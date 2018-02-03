@@ -1,0 +1,104 @@
+# Creating an Auto Scaling Group Using an EC2 Instance<a name="create-asg-from-instance"></a>
+
+When you create an Auto Scaling group, you must specify the information needed to configure the Auto Scaling instances and the minimum number of instances your group must maintain at all times\.
+
+To configure Auto Scaling instances, you can specify a launch configuration, a launch template, or an EC2 instance\. The following procedure demonstrates how to create an Auto Scaling group using an EC2 instance\. To use a launch configuration or a launch template, see [Creating an Auto Scaling Group Using a Launch Configuration](create-asg.md) or [Creating an Auto Scaling Group Using a Launch Template](create-asg-launch-template.md)\.
+
+When you create an Auto Scaling group using an EC2 instance, Amazon EC2 Auto Scaling automatically creates a launch configuration for you and associates it with the Auto Scaling group\. This launch configuration has the same name as the Auto Scaling group, and it derives its attributes, such as AMI ID, instance type, and Availability Zone, from the specified instance\.
+
+**Limitations**  
+The following are limitations when creating an Auto Scaling group from an EC2 instance:
+
++ If the identified instance has tags, the tags are not copied to the `Tags` attribute of the new Auto Scaling group\.
+
++ The Auto Scaling group includes the block device mapping from the AMI used to launch the instance; it does not include any block devices attached after instance launch\.
+
++ If the identified instance is registered with one or more load balancers, the load balancer names are not copied to the `LoadBalancerNames` attribute of the new Auto Scaling group\.
+
+**Prerequisites**
+
+Before you begin, find the ID of the EC2 instance using the Amazon EC2 console or the [describe\-instances](http://docs.aws.amazon.com/cli/latest/reference/ec2/describe-instances.html) command \(AWS CLI\)\. The EC2 instance must meet the following criteria:
+
++ The instance is in the Availability Zone in which you want to create the Auto Scaling group\.
+
++ The instance is not a member of another Auto Scaling group\.
+
++ The instance is in `running` state\.
+
++ The AMI used to launch the instance must still exist\.
+
+
++ [Create an Auto Scaling Group from an EC2 Instance Using the Console](#create-asg-from-instance-console)
++ [Create an Auto Scaling Group from an EC2 Instance Using the AWS CLI](#create-asg-from-instance-aws-cli)
+
+## Create an Auto Scaling Group from an EC2 Instance Using the Console<a name="create-asg-from-instance-console"></a>
+
+You can use the console to create an Auto Scaling group from a running EC2 instance and add the instance to the new Auto Scaling group\. For more information, see [Attach EC2 Instances to Your Auto Scaling Group](attach-instance-asg.md)\.
+
+## Create an Auto Scaling Group from an EC2 Instance Using the AWS CLI<a name="create-asg-from-instance-aws-cli"></a>
+
+Use the following [create\-auto\-scaling\-group](http://docs.aws.amazon.com/cli/latest/reference/autoscaling/create-auto-scaling-group.html) command to create an Auto Scaling group, *my\-asg\-from\-instance*, from the EC2 instance `i-7f12e649`\.
+
+```
+aws autoscaling create-auto-scaling-group --auto-scaling-group-name my-asg-from-instance --instance-id i-7f12e649 --min-size 1 --max-size 2 --desired-capacity 2
+```
+
+Use the following [describe\-auto\-scaling\-groups](http://docs.aws.amazon.com/cli/latest/reference/autoscaling/describe-auto-scaling-groups.html) command to create the Auto Scaling group\.
+
+```
+aws autoscaling describe-auto-scaling-groups --auto-scaling-group-name my-asg-from-instance
+```
+
+The following example response shows that the desired capacity of the group is 2, the group has 2 running instances, and the launch configuration is also named *my\-asg\-from\-instance*:
+
+```
+{
+    "AutoScalingGroups": [
+        {
+            "AutoScalingGroupARN": "arn",
+            "HealthCheckGracePeriod": 0,
+            "SuspendedProcesses": [],
+            "DesiredCapacity": 2,
+            "Tags": [],
+            "EnabledMetrics": [],
+            "LoadBalancerNames": [],
+            "AutoScalingGroupName": "my-asg-from-instance",
+            "DefaultCooldown": 300,
+            "MinSize": 1,
+            "Instances": [
+                {
+                    "InstanceId": "i-6bd79d87",
+                    "AvailabilityZone": "us-west-2a",
+                    "HealthStatus": "Healthy",
+                    "LifecycleState": "InService",
+                    "LaunchConfigurationName": "my-asg-from-instance"
+                },
+                {
+                    "InstanceId": "i-6cd79d80",
+                    "AvailabilityZone": "us-west-2a",
+                    "HealthStatus": "Healthy",
+                    "LifecycleState": "InService",
+                    "LaunchConfigurationName": "my-asg-from-instance"
+                }
+            ],
+            "MaxSize": 2,
+            "VPCZoneIdentifier": "subnet-6bea5f06",
+            "TerminationPolicies": [
+                "Default"
+            ],
+            "LaunchConfigurationName": "my-asg-from-instance",
+            "CreatedTime": "2014-12-29T16:14:50.397Z",
+            "AvailabilityZones": [
+                "us-west-2a"
+            ],
+            "HealthCheckType": "EC2"
+        }
+    ]
+}
+```
+
+Use the following `describe-launch-configs` command to describe the launch configuration *my\-asg\-from\-instance*\.
+
+```
+aws autoscaling describe-launch-configurations --launch-configuration-names my-asg-from-instance
+```

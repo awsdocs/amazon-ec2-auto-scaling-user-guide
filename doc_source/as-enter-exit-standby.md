@@ -1,0 +1,196 @@
+# Temporarily Removing Instances from Your Auto Scaling Group<a name="as-enter-exit-standby"></a>
+
+You can put an instance that is in the `InService` state into the `Standby` state, update or troubleshoot the instance, and then return the instance to service\. Instances that are on standby are still part of the Auto Scaling group, but they do not actively handle application traffic\.
+
+**Important**  
+You are billed for instances that are in a standby state\.
+
+For example, you can change the launch configuration for an Auto Scaling group at any time, and any subsequent instances that the Auto Scaling group launches use this configuration\. However, the Auto Scaling group does not update the instances that are currently in service\. You can either terminate these instances and let the Auto Scaling group replace them, or you can put the instances on standby, update the software, and then put the instances back in service\.
+
+
++ [How the Standby State Works](#standby-state)
++ [Health Status of an Instance in a Standby State](#standby-instance-health-status)
++ [Temporarily Remove an Instance Using the AWS Management Console](#standby-state-console)
++ [Temporarily Remove an Instance Using the AWS CLI](#standby-state-aws-cli)
+
+## How the Standby State Works<a name="standby-state"></a>
+
+The standby state works as follows to help you temporarily remove an instance from your Auto Scaling group:
+
+1. You put the instance into the standby state\. The instance remains in this state until you exit the standby state\.
+
+1. If there is a load balancer or target group attached to your Auto Scaling group, the instance is deregistered from the load balancer or target group\.
+
+1. By default, the desired capacity of your Auto Scaling group is decremented when you put an instance on standby\. This prevents the launch of an additional instance while you have this instance on standby\. Alternatively, you can specify that the capacity is not decremented\. This causes the Auto Scaling group to launch an additional instance to replace the one on standby\.
+
+1. You can update or troubleshoot the instance\.
+
+1. You return the instance to service by exiting the standby state\.
+
+1. After you put an instance that was on standby back in service, the desired capacity is incremented\. If you did not decrement the capacity when you put the instance on standby, the Auto Scaling group detects that you have more instances than you need, and applies the termination policy in effect to reduce the size of the group\. For more information, see [Controlling Which Auto Scaling Instances Terminate During Scale In](as-instance-termination.md)\.
+
+1. If there is a load balancer or target group attached to your Auto Scaling group, the instance is registered with the load balancer or target group\.
+
+The following illustration shows the transitions between instance states in this process:
+
+![\[Instances enter and exit the standby state.\]](http://docs.aws.amazon.com/autoscaling/ec2/userguide/images/standby_lifecycle.png)
+
+For more information about the complete lifecycle of instances in an Auto Scaling group, see [Auto Scaling Lifecycle](AutoScalingGroupLifecycle.md)\.
+
+## Health Status of an Instance in a Standby State<a name="standby-instance-health-status"></a>
+
+Amazon EC2 Auto Scaling does not perform health checks on instances that are in a standby state\. While the instance is in a standby state, its health status reflects the status that it had before you put it on standby\. Amazon EC2 Auto Scaling does not perform a health check on the instance until you put it back in service\.
+
+For example, if you put a healthy instance on standby and then terminate it, Amazon EC2 Auto Scaling continues to report the instance as healthy\. If you return the terminated instance to service, Amazon EC2 Auto Scaling performs a health check on the instance, determines that it is unhealthy, and launches a replacement instance\.
+
+## Temporarily Remove an Instance Using the AWS Management Console<a name="standby-state-console"></a>
+
+The following procedure demonstrates the general process for updating an instance that is currently in service\.
+
+**To temporarily remove an instance using the console**
+
+1. Open the Amazon EC2 console at [https://console\.aws\.amazon\.com/ec2/](https://console.aws.amazon.com/ec2/)\.
+
+1. On the navigation pane, under **Auto Scaling**, choose **Auto Scaling Groups**\.
+
+1. Select the Auto Scaling group\.
+
+1. On the **Instances** tab, select the instance\.
+
+1. Choose **Actions**, **Set to Standby**\.
+
+1. On the **Set to Standby** page, select the check box to launch a replacement instance\. Leave it unchecked to decrement the desired capacity\. Choose **Set to Standby**\.
+
+1. You can update or troubleshoot your instance as needed\. When you have finished, continue with the next step to return the instance to service\.
+
+1. Select the instance, choose **Actions**, **Set to InService**\. On the **Set to InService** page, choose **Set to InService**\.
+
+## Temporarily Remove an Instance Using the AWS CLI<a name="standby-state-aws-cli"></a>
+
+The following procedure demonstrates the general process for updating an instance that is currently in service\.
+
+**To temporarily remove an instance using the AWS CLI**
+
+1. Use the following [describe\-auto\-scaling\-instances](http://docs.aws.amazon.com/cli/latest/reference/autoscaling/describe-auto-scaling-instances.html) command to identify the instance to update:
+
+   ```
+   aws autoscaling describe-auto-scaling-instances
+   ```
+
+   The following is an example response:
+
+   ```
+   {
+       "AutoScalingInstances": [
+           {
+               "AvailabilityZone": "us-west-2a",
+               "InstanceId": "i-5b73d709",
+               "AutoScalingGroupName": "my-asg",
+               "HealthStatus": "HEALTHY",
+               "LifecycleState": "InService",
+               "LaunchConfigurationName": "my-lc"
+           },
+           ...
+       ]
+   }
+   ```
+
+1. Move the instance into a `Standby` state using the following [enter\-standby](http://docs.aws.amazon.com/cli/latest/reference/autoscaling/enter-standby.html) command\. The `--should-decrement-desired-capacity` option decreases the desired capacity so that the Auto Scaling group does not launch a replacement instance\.
+
+   ```
+   aws autoscaling enter-standby --instance-ids i-5b73d709 --auto-scaling-group-name my-asg --should-decrement-desired-capacity
+   ```
+
+   The following is an example response:
+
+   ```
+   {
+       "Activities": [
+           {
+               "Description": "Moving EC2 instance to Standby: i-5b73d709",
+               "AutoScalingGroupName": "my-asg",
+               "ActivityId": "3b1839fe-24b0-40d9-80ae-bcd883c2be32",
+               "Details": "{\"Availability Zone\":\"us-west-2a\"}",
+               "StartTime": "2014-12-15T21:31:26.150Z",
+               "Progress": 50,
+               "Cause": "At 2014-12-15T21:31:26Z instance i-5b73d709 was moved to standby 
+                 in response to a user request, shrinking the capacity from 4 to 3.",
+               "StatusCode": "InProgress"
+           }
+       ]
+   }
+   ```
+
+1. \(Optional\) Verify that the instance is in `Standby` using the following `describe-auto-scaling-instances` command:
+
+   ```
+   aws autoscaling describe-auto-scaling-instances --instance-ids i-5b73d709
+   ```
+
+   The following is an example response\. Notice that the status of the instance is now `Standby`\.
+
+   ```
+   {
+       "AutoScalingInstances": [
+           {
+               "AvailabilityZone": "us-west-2a",
+               "InstanceId": "i-5b73d709",
+               "AutoScalingGroupName": "my-asg",
+               "HealthStatus": "HEALTHY",
+               "LifecycleState": "Standby",
+               "LaunchConfigurationName": "my-lc"
+           }
+       ]
+   }
+   ```
+
+1. You can update or troubleshoot your instance as needed\. When you have finished, continue with the next step to return the instance to service\.
+
+1. Put the instance back in service using the following [exit\-standby](http://docs.aws.amazon.com/cli/latest/reference/autoscaling/exit-standby.html) command:
+
+   ```
+   aws autoscaling exit-standby --instance-ids i-5b73d709 --auto-scaling-group-name my-asg
+   ```
+
+   The following is an example response:
+
+   ```
+   {
+       "Activities": [
+           {
+               "Description": "Moving EC2 instance out of Standby: i-5b73d709",
+               "AutoScalingGroupName": "my-asg",
+               "ActivityId": "db12b166-cdcc-4c54-8aac-08c5935f8389",
+               "Details": "{\"Availability Zone\":\"us-west-2a\"}",
+               "StartTime": "2014-12-15T21:46:14.678Z",
+               "Progress": 30,
+               "Cause": "At 2014-12-15T21:46:14Z instance i-5b73d709 was moved out of standby in
+                  response to a user request, increasing the capacity from 3 to 4.",
+               "StatusCode": "PreInService"
+           }
+       ]
+   }
+   ```
+
+1. \(Optional\) Verify that the instance is back in service using the following `describe-auto-scaling-instances` command:
+
+   ```
+   aws autoscaling describe-auto-scaling-instances --instance-ids i-5b73d709
+   ```
+
+   The following is an example response\. Notice that the status of the instance is `InService`\.
+
+   ```
+   {
+       "AutoScalingInstances": [
+           {
+               "AvailabilityZone": "us-west-2a",
+               "InstanceId": "i-5b73d709",
+               "AutoScalingGroupName": "my-asg",
+               "HealthStatus": "HEALTHY",
+               "LifecycleState": "InService",
+               "LaunchConfigurationName": "my-lc"
+           }
+       ]
+   }
+   ```
