@@ -17,12 +17,11 @@ Auto Scaling supports both default cooldown periods and scaling\-specific cooldo
 
 ## Example: Cooldowns<a name="cooldown-example"></a>
 
-Consider the following scenario: you have a web application running in AWS\. This web application consists three basic tiers: web, application, and database\. To make sure that the application always has the resources to meet traffic demands, you create two Auto Scaling groups: one for your web tier and one for your application tier\.
+Consider the following scenario: you have a web application running in AWS\. This web application consists of three basic tiers: web, application, and database\. To make sure that the application always has the resources to meet traffic demands, you create two Auto Scaling groups: one for your web tier and one for your application tier\.
 
-![\[A basic network architecture with a web tier and application
-                        tier.\]](http://docs.aws.amazon.com/autoscaling/ec2/userguide/images/cooldown-example-start-diagram.png)
+![\[A basic network architecture with a web tier and application tier.\]](http://docs.aws.amazon.com/autoscaling/ec2/userguide/images/cooldown-example-start-diagram.png)
 
-To help ensure that the Auto Scaling group for the application tier has the appropriate number of EC2 instances, create a CloudWatch alarm to scale out whenever the **CPUUtilization** metric for the instances exceeds 90 percent\. When the alarm occurs, the Auto Scaling group launches and configures another instance\.
+To help ensure that the Auto Scaling group for the application tier has the appropriate number of EC2 instances, [create a CloudWatch alarm](as-instance-monitoring.md#CloudWatchAlarm) to scale out whenever the **CPUUtilization** metric for the instances exceeds 90 percent\. When the alarm occurs, the Auto Scaling group launches and configures another instance\.
 
 ![\[An example of how a CloudWatch alarm works with a scaling policy\]](http://docs.aws.amazon.com/autoscaling/ec2/userguide/images/cooldowns-example-scaling-policy-diagram.png)
 
@@ -34,10 +33,9 @@ However, with a cooldown period in place, the Auto Scaling group launches an ins
 
 ## Default Cooldowns<a name="cooldown-default"></a>
 
-The default cooldown period is applied when you create your Auto Scaling group\. Its default value is 300 seconds\. This cooldown period automatically applies to any dynamic scaling activities for simple scaling policies, and you can optionally request that it apply to your manual scaling activities\.
+The default cooldown period is applied when you create your Auto Scaling group\. Its default value is 300 seconds\. This cooldown period automatically applies to any [dynamic scaling](as-scale-based-on-demand.md) activities for simple scaling policies, and you can optionally request that it apply to your [manual scaling](as-manual-scaling.md) activities\.
 
-![\[A flowchart showing how a default cooldown affects scaling
-                        actions.\]](http://docs.aws.amazon.com/autoscaling/ec2/userguide/images/cooldowns-default-diagram.png)
+![\[A flowchart showing how a default cooldown affects scaling actions.\]](http://docs.aws.amazon.com/autoscaling/ec2/userguide/images/cooldowns-default-diagram.png)
 
 You can configure the default cooldown period when you create the Auto Scaling group, using the AWS Management Console, the [create\-auto\-scaling\-group](http://docs.aws.amazon.com/cli/latest/reference/autoscaling/create-auto-scaling-group.html) command \(AWS CLI\), or the [CreateAutoScalingGroup](http://docs.aws.amazon.com/autoscaling/ec2/APIReference/API_CreateAutoScalingGroup.html) API operation\.
 
@@ -65,4 +63,4 @@ Lifecycle hooks can affect the impact of any cooldown periods configured for the
 
 ## Cooldowns and Spot Instances<a name="cooldowns-spot"></a>
 
-You can create Auto Scaling groups to use Spot Instances instead of On\-Demand or Reserved Instances\. The cooldown period begins when the bid for any Spot Instance is successful\.
+You can create Auto Scaling groups to use [Spot Instances](asg-launch-spot-instances.md) instead of On\-Demand or Reserved Instances\. The cooldown period begins when the bid for any Spot Instance is successful\.

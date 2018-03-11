@@ -34,10 +34,10 @@ AWS provides a web\-based user interface, the AWS Management Console\. If you've
 If you prefer to use a command line interface, you have the following options:
 
 **AWS Command Line Interface \(CLI\)**  
-Provides commands for a broad set of AWS products, and is supported on Windows, Mac, and Linux\. To get started, see [AWS Command Line Interface User Guide](http://docs.aws.amazon.com/cli/latest/userguide/)\. For more information about the commands for Auto Scaling, see [autoscaling](http://docs.aws.amazon.com/cli/latest/reference/autoscaling/index.html) in the *AWS Command Line Interface Reference*\.
+Provides commands for a broad set of AWS products, and is supported on Windows, Mac, and Linux\. To get started, see [AWS Command Line Interface User Guide](http://docs.aws.amazon.com/cli/latest/userguide/)\. For more information about the commands for Auto Scaling, see [autoscaling](http://docs.aws.amazon.com/cli/latest/reference/autoscaling/index.html) in the *AWS CLI Command Reference*\.
 
 **AWS Tools for Windows PowerShell**  
-Provides commands for a broad set of AWS products for those who script in the PowerShell environment\. To get started, see the [AWS Tools for Windows PowerShell User Guide](http://docs.aws.amazon.com/powershell/latest/userguide/)\. For more information about the cmdlets for Auto Scaling, see the [AWS Tools for Windows PowerShell Reference](http://docs.aws.amazon.com/powershell/latest/reference/Index.html)\.
+Provides commands for a broad set of AWS products for those who script in the PowerShell environment\. To get started, see the [AWS Tools for Windows PowerShell User Guide](http://docs.aws.amazon.com/powershell/latest/userguide/)\. For more information about the cmdlets for Auto Scaling, see the [AWS Tools for PowerShell Cmdlet Reference](http://docs.aws.amazon.com/powershell/latest/reference/Index.html)\.
 
 Auto Scaling provides a Query API\. These requests are HTTP or HTTPS requests that use the HTTP verbs GET or POST and a Query parameter named `Action`\. For more information about the API actions for Auto Scaling, see [Actions](http://docs.aws.amazon.com/autoscaling/ec2/APIReference/API_Operations.html) in the *Amazon EC2 Auto Scaling API Reference*\.
 

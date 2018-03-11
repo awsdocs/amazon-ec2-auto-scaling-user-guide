@@ -3,13 +3,13 @@
 Amazon EC2 Auto Scaling provides you with an option to create a launch configuration using the attributes from a running EC2 instance\.
 
 **Tip**  
-You can create an Auto Scaling group directly from an EC2 instance\. When you use this feature, Amazon EC2 Auto Scaling automatically creates a launch configuration for you as well\.
+You can [create an Auto Scaling group directly from an EC2 instance](create-asg-from-instance.md)\. When you use this feature, Amazon EC2 Auto Scaling automatically creates a launch configuration for you as well\.
 
 If the specified instance has properties that are not currently supported by launch configurations, the instances launched by the Auto Scaling group might not be identical to the original EC2 instance\.
 
 There are differences between creating a launch configuration from scratch and creating a launch configuration from an existing EC2 instance\. When you create a launch configuration from scratch, you specify the image ID, instance type, optional resources \(such as storage devices\), and optional settings \(like monitoring\)\. When you create a launch configuration from a running instance, Amazon EC2 Auto Scaling derives attributes for the launch configuration from the specified instance, plus the block device mapping for the AMI that the instance was launched from \(ignoring any additional block devices that were added to the instance after launch\)\.
 
-When you create a launch configuration using a running instance, you can override the following attributes by specifying then as part of the same request: AMI, block devices, key pair, instance profile, instance type, kernel, monitoring, placement tenancy, ramdisk, security groups, Spot price, user data, whether the instance has a public IP address is associated, and whether the instance is EBS\-optimized\.
+When you create a launch configuration using a running instance, you can override the following attributes by specifying them as part of the same request: AMI, block devices, key pair, instance profile, instance type, kernel, monitoring, placement tenancy, ramdisk, security groups, Spot price, user data, whether the instance has a public IP address is associated, and whether the instance is EBS\-optimized\.
 
 The following examples show you to create a launch configuration from an EC2 instance\.
 

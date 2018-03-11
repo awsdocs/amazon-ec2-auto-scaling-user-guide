@@ -27,6 +27,7 @@ For more information, see [Identity and Access Management \(IAM\)](http://aws.am
 + [Supported Resource\-Level Permissions](#resource-level-permissions-auto-scaling)
 + [Predefined AWS Managed Policies](#predefined-policies-auto-scaling)
 + [Customer Managed Policies](#example-policies-auto-scaling)
++ [Service\-Linked Roles for Amazon EC2 Auto Scaling](autoscaling-service-linked-role.md)
 + [Launch Auto Scaling Instances with an IAM Role](us-iam-role.md)
 
 ## Amazon EC2 Auto Scaling Actions<a name="policy-auto-scaling-actions"></a>
@@ -59,6 +60,34 @@ Use `Describe:*` to specify all actions whose names start with `Describe`\.
 ```
 
 For more information, see [Amazon EC2 Auto Scaling Actions](http://docs.aws.amazon.com/autoscaling/ec2/APIReference/API_Operations.html) in the *Amazon EC2 Auto Scaling API Reference*\.
+
+### Required Permissions<a name="required-permissions"></a>
+
+When calling the following actions, you must grant IAM users permission to call the action itself, plus additional actions from Amazon EC2 or IAM\.
+
+`CreateLaunchConfiguration`  
+
++ `autoscaling:CreateLaunchConfiguration`
+
++ `ec2:DescribeImages`
+
++ `ec2:DescribeInstances`
+
++ `ec2:DescribeInstanceAttribute`
+
++ `ec2:DescribeKeyPairs`
+
++ `ec2:DescribeSecurityGroups`
+
++ `ec2:DescribeSpotInstanceRequests`
+
++ `ec2:DescribeVpcClassicLink`
+
+`CreateAutoScalingGroup`  
+
++ `autoscaling:CreateAutoScalingGroup`
+
++ `iam:CreateServiceLinkedRole`
 
 ## Amazon EC2 Auto Scaling Resources<a name="policy-auto-scaling-resources"></a>
 
@@ -206,15 +235,17 @@ The following table describes the Amazon EC2 Auto Scaling API actions that suppo
 
 ## Predefined AWS Managed Policies<a name="predefined-policies-auto-scaling"></a>
 
-The managed policies created by AWS grant the required permissions for common use cases\. You can attach these policies to your IAM users\. The following are the AWS managed policies for Amazon EC2 Auto Scaling\.
+The managed policies created by AWS grant the required permissions for common use cases\. You can attach these policies to your IAM users, based on the access that they need\. Each policy grants access to all or some of the API actions for Amazon EC2 Auto Scaling, plus additional API actions for Amazon EC2, CloudWatch, Elastic Load Balancing, IAM, and Amazon SNS\.
 
-+ **AutoScalingConsoleFullAccess** — Grants access to all API actions used by the console for Amazon EC2 Auto Scaling resources\. This includes all API actions for Amazon EC2 Auto Scaling, and selected API actions for Amazon EC2, CloudWatch, Elastic Load Balancing, and Amazon SNS\.
+The following are the AWS managed policies for Amazon EC2 Auto Scaling:
 
-+ **AutoScalingConsoleReadOnlyAccess** — Grants access to the read\-only API actions used by the console for Amazon EC2 Auto Scaling resources\. This includes all read\-only API actions for Amazon EC2 Auto Scaling, and selected read\-only API actions for Amazon EC2, CloudWatch, Elastic Load Balancing, and Amazon SNS
++ **AutoScalingConsoleFullAccess** — Grants full access to Amazon EC2 Auto Scaling using the AWS Management Console\.
 
-+ **AutoScalingFullAccess** — Grants access to all Amazon EC2 Auto Scaling API actions\.
++ **AutoScalingConsoleReadOnlyAccess** — Grants read\-only access to Amazon EC2 Auto Scaling using the AWS Management Console\.
 
-+ **AutoScalingReadOnlyAccess** — Grants access to the read\-only Amazon EC2 Auto Scaling API actions\.
++ **AutoScalingFullAccess** — Grants full access to Amazon EC2 Auto Scaling\.
+
++ **AutoScalingReadOnlyAccess** — Grants read\-only access to Amazon EC2 Auto Scaling\.
 
 ## Customer Managed Policies<a name="example-policies-auto-scaling"></a>
 

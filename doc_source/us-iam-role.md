@@ -8,7 +8,7 @@ For more information about IAM roles and instance profiles, see [IAM Roles](http
 
 ## Prerequisites<a name="us-iam-role-prereq"></a>
 
-Create an IAM role for your EC2 instances\. The console creates an instance profile with the same name as the IAM role\.
+Create an IAM role for your EC2 instances\. The console creates an instance profile with the same name as the IAM role\.<a name="create-iam-role-console"></a>
 
 **To create an IAM role**
 

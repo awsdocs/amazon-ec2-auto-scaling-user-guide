@@ -25,8 +25,7 @@ The default termination policy is designed to help ensure that your network arch
 
 The following flow diagram illustrates how the default termination policy works\.
 
-![\[A flowchart showing how an Auto Scaling group uses the default termination policy to
-                        terminate instances.\]](http://docs.aws.amazon.com/autoscaling/ec2/userguide/images/termination-policy-default-flowchart-diagram.png)
+![\[A flowchart showing how an Auto Scaling group uses the default termination policy to terminate instances.\]](http://docs.aws.amazon.com/autoscaling/ec2/userguide/images/termination-policy-default-flowchart-diagram.png)
 
 Consider an Auto Scaling group that has two Availability Zones, a desired capacity of two instances, and scaling policies that increase and decrease the number of instances by 1 when certain thresholds are met\. The two instances in this group are distributed as follows\.
 

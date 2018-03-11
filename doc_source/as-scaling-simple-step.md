@@ -132,8 +132,7 @@ Use the console to create an Auto Scaling group with two scaling policies: a sca
    1. Select **Use scaling policies to adjust the capacity of this group**\.
 
    1. Specify the minimum and maximum size for your Auto Scaling group using the row that begins with **Scale between**\. For example, if your group is already at its maximum size, you need to specify a new maximum in order to scale out\.  
-![\[Specify the minimum and maximum size for your
-                                            group.\]](http://docs.aws.amazon.com/autoscaling/ec2/userguide/images/as-console-specify-min-max.png)
+![\[Specify the minimum and maximum size for your group.\]](http://docs.aws.amazon.com/autoscaling/ec2/userguide/images/as-console-specify-min-max.png)
 
    1. Specify your scale\-out policy under **Increase Group Size**\. You can optionally specify a name for the policy, then choose **Add new alarm**\.
 

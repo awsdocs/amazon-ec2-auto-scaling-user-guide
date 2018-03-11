@@ -44,7 +44,7 @@ If you do not have any launch configurations, you're first prompted to create on
 
    + To manually adjust the size of the Auto Scaling group as needed, select **Keep this group at its initial size**\. For more information, see [Manual Scaling](as-manual-scaling.md)\.
 
-   + To automatically adjust the size of the Auto Scaling group based on criteria that you specify, select **Use scaling policies to adjust the capacity of this group** and follow the directions\. For more information, see Configure Scaling Policies\.
+   + To automatically adjust the size of the Auto Scaling group based on criteria that you specify, select **Use scaling policies to adjust the capacity of this group** and follow the directions\. For more information, see [Configure Scaling Policies](as-scaling-target-tracking.md#policy-creating-scalingpolicies-console)\.
 
 1. \(Optional\) To receive notifications, choose **Add notification**, configure the notification, and then choose **Next: Configure Tags**\.
 

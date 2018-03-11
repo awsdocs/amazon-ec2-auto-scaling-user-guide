@@ -68,7 +68,7 @@ Use the console to create an Auto Scaling group with a target tracking scaling p
 
    1. Choose **Next: Configure scaling policies**\.
 
-1. On the **Configure scaling policies** page, do the following:
+1. <a name="policy-creating-scalingpolicies-console"></a>On the **Configure scaling policies** page, do the following:
 
    1. Select **Use scaling policies to adjust the capacity of this group**\.
 

@@ -28,6 +28,6 @@ You can create a launch configuration and an Auto Scaling group in a single proc
 
    + To manually adjust the size of the Auto Scaling group as needed, select **Keep this group at its initial size**\. For more information, see [Manual Scaling](as-manual-scaling.md)\.
 
-   + To automatically adjust the size of the Auto Scaling group based on criteria that you specify, select **Use scaling policies to adjust the capacity of this group** and follow the directions\. For more information, see Configure Scaling Policies\.
+   + To automatically adjust the size of the Auto Scaling group based on criteria that you specify, select **Use scaling policies to adjust the capacity of this group** and follow the directions\. For more information, see [Configure Scaling Policies](as-scaling-target-tracking.md#policy-creating-scalingpolicies-console)\.
 
 1. On the **Review** page, you can optionally add tags or notifications, and edit other configuration details\. When you have finished, choose **Create Auto Scaling group**\.

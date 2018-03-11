@@ -4,7 +4,7 @@ Adding Auto Scaling to your application architecture is one way to maximize the 
 
 + Better fault tolerance\. Auto Scaling can detect when an instance is unhealthy, terminate it, and launch an instance to replace it\. You can also configure Auto Scaling to use multiple Availability Zones\. If one Availability Zone becomes unavailable, Auto Scaling can launch instances in another one to compensate\.
 
-+ Better availability\. Auto Scaling can help you ensure that your application always has the right amount of capacity to handle the current traffic demands\. 
++ Better availability\. Auto Scaling can help you ensure that your application always has the right amount of capacity to handle the current traffic demand\. 
 
 + Better cost management\. Auto Scaling can dynamically increase and decrease capacity as needed\. Because you pay for the EC2 instances you use, you save money by launching instances when they are actually needed and terminating them when they aren't needed\.
 
@@ -15,7 +15,7 @@ Adding Auto Scaling to your application architecture is one way to maximize the 
 
 ## Example: Covering Variable Demand<a name="autoscaling-benefits-example"></a>
 
-To demonstrate some of the benefits of Auto Scaling, consider a basic Web application running on AWS\. This application allows employees to search for conference rooms that they might want to use for meetings\. During the beginning and end of the week, usage of this application is minimal\. During the middle of the week, more employees are scheduling meetings, so the demands on the application increases significantly\.
+To demonstrate some of the benefits of Auto Scaling, consider a basic Web application running on AWS\. This application allows employees to search for conference rooms that they might want to use for meetings\. During the beginning and end of the week, usage of this application is minimal\. During the middle of the week, more employees are scheduling meetings, so the demand on the application increases significantly\.
 
 The following graph shows how much of the application's capacity is used over the course of a week\.
 
@@ -25,7 +25,7 @@ Traditionally, there are two ways to plan for these changes in capacity\. The fi
 
 ![\[An example showing how buying more capacity than needed can be inefficient from a cost perspective.\]](http://docs.aws.amazon.com/autoscaling/ec2/userguide/images/capacity-example-over-diagram.png)
 
-The second option is to have enough capacity to handle the average demands on the application\. This option is less expensive, because you aren't purchasing equipment that you'll only use occasionally\. However, you risk creating a poor customer experience when the demands on the application exceeds its capacity\.
+The second option is to have enough capacity to handle the average demand on the application\. This option is less expensive, because you aren't purchasing equipment that you'll only use occasionally\. However, you risk creating a poor customer experience when the demand on the application exceeds its capacity\.
 
 ![\[An example showing how buying less capacity than needed can cause a poor customer experience.\]](http://docs.aws.amazon.com/autoscaling/ec2/userguide/images/capacity-example-under-diagram.png)
 

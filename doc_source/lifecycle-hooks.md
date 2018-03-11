@@ -61,7 +61,7 @@ The maximum amount of time that you can keep an instance in a wait state is 48 h
 
 ### Cooldowns and Custom Actions<a name="lifecycle-hook-cooldowns"></a>
 
-When an Auto Scaling group launches or terminates an instance due to a simple scaling policy, a cooldown takes effect\. The cooldown period helps ensure that the Auto Scaling group does not launch or terminate more instances than needed\.
+When an Auto Scaling group launches or terminates an instance due to a simple scaling policy, a [cooldown](Cooldown.md) takes effect\. The cooldown period helps ensure that the Auto Scaling group does not launch or terminate more instances than needed\.
 
 Consider an Auto Scaling group with a lifecycle hook that supports a custom action at instance launch\. When the application experiences an increase in demand, the group launches instances to add capacity\. Because there is a lifecycle hook, the instance is put into the `Pending:Wait` state, which means that it is not available to handle traffic yet\. When the instance enters the wait state, scaling actions due to simple scaling policies are suspended\. When the instance enter the `InService` state, the cooldown period starts\. When the cooldown period expires, any suspended scaling actions resume\.
 

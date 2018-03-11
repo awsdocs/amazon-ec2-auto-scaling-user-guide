@@ -62,6 +62,7 @@ Amazon's trademarks and trade dress may not be used in
    + [Getting SNS Notifications When Your Auto Scaling Group Scales](ASGettingNotifications.md)
    + [Logging Amazon EC2 Auto Scaling API Calls By Using AWS CloudTrail](logging-using-cloudtrail.md)
 + [Controlling Access to Your Amazon EC2 Auto Scaling Resources](control-access-using-iam.md)
+   + [Service-Linked Roles for Amazon EC2 Auto Scaling](autoscaling-service-linked-role.md)
    + [Launch Auto Scaling Instances with an IAM Role](us-iam-role.md)
 + [Troubleshooting Amazon EC2 Auto Scaling](CHAP_Troubleshooting.md)
    + [Troubleshooting Amazon EC2 Auto Scaling: EC2 Instance Launch Failures](ts-as-instancelaunchfailure.md)

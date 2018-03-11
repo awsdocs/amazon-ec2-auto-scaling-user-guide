@@ -16,7 +16,7 @@ The following procedure demonstrates how to create an Auto Scaling group using a
 
 + Create a launch template\. You must ensure that your template includes all parameters required to launch an EC2 instance, such as an AMI ID and an instance type\. Otherwise, when you use the template to create an Auto Scaling group, you receive an error that you must use a fully\-formed launch template\. For more information, see [Launching an Instance from a Launch Template](http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-launch-templates.html) in the *Amazon EC2 User Guide for Linux Instances*\.
 
-+ An IAM user or role that creates an Auto Scaling group using a launch template must have permission to use the `ec2:RunInstances` action and permission to create or use the resources for the instance\. For example, access to the `iam:PassRole` action is required to use an instance profile\. You can use the **AmazonEC2FullAccess** policy to grant full access to all Amazon EC2 resources\. You can use resource\-level permissions to restrict access to specific launch templates\. For more information, see Require a Launch Template or [Launch Templates](http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ExamplePolicies_EC2.html#iam-example-runinstances-launch-templates) in the *Amazon EC2 User Guide for Linux Instances*\.
++ An IAM user or role that creates an Auto Scaling group using a launch template must have permission to use the `ec2:RunInstances` action and permission to create or use the resources for the instance\. For example, access to the `iam:PassRole` action is required to use an instance profile\. You can use the **AmazonEC2FullAccess** policy to grant full access to all Amazon EC2 resources\. You can use resource\-level permissions to restrict access to specific launch templates\. For more information, see [Require a Launch Template](control-access-using-iam.md#policy-example-launch-template) or [Launch Templates](http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ExamplePolicies_EC2.html#iam-example-runinstances-launch-templates) in the *Amazon EC2 User Guide for Linux Instances*\.
 
 **Limitations**
 
@@ -64,7 +64,7 @@ The following are limitations when creating a launch template for use with an Au
 
    + To manually adjust the size of the Auto Scaling group as needed, select **Keep this group at its initial size**\. For more information, see [Manual Scaling](as-manual-scaling.md)\.
 
-   + To automatically adjust the size of the Auto Scaling group based on criteria that you specify, select **Use scaling policies to adjust the capacity of this group** and follow the directions\. For more information, see Configure Scaling Policies\.
+   + To automatically adjust the size of the Auto Scaling group based on criteria that you specify, select **Use scaling policies to adjust the capacity of this group** and follow the directions\. For more information, see [Configure Scaling Policies](as-scaling-target-tracking.md#policy-creating-scalingpolicies-console)\.
 
 1. \(Optional\) To receive notifications, choose **Add notification**, configure the notification, and then choose **Next: Configure Tags**\.
 

@@ -1,6 +1,6 @@
 # Tagging Auto Scaling Groups and Instances<a name="autoscaling-tagging"></a>
 
-You can organize and manage your Auto Scaling groups by assigning your own metadata to each group in the form of *tags*\. You specify a *key* and a *value* for each tag\. A key can be a general category, such as "project", "owner", or "environment", with specific associated values\. For example, to differentiate between your testing and production environments, you could assign each Auto Scaling group a tag with a key of "environment" and a value of "test" if the group is part of your test environment or "production" if the group is part of your production environment\. We recommend that you use a consistent set of tags to make it easier to track your Auto Scaling groups\.
+You can organize and manage your Auto Scaling groups by assigning your own metadata to each group in the form of *tags*\. You specify a *key* and a *value* for each tag\. A key can be a general category, such as "project", "owner", or "environment", with specific associated values\. For example, to differentiate between your testing and production environments, you could assign each Auto Scaling group a tag with a key of "environment", and either a value of "test" to indicate your test environment or "production" to indicate your production environment\. We recommend that you use a consistent set of tags to make it easier to track your Auto Scaling groups\.
 
 You can specify that the tags for your Auto Scaling group should be added to the EC2 instances that it launches\. The Auto Scaling group applies the tags while the instances are in the `Pending` state\. Note that if you have a lifecycle hook, the tags are available when the instance enters the `Pending:Wait` state\.
 
@@ -28,7 +28,7 @@ The following basic restrictions apply to tags:
 
 + Do not use the `aws:` prefix in your tag names or values, because it is reserved for AWS use\. You can't edit or delete tag names or values with this prefix, and they do not count against toward your limit of tags per Auto Scaling group\.
 
-You can create and assign tags to your Auto Scaling group when you either create or update your Auto Scaling group\. You can remove Auto Scaling group tags at any time\. For information about assigning tags when you create your Auto Scaling group, see [Step 2: Create an Auto Scaling Group](GettingStartedTutorial.md#gs-create-asg)\.
+You can add tags to your Auto Scaling group when you create it or when you update it\. You can remove tags from your Auto Scaling group at any time\. For information about assigning tags when you create your Auto Scaling group, see [Step 2: Create an Auto Scaling Group](GettingStartedTutorial.md#gs-create-asg)\.
 
 ## Tagging Lifecycle<a name="tag-lifecycle"></a>
 
