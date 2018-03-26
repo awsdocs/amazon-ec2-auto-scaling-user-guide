@@ -37,7 +37,7 @@ Instances remain in the `InService` state until one of the following occurs:
 
 ## Scale In<a name="as-lifecycle-scale-in"></a>
 
-It is important that you create a scale in event for each scale out event that you create\. This helps ensure that the resources assigned to your application match the demand for those resources as closely as possible\.
+It is important that you create a corresponding scale in event for each scale out event that you create\. This helps ensure that the resources assigned to your application match the demand for those resources as closely as possible\.
 
 The following scale in events direct the Auto Scaling group to detach EC2 instances from the group and terminate them:
 
