@@ -71,7 +71,7 @@ When Auto Scaling responds to a scale in event, it terminates one or more instan
 
 For more information, see [Amazon EC2 Auto Scaling Lifecycle Hooks](lifecycle-hooks.md)\.
 
-## Enter and Exit Standby<a name="as-lifecycle-standby"></a>
+## Enter and Exit Standby<a name="as-enter-exit-standby"></a>
 
 You can put any instance that is in an `InService` state into a `Standby` state\. This enables you to remove the instance from service, troubleshoot or make changes to it, and then put it back into service\.
 
