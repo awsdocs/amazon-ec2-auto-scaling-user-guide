@@ -4,7 +4,7 @@ When you use Auto Scaling to scale your applications automatically, it is useful
 
 For more information, see the [Amazon CloudWatch Events User Guide](http://docs.aws.amazon.com/AmazonCloudWatch/latest/events/)\.
 
-
+**Topics**
 + [Auto Scaling Events](#cloudwatch-event-types)
 + [Create a Lambda Function](#create-lambda-function)
 + [Route Events to Your Lambda Function](#create-rule)
@@ -12,17 +12,11 @@ For more information, see the [Amazon CloudWatch Events User Guide](http://docs.
 ## Auto Scaling Events<a name="cloudwatch-event-types"></a>
 
 Auto Scaling supports sending events to CloudWatch Events when the following events occur:
-
 + [EC2 Instance\-launch Lifecycle Action](#launch-lifecycle-action)
-
 + [EC2 Instance Launch Successful](#launch-successful)
-
 + [EC2 Instance Launch Unsuccessful](#launch-unsuccessful)
-
 + [EC2 Instance\-terminate Lifecycle Action](#terminate-lifecycle-action)
-
 + [EC2 Instance Terminate Successful](#terminate-successful)
-
 + [EC2 Instance Terminate Unsuccessful](#terminate-unsuccessful)
 
 ### EC2 Instance\-launch Lifecycle Action<a name="launch-lifecycle-action"></a>

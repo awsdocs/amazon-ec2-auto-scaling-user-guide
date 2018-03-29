@@ -8,7 +8,7 @@ If you configure your Auto Scaling group to determine health status using both E
 
 For more information, see [Health Checks for Auto Scaling Instances](healthcheck.md)\.
 
-
+**Topics**
 + [Adding Health Checks Using the Console](#as-add-elb-healthcheck-console)
 + [Adding Health Checks Using the AWS CLI](#as-add-elb-healthcheck-aws-cli)
 

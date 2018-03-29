@@ -4,7 +4,7 @@ When you use Amazon EC2 Auto Scaling, you must use certain building blocks to ge
 
 The following step\-by\-step instructions help you create a template that defines your EC2 instances, create an Auto Scaling group to maintain the healthy number of instances at all times, and optionally delete this basic infrastructure\. This tutorial assumes that you are familiar with launching EC2 instances and have already created a key pair and a security group\.
 
-
+**Topics**
 + [Step 1: Create a Launch Template](#gs-create-lt)
 + [Step 2: Create an Auto Scaling Group](#gs-create-asg)
 + [Step 3: Verify Your Auto Scaling Group](#gs-verify-asg)
@@ -95,13 +95,9 @@ Now that you have created your Auto Scaling group, you are ready to verify that 
    1. On the navigation pane, choose **Instances**\. This page shows both the terminated instance and the running instance\.
 
 Go to the next step if you would like to delete your basic infrastructure for automatic scaling\. Otherwise, you can use this infrastructure as your base and try one or more of the following:
-
 + [Maintaining the Number of Instances in Your Auto Scaling Group](as-maintain-instance-levels.md)
-
 + [Manual Scaling](as-manual-scaling.md)
-
 + [Dynamic Scaling](as-scale-based-on-demand.md)
-
 + [Getting SNS Notifications When Your Auto Scaling Group Scales](ASGettingNotifications.md)
 
 ## Step 4: \(Optional\) Delete Your Scaling Infrastructure<a name="gs-delete-asg"></a>

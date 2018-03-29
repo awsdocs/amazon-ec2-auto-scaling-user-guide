@@ -2,7 +2,7 @@
 
 Amazon EC2 Auto Scaling provides specific and descriptive errors to help you troubleshoot issues\. You can find the error messages in the description of the scaling activities\.
 
-
+**Topics**
 + [Retrieving an Error Message](#RetrievingErrors)
 + [Troubleshooting Amazon EC2 Auto Scaling: EC2 Instance Launch Failures](ts-as-instancelaunchfailure.md)
 + [Troubleshooting Amazon EC2 Auto Scaling: AMI Issues](ts-as-ami.md)
@@ -66,7 +66,6 @@ The following tables list the types of error messages and provide links to the t
 | AMI ID | [AMI <AMI ID> is pending, and cannot be run\. Launching EC2 instance failed\.](ts-as-ami.md#ts-as-ami-2) | 
 | AMI ID | [Value \(<ami ID>\) for parameter virtualName is invalid\.](ts-as-ami.md#ts-as-ami-4) | 
 | Architecture mismatch | [The requested instance type's architecture \(i386\) does not match the architecture in the manifest for ami\-6622f00f \(x86\_64\)\. Launching ec2 instance failed\.](ts-as-ami.md#ts-as-ami-5) | 
-| Virtualization type | [Non\-Windows AMIs with a virtualization type of 'hvm' currently may only be used with Cluster Compute instance types\. Launching EC2 instance failed\.](ts-as-ami.md#ts-as-ami-3) | 
 
 
 **Load Balancer Issues**  

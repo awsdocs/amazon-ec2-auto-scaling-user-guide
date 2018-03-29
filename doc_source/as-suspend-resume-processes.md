@@ -4,7 +4,7 @@ You can suspend and then resume one or more of the scaling processes for your Au
 
 Amazon EC2 Auto Scaling can suspend processes for Auto Scaling groups that repeatedly fail to launch instances\. This is known as an *administrative suspension*, and most commonly applies to Auto Scaling groups that have been trying to launch instances for over 24 hours but have not succeeded in launching any instances\. You can resume processes suspended for administrative reasons\.
 
-
+**Topics**
 + [Scaling Processes](#process-types)
 + [Suspend and Resume Processes Using the Console](#as-suspend-resume)
 + [Suspend and Resume Processes Using the AWS CLI](#as-suspend-resume-aws-cli)

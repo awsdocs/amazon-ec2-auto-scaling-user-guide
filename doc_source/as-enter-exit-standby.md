@@ -7,7 +7,7 @@ You are billed for instances that are in a standby state\.
 
 For example, you can change the launch configuration for an Auto Scaling group at any time, and any subsequent instances that the Auto Scaling group launches use this configuration\. However, the Auto Scaling group does not update the instances that are currently in service\. You can either terminate these instances and let the Auto Scaling group replace them, or you can put the instances on standby, update the software, and then put the instances back in service\.
 
-
+**Topics**
 + [How the Standby State Works](#standby-state)
 + [Health Status of an Instance in a Standby State](#standby-instance-health-status)
 + [Temporarily Remove an Instance Using the AWS Management Console](#standby-state-console)

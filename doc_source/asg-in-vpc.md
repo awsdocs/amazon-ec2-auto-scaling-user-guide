@@ -11,7 +11,7 @@ To enable communication between the Internet and the instances in your subnets, 
 **Prerequisites**  
 Before you can launch your Auto Scaling instances in a VPC, you must first create your VPC environment\. After you create your VPC and subnets, you launch Auto Scaling instances within the subnets\. The easiest way to create a VPC with one public subnet is to use the VPC wizard\. For more information, see the [Amazon VPC Getting Started Guide](http://docs.aws.amazon.com/AmazonVPC/latest/GettingStartedGuide/)\.
 
-
+**Topics**
 + [Default VPC](#as-defaultVPC)
 + [IP Addressing in a VPC](#as-vpc-ipaddress)
 + [Instance Placement Tenancy](#as-vpc-tenancy)
@@ -161,9 +161,6 @@ Use the following procedure to create a launch configuration that links EC2\-Cla
 ## Examples<a name="as-vpc-examples"></a>
 
 For examples, see the following tutorials:
-
 + [Getting Started with Amazon EC2 Auto Scaling](GettingStartedTutorial.md)
-
 + [Hosting a Web App on Amazon Web Services](http://docs.aws.amazon.com/gettingstarted/latest/wah-linux/web-app-hosting-intro.html)
-
 + [Hosting a \.NET Web App on Amazon Web Services](http://docs.aws.amazon.com/gettingstarted/latest/wah/web-app-hosting-intro.html)

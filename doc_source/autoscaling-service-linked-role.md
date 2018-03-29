@@ -5,44 +5,27 @@ Amazon EC2 Auto Scaling uses service\-linked roles for the permissions that it r
 ## Permissions Granted by AWSServiceRoleForAutoScaling<a name="service-linked-role-permissions"></a>
 
 By default, Amazon EC2 Auto Scaling uses the **AWSServiceRoleForAutoScaling** service\-linked role to make the following calls on your behalf\. Alternatively, you can create a service\-linked role for Amazon EC2 Auto Scaling to use to make the following calls on your behalf\.
-
 + `ec2:AttachClassicLinkVpc`
-
 + `ec2:CancelSpotInstanceRequests`
-
 + `ec2:CreateTags`
-
 + `ec2:DeleteTags`
-
 + `ec2:Describe*`
-
 + `ec2:DetachClassicLinkVpc`
-
 + `ec2:ModifyInstanceAttribute`
-
 + `ec2:RequestSpotInstances`
-
 + `ec2:RunInstances`
-
 + `ec2:TerminateInstances`
-
 + `elasticloadbalancing:Register*`
-
 + `elasticloadbalancing:Deregister*`
-
 + `elasticloadbalancing:Describe*`
-
 + `cloudwatch:DeleteAlarms`
-
 + `cloudwatch:DescribeAlarms`
-
 + `cloudwatch:PutMetricAlarm`
-
 + `sns:Publish`
 
 This role trusts the `autoscaling.amazonaws.com` service to assume it\.
 
-If you specify encrypted EBS volumes for your Auto Scaling instances and you use customer managed CMKs for encryption, you must grant the appropriate service\-linked role access to the CMKs so that the Auto Scaling group can launch instances on your behalf\. The principal is the Amazon Resource Name \(ARN\) of the service\-linked role\. When launching On\-Demand instances, use a service\-linked role for Amazon EC2 Auto Scaling\. When launching Spot Instances, use the **AWSServiceRoleForEC2Spot** role when using a launch configuration and a service\-linked role for Amazon EC2 Auto Scaling when using a launch template\. For more information, see [Using Key Policies in AWS KMS](http://docs.aws.amazon.com/kms/latest/developerguide/key-policies.html)\.
+If you specify encrypted EBS volumes for your Auto Scaling instances and you use customer managed CMKs for encryption, you must grant the appropriate service\-linked role access to the CMKs so that the Auto Scaling group can launch instances on your behalf\. The principal is the Amazon Resource Name \(ARN\) of the service\-linked role\. When launching On\-Demand instances, use a service\-linked role for Amazon EC2 Auto Scaling\. When launching Spot Instances, use the **AWSServiceRoleForEC2Spot** role when using a launch configuration and a service\-linked role for Amazon EC2 Auto Scaling when using a launch template\. For more information, see [Using Key Policies in AWS KMS](http://docs.aws.amazon.com/kms/latest/developerguide/key-policies.html) in the *AWS Key Management Service Developer Guide*\. If the CMKs are in a different account than the service\-linked role, you must also create a grant\. For more information, see [Using Grants](http://docs.aws.amazon.com/kms/latest/developerguide/grants.html) in the *AWS Key Management Service Developer Guide*\.
 
 You must configure permissions to allow an IAM entity \(such as a user, group, or role\) to create, edit, or delete a service\-linked role\. For more information, see [Service\-Linked Role Permissions](http://docs.aws.amazon.com/IAM/latest/UserGuide/using-service-linked-roles.html#service-linked-role-permissions) in the *IAM User Guide*\.
 

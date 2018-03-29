@@ -6,7 +6,7 @@ Amazon EC2 sends metrics to CloudWatch that describe your Auto Scaling instances
 
 Auto Scaling groups can send metrics to CloudWatch that describe the group itself\. You must enable these metrics\.
 
-
+**Topics**
 + [Auto Scaling Group Metrics](#as-group-metrics)
 + [Dimensions for Auto Scaling Group Metrics](#as-group-metric-dimensions)
 + [Enable Auto Scaling Group Metrics](#as-enable-group-metrics)
@@ -117,43 +117,25 @@ Alternatively, you can view these metrics using the CloudWatch console\.
 1. \(Optional\) To filter the results by time, select a time range from **Showing data for**\.
 
 1. To view the metrics for your groups, for **Display**, choose **Auto Scaling**\. To get a larger view of a single metric, select its graph\. The following metrics are available for groups:
-
    + Minimum Group Size — `GroupMinSize`
-
    + Maximum Group Size — `GroupMaxSize`
-
    + Desired Capacity — `GroupDesiredCapacity`
-
    + In Service Instances — `GroupInServiceInstances`
-
    + Pending Instances — `GroupPendingInstances`
-
    + Standby Instances — `GroupStandbyInstances`
-
    + Terminating Instances — `GroupTerminatingInstances`
-
    + Total Instances — `GroupTotalInstances`
 
 1. To view metrics for your instances, for **Display**, choose **EC2**\. To get a larger view of a single metric, select its graph\. The following metrics are available for instances:
-
    + CPU Utilization — `CPUUtilization`
-
    + Disk Reads — `DiskReadBytes`
-
    + Disk Read Operations — `DiskReadOps`
-
    + Disk Writes — `DiskWriteBytes`
-
    + Disk Write Operations — `DiskWriteOps`
-
    + Network In — `NetworkIn`
-
    + Network Out — `NetworkOut`
-
    + Status Check Failed \(Any\) — `StatusCheckFailed`
-
    + Status Check Failed \(Instance\) — `StatusCheckFailed_Instance`
-
    + Status Check Failed \(System\) — `StatusCheckFailed_System`
 
 **To view metrics using the CloudWatch console**  
@@ -183,11 +165,8 @@ aws cloudwatch list-metrics --namespace "AWS/AutoScaling" --metric-name GroupDes
 A CloudWatch *alarm* is an object that monitors a single metric over a specific period\. A metric is a variable that you want to monitor, such as average CPU usage of the EC2 instances, or incoming network traffic from many different EC2 instances\. The alarm changes its state when the value of the metric breaches a defined range and maintains the change for a specified number of periods\.
 
 An alarm has three possible states:
-
 + `OK`— The value of the metric remains within the range that you've specified\.
-
 + `ALARM`— The value of the metric is out of the range that you've specified for a specified time duration\.
-
 + `INSUFFICIENT_DATA`— The metric is not yet available or there is not enough data available to determine the alarm state\.
 
 When the alarm changes to the `ALARM` state and remains in that state for a number of periods, it invokes one or more actions\. The actions can be a message sent to an Auto Scaling group to change the desired capacity of the group\.

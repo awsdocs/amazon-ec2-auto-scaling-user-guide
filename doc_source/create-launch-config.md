@@ -48,7 +48,5 @@ Do not select **Proceed without a key pair** if you need to connect to your inst
 **To create a launch configuration using the command line**
 
 You can use one of the following commands:
-
 + [create\-launch\-configuration](http://docs.aws.amazon.com/cli/latest/reference/autoscaling/create-launch-configuration.html) \(AWS CLI\)
-
 + [New\-ASLaunchConfiguration](http://docs.aws.amazon.com/powershell/latest/reference/items/New-ASLaunchConfiguration.html) \(AWS Tools for Windows PowerShell\)

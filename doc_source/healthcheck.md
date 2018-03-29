@@ -5,11 +5,8 @@ The health status of an Auto Scaling instance is either healthy or unhealthy\. A
 ## Instance Health Status<a name="instance-health-status"></a>
 
 Auto Scaling determines the health status of an instance using one or more of the following:
-
 + Status checks provided by Amazon EC2 \(systems status checks and instance status checks\. For more information, see [Status Checks for Your Instances](http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/monitoring-system-instance-status-check.html) in the *Amazon EC2 User Guide for Linux Instances*\.
-
 + Health checks provided by Elastic Load Balancing\. For more information, see [Health Checks for Your Target Groups](http://docs.aws.amazon.com/elasticloadbalancing/latest/application/target-group-health-checks.html) in the *User Guide for Application Load Balancers* or [Configure Health Checks for Your Classic Load Balancer](http://docs.aws.amazon.com/elasticloadbalancing/latest/classic/elb-healthchecks.html) in the *User Guide for Classic Load Balancers*\.
-
 + Custom health checks\.
 
 By default, Auto Scaling health checks use the results of the EC2 status checks to determine the health status of an instance\. Auto Scaling marks an instance as unhealthy if its instance fails one or more of the status checks\.

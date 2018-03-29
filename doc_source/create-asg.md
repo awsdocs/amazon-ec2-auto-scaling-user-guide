@@ -41,9 +41,7 @@ If you do not have any launch configurations, you're first prompted to create on
    1. Choose **Next: Configure scaling policies**\.
 
 1. On the **Configure scaling policies** page, select one of the following options, and then choose **Next: Configure Notifications**:
-
    + To manually adjust the size of the Auto Scaling group as needed, select **Keep this group at its initial size**\. For more information, see [Manual Scaling](as-manual-scaling.md)\.
-
    + To automatically adjust the size of the Auto Scaling group based on criteria that you specify, select **Use scaling policies to adjust the capacity of this group** and follow the directions\. For more information, see [Configure Scaling Policies](as-scaling-target-tracking.md#policy-creating-scalingpolicies-console)\.
 
 1. \(Optional\) To receive notifications, choose **Add notification**, configure the notification, and then choose **Next: Configure Tags**\.
@@ -59,7 +57,5 @@ If you do not have any launch configurations, you're first prompted to create on
 **To create an Auto Scaling group using the command line**
 
 You can use one of the following commands:
-
 + [create\-auto\-scaling\-group](http://docs.aws.amazon.com/cli/latest/reference/autoscaling/create-auto-scaling-group.html) \(AWS CLI\)
-
 + [New\-ASAutoScalingGroup](http://docs.aws.amazon.com/powershell/latest/reference/items/New-ASAutoScalingGroup.html) \(AWS Tools for Windows PowerShell\)

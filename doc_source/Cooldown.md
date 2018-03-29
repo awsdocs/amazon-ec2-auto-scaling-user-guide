@@ -7,7 +7,7 @@ Cooldown periods are not supported for step scaling policies or scheduled scalin
 
 Auto Scaling supports both default cooldown periods and scaling\-specific cooldown periods\.
 
-
+**Topics**
 + [Example: Cooldowns](#cooldown-example)
 + [Default Cooldowns](#cooldown-default)
 + [Scaling\-Specific Cooldowns](#cooldowns-scaling-specific)

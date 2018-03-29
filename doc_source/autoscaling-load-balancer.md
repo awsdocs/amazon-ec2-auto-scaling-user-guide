@@ -4,7 +4,7 @@ You can automatically increase the size of your Auto Scaling group when demand g
 
 To use a load balancer with your Auto Scaling group, create the load balancer and then attach it to the group\.
 
-
+**Topics**
 + [Attaching a Load Balancer to Your Auto Scaling Group](attach-load-balancer-asg.md)
 + [Using ELB Health Checks with Auto Scaling](as-add-elb-healthcheck.md)
 + [Expanding Your Scaled and Load\-Balanced Application to an Additional Availability Zone](as-add-availability-zone.md)

@@ -8,7 +8,7 @@ When you detach a load balancer, it enters the `Removing` state while deregister
 
 Elastic Load Balancing sends data about your load balancers and EC2 instances to Amazon CloudWatch\. CloudWatch collects performance data for your resources and presents it as metrics\. For more information, see [Monitoring Your Auto Scaling Groups and Instances Using Amazon CloudWatch](as-instance-monitoring.md)\. After you attach a load balancer to your Auto Scaling group, you can create scaling policies that use Elastic Load Balancing metrics to scale your application automatically\. For more information, see [Create an Auto Scaling Group with Target Tracking Scaling Policies](as-scaling-target-tracking.md#policy_creating)\.
 
-
+**Topics**
 + [Prerequisites](#as-add-load-balancer-prerequisites)
 + [Add a Load Balancer Using the Console](#as-add-load-balancer-console)
 + [Add a Load Balancer Using the AWS CLI](#as-add-load-balancer-aws-cli)

@@ -13,25 +13,17 @@ With the API, AWS CLI, or an SDK, when you update your Auto Scaling group, you c
 The following procedure demonstrates how to create an Auto Scaling group using a launch template\.
 
 **Prerequisites**
-
 + Create a launch template\. You must ensure that your template includes all parameters required to launch an EC2 instance, such as an AMI ID and an instance type\. Otherwise, when you use the template to create an Auto Scaling group, you receive an error that you must use a fully\-formed launch template\. For more information, see [Launching an Instance from a Launch Template](http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-launch-templates.html) in the *Amazon EC2 User Guide for Linux Instances*\.
-
 + An IAM user or role that creates an Auto Scaling group using a launch template must have permission to use the `ec2:RunInstances` action and permission to create or use the resources for the instance\. For example, access to the `iam:PassRole` action is required to use an instance profile\. You can use the **AmazonEC2FullAccess** policy to grant full access to all Amazon EC2 resources\. You can use resource\-level permissions to restrict access to specific launch templates\. For more information, see [Require a Launch Template](control-access-using-iam.md#policy-example-launch-template) or [Launch Templates](http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ExamplePolicies_EC2.html#iam-example-runinstances-launch-templates) in the *Amazon EC2 User Guide for Linux Instances*\.
 
 **Limitations**
 
 The following are limitations when creating a launch template for use with an Auto Scaling group:
-
 + You cannot specify multiple network interfaces\.
-
 + If you specify a network interface, its device index must be 0\.
-
 + If you specify a network interface, you must specify any security groups as part of the network interface\.
-
 + You cannot specify private IP addresses\.
-
 + You cannot use host placement affinity\.
-
 + If you specify Spot Instances, you must specify a one\-time request with no end date\.
 
 **To create an Auto Scaling group using a launch template**
@@ -61,9 +53,7 @@ The following are limitations when creating a launch template for use with an Au
    1. Choose **Next: Configure scaling policies**\.
 
 1. On the **Configure scaling policies** page, select one of the following options, and then choose **Next: Configure Notifications**:
-
    + To manually adjust the size of the Auto Scaling group as needed, select **Keep this group at its initial size**\. For more information, see [Manual Scaling](as-manual-scaling.md)\.
-
    + To automatically adjust the size of the Auto Scaling group based on criteria that you specify, select **Use scaling policies to adjust the capacity of this group** and follow the directions\. For more information, see [Configure Scaling Policies](as-scaling-target-tracking.md#policy-creating-scalingpolicies-console)\.
 
 1. \(Optional\) To receive notifications, choose **Add notification**, configure the notification, and then choose **Next: Configure Tags**\.
@@ -79,7 +69,5 @@ The following are limitations when creating a launch template for use with an Au
 **To create an Auto Scaling group using the command line**
 
 You can use one of the following commands:
-
 + [create\-auto\-scaling\-group](http://docs.aws.amazon.com/cli/latest/reference/autoscaling/create-auto-scaling-group.html) \(AWS CLI\)
-
 + [New\-ASAutoScalingGroup](http://docs.aws.amazon.com/powershell/latest/reference/items/New-ASAutoScalingGroup.html) \(AWS Tools for Windows PowerShell\)

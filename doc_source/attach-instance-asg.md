@@ -3,35 +3,25 @@
 Amazon EC2 Auto Scaling provides you with an option to enable automatic scaling for one or more EC2 instances by attaching them to your existing Auto Scaling group\. After the instances are attached, they become a part of the Auto Scaling group\.
 
 The instance that you want to attach must meet the following criteria:
-
 + The instance is in the `running` state\.
-
 + The AMI used to launch the instance must still exist\.
-
 + The instance is not a member of another Auto Scaling group\.
-
 + The instance is in the same Availability Zone as the Auto Scaling group\.
-
 + If the Auto Scaling group has an attached load balancer, the instance and the load balancer must both be in EC2\-Classic or the same VPC\. If the Auto Scaling group has an attached target group, the instance and the load balancer must both be in the same VPC\.
 
 When you attach instances, the desired capacity of the group increases by the number of instances being attached\. If the number of instances being attached plus the desired capacity exceeds the maximum size of the group, the request fails\.
 
 If you attach an instance to an Auto Scaling group that has an attached load balancer, the instance is registered with the load balancer\. If you attach an instance to an Auto Scaling group that has an attached target group, the instance is registered with the target group\.
 
-
+**Topics**
 + [Attaching an Instance Using the AWS Management Console](#attach-instance-console)
 + [Attaching an Instance Using the AWS CLI](#attach-instance-aws-cli)
 
 The examples use an Auto Scaling group with the following configuration:
-
 + Auto Scaling group name = **my\-asg**
-
 + Minimum size = **1**
-
 + Maximum size = **5**
-
 + Desired capacity = **2**
-
 + Availability Zone = **us\-west\-2a**
 
 ## Attaching an Instance Using the AWS Management Console<a name="attach-instance-console"></a>

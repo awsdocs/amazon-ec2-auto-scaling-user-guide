@@ -4,7 +4,7 @@
 
 Each Auto Scaling group can have multiple lifecycle hooks\. However, there is a limit on the number of hooks per Auto Scaling group\. For more information, see [Auto Scaling Limits](as-account-limits.md)\.
 
-
+**Topics**
 + [How Lifecycle Hooks Work](#lifecycle-hooks-overview)
 + [Considerations When Using Lifecycle Hooks](#lifecycle-hook-considerations)
 + [Prepare for Notifications](#preparing-for-notification)
@@ -21,11 +21,8 @@ After you add lifecycle hooks to your Auto Scaling group, they work as follows:
 1. Puts the instance into a wait state \(`Pending:Wait` or `Terminating:Wait`\)\. The instance is paused until either you continue or the timeout period ends\.
 
 1. You can perform a custom action using one or more of the following options:
-
    + Define a CloudWatch Events target to invoke a Lambda function when a lifecycle action occurs\. The Lambda function is invoked when Amazon EC2 Auto Scaling submits an event for a lifecycle action to CloudWatch Events\. The event contains information about the instance that is launching or terminating, and a token that you can use to control the lifecycle action\.
-
    + Define a notification target for the lifecycle hook\. Amazon EC2 Auto Scaling sends a message to the notification target\. The message contains information about the instance that is launching or terminating, and a token that you can use to control the lifecycle action\.
-
    + Create a script that runs on the instance as the instance starts\. The script can control the lifecycle action using the ID of the instance on which it runs\.
 
 1. By default, the instance remains in a wait state for one hour, and then the Auto Scaling group continues the launch or terminate process \(`Pending:Proceed` or `Terminating:Proceed`\)\. If you need more time, you can restart the timeout period by recording a heartbeat\. If you finish before the timeout period ends, you can complete the lifecycle action, which continues the launch or termination process\.
@@ -40,7 +37,7 @@ For more information about the complete lifecycle of instances in an Auto Scalin
 
 Adding lifecycle hooks to your Auto Scaling group gives you greater control over how instances launch and terminate\. Here are some things to consider when adding a lifecycle hook to your Auto Scaling group, to help ensure that the group continues to perform as expected\.
 
-
+**Topics**
 + [Keeping Instances in a Wait State](#lifecycle-hook-wait-state)
 + [Cooldowns and Custom Actions](#lifecycle-hook-cooldowns)
 + [Health Check Grace Period](#lifecycle-hook-health-check-grace-period)
@@ -50,11 +47,8 @@ Adding lifecycle hooks to your Auto Scaling group gives you greater control over
 ### Keeping Instances in a Wait State<a name="lifecycle-hook-wait-state"></a>
 
 Instances can remain in a wait state for a finite period of time\. The default is 1 hour \(3600 seconds\)\. You can adjust this time in the following ways:
-
 + Set the heartbeat timeout for the lifecycle hook when you create the lifecycle hook\. With the [put\-lifecycle\-hook](http://docs.aws.amazon.com/cli/latest/reference/autoscaling/put-lifecycle-hook.html) command, use the `--heartbeat-timeout` parameter\. With the PutLifecycleHook operation, use the `HeartbeatTimeout` parameter\.
-
 + Continue to the next state if you finish before the timeout period ends, using the [complete\-lifecycle\-action](http://docs.aws.amazon.com/cli/latest/reference/autoscaling/complete-lifecycle-action.html) command or the CompleteLifecycleAction operation\.
-
 + Restart the timeout period by recording a heartbeat, using the [record\-lifecycle\-action\-heartbeat](http://docs.aws.amazon.com/cli/latest/reference/autoscaling/record-lifecycle-action-heartbeat.html) command or the RecordLifecycleActionHeartbeat operation\. This increments the heartbeat timeout by the timeout value specified when you created the lifecycle hook\. For example, if the timeout value is 1 hour, and you call this command after 30 minutes, the instance remains in a wait state for an additional hour, or a total of 90 minutes\.
 
 The maximum amount of time that you can keep an instance in a wait state is 48 hours or 100 times the heartbeat timeout, whichever is smaller\.
@@ -87,7 +81,7 @@ You can optionally configure notifications when the instance enters a wait state
 
 Alternatively, if you have a script that configures your instances when they launch, you do not need to receive notification when the lifecycle action occurs\. If you are not doing so already, update your script to retrieve the instance ID of the instance from the instance metadata\. For more information, see [Retrieving Instance Metadata](http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-instance-metadata.html#instancedata-data-retrieval)\.
 
-
+**Topics**
 + [Receive Notification Using CloudWatch Events](#cloudwatch-events-notification)
 + [Receive Notification Using Amazon SNS](#sns-notifications)
 + [Receive Notification Using Amazon SQS](#sqs-notifications)
@@ -149,17 +143,11 @@ You can use Amazon SNS to set up a notification target to receive notifications 
 1. Create an IAM role to grant Amazon EC2 Auto Scaling permissions to access your notification target, using the steps in [Creating a Role to Delegate Permissions to an AWS Service](http://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_create_for-service.html) in the *IAM User Guide*\. When prompted to select a role type, select **AWS Service Roles**, **AutoScaling Notification Access**\. Note the ARN of the role\. For example, `arn:aws:iam::123456789012:role/my-notification-role`\.
 
 1. When the Auto Scaling group responds to a scale\-out or scale in event, it puts the instance in a wait state\. While the instance is in a wait state, a message is published to the notification target\. The message includes the following event data:
-
    + **LifecycleActionToken** — The lifecycle action token\.
-
    + **AccountId** — The AWS account ID\.
-
    + **AutoScalingGroupName** — The name of the Auto Scaling group\.
-
    + **LifecycleHookName** — The name of the lifecycle hook\.
-
    + **EC2InstanceId** — The ID of the EC2 instance\.
-
    + **LifecycleTransition** — The lifecycle hook type\.
 
    For example:

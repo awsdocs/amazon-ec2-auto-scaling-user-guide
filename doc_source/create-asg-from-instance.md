@@ -8,26 +8,19 @@ When you create an Auto Scaling group using an EC2 instance, Amazon EC2 Auto Sca
 
 **Limitations**  
 The following are limitations when creating an Auto Scaling group from an EC2 instance:
-
 + If the identified instance has tags, the tags are not copied to the `Tags` attribute of the new Auto Scaling group\.
-
 + The Auto Scaling group includes the block device mapping from the AMI used to launch the instance; it does not include any block devices attached after instance launch\.
-
 + If the identified instance is registered with one or more load balancers, the load balancer names are not copied to the `LoadBalancerNames` attribute of the new Auto Scaling group\.
 
 **Prerequisites**
 
 Before you begin, find the ID of the EC2 instance using the Amazon EC2 console or the [describe\-instances](http://docs.aws.amazon.com/cli/latest/reference/ec2/describe-instances.html) command \(AWS CLI\)\. The EC2 instance must meet the following criteria:
-
 + The instance is in the Availability Zone in which you want to create the Auto Scaling group\.
-
 + The instance is not a member of another Auto Scaling group\.
-
 + The instance is in `running` state\.
-
 + The AMI used to launch the instance must still exist\.
 
-
+**Topics**
 + [Create an Auto Scaling Group from an EC2 Instance Using the Console](#create-asg-from-instance-console)
 + [Create an Auto Scaling Group from an EC2 Instance Using the AWS CLI](#create-asg-from-instance-aws-cli)
 

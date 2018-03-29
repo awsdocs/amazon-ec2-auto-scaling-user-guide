@@ -3,14 +3,11 @@
 *Scaling* is the ability to increase or decrease the compute capacity of your application\. Scaling starts with an event, or scaling action, which instructs an Auto Scaling group to either launch or terminate EC2 instances\.
 
 Amazon EC2 Auto Scaling provides a number of ways to adjust scaling to best meet the needs of your applications\. As a result, it's important that you have a good understanding of your application\. Keep the following considerations in mind:
-
 + What role do you want Amazon EC2 Auto Scaling to play in your application's architecture? It's common to think about automatic scaling as a way to increase and decrease capacity, but it's also useful for maintaining a steady number of servers\.
-
 + What cost constraints are important to you? Because Amazon EC2 Auto Scaling uses EC2 instances, you only pay for the resources that you use\. Knowing your cost constraints helps you decide when to scale your applications, and by how much\.
-
 + What metrics are important to your application? CloudWatch supports a number of different metrics that you can use with your Auto Scaling group\. We recommend reviewing them to see which of these metrics are the most relevant to your application\.
 
-
+**Topics**
 + [Scaling Options](#scaling_typesof)
 + [Multiple Scaling Policies](#multiple-scaling-policy-resolution)
 + [Maintaining the Number of Instances in Your Auto Scaling Group](as-maintain-instance-levels.md)

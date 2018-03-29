@@ -1,17 +1,11 @@
 # Controlling Access to Your Amazon EC2 Auto Scaling Resources<a name="control-access-using-iam"></a>
 
 Amazon EC2 Auto Scaling integrates with AWS Identity and Access Management \(IAM\), a service that enables you to do the following:
-
 + Create users and groups under your organization's AWS account
-
 + Assign unique security credentials to each user under your AWS account
-
 + Control each user's permissions to perform tasks using AWS resources
-
 + Allow the users in another AWS account to share your AWS resources
-
 + Create roles for your AWS account and define the users or services that can assume them
-
 + Use existing identities for your enterprise to grant permissions to perform tasks using AWS resources
 
 For example, you can create an IAM policy that grants the Managers group permission to use only the `DescribeAutoScalingGroups`, `DescribeLaunchConfigurations`, `DescribeScalingActivities`, and `DescribePolicies` API operations\. Users in the Managers group could then use those operations with any Auto Scaling groups and launch configurations\.
@@ -20,7 +14,7 @@ You can also create IAM policies that restrict access to a particular Auto Scali
 
 For more information, see [Identity and Access Management \(IAM\)](http://aws.amazon.com/iam/) or the [IAM User Guide](http://docs.aws.amazon.com/IAM/latest/UserGuide/)\.
 
-
+**Topics**
 + [Amazon EC2 Auto Scaling Actions](#policy-auto-scaling-actions)
 + [Amazon EC2 Auto Scaling Resources](#policy-auto-scaling-resources)
 + [Amazon EC2 Auto Scaling Condition Keys](#policy-auto-scaling-condition-keys)
@@ -66,27 +60,17 @@ For more information, see [Amazon EC2 Auto Scaling Actions](http://docs.aws.amaz
 When calling the following actions, you must grant IAM users permission to call the action itself, plus additional actions from Amazon EC2 or IAM\.
 
 `CreateLaunchConfiguration`  
-
 + `autoscaling:CreateLaunchConfiguration`
-
 + `ec2:DescribeImages`
-
 + `ec2:DescribeInstances`
-
 + `ec2:DescribeInstanceAttribute`
-
 + `ec2:DescribeKeyPairs`
-
 + `ec2:DescribeSecurityGroups`
-
 + `ec2:DescribeSpotInstanceRequests`
-
 + `ec2:DescribeVpcClassicLink`
 
 `CreateAutoScalingGroup`  
-
 + `autoscaling:CreateAutoScalingGroup`
-
 + `iam:CreateServiceLinkedRole`
 
 ## Amazon EC2 Auto Scaling Resources<a name="policy-auto-scaling-resources"></a>
@@ -118,41 +102,23 @@ To specify a launch configuration with `CreateLaunchConfiguration`, you must rep
 ```
 
 The following Amazon EC2 Auto Scaling actions do not support resource\-level permissions:
-
 + `DescribeAccountLimits`
-
 + `DescribeAdjustmentTypes`
-
 + `DescribeAutoScalingGroups`
-
 + `DescribeAutoScalingInstances`
-
 + `DescribeAutoScalingNotificationTypes`
-
 + `DescribeLaunchConfigurations`
-
 + `DescribeLifecycleHooks`
-
 + `DescribeLifecycleHookTypes`
-
 + `DescribeLoadBalancers`
-
 + `DescribeLoadBalancerTargetGroups`
-
 + `DescribeMetricCollectionTypes`
-
 + `DescribeNotificationConfigurations`
-
 + `DescribePolicies`
-
 + `DescribeScalingActivities`
-
 + `DescribeScalingProcessTypes`
-
 + `DescribeScheduledActions`
-
 + `DescribeTags`
-
 + `DescribeTerminationPolicyTypes`
 
 For actions that don't support resource\-level permissions, you must use "\*" as the resource\.
@@ -166,27 +132,16 @@ For actions that don't support resource\-level permissions, you must use "\*" as
 When you create a policy, you can specify the conditions when the policy should take effect\. To express conditions, use predefined condition keys\. There are condition keys that are specific to Auto Scaling, plus AWS\-wide condition keys\.
 
 The following condition keys are specific to Amazon EC2 Auto Scaling:
-
 + `autoscaling:ImageId`
-
 + `autoscaling:InstanceType`
-
 + `autoscaling:LaunchConfigurationName`
-
 + `autoscaling:LaunchTemplateVersionSpecified`
-
 + `autoscaling:LoadBalancerNames`
-
 + `autoscaling:MaxSize`
-
 + `autoscaling:MinSize`
-
 + `autoscaling:ResourceTag/key`
-
 + `autoscaling:SpotPrice`
-
 + `autoscaling:TargetGroupARNs`
-
 + `autoscaling:VPCZoneIdentifiers`
 
 For a list of context keys supported by each AWS service and a list of AWS\-wide policy keys, see [AWS Service Actions and Condition Context Keys](http://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_actionsconditions.html) and [Global and IAM Condition Context Keys](http://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_condition-keys.html) in the *IAM User Guide*\.
@@ -238,13 +193,9 @@ The following table describes the Amazon EC2 Auto Scaling API actions that suppo
 The managed policies created by AWS grant the required permissions for common use cases\. You can attach these policies to your IAM users, based on the access that they need\. Each policy grants access to all or some of the API actions for Amazon EC2 Auto Scaling, plus additional API actions for Amazon EC2, CloudWatch, Elastic Load Balancing, IAM, and Amazon SNS\.
 
 The following are the AWS managed policies for Amazon EC2 Auto Scaling:
-
 + **AutoScalingConsoleFullAccess** — Grants full access to Amazon EC2 Auto Scaling using the AWS Management Console\.
-
 + **AutoScalingConsoleReadOnlyAccess** — Grants read\-only access to Amazon EC2 Auto Scaling using the AWS Management Console\.
-
 + **AutoScalingFullAccess** — Grants full access to Amazon EC2 Auto Scaling\.
-
 + **AutoScalingReadOnlyAccess** — Grants read\-only access to Amazon EC2 Auto Scaling\.
 
 ## Customer Managed Policies<a name="example-policies-auto-scaling"></a>
@@ -256,11 +207,8 @@ You can create custom IAM policies that grant your IAM users permissions to perf
 When you create or update an Auto Scaling group, you can specify a launch template, a launch configuration, or an EC2 instance\. When you specify a launch template, you can configure the Auto Scaling group to use a specific launch template version, the latest version, or the default version when launching instances\.
 
 The `autoscaling:LaunchTemplateVersionSpecified` condition key is a Boolean value that is set as follows:
-
 + `null` \- If no launch template is specified
-
 + `true` \- If a specific launch template version is used
-
 + `false` \- If either the latest or default launch template version is used
 
 The following policy grants users permission to create or update an Auto Scaling group using a specific launch template version, and access the Amazon EC2 resources specified in the launch template\.

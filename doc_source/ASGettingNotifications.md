@@ -9,7 +9,7 @@ For example, if you configure your Auto Scaling group to use the `autoscaling: E
 **Tip**  
 If you prefer, you can use Amazon CloudWatch Events to configure a target to invoke a Lambda function when your Auto Scaling group scales or when a lifecycle action occurs\. For more information, see [Getting CloudWatch Events When Your Auto Scaling Group Scales](cloud-watch-events.md)\.
 
-
+**Topics**
 + [SNS Notifications](#auto-scaling-sns-notifications)
 + [Configure Amazon SNS](#as-configure-sns)
 + [Configure Your Auto Scaling Group to Send Notifications](#as-configure-asg-for-sns)
@@ -30,15 +30,10 @@ Auto Scaling supports sending Amazon SNS notifications when the following events
 |  `autoscaling:EC2_INSTANCE_TERMINATE_ERROR`  | Failed instance termination | 
 
 The message includes the following information:
-
 + **Event** — The event\.
-
 + **AccountId** — The AWS account ID\.
-
 + **AutoScalingGroupName** — The name of the Auto Scaling group\.
-
 + **AutoScalingGroupARN** — The ARN of the Auto Scaling group\.
-
 + **EC2InstanceId** — The ID of the EC2 instance\.
 
 For example:

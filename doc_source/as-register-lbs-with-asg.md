@@ -4,17 +4,14 @@ You can attach a load balancer to your Auto Scaling group\. The load balancer au
 
 This tutorial attaches a load balancer to an Auto Scaling group when you create the group\. To attach a load balancer to an existing Auto Scaling group, see [Attaching a Load Balancer to Your Auto Scaling Group](attach-load-balancer-asg.md)\.
 
-
+**Topics**
 + [Prerequisites](#as-register-lbs-prerequisites)
 + [Configure Scaling and Load Balancing Using the AWS Management Console](#as-register-lbs-console)
 + [Configure Scaling and Load Balancing Using the AWS CLI](#as-lbs-app-cli)
 
 ## Prerequisites<a name="as-register-lbs-prerequisites"></a>
-
 + \(Optional\) Create an IAM role that grants your application the access to AWS that it needs\.
-
 + Launch an instance; be sure to specify the IAM role \(if you created one\) and specify any configuration scripts that you need as user data\. Connect to the instance and customize it\. For example, you can install software and applications and copy data\. Test your application on your instance to ensure that your instance is configured correctly\. Create a custom Amazon Machine Image \(AMI\) from your instance\. You can terminate the instance if you no longer need it\.
-
 + Create a load balancer\. Elastic Load Balancing supports three types of load balancers: Application Load Balancers, Network Load Balancers, and Classic Load Balancers\. You can attach any of these types of load balancers to your Auto Scaling group\. For more information, see the [Elastic Load Balancing User Guide](http://docs.aws.amazon.com/elasticloadbalancing/latest/userguide/)\.
 
   With Classic Load Balancers, instances are registered with the load balancer\. With Application Load Balancers and Network Load Balancers, instances are registered as targets with a target group\. When you plan to use your load balancer with an Auto Scaling group, you don't need to register your EC2 instances with the load balancer or target group\. After you attach a load balancer or target group to your Auto Scaling group, Auto Scaling registers your instances with the load balancer or target group when it launches them\.
@@ -23,7 +20,7 @@ This tutorial attaches a load balancer to an Auto Scaling group when you create 
 
 Complete the following tasks to set up a scaled and load\-balanced application when you create your Auto Scaling group\.
 
-
+**Topics**
 + [Create or Select a Launch Template](#as-register-lbs-create-lc-console)
 + [Create an Auto Scaling Group](#as-register-lbs-create-asg-console)
 + [\(Optional\) Verify that Your Load Balancer is Attached to Your Auto Scaling Group](#as-register-lbs-verify-console)
@@ -101,9 +98,7 @@ Use the following procedure to continue where you left off after selecting or cr
    1. If you selected a VPC in the previous step, select one or more subnets from **Subnet**\. If you selected EC2\-Classic instead, select one or more Availability Zones from **Availability Zone\(s\)**\.
 
    1. For **Advanced Details**, select `Receive traffic from Elastic Load Balancer(s)` and then do one of the following:
-
       + \[Classic Load Balancers\] Select your load balancer from **Load Balancers**\.
-
       + \[Target groups\] Select your target group from **Target Groups**\.
 
    1. \(Optional\) To use Elastic Load Balancing health checks, choose **ELB** for **Advanced Details**, **Health Check Type**\.
@@ -136,7 +131,7 @@ Use the following procedure to continue where you left off after selecting or cr
 
 Complete the following tasks to set up a scaled and load\-balanced application\.
 
-
+**Topics**
 + [Create a Launch Configuration](#as-lbs-app-create-lc-cli)
 + [Create an Auto Scaling Group with a Load Balancer](#as-lbs-app-create-asg-cli)
 

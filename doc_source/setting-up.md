@@ -2,7 +2,7 @@
 
 Before you start using Amazon EC2 Auto Scaling, complete the following tasks\.
 
-
+**Topics**
 + [Sign Up for AWS](#sign-up-for-aws)
 + [Prepare to Use Amazon EC2](#set-up-ec2)
 

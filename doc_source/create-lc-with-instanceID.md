@@ -13,7 +13,7 @@ When you create a launch configuration using a running instance, you can overrid
 
 The following examples show you to create a launch configuration from an EC2 instance\.
 
-
+**Topics**
 + [Create a Launch Configuration Using an EC2 Instance](#create-lc-with-defaultconfig)
 + [Create a Launch Configuration from an Instance and Override the Block Devices](#create-lc-with-bdm)
 + [Create a Launch Configuration and Override the Instance Type](#create-lc-with-instance-type)

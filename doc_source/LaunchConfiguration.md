@@ -7,7 +7,7 @@ When you create an Auto Scaling group, you must specify a launch template, launc
 
 You can specify your launch configuration with multiple Auto Scaling groups\. However, you can only specify one launch configuration for an Auto Scaling group at a time, and you can't modify a launch configuration after you've created it\. Therefore, if you want to change the launch configuration for an Auto Scaling group, you must create a launch configuration and then update your Auto Scaling group with the new launch configuration\.
 
-
+**Topics**
 + [Creating a Launch Configuration](create-launch-config.md)
 + [Creating a Launch Configuration Using an EC2 Instance](create-lc-with-instanceID.md)
 + [Changing the Launch Configuration for an Auto Scaling Group](change-launch-config.md)

@@ -2,7 +2,7 @@
 
 At any time, you can change the size of an existing Auto Scaling group\. Update the desired capacity of the Auto Scaling group, or update the instances that are attached to the Auto Scaling group\.
 
-
+**Topics**
 + [Change the Size of Your Auto Scaling Group Using the Console](#as-manual-scaling-console)
 + [Change the Size of Your Auto Scaling Group Using the AWS CLI](#as-manual-scaling-aws-cli)
 + [Attach EC2 Instances to Your Auto Scaling Group](attach-instance-asg.md)

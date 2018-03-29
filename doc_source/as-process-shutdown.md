@@ -2,7 +2,7 @@
 
 To completely delete your scaling infrastructure, complete the following tasks\.
 
-
+**Topics**
 + [Delete Your Auto Scaling Group](#as-shutdown-lbs-delete-asg-cli)
 + [\(Optional\) Delete the Launch Configuration](#as-shutdown-lbs-delete-lc-cli)
 + [\(Optional\) Delete the Load Balancer](#as-shutdown-lbs-delete-lbs-cli)

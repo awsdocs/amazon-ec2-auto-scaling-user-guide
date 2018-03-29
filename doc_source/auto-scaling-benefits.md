@@ -1,14 +1,11 @@
 # Benefits of Auto Scaling<a name="auto-scaling-benefits"></a>
 
 Adding Auto Scaling to your application architecture is one way to maximize the benefits of the AWS cloud\. When you use Auto Scaling, your applications gain the following benefits:
-
 + Better fault tolerance\. Auto Scaling can detect when an instance is unhealthy, terminate it, and launch an instance to replace it\. You can also configure Auto Scaling to use multiple Availability Zones\. If one Availability Zone becomes unavailable, Auto Scaling can launch instances in another one to compensate\.
-
 + Better availability\. Auto Scaling can help you ensure that your application always has the right amount of capacity to handle the current traffic demand\. 
-
 + Better cost management\. Auto Scaling can dynamically increase and decrease capacity as needed\. Because you pay for the EC2 instances you use, you save money by launching instances when they are actually needed and terminating them when they aren't needed\.
 
-
+**Topics**
 + [Example: Covering Variable Demand](#autoscaling-benefits-example)
 + [Example: Web App Architecture](#autoscaling-design-example)
 + [Example: Distributing Instances Across Availability Zones](#arch-AutoScalingMultiAZ)
@@ -66,13 +63,9 @@ Auto Scaling attempts to distribute instances evenly between the Availability Zo
 ### Rebalancing Activities<a name="AutoScalingBehavior.InstanceUsage"></a>
 
 After certain actions occur, your Auto Scaling group can become unbalanced between Availability Zones\. Auto Scaling compensates by rebalancing the Availability Zones\. The following actions can lead to rebalancing activity:
-
 + You change the Availability Zones for your group\.
-
 + You explicitly terminate or detach instances and the group becomes unbalanced\.
-
 + An Availability Zone that previously had insufficient capacity recovers and has additional capacity available\.
-
 + An Availability Zone that previously had a Spot market price above your Spot bid price now has a market price below your bid price\.
 
 When rebalancing, Auto Scaling launches new instances before terminating the old ones, so that rebalancing does not compromise the performance or availability of your application\.
