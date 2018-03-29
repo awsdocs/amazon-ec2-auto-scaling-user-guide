@@ -92,7 +92,7 @@ Now that you have created your Auto Scaling group, you are ready to verify that 
 
    1. On the navigation pane, choose **Auto Scaling Groups**\. Select your Auto Scaling group and choose the **Activity History** tab\. The default cooldown for the Auto Scaling group is 300 seconds \(5 minutes\), so it takes about 5 minutes until you see the scaling activity\. When the scaling activity starts, you'll see an entry for the termination of the first instance and an entry for the launch of a new instance\. The **Instances** tab shows the new instance only\.
 
-   1. On the navigation pane, choose **Instances**\. This page shows both the terminated instance and the running instance\.
+   1. On the navigation pane, choose **Activity History**\. This page shows both the terminated instance and the running instance\.
 
 Go to the next step if you would like to delete your basic infrastructure for automatic scaling\. Otherwise, you can use this infrastructure as your base and try one or more of the following:
 + [Maintaining the Number of Instances in Your Auto Scaling Group](as-maintain-instance-levels.md)
