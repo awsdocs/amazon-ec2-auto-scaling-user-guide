@@ -17,7 +17,7 @@ Elastic Load Balancing sends data about your load balancers and EC2 instances to
 
 Before you begin, create a load balancer in the same region as the Auto Scaling group\. Elastic Load Balancing supports three types of load balancers: Application Load Balancers, Network Load Balancers, and Classic Load Balancers\. You can attach any of these types of load balancers to your Auto Scaling group\. For more information, see the [Elastic Load Balancing User Guide](http://docs.aws.amazon.com/elasticloadbalancing/latest/userguide/)\.
 
-With Classic Load Balancers, instances are registered with the load balancer\. With Application Load Balancers and Network Load Balancers, instances are registered as targets with a target group\. When you plan to use your load balancer with an Auto Scaling group, you don't need to register your EC2 instances with the load balancer or target group\. After you attach a load balancer or target group to your Auto Scaling group, The Auto Scaling group registers your instances with the load balancer or target group when it launches them\.
+With Classic Load Balancers, instances are registered with the load balancer\. With Application Load Balancers and Network Load Balancers, instances are registered as targets with a target group\. When you plan to use your load balancer with an Auto Scaling group, you don't need to register your EC2 instances with the load balancer or target group\. After you attach a load balancer or target group to your Auto Scaling group, the Auto Scaling group registers your instances with the load balancer or target group when it launches them\.
 
 ## Add a Load Balancer Using the Console<a name="as-add-load-balancer-console"></a>
 
