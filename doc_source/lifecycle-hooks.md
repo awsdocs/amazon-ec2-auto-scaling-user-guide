@@ -169,6 +169,9 @@ You can use Amazon SNS to set up a notification target to receive notifications 
 
 You can use Amazon SQS to set up a notification target to receive notifications when a lifecycle action occurs\.
 
+**Important**  
+FIFO queues are not compatible with lifecycle hooks\.
+
 **To set up notifications using Amazon SQS**
 
 1. Create the target using Amazon SQS\. For more information, see [Getting Started with Amazon SQS](http://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-getting-started.html) in the *Amazon Simple Queue Service Developer Guide*\. Note the ARN of the target\.

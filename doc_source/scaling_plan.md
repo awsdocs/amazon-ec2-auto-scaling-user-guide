@@ -10,14 +10,14 @@ Amazon EC2 Auto Scaling provides a number of ways to adjust scaling to best meet
 **Topics**
 + [Scaling Options](#scaling_typesof)
 + [Multiple Scaling Policies](#multiple-scaling-policy-resolution)
-+ [Maintaining the Number of Instances in Your Auto Scaling Group](as-maintain-instance-levels.md)
++ [Maintaining the Size of Your Auto Scaling Group](as-maintain-instance-levels.md)
 + [Manual Scaling](as-manual-scaling.md)
 + [Scheduled Scaling](schedule_time.md)
 + [Dynamic Scaling](as-scale-based-on-demand.md)
 + [Scaling Cooldowns](Cooldown.md)
-+ [Controlling Which Auto Scaling Instances Terminate During Scale In](as-instance-termination.md)
-+ [Amazon EC2 Auto Scaling Lifecycle Hooks](lifecycle-hooks.md)
-+ [Temporarily Removing Instances from Your Auto Scaling Group](as-enter-exit-standby.md)
++ [Auto Scaling Instance Termination](as-instance-termination.md)
++ [Lifecycle Hooks](lifecycle-hooks.md)
++ [Temporarily Removing Instances](as-enter-exit-standby.md)
 + [Suspending and Resuming Scaling Processes](as-suspend-resume-processes.md)
 
 ## Scaling Options<a name="scaling_typesof"></a>
@@ -31,12 +31,12 @@ You can configure your Auto Scaling group to maintain a minimum or specified num
 Manual scaling is the most basic way to scale your resources\. Specify only the change in the maximum, minimum, or desired capacity of your Auto Scaling group\. Amazon EC2 Auto Scaling manages the process of creating or terminating instances to maintain the updated capacity\. For more information, see [Manual Scaling](as-manual-scaling.md)\.
 
 **Scale based on a schedule**  
-Sometimes you know exactly when you will need to increase or decrease the number of instances in your group, simply because that need arises on a predictable schedule\. Scaling by schedule means that scaling actions are performed automatically as a function of time and date\. For more information, see [Scheduled Scaling](schedule_time.md)\.
+Sometimes you know exactly when you will need to increase or decrease the number of instances in your group, simply because that need arises on a predictable schedule\. Scaling by schedule means that scaling actions are performed automatically as a function of time and date\. For more information, see [Scheduled Scaling for Amazon EC2 Auto Scaling](schedule_time.md)\.
 
 **Scale based on demand**  
 A more advanced way to scale your resources, scaling by policy, lets you define parameters that control the scaling process\. For example, you can create a policy that calls for enlarging your fleet of EC2 instances whenever the average CPU utilization rate stays above ninety percent for fifteen minutes\. This is useful when you can define how you want to scale in response to changing conditions, but you don't know when those conditions will change\. You can set up Amazon EC2 Auto Scaling to respond for you\. 
 
-You should have two policies, one for scaling in \(terminating instances\) and one for scaling out \(launching instances\), for each event to monitor\. For example, if you want to scale out when the network bandwidth reaches a certain level, create a policy specifying that Amazon EC2 Auto Scaling should start a certain number of instances to help with your traffic\. But you may also want an accompanying policy to scale in by a certain number when the network bandwidth level goes back down\. For more information, see [Dynamic Scaling](as-scale-based-on-demand.md)\.
+You should have two policies, one for scaling in \(terminating instances\) and one for scaling out \(launching instances\), for each event to monitor\. For example, if you want to scale out when the network bandwidth reaches a certain level, create a policy specifying that Amazon EC2 Auto Scaling should start a certain number of instances to help with your traffic\. But you may also want an accompanying policy to scale in by a certain number when the network bandwidth level goes back down\. For more information, see [Dynamic Scaling for Amazon EC2 Auto Scaling](as-scale-based-on-demand.md)\.
 
 ## Multiple Scaling Policies<a name="multiple-scaling-policy-resolution"></a>
 

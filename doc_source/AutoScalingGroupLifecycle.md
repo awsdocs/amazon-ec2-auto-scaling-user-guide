@@ -13,8 +13,8 @@ The following illustration shows the transitions between instance states in the 
 
 The following scale out events direct the Auto Scaling group to launch EC2 instances and attach them to the group:
 + You manually increase the size of the group\. For more information, see [Manual Scaling](as-manual-scaling.md)\.
-+ You create a scaling policy to automatically increase the size of the group based on a specified increase in demand\. For more information, see [Dynamic Scaling](as-scale-based-on-demand.md)\.
-+ You set up scaling by schedule to increase the size of the group at a specific time\. For more information, see [Scheduled Scaling](schedule_time.md)\.
++ You create a scaling policy to automatically increase the size of the group based on a specified increase in demand\. For more information, see [Dynamic Scaling for Amazon EC2 Auto Scaling](as-scale-based-on-demand.md)\.
++ You set up scaling by schedule to increase the size of the group at a specific time\. For more information, see [Scheduled Scaling for Amazon EC2 Auto Scaling](schedule_time.md)\.
 
 When a scale out event occurs, the Auto Scaling group launches the required number of EC2 instances, using its assigned launch configuration\. These instances start in the `Pending` state\. If you add a lifecycle hook to your Auto Scaling group, you can perform a custom action here\. For more information, see [Lifecycle Hooks](#as-lifecycle-hooks)\.
 

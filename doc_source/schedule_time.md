@@ -1,10 +1,12 @@
-# Scheduled Scaling<a name="schedule_time"></a>
+# Scheduled Scaling for Amazon EC2 Auto Scaling<a name="schedule_time"></a>
 
 Scaling based on a schedule allows you to scale your application in response to predictable load changes\. For example, every week the traffic to your web application starts to increase on Wednesday, remains high on Thursday, and starts to decrease on Friday\. You can plan your scaling activities based on the predictable traffic patterns of your web application\. 
 
 To configure your Auto Scaling group to scale based on a schedule, you create a scheduled action, which tells Amazon EC2 Auto Scaling to perform a scaling action at specified times\. To create a scheduled scaling action, you specify the start time when you want the scaling action to take effect, and the new minimum, maximum, and desired sizes for the scaling action\. At the specified time, Amazon EC2 Auto Scaling updates the group with the values for minimum, maximum, and desired size specified by the scaling action\.
 
 You can create scheduled actions for scaling one time only or for scaling on a recurring schedule\.
+
+You can also use scheduled scaling with Application Auto Scaling\. For more information, see [Scheduled Scaling](http://docs.aws.amazon.com/autoscaling/application/userguide/application-auto-scaling-scheduled-scaling.html) in the *Application Auto Scaling User Guide*\.
 
 **Topics**
 + [Considerations for Scheduled Actions](#sch-actions_rules)

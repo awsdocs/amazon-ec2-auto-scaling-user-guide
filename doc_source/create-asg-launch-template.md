@@ -2,8 +2,6 @@
 
 When you create an Auto Scaling group, you must specify the information needed to configure the Auto Scaling instances and the minimum number of instances your group must maintain at all times\.
 
-To configure Auto Scaling instances, you must specify a launch template, a launch configuration, or an EC2 instance\. We recommend that you use a launch template to ensure that you can use the latest features of Amazon EC2\.
-
 When you create an Auto Scaling group using a launch template, you specify which version of the launch template the Auto Scaling group uses to launch Auto Scaling instances\. You can specify a specific version \(using the API, AWS CLI, or an SDK, but not the console\)\. Alternatively, you can configure the Auto Scaling group to select either the default version or the latest version of the launch template dynamically when a scale out event occurs\.
 
 If you configured your Auto Scaling group to select either the default version or the latest version of a launch template dynamically, you can change the configuration of the Auto Scaling instances to be launched by the group by creating a new version or new default version of the launch template\.
@@ -32,9 +30,11 @@ The following are limitations when creating a launch template for use with an Au
 
 1. On the navigation bar at the top of the screen, select the same region that you used when you created the launch template\.
 
-1. In the navigation pane, choose **Launch Templates**\.
+1. In the navigation pane, choose **Auto Scaling Groups**\.
 
-1. Select the launch template and choose **Actions**, **Create Auto Scaling group**\.
+1. Choose **Create Auto Scaling group**\.
+
+1. Choose **Launch Template**, select your launch template, and then choose **Next Step**\.
 
 1. On the **Configure Auto Scaling group details** page, do the following:
 

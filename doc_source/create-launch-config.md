@@ -2,10 +2,7 @@
 
 When you create a launch configuration, you must specify information about the EC2 instances to launch, such as the Amazon Machine Image \(AMI\), instance type, key pair, security groups, and block device mapping\. Alternatively, you can create a launch configuration using attributes from a running EC2 instance\. For more information, see [Creating a Launch Configuration Using an EC2 Instance](create-lc-with-instanceID.md)\.
 
-**Important**  
-When you create an Auto Scaling group, you must specify a launch template, launch configuration, or an EC2 instance\. We recommend that you use a launch template instead of a launch configuration\. For more information, see [Creating an Auto Scaling Group Using a Launch Template](create-asg-launch-template.md)\.
-
-After you create a launch template or a launch configuration, you can create an Auto Scaling group\. For more information, see [Creating an Auto Scaling Group Using a Launch Configuration](create-asg.md)\.
+After you create a launch configuration, you can create an Auto Scaling group\. For more information, see [Creating an Auto Scaling Group Using a Launch Configuration](create-asg.md)\.
 
 An Auto Scaling group is associated with one launch configuration at a time, and you can't modify a launch configuration after you've created it\. Therefore, if you want to change the launch configuration for an existing Auto Scaling group, you must update it with the new launch configuration\. For more information, see [Changing the Launch Configuration for an Auto Scaling Group](change-launch-config.md)\.
 
@@ -15,9 +12,9 @@ An Auto Scaling group is associated with one launch configuration at a time, and
 
 1. On the navigation bar at the top of the screen, the current region is displayed\. Select a region for your Auto Scaling group that meets your needs\.
 
-1. On the navigation pane, under **Auto Scaling**, choose **Launch Configurations**\. If you are new to Amazon EC2 Auto Scaling, you see a welcome page; choose **Create Auto Scaling group**\.
+1. On the navigation pane, under **Auto Scaling**, choose **Launch Configurations**\. 
 
-1. Choose **Create launch configuration**\.
+1. On the next page, choose **Create launch configuration**\.
 
 1. On the **Choose AMI** page, select an AMI\.
 

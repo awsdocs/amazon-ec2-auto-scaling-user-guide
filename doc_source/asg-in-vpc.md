@@ -101,7 +101,7 @@ Use the following procedure to create a launch configuration that links EC2\-Cla
 
 1. Open the Amazon EC2 console at [https://console\.aws\.amazon\.com/ec2/](https://console.aws.amazon.com/ec2/)\.
 
-1. On the navigation pane, choose **Launch Configurations**\. If you are new to Amazon EC2 Auto Scaling, you see a welcome page\. Choose **Create Auto Scaling group**\.
+1. On the navigation pane, choose **Launch Configurations**\. 
 
 1. Choose **Create launch configuration**\.
 

@@ -129,7 +129,7 @@ For actions that don't support resource\-level permissions, you must use "\*" as
 
 ## Amazon EC2 Auto Scaling Condition Keys<a name="policy-auto-scaling-condition-keys"></a>
 
-When you create a policy, you can specify the conditions when the policy should take effect\. To express conditions, use predefined condition keys\. There are condition keys that are specific to Auto Scaling, plus AWS\-wide condition keys\.
+When you create a policy, you can specify the conditions that control when the policy is in effect\. Each condition contains one or more key\-value pairs\. There are global condition keys and service\-specific condition keys\.
 
 The following condition keys are specific to Amazon EC2 Auto Scaling:
 + `autoscaling:ImageId`
@@ -144,7 +144,7 @@ The following condition keys are specific to Amazon EC2 Auto Scaling:
 + `autoscaling:TargetGroupARNs`
 + `autoscaling:VPCZoneIdentifiers`
 
-For a list of context keys supported by each AWS service and a list of AWS\-wide policy keys, see [AWS Service Actions and Condition Context Keys](http://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_actionsconditions.html) and [Global and IAM Condition Context Keys](http://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_condition-keys.html) in the *IAM User Guide*\.
+For more information about global condition keys, see [AWS Global Condition Context Keys](http://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_condition-keys.html) in the *IAM User Guide*\.
 
 ## Supported Resource\-Level Permissions<a name="resource-level-permissions-auto-scaling"></a>
 

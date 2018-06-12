@@ -50,7 +50,7 @@ Use the [set\-desired\-capacity](http://docs.aws.amazon.com/cli/latest/reference
 aws autoscaling set-desired-capacity --auto-scaling-group-name my-asg --desired-capacity 2
 ```
 
-By default, the command does not wait for the cooldown period specified for the group to complete\. You can override the default behavior and wait for the cooldown period to complete by specifying the `–-honor-cooldown` option as shown in the following example\. For more information, see [Scaling Cooldowns](Cooldown.md)\.
+By default, the command does not wait for the cooldown period specified for the group to complete\. You can override the default behavior and wait for the cooldown period to complete by specifying the `–-honor-cooldown` option as shown in the following example\. For more information, see [Scaling Cooldowns for Amazon EC2 Auto Scaling](Cooldown.md)\.
 
 ```
 aws autoscaling set-desired-capacity --auto-scaling-group-name my-asg --desired-capacity 2 --honor-cooldown

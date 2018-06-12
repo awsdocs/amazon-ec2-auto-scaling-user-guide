@@ -21,73 +21,75 @@ This tutorial attaches a load balancer to an Auto Scaling group when you create 
 Complete the following tasks to set up a scaled and load\-balanced application when you create your Auto Scaling group\.
 
 **Topics**
-+ [Create or Select a Launch Template](#as-register-lbs-create-lc-console)
++ [Create or Select a Launch Configuration](#as-register-lbs-create-lc-console)
 + [Create an Auto Scaling Group](#as-register-lbs-create-asg-console)
 + [\(Optional\) Verify that Your Load Balancer is Attached to Your Auto Scaling Group](#as-register-lbs-verify-console)
 
-### Create or Select a Launch Template<a name="as-register-lbs-create-lc-console"></a>
+### Create or Select a Launch Configuration<a name="as-register-lbs-create-lc-console"></a>
 
-If you already have a launch template that you'd like to use, select it using the following procedure\.
+A launch configuration specifies the type of EC2 instance that Amazon EC2 Auto Scaling creates for you\. When you create a launch configuration, you include information such as the ID of the Amazon Machine Image \(AMI\) to use, the instance type, key pair, and block device mapping\. If you created a launch template, you can use your launch template to create an Auto Scaling group instead of using a launch configuration\. For more information, see [Creating an Auto Scaling Group Using a Launch Template](create-asg-launch-template.md)\.
 
-**To select an existing launch template**
+If you already have a launch configuration that you'd like to use, select it using the following procedure\.
 
-1. Open the Amazon EC2 console at [https://console\.aws\.amazon\.com/ec2/](https://console.aws.amazon.com/ec2/)\.
-
-1. On the navigation bar at the top of the screen, select the region that you used when creating your load balancer\.
-
-1. On the navigation pane, under **Instances**, choose **Launch Templates**\.
-
-1. Select a launch template\.
-
-1. Choose **Actions**, **Create Auto Scaling group**\.
-
-Alternatively, to create a new launch template, use the following procedure\.
-
-**To create a launch template**
+**To select an existing launch configuration**
 
 1. Open the Amazon EC2 console at [https://console\.aws\.amazon\.com/ec2/](https://console.aws.amazon.com/ec2/)\.
 
 1. On the navigation bar at the top of the screen, select the region that you used when creating your load balancer\.
 
-1. On the navigation pane, under **Instances**, choose **Launch Templates**\.
+1. On the navigation pane, under **Auto Scaling**, choose **Auto Scaling Groups**\.
 
-1. Choose **Create launch template**\.
+1. On the next page, choose **Create Auto Scaling group**\.
 
-1. Provide a name and description for the launch template\. The name of a launch template must have 3 to 125 characters, and can include the following characters: \(\)\./\_\.
+1. On the **Create Auto Scaling Group** page, choose **Launch Configuration**, select an existing launch configuration, and then choose **Next Step**\. 
 
-1. For **AMI ID**, type the ID of the AMI for your instances\.
+To create a new launch configuration, use the following procedure:
 
-1. For **Instance type**, select a hardware configuration for your instances that is compatible with the AMI that you specified\.
+**To create a launch configuration**
 
-1. \(Optional\) For **Key pair name**, type the name of the key pair to use when connecting to your instances\.
+1. Open the Amazon EC2 console at [https://console\.aws\.amazon\.com/ec2/](https://console.aws.amazon.com/ec2/)\.
 
-1. For **Network interfaces**, do the following:
+1. On the navigation bar at the top of the screen, select the region that you used when creating your load balancer\.
 
-   1. Choose **Add network interface**\.
+1. On the navigation pane, under **Auto Scaling**, choose **Auto Scaling Groups**\. 
 
-   1. For **Subnet**, specify a subnet for your instances\.
+1. On the next page, choose **Create Auto Scaling group**\.
 
-   1. \(Optional\) To connect to instances in a nondefault VPC, for **Auto\-assign public IP**, choose **Enable**\.
+1. On the **Create Auto Scaling Group** page, choose **Launch Configuration, Create a new launch configuration**, and then choose **Next Step**\. 
 
-   1. For **Security group ID**, specify a security group for your instances\.
+1. On the **Choose AMI** page, select your custom AMI\.
 
-1. \(Optional\) To securely distribute credentials to your instances, for **Advanced details**, **IAM instance profile**, type the Amazon Resource Name \(ARN\) of your IAM role\.
+1. On the **Choose Instance Type** page, select a hardware configuration for your instance, and then choose **Next: Configure details**\.
 
-1. \(Optional\) To specify user data or a configuration script for your instances, paste it into **Advanced details**, **User data**\.
+1. On the **Configure Details** page, do the following:
 
-1. Choose **Create launch template**\.
+   1. For **Name**, type a name for your launch configuration\.
 
-1. On the confirmation page, choose **Create Auto Scaling group**\.
+   1. \(Optional\) To securely distribute credentials to your EC2 instance, select your IAM role\.
+
+   1. \(Optional\) If you need to connect to an instance in a nondefault VPC, for **Advanced Details**, **IP Address Type**, choose **Assign a public IP address to every instance**\.
+
+   1. \(Optional\) To specify user data or a configuration script for your instance, for **Advanced Details**, **User data**, paste your configuration script\.
+
+   1. Choose **Skip to review**\.
+
+1. On the **Review** page, choose **Edit security groups**\. Follow the instructions to choose an existing security group, and then choose **Review**\.
+
+1. On the **Review** page, choose **Create launch configuration**\.
+
+1. On the **Select an existing key pair or create a new key pair** page, select one of the listed options\. Select the acknowledgment check box, and then choose **Create launch configuration**\.
+**Warning**  
+Do not choose **Proceed without a key pair** if you need to connect to your instance\.
+
+After completing the instructions above, you're ready to proceed with the wizard to create an Auto Scaling group\.
 
 ### Create an Auto Scaling Group<a name="as-register-lbs-create-asg-console"></a>
 
-Use the following procedure to continue where you left off after selecting or creating your launch template\.
+Use the following procedure to continue where you left off after selecting or creating your launch configuration\.
 
 **To create an Auto Scaling group**
 
 1. On the **Configure Auto Scaling group details** page, do the following:
-
-   1. For **Launch template version**, choose whether the Auto Scaling group uses the default or the latest version of the launch template when scaling out\.
 
    1. For **Group name**, type a name for your Auto Scaling group\.
 

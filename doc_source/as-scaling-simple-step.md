@@ -1,19 +1,19 @@
-# Simple and Step Scaling Policies<a name="as-scaling-simple-step"></a>
+# Simple and Step Scaling Policies for Amazon EC2 Auto Scaling<a name="as-scaling-simple-step"></a>
 
 Amazon EC2 Auto Scaling originally supported only simple scaling policies\. If you created your scaling policy before target tracking and step policies were introduced, your policy is treated as a simple scaling policy\.
 
-We recommend that you use step scaling policies instead of simple scaling policies even if you have a single step adjustment, because we continuously evaluate alarms and do not lock the group during scaling activities or health check replacements\. If you are scaling based on a metric that is a utilization metric that increases or decreases proportionally to the number of instances in the Auto Scaling group, we recommend that you use a target tracking scaling policy instead\. For more information, see [Target Tracking Scaling Policies](as-scaling-target-tracking.md)\.
+We recommend that you use step scaling policies instead of simple scaling policies even if you have a single step adjustment, because we continuously evaluate alarms and do not lock the group during scaling activities or health check replacements\. If you are scaling based on a metric that is a utilization metric that increases or decreases proportionally to the number of instances in the Auto Scaling group, we recommend that you use a target tracking scaling policy instead\. For more information, see [Target Tracking Scaling Policies for Amazon EC2 Auto Scaling](as-scaling-target-tracking.md)\.
 
 ## Simple Scaling Policies<a name="SimpleScaling"></a>
 
-After a scaling activity is started, the policy must wait for the scaling activity or health check replacement to complete and the cooldown period to expire before it can respond to additional alarms\. Cooldown periods help to prevent the initiation of additional scaling activities before the effects of previous activities are visible\. You can use the default cooldown period associated with your Auto Scaling group, or you can override the default by specifying a cooldown period for your policy\. For more information, see [Scaling Cooldowns](Cooldown.md)\.
+After a scaling activity is started, the policy must wait for the scaling activity or health check replacement to complete and the cooldown period to expire before it can respond to additional alarms\. Cooldown periods help to prevent the initiation of additional scaling activities before the effects of previous activities are visible\. You can use the default cooldown period associated with your Auto Scaling group, or you can override the default by specifying a cooldown period for your policy\. For more information, see [Scaling Cooldowns for Amazon EC2 Auto Scaling](Cooldown.md)\.
 
 ## Step Scaling Policies<a name="StepScaling"></a>
 
 After a scaling activity is started, the policy continues to respond to additional alarms, even while a scaling activity or health check replacement is in progress\. Therefore, all alarms that are breached are evaluated by Amazon EC2 Auto Scaling as it receives the alarm messages\. If you are creating a policy to scale out, you can specify the estimated warm\-up time that it takes for a newly launched instance to be ready to contribute to the aggregated metrics\. For more information, see [Instance Warmup](#as-step-scaling-warmup)\.
 
 **Note**  
-Cooldown periods are not supported for step scaling policies\. Therefore, you can't specify a cooldown period for these policies and the default cooldown period for the group doesn't apply\.
+Amazon EC2 Auto Scaling does not support cooldown periods for step scaling policies\. Therefore, you can't specify a cooldown period for these policies and the default cooldown period for the group doesn't apply\.
 
 ## Scaling Adjustment Types<a name="as-scaling-adjustment"></a>
 

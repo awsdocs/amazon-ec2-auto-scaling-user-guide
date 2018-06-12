@@ -5,7 +5,7 @@ The following table describes important additions to the Amazon EC2 Auto Scaling
 
 | Feature | Description | Release Date | 
 | --- | --- | --- | 
-|  Support for target tracking scaling policies  |  Set up dynamic scaling for your application in just a few steps\. For more information, see [Target Tracking Scaling Policies](as-scaling-target-tracking.md)\.  | 12 July 2017 | 
+|  Support for target tracking scaling policies  |  Set up dynamic scaling for your application in just a few steps\. For more information, see [Target Tracking Scaling Policies for Amazon EC2 Auto Scaling](as-scaling-target-tracking.md)\.  | 12 July 2017 | 
 |  Support for resource\-level permissions  |  Create IAM policies to control access at the resource level\. For more information, see [Controlling Access to Your Amazon EC2 Auto Scaling Resources](control-access-using-iam.md)\.  | 15 May 2017 | 
 |  Monitoring improvements  |  Auto Scaling group metrics no longer require that you enable detailed monitoring\. You can now enable group metrics collection and view metrics graphs from the **Monitoring** tab in the console\. For more information, see [Monitoring Your Auto Scaling Groups and Instances Using Amazon CloudWatch](as-instance-monitoring.md)\.  | 18 August 2016 | 
 |  Support for Application Load Balancers  |  Attach one or more target groups to a new or existing Auto Scaling group\. For more information, see [Attaching a Load Balancer to Your Auto Scaling Group](attach-load-balancer-asg.md)\.  | 11 August 2016 | 
@@ -29,10 +29,10 @@ The following table describes important additions to the Amazon EC2 Auto Scaling
 |  Support for Spot Instances  |  Request Spot Instances in Auto Scaling groups by specifying a Spot Instance bid price in your launch configuration\. For more information, see [Launching Spot Instances in Your Auto Scaling Group](asg-launch-spot-instances.md)\.  | 7 June 2012 | 
 |  Tag groups and instances  |  Tag Auto Scaling groups and specify that the tag also applies to EC2 instances launched after the tag was created\. For more information, see [Tagging Auto Scaling Groups and Instances](autoscaling-tagging.md)\.  | 26 January 2012 | 
 |  Support for Amazon SNS  |  Use Amazon SNS to receive notifications whenever Auto Scaling launches or terminates EC2 instances\. For more information, see [Getting SNS Notifications When Your Auto Scaling Group Scales](ASGettingNotifications.md)\. Auto Scaling also added the following new features: [\[See the AWS documentation website for more details\]](http://docs.aws.amazon.com/autoscaling/ec2/userguide/DocumentHistory.html)  | 20 July 2011 | 
-|  Scheduled scaling actions  |  Added support for scheduled scaling actions\. For more information, see [Scheduled Scaling](schedule_time.md)\.  | 2 December 2010 | 
+|  Scheduled scaling actions  |  Added support for scheduled scaling actions\. For more information, see [Scheduled Scaling for Amazon EC2 Auto Scaling](schedule_time.md)\.  | 2 December 2010 | 
 |  Support for Amazon VPC  |  Added support for Amazon VPC\. For more information, see [Launching Auto Scaling Instances in a VPC](asg-in-vpc.md)\.  | 2 December 2010 | 
 |  Support for HPC clusters  |  Added support for high performance computing \(HPC\) clusters\.  | 2 December 2010 | 
 |  Support for health checks  |  Added support for using Elastic Load Balancing health checks with Auto Scaling\-managed EC2 instances\. For more information, see [Using ELB Health Checks with Auto Scaling](as-add-elb-healthcheck.md)\.  | 2 December 2010 | 
-|  Support for CloudWatch alarms  |  Removed the older trigger mechanism and redesigned Auto Scaling to use the CloudWatch alarm feature\. For more information, see [Dynamic Scaling](as-scale-based-on-demand.md)\.  | 2 December 2010 | 
+|  Support for CloudWatch alarms  |  Removed the older trigger mechanism and redesigned Auto Scaling to use the CloudWatch alarm feature\. For more information, see [Dynamic Scaling for Amazon EC2 Auto Scaling](as-scale-based-on-demand.md)\.  | 2 December 2010 | 
 |  Suspend and resume scaling  |  Added support to suspend and resume scaling processes\.  | 2 December 2010 | 
 |  Support for IAM  |  Added support for IAM\. For more information, see [Controlling Access to Your Amazon EC2 Auto Scaling Resources](control-access-using-iam.md)\.  | 2 December 2010 | 

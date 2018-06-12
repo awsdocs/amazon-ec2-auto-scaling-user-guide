@@ -1,11 +1,11 @@
-# Dynamic Scaling<a name="as-scale-based-on-demand"></a>
+# Dynamic Scaling for Amazon EC2 Auto Scaling<a name="as-scale-based-on-demand"></a>
 
 When you configure dynamic scaling, you must define how you want to scale in response to changing demand\. For example, say you have a web application that currently runs on two instances and you do not want the CPU utilization of the Auto Scaling group to exceed 70 percent\. You can configure your Auto Scaling group to scale automatically to meet this need\. The policy type determines how the scaling action is performed\.
 
 **Topics**
 + [Scaling Policy Types](#as-scaling-types)
-+ [Target Tracking Scaling Policies](as-scaling-target-tracking.md)
-+ [Simple and Step Scaling Policies](as-scaling-simple-step.md)
++ [Target Tracking Scaling Policies for Amazon EC2 Auto Scaling](as-scaling-target-tracking.md)
++ [Simple and Step Scaling Policies for Amazon EC2 Auto Scaling](as-scaling-simple-step.md)
 + [Add a Scaling Policy to an Existing Auto Scaling Group](policy-updating-console.md)
 + [Scaling Based on Amazon SQS](as-using-sqs-queue.md)
 
