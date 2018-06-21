@@ -83,7 +83,7 @@ The following is example data for this event\.
       "EndTime": "yyyy-mm-ddThh:mm:ssZ",
       "EC2InstanceId": "i-1234567890abcdef0",
       "StartTime": "yyyy-mm-ddThh:mm:ssZ",
-      "Cause": "description-text",
+      "Cause": "description-text"
   }
 }
 ```
@@ -121,7 +121,7 @@ The following is example data for this event\.
       "EndTime": "yyyy-mm-ddThh:mm:ssZ",
       "EC2InstanceId": "i-1234567890abcdef0",
       "StartTime": "yyyy-mm-ddThh:mm:ssZ",
-      "Cause": "description-text",
+      "Cause": "description-text"
   }
 }
 ```
@@ -189,7 +189,7 @@ The following is example data for this event\.
       "EndTime": "yyyy-mm-ddThh:mm:ssZ",
       "EC2InstanceId": "i-1234567890abcdef0",
       "StartTime": "yyyy-mm-ddThh:mm:ssZ",
-      "Cause": "description-text",
+      "Cause": "description-text"
   }
 }
 ```
@@ -227,7 +227,7 @@ The following is example data for this event\.
       "EndTime": "yyyy-mm-ddThh:mm:ssZ",
       "EC2InstanceId": "i-1234567890abcdef0",
       "StartTime": "yyyy-mm-ddThh:mm:ssZ",
-      "Cause": "description-text",
+      "Cause": "description-text"
   }
 }
 ```
