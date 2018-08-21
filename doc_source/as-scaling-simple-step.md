@@ -73,11 +73,11 @@ If the metric value gets to 40, the desired capacity of the group decreases by 1
 
 ## Instance Warmup<a name="as-step-scaling-warmup"></a>
 
-With step scaling policies, you can specify the number of seconds that it takes for a newly launched instance to warm up\. Until its specified warm\-up time has expired, an instance is not counted toward the aggregated metrics of the Auto Scaling group\.
+With step scaling policies, you can specify the number of seconds that it takes for a newly launched instance to warm up\. Until its specified warm\-up time has expired, an instance is not counted toward the aggregated metrics of the Auto Scaling group\. While scaling out, AWS also does not consider instances that are warming up as part of the current capacity of the group\. Therefore, multiple alarm breaches that fall in the range of the same step adjustment result in a single scaling activity\. This ensures that we don't add more instances than you need\. 
 
-While scaling out, we do not consider instances that are warming up as part of the current capacity of the group\. Therefore, multiple alarm breaches that fall in the range of the same step adjustment result in a single scaling activity\. This ensures that we don't add more instances than you need\. Using the example in the previous section, suppose that the metric gets to 60, and then it gets to 62 while the new instance is still warming up\. The current capacity is still 10 instances, so 1 instance is added \(10 percent of 10 instances\), but the desired capacity of the group is already 11 instances, so we do not increase the desired capacity further\. However, if the metric gets to 70 while the new instance is still warming up, we should add 3 instances \(30 percent of 10 instances\), but the desired capacity of the group is already 11, so we add only 2 instances, for a new desired capacity of 13 instances\.
+Using the example in the previous section, suppose that the metric gets to 60, and then it gets to 62 while the new instance is still warming up\. The current capacity is still 10 instances, so 1 instance is added \(10 percent of 10 instances\), but the desired capacity of the group is already 11 instances, so AWS does not increase the desired capacity further\. If the metric gets to 70 while the new instance is still warming up, we should add 3 instances \(30 percent of 10 instances\)\. However, the desired capacity of the group is already 11, so we add only 2 instances, for a new desired capacity of 13 instances\.
 
-While scaling in, we consider instances that are terminating as part of the current capacity of the group\. Therefore, we don't remove more instances from the Auto Scaling group than necessary\.
+While scaling in, AWS considers instances that are terminating as part of the current capacity of the group\. Therefore, we don't remove more instances from the Auto Scaling group than necessary\.
 
 A scale\-in activity can't start while a scale\-out activity is in progress\.
 
@@ -129,8 +129,10 @@ Use the console to create an Auto Scaling group with two scaling policies: a sca
 
       To add another step adjustment, choose **Add step**\. To set a minimum number of instances to scale, update the number field in **Add instances in increments of at least 1 instance\(s\)**\.
 
-      \(Optional\) We recommend that you use the default to create both scaling policies with steps\. To create simple scaling policies, choose **Create a simple scaling policy**\. For more information, see [Scaling Policy Types](as-scale-based-on-demand.md#as-scaling-types)\.  
+      \(Optional\) We recommend that you use the default to create scaling policies with steps\. To create simple scaling policies, choose **Create a simple scaling policy**\. For more information, see [Simple and Step Scaling Policies for Amazon EC2 Auto Scaling](#as-scaling-simple-step)\.  
 ![\[Create scale-out policy\]](http://docs.aws.amazon.com/autoscaling/ec2/userguide/images/as-console-create-scaleout-policy.png)
+
+   1. Specify an instance warm\-up value for **Instances need**, which allows you to control the amount of time until a newly launched instance can contribute to the CloudWatch metrics\. 
 
    1. Specify your scale\-in policy under **Decrease Group Size**\. You can optionally specify a name for the policy, then choose **Add new alarm**\.
 
@@ -138,7 +140,7 @@ Use the console to create an Auto Scaling group with two scaling policies: a sca
 
    1. For **Take the action**, choose `Remove`, type `2` in the next field, and then choose `instances`\. By default, the upper bound for this step adjustment is the alarm threshold and the lower bound is null \(negative infinity\)\. To add another step adjustment, choose **Add step**\.
 
-      \(Optional\) We recommend that you use the default to create both scaling policies with steps\. To create simple scaling policies, choose **Create a simple scaling policy**\. For more information, see [Scaling Policy Types](as-scale-based-on-demand.md#as-scaling-types)\.  
+      \(Optional\) We recommend that you use the default to create scaling policies with steps\. To create simple scaling policies, choose **Create a simple scaling policy**\. For more information, see [Scaling Policy Types](as-scale-based-on-demand.md#as-scaling-types)\.  
 ![\[Create scale-out policy\]](http://docs.aws.amazon.com/autoscaling/ec2/userguide/images/as-console-create-scalein-policy.png)
 
    1. Choose **Review**\.

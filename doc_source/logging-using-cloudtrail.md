@@ -1,12 +1,12 @@
 # Logging Amazon EC2 Auto Scaling API Calls By Using AWS CloudTrail<a name="logging-using-cloudtrail"></a>
 
-Amazon EC2 Auto Scaling is integrated with CloudTrail, a service that captures API calls made by or on behalf of Auto Scaling in your AWS account and delivers the log files to an Amazon S3 bucket that you specify\. CloudTrail captures API calls from the Auto Scaling console or from the Auto Scaling API\. Using the information collected by CloudTrail, you can determine what request was made to Auto Scaling, the source IP address from which the request was made, who made the request, when it was made, and so on\. For more information about CloudTrail, including how to configure and enable it, see the [http://docs.aws.amazon.com/awscloudtrail/latest/userguide/](http://docs.aws.amazon.com/awscloudtrail/latest/userguide/)\.
+Amazon EC2 Auto Scaling is integrated with CloudTrail, a service that captures API calls made by or on behalf of Amazon EC2 Auto Scaling in your AWS account and delivers the log files to an Amazon S3 bucket that you specify\. CloudTrail captures API calls from the Amazon EC2 console and from the Amazon EC2 Auto Scaling API\. Using the information collected by CloudTrail, you can determine what request was made to Amazon EC2 Auto Scaling, the source IP address from which the request was made, who made the request, when it was made, and so on\. For more information about CloudTrail, including how to configure and enable it, see the [http://docs.aws.amazon.com/awscloudtrail/latest/userguide/](http://docs.aws.amazon.com/awscloudtrail/latest/userguide/)\.
 
-## Auto Scaling Information in CloudTrail<a name="service-name-info-in-cloudtrail"></a>
+## Amazon EC2 Auto Scaling Information in CloudTrail<a name="service-name-info-in-cloudtrail"></a>
 
-When CloudTrail logging is enabled in your AWS account, API calls made to Auto Scaling actions are tracked in log files\. Auto Scaling records are written together with other AWS service records in a log file\. CloudTrail determines when to create and write to a new file based on a time period and file size\.
+When CloudTrail logging is enabled in your AWS account, API calls made to Amazon EC2 Auto Scaling actions are tracked in log files\. Amazon EC2 Auto Scaling records are written together with other AWS service records in a log file\. CloudTrail determines when to create and write to a new file based on a time period and file size\.
 
-All of the Auto Scaling actions are logged and are documented in the [Amazon EC2 Auto Scaling API Reference](http://docs.aws.amazon.com/autoscaling/ec2/APIReference/)\. For example, calls to the **CreateLaunchConfiguration**, **DescribeAutoScalingGroup**, and **UpdateAutoScalingGroup** actions generate entries in the CloudTrail log files\. 
+All of the Amazon EC2 Auto Scaling actions are logged and are documented in the [Amazon EC2 Auto Scaling API Reference](http://docs.aws.amazon.com/autoscaling/ec2/APIReference/)\. For example, calls to the **CreateLaunchConfiguration**, **DescribeAutoScalingGroup**, and **UpdateAutoScalingGroup** actions generate entries in the CloudTrail log files\. 
 
 Every log entry contains information about who generated the request\. The user identity information in the log helps you determine whether the request was made with account or IAM user credentials, with temporary security credentials for a role or federated user, or by another AWS service\. For more information, see **userIdentity** in the [CloudTrail Event Reference](http://docs.aws.amazon.com/awscloudtrail/latest/userguide/event_reference_top_level.html) section in the *AWS CloudTrail User Guide*\.
 
@@ -14,9 +14,9 @@ You can store your log files in your bucket for as long as you want, but you can
 
 You can choose to have CloudTrail publish Amazon SNS notifications when new log files are delivered if you want to take quick action upon log file delivery\. For more information, see [Configuring Amazon SNS Notifications](http://docs.aws.amazon.com/awscloudtrail/latest/userguide/getting_notifications_top_level.html) in the *AWS CloudTrail User Guide*\.
 
-You can also aggregate Auto Scaling log files from multiple AWS regions and multiple AWS accounts into a single Amazon S3 bucket\. For more information, see [Aggregating CloudTrail Log Files to a Single Amazon S3 Bucket](http://docs.aws.amazon.com/awscloudtrail/latest/userguide/aggregating_logs_top_level.html) in the *AWS CloudTrail User Guide*\.
+You can also aggregate Amazon EC2 Auto Scaling log files from multiple AWS regions and multiple AWS accounts into a single Amazon S3 bucket\. For more information, see [Aggregating CloudTrail Log Files to a Single Amazon S3 Bucket](http://docs.aws.amazon.com/awscloudtrail/latest/userguide/aggregating_logs_top_level.html) in the *AWS CloudTrail User Guide*\.
 
-## Understanding Auto Scaling Log File Entries<a name="understanding-service-name-entries"></a>
+## Understanding Amazon EC2 Auto Scaling Log File Entries<a name="understanding-service-name-entries"></a>
 
 CloudTrail log files can contain one or more log entries where each entry is made up of multiple JSON\-formatted events\. A log entry represents a single request from any source and includes information about the requested action, any parameters, the date and time of the action, and so on\. The log entries are not guaranteed to be in any particular order\. That is, they are not an ordered stack trace of the public API calls\.
 

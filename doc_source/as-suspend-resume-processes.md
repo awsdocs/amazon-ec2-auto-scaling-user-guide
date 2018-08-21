@@ -1,6 +1,6 @@
 # Suspending and Resuming Scaling Processes<a name="as-suspend-resume-processes"></a>
 
-You can suspend and then resume one or more of the scaling processes for your Auto Scaling group\. This can be useful when you want to investigate a configuration problem or other issue with your web application and then make changes to your application, without triggering the scaling processes\.
+You can suspend and then resume one or more of the scaling processes for your Auto Scaling group\. This can be useful when you want to investigate a configuration problem or other issue with your web application and then make changes to your application, without invoking the scaling processes\.
 
 Amazon EC2 Auto Scaling can suspend processes for Auto Scaling groups that repeatedly fail to launch instances\. This is known as an *administrative suspension*, and most commonly applies to Auto Scaling groups that have been trying to launch instances for over 24 hours but have not succeeded in launching any instances\. You can resume processes suspended for administrative reasons\.
 
@@ -29,12 +29,12 @@ Terminates instances that are marked as unhealthy and later creates new instance
 
 `AZRebalance`  
 Balances the number of EC2 instances in the group across the Availability Zones in the region\. If you remove an Availability Zone from your Auto Scaling group or an Availability Zone otherwise becomes unhealthy or unavailable, the scaling process launches new instances in an unaffected Availability Zone before terminating the unhealthy or unavailable instances\. When the unhealthy Availability Zone returns to a healthy state, the scaling process automatically redistributes the instances evenly across the Availability Zones for the group\. For more information, see [Rebalancing Activities](auto-scaling-benefits.md#AutoScalingBehavior.InstanceUsage)\.  
-If you suspend `AZRebalance` and a scale out or scale in event occurs, the scaling process still tries to balance the Availability Zones\. For example, during scale out, it launches the instance in the Availability Zone with the fewest instances\.  
+If you suspend `AZRebalance` and a scale\-out or scale\-in event occurs, the scaling process still tries to balance the Availability Zones\. For example, during scale\-out, it launches the instance in the Availability Zone with the fewest instances\.  
 If you suspend the `Launch` process, `AZRebalance` neither launches new instances nor terminates existing instances\. This is because `AZRebalance` terminates instances only after launching the replacement instances\. If you suspend the `Terminate` process, your Auto Scaling group can grow up to ten percent larger than its maximum size, because this is allowed temporarily during rebalancing activities\. If the scaling process cannot terminate instances, your Auto Scaling group could remain above its maximum size until you resume the `Terminate` process\.
 
 `AlarmNotification`  
 Accepts notifications from CloudWatch alarms that are associated with the group\.  
-If you suspend `AlarmNotification`, Amazon EC2 Auto Scaling does not automatically execute policies that would be triggered by an alarm\. If you suspend `Launch` or `Terminate`, it would not be able to execute scale\-out or scale\-in policies, respectively\.
+If you suspend `AlarmNotification`, Amazon EC2 Auto Scaling does not automatically execute policies that would be triggered by an alarm\. If you suspend `Launch` or `Terminate`, it will not be able to execute scale\-out or scale\-in policies, respectively\.
 
 `ScheduledActions`  
 Performs scheduled actions that you create\.  

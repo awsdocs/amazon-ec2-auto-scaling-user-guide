@@ -1,6 +1,6 @@
 # Add a Scaling Policy to an Existing Auto Scaling Group<a name="policy-updating-console"></a>
 
-Use the console to add a scaling policy to an existing Auto Scaling group\.
+Use the console to add a scaling policy to an existing Auto Scaling group\. A scaling policy is used to increase and decrease the number of running EC2 instances in the group dynamically to meet changing conditions\. For more information, see [Dynamic Scaling for Amazon EC2 Auto Scaling](as-scale-based-on-demand.md)\.
 
 **To update an Auto Scaling group with scaling based on metrics**
 
@@ -10,7 +10,9 @@ Use the console to add a scaling policy to an existing Auto Scaling group\.
 
 1. Select the Auto Scaling group\.
 
-1. On the **Scaling Policies** tab, choose **Add policy**\.
+1. On the **Scaling Policies** tab, choose **Add policy**\. 
+
+   The page displays all the available resources\.
 
 1. If you are adding a target tracking scaling policy, use the following steps\. If you are using a simple or step scaling policy, skip to the next step\.
 
@@ -24,7 +26,9 @@ Use the console to add a scaling policy to an existing Auto Scaling group\.
 
    1. Choose **Create**\.
 
-1. If you are using a step scaling policy, do the following:
+1. If you are using a step scaling policy, choose **Create a scaling policy with steps**, and then do the following:
+**Note**  
+We recommend that you use the option to create scaling policies with steps\. To use a simple scaling policy, choose **Create a simple scaling policy** instead\. For more information about simple scaling, see [Simple and Step Scaling Policies for Amazon EC2 Auto Scaling](as-scaling-simple-step.md)\.
 
    1. For **Name**, type a name for the policy, and then choose **Create new alarm**\.
 
@@ -32,6 +36,6 @@ Use the console to add a scaling policy to an existing Auto Scaling group\.
 
    1. Specify the scaling activity for the policy using **Take the action**\. By default, the lower bound for this step adjustment is the alarm threshold and the upper bound is null \(positive infinity\)\. To add another step adjustment, choose **Add step**\.
 
-      \(Optional\) We recommend that you use the default to create both scaling policies with steps\. To create simple scaling policies, choose **Create a simple scaling policy**\. For more information, see [Scaling Policy Types](as-scale-based-on-demand.md#as-scaling-types)\.
+   1. Specify an instance warm\-up value for **Instances need**, which allows you to control the amount of time until a newly launched instance can contribute to the CloudWatch metrics\. 
 
    1. Choose **Create**\.

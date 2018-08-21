@@ -1,6 +1,6 @@
 # Getting CloudWatch Events When Your Auto Scaling Group Scales<a name="cloud-watch-events"></a>
 
-When you use Auto Scaling to scale your applications automatically, it is useful to know when Auto Scaling is launching or terminating the EC2 instances in your Auto Scaling group\. You can configure Auto Scaling to send events to Amazon CloudWatch Events whenever your Auto Scaling group scales\.
+When you use Amazon EC2 Auto Scaling to scale your applications automatically, it is useful to know when Amazon EC2 Auto Scaling is launching or terminating the EC2 instances in your Auto Scaling group\. You can configure Amazon EC2 Auto Scaling to send events to Amazon CloudWatch Events whenever your Auto Scaling group scales\.
 
 For more information, see the [Amazon CloudWatch Events User Guide](http://docs.aws.amazon.com/AmazonCloudWatch/latest/events/)\.
 
@@ -11,7 +11,7 @@ For more information, see the [Amazon CloudWatch Events User Guide](http://docs.
 
 ## Auto Scaling Events<a name="cloudwatch-event-types"></a>
 
-Auto Scaling supports sending events to CloudWatch Events when the following events occur:
+Amazon EC2 Auto Scaling supports sending events to CloudWatch Events when the following events occur:
 + [EC2 Instance\-launch Lifecycle Action](#launch-lifecycle-action)
 + [EC2 Instance Launch Successful](#launch-successful)
 + [EC2 Instance Launch Unsuccessful](#launch-unsuccessful)
@@ -21,7 +21,7 @@ Auto Scaling supports sending events to CloudWatch Events when the following eve
 
 ### EC2 Instance\-launch Lifecycle Action<a name="launch-lifecycle-action"></a>
 
-Auto Scaling moved an instance to a `Pending:Wait` state due to a lifecycle hook\.
+Amazon EC2 Auto Scaling moved an instance to a `Pending:Wait` state due to a lifecycle hook\.
 
 **Event Data**  
 The following is example data for this event\.
@@ -51,7 +51,7 @@ The following is example data for this event\.
 
 ### EC2 Instance Launch Successful<a name="launch-successful"></a>
 
-Auto Scaling successfully launched an instance\.
+Amazon EC2 Auto Scaling successfully launched an instance\.
 
 **Event Data**  
 The following is example data for this event\.
@@ -90,7 +90,7 @@ The following is example data for this event\.
 
 ### EC2 Instance Launch Unsuccessful<a name="launch-unsuccessful"></a>
 
-Auto Scaling failed to launch an instance\.
+Amazon EC2 Auto Scaling failed to launch an instance\.
 
 **Event Data**  
 The following is example data for this event\.
@@ -128,7 +128,7 @@ The following is example data for this event\.
 
 ### EC2 Instance\-terminate Lifecycle Action<a name="terminate-lifecycle-action"></a>
 
-Auto Scaling moved an instance to a `Terminating:Wait` state due to a lifecycle hook\.
+Amazon EC2 Auto Scaling moved an instance to a `Terminating:Wait` state due to a lifecycle hook\.
 
 **Event Data**  
 The following is example data for this event\.
@@ -150,14 +150,15 @@ The following is example data for this event\.
     "AutoScalingGroupName":"my-asg", 
     "LifecycleHookName":"my-lifecycle-hook", 
     "EC2InstanceId":"i-1234567890abcdef0", 
-    "LifecycleTransition":"autoscaling:EC2_INSTANCE_TERMINATING" 
+    "LifecycleTransition":"autoscaling:EC2_INSTANCE_TERMINATING", 
+    "NotificationMetadata":"additional-info"
   } 
 }
 ```
 
 ### EC2 Instance Terminate Successful<a name="terminate-successful"></a>
 
-Auto Scaling successfully terminated an instance\.
+Amazon EC2 Auto Scaling successfully terminated an instance\.
 
 **Event Data**  
 The following is example data for this event\.
@@ -196,7 +197,7 @@ The following is example data for this event\.
 
 ### EC2 Instance Terminate Unsuccessful<a name="terminate-unsuccessful"></a>
 
-Auto Scaling failed to terminate an instance\.
+Amazon EC2 Auto Scaling failed to terminate an instance\.
 
 **Event Data**  
 The following is example data for this event\.
@@ -311,4 +312,4 @@ To test your rule, change the size of your Auto Scaling group\. If you used the 
 1. Select the log group for your Lambda function \(for example, **/aws/lambda/***my\-function*\)\.
 
 1. Select a log stream to view the event data\. The data is displayed, similar to the following:  
-![\[Viewing event data for Auto Scaling in CloudWatch Logs.\]](http://docs.aws.amazon.com/autoscaling/ec2/userguide/images/auto_scaling_event_data.png)
+![\[Viewing event data for Amazon EC2 Auto Scaling in CloudWatch Logs.\]](http://docs.aws.amazon.com/autoscaling/ec2/userguide/images/auto_scaling_event_data.png)

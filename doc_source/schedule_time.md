@@ -86,7 +86,7 @@ aws autoscaling put-scheduled-update-group-action --scheduled-action-name ScaleD
 ```
 
 **To schedule scaling on a recurring schedule**  
-You can specify a recurrence schedule, in UTC, using the Cron format\. For more information, see the [Cron](http://en.wikipedia.org/wiki/Cron) Wikipedia entry\.
+You can specify a recurrence schedule, in UTC, using the Cron format\. For more information about this format, see [Crontab](http://crontab.org)\.
 
 Use the following [put\-scheduled\-update\-group\-action](http://docs.aws.amazon.com/cli/latest/reference/autoscaling/put-scheduled-update-group-action.html) command to create a scheduled action that runs at 00:30 hours on the first of January, June, and December each year:
 

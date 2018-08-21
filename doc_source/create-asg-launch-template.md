@@ -1,17 +1,20 @@
 # Creating an Auto Scaling Group Using a Launch Template<a name="create-asg-launch-template"></a>
 
-When you create an Auto Scaling group, you must specify the information needed to configure the Auto Scaling instances and the minimum number of instances your group must maintain at all times\.
+This section shows you how to create an Auto Scaling group using a launch template\.
 
-When you create an Auto Scaling group using a launch template, you specify which version of the launch template the Auto Scaling group uses to launch Auto Scaling instances\. You can specify a specific version \(using the API, AWS CLI, or an SDK, but not the console\)\. Alternatively, you can configure the Auto Scaling group to select either the default version or the latest version of the launch template dynamically when a scale out event occurs\.
+When you create an Auto Scaling group, you must specify the information needed to configure the EC2 instances and the minimum number of instances your group must maintain at all times\. When you use a launch template, you can have multiple launch template versions where you specify different launch parameters\.
 
-If you configured your Auto Scaling group to select either the default version or the latest version of a launch template dynamically, you can change the configuration of the Auto Scaling instances to be launched by the group by creating a new version or new default version of the launch template\.
+When you create an Auto Scaling group using a launch template, you select the launch template and which specific version of the launch template the group uses to launch EC2 instances\. You can change these selections anytime by updating the group\. 
 
-With the API, AWS CLI, or an SDK, when you update your Auto Scaling group, you can specify a different launch template for the group\. You can also specify a launch template when you update an Auto Scaling group that was created using a launch configuration\.
+Alternatively, you can configure the Auto Scaling group to select either the default version or the latest version of the launch template dynamically when a scale out event occurs\. For example, if you configure your Auto Scaling group to select the default version of a launch template dynamically, you can change the configuration of the EC2 instances to be launched by the group by creating or designating a new default version of the launch template\. 
 
-The following procedure demonstrates how to create an Auto Scaling group using a launch template\.
+**Note**  
+If you currently use launch configurations, you can specify a launch template when you update an Auto Scaling group that was created using a launch configuration\. You can also create launch templates from existing launch configurations\. For more information, see [Copying a Launch Configuration to a Launch Template](copy-launch-config.md)\.
+
+The following procedure demonstrates how to create an Auto Scaling group using an existing launch template\.
 
 **Prerequisites**
-+ Create a launch template\. You must ensure that your template includes all parameters required to launch an EC2 instance, such as an AMI ID and an instance type\. Otherwise, when you use the template to create an Auto Scaling group, you receive an error that you must use a fully\-formed launch template\. For more information, see [Launching an Instance from a Launch Template](http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-launch-templates.html) in the *Amazon EC2 User Guide for Linux Instances*\.
++ You must ensure that your launch template includes all parameters required to launch an EC2 instance, such as an AMI ID and an instance type\. Otherwise, when you use the template to create an Auto Scaling group, you receive an error that you must use a fully\-formed launch template\. For more information, see [Launching an Instance from a Launch Template](http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-launch-templates.html) in the *Amazon EC2 User Guide for Linux Instances*\. 
 + An IAM user or role that creates an Auto Scaling group using a launch template must have permission to use the `ec2:RunInstances` action and permission to create or use the resources for the instance\. For example, access to the `iam:PassRole` action is required to use an instance profile\. You can use the **AmazonEC2FullAccess** policy to grant full access to all Amazon EC2 resources\. You can use resource\-level permissions to restrict access to specific launch templates\. For more information, see [Require a Launch Template](control-access-using-iam.md#policy-example-launch-template) or [Launch Templates](http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ExamplePolicies_EC2.html#iam-example-runinstances-launch-templates) in the *Amazon EC2 User Guide for Linux Instances*\.
 
 **Limitations**
@@ -19,7 +22,7 @@ The following procedure demonstrates how to create an Auto Scaling group using a
 The following are limitations when creating a launch template for use with an Auto Scaling group:
 + You cannot specify multiple network interfaces\.
 + If you specify a network interface, its device index must be 0\.
-+ If you specify a network interface, you must specify any security groups as part of the network interface\.
++ If you specify a network interface, you must specify any security groups as part of the network interface, and not in the **Security Groups** section of the template\.
 + You cannot specify private IP addresses\.
 + You cannot use host placement affinity\.
 + If you specify Spot Instances, you must specify a one\-time request with no end date\.
@@ -38,7 +41,7 @@ The following are limitations when creating a launch template for use with an Au
 
 1. On the **Configure Auto Scaling group details** page, do the following:
 
-   1. For **Launch template version**, choose whether the Auto Scaling group uses the default or the latest version of the launch template when scaling out\.
+   1. For **Launch template version**, choose whether the Auto Scaling group uses the default, the latest, or a specific version of the launch template when scaling out\.
 
    1. For **Group name**, type a name for your Auto Scaling group\.
 

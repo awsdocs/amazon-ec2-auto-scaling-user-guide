@@ -1,6 +1,6 @@
 # Dynamic Scaling for Amazon EC2 Auto Scaling<a name="as-scale-based-on-demand"></a>
 
-When you configure dynamic scaling, you must define how you want to scale in response to changing demand\. For example, say you have a web application that currently runs on two instances and you do not want the CPU utilization of the Auto Scaling group to exceed 70 percent\. You can configure your Auto Scaling group to scale automatically to meet this need\. The policy type determines how the scaling action is performed\.
+When you configure dynamic scaling, you must define how you want to scale in response to changing demand\. For example, you have a web application that currently runs on two instances and you do not want the CPU utilization of the Auto Scaling group to exceed 70 percent\. You can configure your Auto Scaling group to scale automatically to meet this need\. The policy type determines how the scaling action is performed\.
 
 **Topics**
 + [Scaling Policy Types](#as-scaling-types)
@@ -12,7 +12,7 @@ When you configure dynamic scaling, you must define how you want to scale in res
 ## Scaling Policy Types<a name="as-scaling-types"></a>
 
 Amazon EC2 Auto Scaling supports the following types of scaling policies:
-+ **Target tracking scaling**—Increase or decrease  the current capacity of the group based on a target value for a specific metric\. This is similar to the way that your thermostat maintains the temperature of your home – you select a temperature and the thermostat does the rest\.
++ **Target tracking scaling**—Increase or decrease the current capacity of the group based on a target value for a specific metric\. This is similar to the way that your thermostat maintains the temperature of your home – you select a temperature and the thermostat does the rest\.
 + **Step scaling**—Increase or decrease the current capacity of the group based on a set of scaling adjustments, known as *step adjustments*, that vary based on the size of the alarm breach\.
 + **Simple scaling**—Increase or decrease the current capacity of the group based on a single scaling adjustment\.
 

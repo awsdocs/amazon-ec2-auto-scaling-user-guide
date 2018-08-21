@@ -1,9 +1,11 @@
 # Scaling Cooldowns for Amazon EC2 Auto Scaling<a name="Cooldown"></a>
 
-The cooldown period is a configurable setting for your Auto Scaling group that helps to ensure that it doesn't launch or terminate additional instances before the previous scaling activity takes effect\. After the Auto Scaling group dynamically scales using a simple scaling policy, it waits for the cooldown period to complete before resuming scaling activities\. When you manually scale your Auto Scaling group, the default is not to wait for the cooldown period, but you can override the default and honor the cooldown period\. If an instance becomes unhealthy, the Auto Scaling group does not wait for the cooldown period to complete before replacing the unhealthy instance\.
+The cooldown period is a configurable setting for your Auto Scaling group that helps to ensure that it doesn't launch or terminate additional instances before the previous scaling activity takes effect\. After the Auto Scaling group dynamically scales using a simple scaling policy, it waits for the cooldown period to complete before resuming scaling activities\. 
 
 **Important**  
-Amazon EC2 Auto Scaling does not support cooldown periods for step scaling policies or scheduled scaling\. Application Auto Scaling supports cooldown periods for step scaling policies \(see [Cooldown Period](http://docs.aws.amazon.com/autoscaling/application/userguide/application-auto-scaling-step-scaling-policies.html#step-scaling-cooldown)\)\.
+Amazon EC2 Auto Scaling supports cooldown periods when using simple scaling policies, but not when using target tracking policies, step scaling policies, or scheduled scaling\. 
+
+When you manually scale your Auto Scaling group, the default is not to wait for the cooldown period, but you can override the default and honor the cooldown period\. If an instance becomes unhealthy, the Auto Scaling group does not wait for the cooldown period to complete before replacing the unhealthy instance\.
 
 Amazon EC2 Auto Scaling supports both default cooldown periods and scaling\-specific cooldown periods\.
 

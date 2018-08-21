@@ -5,7 +5,7 @@ The EC2 instances in an Auto Scaling group have a path, or lifecycle, that diffe
 **Note**  
 You are billed for instances as soon as they are launched, including the time that they are not yet in service\.
 
-The following illustration shows the transitions between instance states in the Auto Scaling lifecycle\.
+The following illustration shows the transitions between instance states in the Amazon EC2 Auto Scaling lifecycle\.
 
 ![\[The lifecycle of instances within an Auto Scaling group.\]](http://docs.aws.amazon.com/autoscaling/ec2/userguide/images/auto_scaling_lifecycle.png)
 
@@ -23,7 +23,7 @@ When each instance is fully configured and passes the Amazon EC2 health checks, 
 ## Instances In Service<a name="as-lifecycle-inservice"></a>
 
 Instances remain in the `InService` state until one of the following occurs:
-+ A scale in event occurs, and Auto Scaling chooses to terminate this instance in order to reduce the size of the Auto Scaling group\. For more information, see [Controlling Which Auto Scaling Instances Terminate During Scale In](as-instance-termination.md)\.
++ A scale in event occurs, and Amazon EC2 Auto Scaling chooses to terminate this instance in order to reduce the size of the Auto Scaling group\. For more information, see [Controlling Which Auto Scaling Instances Terminate During Scale In](as-instance-termination.md)\.
 + You put the instance into a `Standby` state\. For more information, see [Enter and Exit Standby](#as-lifecycle-standby)\.
 + You detach the instance from the Auto Scaling group\. For more information, see [Detach an Instance](#as-lifecycle-detach)\.
 + The instance fails a required number of health checks, so it is removed from the Auto Scaling group, terminated, and replaced\. For more information, see [Health Checks for Auto Scaling Instances](healthcheck.md)\.
@@ -55,9 +55,9 @@ For more information, see [Detach EC2 Instances from Your Auto Scaling Group](de
 
 You can add a lifecycle hook to your Auto Scaling group so that you can perform custom actions when instances launch or terminate\.
 
-When Auto Scaling responds to a scale out event, it launches one or more instances\. These instances start in the `Pending` state\. If you added an `autoscaling:EC2_INSTANCE_LAUNCHING` lifecycle hook to your Auto Scaling group, the instances move from the `Pending` state to the `Pending:Wait` state\. After you complete the lifecycle action, the instances enter the `Pending:Proceed` state\. When the instances are fully configured, they are attached to the Auto Scaling group and they enter the `InService` state\.
+When Amazon EC2 Auto Scaling responds to a scale out event, it launches one or more instances\. These instances start in the `Pending` state\. If you added an `autoscaling:EC2_INSTANCE_LAUNCHING` lifecycle hook to your Auto Scaling group, the instances move from the `Pending` state to the `Pending:Wait` state\. After you complete the lifecycle action, the instances enter the `Pending:Proceed` state\. When the instances are fully configured, they are attached to the Auto Scaling group and they enter the `InService` state\.
 
-When Auto Scaling responds to a scale in event, it terminates one or more instances\. These instances are detached from the Auto Scaling group and enter the `Terminating` state\. If you added an `autoscaling:EC2_INSTANCE_TERMINATING` lifecycle hook to your Auto Scaling group, the instances move from the `Terminating` state to the `Terminating:Wait` state\. After you complete the lifecycle action, the instances enter the `Terminating:Proceed` state\. When the instances are fully terminated, they enter the `Terminated` state\.
+When Amazon EC2 Auto Scaling responds to a scale in event, it terminates one or more instances\. These instances are detached from the Auto Scaling group and enter the `Terminating` state\. If you added an `autoscaling:EC2_INSTANCE_TERMINATING` lifecycle hook to your Auto Scaling group, the instances move from the `Terminating` state to the `Terminating:Wait` state\. After you complete the lifecycle action, the instances enter the `Terminating:Proceed` state\. When the instances are fully terminated, they enter the `Terminated` state\.
 
 For more information, see [Amazon EC2 Auto Scaling Lifecycle Hooks](lifecycle-hooks.md)\.
 

@@ -4,7 +4,7 @@ When you create an Auto Scaling group, you must specify the information needed t
 
 To configure Auto Scaling instances, you can specify a launch configuration, a launch template, or an EC2 instance\. The following procedure demonstrates how to create an Auto Scaling group using an EC2 instance\. To use a launch configuration or a launch template, see [Creating an Auto Scaling Group Using a Launch Configuration](create-asg.md) or [Creating an Auto Scaling Group Using a Launch Template](create-asg-launch-template.md)\.
 
-When you create an Auto Scaling group using an EC2 instance, Amazon EC2 Auto Scaling automatically creates a launch configuration for you and associates it with the Auto Scaling group\. This launch configuration has the same name as the Auto Scaling group, and it derives its attributes, such as AMI ID, instance type, and Availability Zone, from the specified instance\.
+When you create an Auto Scaling group using an EC2 instance, Amazon EC2 Auto Scaling creates a launch configuration for you and associates it with the Auto Scaling group\. This launch configuration has the same name as the Auto Scaling group, and it derives its attributes, such as AMI ID, instance type, and Availability Zone, from the specified instance\.
 
 **Limitations**  
 The following are limitations when creating an Auto Scaling group from an EC2 instance:
