@@ -6,7 +6,7 @@ The instance that you want to attach must meet the following criteria:
 + The instance is in the `running` state\.
 + The AMI used to launch the instance must still exist\.
 + The instance is not a member of another Auto Scaling group\.
-+ The instance is in the same Availability Zone as the Auto Scaling group\.
++ The Availability Zone of the instance is in the list of Availability Zones declared in the Auto Scaling group\.
 + If the Auto Scaling group has an attached load balancer, the instance and the load balancer must both be in EC2\-Classic or the same VPC\. If the Auto Scaling group has an attached target group, the instance and the load balancer must both be in the same VPC\.
 
 When you attach instances, the desired capacity of the group increases by the number of instances being attached\. If the number of instances being attached plus the desired capacity exceeds the maximum size of the group, the request fails\.
