@@ -46,16 +46,17 @@ The following tables list the types of error messages and provide links to the t
 | Issue |  Error Message | 
 | --- | --- | 
 |  Auto Scaling group | [AutoScalingGroup <Auto Scaling group name> not found\.](ts-as-instancelaunchfailure.md#ts-as-instancelaunchfailure-4) | 
-|  Availability Zone | [The requested Availability Zone is no longer supported\. Please retry your request \.\.\.\.\.\.](ts-as-instancelaunchfailure.md#ts-as-instancelaunchfailure-5) | 
+|  Availability Zone | [The requested Availability Zone is no longer supported\. Please retry your request\.\.\.](ts-as-instancelaunchfailure.md#ts-as-instancelaunchfailure-5) | 
 |  AWS account | [You are not subscribed to this service\. Please see http://aws\.amazon\.com\.](ts-as-instancelaunchfailure.md#ts-as-instancelaunchfailure-7) | 
 |  Block device mapping | [Invalid device name upload\. Launching EC2 instance failed\.](ts-as-instancelaunchfailure.md#ts-as-instancelaunchfailure-8) | 
 |  Block device mapping | [Value \(<name associated with the instance storage device>\) for parameter virtualName is invalid\.\.\.](ts-as-instancelaunchfailure.md#ts-as-instancelaunchfailure-9) | 
 |  Block device mapping | [EBS block device mappings not supported for instance\-store AMIs\.](ts-as-instancelaunchfailure.md#ts-as-instancelaunchfailure-10) | 
-|  Instance type and Availability Zone | [Your requested instance type \(<instance type>\) is not supported in your requested Availability Zone \(<instance Availability Zone>\)\.\.\.\.](ts-as-instancelaunchfailure.md#ts-as-instancelaunchfailure-6) | 
+|  Instance type and Availability Zone | [Your requested instance type \(<instance type>\) is not supported in your requested Availability Zone \(<instance Availability Zone>\)\.\.\.](ts-as-instancelaunchfailure.md#ts-as-instancelaunchfailure-6) | 
 |  Key pair | [The key pair <key pair associated with your EC2 instance> does not exist\. Launching EC2 instance failed\.](ts-as-instancelaunchfailure.md#ts-as-instancelaunchfailure-2) | 
 |  Launch configuration | [The requested configuration is currently not supported\.](ts-as-instancelaunchfailure.md#ts-as-instancelaunchfailure-3) | 
 |  Placement group | [Placement groups may not be used with instances of type 'm1\.large'\. Launching EC2 instance failed\.](ts-as-instancelaunchfailure.md#ts-as-instancelaunchfailure-11) | 
 |  Security group | [The security group <name of the security group> does not exist\. Launching EC2 instance failed\.](ts-as-instancelaunchfailure.md#ts-as-instancelaunchfailure-1) | 
+|  Service\-linked role | [Client\.InternalError: Client error on launch\.](ts-as-instancelaunchfailure.md#ts-as-instancelaunchfailure-12) | 
 
 
 **AMI Issues**  
@@ -83,4 +84,4 @@ The following tables list the types of error messages and provide links to the t
 | Issue | Error Message | 
 | --- | --- | 
 | Capacity limits | [<number of instances> instance\(s\) are already running\. Launching EC2 instance failed\.](ts-as-capacity.md#ts-as-capacity-2) | 
-| Insufficient capacity in Availability Zone | [We currently do not have sufficient <instance type> capacity in the Availability Zone you requested \(<requested Availability Zone>\)\.\.\.\.](ts-as-capacity.md#ts-as-capacity-1) | 
+| Insufficient capacity in Availability Zone | [We currently do not have sufficient <instance type> capacity in the Availability Zone you requested \(<requested Availability Zone>\)\.\.\.](ts-as-capacity.md#ts-as-capacity-1) | 

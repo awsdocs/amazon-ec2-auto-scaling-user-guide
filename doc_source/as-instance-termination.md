@@ -6,6 +6,9 @@ When you configure automatic scale in, you must decide which instances should te
 
 You can also use instance protection to prevent specific instances from being terminated during automatic scale in\.
 
+**Note**  
+The information in this section about maximizing usage to the hour is currently applicable to instances running Microsoft Windows or Linux distributions that have an hourly charge\. If your Auto Scaling group uses Amazon Linux or Ubuntu, your EC2 usage is billed in one second increments\. For more information about per\-second billing, see [Amazon EC2 Pricing](https://aws.amazon.com/ec2/pricing/)\.
+
 **Topics**
 + [Default Termination Policy](#default-termination-policy)
 + [Customizing the Termination Policy](#custom-termination-policy)
@@ -60,7 +63,7 @@ Amazon EC2 Auto Scaling supports the following custom termination policies:
 
 1. For **Actions**, choose **Edit**\.
 
-1. On the **Details** tab, locate **Termination Policies**\. Choose one or more termination policies\. If you choose multiple policies, list them in the order that you would like them to apply\. If you use the `Default` policy, make it the last one in the list\.
+1. On the **Details** tab, locate **Termination Policies**\. Choose one or more termination policies\. If you choose multiple policies, list them in the order that you want them to apply\. If you use the `Default` policy, make it the last one in the list\.
 
 1. Choose **Save**\.
 
@@ -72,10 +75,10 @@ Use one of the following commands:
 You can use these policies individually, or combine them into a list of policies\. For example, use the following command to update an Auto Scaling group to use the `OldestLaunchConfiguration` policy first and then use the `ClosestToNextInstanceHour` policy:
 
 ```
-aws autoscaling update-auto-scaling-group --auto-scaling-group-name my-asg --termination-policies "OldestLaunchConfiguration,ClosestToNextInstanceHour"
+aws autoscaling update-auto-scaling-group --auto-scaling-group-name my-asg --termination-policies "OldestLaunchConfiguration" "ClosestToNextInstanceHour"
 ```
 
-If you use the `Default` termination policy, make it the last one in the list of termination policies\. For example, `--termination-policies "OldestLaunchConfiguration,Default"`\.
+If you use the `Default` termination policy, make it the last one in the list of termination policies\. For example, `--termination-policies "OldestLaunchConfiguration" "Default"`\.
 
 ## Instance Protection<a name="instance-protection"></a>
 
@@ -83,7 +86,7 @@ To control whether an Auto Scaling group can terminate a particular instance whe
 
 Instance protection starts when the instance state is `InService`\. If you detach an instance that is protected from termination, its instance protection setting is lost\. When you attach the instance to the group again, it inherits the current instance protection setting of the group\.
 
-If all instances in an Auto Scaling group are protected from termination during scale in and a scale in event occurs, its desired capacity is decremented\. However, the Auto Scaling group can't terminate the required number of instances until their instance protection settings are disabled\.
+If all instances in an Auto Scaling group are protected from termination during scale in and a scale\-in event occurs, its desired capacity is decremented\. However, the Auto Scaling group can't terminate the required number of instances until their instance protection settings are disabled\.
 
 Instance protection does not protect Auto Scaling instances from the following:
 + Manual termination through the Amazon EC2 console, the `terminate-instances` command, or the `TerminateInstances` action\. To protect Auto Scaling instances from manual termination, enable termination protection\. For more information, see [Enabling Termination Protection](http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/terminating-instances.html#Using_ChangingDisableAPITermination) in the *Amazon EC2 User Guide for Linux Instances*\.

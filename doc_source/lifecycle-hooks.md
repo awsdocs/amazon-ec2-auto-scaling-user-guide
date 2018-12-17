@@ -16,7 +16,7 @@ Each Auto Scaling group can have multiple lifecycle hooks\. However, there is a 
 
 After you add lifecycle hooks to your Auto Scaling group, they work as follows:
 
-1. Responds to scale out events by launching instances and scale in events by terminating instances\.
+1. Responds to scale\-out events by launching instances and scale\-in events by terminating instances\.
 
 1. Puts the instance into a wait state \(`Pending:Wait` or `Terminating:Wait`\)\. The instance is paused until either you continue or the timeout period ends\.
 
@@ -73,7 +73,7 @@ If the instance is terminating, both `ABANDON` and `CONTINUE` allow the instance
 
 ### Spot Instances<a name="lifecycle-hook-spot"></a>
 
-You can use lifecycle hooks with Spot Instances\. However, a lifecycle hook does not prevent an instance from terminating due to a change in the Spot Price, which can happen at any time\. In addition, when a Spot Instance terminates, you must still complete the lifecycle action \(using the complete\-lifecycle\-action command or the CompleteLifecycleAction operation\)\.
+You can use lifecycle hooks with Spot Instances\. However, a lifecycle hook does not prevent an instance from terminating due to a change in the Spot price, which can happen at any time\. In addition, when a Spot Instance terminates, you must still complete the lifecycle action \(using the complete\-lifecycle\-action command or the CompleteLifecycleAction operation\)\.
 
 ## Prepare for Notifications<a name="preparing-for-notification"></a>
 
@@ -142,7 +142,7 @@ You can use Amazon SNS to set up a notification target to receive notifications 
 
 1. Create an IAM role to grant Amazon EC2 Auto Scaling permissions to access your notification target, using the steps in [Creating a Role to Delegate Permissions to an AWS Service](http://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_create_for-service.html) in the *IAM User Guide*\. When prompted to select a role type, select **AWS Service Roles**, **AutoScaling Notification Access**\. Note the ARN of the role\. For example, `arn:aws:iam::123456789012:role/my-notification-role`\.
 
-1. When the Auto Scaling group responds to a scale\-out or scale in event, it puts the instance in a wait state\. While the instance is in a wait state, a message is published to the notification target\. The message includes the following event data:
+1. When the Auto Scaling group responds to a scale\-out or scale\-in event, it puts the instance in a wait state\. While the instance is in a wait state, a message is published to the notification target\. The message includes the following event data:
    + **LifecycleActionToken** — The lifecycle action token\.
    + **AccountId** — The AWS account ID\.
    + **AutoScalingGroupName** — The name of the Auto Scaling group\.
@@ -210,7 +210,7 @@ The topic receives a test notification with the following key\-value pair:
 
 ## Complete the Lifecycle Hook<a name="completing-lifecycle-hooks"></a>
 
-When an Auto Scaling group responds to a scale out or scale in event, it puts the instance in a wait state and sends any notifications\. It continues the launch or terminate process after you complete the lifecycle hook\.
+When an Auto Scaling group responds to a scale\-out or scale\-in event, it puts the instance in a wait state and sends any notifications\. It continues the launch or terminate process after you complete the lifecycle hook\.
 
 **To complete a lifecycle hook**
 

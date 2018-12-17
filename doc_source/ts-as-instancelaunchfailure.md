@@ -11,13 +11,14 @@ When your EC2 instances fail to launch, you might get one or more of the followi
 + [The key pair <key pair associated with your EC2 instance> does not exist\. Launching EC2 instance failed\.](#ts-as-instancelaunchfailure-2)
 + [The requested configuration is currently not supported\.](#ts-as-instancelaunchfailure-3)
 + [AutoScalingGroup <Auto Scaling group name> not found\.](#ts-as-instancelaunchfailure-4)
-+ [The requested Availability Zone is no longer supported\. Please retry your request \.\.\.\.\.\.](#ts-as-instancelaunchfailure-5)
-+ [Your requested instance type \(<instance type>\) is not supported in your requested Availability Zone \(<instance Availability Zone>\)\.\.\.\.](#ts-as-instancelaunchfailure-6)
++ [The requested Availability Zone is no longer supported\. Please retry your request\.\.\.](#ts-as-instancelaunchfailure-5)
++ [Your requested instance type \(<instance type>\) is not supported in your requested Availability Zone \(<instance Availability Zone>\)\.\.\.](#ts-as-instancelaunchfailure-6)
 + [You are not subscribed to this service\. Please see http://aws\.amazon\.com\.](#ts-as-instancelaunchfailure-7)
 + [Invalid device name upload\. Launching EC2 instance failed\.](#ts-as-instancelaunchfailure-8)
 + [Value \(<name associated with the instance storage device>\) for parameter virtualName is invalid\.\.\.](#ts-as-instancelaunchfailure-9)
 + [EBS block device mappings not supported for instance\-store AMIs\.](#ts-as-instancelaunchfailure-10)
 + [Placement groups may not be used with instances of type 'm1\.large'\. Launching EC2 instance failed\.](#ts-as-instancelaunchfailure-11)
++ [Client\.InternalError: Client error on launch\.](#ts-as-instancelaunchfailure-12)
 
 ## The security group <name of the security group> does not exist\. Launching EC2 instance failed\.<a name="ts-as-instancelaunchfailure-1"></a>
 + **Cause**: The security group specified in your launch configuration might have been deleted\. 
@@ -55,12 +56,12 @@ When your EC2 instances fail to launch, you might get one or more of the followi
 + **Cause**: The Auto Scaling group might have been deleted\.
 + **Solution**: Create a new Auto Scaling group\.
 
-## The requested Availability Zone is no longer supported\. Please retry your request \.\.\.\.\.\.<a name="ts-as-instancelaunchfailure-5"></a>
+## The requested Availability Zone is no longer supported\. Please retry your request\.\.\.<a name="ts-as-instancelaunchfailure-5"></a>
 + **Error Message**: The requested Availability Zone is no longer supported\. Please retry your request by not specifying an Availability Zone or choosing <list of available Availability Zones>\. Launching EC2 instance failed\.
 + **Cause**: The Availability Zone associated with your Auto Scaling group might not be currently available\.
 + **Solution**: Update your Auto Scaling group with the recommendations in the error message\. 
 
-## Your requested instance type \(<instance type>\) is not supported in your requested Availability Zone \(<instance Availability Zone>\)\.\.\.\.<a name="ts-as-instancelaunchfailure-6"></a>
+## Your requested instance type \(<instance type>\) is not supported in your requested Availability Zone \(<instance Availability Zone>\)\.\.\.<a name="ts-as-instancelaunchfailure-6"></a>
 + **Error Message**: Your requested instance type \(<instance type>\) is not supported in your requested Availability Zone \(<instance Availability Zone>\)\. Please retry your request by not specifying an Availability Zone or choosing <list of Availability Zones that supports the instance type>\. Launching EC2 instance failed\.
 + **Cause**: The instance type associated with your launch configuration might not be currently available in the Availability Zones specified in your Auto Scaling group\. 
 + **Solution**: Update your Auto Scaling group with the recommendations in the error message\.
@@ -107,3 +108,13 @@ When your EC2 instances fail to launch, you might get one or more of the followi
   1.  Alternatively, create a new launch configuration with the supported instance type\. 
 
   1. Update your Auto Scaling group with new placement group or launch configuration using the [update\-auto\-scaling\-group](http://docs.aws.amazon.com/cli/latest/reference/autoscaling/update-auto-scaling-group.html) command\.
+
+## Client\.InternalError: Client error on launch\.<a name="ts-as-instancelaunchfailure-12"></a>
++ **Cause**: This error can be caused when an Auto Scaling group attempts to launch an instance that has an encrypted EBS volume, but the [service\-linked role](autoscaling-service-linked-role.md) does not have access to the [customer managed CMK](http://docs.aws.amazon.com/kms/latest/developerguide/concepts.html) used to encrypt it\. 
++ **Solution**: Additional setup is required to allow the Auto Scaling group to launch instances\. The following table summarizes the steps for resolving the error\. For more information, see [https://forums\.aws\.amazon\.com/thread\.jspa?threadID=277523](https://forums.aws.amazon.com/thread.jspa?threadID=277523)\.
+
+
+| Scenario | Next Steps | 
+| --- | --- | 
+|  **Scenario 1:**  CMK and Auto Scaling group are in the same AWS account  |  Allow the service\-linked role to use the CMK as follows: [\[See the AWS documentation website for more details\]](http://docs.aws.amazon.com/autoscaling/ec2/userguide/ts-as-instancelaunchfailure.html)  | 
+|  **Scenario 2:** CMK and Auto Scaling group are in different AWS accounts  |  There are two possible solutions: Solution 1: Use a CMK in the same AWS account as the Auto Scaling group [\[See the AWS documentation website for more details\]](http://docs.aws.amazon.com/autoscaling/ec2/userguide/ts-as-instancelaunchfailure.html) Solution 2: Continue to use the CMK in a different AWS account from the Auto Scaling group [\[See the AWS documentation website for more details\]](http://docs.aws.amazon.com/autoscaling/ec2/userguide/ts-as-instancelaunchfailure.html)  | 
