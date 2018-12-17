@@ -83,7 +83,7 @@ The following is example data for this event\.
       "EndTime": "yyyy-mm-ddThh:mm:ssZ",
       "EC2InstanceId": "i-1234567890abcdef0",
       "StartTime": "yyyy-mm-ddThh:mm:ssZ",
-      "Cause": "description-text",
+      "Cause": "description-text"
   }
 }
 ```
@@ -121,7 +121,7 @@ The following is example data for this event\.
       "EndTime": "yyyy-mm-ddThh:mm:ssZ",
       "EC2InstanceId": "i-1234567890abcdef0",
       "StartTime": "yyyy-mm-ddThh:mm:ssZ",
-      "Cause": "description-text",
+      "Cause": "description-text"
   }
 }
 ```
@@ -190,7 +190,7 @@ The following is example data for this event\.
       "EndTime": "yyyy-mm-ddThh:mm:ssZ",
       "EC2InstanceId": "i-1234567890abcdef0",
       "StartTime": "yyyy-mm-ddThh:mm:ssZ",
-      "Cause": "description-text",
+      "Cause": "description-text"
   }
 }
 ```
@@ -228,7 +228,7 @@ The following is example data for this event\.
       "EndTime": "yyyy-mm-ddThh:mm:ssZ",
       "EC2InstanceId": "i-1234567890abcdef0",
       "StartTime": "yyyy-mm-ddThh:mm:ssZ",
-      "Cause": "description-text",
+      "Cause": "description-text"
   }
 }
 ```
@@ -312,4 +312,5 @@ To test your rule, change the size of your Auto Scaling group\. If you used the 
 1. Select the log group for your Lambda function \(for example, **/aws/lambda/***my\-function*\)\.
 
 1. Select a log stream to view the event data\. The data is displayed, similar to the following:  
+
 ![\[Viewing event data for Amazon EC2 Auto Scaling in CloudWatch Logs.\]](http://docs.aws.amazon.com/autoscaling/ec2/userguide/images/auto_scaling_event_data.png)
