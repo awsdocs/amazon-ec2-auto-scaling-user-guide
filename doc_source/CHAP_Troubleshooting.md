@@ -11,7 +11,7 @@ Amazon EC2 Auto Scaling provides specific and descriptive errors to help you tro
 
 ## Retrieving an Error Message<a name="RetrievingErrors"></a>
 
-To retrieve an error message from the description of scaling activities, use the [describe\-scaling\-activities](http://docs.aws.amazon.com/cli/latest/reference/autoscaling/describe-scaling-activities.html) command as follows:
+To retrieve an error message from the description of scaling activities, use the [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/describe-scaling-activities.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/describe-scaling-activities.html) command as follows:
 
 ```
 aws autoscaling describe-scaling-activities --auto-scaling-group-name my-asg

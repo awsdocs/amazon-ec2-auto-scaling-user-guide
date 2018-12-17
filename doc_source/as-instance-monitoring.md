@@ -2,7 +2,7 @@
 
 Amazon CloudWatch enables you to retrieve statistics as an ordered set of time\-series data, known as metrics\. You can use these metrics to verify that your system is performing as expected\.
 
-Amazon EC2 sends metrics to CloudWatch that describe your Auto Scaling instances\. These metrics are available for any EC2 instance, not just those in an Auto Scaling group\. For more information, see [Instance Metrics](http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/viewing_metrics_with_cloudwatch.html#ec2-cloudwatch-metrics) in the *Amazon EC2 User Guide for Linux Instances*\.
+Amazon EC2 sends metrics to CloudWatch that describe your Auto Scaling instances\. These metrics are available for any EC2 instance, not just those in an Auto Scaling group\. For more information, see [Instance Metrics](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/viewing_metrics_with_cloudwatch.html#ec2-cloudwatch-metrics) in the *Amazon EC2 User Guide for Linux Instances*\.
 
 Auto Scaling groups can send metrics to CloudWatch that describe the group itself\. You must enable these metrics\.
 
@@ -61,20 +61,20 @@ When you enable Auto Scaling group metrics, Auto Scaling sends sampled data to C
 ![\[Disable Auto Scaling group metrics collection.\]](http://docs.aws.amazon.com/autoscaling/ec2/userguide/images/monitoring_group_metrics_disable.png)
 
 **To enable group metrics using the AWS CLI**  
-Enable one or more group metrics using the [enable\-metrics\-collection](http://docs.aws.amazon.com/cli/latest/reference/autoscaling/enable-metrics-collection.html) command\. For example, the following command enables the GroupDesiredCapacity metric\.
+Enable one or more group metrics using the [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/enable-metrics-collection.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/enable-metrics-collection.html) command\. For example, the following command enables the GroupDesiredCapacity metric\.
 
 ```
 aws autoscaling enable-metrics-collection --auto-scaling-group-name my-asg --metrics GroupDesiredCapacity --granularity "1Minute"
 ```
 
-If you omit the \-\-metrics option, all metrics are enabled\.
+If you omit the `--metrics` option, all metrics are enabled\.
 
 ```
 aws autoscaling enable-metrics-collection --auto-scaling-group-name my-asg --granularity "1Minute"
 ```
 
 **To disable group metrics using the AWS CLI**  
-Use the [disable\-metrics\-collection](http://docs.aws.amazon.com/cli/latest/reference/autoscaling/disable-metrics-collection.html) command\. For example, the following command disables all Auto Scaling group metrics:
+Use the [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/disable-metrics-collection.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/disable-metrics-collection.html) command\. For example, the following command disables all Auto Scaling group metrics:
 
 ```
 aws autoscaling disable-metrics-collection --auto-scaling-group-name my-asg
@@ -82,21 +82,28 @@ aws autoscaling disable-metrics-collection --auto-scaling-group-name my-asg
 
 ## Configure Monitoring for Auto Scaling Instances<a name="enable-as-instance-metrics"></a>
 
-By default, basic monitoring is enabled when you create a launch configuration using the AWS Management Console and detailed monitoring is enabled when you create a launch configuration using the AWS CLI or an API\.
+You configure monitoring for EC2 instances using a launch configuration or template\. Monitoring is enabled whenever an instance is launched, either basic monitoring \(5\-minute granularity\) or detailed monitoring \(1\-minute granularity\)\. For detailed monitoring, additional charges apply\. For more information, see [Amazon CloudWatch Pricing](https://aws.amazon.com/cloudwatch/pricing/)\.
 
-If you have an Auto Scaling group and need to change which type of monitoring is enabled for your Auto Scaling instances, you must create a new launch configuration and update the Auto Scaling group to use this launch configuration\. After that, the instances that the Auto Scaling group launches will use the updated monitoring type\. Note that existing instances in the Auto Scaling group continue to use the previous monitoring type\. You can terminate these instances so that Auto Scaling replaces them, or update each instance individually using the [monitor\-instances](http://docs.aws.amazon.com/cli/latest/reference/ec2/monitor-instances.html) and [unmonitor\-instances](http://docs.aws.amazon.com/cli/latest/reference/ec2/unmonitor-instances.html)\.
+**Note**  
+By default, basic monitoring is enabled when you create a launch template or when you use the AWS Management Console to create a launch configuration\. Detailed monitoring is enabled by default when you create a launch configuration using the AWS CLI or an SDK\. 
 
-If you have CloudWatch alarms associated with your Auto Scaling group, use the [put\-metric\-alarm](http://docs.aws.amazon.com/cli/latest/reference/cloudwatch/put-metric-alarm.html) command to update each alarm so that its period matches the monitoring type \(300 seconds for basic monitoring and 60 seconds for detailed monitoring\)\. If you change from detailed monitoring to basic monitoring but do not update your alarms to match the five\-minute period, they continue to check for statistics every minute and might find no data available for as many as four out of every five periods\.
+To change the type of monitoring enabled on new EC2 instances, update the launch template or update the Auto Scaling group to use a new launch configuration\. Existing instances continue to use the previously enabled monitoring type\. To update all instances, terminate them so that they are replaced by your Auto Scaling group or update instances individually using [https://docs.aws.amazon.com/cli/latest/reference/ec2/monitor-instances.html](https://docs.aws.amazon.com/cli/latest/reference/ec2/monitor-instances.html) and [https://docs.aws.amazon.com/cli/latest/reference/ec2/unmonitor-instances.html](https://docs.aws.amazon.com/cli/latest/reference/ec2/unmonitor-instances.html)\.
+
+If you have CloudWatch alarms associated with your Auto Scaling group, use the [https://docs.aws.amazon.com/cli/latest/reference/cloudwatch/put-metric-alarm.html](https://docs.aws.amazon.com/cli/latest/reference/cloudwatch/put-metric-alarm.html) command to update each alarm\. Make each period match the monitoring type \(300 seconds for basic monitoring and 60 seconds for detailed monitoring\)\. If you change from detailed monitoring to basic monitoring but do not update your alarms to match the five\-minute period, they continue to check for statistics every minute\. They might find no data available for as many as four out of every five periods\.
 
 **To configure CloudWatch monitoring using the console**  
 When you create the launch configuration using the AWS Management Console, on the **Configure Details** page, select **Enable CloudWatch detailed monitoring**\. Otherwise, basic monitoring is enabled\. For more information, see [Creating a Launch Configuration](create-launch-config.md)\.
 
+To enable detailed monitoring for a launch template using the AWS Management Console, in the **Advanced Details** section, for **Monitoring**, choose **Enable**\. Otherwise, basic monitoring is enabled\. For more information, see [Creating a Launch Template for an Auto Scaling Group](create-launch-template.md)\.
+
 **To configure CloudWatch monitoring using the AWS CLI**  
-Use the [create\-launch\-configuration](http://docs.aws.amazon.com/cli/latest/reference/autoscaling/create-launch-configuration.html) command with the `--instance-monitoring` option\. Set this option to `true` to enable detailed monitoring or `false` to enable basic monitoring\.
+For launch configurations, use the [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/create-launch-configuration.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/create-launch-configuration.html) command with the `--instance-monitoring` option\. Set this option to `true` to enable detailed monitoring or `false` to enable basic monitoring\.
 
 ```
 --instance-monitoring Enabled=true
 ```
+
+For launch templates, use the [https://docs.aws.amazon.com/cli/latest/reference/ec2/create-launch-template.html](https://docs.aws.amazon.com/cli/latest/reference/ec2/create-launch-template.html) command and pass a JSON file that contains the parameters and values for creating the launch template\. Set the monitoring parameter to `"Monitoring": {"Enabled": true}` to enable detailed monitoring or `"Monitoring": {"Enabled": false}` to enable basic monitoring\. 
 
 ## View CloudWatch Metrics<a name="as-view-group-metrics"></a>
 
@@ -139,10 +146,10 @@ Alternatively, you can view these metrics using the CloudWatch console\.
    + Status Check Failed \(System\) — `StatusCheckFailed_System`
 
 **To view metrics using the CloudWatch console**  
-For more information, see [Aggregate Statistics by Auto Scaling Group](http://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/GetMetricAutoScalingGroup.html)\.
+For more information, see [Aggregate Statistics by Auto Scaling Group](https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/GetMetricAutoScalingGroup.html)\.
 
 **To view CloudWatch metrics using the AWS CLI**  
-To view all metrics for all your Auto Scaling groups, use the following [list\-metrics](http://docs.aws.amazon.com/cli/latest/reference/cloudwatch/list-metrics.html) command:
+To view all metrics for all your Auto Scaling groups, use the following [https://docs.aws.amazon.com/cli/latest/reference/cloudwatch/list-metrics.html](https://docs.aws.amazon.com/cli/latest/reference/cloudwatch/list-metrics.html) command:
 
 ```
 aws cloudwatch list-metrics --namespace "AWS/AutoScaling"
@@ -179,16 +186,14 @@ You configure an alarm by identifying the metrics to monitor\. For example, you 
 
 1. On the navigation pane, choose **Alarms**\.
 
-1. Choose **Create Alarm**\.
-
-1. Choose the **EC2 Metrics** category\.
+1. Choose **Create Alarm**, **EC2 Metrics**\.
 
 1. \(Optional\) You can filter the results\. To see the instance metrics, choose **Per\-Instance Metrics**\. To see the Auto Scaling group metrics, choose **By Auto Scaling Group**\.
 
-1. Select a metric, and then choose **Next**\.
+1. Select a metric and choose **Next**\.
 
 1. Specify a threshold for the alarm and the action to take\.
 
-   For more information, see [Creating CloudWatch Alarms](http://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/AlarmThatSendsEmail.html) in the *Amazon CloudWatch User Guide*\.
+   For more information, see [Creating CloudWatch Alarms](https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/AlarmThatSendsEmail.html) in the *Amazon CloudWatch User Guide*\.
 
 1. Choose **Create Alarm**\.

@@ -1,10 +1,10 @@
 # Tagging Auto Scaling Groups and Instances<a name="autoscaling-tagging"></a>
 
-You can organize and manage your Auto Scaling groups by assigning your own metadata to each group in the form of *tags*\. You specify a *key* and a *value* for each tag\. A key can be a general category, such as "project", "owner", or "environment", with specific associated values\. For example, to differentiate between your testing and production environments, you could assign each Auto Scaling group a tag with a key of "environment", and either a value of "test" to indicate your test environment or "production" to indicate your production environment\. We recommend that you use a consistent set of tags to make it easier to track your Auto Scaling groups\.
+You can organize and manage your Auto Scaling groups by assigning your own metadata to each group in the form of *tags*\. You specify a *key* and a *value* for each tag\. A key can be a general category, such as "project," "owner," or "environment," with specific associated values\. For example, to differentiate between your testing and production environments, you could assign each Auto Scaling group a tag with a key of "environment\." Use a value of "test" to indicate your test environment or "production" to indicate your production environment\. We recommend that you use a consistent set of tags to make it easier to track your Auto Scaling groups\.
 
-You can specify that the tags for your Auto Scaling group should be added to the EC2 instances that it launches\. The Auto Scaling group applies the tags while the instances are in the `Pending` lifecycle state\. If you have a lifecycle hook, the tags are available when the instance enters the `Pending:Wait` lifecycle state\. For more information, see [Auto Scaling Lifecycle](AutoScalingGroupLifecycle.md)\.
+You can specify that the tags for your Auto Scaling group should be added to the Amazon EC2 instances that it launches\. The Auto Scaling group applies the tags while the instances are in the `Pending` lifecycle state\. If you have a lifecycle hook, the tags are available when the instance enters the `Pending:Wait` lifecycle state\. For more information, see [Auto Scaling Lifecycle](AutoScalingGroupLifecycle.md)\.
 
-Tagging your EC2 instances enables you to see instance cost allocation by tag in your AWS bill\. For more information, see [Using Cost Allocation Tags](http://docs.aws.amazon.com/awsaccountbilling/latest/aboutv2/cost-alloc-tags.html) in the *AWS Billing and Cost Management User Guide*\.
+Tagging your instances enables you to see instance cost allocation by tag in your AWS bill\. For more information, see [Using Cost Allocation Tags](https://docs.aws.amazon.com/awsaccountbilling/latest/aboutv2/cost-alloc-tags.html) in the *AWS Billing and Cost Management User Guide*\.
 
 **Topics**
 + [Tag Restrictions](#tag_restrictions)
@@ -19,14 +19,14 @@ The following basic restrictions apply to tags:
 + The maximum number of tags that you can add or remove using a single call is 25\.
 + The maximum key length is 127 Unicode characters\.
 + The maximum value length is 255 Unicode characters\.
-+ Tag keys and values are case sensitive\.
++ Tag keys and values are case\-sensitive\.
 + Do not use the `aws:` prefix in your tag names or values, because it is reserved for AWS use\. You can't edit or delete tag names or values with this prefix, and they do not count against toward your limit of tags per Auto Scaling group\.
 
 You can add tags to your Auto Scaling group when you create it or when you update it\. You can remove tags from your Auto Scaling group at any time\. For information about assigning tags when you create your Auto Scaling group, see [Step 2: Create an Auto Scaling Group](GettingStartedTutorial.md#gs-create-asg)\.
 
 ## Tagging Lifecycle<a name="tag-lifecycle"></a>
 
-If you have opted to propagate tags to your Auto Scaling instances, the tags are managed as follows:
+If you have opted to propagate tags to your Amazon EC2 instances, the tags are managed as follows:
 + When an Auto Scaling group launches instances, it adds the tags to the instances\. In addition, it adds a tag with a key of `aws:autoscaling:groupName` and a value of the name of the Auto Scaling group\.
 + When you attach existing instances, the Auto Scaling group adds the tags to the instances, overwriting any existing tags with the same tag key\. In addition, it adds a tag with a key of `aws:autoscaling:groupName` and a value of the name of the Auto Scaling group\.
 + When you detach an instance from an Auto Scaling group, it removes only the `aws:autoscaling:groupName` tag\.
@@ -62,7 +62,7 @@ Use the Amazon EC2 console to add or modify tags\.
 
 ### Add or Modify Tags Using the AWS CLI<a name="add-tags-aws-cli"></a>
 
-Use the [create\-or\-update\-tags](http://docs.aws.amazon.com/cli/latest/reference/autoscaling/create-or-update-tags.html) command to create or modify a tag\. For example, the following command adds a tag with a key of "environment" and a value of "test" that will also be added to instances launched in the Auto Scaling group after this change\. If a tag with this key already exists, the existing tag is replaced\.
+Use the [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/create-or-update-tags.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/create-or-update-tags.html) command to create or modify a tag\. For example, the following command adds a tag with a key of "environment" and a value of "test\." The tag is also added to any instances launched in the Auto Scaling group after this change\. If a tag with this key already exists, the existing tag is replaced\.
 
 ```
 aws autoscaling create-or-update-tags --tags "ResourceId=my-asg,ResourceType=auto-scaling-group,Key=environment,Value=test,PropagateAtLaunch=true"
@@ -74,7 +74,7 @@ The following is an example response:
 OK-Created/Updated tags
 ```
 
-Use the following [describe\-tags](http://docs.aws.amazon.com/cli/latest/reference/autoscaling/describe-tags.html) command to list the tags for the specified Auto Scaling group\.
+Use the following [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/describe-tags.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/describe-tags.html) command to list the tags for the specified Auto Scaling group\.
 
 ```
 aws autoscaling describe-tags --filters Name=auto-scaling-group,Values=my-asg
@@ -96,7 +96,7 @@ The following is an example response:
 }
 ```
 
-Alternatively, use the following [describe\-auto\-scaling\-groups](http://docs.aws.amazon.com/cli/latest/reference/autoscaling/describe-auto-scaling-groups.html) command to verify that the tag is added to the Auto Scaling group\.
+Alternatively, use the following [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/describe-auto-scaling-groups.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/describe-auto-scaling-groups.html) command to verify that the tag is added to the Auto Scaling group\.
 
 ```
 aws autoscaling describe-auto-scaling-groups --auto-scaling-group-name my-asg
@@ -156,10 +156,10 @@ You can delete a tag associated with your Auto Scaling group at any time\.
 
 ### Delete Tags Using the AWS CLI<a name="delete-tag-aws-cli"></a>
 
-Use the [delete\-tags](http://docs.aws.amazon.com/cli/latest/reference/autoscaling/delete-tags.html) command to delete a tag\. For example, the following command deletes a tag with a key of "environment"\.
+Use the [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/delete-tags.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/delete-tags.html) command to delete a tag\. For example, the following command deletes a tag with a key of "environment\."
 
 ```
 aws autoscaling delete-tags --tags "ResourceId=my-asg,ResourceType=auto-scaling-group,Key=environment"
 ```
 
-Notice that you must specify the tag key, but you don't need to specify the value\. If you specify a value and the value is incorrect, the tag is not deleted\.
+You must specify the tag key, but you don't have to specify the value\. If you specify a value and the value is incorrect, the tag is not deleted\.

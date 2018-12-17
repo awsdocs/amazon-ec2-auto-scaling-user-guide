@@ -1,8 +1,8 @@
 # Getting CloudWatch Events When Your Auto Scaling Group Scales<a name="cloud-watch-events"></a>
 
-When you use Amazon EC2 Auto Scaling to scale your applications automatically, it is useful to know when Amazon EC2 Auto Scaling is launching or terminating the EC2 instances in your Auto Scaling group\. You can configure Amazon EC2 Auto Scaling to send events to Amazon CloudWatch Events whenever your Auto Scaling group scales\.
+It is useful to know when Amazon EC2 Auto Scaling is launching or terminating the EC2 instances in your Auto Scaling group\. You can configure Amazon EC2 Auto Scaling to send events to Amazon CloudWatch Events whenever your Auto Scaling group scales\.
 
-For more information, see the [Amazon CloudWatch Events User Guide](http://docs.aws.amazon.com/AmazonCloudWatch/latest/events/)\.
+For more information, see the [Amazon CloudWatch Events User Guide](https://docs.aws.amazon.com/AmazonCloudWatch/latest/events/)\.
 
 **Topics**
 + [Auto Scaling Events](#cloudwatch-event-types)
@@ -312,5 +312,4 @@ To test your rule, change the size of your Auto Scaling group\. If you used the 
 1. Select the log group for your Lambda function \(for example, **/aws/lambda/***my\-function*\)\.
 
 1. Select a log stream to view the event data\. The data is displayed, similar to the following:  
-
 ![\[Viewing event data for Amazon EC2 Auto Scaling in CloudWatch Logs.\]](http://docs.aws.amazon.com/autoscaling/ec2/userguide/images/auto_scaling_event_data.png)

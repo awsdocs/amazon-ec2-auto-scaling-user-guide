@@ -1,10 +1,12 @@
-# Launch Auto Scaling Instances with an IAM Role<a name="us-iam-role"></a>
+# Use an IAM Role for Applications That Run on Amazon EC2 Instances<a name="us-iam-role"></a>
 
-AWS Identity and Access Management \(IAM\) roles for EC2 instances make it easier for you to access other AWS services securely from within the EC2 instances\. EC2 instances launched with an IAM role automatically have AWS security credentials available\. 
+Applications that run on an Amazon EC2 instances need credentials in order to access other AWS services\. To provide credentials to the application in a secure way, use an IAM role\. 
 
-You can launch your Auto Scaling instances with an IAM role to automatically enable applications running on your instances to securely access other AWS resources\. You do this by creating a launch configuration with an EC2 instance profile\. An instance profile is a container for an IAM role\. First, create an IAM role that has all the permissions required to access the AWS resources, then add your role to the instance profile\.
+When you launch an Amazon EC2 instance, you can specify an IAM role for the instance as a launch parameter\. Applications that run on the EC2 instance can use the role's credentials when they access AWS resources\. The role's permissions determine what the application is allowed to do\. 
 
-For more information about IAM roles and instance profiles, see [IAM Roles](http://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles.html) in the *IAM User Guide*\.
+With Amazon EC2 Auto Scaling, you create a launch configuration or launch template with an EC2 *instance profile*\. An instance profile is a container for an IAM role\. First, create an IAM role that has all the permissions required to access the AWS resources, then add your role to the instance profile\.
+
+For more information about IAM roles and instance profiles, see [Using an IAM Role to Grant Permissions to Applications Running on Amazon EC2 Instances ](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_use_switch-role-ec2.html) in the *IAM User Guide*\.
 
 ## Prerequisites<a name="us-iam-role-prereq"></a>
 
@@ -26,7 +28,7 @@ Create an IAM role for your EC2 instances\. The console creates an instance prof
 
 When you create the launch configuration using the AWS Management Console, on the **Configure Details** page, select the role from **IAM role**\. For more information, see [Creating a Launch Configuration](create-launch-config.md)\.
 
-When you create the launch configuration using the [create\-launch\-configuration](http://docs.aws.amazon.com/cli/latest/reference/autoscaling/create-launch-configuration.html) command from the AWS CLI, specify the name of the instance profile as follows:
+When you create the launch configuration using the [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/create-launch-configuration.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/create-launch-configuration.html) command from the AWS CLI, specify the name of the instance profile as follows:
 
 ```
 aws autoscaling create-launch-configuration --launch-configuration-name my-lc-with-instance-profile \

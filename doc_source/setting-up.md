@@ -16,14 +16,14 @@ If you don't have an AWS account, sign up for AWS as follows\.
 
 1. Open [https://aws\.amazon\.com/](https://aws.amazon.com/), and then choose **Create an AWS Account**\.
 **Note**  
-This might be unavailable in your browser if you previously signed into the AWS Management Console\. In that case, choose **Sign in to a different account**, and then choose **Create a new AWS account**\.
+If you previously signed in to the AWS Management Console using AWS account root user credentials, choose **Sign in to a different account**\. If you previously signed in to the console using IAM credentials, choose **Sign\-in using root account credentials**\. Then choose **Create a new AWS account**\.
 
 1. Follow the online instructions\.
 
-   Part of the sign\-up procedure involves receiving a phone call and entering a PIN using the phone keypad\.
+   Part of the sign\-up procedure involves receiving a phone call and entering a verification code using the phone keypad\.
 
-AWS sends you a confirmation e\-mail after the sign\-up process is complete\.
+AWS sends you a confirmation email after the sign\-up process is complete\.
 
 ## Prepare to Use Amazon EC2<a name="set-up-ec2"></a>
 
-If you haven't used Amazon EC2 before, complete the tasks described in the Amazon EC2 documentation\. For more information, see [Setting Up with Amazon EC2](http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/get-set-up-for-amazon-ec2.html) in the *Amazon EC2 User Guide for Linux Instances* or [Setting Up with Amazon EC2](http://docs.aws.amazon.com/AWSEC2/latest/WindowsGuide/get-set-up-for-amazon-ec2.html) in the *Amazon EC2 User Guide for Windows Instances*, depending on which operating system you plan to use for your EC2 instances\.
+If you haven't used Amazon EC2 before, complete the tasks described in the Amazon EC2 documentation\. For more information, see [Setting Up with Amazon EC2](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/get-set-up-for-amazon-ec2.html) in the *Amazon EC2 User Guide for Linux Instances* or [Setting Up with Amazon EC2](https://docs.aws.amazon.com/AWSEC2/latest/WindowsGuide/get-set-up-for-amazon-ec2.html) in the *Amazon EC2 User Guide for Windows Instances*\.

@@ -1,8 +1,11 @@
 # Creating an Auto Scaling Group Using a Launch Configuration<a name="create-asg"></a>
 
-When you create an Auto Scaling group, you must specify the information needed to configure the Auto Scaling instances and the minimum number of instances your group must maintain at all times\.
+When you create an Auto Scaling group, you must specify the necessary information to configure the Amazon EC2 instances, the subnets for the instances, and the initial number of instances\.
 
-The following procedures demonstrate how to create an Auto Scaling group using a launch configuration\. You cannot modify a launch configuration after it is created, but you can replace the launch configuration for an Auto Scaling group\. For more information, see [Changing the Launch Configuration for an Auto Scaling Group](change-launch-config.md)\.
+**Important**  
+To configure the Amazon EC2 instances, you can specify a launch template, a launch configuration, or an EC2 instance\. We recommend that you use a launch template to ensure that you can use the latest features of Amazon EC2\. For more information, see [Launch Templates](LaunchTemplates.md)\.
+
+The following procedure demonstrates how to create an Auto Scaling group using a launch configuration\. You cannot modify a launch configuration after it is created, but you can replace the launch configuration for an Auto Scaling group\. For more information, see [Changing the Launch Configuration for an Auto Scaling Group](change-launch-config.md)\. 
 
 **Prerequisites**  
 Create a launch configuration\. For more information, see [Creating a Launch Configuration](create-launch-config.md)\.
@@ -29,9 +32,9 @@ If you do not have any launch configurations, you're first prompted to create on
 
    1. For **Network**, select a VPC for your Auto Scaling group\.
 
-   1. For **Subnet**, select one or more subnets\.
+   1. For **Subnet**, select one or more subnets in your VPC\. Use subnets in multiple Availability Zones for high availability\. For more information about high availability with Amazon EC2 Auto Scaling, see [Distributing Instances Across Availability Zones](auto-scaling-benefits.md#arch-AutoScalingMultiAZ)\.
 
-   1. \(Optional\) To register your Auto Scaling instances with a load balancer, select **Receive traffic from one or more load balancers** and select one or more Classic Load Balancers or target groups\.
+   1. \(Optional\) To register your Amazon EC2 instances with a load balancer, select **Receive traffic from one or more load balancers** and select one or more Classic Load Balancers or target groups\.
 
    1. Choose **Next: Configure scaling policies**\.
 
@@ -52,5 +55,5 @@ If you do not have any launch configurations, you're first prompted to create on
 **To create an Auto Scaling group using the command line**
 
 You can use one of the following commands:
-+ [create\-auto\-scaling\-group](http://docs.aws.amazon.com/cli/latest/reference/autoscaling/create-auto-scaling-group.html) \(AWS CLI\)
-+ [New\-ASAutoScalingGroup](http://docs.aws.amazon.com/powershell/latest/reference/items/New-ASAutoScalingGroup.html) \(AWS Tools for Windows PowerShell\)
++ [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/create-auto-scaling-group.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/create-auto-scaling-group.html) \(AWS CLI\)
++ [https://docs.aws.amazon.com/powershell/latest/reference/items/New-ASAutoScalingGroup.html](https://docs.aws.amazon.com/powershell/latest/reference/items/New-ASAutoScalingGroup.html) \(AWS Tools for Windows PowerShell\)

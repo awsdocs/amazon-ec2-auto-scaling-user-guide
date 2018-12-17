@@ -24,25 +24,25 @@ When your EC2 instances fail to launch, you might get one or more of the followi
 + **Cause**: The security group specified in your launch configuration might have been deleted\. 
 + **Solution**: 
 
-  1. Use the [describe\-security\-groups](http://docs.aws.amazon.com/cli/latest/reference/ec2/describe-security-groups.html) command to get the list of the security groups associated with your account\.
+  1. Use the [https://docs.aws.amazon.com/cli/latest/reference/ec2/describe-security-groups.html](https://docs.aws.amazon.com/cli/latest/reference/ec2/describe-security-groups.html) command to get the list of the security groups associated with your account\.
 
-  1. From the list, select the security groups to use\. To create a security group instead, use the [create\-security\-group](http://docs.aws.amazon.com/cli/latest/reference/ec2/create-security-group.html) command\.
+  1. From the list, select the security groups to use\. To create a security group instead, use the [https://docs.aws.amazon.com/cli/latest/reference/ec2/create-security-group.html](https://docs.aws.amazon.com/cli/latest/reference/ec2/create-security-group.html) command\.
 
   1. Create a new launch configuration\.
 
-  1. Update your Auto Scaling group with the new launch configuration using the [update\-auto\-scaling\-group](http://docs.aws.amazon.com/cli/latest/reference/autoscaling/update-auto-scaling-group.html) command\.
+  1. Update your Auto Scaling group with the new launch configuration using the [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/update-auto-scaling-group.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/update-auto-scaling-group.html) command\.
 
 ## The key pair <key pair associated with your EC2 instance> does not exist\. Launching EC2 instance failed\.<a name="ts-as-instancelaunchfailure-2"></a>
 + **Cause**: The key pair that was used when launching the instance might have been deleted\.
 + **Solution**: 
 
-  1. Use the [describe\-key\-pairs](http://docs.aws.amazon.com/cli/latest/reference/ec2/describe-key-pairs.html) command to get the list of the key pairs available to you\.
+  1. Use the [https://docs.aws.amazon.com/cli/latest/reference/ec2/describe-key-pairs.html](https://docs.aws.amazon.com/cli/latest/reference/ec2/describe-key-pairs.html) command to get the list of the key pairs available to you\.
 
-  1. From the list, select the key pair to use\. To create a key pair instead, use the [create\-key\-pair](http://docs.aws.amazon.com/cli/latest/reference/ec2/create-key-pair.html) command\.
+  1. From the list, select the key pair to use\. To create a key pair instead, use the [https://docs.aws.amazon.com/cli/latest/reference/ec2/create-key-pair.html](https://docs.aws.amazon.com/cli/latest/reference/ec2/create-key-pair.html) command\.
 
   1. Create a new launch configuration\.
 
-  1. Update your Auto Scaling group with the new launch configuration using the [update\-auto\-scaling\-group](http://docs.aws.amazon.com/cli/latest/reference/autoscaling/update-auto-scaling-group.html) command\.
+  1. Update your Auto Scaling group with the new launch configuration using the [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/update-auto-scaling-group.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/update-auto-scaling-group.html) command\.
 
 ## The requested configuration is currently not supported\.<a name="ts-as-instancelaunchfailure-3"></a>
 + **Cause**: Some options in your launch configuration might not be currently supported\.
@@ -50,7 +50,7 @@ When your EC2 instances fail to launch, you might get one or more of the followi
 
   1. Create a new launch configuration\.
 
-  1. Update your Auto Scaling group with the new launch configuration using the [update\-auto\-scaling\-group](http://docs.aws.amazon.com/cli/latest/reference/autoscaling/update-auto-scaling-group.html) command\.
+  1. Update your Auto Scaling group with the new launch configuration using the [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/update-auto-scaling-group.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/update-auto-scaling-group.html) command\.
 
 ## AutoScalingGroup <Auto Scaling group name> not found\.<a name="ts-as-instancelaunchfailure-4"></a>
 + **Cause**: The Auto Scaling group might have been deleted\.
@@ -74,43 +74,43 @@ When your EC2 instances fail to launch, you might get one or more of the followi
 + **Cause**: The block device mappings in your launch configuration might contain block device names that are not available or currently not supported\. 
 + **Solution**: 
 
-  1. Use the [describe\-volumes](http://docs.aws.amazon.com/cli/latest/reference/ec2/describe-volumes.html) command to see how the volumes are exposed to the instance\.
+  1. Use the [https://docs.aws.amazon.com/cli/latest/reference/ec2/describe-volumes.html](https://docs.aws.amazon.com/cli/latest/reference/ec2/describe-volumes.html) command to see how the volumes are exposed to the instance\.
 
   1. Create a new launch configuration using the device name listed in the volume description\.
 
-  1. Update your Auto Scaling group with the new launch configuration using the [update\-auto\-scaling\-group](http://docs.aws.amazon.com/cli/latest/reference/autoscaling/update-auto-scaling-group.html) command\.
+  1. Update your Auto Scaling group with the new launch configuration using the [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/update-auto-scaling-group.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/update-auto-scaling-group.html) command\.
 
 ## Value \(<name associated with the instance storage device>\) for parameter virtualName is invalid\.\.\.<a name="ts-as-instancelaunchfailure-9"></a>
 + **Error Message**: Value \(<name associated with the instance storage device>\) for parameter virtualName is invalid\. Expected format: 'ephemeralNUMBER'\. Launching EC2 instance failed\.
 + **Cause**: The format specified for the virtual name associated with the block device is incorrect\. 
 + **Solution**:
 
-  1. Create a new launch configuration by specifying the device name in the `virtualName` parameter\. For information about the device name format, see [Instance Store Device Names](http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/InstanceStorage.html#InstanceStoreDeviceNames) in the *Amazon EC2 User Guide for Linux Instances*\.
+  1. Create a new launch configuration by specifying the device name in the `virtualName` parameter\. For information about the device name format, see [Instance Store Device Names](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/InstanceStorage.html#InstanceStoreDeviceNames) in the *Amazon EC2 User Guide for Linux Instances*\.
 
-  1. Update your Auto Scaling group with the new launch configuration using the [update\-auto\-scaling\-group](http://docs.aws.amazon.com/cli/latest/reference/autoscaling/update-auto-scaling-group.html) command\.
+  1. Update your Auto Scaling group with the new launch configuration using the [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/update-auto-scaling-group.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/update-auto-scaling-group.html) command\.
 
 ## EBS block device mappings not supported for instance\-store AMIs\.<a name="ts-as-instancelaunchfailure-10"></a>
 + **Cause**: The block device mappings specified in the launch configuration are not supported on your instance\. 
 + **Solution**:
 
-  1. Create a new launch configuration with block device mappings supported by your instance type\. For more information, see [Block Device Mapping](http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/block-device-mapping-concepts.html) in the *Amazon EC2 User Guide for Linux Instances*\.
+  1. Create a new launch configuration with block device mappings supported by your instance type\. For more information, see [Block Device Mapping](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/block-device-mapping-concepts.html) in the *Amazon EC2 User Guide for Linux Instances*\.
 
-  1. Update your Auto Scaling group with the new launch configuration using the [update\-auto\-scaling\-group](http://docs.aws.amazon.com/cli/latest/reference/autoscaling/update-auto-scaling-group.html) command\.
+  1. Update your Auto Scaling group with the new launch configuration using the [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/update-auto-scaling-group.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/update-auto-scaling-group.html) command\.
 
 ## Placement groups may not be used with instances of type 'm1\.large'\. Launching EC2 instance failed\.<a name="ts-as-instancelaunchfailure-11"></a>
 + **Cause**: Your cluster placement group contains an invalid instance type\. 
 + **Solution**: 
 
-  1. For information about valid instance types supported by the placement groups, see [Placement Groups](http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/placement-groups.html) in the *Amazon EC2 User Guide for Linux Instances*\.
+  1. For information about valid instance types supported by the placement groups, see [Placement Groups](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/placement-groups.html) in the *Amazon EC2 User Guide for Linux Instances*\.
 
-  1. Follow the instructions detailed in the [Placement Groups](http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/placement-groups.html) to create a new placement group\.
+  1. Follow the instructions detailed in the [Placement Groups](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/placement-groups.html) to create a new placement group\.
 
   1.  Alternatively, create a new launch configuration with the supported instance type\. 
 
-  1. Update your Auto Scaling group with new placement group or launch configuration using the [update\-auto\-scaling\-group](http://docs.aws.amazon.com/cli/latest/reference/autoscaling/update-auto-scaling-group.html) command\.
+  1. Update your Auto Scaling group with a new placement group or launch configuration using the [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/update-auto-scaling-group.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/update-auto-scaling-group.html) command\.
 
 ## Client\.InternalError: Client error on launch\.<a name="ts-as-instancelaunchfailure-12"></a>
-+ **Cause**: This error can be caused when an Auto Scaling group attempts to launch an instance that has an encrypted EBS volume, but the [service\-linked role](autoscaling-service-linked-role.md) does not have access to the [customer managed CMK](http://docs.aws.amazon.com/kms/latest/developerguide/concepts.html) used to encrypt it\. 
++ **Cause**: This error can be caused when an Auto Scaling group attempts to launch an instance that has an encrypted EBS volume, but the [service\-linked role](autoscaling-service-linked-role.md) does not have access to the [customer managed CMK](https://docs.aws.amazon.com/kms/latest/developerguide/concepts.html) used to encrypt it\. 
 + **Solution**: Additional setup is required to allow the Auto Scaling group to launch instances\. The following table summarizes the steps for resolving the error\. For more information, see [https://forums\.aws\.amazon\.com/thread\.jspa?threadID=277523](https://forums.aws.amazon.com/thread.jspa?threadID=277523)\.
 
 

@@ -18,7 +18,7 @@ When your EC2 instances fail to launch due to issues with your AMI, you might ge
 
   1. Create a new launch configuration using a valid AMI\.
 
-  1. Update your Auto Scaling group with the new launch configuration using the [update\-auto\-scaling\-group](http://docs.aws.amazon.com/cli/latest/reference/autoscaling/update-auto-scaling-group.html) command\.
+  1. Update your Auto Scaling group with the new launch configuration using the [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/update-auto-scaling-group.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/update-auto-scaling-group.html) command\.
 
 ## AMI <AMI ID> is pending, and cannot be run\. Launching EC2 instance failed\.<a name="ts-as-ami-2"></a>
 + **Cause**: You might have just created your AMI \(by taking a snapshot of a running instance or any other way\), and it might not be available yet\. 
@@ -30,7 +30,7 @@ When your EC2 instances fail to launch due to issues with your AMI, you might ge
 
   1. Create a new launch configuration by specifying the name of the virtual device of your instance for the `virtualName` parameter\.
 
-  1. Update your Auto Scaling group with the new launch configuration using the [update\-auto\-scaling\-group](http://docs.aws.amazon.com/cli/latest/reference/autoscaling/update-auto-scaling-group.html) command\.
+  1. Update your Auto Scaling group with the new launch configuration using the [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/update-auto-scaling-group.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/update-auto-scaling-group.html) command\.
 
 ## The requested instance type's architecture \(i386\) does not match the architecture in the manifest for ami\-6622f00f \(x86\_64\)\. Launching ec2 instance failed\.<a name="ts-as-ami-5"></a>
 + **Cause**: The architecture of the `InstanceType` mentioned in your launch configuration does not match the image architecture\. 
@@ -38,4 +38,4 @@ When your EC2 instances fail to launch due to issues with your AMI, you might ge
 
   1. Create a new launch configuration using the AMI architecture that matches the architecture of the requested instance type\.
 
-  1. Update your Auto Scaling group with the new launch configuration using the [update\-auto\-scaling\-group](http://docs.aws.amazon.com/cli/latest/reference/autoscaling/update-auto-scaling-group.html) command\.
+  1. Update your Auto Scaling group with the new launch configuration using the [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/update-auto-scaling-group.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/update-auto-scaling-group.html) command\.

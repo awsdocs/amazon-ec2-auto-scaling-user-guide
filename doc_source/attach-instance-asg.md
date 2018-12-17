@@ -2,7 +2,7 @@
 
 Amazon EC2 Auto Scaling provides you with an option to enable automatic scaling for one or more EC2 instances by attaching them to your existing Auto Scaling group\. After the instances are attached, they become a part of the Auto Scaling group\.
 
-The instance that you want to attach must meet the following criteria:
+The instance to attach must meet the following criteria:
 + The instance is in the `running` state\.
 + The AMI used to launch the instance must still exist\.
 + The instance is not a member of another Auto Scaling group\.
@@ -58,19 +58,19 @@ You can attach an existing instance to an existing Auto Scaling group, or to a n
 
 1. On the **Attach to Auto Scaling Group** page, select **an existing Auto Scaling group**, select the instance, and then choose **Attach**\.
 
-1. If the instance doesn't meet the criteria \(for example, if it's not in the same Availability Zone as the Auto Scaling group\), you get an error message with the details\. Choose **Close** and try again with an instance that meets the criteria\.
+1. If the instance doesn't meet the criteria, you get an error message with the details\. For example, it might not be in the same Availability Zone as the Auto Scaling group\. Choose **Close** and try again with an instance that meets the criteria\.
 
 ## Attaching an Instance Using the AWS CLI<a name="attach-instance-aws-cli"></a>
 
 **To attach an instance to an Auto Scaling group using the AWS CLI**
 
-1. Describe a specific Auto Scaling group using the following [describe\-auto\-scaling\-groups](http://docs.aws.amazon.com/cli/latest/reference/autoscaling/describe-auto-scaling-groups.html) command:
+1. Describe a specific Auto Scaling group using the following [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/describe-auto-scaling-groups.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/describe-auto-scaling-groups.html) command:
 
    ```
    aws autoscaling describe-auto-scaling-groups --auto-scaling-group-names my-asg
    ```
 
-   The following example response shows that the desired capacity is 2 and the group has 2 running instances: 
+   The following example response shows that the desired capacity is 2 and the group has two running instances: 
 
    ```
    {
@@ -118,13 +118,13 @@ You can attach an existing instance to an existing Auto Scaling group, or to a n
    }
    ```
 
-1. Attach an instance to the Auto Scaling group using the following [attach\-instances](http://docs.aws.amazon.com/cli/latest/reference/autoscaling/attach-instances.html) command:
+1. Attach an instance to the Auto Scaling group using the following [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/attach-instances.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/attach-instances.html) command:
 
    ```
    aws autoscaling attach-instances --instance-ids i-a8e09d9c --auto-scaling-group-name my-asg
    ```
 
-1. To verify that the instance is attached, use the following `describe-auto-scaling-groups` command:
+1. To verify that the instance is attached, use the following describe\-auto\-scaling\-groups command:
 
    ```
    aws autoscaling describe-auto-scaling-groups --auto-scaling-group-names my-asg

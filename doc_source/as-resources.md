@@ -4,6 +4,9 @@ The following related resources can help you as you work with this service\.
 + **[Amazon EC2 Auto Scaling](https://aws.amazon.com/ec2/autoscaling/)** – The primary web page for information about Amazon EC2 Auto Scaling\.
 + **[Amazon EC2 Technical FAQ](https://aws.amazon.com/ec2/faqs/)** – The answers to questions customers ask about Amazon EC2 and Amazon EC2 Auto Scaling\.
 + **[Amazon EC2 Discussion Forum](https://forums.aws.amazon.com/forum.jspa?forumID=30)** – Get help from the community\.
++ **[AWS Auto Scaling User Guide](https://docs.aws.amazon.com/autoscaling/plans/userguide/)** – The AWS Auto Scaling console is where the scaling features of individual services come together in a single user interface\. 
+
+The following additional resources are available to help you learn more about AWS\.
 + ** [Classes & Workshops](https://aws.amazon.com/training/course-descriptions/)** – Links to role\-based and specialty courses as well as self\-paced labs to help sharpen your AWS skills and gain practical experience\.
 + ** [AWS Developer Tools](https://aws.amazon.com/tools/)** – Links to developer tools, SDKs, IDE toolkits, and command line tools for developing and managing AWS applications\.
 + ** [AWS Whitepapers](https://aws.amazon.com/whitepapers/)** – Links to a comprehensive list of technical AWS whitepapers, covering topics such as architecture, security, and economics and authored by AWS Solutions Architects or other technical experts\.

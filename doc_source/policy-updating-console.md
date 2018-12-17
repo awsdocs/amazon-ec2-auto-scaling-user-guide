@@ -32,7 +32,7 @@ We recommend that you use the option to create scaling policies with steps\. To 
 
    1. For **Name**, type a name for the policy, and then choose **Create new alarm**\.
 
-   1. On the **Create Alarm** page, choose **create topic**\. For **Send a notification to**, type a name for the SNS topic\. For **With these recipients**, type one or more email addresses to receive notification\. If you want, you can replace the default name for your alarm with a custom name\. Next, specify the metric and the criteria for the alarm, using **Whenever**, **Is**, and **For at least**\. Choose **Create Alarm**\.
+   1. On the **Create Alarm** page, choose **create topic**\. For **Send a notification to**, type a name for the SNS topic\. For **With these recipients**, type one or more email addresses to receive notification\. You can replace the default name for your alarm with a custom name\. Next, specify the metric and the criteria for the alarm, using **Whenever**, **Is**, and **For at least**\. Choose **Create Alarm**\.
 
    1. Specify the scaling activity for the policy using **Take the action**\. By default, the lower bound for this step adjustment is the alarm threshold and the upper bound is null \(positive infinity\)\. To add another step adjustment, choose **Add step**\.
 

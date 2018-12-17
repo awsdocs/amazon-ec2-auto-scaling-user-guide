@@ -12,7 +12,7 @@ This tutorial attaches a load balancer to an Auto Scaling group when you create 
 ## Prerequisites<a name="as-register-lbs-prerequisites"></a>
 + \(Optional\) Create an IAM role that grants your application the access to AWS that it needs\.
 + Launch an instance; be sure to specify the IAM role \(if you created one\) and specify any configuration scripts that you need as user data\. Connect to the instance and customize it\. For example, you can install software and applications and copy data\. Test your application on your instance to ensure that your instance is configured correctly\. Create a custom Amazon Machine Image \(AMI\) from your instance\. You can terminate the instance if you no longer need it\.
-+ Create a load balancer\. Elastic Load Balancing supports three types of load balancers: Application Load Balancers, Network Load Balancers, and Classic Load Balancers\. You can attach any of these types of load balancers to your Auto Scaling group\. For more information, see the [Elastic Load Balancing User Guide](http://docs.aws.amazon.com/elasticloadbalancing/latest/userguide/)\.
++ Create a load balancer\. Elastic Load Balancing supports three types of load balancers: Application Load Balancers, Network Load Balancers, and Classic Load Balancers\. You can attach any of these types of load balancers to your Auto Scaling group\. For more information, see the [Elastic Load Balancing User Guide](https://docs.aws.amazon.com/elasticloadbalancing/latest/userguide/)\.
 
   With Classic Load Balancers, instances are registered with the load balancer\. With Application Load Balancers and Network Load Balancers, instances are registered as targets with a target group\. When you plan to use your load balancer with an Auto Scaling group, you don't need to register your EC2 instances with the load balancer or target group\. After you attach a load balancer or target group to your Auto Scaling group, Auto Scaling registers your instances with the load balancer or target group when it launches them\.
 
@@ -55,7 +55,7 @@ To create a new launch configuration, use the following procedure:
 
 1. On the next page, choose **Create Auto Scaling group**\.
 
-1. On the **Create Auto Scaling Group** page, choose **Launch Configuration, Create a new launch configuration**, and then choose **Next Step**\. 
+1. On the **Create Auto Scaling Group** page, choose **Launch Configuration**, **Create a new launch configuration**, and then choose **Next Step**\. 
 
 1. On the **Choose AMI** page, select your custom AMI\.
 
@@ -99,7 +99,7 @@ Use the following procedure to continue where you left off after selecting or cr
 
    1. If you selected a VPC in the previous step, select one or more subnets from **Subnet**\. If you selected EC2\-Classic instead, select one or more Availability Zones from **Availability Zone\(s\)**\.
 
-   1. For **Advanced Details**, select `Receive traffic from Elastic Load Balancer(s)` and then do one of the following:
+   1. For **Advanced Details**, select **Receive traffic from Elastic Load Balancer\(s\)** and then do one of the following:
       + \[Classic Load Balancers\] Select your load balancer from **Load Balancers**\.
       + \[Target groups\] Select your target group from **Target Groups**\.
 
@@ -109,7 +109,7 @@ Use the following procedure to continue where you left off after selecting or cr
 
 1. On the **Configure scaling policies** page, select **Keep this group at its initial size**, and then choose **Review**\.
 
-   If you want to configure scaling policies for your Auto Scaling group, see [Create an Auto Scaling Group with Target Tracking Scaling Policies](as-scaling-target-tracking.md#policy_creating)\.
+   To configure scaling policies for your Auto Scaling group, see [Create an Auto Scaling Group with Target Tracking Scaling Policies](as-scaling-target-tracking.md#policy_creating)\.
 
 1. Review the details of your Auto Scaling group\. You can choose **Edit** to make changes\. When you are finished, choose **Create Auto Scaling group**\.
 
@@ -120,8 +120,6 @@ Use the following procedure to continue where you left off after selecting or cr
 1. Select your Auto Scaling group\.
 
 1. On the **Details** tab, **Load Balancers** shows any attached load balancers and **Target Groups** shows any attached target groups\.
-
-1. On the **Details** tab, **Load Balancers** shows any attached load balancers\.
 
 1. On the **Activity History** tab, the **Status** column shows you the status of your Auto Scaling instances\. While an instance is launching, its status is `In progress`\. The status changes to `Successful` after the instance is launched\.
 
@@ -142,7 +140,7 @@ Complete the following tasks to set up a scaled and load\-balanced application\.
 If you already have a launch configuration that you'd like to use, skip this step\.
 
 **To create the launch configuration**  
-Use the following [create\-launch\-configuration](http://docs.aws.amazon.com/cli/latest/reference/autoscaling/create-launch-configuration.html) command:
+Use the following [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/create-launch-configuration.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/create-launch-configuration.html) command:
 
 ```
 aws autoscaling create-launch-configuration --launch-configuration-name my-lc \
@@ -154,7 +152,7 @@ aws autoscaling create-launch-configuration --launch-configuration-name my-lc \
 You can attach an existing load balancer to an Auto Scaling group when you create the group\.
 
 **To create an Auto Scaling group with an attached Classic Load Balancer**  
-Use the following [create\-auto\-scaling\-group](http://docs.aws.amazon.com/cli/latest/reference/autoscaling/create-auto-scaling-group.html) command with the `--load-balancer-names` option to create an Auto Scaling group with an attached Classic Load Balancer:
+Use the following [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/create-auto-scaling-group.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/create-auto-scaling-group.html) command with the `--load-balancer-names` option to create an Auto Scaling group with an attached Classic Load Balancer:
 
 ```
 aws autoscaling create-auto-scaling-group --auto-scaling-group-name my-lb-asg \
@@ -165,7 +163,7 @@ aws autoscaling create-auto-scaling-group --auto-scaling-group-name my-lb-asg \
 ```
 
 **To create an Auto Scaling group with an attached target group**  
-Use the following [create\-auto\-scaling\-group](http://docs.aws.amazon.com/cli/latest/reference/autoscaling/create-auto-scaling-group.html) command with the `--target-group-arns` option to create an Auto Scaling group with an attached target group:
+Use the following [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/create-auto-scaling-group.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/create-auto-scaling-group.html) command with the `--target-group-arns` option to create an Auto Scaling group with an attached target group:
 
 ```
 aws autoscaling create-auto-scaling-group --auto-scaling-group-name my-lb-asg \

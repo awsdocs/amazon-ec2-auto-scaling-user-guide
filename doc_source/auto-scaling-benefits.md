@@ -1,9 +1,9 @@
 # Benefits of Auto Scaling<a name="auto-scaling-benefits"></a>
 
-Adding Amazon EC2 Auto Scaling to your application architecture is one way to maximize the benefits of the AWS cloud\. When you use Amazon EC2 Auto Scaling, your applications gain the following benefits:
+Adding Amazon EC2 Auto Scaling to your application architecture is one way to maximize the benefits of the AWS Cloud\. When you use Amazon EC2 Auto Scaling, your applications gain the following benefits:
 + Better fault tolerance\. Amazon EC2 Auto Scaling can detect when an instance is unhealthy, terminate it, and launch an instance to replace it\. You can also configure Amazon EC2 Auto Scaling to use multiple Availability Zones\. If one Availability Zone becomes unavailable, Amazon EC2 Auto Scaling can launch instances in another one to compensate\.
-+ Better availability\. Amazon EC2 Auto Scaling can help you ensure that your application always has the right amount of capacity to handle the current traffic demand\. 
-+ Better cost management\. Amazon EC2 Auto Scaling can dynamically increase and decrease capacity as needed\. Because you pay for the EC2 instances you use, you save money by launching instances when they are actually needed and terminating them when they aren't needed\.
++ Better availability\. Amazon EC2 Auto Scaling helps ensure that your application always has the right amount of capacity to handle the current traffic demand\. 
++ Better cost management\. Amazon EC2 Auto Scaling can dynamically increase and decrease capacity as needed\. Because you pay for the EC2 instances you use, you save money by launching instances when they are needed and terminating them when they aren't\.
 
 **Topics**
 + [Example: Covering Variable Demand](#autoscaling-benefits-example)
@@ -12,7 +12,7 @@ Adding Amazon EC2 Auto Scaling to your application architecture is one way to ma
 
 ## Example: Covering Variable Demand<a name="autoscaling-benefits-example"></a>
 
-To demonstrate some of the benefits of Amazon EC2 Auto Scaling, consider a basic Web application running on AWS\. This application allows employees to search for conference rooms that they might want to use for meetings\. During the beginning and end of the week, usage of this application is minimal\. During the middle of the week, more employees are scheduling meetings, so the demand on the application increases significantly\.
+To demonstrate some of the benefits of Amazon EC2 Auto Scaling, consider a basic web application running on AWS\. This application allows employees to search for conference rooms that they might want to use for meetings\. During the beginning and end of the week, usage of this application is minimal\. During the middle of the week, more employees are scheduling meetings, so the demand on the application increases significantly\.
 
 The following graph shows how much of the application's capacity is used over the course of a week\.
 
@@ -36,7 +36,7 @@ In a common web app scenario, you run multiple copies of your app simultaneously
 
 ![\[An illustration of a basic Auto Scaling group.\]](http://docs.aws.amazon.com/autoscaling/ec2/userguide/images/as-sample-web-architecture-diagram.png)
 
-Amazon EC2 Auto Scaling manages the launch and termination of these EC2 instances on your behalf\. You define a set of criteria \(such as an Amazon CloudWatch alarm\) that determines when the Auto Scaling group launches or terminates EC2 instances\. Adding Auto Scaling groups to your network architecture can help you make your application more highly available and fault tolerant\.
+Amazon EC2 Auto Scaling manages the launch and termination of these EC2 instances on your behalf\. You define a set of criteria \(such as an Amazon CloudWatch alarm\) that determines when the Auto Scaling group launches or terminates EC2 instances\. Adding Auto Scaling groups to your network architecture helps make your application more highly available and fault tolerant\.
 
 ![\[An illustration of a basic Auto Scaling group.\]](http://docs.aws.amazon.com/autoscaling/ec2/userguide/images/as-sample-web-architecture-diagram-with-asgs.png)
 
@@ -46,13 +46,13 @@ To distribute traffic between the instances in your Auto Scaling groups, you can
 
 ## Example: Distributing Instances Across Availability Zones<a name="arch-AutoScalingMultiAZ"></a>
 
-AWS resources, such as EC2 instances, are housed in highly\-available data centers\. To provide additional scalability and reliability, these data centers are in different physical locations\. *Regions* are large and widely dispersed geographic locations\. Each region contains multiple distinct locations, called *Availability Zones*, that are engineered to be isolated from failures in other Availability Zones and provide inexpensive, low\-latency network connectivity to other Availability Zones in the same region\. For more information, see [Regions and Endpoints: Amazon EC2 Auto Scaling](http://docs.aws.amazon.com/general/latest/gr/rande.html#as_region) in the *Amazon Web Services General Reference*\.
+AWS resources, such as EC2 instances, are housed in highly available data centers\. To provide additional scalability and reliability, these data centers are in different physical locations\. *Regions* are large and widely dispersed geographic locations\. Each Region contains multiple distinct locations, called *Availability Zones*, which are engineered to be isolated from failures in other Availability Zones\. They provide inexpensive, low\-latency network connectivity to other Availability Zones in the same Region\. For more information, see [Regions and Endpoints: Amazon EC2 Auto Scaling](https://docs.aws.amazon.com/general/latest/gr/rande.html#as_region) in the *Amazon Web Services General Reference*\.
 
-Amazon EC2 Auto Scaling enables you to take advantage of the safety and reliability of geographic redundancy by spanning Auto Scaling groups across multiple Availability Zones within a region\. When one Availability Zone becomes unhealthy or unavailable, Auto Scaling launches new instances in an unaffected Availability Zone\. When the unhealthy Availability Zone returns to a healthy state, Auto Scaling automatically redistributes the application instances evenly across all of the designated Availability Zones\.
+Amazon EC2 Auto Scaling enables you to take advantage of the safety and reliability of geographic redundancy by spanning Auto Scaling groups across multiple Availability Zones within a Region\. When one Availability Zone becomes unhealthy or unavailable, Auto Scaling launches new instances in an unaffected Availability Zone\. When the unhealthy Availability Zone returns to a healthy state, Auto Scaling automatically redistributes the application instances evenly across all of the designated Availability Zones\.
 
-An Auto Scaling group can contain EC2 instances in one or more Availability Zones within the same region\. However, Auto Scaling groups cannot span multiple regions\.
+An Auto Scaling group can contain EC2 instances in one or more Availability Zones within the same Region\. However, Auto Scaling groups cannot span multiple Regions\.
 
-For Auto Scaling groups in a VPC, the EC2 instances are launched in subnets\. You select the subnets for your EC2 instances when you create or update the Auto Scaling group\. You can select one or more subnets per Availability Zone\. For more information, see [Launching Auto Scaling Instances in a VPC](asg-in-vpc.md)\.
+For Auto Scaling groups in a VPC, the EC2 instances are launched in subnets\. You select the subnets for your EC2 instances when you create or update the Auto Scaling group\. You can select one or more subnets per Availability Zone\. For more information, see [VPCs and Subnets](https://docs.aws.amazon.com/vpc/latest/userguide/VPC_Subnets.html) in the *Amazon VPC User Guide*\.
 
 ### Instance Distribution<a name="AutoScalingBehavior.Rebalancing"></a>
 

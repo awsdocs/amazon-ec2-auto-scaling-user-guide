@@ -17,7 +17,7 @@ When your EC2 instances fail to launch due to issues with the load balancer asso
 + **Cause 1**: The load balancer has been deleted\.
 + **Solution 1**:
 
-  1. Check to see if your load balancer still exists\. You can use the [describe\-load\-balancers](http://docs.aws.amazon.com/cli/latest/reference/elb/describe-load-balancers.html) command\.
+  1. Check to see if your load balancer still exists\. You can use the [https://docs.aws.amazon.com/cli/latest/reference/elb/describe-load-balancers.html](https://docs.aws.amazon.com/cli/latest/reference/elb/describe-load-balancers.html) command\.
 
   1. If you see your load balancer listed in the response, see **Cause 2**\.
 

@@ -5,7 +5,7 @@ You can put an instance that is in the `InService` state into the `Standby` stat
 **Important**  
 You are billed for instances that are in a standby state\.
 
-For example, you can change the launch configuration for an Auto Scaling group at any time, and any subsequent instances that the Auto Scaling group launches use this configuration\. However, the Auto Scaling group does not update the instances that are currently in service\. You can either terminate these instances and let the Auto Scaling group replace them, or you can put the instances on standby, update the software, and then put the instances back in service\.
+For example, you can change the launch configuration for an Auto Scaling group at any time, and any subsequent instances that the Auto Scaling group launches use this configuration\. However, the Auto Scaling group does not update the instances that are currently in service\. You can terminate these instances and let the Auto Scaling group replace them\. Or, you can put the instances on standby, update the software, and then put the instances back in service\.
 
 **Topics**
 + [How the Standby State Works](#standby-state)
@@ -27,7 +27,7 @@ The standby state works as follows to help you temporarily remove an instance fr
 
 1. You return the instance to service by exiting the standby state\.
 
-1. After you put an instance that was on standby back in service, the desired capacity is incremented\. If you did not decrement the capacity when you put the instance on standby, the Auto Scaling group detects that you have more instances than you need, and applies the termination policy in effect to reduce the size of the group\. For more information, see [Controlling Which Auto Scaling Instances Terminate During Scale In](as-instance-termination.md)\.
+1. After you put an instance that was on standby back in service, the desired capacity is incremented\. If you did not decrement the capacity when you put the instance on standby, the Auto Scaling group detects that you have more instances than you need\. It applies the termination policy in effect to reduce the size of the group\. For more information, see [Controlling Which Auto Scaling Instances Terminate During Scale In](as-instance-termination.md)\.
 
 1. If there is a load balancer or target group attached to your Auto Scaling group, the instance is registered with the load balancer or target group\.
 
@@ -71,7 +71,7 @@ The following procedure demonstrates the general process for updating an instanc
 
 **To temporarily remove an instance using the AWS CLI**
 
-1. Use the following [describe\-auto\-scaling\-instances](http://docs.aws.amazon.com/cli/latest/reference/autoscaling/describe-auto-scaling-instances.html) command to identify the instance to update:
+1. Use the following [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/describe-auto-scaling-instances.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/describe-auto-scaling-instances.html) command to identify the instance to update:
 
    ```
    aws autoscaling describe-auto-scaling-instances
@@ -95,7 +95,7 @@ The following procedure demonstrates the general process for updating an instanc
    }
    ```
 
-1. Move the instance into a `Standby` state using the following [enter\-standby](http://docs.aws.amazon.com/cli/latest/reference/autoscaling/enter-standby.html) command\. The `--should-decrement-desired-capacity` option decreases the desired capacity so that the Auto Scaling group does not launch a replacement instance\.
+1. Move the instance into a `Standby` state using the following [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/enter-standby.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/enter-standby.html) command\. The `--should-decrement-desired-capacity` option decreases the desired capacity so that the Auto Scaling group does not launch a replacement instance\.
 
    ```
    aws autoscaling enter-standby --instance-ids i-5b73d709 --auto-scaling-group-name my-asg --should-decrement-desired-capacity
@@ -121,7 +121,7 @@ The following procedure demonstrates the general process for updating an instanc
    }
    ```
 
-1. \(Optional\) Verify that the instance is in `Standby` using the following `describe-auto-scaling-instances` command:
+1. \(Optional\) Verify that the instance is in `Standby` using the following describe\-auto\-scaling\-instances command:
 
    ```
    aws autoscaling describe-auto-scaling-instances --instance-ids i-5b73d709
@@ -146,7 +146,7 @@ The following procedure demonstrates the general process for updating an instanc
 
 1. You can update or troubleshoot your instance as needed\. When you have finished, continue with the next step to return the instance to service\.
 
-1. Put the instance back in service using the following [exit\-standby](http://docs.aws.amazon.com/cli/latest/reference/autoscaling/exit-standby.html) command:
+1. Put the instance back in service using the following [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/exit-standby.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/exit-standby.html) command:
 
    ```
    aws autoscaling exit-standby --instance-ids i-5b73d709 --auto-scaling-group-name my-asg

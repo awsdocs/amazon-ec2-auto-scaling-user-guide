@@ -1,6 +1,6 @@
 # Replacing a Launch Configuration with a Launch Template<a name="replace-launch-config"></a>
 
-When you edit an Auto Scaling group that has an existing launch configuration, you have the option of replacing the launch configuration with a launch template\. This lets you use launch templates with any Auto Scaling groups you currently use\. In doing so, you can take advantage of the versioning features of launch templates\. 
+When you edit an Auto Scaling group that has an existing launch configuration, you have the option of replacing the launch configuration with a launch template\. This lets you use launch templates with any Auto Scaling groups you currently use\. In doing so, you can take advantage of the versioning and other features of launch templates\. 
 
 After you replace the launch configuration for an Auto Scaling group, any new instances are launched using the new launch template, but existing instances are not affected\. 
 

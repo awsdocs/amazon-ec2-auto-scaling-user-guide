@@ -1,8 +1,8 @@
 # Suspending and Resuming Scaling Processes<a name="as-suspend-resume-processes"></a>
 
-You can suspend and then resume one or more of the scaling processes for your Auto Scaling group\. This can be useful when you want to investigate a configuration problem or other issue with your web application and then make changes to your application, without invoking the scaling processes\.
+You can suspend and then resume one or more of the scaling processes for your Auto Scaling group\. This can be useful for investigating a configuration problem or other issues with your web application and making changes to your application without invoking the scaling processes\.
 
-Amazon EC2 Auto Scaling can suspend processes for Auto Scaling groups that repeatedly fail to launch instances\. This is known as an *administrative suspension*, and most commonly applies to Auto Scaling groups that have been trying to launch instances for over 24 hours but have not succeeded in launching any instances\. You can resume processes suspended for administrative reasons\.
+Amazon EC2 Auto Scaling can suspend processes for Auto Scaling groups that repeatedly fail to launch instances\. This is known as an *administrative suspension*\. It most commonly applies to Auto Scaling groups that have been trying to launch instances for over 24 hours but have not succeeded in launching any instances\. You can resume processes suspended for administrative reasons\.
 
 **Topics**
 + [Scaling Processes](#process-types)
@@ -19,7 +19,7 @@ If you suspend `Launch`, this disrupts other processes\. For example, you can't 
 
 `Terminate`  
 Removes an EC2 instance from the group, decreasing its capacity\.  
-If you suspend `Terminate`, this disrupts other processes\.
+If you suspend `Terminate`, it disrupts other processes\.
 
 `HealthCheck`  
 Checks the health of the instances\. Amazon EC2 Auto Scaling marks an instance as unhealthy if Amazon EC2 or Elastic Load Balancing tells Amazon EC2 Auto Scaling that the instance is unhealthy\. This process can override the health status of an instance that you set manually\.
@@ -29,12 +29,12 @@ Terminates instances that are marked as unhealthy and later creates new instance
 
 `AZRebalance`  
 Balances the number of EC2 instances in the group across the Availability Zones in the region\. If you remove an Availability Zone from your Auto Scaling group or an Availability Zone otherwise becomes unhealthy or unavailable, the scaling process launches new instances in an unaffected Availability Zone before terminating the unhealthy or unavailable instances\. When the unhealthy Availability Zone returns to a healthy state, the scaling process automatically redistributes the instances evenly across the Availability Zones for the group\. For more information, see [Rebalancing Activities](auto-scaling-benefits.md#AutoScalingBehavior.InstanceUsage)\.  
-If you suspend `AZRebalance` and a scale\-out or scale\-in event occurs, the scaling process still tries to balance the Availability Zones\. For example, during scale\-out, it launches the instance in the Availability Zone with the fewest instances\.  
+If you suspend `AZRebalance` and a scale\-out or scale\-in event occurs, the scaling process still tries to balance the Availability Zones\. For example, during scale out, it launches the instance in the Availability Zone with the fewest instances\.  
 If you suspend the `Launch` process, `AZRebalance` neither launches new instances nor terminates existing instances\. This is because `AZRebalance` terminates instances only after launching the replacement instances\. If you suspend the `Terminate` process, your Auto Scaling group can grow up to ten percent larger than its maximum size, because this is allowed temporarily during rebalancing activities\. If the scaling process cannot terminate instances, your Auto Scaling group could remain above its maximum size until you resume the `Terminate` process\.
 
 `AlarmNotification`  
 Accepts notifications from CloudWatch alarms that are associated with the group\.  
-If you suspend `AlarmNotification`, Amazon EC2 Auto Scaling does not automatically execute policies that would be triggered by an alarm\. If you suspend `Launch` or `Terminate`, it will not be able to execute scale\-out or scale\-in policies, respectively\.
+If you suspend `AlarmNotification`, Amazon EC2 Auto Scaling does not automatically execute policies that would be triggered by an alarm\. If you suspend `Launch` or `Terminate`, it is not able to execute scale\-out or scale\-in policies, respectively\.
 
 `ScheduledActions`  
 Performs scheduled actions that you create\.  
@@ -71,28 +71,28 @@ You can suspend and resume individual processes using the AWS Management Console
 You can suspend and resume individual processes or all processes\.
 
 **To suspend a process**  
-Use the [suspend\-processes](http://docs.aws.amazon.com/cli/latest/reference/autoscaling/suspend-processes.html) command with the `--scaling-processes` option as follows:
+Use the [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/suspend-processes.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/suspend-processes.html) command with the `--scaling-processes` option as follows:
 
 ```
 aws autoscaling suspend-processes --auto-scaling-group-name my-asg --scaling-processes AlarmNotification
 ```
 
 **To suspend all processes**  
-Use the [suspend\-processes](http://docs.aws.amazon.com/cli/latest/reference/autoscaling/suspend-processes.html) command as follows \(omitting the `--scaling-processes` option\):
+Use the [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/suspend-processes.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/suspend-processes.html) command as follows \(omitting the `--scaling-processes` option\):
 
 ```
 aws autoscaling suspend-processes --auto-scaling-group-name my-asg
 ```
 
 **To resume a suspended process**  
-Use the [resume\-processes](http://docs.aws.amazon.com/cli/latest/reference/autoscaling/resume-processes.html) command as follows:
+Use the [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/resume-processes.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/resume-processes.html) command as follows:
 
 ```
 aws autoscaling resume-processes --auto-scaling-group-name my-asg --scaling-processes AlarmNotification
 ```
 
 **To resume all suspended processes**  
-Use the [resume\-processes](http://docs.aws.amazon.com/cli/latest/reference/autoscaling/resume-processes.html) command as follows \(omitting the `--scaling-processes` option\):
+Use the [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/resume-processes.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/resume-processes.html) command as follows \(omitting the `--scaling-processes` option\):
 
 ```
 aws autoscaling resume-processes --auto-scaling-group-name my-asg

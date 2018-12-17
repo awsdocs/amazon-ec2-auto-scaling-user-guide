@@ -6,7 +6,7 @@ You can remove an instance from an Auto Scaling group\. After the instances are 
 
 When you detach instances, you have the option of decrementing the desired capacity for the Auto Scaling group by the number of instances being detached\. If you choose not to decrement the capacity, Amazon EC2 Auto Scaling launches new instances to replace the ones that you detached\. If you decrement the capacity but detach multiple instances from the same Availability Zone, Amazon EC2 Auto Scaling can rebalance the Availability Zones unless you suspend the `AZRebalance` process\. For more information, see [Scaling Processes](as-suspend-resume-processes.md#process-types)\.
 
-If the number of instances that you are detaching will drop the size of the Auto Scaling group below its minimum capacity, you must decrement the minimum capacity for the Auto Scaling group before you can detach the instances\.
+If the number of instances that you are detaching decreases the size of the Auto Scaling group below its minimum capacity, you must decrement the minimum capacity for the group before you can detach the instances\.
 
 If you detach an instance from an Auto Scaling group that has an attached load balancer, the instance is deregistered from the load balancer\. If you detach an instance from an Auto Scaling group that has an attached target group, the instance is deregistered from the target group\. If connection draining is enabled for your load balancer, Amazon EC2 Auto Scaling waits for in\-flight requests to complete\.
 
@@ -43,7 +43,7 @@ Use the following procedure to detach an instance from your Auto Scaling group\.
 
 **To detach an instance from an existing Auto Scaling group using the AWS CLI**
 
-1. List the current instances using the following [describe\-auto\-scaling\-instances](http://docs.aws.amazon.com/cli/latest/reference/autoscaling/describe-auto-scaling-instances.html) command:
+1. List the current instances using the following [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/describe-auto-scaling-instances.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/describe-auto-scaling-instances.html) command:
 
    ```
    aws autoscaling describe-auto-scaling-instances
@@ -90,13 +90,13 @@ Use the following procedure to detach an instance from your Auto Scaling group\.
    }
    ```
 
-1. Detach an instance and decrement the desired capacity using the following [detach\-instances](http://docs.aws.amazon.com/cli/latest/reference/autoscaling/detach-instances.html) command:
+1. Detach an instance and decrement the desired capacity using the following [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/detach-instances.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/detach-instances.html) command:
 
    ```
    aws autoscaling detach-instances --instance-ids i-2a2d8978 --auto-scaling-group-name my-asg --should-decrement-desired-capacity
    ```
 
-1. Verify that the instance is detached using the following `describe-auto-scaling-instances` command:
+1. Verify that the instance is detached using the following describe\-auto\-scaling\-instances command:
 
    ```
    aws autoscaling describe-auto-scaling-instances

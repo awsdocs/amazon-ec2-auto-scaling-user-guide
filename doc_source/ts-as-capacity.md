@@ -1,6 +1,6 @@
 # Troubleshooting Auto Scaling: Capacity Limits<a name="ts-as-capacity"></a>
 
-This page provides information about issues with the capacity limits of your Auto Scaling group, potential causes, and the steps you can take to resolve the issues\.
+This page provides information about issues with the capacity limits of your Auto Scaling group, potential causes, and the steps you can take to resolve the issues\. For more information about Amazon EC2 Auto Scaling limits, see [Amazon EC2 Auto Scaling Limits](as-account-limits.md)\.
 
 To retrieve an error message, see [Retrieving an Error Message](CHAP_Troubleshooting.md#RetrievingErrors)\.
 
@@ -17,10 +17,10 @@ If your EC2 instances fail to launch due to issues with the capacity limits of y
 
   1. Create a new launch configuration by following the recommendations in the error message\.
 
-  1. Update your Auto Scaling group with the new launch configuration using the [update\-auto\-scaling\-group](http://docs.aws.amazon.com/cli/latest/reference/autoscaling/update-auto-scaling-group.html) command\.
+  1. Update your Auto Scaling group with the new launch configuration using the [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/update-auto-scaling-group.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/update-auto-scaling-group.html) command\.
 
 ## <number of instances> instance\(s\) are already running\. Launching EC2 instance failed\.<a name="ts-as-capacity-2"></a>
 + **Cause**: The Auto Scaling group has reached the limit set by the `DesiredCapacity` parameter\.
 + **Solution**:
-  + Update your Auto Scaling group by providing a new value for the `--desired-capacity` parameter using the [update\-auto\-scaling\-group](http://docs.aws.amazon.com/cli/latest/reference/autoscaling/update-auto-scaling-group.html) command\.
-  + If you've reached your limit for the number of EC2 instances, you can request an increase\. For more information, see [AWS Service Limits](http://docs.aws.amazon.com/general/latest/gr/aws_service_limits.html)\.
+  + Update your Auto Scaling group by providing a new value for the `--desired-capacity` parameter using the [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/update-auto-scaling-group.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/update-auto-scaling-group.html) command\.
+  + If you've reached your limit for the number of EC2 instances, you can request an increase\. For more information, see [AWS Service Limits](https://docs.aws.amazon.com/general/latest/gr/aws_service_limits.html)\.

@@ -2,11 +2,11 @@
 
 Scaling based on a schedule allows you to scale your application in response to predictable load changes\. For example, every week the traffic to your web application starts to increase on Wednesday, remains high on Thursday, and starts to decrease on Friday\. You can plan your scaling activities based on the predictable traffic patterns of your web application\. 
 
-To configure your Auto Scaling group to scale based on a schedule, you create a scheduled action, which tells Amazon EC2 Auto Scaling to perform a scaling action at specified times\. To create a scheduled scaling action, you specify the start time when you want the scaling action to take effect, and the new minimum, maximum, and desired sizes for the scaling action\. At the specified time, Amazon EC2 Auto Scaling updates the group with the values for minimum, maximum, and desired size specified by the scaling action\.
+To configure your Auto Scaling group to scale based on a schedule, you create a scheduled action\. The scheduled action tells Amazon EC2 Auto Scaling to perform a scaling action at specified times\. To create a scheduled scaling action, you specify the start time when the scaling action should take effect, and the new minimum, maximum, and desired sizes for the scaling action\. At the specified time, Amazon EC2 Auto Scaling updates the group with the values for minimum, maximum, and desired size specified by the scaling action\.
 
 You can create scheduled actions for scaling one time only or for scaling on a recurring schedule\.
 
-You can also use scheduled scaling with Application Auto Scaling\. For more information, see [Scheduled Scaling](http://docs.aws.amazon.com/autoscaling/application/userguide/application-auto-scaling-scheduled-scaling.html) in the *Application Auto Scaling User Guide*\.
+You can also use scheduled scaling with Application Auto Scaling\. For more information, see [Scheduled Scaling](https://docs.aws.amazon.com/autoscaling/application/userguide/application-auto-scaling-scheduled-scaling.html) in the *Application Auto Scaling User Guide*\.
 
 **Topics**
 + [Considerations for Scheduled Actions](#sch-actions_rules)
@@ -73,7 +73,7 @@ If your requirements change, you can update a scheduled action\.
 You can create a schedule for scaling one time only or for scaling on a recurring schedule\.
 
 **To schedule scaling for one time only**  
-To increase the number of running instances in your Auto Scaling group at a specific time, in "YYYY\-MM\-DDThh:mm:ssZ" format in UTC, use the following [put\-scheduled\-update\-group\-action](http://docs.aws.amazon.com/cli/latest/reference/autoscaling/put-scheduled-update-group-action.html) command:
+To increase the number of running instances in your Auto Scaling group at a specific time, in "YYYY\-MM\-DDThh:mm:ssZ" format in UTC, use the following [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/put-scheduled-update-group-action.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/put-scheduled-update-group-action.html) command:
 
 ```
 aws autoscaling put-scheduled-update-group-action --scheduled-action-name ScaleUp --auto-scaling-group-name my-asg --start-time "2013-05-12T08:00:00Z" --desired-capacity 3 
@@ -88,7 +88,7 @@ aws autoscaling put-scheduled-update-group-action --scheduled-action-name ScaleD
 **To schedule scaling on a recurring schedule**  
 You can specify a recurrence schedule, in UTC, using the Cron format\. For more information about this format, see [Crontab](http://crontab.org)\.
 
-Use the following [put\-scheduled\-update\-group\-action](http://docs.aws.amazon.com/cli/latest/reference/autoscaling/put-scheduled-update-group-action.html) command to create a scheduled action that runs at 00:30 hours on the first of January, June, and December each year:
+Use the following [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/put-scheduled-update-group-action.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/put-scheduled-update-group-action.html) command to create a scheduled action that runs at 00:30 hours on the first of January, June, and December each year:
 
 ```
 aws autoscaling put-scheduled-update-group-action --scheduled-action-name scaleup-schedule-year --auto-scaling-group-name my-asg --recurrence "30 0 1 1,6,12 0" --desired-capacity 3 
@@ -113,7 +113,7 @@ When you are finished with a scheduled action, you can delete it\.
 1. When prompted for confirmation, choose **Yes, Delete**\.
 
 **To delete a scheduled action using the AWS CLI**  
-Use the following [delete\-scheduled\-action](http://docs.aws.amazon.com/cli/latest/reference/autoscaling/delete-scheduled-action.html) command:
+Use the following [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/delete-scheduled-action.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/delete-scheduled-action.html) command:
 
 ```
 aws autoscaling delete-scheduled-action --scheduled-action-name ScaleUp
