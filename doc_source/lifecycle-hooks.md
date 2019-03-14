@@ -1,6 +1,6 @@
 # Amazon EC2 Auto Scaling Lifecycle Hooks<a name="lifecycle-hooks"></a>
 
-*Lifecycle hooks* enable you to perform custom actions by pausing instances as an Auto Scaling group launches or terminates them\. For example, while your newly launched instance is paused, you could install or configure software on it\.
+Lifecycle hooks enable you to perform custom actions by *pausing* instances as an Auto Scaling group launches or terminates them\. When an instance is paused, it remains in a wait state for a certain amount of time \(one hour by default\) or until you continue\. For example, your newly launched instance completes its startup sequence and a lifecycle hook pauses the instance\. While the instance is paused, you can install or configure software on it, making sure your instance is fully ready before it starts receiving traffic\.
 
 Each Auto Scaling group can have multiple lifecycle hooks\. However, there is a limit on the number of hooks per Auto Scaling group\. For more information, see [Amazon EC2 Auto Scaling Limits](as-account-limits.md)\.
 
@@ -16,9 +16,9 @@ Each Auto Scaling group can have multiple lifecycle hooks\. However, there is a 
 
 After you add lifecycle hooks to your Auto Scaling group, they work as follows:
 
-1. Responds to scale\-out events by launching instances and scale\-in events by terminating instances\.
+1. The Auto Scaling group responds to scale\-out events by launching instances and scale\-in events by terminating instances\.
 
-1. Puts the instance into a wait state \(`Pending:Wait` or `Terminating:Wait`\)\. The instance is paused until either you continue or the timeout period ends\.
+1. The lifecycle hook puts the instance into a wait state \(`Pending:Wait` or `Terminating:Wait`\)\. The instance is paused until you continue or the timeout period ends\.
 
 1. You can perform a custom action using one or more of the following options:
    + Define a CloudWatch Events target to invoke a Lambda function when a lifecycle action occurs\. The Lambda function is invoked when Amazon EC2 Auto Scaling submits an event for a lifecycle action to CloudWatch Events\. The event contains information about the instance that is launching or terminating, and a token that you can use to control the lifecycle action\.
@@ -35,7 +35,7 @@ For more information about the complete lifecycle of instances in an Auto Scalin
 
 ## Considerations When Using Lifecycle Hooks<a name="lifecycle-hook-considerations"></a>
 
-Adding lifecycle hooks to your Auto Scaling group gives you greater control over how instances launch and terminate\. Here are some things to consider when adding a lifecycle hook to your Auto Scaling group, to help ensure that the group continues to perform as expected\.
+Adding lifecycle hooks to your Auto Scaling group gives you greater control over how instances launch and terminate\. The following are things to consider when adding a lifecycle hook to your Auto Scaling group, to help ensure that the group continues to perform as expected\.
 
 **Topics**
 + [Keeping Instances in a Wait State](#lifecycle-hook-wait-state)
@@ -46,10 +46,10 @@ Adding lifecycle hooks to your Auto Scaling group gives you greater control over
 
 ### Keeping Instances in a Wait State<a name="lifecycle-hook-wait-state"></a>
 
-Instances can remain in a wait state for a finite period of time\. The default is 1 hour \(3600 seconds\)\. You can adjust this time in the following ways:
+Instances can remain in a wait state for a finite period of time\. The default is one hour \(3600 seconds\)\. You can adjust this time in the following ways:
 + Set the heartbeat timeout for the lifecycle hook when you create the lifecycle hook\. With the [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/put-lifecycle-hook.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/put-lifecycle-hook.html) command, use the `--heartbeat-timeout` parameter\. With the `PutLifecycleHook` operation, use the `HeartbeatTimeout` parameter\.
 + Continue to the next state if you finish before the timeout period ends, using the [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/complete-lifecycle-action.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/complete-lifecycle-action.html) command or the `CompleteLifecycleAction` operation\.
-+ Restart the timeout period by recording a heartbeat, using the [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/record-lifecycle-action-heartbeat.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/record-lifecycle-action-heartbeat.html) command or the `RecordLifecycleActionHeartbeat` operation\. This increments the heartbeat timeout by the timeout value specified when you created the lifecycle hook\. For example, if the timeout value is 1 hour, and you call this command after 30 minutes, the instance remains in a wait state for an additional hour, or a total of 90 minutes\.
++ Restart the timeout period by recording a heartbeat, using the [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/record-lifecycle-action-heartbeat.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/record-lifecycle-action-heartbeat.html) command or the `RecordLifecycleActionHeartbeat` operation\. This increments the heartbeat timeout by the timeout value specified when you created the lifecycle hook\. For example, if the timeout value is one hour, and you call this command after 30 minutes, the instance remains in a wait state for an additional hour, or a total of 90 minutes\.
 
 The maximum amount of time that you can keep an instance in a wait state is 48 hours or 100 times the heartbeat timeout, whichever is smaller\.
 
@@ -57,7 +57,7 @@ The maximum amount of time that you can keep an instance in a wait state is 48 h
 
 When an Auto Scaling group launches or terminates an instance due to a simple scaling policy, a [cooldown](Cooldown.md) takes effect\. The cooldown period helps ensure that the Auto Scaling group does not launch or terminate more instances than needed\.
 
-Consider an Auto Scaling group with a lifecycle hook that supports a custom action at instance launch\. When the application experiences an increase in demand, the group launches instances to add capacity\. Because there is a lifecycle hook, the instance is put into the `Pending:Wait` state, which means that it is not available to handle traffic yet\. When the instance enters the wait state, scaling actions due to simple scaling policies are suspended\. When the instance enter the `InService` state, the cooldown period starts\. When the cooldown period expires, any suspended scaling actions resume\.
+Consider an Auto Scaling group with a lifecycle hook that supports a custom action at instance launch\. When the application experiences an increase in demand, the group launches instances to add capacity\. Because there is a lifecycle hook, the instance is put into the `Pending:Wait` state, which means that it is not available to handle traffic yet\. When the instance enters the wait state, scaling actions due to simple scaling policies are suspended\. When the instance enters the `InService` state, the cooldown period starts\. When the cooldown period expires, any suspended scaling actions resume\.
 
 ### Health Check Grace Period<a name="lifecycle-hook-health-check-grace-period"></a>
 
@@ -73,7 +73,7 @@ If the instance is terminating, both `ABANDON` and `CONTINUE` allow the instance
 
 ### Spot Instances<a name="lifecycle-hook-spot"></a>
 
-You can use lifecycle hooks with Spot Instances\. However, a lifecycle hook does not prevent an instance from terminating due to a change in the Spot price, which can happen at any time\. In addition, when a Spot Instance terminates, you must still complete the lifecycle action \(using the complete\-lifecycle\-action command or the `CompleteLifecycleAction` operation\)\.
+You can use lifecycle hooks with Spot Instances\. However, a lifecycle hook does not prevent an instance from terminating in the event that capacity is no longer available\. In addition, when a Spot Instance terminates, you must still complete the lifecycle action \(using the complete\-lifecycle\-action command or the `CompleteLifecycleAction` operation\)\.
 
 ## Prepare for Notifications<a name="preparing-for-notification"></a>
 
@@ -130,7 +130,9 @@ You can use CloudWatch Events to set up a target to invoke a Lambda function whe
    aws events put-targets --rule my-rule --targets Id=1,Arn=arn:aws:lambda:us-west-2:123456789012:function:my-function
    ```
 
-1. When the Auto Scaling group responds to a scale\-out or scale\-in event, it puts the instance in a wait state\. While the instance is in a wait state, the Lambda function is invoked\. For more information about the event data, see [Auto Scaling Events](cloud-watch-events.md#cloudwatch-event-types)\.
+1. To create the lifecycle hook, skip to the next step: [Add Lifecycle Hooks](#adding-lifecycle-hooks)\.
+
+When the Auto Scaling group responds to a scale\-out or scale\-in event, it puts the instance in a wait state\. While the instance is in a wait state, the Lambda function is invoked\. For more information about the event data, see [Auto Scaling Events](cloud-watch-events.md#cloudwatch-event-types)\.
 
 ### Receive Notification Using Amazon SNS<a name="sns-notifications"></a>
 
@@ -138,32 +140,42 @@ You can use Amazon SNS to set up a notification target to receive notifications 
 
 **To set up notifications using Amazon SNS**
 
-1. Create the target using Amazon SNS\. For more information, see [Create a Topic](https://docs.aws.amazon.com/sns/latest/dg/CreateTopic.html) in the *Amazon Simple Notification Service Developer Guide*\. Note the ARN of the target \(for example, `arn:aws:sns:us-west-2:123456789012:my-sns-topic`\)\.
-
-1. Create an IAM role to grant Amazon EC2 Auto Scaling permissions to access your notification target, using the steps in [Creating a Role to Delegate Permissions to an AWS Service](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_create_for-service.html) in the *IAM User Guide*\. When prompted to select a role type, select **AWS Service Roles**, **AutoScaling Notification Access**\. Note the ARN of the role\. For example, `arn:aws:iam::123456789012:role/my-notification-role`\.
-
-1. When the Auto Scaling group responds to a scale\-out or scale\-in event, it puts the instance in a wait state\. While the instance is in a wait state, a message is published to the notification target\. The message includes the following event data:
-   + `LifecycleActionToken` — The lifecycle action token\.
-   + `AccountId` — The AWS account ID\.
-   + `AutoScalingGroupName` — The name of the Auto Scaling group\.
-   + `LifecycleHookName` — The name of the lifecycle hook\.
-   + `EC2InstanceId` — The ID of the EC2 instance\.
-   + `LifecycleTransition` — The lifecycle hook type\.
-
-   For example:
+1. Create an Amazon SNS topic using the following [https://docs.aws.amazon.com/cli/latest/reference/sns/create-topic.html](https://docs.aws.amazon.com/cli/latest/reference/sns/create-topic.html) command\. For more information, see [Create a Topic](https://docs.aws.amazon.com/sns/latest/dg/sns-getting-started.html#CreateTopic) in the *Amazon Simple Notification Service Developer Guide*\. 
 
    ```
-   Service: AWS Auto Scaling
-   Time: 2016-09-30T20:42:11.305Z
-   RequestId: 18b2ec17-3e9b-4c15-8024-ff2e8ce8786a
-   LifecycleActionToken: 71514b9d-6a40-4b26-8523-05e7ee35fa40
-   AccountId: 123456789012
-   AutoScalingGroupName: my-asg
-   LifecycleHookName: my-hook
-   EC2InstanceId: i-0598c7d356eba48d7
-   LifecycleTransition: autoscaling:EC2_INSTANCE_LAUNCHING
-   NotificationMetadata: null
+   aws sns create-topic --name my-sns-topic
    ```
+
+   Note the ARN of the target \(for example, `arn:aws:sns:us-west-2:123456789012:my-sns-topic`\)\.
+
+1. Create a service role to grant Amazon EC2 Auto Scaling permissions to access your notification target, using the steps in [Creating a Role for an AWS Service \(Console\)](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_create_for-service.html#roles-creatingrole-service-console) in the *IAM User Guide*\. 
+
+   When prompted to select a role type, choose **AWS service**, **Auto Scaling**, **Auto Scaling Notification Access**\. Note the ARN of the role\. For example, `arn:aws:iam::123456789012:role/my-notification-role`\.
+
+1. To create the lifecycle hook, skip to the next step: [Add Lifecycle Hooks](#adding-lifecycle-hooks)\.
+
+When the Auto Scaling group responds to a scale\-out or scale\-in event, it puts the instance in a wait state\. While the instance is in a wait state, a message is published to the notification target\. The message includes the following event data:
++ `LifecycleActionToken` — The lifecycle action token\.
++ `AccountId` — The AWS account ID\.
++ `AutoScalingGroupName` — The name of the Auto Scaling group\.
++ `LifecycleHookName` — The name of the lifecycle hook\.
++ `EC2InstanceId` — The ID of the EC2 instance\.
++ `LifecycleTransition` — The lifecycle hook type\.
+
+For example:
+
+```
+Service: AWS Auto Scaling
+Time: 2016-09-30T20:42:11.305Z
+RequestId: 18b2ec17-3e9b-4c15-8024-ff2e8ce8786a
+LifecycleActionToken: 71514b9d-6a40-4b26-8523-05e7ee35fa40
+AccountId: 123456789012
+AutoScalingGroupName: my-asg
+LifecycleHookName: my-hook
+EC2InstanceId: i-0598c7d356eba48d7
+LifecycleTransition: autoscaling:EC2_INSTANCE_LAUNCHING
+NotificationMetadata: null
+```
 
 ### Receive Notification Using Amazon SQS<a name="sqs-notifications"></a>
 
@@ -174,11 +186,15 @@ FIFO queues are not compatible with lifecycle hooks\.
 
 **To set up notifications using Amazon SQS**
 
-1. Create the target using Amazon SQS\. For more information, see [Getting Started with Amazon SQS](https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-getting-started.html) in the *Amazon Simple Queue Service Developer Guide*\. Note the ARN of the target\.
+1. Create the target using Amazon SQS\. For more information, see [Getting Started with Amazon SQS](https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-getting-started.html) in the *Amazon Simple Queue Service Developer Guide*\. Note the ARN of the target \(for example, `arn:aws:sqs:us-west-2:123456789012:my-sqs-queue`\)\.
 
-1. Create an IAM role to grant Amazon EC2 Auto Scaling permission to access your notification target, using the steps in [Creating a Role to Delegate Permissions to an AWS Service](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_create_for-service.html) in the *IAM User Guide*\. When prompted to select a role type, select **AWS Service Roles**, **AutoScaling Notification Access**\. Note the ARN of the role\. For example, `arn:aws:iam::123456789012:role/my-notification-role`\.
+1. Create a service role to grant Amazon EC2 Auto Scaling permission to access your notification target, using the steps in [Creating a Role for an AWS Service \(Console\)](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_create_for-service.html#roles-creatingrole-service-console) in the *IAM User Guide*\.
 
-1. When the Auto Scaling group responds to a scale\-out or scale\-in event, it puts the instance in a wait state\. While the instance is in a wait state, a message is published to the notification target\.
+   When prompted to select a role type, choose **AWS service**, **Auto Scaling**, **Auto Scaling Notification Access**\. Note the ARN of the role\. For example, `arn:aws:iam::123456789012:role/my-notification-role`\.
+
+1. To create the lifecycle hook, skip to the next step: [Add Lifecycle Hooks](#adding-lifecycle-hooks)\.
+
+When the Auto Scaling group responds to a scale\-out or scale\-in event, it puts the instance in a wait state\. While the instance is in a wait state, a message is published to the notification target\.
 
 ## Add Lifecycle Hooks<a name="adding-lifecycle-hooks"></a>
 

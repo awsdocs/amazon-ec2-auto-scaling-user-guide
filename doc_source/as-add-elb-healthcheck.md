@@ -1,12 +1,14 @@
-# Using Elastic Load Balancing Health Checks with Auto Scaling<a name="as-add-elb-healthcheck"></a>
+# Adding Elastic Load Balancing Health Checks to an Auto Scaling Group<a name="as-add-elb-healthcheck"></a>
 
-An Auto Scaling group periodically checks the health status of each instance\. It can use Amazon EC2 status checks only, or EC2 status checks plus Elastic Load Balancing health checks\. If it determines that an instance is unhealthy, it replaces the instance\.
+The default health checks for an Auto Scaling group are EC2 status checks only\. If an instance fails these status checks, the Auto Scaling group considers the instance unhealthy and replaces it\. For more information, see [Health Checks for Auto Scaling Instances](healthcheck.md)\. 
 
-If you configure an Auto Scaling group to determine health status using EC2 status checks only \(the default\), the instance is unhealthy if it fails the EC2 status checks\. However, if you have attached one or more load balancers or target groups to the Auto Scaling group and a load balancer reports that an instance is unhealthy, the instance is not considered unhealthy\. Therefore, the instance is not replaced\.
+If you attached one or more load balancers or target groups to your Auto Scaling group, the group does not, by default, consider an instance unhealthy and replace it if it fails the load balancer health checks\. 
 
-If you configure your Auto Scaling group to determine health status using both EC2 status checks and Elastic Load Balancing health checks, it considers the instance unhealthy if it fails either the status checks or the health check\. If you attach multiple load balancers to an Auto Scaling group, all of them must report that the instance is healthy in order for it to consider the instance healthy\. If one load balancer reports an instance as unhealthy, the Auto Scaling group replaces the instance, even if other load balancers report it as healthy\.
+However, you can optionally configure the Auto Scaling group to use Elastic Load Balancing health checks\. This ensures that the group can determine an instance's health based on additional tests provided by the load balancer\. The load balancer periodically sends pings, attempts connections, or sends requests to test the EC2 instances\. These tests are called health checks\. For more information, see [Health Checks for Your Target Groups](https://docs.aws.amazon.com/elasticloadbalancing/latest/application/target-group-health-checks.html) in the *User Guide for Application Load Balancers* or [Configure Health Checks for Your Classic Load Balancer](https://docs.aws.amazon.com/elasticloadbalancing/latest/classic/elb-healthchecks.html) in the *User Guide for Classic Load Balancers*\. 
 
-For more information, see [Health Checks for Auto Scaling Instances](healthcheck.md)\.
+If you configure the Auto Scaling group to use Elastic Load Balancing health checks, it considers the instance unhealthy if it fails either the EC2 status checks or the load balancer health checks\. If you attach multiple load balancers to an Auto Scaling group, all of them must report that the instance is healthy in order for it to consider the instance healthy\. If one load balancer reports an instance as unhealthy, the Auto Scaling group replaces the instance, even if other load balancers report it as healthy\. 
+
+The following procedures show how to add Elastic Load Balancing health checks to your Auto Scaling group\.
 
 **Topics**
 + [Adding Health Checks Using the Console](#as-add-elb-healthcheck-console)
@@ -22,7 +24,7 @@ Use the following procedure to add an `ELB` health check with a grace period of 
 
 1. On the navigation pane, under **Auto Scaling**, choose **Auto Scaling Groups**\.
 
-1. Select your group\.
+1. Choose an existing group from the list\.
 
 1. On the **Details** tab, choose **Edit**\.
 

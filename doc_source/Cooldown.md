@@ -4,7 +4,7 @@ The cooldown period helps to ensure that your Auto Scaling group doesn't launch 
 
 Amazon EC2 Auto Scaling supports cooldown periods when using simple scaling policies, but not when using other scaling policies\. After the Auto Scaling group dynamically scales using a simple scaling policy, it waits for the cooldown period to complete before resuming scaling activities\. You can use the default cooldown period associated with your Auto Scaling group, or you can override the default by specifying a cooldown period for your policy\. For more information about simple scaling, see [Simple and Step Scaling Policies for Amazon EC2 Auto Scaling](as-scaling-simple-step.md)\.
 
-When you manually scale your Auto Scaling group, the default is not to wait for the cooldown period, but you can override the default and honor the cooldown period\. If an instance becomes unhealthy, the Auto Scaling group does not wait for the cooldown period to complete before replacing the unhealthy instance\. For more information about manual scaling, see [Manual Scaling](as-manual-scaling.md)\.
+When you manually scale your Auto Scaling group, the default is not to wait for the cooldown period, but you can override the default and honor the cooldown period\. If an instance becomes unhealthy, the Auto Scaling group does not wait for the cooldown period to complete before replacing the unhealthy instance\. For more information about manual scaling, see [Manual Scaling for Amazon EC2 Auto Scaling](as-manual-scaling.md)\.
 
 Amazon EC2 Auto Scaling supports both default cooldown periods and scaling\-specific cooldown periods\.
 
@@ -34,7 +34,7 @@ However, with a cooldown period in place, the Auto Scaling group launches an ins
 
 ## Default Cooldowns<a name="cooldown-default"></a>
 
-The default cooldown period is applied when you create your Auto Scaling group\. Its default value is 300 seconds\. This cooldown period automatically applies to any scaling activities for simple scaling policies, and you can optionally request that it apply to your manual scaling activities\.
+The default cooldown period is applied when you create your Auto Scaling group\. Its default value is 300 seconds\. This cooldown period automatically applies to any scaling activities for simple scaling policies, and you can optionally request to have it apply to your manual scaling activities\.
 
 ![\[A flowchart showing how a default cooldown affects scaling actions.\]](http://docs.aws.amazon.com/autoscaling/ec2/userguide/images/cooldowns-default-diagram.png)
 
@@ -46,7 +46,7 @@ You can change the default cooldown period at any time, using the AWS Management
 
 In addition to specifying the default cooldown period for your Auto Scaling group, you can create cooldowns that apply to a specific simple scaling policy or manual scaling\. A scaling\-specific cooldown period overrides the default cooldown period\.
 
-One common use for scaling\-specific cooldowns is with a scale\-in policy—a policy that terminates instances based on a specific criteria or metric\. Because this policy terminates instances, Amazon EC2 Auto Scaling needs less time to determine whether to terminate additional instances\. The default cooldown period of 300 seconds is too long—you can reduce costs by applying a scaling\-specific cooldown period of 180 seconds to the scale\-in policy\.
+One common use for scaling\-specific cooldowns is with a scale\-in policy—a policy that terminates instances based on a specific criteria or metric\. Because this policy terminates instances, Amazon EC2 Auto Scaling needs less time to determine whether to terminate additional instances\. The default cooldown period of 300 seconds is too long, in which case a scaling\-specific cooldown period of 180 seconds for your scale\-in policy can reduce costs by allowing the group to scale in faster\.
 
 You can create a scaling\-specific cooldown period using the AWS Management Console, the [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/put-scaling-policy.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/put-scaling-policy.html) command \(AWS CLI\), or the [https://docs.aws.amazon.com/autoscaling/ec2/APIReference/API_PutScalingPolicy.html](https://docs.aws.amazon.com/autoscaling/ec2/APIReference/API_PutScalingPolicy.html) API operation\.
 

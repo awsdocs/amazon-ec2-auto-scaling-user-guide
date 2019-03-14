@@ -4,7 +4,7 @@ A launch template is similar to a [launch configuration](LaunchConfiguration.md)
 
 We recommend that you use launch templates instead of launch configurations to ensure that you can use the latest features of Amazon EC2, such as T2 Unlimited instances\. 
 
-With launch templates, you can also provision capacity across multiple instance types using both On\-Demand Instances and Spot Instances to achieve the desired scale, performance, and cost\. For more information, see [Using Multiple Instance Types and Purchase Options](AutoScalingGroup.md#asg-purchase-options)\.
+With launch templates, you can also provision capacity across multiple instance types using both On\-Demand Instances and Spot Instances to achieve the desired scale, performance, and cost\. For more information, see [Auto Scaling Groups with Multiple Instance Types and Purchase Options](asg-purchase-options.md)\.
 
 If you currently use launch configurations, you can specify a launch template when you update an Auto Scaling group that was created using a launch configuration\.
 

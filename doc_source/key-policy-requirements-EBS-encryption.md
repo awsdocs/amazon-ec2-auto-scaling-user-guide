@@ -11,49 +11,49 @@ The following two policy sections grant the service\-linked role named `AWSServi
 
 ```
 {
-  "Sid": "Allow use of the CMK",
-  "Effect": "Allow",
-  "Principal": {
-    "AWS": [
-      "arn:aws:iam::123456789012:role/aws-service-role/autoscaling.amazonaws.com/AWSServiceRoleForAutoScaling"
-    ]
-  },
-  "Action": [
-    "kms:Encrypt",
-    "kms:Decrypt",
-    "kms:ReEncrypt*",
-    "kms:GenerateDataKey*",
-    "kms:DescribeKey"
-  ],
-  "Resource": "*"
+   "Sid": "Allow use of the CMK",
+   "Effect": "Allow",
+   "Principal": {
+       "AWS": [
+           "arn:aws:iam::123456789012:role/aws-service-role/autoscaling.amazonaws.com/AWSServiceRoleForAutoScaling"
+       ]
+   },
+   "Action": [
+       "kms:Encrypt",
+       "kms:Decrypt",
+       "kms:ReEncrypt*",
+       "kms:GenerateDataKey*",
+       "kms:DescribeKey"
+   ],
+   "Resource": "*"
 }
 ```
 
 ```
 {
-  "Sid": "Allow attachment of persistent resources",
-  "Effect": "Allow",
-  "Principal": {
-    "AWS": [
-      "arn:aws:iam::123456789012:role/aws-service-role/autoscaling.amazonaws.com/AWSServiceRoleForAutoScaling"
-    ]
-  },
-  "Action": [
-    "kms:CreateGrant"
-  ],
-  "Resource": "*",
-  "Condition": {
-    "Bool": {
-      "kms:GrantIsForAWSResource": true
+   "Sid": "Allow attachment of persistent resources",
+   "Effect": "Allow",
+   "Principal": {
+       "AWS": [
+           "arn:aws:iam::123456789012:role/aws-service-role/autoscaling.amazonaws.com/AWSServiceRoleForAutoScaling"
+       ]
+   },
+   "Action": [
+       "kms:CreateGrant"
+   ],
+   "Resource": "*",
+   "Condition": {
+       "Bool": {
+           "kms:GrantIsForAWSResource": true
+       }
     }
-  }
 }
 ```
 
 When you add new sections to your CMK policy, do not change any existing sections in the policy\. For information about editing key policies, see [Using Key Policies in AWS KMS](https://docs.aws.amazon.com/kms/latest/developerguide/key-policies.html) in the *AWS Key Management Service Developer Guide*\.
 
 **Important**  
-The Principal element of the key policy is the Amazon Resource Name \(ARN\) of the service\-linked role\. When launching On\-Demand Instances, use the ARN of the service\-linked for Amazon EC2 Auto Scaling: **AWSServiceRoleForAutoScaling**\. When launching Spot Instances, use the ARN of the **AWSServiceRoleForEC2Spot** role when using a launch configuration, or the service\-linked role for Amazon EC2 Auto Scaling when using a launch template\.
+The Principal element of the key policy is the Amazon Resource Name \(ARN\) of the service\-linked role\. When launching On\-Demand Instances, use the ARN of the service\-linked role for Amazon EC2 Auto Scaling: **AWSServiceRoleForAutoScaling**\. When launching Spot Instances, use the ARN of the **AWSServiceRoleForEC2Spot** role when using a launch configuration, or the service\-linked role for Amazon EC2 Auto Scaling when using a launch template\.
 
 ## Example: CMK Key Policy Sections Allowing Cross\-Account Access to the CMK<a name="policy-example-cmk-cross-account-access"></a>
 
@@ -63,37 +63,37 @@ First, add the following two sections to the CMK's key policy so that you can us
 
 ```
 {
-  "Sid": "Allow use of the key",
-  "Effect": "Allow",
-  "Principal": {
-    "AWS": [
-      "arn:aws:iam::111122223333:root"
-    ]
-  },
-  "Action": [
-    "kms:Encrypt",
-    "kms:Decrypt",
-    "kms:ReEncrypt*",
-    "kms:GenerateDataKey*",
-    "kms:DescribeKey"
-  ],
-  "Resource": "*"
+   "Sid": "Allow use of the key",
+   "Effect": "Allow",
+   "Principal": {
+       "AWS": [
+           "arn:aws:iam::111122223333:root"
+       ]
+   },
+   "Action": [
+       "kms:Encrypt",
+       "kms:Decrypt",
+       "kms:ReEncrypt*",
+       "kms:GenerateDataKey*",
+       "kms:DescribeKey"
+   ],
+   "Resource": "*"
 }
 ```
 
 ```
 {
-  "Sid": "Allow attachment of persistent resources",
-  "Effect": "Allow",
-  "Principal": {
-    "AWS": [
-      "arn:aws:iam::111122223333:root"
-    ]
-  },
-  "Action": [
-    "kms:CreateGrant"
-  ],
-  "Resource": "*"
+   "Sid": "Allow attachment of persistent resources",
+   "Effect": "Allow",
+   "Principal": {
+       "AWS": [
+           "arn:aws:iam::111122223333:root"
+       ]
+   },
+   "Action": [
+       "kms:CreateGrant"
+   ],
+   "Resource": "*"
 }
 ```
 

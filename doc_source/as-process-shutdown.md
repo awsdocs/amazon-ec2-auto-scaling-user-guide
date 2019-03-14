@@ -18,7 +18,7 @@ When you delete an Auto Scaling group, its desired, minimum, and maximum values 
 
 1. On the navigation pane, under **Auto Scaling**, choose **Auto Scaling Groups**\.
 
-1. On the Auto Scaling groups page, select your Auto Scaling group and choose **Actions**, **Delete**\. 
+1. On the **Auto Scaling Groups** page, choose your Auto Scaling group and choose **Actions**, **Delete**\. 
 
 1. When prompted for confirmation, choose **Yes, Delete**\.
 
@@ -37,7 +37,7 @@ You can skip this step to keep the launch configuration for future use\.
 
 1. On the navigation pane, under **Auto Scaling**, choose **Launch Configurations**\.
 
-1. On the **Launch Configurations** page, select your launch configuration and choose **Actions**, **Delete launch configuration**\.
+1. On the **Launch Configurations** page, choose your launch configuration and choose **Actions**, **Delete launch configuration**\.
 
 1. When prompted for confirmation, choose **Yes, Delete**\.
 
@@ -56,7 +56,7 @@ Skip this step if your Auto Scaling group is not registered with an Elastic Load
 
 1. On the navigation pane, under **LOAD BALANCING**, choose **Load Balancers**\.
 
-1. Select the load balancer and choose **Actions**, **Delete**\.
+1. Choose the load balancer and choose **Actions**, **Delete**\.
 
 1. When prompted for confirmation, choose **Yes, Delete**\.
 
@@ -77,13 +77,16 @@ aws elb delete-load-balancer --load-balancer-name my-load-balancer
 
 You can skip this step if your Auto Scaling group is not associated with any CloudWatch alarms, or if you want to keep the alarms for future use\.
 
+**Note**  
+The CloudWatch alarms that are associated with your target tracking scaling policies are deleted automatically when you delete the scaling policies\.
+
 **To delete the CloudWatch alarms using the console**
 
 1. Open the CloudWatch console at [https://console\.aws\.amazon\.com/cloudwatch/](https://console.aws.amazon.com/cloudwatch/)\.
 
 1. On the navigation pane, choose **Alarms**\.
 
-1. Select the alarms and choose **Delete**\.
+1. Choose the alarms and choose **Delete**\.
 
 1. When prompted for confirmation, choose **Yes, Delete**\.
 

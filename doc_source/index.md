@@ -1,7 +1,7 @@
 # Amazon EC2 Auto Scaling User Guide
 
 -----
-*****Copyright &copy; 2018 Amazon Web Services, Inc. and/or its affiliates. All rights reserved.*****
+*****Copyright &copy; 2019 Amazon Web Services, Inc. and/or its affiliates. All rights reserved.*****
 
 -----
 Amazon's trademarks and trade dress may not be used in 
@@ -31,6 +31,7 @@ Amazon's trademarks and trade dress may not be used in
    + [Changing the Launch Configuration for an Auto Scaling Group](change-launch-config.md)
    + [Launching Auto Scaling Instances in a VPC](asg-in-vpc.md)
 + [Auto Scaling Groups](AutoScalingGroup.md)
+   + [Auto Scaling Groups with Multiple Instance Types and Purchase Options](asg-purchase-options.md)
    + [Creating an Auto Scaling Group Using a Launch Template](create-asg-launch-template.md)
    + [Creating an Auto Scaling Group Using a Launch Configuration](create-asg.md)
    + [Creating an Auto Scaling Group Using an EC2 Instance](create-asg-from-instance.md)
@@ -38,14 +39,14 @@ Amazon's trademarks and trade dress may not be used in
    + [Tagging Auto Scaling Groups and Instances](autoscaling-tagging.md)
    + [Using a Load Balancer With an Auto Scaling Group](autoscaling-load-balancer.md)
       + [Attaching a Load Balancer to Your Auto Scaling Group](attach-load-balancer-asg.md)
-      + [Using Elastic Load Balancing Health Checks with Auto Scaling](as-add-elb-healthcheck.md)
+      + [Adding Elastic Load Balancing Health Checks to an Auto Scaling Group](as-add-elb-healthcheck.md)
       + [Expanding Your Scaled and Load-Balanced Application to an Additional Availability Zone](as-add-availability-zone.md)
    + [Launching Spot Instances in Your Auto Scaling Group](asg-launch-spot-instances.md)
    + [Merging Your Auto Scaling Groups into a Single Multi-Zone Group](merge-auto-scaling-groups.md)
    + [Deleting Your Auto Scaling Infrastructure](as-process-shutdown.md)
 + [Scaling the Size of Your Auto Scaling Group](scaling_plan.md)
    + [Maintaining the Number of Instances in Your Auto Scaling Group](as-maintain-instance-levels.md)
-   + [Manual Scaling](as-manual-scaling.md)
+   + [Manual Scaling for Amazon EC2 Auto Scaling](as-manual-scaling.md)
       + [Attach EC2 Instances to Your Auto Scaling Group](attach-instance-asg.md)
       + [Detach EC2 Instances from Your Auto Scaling Group](detach-instance-asg.md)
    + [Scheduled Scaling for Amazon EC2 Auto Scaling](schedule_time.md)
@@ -68,7 +69,7 @@ Amazon's trademarks and trade dress may not be used in
 + [Controlling Access to Your Amazon EC2 Auto Scaling Resources](control-access-using-iam.md)
    + [Service-Linked Roles for Amazon EC2 Auto Scaling](autoscaling-service-linked-role.md)
    + [Required CMK Key Policy for Use with Encrypted Volumes](key-policy-requirements-EBS-encryption.md)
-   + [Use an IAM Role for Applications That Run on Amazon EC2 Instances](us-iam-role.md)
+   + [IAM Role for Applications that Run on Amazon EC2 Instances](us-iam-role.md)
 + [Troubleshooting Amazon EC2 Auto Scaling](CHAP_Troubleshooting.md)
    + [Troubleshooting Amazon EC2 Auto Scaling: EC2 Instance Launch Failures](ts-as-instancelaunchfailure.md)
    + [Troubleshooting Amazon EC2 Auto Scaling: AMI Issues](ts-as-ami.md)

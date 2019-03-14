@@ -166,7 +166,7 @@ You can create custom IAM policies that grant your IAM users permissions to perf
 
 ### Example: Require a Launch Template<a name="policy-example-launch-template"></a>
 
-The following policy grants IAM users permissions to create and update Auto Scaling groups on one condition\. They must use a launch template and specify the version of the launch template the group uses to launch instances\. Each instance uses the user\-specified launch template version during launch\. Users may access the Amazon EC2 resources specified in the launch template\. 
+The following policy grants IAM users permissions to create and update Auto Scaling groups, provided that they use a launch template and specify the version of the launch template that the group uses to launch instances\. Each instance uses the user\-specified launch template version during launch\. Users may access the Amazon EC2 resources specified in the launch template\. 
 
 ```
 {
@@ -198,7 +198,7 @@ The following policy grants IAM users permissions to create and update Auto Scal
 
 The `autoscaling:LaunchTemplateVersionSpecified` condition key accepts the following values:
 + `true` \- Ensures that a launch template version is specified\. 
-+ `false` \- Ensures that either the **Latest** or **Default** launch template version is specified\. 
++ `false` \- Ensures that either the `Latest` or `Default` launch template version is specified\. 
 + `null` \- Ensures that a launch template is not specified\.
 
 The `ec2:*` grants permission to call all Amazon EC2 API actions and access all Amazon EC2 resources\. 

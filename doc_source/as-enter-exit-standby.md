@@ -41,7 +41,7 @@ For more information about the complete lifecycle of instances in an Auto Scalin
 
 Amazon EC2 Auto Scaling does not perform health checks on instances that are in a standby state\. While the instance is in a standby state, its health status reflects the status that it had before you put it on standby\. Amazon EC2 Auto Scaling does not perform a health check on the instance until you put it back in service\.
 
-For example, if you put a healthy instance on standby and then terminate it, Amazon EC2 Auto Scaling continues to report the instance as healthy\. If you return the terminated instance to service, Amazon EC2 Auto Scaling performs a health check on the instance, determines that it is unhealthy, and launches a replacement instance\.
+For example, if you put a healthy instance on standby and then terminate it, Amazon EC2 Auto Scaling continues to report the instance as healthy\. If you return the terminated instance to service, Amazon EC2 Auto Scaling performs a health check on the instance, determines that it is terminating and unhealthy, and launches a replacement instance\.
 
 ## Temporarily Remove an Instance Using the AWS Management Console<a name="standby-state-console"></a>
 

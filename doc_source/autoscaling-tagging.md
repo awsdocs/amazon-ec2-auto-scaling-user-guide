@@ -1,6 +1,6 @@
 # Tagging Auto Scaling Groups and Instances<a name="autoscaling-tagging"></a>
 
-You can organize and manage your Auto Scaling groups by assigning your own metadata to each group in the form of *tags*\. You specify a *key* and a *value* for each tag\. A key can be a general category, such as "project," "owner," or "environment," with specific associated values\. For example, to differentiate between your testing and production environments, you could assign each Auto Scaling group a tag with a key of "environment\." Use a value of "test" to indicate your test environment or "production" to indicate your production environment\. We recommend that you use a consistent set of tags to make it easier to track your Auto Scaling groups\.
+You can organize and manage your Auto Scaling groups by assigning your own metadata to each group as *tags*\. You specify a *key* and a *value* for each tag\. A key can be a general category, such as "project," "owner," or "environment," with specific associated values\. For example, to differentiate between your testing and production environments, you could assign each Auto Scaling group a tag with a key of "environment\." Use a value of "test" to indicate your test environment or "production" to indicate your production environment\. We recommend that you use a consistent set of tags to assist you in tracking your Auto Scaling groups\.
 
 You can specify that the tags for your Auto Scaling group should be added to the Amazon EC2 instances that it launches\. The Auto Scaling group applies the tags while the instances are in the `Pending` lifecycle state\. If you have a lifecycle hook, the tags are available when the instance enters the `Pending:Wait` lifecycle state\. For more information, see [Auto Scaling Lifecycle](AutoScalingGroupLifecycle.md)\.
 
@@ -20,7 +20,7 @@ The following basic restrictions apply to tags:
 + The maximum key length is 127 Unicode characters\.
 + The maximum value length is 255 Unicode characters\.
 + Tag keys and values are case\-sensitive\.
-+ Do not use the `aws:` prefix in your tag names or values, because it is reserved for AWS use\. You can't edit or delete tag names or values with this prefix, and they do not count against toward your limit of tags per Auto Scaling group\.
++ Do not use the `aws:` prefix in your tag names or values, because it is reserved for AWS use\. You can't edit or delete tag names or values with this prefix, and they do not count toward your limit of tags per Auto Scaling group\.
 
 You can add tags to your Auto Scaling group when you create it or when you update it\. You can remove tags from your Auto Scaling group at any time\. For information about assigning tags when you create your Auto Scaling group, see [Step 2: Create an Auto Scaling Group](GettingStartedTutorial.md#gs-create-asg)\.
 
@@ -50,7 +50,7 @@ Use the Amazon EC2 console to add or modify tags\.
 
 1. On the navigation pane, under **Auto Scaling**, choose **Auto Scaling Groups**\.
 
-1. Select your Auto Scaling group\.
+1. Choose an existing group from the list\.
 
 1. On the **Tags** tab, choose **Add/Edit tags**\. The **Add/Edit Auto Scaling Group Tags** page lists any existing tags for the Auto Scaling group\.
 
@@ -146,7 +146,7 @@ You can delete a tag associated with your Auto Scaling group at any time\.
 
 1. On the navigation pane, under **Auto Scaling**, choose **Auto Scaling Groups**\.
 
-1. Select your Auto Scaling group\.
+1. Choose an existing group from the list\.
 
 1. On the **Tags** tab, choose **Add/Edit tags**\. The **Add/Edit Auto Scaling Group Tags** page lists any existing tags for the Auto Scaling group\.
 

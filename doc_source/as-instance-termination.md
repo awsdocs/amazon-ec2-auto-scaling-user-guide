@@ -1,13 +1,13 @@
 # Controlling Which Auto Scaling Instances Terminate During Scale In<a name="as-instance-termination"></a>
 
-With each Auto Scaling group, you control when it adds instances \(referred to as *scaling out*\) or remove instances \(referred to as *scaling in*\) from your network architecture\. You can scale the size of your group manually by attaching and detaching instances, or you can automate the process through the use of a scaling policy\.
+With each Auto Scaling group, you control when it adds instances \(referred to as *scaling out*\) or removes instances \(referred to as *scaling in*\) from your network architecture\. You can scale the size of your group manually by attaching and detaching instances, or you can automate the process through the use of a scaling policy\. 
 
-When you configure automatic scale in, you must set up a termination policy for the Auto Scaling group to use to choose which instances to terminate first\.
+To specify which instances to terminate first during scale in, configure a termination policy for the Auto Scaling group\. 
 
-You can also use instance protection to prevent specific instances from being terminated during automatic scale in\.
+You can also optionally use instance protection to prevent specific instances from being terminated during automatic scale in\. For instances in an Auto Scaling group, use Amazon EC2 Auto Scaling features to protect an instance if a scale in occurs instead of Amazon EC2 termination protection\. 
 
 **Note**  
-The information in this section about maximizing usage to the hour is currently applicable to instances running Microsoft Windows or Linux distributions that have an hourly charge\. If your Auto Scaling group uses Amazon Linux or Ubuntu, your EC2 usage is billed in one\-second increments\. For more information about per\-second billing, see [Amazon EC2 Pricing](https://aws.amazon.com/ec2/pricing/)\.
+For [Auto Scaling Groups with Multiple Instance Types and Purchase Options](asg-purchase-options.md), the scale\-in action respects the percentages set for On\-Demand and Spot Instances and the On\-Demand base amount\. When the group scales in, the Auto Scaling group first identifies which of these two types of instances it will terminate and then chooses the Availability Zone with the most instances of that type to apply the default or customized termination policy to\. 
 
 **Topics**
 + [Default Termination Policy](#default-termination-policy)
@@ -16,25 +16,29 @@ The information in this section about maximizing usage to the hour is currently 
 
 ## Default Termination Policy<a name="default-termination-policy"></a>
 
-The default termination policy is designed to help ensure that your instances span Availability Zones evenly for high availability\. 
+This section describes the default termination policy used by an Auto Scaling group when a scale\-in event occurs\. The default termination policy is designed to help ensure that your instances span Availability Zones evenly for high availability\. The default policy is kept generic and flexible to cover a range of scenarios\. 
 
 With the default termination policy, the behavior of the Auto Scaling group is as follows:
 
 1. Determine which Availability Zone\(s\) have the most instances and at least one instance that is not protected from scale in\. 
 
-1. If there are multiple unprotected instances to choose from in the Availability Zone\(s\) with the most instances: 
+   If there are multiple unprotected instances to choose from in the Availability Zone\(s\) with the most instances, an instance is selected for termination based on the following criteria \(applied in the order shown\)\.
 
-   1. For Auto Scaling groups configured to [launch instances across pricing options and instance types](AutoScalingGroup.md#asg-purchase-options):
+1. \[For [Auto Scaling Groups with Multiple Instance Types and Purchase Options](asg-purchase-options.md) only\]
 
-      Determine which instance to terminate so as to align the remaining instances to the allocation strategies for On\-Demand and Spot Instances, your current selection of instance types, and distribution across your N lowest priced Spot pools\. 
+   Determine which instance to terminate so as to align the remaining instances to the allocation strategy for the On\-Demand or Spot Instance that is terminating, your current selection of instance types, and distribution across your N lowest priced Spot pools\. If there is one such instance, terminate it\. Otherwise, apply the next condition\.
 
-   1. If there are multiple instances to choose from, determine whether any of these instances use the oldest launch configuration or template\. If there is one such instance, terminate it\. 
+1. \[For Auto Scaling groups that use a launch template\]
 
-   1. For Auto Scaling groups that use a launch configuration: 
+   Determine whether any of these instances use the oldest launch template\. \(The exception is if the group originally used a launch configuration\. Amazon EC2 Auto Scaling terminates instances that use a launch configuration before instances with the oldest launch template\.\) If there is one such instance, terminate it\. 
 
-      Determine whether any of these instances use the oldest launch configuration\. If there is one such instance, terminate it\. 
+1. \[For Auto Scaling groups that use a launch configuration\]
 
-1. If there are multiple unprotected instances to terminate based on the above criteria, determine which instances are closest to the next billing hour\. \(This helps you maximize the use of your instances that have an hourly charge\.\) If there is one such instance, terminate it\. 
+   Determine whether any of these instances use the oldest launch configuration\. If there is one such instance, terminate it\. 
+
+1. If there are multiple unprotected instances to terminate after applying all of the above criteria, determine which instances are closest to the next billing hour\. \(This helps you maximize the use of your instances that have an hourly charge\.\) If there is one such instance, terminate it\. 
+**Note**  
+Maximizing usage to the hour is currently applicable to instances running Microsoft Windows or Linux distributions that have an hourly charge\. If your Auto Scaling group uses Amazon Linux or Ubuntu, your EC2 usage is billed in one\-second increments\. For more information about per\-second billing, see [Amazon EC2 Pricing](https://aws.amazon.com/ec2/pricing/)\.
 
 1. If there are multiple unprotected instances closest to the next billing hour, choose one of these instances at random\.
 
@@ -47,7 +51,7 @@ When the threshold for the scale\-out policy is met, the policy takes effect and
 
 ![\[An Auto Scaling group after a scaling action occurs.\]](http://docs.aws.amazon.com/autoscaling/ec2/userguide/images/termination-policy-default-2-diagram.png)
 
-When the threshold for the scale\-in policy is met, the policy takes effect and the Auto Scaling group terminates one of the instances\. If you did not assign a specific termination policy to the group, it uses the default termination policy\. It selects the Availability Zone with two instances, and terminates the instance launched from the oldest launch configuration\. If the instances were launched from the same launch configuration, then the Auto Scaling group selects the instance that is closest to the next billing hour and terminates it\.
+When the threshold for the scale\-in policy is met, the policy takes effect and the Auto Scaling group terminates one of the instances\. If you did not assign a specific termination policy to the group, it uses the default termination policy\. It selects the Availability Zone with two instances, and terminates the instance launched from the oldest launch configuration\. If the instances were launched from the same launch configuration, the Auto Scaling group selects the instance that is closest to the next billing hour and terminates it\.
 
 For more information about high availability with Amazon EC2 Auto Scaling, see [Distributing Instances Across Availability Zones](auto-scaling-benefits.md#arch-AutoScalingMultiAZ)\.
 
@@ -55,7 +59,7 @@ For more information about high availability with Amazon EC2 Auto Scaling, see [
 
 The default termination policy assigned to an Auto Scaling group is typically sufficient for most situations\. However, you have the option of replacing the default policy with a customized one\.
 
-When you customize the termination policy, if one Availability Zone has more instances than the other Availability Zones that are used by the group, then your termination policy is applied to the instances from the imbalanced Availability Zone\. If the Availability Zones used by the group are balanced, then the termination policy is applied across all the Availability Zones for the group\.
+When you customize the termination policy, if one Availability Zone has more instances than the other Availability Zones that are used by the group, your termination policy is applied to the instances from the imbalanced Availability Zone\. If the Availability Zones used by the group are balanced, the termination policy is applied across all of the Availability Zones for the group\.
 
 Amazon EC2 Auto Scaling supports the following custom termination policies:
 + `OldestInstance`\. Terminate the oldest instance in the group\. This option is useful when you're upgrading the instances in the Auto Scaling group to a new EC2 instance type\. You can gradually replace instances of the old type with instances of the new type\.
@@ -64,7 +68,7 @@ Amazon EC2 Auto Scaling supports the following custom termination policies:
 + `ClosestToNextInstanceHour`\. Terminate instances that are closest to the next billing hour\. This policy helps you maximize the use of your instances and manage your Amazon EC2 usage costs\.
 + `Default`\. Terminate instances according to the default termination policy\. This policy is useful when you have more than one scaling policy for the group\.
 + `OldestLaunchTemplate`\. Terminate instances that have the oldest launch template: first the non\-current launch template followed by the oldest version of the current launch template\. This policy is useful when you're updating a group and phasing out the instances from a previous configuration\.
-+ `AllocationStrategy`\. Terminate instances in the Auto Scaling group to align the instance distribution to the allocation strategies for On\-Demand and Spot Instances, your current selection of instance types, and distribution across your N lowest priced Spot pools\. 
++ `AllocationStrategy`\. Terminate instances in the Auto Scaling group to align the remaining instances to the allocation strategy for the type of instance \(either a Spot Instance or an On\-Demand Instance\) that is terminating\. This policy is useful when your preferred instance types have changed\. You can gradually rebalance the distribution of Spot Instances across your N lowest priced Spot pools\. You can also gradually replace On\-Demand Instances of a lower priority type with On\-Demand Instances of a higher priority type\.
 
 **To customize a termination policy using the console**
 
@@ -99,12 +103,12 @@ To control whether an Auto Scaling group can terminate a particular instance whe
 
 Instance protection starts when the instance state is `InService`\. If you detach an instance that is protected from termination, its instance protection setting is lost\. When you attach the instance to the group again, it inherits the current instance protection setting of the group\.
 
-If all instances in an Auto Scaling group are protected from termination during scale in and a scale\-in event occurs, its desired capacity is decremented\. However, the Auto Scaling group can't terminate the required number of instances until their instance protection settings are disabled\.
+If all instances in an Auto Scaling group are protected from termination during scale in, and a scale\-in event occurs, its desired capacity is decremented\. However, the Auto Scaling group can't terminate the required number of instances until their instance protection settings are disabled\.
 
 Instance protection does not protect Auto Scaling instances from the following:
-+ Manual termination through the Amazon EC2 console, the `terminate-instances` command, or the `TerminateInstances` action\. To protect Auto Scaling instances from manual termination, enable termination protection\. For more information, see [Enabling Termination Protection](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/terminating-instances.html#Using_ChangingDisableAPITermination) in the *Amazon EC2 User Guide for Linux Instances*\.
-+ Health check replacement if the instance fails health checks\.
-+ Spot Instance interruption\.
++ Manual termination through the Amazon EC2 console, the `terminate-instances` command, or the `TerminateInstances` action\. To protect Auto Scaling instances from manual termination, enable Amazon EC2 termination protection\. For more information, see [Enabling Termination Protection](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/terminating-instances.html#Using_ChangingDisableAPITermination) in the *Amazon EC2 User Guide for Linux Instances*\.
++ Health check replacement if the instance fails health checks\. For more information, see [Health Checks for Auto Scaling Instances](healthcheck.md)\. To prevent Amazon EC2 Auto Scaling from terminating unhealthy instances, suspend the `ReplaceUnhealthy` process\. For more information, [Suspending and Resuming Scaling Processes](as-suspend-resume-processes.md)\.
++ Spot Instance interruptions\. A Spot instance is terminated when capacity is no longer available or the Spot price exceeds your maximum price\. 
 
 **Topics**
 + [Enable Instance Protection for a Group](#instance-protection-group)

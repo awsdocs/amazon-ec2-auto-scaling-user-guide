@@ -21,22 +21,22 @@ Use the following procedure to expand your Auto Scaling group to an additional s
 
 1. On the navigation pane, under **Auto Scaling**, choose **Auto Scaling Groups**\.
 
-1. Select your group\.
+1. Choose an existing group from the list\.
 
 1. On the **Details** tab, choose **Edit**\.
 
 1. Do one of the following:
-   + \[EC2\-VPC\] In **Subnet\(s\)**, select the subnet corresponding to the Availability Zone\.
-   + \[EC2\-Classic\] In **Availability Zones\(s\)**, select the Availability Zone\.
+   + \[EC2\-VPC\] In **Subnet\(s\)**, choose the subnet corresponding to the Availability Zone\.
+   + \[EC2\-Classic\] In **Availability Zones\(s\)**, choose the Availability Zone\.
 
 1. Choose **Save**\.
 
 1. On the navigation pane, choose **Load Balancers**\.
 
-1. Select your load balancer\.
+1. Choose your load balancer\.
 
 1. Do one of the following:
-   + \[Classic Load Balancer in EC2\-Classic\] On the **Instances** tab, choose **Edit Availability Zones**\. On the **Add and Remove Availability Zones** page, select the Availability Zone to add\.
+   + \[Classic Load Balancer in EC2\-Classic\] On the **Instances** tab, choose **Edit Availability Zones**\. On the **Add and Remove Availability Zones** page, choose the Availability Zone to add\.
    + \[Classic Load Balancer in a VPC\] On the **Instances** tab, choose **Edit Availability Zones**\. On the **Add and Remove Subnets** page, for **Available subnets**, choose the add icon \(\+\) for the subnet to add\. The subnet is moved under **Selected subnets**\.
    + \[Application Load Balancer\] On the **Description** tab, for **Availability Zones**, choose **Edit**\. Choose the add icon \(\+\) for one of the subnets for the Availability Zone to add\. The subnet is moved under **Selected subnets**\.
 

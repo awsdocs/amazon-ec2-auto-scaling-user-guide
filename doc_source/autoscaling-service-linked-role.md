@@ -96,6 +96,4 @@ You can use IAM to delete the default service\-linked role or one that you've cr
 
 If you delete the `AWSServiceRoleForAutoScaling` service\-linked role, Amazon EC2 Auto Scaling creates the role again when you create an Auto Scaling group but do not specify a different service\-linked role\.
 
-## Supported Regions for Amazon EC2 Auto Scaling Service\-Linked Roles<a name="slr-regions"></a>
-
-Amazon EC2 Auto Scaling supports using service\-linked roles in all of the regions where the service is available\. For more information, see [AWS Regions and Endpoints](https://docs.aws.amazon.com/general/latest/gr/rande.html)\.
+## <a name="slr-regions"></a>

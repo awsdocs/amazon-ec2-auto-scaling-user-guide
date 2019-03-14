@@ -14,7 +14,7 @@ Use the console to add a scaling policy to an existing Auto Scaling group\. A sc
 
    The page displays all the available resources\.
 
-1. If you are adding a target tracking scaling policy, use the following steps\. If you are using a simple or step scaling policy, skip to the next step\.
+1. If you are adding a target tracking scaling policy, use the following sub\-steps\. If you are using a simple or step scaling policy, skip to the next step\.
 
    1. For **Name**, type a name for the policy\.
 
@@ -28,7 +28,7 @@ Use the console to add a scaling policy to an existing Auto Scaling group\. A sc
 
 1. If you are using a step scaling policy, choose **Create a scaling policy with steps**, and then do the following:
 **Note**  
-We recommend that you use the option to create scaling policies with steps\. To use a simple scaling policy, choose **Create a simple scaling policy** instead\. For more information about simple scaling, see [Simple and Step Scaling Policies for Amazon EC2 Auto Scaling](as-scaling-simple-step.md)\.
+We recommend that you use the option to create scaling policies with steps\. To use a simple scaling policy, choose **Create a simple scaling policy** instead\. For more information about simple and step scaling, see [Simple and Step Scaling Policies for Amazon EC2 Auto Scaling](as-scaling-simple-step.md)\.
 
    1. For **Name**, type a name for the policy, and then choose **Create new alarm**\.
 

@@ -1,10 +1,10 @@
-# Use an IAM Role for Applications That Run on Amazon EC2 Instances<a name="us-iam-role"></a>
+# IAM Role for Applications that Run on Amazon EC2 Instances<a name="us-iam-role"></a>
 
-Applications that run on an Amazon EC2 instances need credentials in order to access other AWS services\. To provide credentials to the application in a secure way, use an IAM role\. 
+Applications that run on Amazon EC2 instances need credentials in order to access other AWS services\. To provide credentials to the application in a secure way, use an IAM role\. 
 
 When you launch an Amazon EC2 instance, you can specify an IAM role for the instance as a launch parameter\. Applications that run on the EC2 instance can use the role's credentials when they access AWS resources\. The role's permissions determine what the application is allowed to do\. 
 
-With Amazon EC2 Auto Scaling, you create a launch configuration or launch template with an EC2 *instance profile*\. An instance profile is a container for an IAM role\. First, create an IAM role that has all the permissions required to access the AWS resources, then add your role to the instance profile\.
+For instances in an Auto Scaling group, you create a launch configuration or launch template with an EC2 *instance profile*\. An instance profile is a container for an IAM role\. First, create an IAM role that has all the permissions required to access the AWS resources, then add your role to the instance profile\.
 
 For more information about IAM roles and instance profiles, see [Using an IAM Role to Grant Permissions to Applications Running on Amazon EC2 Instances ](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_use_switch-role-ec2.html) in the *IAM User Guide*\.
 

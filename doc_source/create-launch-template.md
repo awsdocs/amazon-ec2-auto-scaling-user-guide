@@ -11,14 +11,14 @@ For information about the required IAM permissions, see [Controlling the Use of 
 **Considerations**
 
 Keep the following considerations in mind when creating a launch template for use with an Auto Scaling group:
-+ Launch templates give you the flexibility of launching one type of instance, or a combination of instance types and On\-Demand and Spot purchase options\. For more information, see [Using Multiple Instance Types and Purchase Options](AutoScalingGroup.md#asg-purchase-options)\. Launching instances with such a combination is not supported:
++ Launch templates give you the flexibility of launching one type of instance, or a combination of instance types and On\-Demand and Spot purchase options\. For more information, see [Auto Scaling Groups with Multiple Instance Types and Purchase Options](asg-purchase-options.md)\. Launching instances with such a combination is not supported:
   + If you specify a Spot Instance request in **Additional Details**
   + In EC2\-Classic
 + If you configure a network type \(VPC or EC2\-Classic\), subnet, and Availability Zone for your template, these settings are ignored in favor of what is specified in the Auto Scaling group\. 
 + If you specify a network interface, you must configure the security group as part of the network interface, and not in the **Security Groups** section of the template\. 
 + You cannot specify multiple network interfaces\.
 + You cannot specify private IP addresses\. 
-+ To specify a network interface to use, its device index must be 0 \(eth0\)\. 
++ To specify an existing network interface to use, its device index must be 0 \(eth0\)\. For this scenario, you must use the CLI or API to create the Auto Scaling group\. When you create the group using the CLI create\-auto\-scaling\-group command or API CreateAutoScalingGroup action, you must specify the Availability Zones parameter instead of the subnet \(VPC zone identifier\) parameter\. 
 + You cannot use host placement affinity\.
 
 **To create a new launch template for an Auto Scaling group using the console**
@@ -37,13 +37,13 @@ Keep the following considerations in mind when creating a launch template for us
 
 1. Under **Launch template contents**, provide the following information\.
 
-   1. **AMI ID**: Choose an AMI ID from which to launch the instances\. You can search through all available AMIs using the **Search for AMI** dialog\. On the **Quick Start** tab, select from one of the commonly used AMIs in the list\. If you don't see the AMI that you need, select the **AWS Marketplace** or **Community AMIs** tab to [find a suitable AMI](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/finding-an-ami.html)\.
+   1. **AMI ID**: Choose the ID of the Amazon Machine Image \(AMI\) from which to launch the instances\. You can search through all available AMIs using the **Search for AMI** dialog\. From the **Quick Start** list, select from one of the commonly used AMIs in the list\. If you don't see the AMI that you need, select the **AWS Marketplace** or **Community AMIs** list to [find a suitable AMI](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/finding-an-ami.html)\.
 
    1. **Instance type**: Choose the [instance type](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/instance-types.html)\. Ensure that the instance type is compatible with the AMI you've specified\. 
 
    1. **Key pair name**: Specify the [key pair](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-key-pairs.html) to use when connecting to your instances\.
 
-   1. **Network type**: You can choose to specify whether to launch instances into a VPC or EC2\-Classic, if applicable\. However, the network type and Availability Zone settings of the launch template are ignored in favor of the settings of the Auto Scaling group\. 
+   1. **Network type**: You can choose to specify whether to launch instances into a VPC or EC2\-Classic, if applicable\. However, the network type and Availability Zone settings of the launch template are ignored for Amazon EC2 Auto Scaling in favor of the settings of the Auto Scaling group\. 
 
    1. **Security Groups**: Choose one or more [security groups](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-network-security.html), or leave blank to configure the security group as part of the network interface\. You cannot specify security groups in both places\. To launch instances into a VPC, you must specify a security group that is created for that VPC\.
 
@@ -55,11 +55,11 @@ Keep the following considerations in mind when creating a launch template for us
 
    1. **Description**: Enter a descriptive name\.
 
-   1. **Subnet**: While you may choose to specify a subnet, it is ignored in favor of the subnets specified in the Auto Scaling group\.
+   1. **Subnet**: While you may choose to specify a subnet, it is ignored for Amazon EC2 Auto Scaling in favor of the settings of the Auto Scaling group\. 
 
    1. **Auto\-assign public IP**: Specify whether to automatically assign a public IP address to the network interface\. 
 
-   1. **Security group ID**: Enter the IDs of one or more security groups with which to associate the primary network interface \(eth0\)\. To launch instances into a VPC, you must specify a security group that is created for that VPC\.
+   1. **Security group ID**: Enter the IDs of one or more [security groups](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-network-security.html) with which to associate the primary network interface \(eth0\)\. To launch instances into a VPC, you must specify a security group that is created for that VPC\.
 
    1. **Delete on termination**: Choose whether the network interface is deleted when the Auto Scaling group scales in and terminates the instance to which the network interface is attached\.
 
@@ -88,12 +88,12 @@ Keep the following considerations in mind when creating a launch template for us
 1. For **Advanced Details**, expand the section to view the fields and specify any additional parameters for the instances\. For more information about this section and how each parameter can be used, see [Creating a Launch Template](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-launch-templates.html#create-launch-template) in the *Amazon EC2 User Guide for Linux Instances*\. 
    + **Purchasing option**: You have the option to request Spot Instances and specify the maximum price you are willing to pay per instance hour\. For this to work with an Auto Scaling group, you must specify a one\-time request with no end date\. For more information, see [Launching Spot Instances in Your Auto Scaling Group](asg-launch-spot-instances.md)\.
 **Important**  
-If you will specify multiple instance types and purchase options when you configure your Auto Scaling group, leave these fields empty\. For more information, see [Using Multiple Instance Types and Purchase Options](AutoScalingGroup.md#asg-purchase-options)\.
-   + **IAM instance profile**: Specify an AWS Identity and Access Management \(IAM\) instance profile to associate with the instances\. For more information, see [Use an IAM Role for Applications That Run on Amazon EC2 Instances](us-iam-role.md)\.
-   + **Shutdown behavior**: You can leave this field blank because it is ignored for Amazon EC2 Auto Scaling\. The default behavior of Auto Scaling is to terminate the instance\. 
-   + **Termination protection**: You can leave this field blank because it is ignored for Amazon EC2 Auto Scaling when scaling your Auto Scaling group\. To control whether an Auto Scaling group can terminate a particular instance when scaling in, use [Instance Protection](as-instance-termination.md#instance-protection)\.
+If you will specify multiple instance types and purchase options when you configure your Auto Scaling group, leave these fields empty\. For more information, see [Auto Scaling Groups with Multiple Instance Types and Purchase Options](asg-purchase-options.md)\.
+   + **IAM instance profile**: Specify an AWS Identity and Access Management \(IAM\) instance profile to associate with the instances\. For more information, see [IAM Role for Applications that Run on Amazon EC2 Instances](us-iam-role.md)\.
+   + **Shutdown behavior**: You can leave this field blank because it is ignored for Amazon EC2 Auto Scaling\. The default behavior of Amazon EC2 Auto Scaling is to terminate the instance\. 
+   + **Termination protection**: Provides additional termination protection but is ignored for Amazon EC2 Auto Scaling when scaling in your Auto Scaling group\. To control whether an Auto Scaling group can terminate a particular instance when scaling in, use [Instance Protection](as-instance-termination.md#instance-protection)\.
    + **Monitoring**: Choose whether to enable detailed monitoring of the instances using Amazon CloudWatch\. Additional charges apply\. For more information, see [Monitoring Your Auto Scaling Groups and Instances Using Amazon CloudWatch](as-instance-monitoring.md)\.
-   + **T2/T3 Unlimited**: \(Only valid for T2 and T3 instances\) Choose whether to enable applications to burst beyond the baseline for as long as needed\. Additional charges may apply\. 
+   + **T2/T3 Unlimited**: \(Only valid for T2 and T3 instances\) Choose whether to enable applications to burst beyond the baseline for as long as needed\. Additional charges may apply\. For more information, see [Using an Auto Scaling Group to Launch a Burstable Performance Instance as Unlimited](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/burstable-performance-instances-how-to.html#burstable-performance-instances-auto-scaling-grp) in the *Amazon EC2 User Guide for Linux Instances*\.
    + **Placement group name**: Specify a placement group in which to launch the instances\. Not all instance types can be launched in a placement group\. If you configure an Auto Scaling group using a CLI command that specifies a different placement group, the setting is ignored in favor of the one specified for the Auto Scaling group\.
    + **EBS\-optimized instance**: Provides additional, dedicated capacity for Amazon EBS I/O\. Not all instance types support this feature, and additional charges apply\. 
    + **Tenancy**: You can choose to run your instances either on shared hardware \(**Shared**\), or on isolated, dedicated hardware \(**Dedicated**\)\. Additional charges may apply\. You cannot choose **Dedicated host**\.
@@ -108,3 +108,64 @@ If you will specify multiple instance types and purchase options when you config
 You can use one of the following commands:
 + [https://docs.aws.amazon.com/cli/latest/reference/ec2/create-launch-template.html](https://docs.aws.amazon.com/cli/latest/reference/ec2/create-launch-template.html) \(AWS CLI\)
 + [https://docs.aws.amazon.com/powershell/latest/reference/items/New-EC2LaunchTemplate.html](https://docs.aws.amazon.com/powershell/latest/reference/items/New-EC2LaunchTemplate.html) \(AWS Tools for Windows PowerShell\)
+
+Create a launch template using the [https://docs.aws.amazon.com/cli/latest/reference/ec2/create-launch-template.html](https://docs.aws.amazon.com/cli/latest/reference/ec2/create-launch-template.html) command as follows\. Specify a value for `Groups` that corresponds to a security group for the VPC that your Auto Scaling group will launch instances into\.
+
+```
+aws ec2 create-launch-template --launch-template-name my-template-for-auto-scaling --version-description version1 --launch-template-data '{"NetworkInterfaces":[{"DeviceIndex":0,"AssociatePublicIpAddress":true,"Groups":["sg-7c227019"],"DeleteOnTermination":true}],"ImageId":"ami-01e24be29428c15b2","InstanceType":"t2.micro","TagSpecifications": [{"ResourceType": "instance","Tags": [{"Key":"name","Value":"webserver"}]}]}'
+```
+
+Use the following [https://docs.aws.amazon.com/cli/latest/reference/ec2/describe-launch-templates.html](https://docs.aws.amazon.com/cli/latest/reference/ec2/describe-launch-templates.html) command to describe the launch template *my\-template\-for\-auto\-scaling*\.
+
+```
+aws ec2 describe-launch-templates --launch-template-names my-template-for-auto-scaling
+```
+
+Use the following [https://docs.aws.amazon.com/cli/latest/reference/ec2/describe-launch-template-versions.html](https://docs.aws.amazon.com/cli/latest/reference/ec2/describe-launch-template-versions.html) command to describe the versions of the specified launch template *my\-template\-for\-auto\-scaling*\.
+
+```
+aws ec2 describe-launch-template-versions --launch-template-id lt-068f72b72934aff71
+```
+
+The following is an example response:
+
+```
+{
+    "LaunchTemplateVersions": [
+        {
+            "VersionDescription": "version1",
+            "LaunchTemplateId": "lt-068f72b72934aff71",
+            "LaunchTemplateName": "my-template-for-auto-scaling",
+            "VersionNumber": 1,
+            "CreatedBy": "arn:aws:iam::123456789012:user/AWS-CLI",
+            "LaunchTemplateData": {
+                "TagSpecifications": [
+                    {
+                        "ResourceType": "instance",
+                        "Tags": [
+                            {
+                                "Value": "webserver",
+                                "Key": "name"
+                            }
+                        ]
+                    }
+                ],
+                "ImageId": "ami-01e24be29428c15b2",
+                "InstanceType": "t2.micro",
+                "NetworkInterfaces": [
+                    {
+                        "DeviceIndex": 0,
+                        "DeleteOnTermination": true,
+                        "Groups": [
+                            "sg-7c227019"
+                        ],
+                        "AssociatePublicIpAddress": true
+                    }
+                ]
+            },
+            "DefaultVersion": true,
+            "CreateTime": "2019-02-28T19:52:27.000Z"
+        }
+    ]
+}
+```

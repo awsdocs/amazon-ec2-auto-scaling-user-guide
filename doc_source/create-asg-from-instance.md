@@ -36,7 +36,7 @@ Use the following [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/
 aws autoscaling create-auto-scaling-group --auto-scaling-group-name my-asg-from-instance --instance-id i-7f12e649 --min-size 1 --max-size 2 --desired-capacity 2
 ```
 
-Use the following [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/describe-auto-scaling-groups.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/describe-auto-scaling-groups.html) command to create the Auto Scaling group:
+Use the following [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/describe-auto-scaling-groups.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/describe-auto-scaling-groups.html) command to describe the Auto Scaling group:
 
 ```
 aws autoscaling describe-auto-scaling-groups --auto-scaling-group-name my-asg-from-instance
@@ -90,7 +90,7 @@ The following example response shows that the desired capacity of the group is 2
 }
 ```
 
-Use the following describe\-launch\-configs command to describe the launch configuration *my\-asg\-from\-instance*\.
+Use the following [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/describe-launch-configurations.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/describe-launch-configurations.html) command to describe the launch configuration *my\-asg\-from\-instance*\.
 
 ```
 aws autoscaling describe-launch-configurations --launch-configuration-names my-asg-from-instance

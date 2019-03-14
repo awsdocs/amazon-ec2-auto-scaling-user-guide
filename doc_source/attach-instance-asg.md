@@ -58,7 +58,7 @@ You can attach an existing instance to an existing Auto Scaling group, or to a n
 
 1. On the **Attach to Auto Scaling Group** page, select **an existing Auto Scaling group**, select the instance, and then choose **Attach**\.
 
-1. If the instance doesn't meet the criteria, you get an error message with the details\. For example, it might not be in the same Availability Zone as the Auto Scaling group\. Choose **Close** and try again with an instance that meets the criteria\.
+1. If the instance doesn't meet the criteria, you get an error message with the details\. For example, the instance might not be in the same Availability Zone as the Auto Scaling group\. Choose **Close** and try again with an instance that meets the criteria\.
 
 ## Attaching an Instance Using the AWS CLI<a name="attach-instance-aws-cli"></a>
 
@@ -124,7 +124,7 @@ You can attach an existing instance to an existing Auto Scaling group, or to a n
    aws autoscaling attach-instances --instance-ids i-a8e09d9c --auto-scaling-group-name my-asg
    ```
 
-1. To verify that the instance is attached, use the following describe\-auto\-scaling\-groups command:
+1. To verify that the instance is attached, use the following [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/describe-auto-scaling-groups.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/describe-auto-scaling-groups.html) command:
 
    ```
    aws autoscaling describe-auto-scaling-groups --auto-scaling-group-names my-asg

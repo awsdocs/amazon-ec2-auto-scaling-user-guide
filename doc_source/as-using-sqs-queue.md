@@ -58,14 +58,14 @@ Wherever possible, you should scale on EC2 instance metrics with a 1\-minute fre
    Here is an example CLI [https://docs.aws.amazon.com/cli/latest/reference/cloudwatch/put-metric-data.html](https://docs.aws.amazon.com/cli/latest/reference/cloudwatch/put-metric-data.html) command:
 
    ```
-   aws cloudwatch put-metric-data --metric-name MyBacklogPerInstance --namespace MyNamespace --unit None --value 20
+   aws cloudwatch put-metric-data --metric-name MyBacklogPerInstance --namespace MyNamespace --unit None --value 20 --dimensions MyOptionalMetricDimensionName=MyOptionalMetricDimensionValue
    ```
 
 After your application is emitting the desired metric, the data is sent to CloudWatch\. The metrics are visible in the CloudWatch console\. You can access them by logging into the AWS Management Console and navigating to the CloudWatch page\. You can view the metric by navigating to the metrics page or searching for your metric using the search box\. For help viewing metrics, see [View Available Metrics](https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/viewing_metrics_with_cloudwatch.html) in the *Amazon CloudWatch User Guide*\.
 
 ### Step 2: Create the Scaling Policies<a name="create-sqs-policies-cli"></a>
 
-Next, create a scaling policy that tells the Auto Scaling group what to do when conditions change\.
+Next, create a target tracking scaling policy that tells the Auto Scaling group what to do when conditions change\.
 
 **To create scaling policies**
 
@@ -80,6 +80,12 @@ Next, create a scaling policy that tells the Auto Scaling group what to do when 
       "CustomizedMetricSpecification":{
          "MetricName":"MyBacklogPerInstance",
          "Namespace":"MyNamespace",
+         "Dimensions":[
+            {
+               "Name":"MyOptionalMetricDimensionName",
+               "Value":"MyOptionalMetricDimensionValue"
+            }
+         ],
          "Statistic":"Average",
          "Unit":"None"
       }
@@ -122,4 +128,4 @@ You can test your scale\-out policy by increasing the number of messages in your
    aws autoscaling describe-auto-scaling-groups --auto-scaling-group-name MyAutoScalingGroup
    ```
 
-For more in\-depth information about target tracking, see [Target Tracking Scaling Policies for Amazon EC2 Auto Scaling](as-scaling-target-tracking.md)\.
+For more information about target tracking, see [Target Tracking Scaling Policies for Amazon EC2 Auto Scaling](as-scaling-target-tracking.md)\.

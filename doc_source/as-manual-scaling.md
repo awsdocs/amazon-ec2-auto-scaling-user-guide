@@ -1,4 +1,4 @@
-# Manual Scaling<a name="as-manual-scaling"></a>
+# Manual Scaling for Amazon EC2 Auto Scaling<a name="as-manual-scaling"></a>
 
 At any time, you can change the size of an existing Auto Scaling group\. Update the desired capacity of the Auto Scaling group, or update the instances that are attached to the Auto Scaling group\.
 
@@ -34,7 +34,7 @@ Now, verify that your Auto Scaling group has launched one additional instance\.
 
 **To verify that the size of your Auto Scaling group has changed**
 
-1. On the **Activity History** tab, the **Status** column shows the current status of your instance\. You can use the refresh button until you see the status of your instance change to **Successful**, indicating that your Auto Scaling group has successfully launched a new instance\.
+1. On the **Activity History** tab, the **Status** column shows the current status of your instance\. Use the refresh button until you see the status of your instance change to **Successful**, indicating that your Auto Scaling group has successfully launched a new instance\.
 
 1. On the **Instances** tab, the **Lifecycle** column shows the state of your instances\. It takes a short time for an instance to launch\. After the instance starts, its state changes to `InService`\. You can see that your Auto Scaling group has launched `1` new instance, and it is in the `InService` state\.
 

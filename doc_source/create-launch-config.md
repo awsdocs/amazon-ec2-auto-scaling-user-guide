@@ -31,7 +31,7 @@ T2 instances must be launched into a subnet of a VPC\. If you select a `t2.micro
 
    1. \(Optional\) For **Purchasing option**, you may request Spot Instances and specify the maximum price you are willing to pay per instance hour\. For more information, see [Launching Spot Instances in Your Auto Scaling Group](asg-launch-spot-instances.md)\.
 
-   1. \(Optional\) For **IAM role**, select a role to associate with the instances\. For more information, see [Use an IAM Role for Applications That Run on Amazon EC2 Instances](us-iam-role.md)\.
+   1. \(Optional\) For **IAM role**, select a role to associate with the instances\. For more information, see [IAM Role for Applications that Run on Amazon EC2 Instances](us-iam-role.md)\.
 
    1. \(Optional\) By default, basic monitoring is enabled for your Auto Scaling instances\. To enable detailed monitoring for your Auto Scaling instances, select **Enable CloudWatch detailed monitoring**\.
 

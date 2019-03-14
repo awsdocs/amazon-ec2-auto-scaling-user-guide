@@ -15,17 +15,17 @@ Amazon EC2 Auto Scaling supports the following scaling processes:
 
 `Launch`  
 Adds a new EC2 instance to the group, increasing its capacity\.  
-If you suspend `Launch`, this disrupts other processes\. For example, you can't return an instance in a standby state to service if the `Launch` process is suspended, because the group can't scale\.
+If you suspend `Launch`, this disrupts other processes\. Refer to the sections below for more information\. For example, you can't return an instance in a standby state to service if the `Launch` process is suspended, because the group can't scale\.
 
 `Terminate`  
 Removes an EC2 instance from the group, decreasing its capacity\.  
-If you suspend `Terminate`, it disrupts other processes\.
+If you suspend `Terminate`, this disrupts other processes\. Refer to the sections below for more information\. For example, your scaling policy can't perform a scale\-in action if the `Terminate` process is suspended, because the group can't terminate instances\.
 
 `HealthCheck`  
-Checks the health of the instances\. Amazon EC2 Auto Scaling marks an instance as unhealthy if Amazon EC2 or Elastic Load Balancing tells Amazon EC2 Auto Scaling that the instance is unhealthy\. This process can override the health status of an instance that you set manually\.
+Checks the health of the instances\. Amazon EC2 Auto Scaling marks an instance as unhealthy if Amazon EC2 or Elastic Load Balancing tells Amazon EC2 Auto Scaling that the instance is unhealthy\. This process can override the health status of an instance that you set manually\. For more information, see [Health Checks for Auto Scaling Instances](healthcheck.md)\.
 
 `ReplaceUnhealthy`  
-Terminates instances that are marked as unhealthy and later creates new instances to replace them\. This process works with the `HealthCheck` process, and uses both the `Terminate` and `Launch` processes\.
+Terminates instances that are marked as unhealthy and later creates new instances to replace them\. This process works with the `HealthCheck` process, and uses both the `Terminate` and `Launch` processes\. For more information, see [Health Checks for Auto Scaling Instances](healthcheck.md)\.
 
 `AZRebalance`  
 Balances the number of EC2 instances in the group across the Availability Zones in the region\. If you remove an Availability Zone from your Auto Scaling group or an Availability Zone otherwise becomes unhealthy or unavailable, the scaling process launches new instances in an unaffected Availability Zone before terminating the unhealthy or unavailable instances\. When the unhealthy Availability Zone returns to a healthy state, the scaling process automatically redistributes the instances evenly across the Availability Zones for the group\. For more information, see [Rebalancing Activities](auto-scaling-benefits.md#AutoScalingBehavior.InstanceUsage)\.  

@@ -1,25 +1,47 @@
 # Health Checks for Auto Scaling Instances<a name="healthcheck"></a>
 
-The health status of an Auto Scaling instance is either healthy or unhealthy\. After an instance is fully configured and passes the initial health checks, it is considered healthy by Amazon EC2 Auto Scaling and enters the `InService` state\. Amazon EC2 Auto Scaling periodically performs health checks on the instances in your Auto Scaling group and identifies any instances that are unhealthy\. After Amazon EC2 Auto Scaling marks an instance as unhealthy, it is scheduled for replacement\. For more information, see [Replacing Unhealthy Instances](as-maintain-instance-levels.md#replace-unhealthy-instance)\.
+The health status of an Auto Scaling instance is either healthy or unhealthy\. All instances in your Auto Scaling group start in the healthy state\. Instances are assumed to be healthy unless Amazon EC2 Auto Scaling receives notification that they are unhealthy\. This notification can come from one or more of the following sources: Amazon EC2, Elastic Load Balancing, or a custom health check\. 
+
+After Amazon EC2 Auto Scaling marks an instance as unhealthy, it is scheduled for replacement\. If you do not want instances to be replaced, you can suspend the health check process for any individual Auto Scaling group\.
 
 ## Instance Health Status<a name="instance-health-status"></a>
 
-Amazon EC2 Auto Scaling determines the health status of an instance using one or more of the following:
-+ Status checks provided by Amazon EC2 \(systems status checks and instance status checks\. For more information, see [Status Checks for Your Instances](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/monitoring-system-instance-status-check.html) in the *Amazon EC2 User Guide for Linux Instances*\.
-+ Health checks provided by Elastic Load Balancing\. For more information, see [Health Checks for Your Target Groups](https://docs.aws.amazon.com/elasticloadbalancing/latest/application/target-group-health-checks.html) in the *User Guide for Application Load Balancers* or [Configure Health Checks for Your Classic Load Balancer](https://docs.aws.amazon.com/elasticloadbalancing/latest/classic/elb-healthchecks.html) in the *User Guide for Classic Load Balancers*\.
-+ Custom health checks\.
+Amazon EC2 Auto Scaling can determine the health status of an instance using one or more of the following:
++ Status checks provided by Amazon EC2 to identify hardware and software issues that may impair an instance\. This includes both instance status checks and system status checks\. For more information, see [Types of Status Checks](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/monitoring-system-instance-status-check.html#types-of-instance-status-checks) in the *Amazon EC2 User Guide for Linux Instances*\. 
++ Health checks provided by Elastic Load Balancing\. 
++ Your custom health checks\. 
 
-By default, Amazon EC2 Auto Scaling health checks use the results of the Amazon EC2 status checks to determine the health status of an instance\. If an instance fails one or more of the status checks, Amazon EC2 Auto Scaling marks it as unhealthy\.
+The EC2 status checks are the default health checks for Amazon EC2 Auto Scaling and do not require any special configuration\. You can customize the default health checks conducted by your Auto Scaling group by specifying additional checks, however\. For more information, see [Adding Elastic Load Balancing Health Checks to an Auto Scaling Group](as-add-elb-healthcheck.md) and [Custom Health Checks](#as-configure-healthcheck)\. 
 
-If you attached a load balancer or target group to your Auto Scaling group, you can configure Amazon EC2 Auto Scaling to mark an instance as unhealthy when Elastic Load Balancing reports it as `OutOfService`\. If connection draining is enabled for your load balancer, Amazon EC2 Auto Scaling waits for in\-flight requests to complete or the maximum timeout to expire, whichever comes first, before terminating instances due to a scaling event or health check replacement\. For more information, see [Using Elastic Load Balancing Health Checks with Auto Scaling](as-add-elb-healthcheck.md)\.
+## Determining Instance Health<a name="determine-instance-health"></a>
+
+After an instance is fully configured and passes the initial health checks, it is considered healthy by Amazon EC2 Auto Scaling and enters the `InService` state\. Amazon EC2 Auto Scaling periodically performs health checks on the instances in your Auto Scaling group and identifies any instances that are unhealthy\. 
+
+Amazon EC2 Auto Scaling health checks use the results of the Amazon EC2 status checks to determine the health status of an instance\. If the instance is in any state other than `running` or if the system status is `impaired`, Amazon EC2 Auto Scaling considers the instance to be unhealthy and launches a replacement instance\. This includes when the instance has any of the following states:
++ `stopping`
++ `stopped`
++ `terminating`
++ `terminated`
+
+If you attached a load balancer or target group to your Auto Scaling group, you can configure the group to mark an instance as unhealthy when Elastic Load Balancing reports it as `OutOfService`\. If connection draining is enabled for your load balancer, Amazon EC2 Auto Scaling waits for in\-flight requests to complete or the maximum timeout to expire, whichever comes first, before terminating instances due to a scaling event or health check replacement\. If you configure your Auto Scaling group to use the Elastic Load Balancing health checks, Amazon EC2 Auto Scaling determines the health status of the instances by checking both the EC2 status checks and the Elastic Load Balancing health checks\. For more information, see [Adding Elastic Load Balancing Health Checks to an Auto Scaling Group](as-add-elb-healthcheck.md)\.
+
+If you have custom health checks, you can send the information from your health checks to Amazon EC2 Auto Scaling so that Amazon EC2 Auto Scaling can use this information\. For example, if you determine that an instance is not functioning as expected, you can set the health status of the instance to `Unhealthy`\. The next time that Amazon EC2 Auto Scaling performs a health check on the instance, it will determine that the instance is unhealthy and then launch a replacement instance\.
 
 ## Health Check Grace Period<a name="health-check-grace-period"></a>
 
 Frequently, an Auto Scaling instance that has just come into service needs to warm up before it can pass the health check\. Amazon EC2 Auto Scaling waits until the health check grace period ends before checking the health status of the instance\. Amazon EC2 status checks and Elastic Load Balancing health checks can complete before the health check grace period expires\. However, Amazon EC2 Auto Scaling does not act on them until the health check grace period expires\. To provide ample warm\-up time for your instances, ensure that the health check grace period covers the expected startup time for your application\. If you add a lifecycle hook, the grace period does not start until the lifecycle hook actions are completed and the instance enters the `InService` state\.
 
+## Replacing Unhealthy Instances<a name="replace-unhealthy-instance"></a>
+
+After an instance has been marked unhealthy because of an Amazon EC2 or Elastic Load Balancing health check, it is almost immediately scheduled for replacement\. It never automatically recovers its health\. You can intervene manually by calling the [https://docs.aws.amazon.com/autoscaling/ec2/APIReference/API_SetInstanceHealth.html](https://docs.aws.amazon.com/autoscaling/ec2/APIReference/API_SetInstanceHealth.html) action \(or the as\-set\-instance\-health command\) to set the instance's health status back to healthy\. If the instance is already terminating, you get an error\. Because the interval between marking an instance unhealthy and its actual termination is so small, attempting to set an instance's health status back to healthy with the `SetInstanceHealth` action \(or, as\-set\-instance\-health command\) is probably useful only for a suspended group\. For more information, see [Suspending and Resuming Scaling Processes](as-suspend-resume-processes.md)\.
+
+Amazon EC2 Auto Scaling creates a new scaling activity for terminating the unhealthy instance and then terminates it\. Later, another scaling activity launches a new instance to replace the terminated instance\.
+
+When your instance is terminated, any associated Elastic IP addresses are disassociated and are not automatically associated with the new instance\. You must associate these Elastic IP addresses with the new instance manually\. Similarly, when your instance is terminated, its attached EBS volumes are detached\. You must attach these EBS volumes to the new instance manually\. For more information, see [Disassociating an Elastic IP Address and Reassociating with a Different Instance](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/elastic-ip-addresses-eip.html#using-instance-addressing-eips-associating-different) and [Attaching an Amazon EBS Volume to an Instance](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ebs-attaching-volume.html) in the *Amazon EC2 User Guide for Linux Instances*\. 
+
 ## Custom Health Checks<a name="as-configure-healthcheck"></a>
 
-If you have custom health checks, you can send the information from your health checks to Amazon EC2 Auto Scaling so that Amazon EC2 Auto Scaling can use this information\. For example, if you determine that an instance is not functioning as expected, you can set the health status of the instance to `Unhealthy`\. The next time that Amazon EC2 Auto Scaling performs a health check on the instance, it will determine that the instance is unhealthy and then launch a replacement instance\.
+If you have your own health check system, you can send the instance's health information directly from your system to Amazon EC2 Auto Scaling\. 
 
 Use the following [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/set-instance-health.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/set-instance-health.html) command to set the health state of the specified instance to `Unhealthy`:
 

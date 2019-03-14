@@ -1,18 +1,26 @@
 # Simple and Step Scaling Policies for Amazon EC2 Auto Scaling<a name="as-scaling-simple-step"></a>
 
-Amazon EC2 Auto Scaling originally supported only simple scaling policies\. If you created your scaling policy before target tracking and step policies were introduced, your policy is treated as a simple scaling policy\.
+With simple and step scaling policies, you choose scaling metrics and threshold values for the CloudWatch alarms that trigger the scaling process as well as define how your Auto Scaling group should be scaled when a threshold is in breach for a specified number of evaluation periods\. 
 
-We recommend that you use step scaling policies instead of simple scaling policies even if you have a single step adjustment\. We continuously evaluate alarms and do not lock the group during scaling activities or health check replacements\. If you are scaling based on a metric that is a utilization metric that increases or decreases proportionally to the number of instances in the Auto Scaling group, we recommend that you use a target tracking scaling policy instead\. For more information, see [Target Tracking Scaling Policies for Amazon EC2 Auto Scaling](as-scaling-target-tracking.md)\.
+We recommend that you use step scaling policies instead of simple scaling policies, even if you have a single scaling adjustment\. Amazon EC2 Auto Scaling originally supported only simple scaling policies\. If you created your scaling policy before target tracking and step policies were introduced, your policy is treated as a simple scaling policy\. For more information, see [Simple Scaling Policies and Cooldowns](#SimpleScaling)\.
+
+If your scaling metric is a utilization metric that increases or decreases proportionally to the number of instances in the Auto Scaling group, we recommend that you use a target tracking scaling policy\. For more information, see [Target Tracking Scaling Policies for Amazon EC2 Auto Scaling](as-scaling-target-tracking.md)\. You still have the option to use target tracking scaling with step scaling for a more advanced scaling policy configuration\. For example, if you want, you can configure a more aggressive response when utilization reaches a certain level\.
 
 ## Step Scaling Policies<a name="StepScaling"></a>
 
-After a scaling activity is started, the policy continues to respond to additional alarms, even while a scaling activity or health check replacement is in progress\. Therefore, all alarms that are breached are evaluated by Amazon EC2 Auto Scaling as it receives the alarm messages\. If you are creating a policy to scale out, you can specify the estimated warm\-up time that it takes for a newly launched instance to be ready to contribute to the aggregated metrics\. For more information, see [Instance Warmup](#as-step-scaling-warmup)\.
+Step scaling policies increase or decrease the current capacity of your Auto Scaling group based on a set of scaling adjustments, known as *step adjustments*\. The adjustments vary based on the size of the alarm breach\. 
 
-## Simple Scaling Policies and Cooldown Periods<a name="SimpleScaling"></a>
+After a scaling activity is started, the policy continues to respond to additional alarms, even while a scaling activity or health check replacement is in progress\. Therefore, all alarms that are breached are evaluated by Amazon EC2 Auto Scaling as it receives the alarm messages\. 
 
-In most cases, step scaling policies are a better choice than simple scaling policies\. With simple scaling, after a scaling activity is started, the policy must wait for the scaling activity or health check replacement to complete and the cooldown period to expire before responding to additional alarms\. Cooldown periods help to prevent the initiation of additional scaling activities before the effects of previous activities are visible\. For more information, see [Scaling Cooldowns for Amazon EC2 Auto Scaling](Cooldown.md)\.
+If you are creating a policy to scale out, you can specify the estimated warm\-up time that it takes for a newly launched instance to be ready to contribute to the aggregated metrics\. For more information, see [Instance Warmup](#as-step-scaling-warmup)\.
 
-Amazon EC2 Auto Scaling does not support cooldown periods for step scaling policies\. Therefore, you can't specify a cooldown period for these policies and the default cooldown period for the group doesn't apply\.
+You can also use step scaling for resources beyond Amazon EC2\. For more information, see [Step Scaling Policies](https://docs.aws.amazon.com/autoscaling/application/userguide/application-auto-scaling-step-scaling-policies.html) in the *Application Auto Scaling User Guide*\.
+
+## Simple Scaling Policies and Cooldowns<a name="SimpleScaling"></a>
+
+In most cases, step scaling policies are a better choice than simple scaling policies\. With simple scaling, after a scaling activity is started, the policy must wait for the scaling activity or health check replacement to complete and the cooldown period to expire before responding to additional alarms\. Cooldown periods help to prevent the initiation of additional scaling activities before the effects of previous activities are visible\. For more information, see [Scaling Cooldowns for Amazon EC2 Auto Scaling](Cooldown.md)\. 
+
+Amazon EC2 Auto Scaling does not support cooldown periods for step scaling policies\. Therefore, you can't specify a cooldown period for these policies and the default cooldown period for the group doesn't apply\. 
 
 ## Scaling Adjustment Types<a name="as-scaling-adjustment"></a>
 
@@ -49,7 +57,7 @@ There are a few rules for the step adjustments for your policy:
 + The upper and lower bound can't be null in the same step adjustment\.
 + If the metric value is above the breach threshold, the lower bound is inclusive and the upper bound is exclusive\. If the metric value is below the breach threshold, the lower bound is exclusive and the upper bound is inclusive\.
 
-Amazon EC2 Auto Scaling applies the aggregation type to the metric data points from all instances\. It compares the aggregated metric value against the upper and lower bounds defined by the step adjustments to determine which step adjustment to perform\. 
+CloudWatch aggregates metric data points based on the statistic for the metric associated with your CloudWatch alarm\. When the alarm is breached, the appropriate scaling policy is triggered\. Amazon EC2 Auto Scaling applies the aggregation type to the most recent metric data points from CloudWatch \(as opposed to the raw metric data\)\. It compares this aggregated metric value against the upper and lower bounds defined by the step adjustments to determine which step adjustment to perform\. 
 
 If you are using the AWS Management Console, you specify the upper and lower bounds as absolute values\. If you are using the API or the CLI, you specify the upper and lower bounds relative to the breach threshold\. For example, suppose that you have an alarm with a breach threshold of 50 and a scaling adjustment type of `PercentChangeInCapacity`\. You also have scale\-out and scale\-in policies with the following step adjustments:
 
@@ -85,7 +93,7 @@ A scale\-in activity can't start while a scale\-out activity is in progress\.
 
 ## Create an Auto Scaling Group with Step Scaling Policies<a name="policy-creating-asg-console"></a>
 
-You can create a scaling policy that uses CloudWatch alarms to determine when your Auto Scaling group should scale out or scale in\. Each CloudWatch alarm watches a single metric and sends messages to Amazon EC2 Auto Scaling when the metric breaches a threshold that you specify in your policy\. You can use alarms to monitor any of the metrics that the services in AWS that you're using send to CloudWatch\. Or, you can create and monitor your own custom metrics\.
+You can create a scaling policy that uses CloudWatch alarms to determine when your Auto Scaling group should scale out or scale in\. Each CloudWatch alarm watches a single metric and sends messages to Amazon EC2 Auto Scaling when the metric breaches a threshold that you specify in your policy\. You can use alarms to monitor any of the metrics that are sent to CloudWatch from the services in AWS that you're using\. Or, you can create and monitor your own metrics\.
 
 When you create a CloudWatch alarm, you can specify an Amazon SNS topic to send an email notification to when the alarm changes state\. For more information, see [Create Amazon CloudWatch Alarms](as-instance-monitoring.md#CloudWatchAlarm)\.
 
@@ -109,7 +117,7 @@ Use the console to create an Auto Scaling group with two scaling policies: a sca
 
    1. For **Group size**, type the desired capacity for your Auto Scaling group\.
 
-   1. If the launch configuration specifies instances that require a VPC, such as T2 instances, you must select a VPC from **Network**\. Otherwise, if your AWS account supports EC2\-Classic and the instances don't require a VPC, you can select either `Launch info EC2-Classic` or a VPC\.
+   1. If the launch configuration specifies instances that require a VPC, such as T2 instances, you must select a VPC from **Network**\. Otherwise, if your AWS account supports EC2\-Classic and the instances don't require a VPC, you can select either `Launch into EC2-Classic` or a VPC\.
 
    1. If you selected a VPC in the previous step, select one or more subnets from **Subnet**\. If you selected EC2\-Classic in the previous step, select one or more Availability Zones from **Availability Zone\(s\)**\.
 
@@ -163,7 +171,7 @@ Use the console to create an Auto Scaling group with two scaling policies: a sca
 
    1. On the **Scaling Policies** tab, you can see the policies that you created for the Auto Scaling group\.
 
-## Configure Scaling Policies Using the AWS CLI<a name="policy-creating-aws-cli"></a>
+## Configure Step Scaling Policies Using the AWS CLI<a name="policy-creating-aws-cli"></a>
 
 Use the AWS CLI as follows to configure step scaling policies for your Auto Scaling group\.
 
@@ -174,10 +182,10 @@ Use the AWS CLI as follows to configure step scaling policies for your Auto Scal
 
 ### Step 1: Create an Auto Scaling Group<a name="policy-creating-asg-aws-cli"></a>
 
-Use the following [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/create-auto-scaling-group.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/create-auto-scaling-group.html) command to create an Auto Scaling group named `my-asg` using the launch configuration `my-lc`\. If you don't have a launch configuration that you'd like to use, you can create one\. For more information, see [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/create-launch-configuration.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/create-launch-configuration.html)\.
+Use the following [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/create-auto-scaling-group.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/create-auto-scaling-group.html) command to create an Auto Scaling group named `my-asg` using the launch configuration `my-launch-config`\. If you don't have a launch configuration that you'd like to use, you can create one\. For more information, see [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/create-launch-configuration.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/create-launch-configuration.html)\.
 
 ```
-aws autoscaling create-auto-scaling-group --auto-scaling-group-name my-asg --launch-configuration-name my-lc --max-size 5 --min-size 1 --availability-zones "us-west-2c"
+aws autoscaling create-auto-scaling-group --auto-scaling-group-name my-asg --launch-configuration-name my-launch-config --max-size 5 --min-size 1 --availability-zones "us-west-2c"
 ```
 
 ### Step 2: Create Scaling Policies<a name="policy-creating-policy-aws-cli"></a>
@@ -185,25 +193,22 @@ aws autoscaling create-auto-scaling-group --auto-scaling-group-name my-asg --lau
 You can create scaling policies that tell the Auto Scaling group what to do when the specified conditions change\.
 
 **Example: my\-scaleout\-policy**  
-Use the following [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/put-scaling-policy.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/put-scaling-policy.html) command to create a scaling policy named `my-scaleout-policy` with an adjustment type of `PercentChangeInCapacity` that increases the capacity of the group by 30 percent:
+Use the following [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/put-scaling-policy.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/put-scaling-policy.html) command to create a step scaling policy named `my-scaleout-policy` with an adjustment type of `PercentChangeInCapacity` that increases the capacity of the group based on the following step adjustments \(assuming a CloudWatch alarm threshold of 60%\):
++ Increase the instance count by 10% when the value of the metric is greater than or equal to 70% but less than 80% 
++ Increase the instance count by 20% when the value of the metric is greater than or equal to 80% but less than 90%
++ Increase the instance count by 30% when the value of the metric is greater than or equal to 90%
 
 ```
-aws autoscaling put-scaling-policy --policy-name my-scaleout-policy --auto-scaling-group-name my-asg --scaling-adjustment 30 --adjustment-type PercentChangeInCapacity
-```
-
-The output includes the ARN that serves as a unique name for the policy\. Later, you can use either the ARN or a combination of the policy name and group name to specify the policy\. Store this ARN in a safe place\. You need it to create CloudWatch alarms\.
-
-```
-{
-    "PolicyARN": "arn:aws:autoscaling:us-west-2:123456789012:scalingPolicy:ac542982-cbeb-4294-891c-a5a941dfa787:autoScalingGroupName/my-asg:policyName/my-scaleout-policy
-}
-```
-
-**Example: my\-scalein\-policy**  
-Use the following [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/put-scaling-policy.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/put-scaling-policy.html) command to create a scaling policy named `my-scalein-policy` with an adjustment type of `ChangeInCapacity` that decreases the capacity of the group by two instances:
-
-```
-aws autoscaling put-scaling-policy --policy-name my-scalein-policy --auto-scaling-group-name my-asg --scaling-adjustment -2 --adjustment-type ChangeInCapacity
+aws autoscaling put-scaling-policy \
+  --auto-scaling-group-name my-asg  \
+  --policy-name my-scaleout-policy \
+  --policy-type StepScaling \
+  --adjustment-type PercentChangeInCapacity \
+  --metric-aggregation-type Average \
+  --step-adjustments MetricIntervalLowerBound=10.0,MetricIntervalUpperBound=20.0,ScalingAdjustment=10 \
+                     MetricIntervalLowerBound=20.0,MetricIntervalUpperBound=30.0,ScalingAdjustment=20 \
+                     MetricIntervalLowerBound=30.0,ScalingAdjustment=30 \
+  --min-adjustment-magnitude 1
 ```
 
 The output includes the ARN for the policy\. Store this ARN in a safe place\. You need it to create CloudWatch alarms\.
@@ -214,20 +219,68 @@ The output includes the ARN for the policy\. Store this ARN in a safe place\. Yo
 }
 ```
 
-### Step 3: Create CloudWatch Alarms<a name="policy-creating-alarms-aws-cli"></a>
-
-In step 2, you created scaling policies that provided instructions to the Auto Scaling group about how to scale out and scale in when the conditions that you specify change\. In this step, you create alarms by identifying the metrics to watch, defining the conditions for scaling, and then associating the alarms with the scaling policies\.
-
-**Example: AddCapacity**  
-Use the following CloudWatch [https://docs.aws.amazon.com/cli/latest/reference/cloudwatch/put-metric-alarm.html](https://docs.aws.amazon.com/cli/latest/reference/cloudwatch/put-metric-alarm.html) command to create an alarm that increases the size of the Auto Scaling group when the value of the specified metric breaches 80\. For example, you can add capacity when the average CPU usage of all the instances \(`CPUUtilization`\) increases to 80 percent\. To use your own custom metric, specify its name in `--metric-name` and its namespace in `--namespace`\.
+**Example: my\-scalein\-policy**  
+Use the following [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/put-scaling-policy.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/put-scaling-policy.html) command to create a step scaling policy named `my-scalein-policy` with an adjustment type of `ChangeInCapacity` that decreases the capacity of the group by 2 instances:
 
 ```
-aws cloudwatch put-metric-alarm --alarm-name AddCapacity --metric-name CPUUtilization --namespace AWS/EC2 --statistic Average --period 120 --threshold 80 --comparison-operator GreaterThanOrEqualToThreshold --dimensions "Name=AutoScalingGroupName,Value=my-asg" --evaluation-periods 2 --alarm-actions PolicyARN
+aws autoscaling put-scaling-policy \
+  --auto-scaling-group-name my-asg  \
+  --policy-name my-scalein-policy \
+  --policy-type StepScaling \
+  --adjustment-type ChangeInCapacity \
+  --step-adjustments MetricIntervalUpperBound=0.0,ScalingAdjustment=-2
+```
+
+The output includes the ARN that serves as a unique name for the policy\. Later, you can use either the ARN or a combination of the policy name and group name to specify the policy\. Store this ARN in a safe place\. You need it to create CloudWatch alarms\.
+
+```
+{
+    "PolicyARN": "arn:aws:autoscaling:us-west-2:123456789012:scalingPolicy:ac542982-cbeb-4294-891c-a5a941dfa787:autoScalingGroupName/my-asg:policyName/my-scaleout-policy
+}
+```
+
+#### Examples of Simple Scaling Policies<a name="policy-creating-aws-cli"></a>
+
+Alternatively, you can create simple scaling policies by using the following CLI commands instead of the preceding CLI commands\. The output of these commands includes an ARN for each policy, which you need to create the CloudWatch alarms\. Keep in mind that a cooldown period will be in place due to the use of simple scaling policies\. 
+
+**Example: my\-simple\-scaleout\-policy**  
+Use the following [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/put-scaling-policy.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/put-scaling-policy.html) command to create a simple scaling policy named `my-simple-scaleout-policy` with an adjustment type of `PercentChangeInCapacity` that increases the capacity of the group by 30 percent:
+
+```
+aws autoscaling put-scaling-policy --policy-name my-simple-scaleout-policy --auto-scaling-group-name my-asg --scaling-adjustment 30 --adjustment-type PercentChangeInCapacity
+```
+
+**Example: my\-simple\-scalein\-policy**  
+Use the following [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/put-scaling-policy.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/put-scaling-policy.html) command to create a simple scaling policy named `my-simple-scalein-policy` with an adjustment type of `ChangeInCapacity` that decreases the capacity of the group by two instances:
+
+```
+aws autoscaling put-scaling-policy --policy-name my-simple-scalein-policy --auto-scaling-group-name my-asg --scaling-adjustment -2 --adjustment-type ChangeInCapacity
+```
+
+### Step 3: Create CloudWatch Alarms<a name="policy-creating-alarms-aws-cli"></a>
+
+In step 2, you created scaling policies that provided instructions to the Auto Scaling group about how to scale in and scale out when the conditions that you specify change\. In this step, you create alarms by identifying the metrics to watch, defining the conditions for scaling, and then associating the alarms with the scaling policies\. 
+
+**Example: AddCapacity**  
+Use the following CloudWatch [https://docs.aws.amazon.com/cli/latest/reference/cloudwatch/put-metric-alarm.html](https://docs.aws.amazon.com/cli/latest/reference/cloudwatch/put-metric-alarm.html) command to create an alarm that increases the size of the Auto Scaling group based on an average CPU threshold value of 60% for at least two consecutive evaluation periods of two minutes\. To use your own custom metric, specify its name in `--metric-name` and its namespace in `--namespace`\.
+
+```
+aws cloudwatch put-metric-alarm --alarm-name Step-Scaling-AlarmHigh-AddCapacity \
+--metric-name CPUUtilization --namespace AWS/EC2 --statistic Average \
+--period 120 --evaluation-periods 2 --threshold 60 \
+--comparison-operator GreaterThanOrEqualToThreshold \
+--dimensions "Name=AutoScalingGroupName,Value=my-asg" \
+--alarm-actions PolicyARN
 ```
 
 **Example: RemoveCapacity**  
-Use the following CloudWatch [https://docs.aws.amazon.com/cli/latest/reference/cloudwatch/put-metric-alarm.html](https://docs.aws.amazon.com/cli/latest/reference/cloudwatch/put-metric-alarm.html) command to create an alarm that decreases the size of the Auto Scaling group when the value of the specified metric breaches 40\. For example, you can remove capacity when the average CPU usage of all the instances \(`CPUUtilization`\) decreases to 40 percent\. To use your own custom metric, specify its name in `--metric-name` and its namespace in `--namespace`\.
+Use the following CloudWatch [https://docs.aws.amazon.com/cli/latest/reference/cloudwatch/put-metric-alarm.html](https://docs.aws.amazon.com/cli/latest/reference/cloudwatch/put-metric-alarm.html) command to create an alarm that decreases the size of the Auto Scaling group based on average CPU threshold value of 40% for at least two consecutive evaluation periods of two minutes\. To use your own custom metric, specify its name in `--metric-name` and its namespace in `--namespace`\.
 
 ```
-aws cloudwatch put-metric-alarm --alarm-name RemoveCapacity --metric-name CPUUtilization --namespace AWS/EC2 --statistic Average --period 120 --threshold 40 --comparison-operator LessThanOrEqualToThreshold --dimensions "Name=AutoScalingGroupName,Value=my-asg" --evaluation-periods 2 --alarm-actions PolicyARN
+aws cloudwatch put-metric-alarm --alarm-name Step-Scaling-AlarmLow-RemoveCapacity \
+--metric-name CPUUtilization --namespace AWS/EC2 --statistic Average \
+--period 120 --evaluation-periods 2 --threshold 40 \
+--comparison-operator LessThanOrEqualToThreshold \
+--dimensions "Name=AutoScalingGroupName,Value=my-asg" \
+--alarm-actions PolicyARN
 ```
