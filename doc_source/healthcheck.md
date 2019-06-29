@@ -33,7 +33,7 @@ Frequently, an Auto Scaling instance that has just come into service needs to wa
 
 ## Replacing Unhealthy Instances<a name="replace-unhealthy-instance"></a>
 
-After an instance has been marked unhealthy because of an Amazon EC2 or Elastic Load Balancing health check, it is almost immediately scheduled for replacement\. It never automatically recovers its health\. You can intervene manually by calling the [https://docs.aws.amazon.com/autoscaling/ec2/APIReference/API_SetInstanceHealth.html](https://docs.aws.amazon.com/autoscaling/ec2/APIReference/API_SetInstanceHealth.html) action \(or the as\-set\-instance\-health command\) to set the instance's health status back to healthy\. If the instance is already terminating, you get an error\. Because the interval between marking an instance unhealthy and its actual termination is so small, attempting to set an instance's health status back to healthy with the `SetInstanceHealth` action \(or, as\-set\-instance\-health command\) is probably useful only for a suspended group\. For more information, see [Suspending and Resuming Scaling Processes](as-suspend-resume-processes.md)\.
+After an instance has been marked unhealthy because of an Amazon EC2 or Elastic Load Balancing health check, it is almost immediately scheduled for replacement\. It never automatically recovers its health\. You can intervene manually by calling the [https://docs.aws.amazon.com/autoscaling/ec2/APIReference/API_SetInstanceHealth.html](https://docs.aws.amazon.com/autoscaling/ec2/APIReference/API_SetInstanceHealth.html) action \(or the set\-instance\-health command\) to set the instance's health status back to healthy\. If the instance is already terminating, you get an error\. Because the interval between marking an instance unhealthy and its actual termination is so small, attempting to set an instance's health status back to healthy with the `SetInstanceHealth` action \(or, set\-instance\-health command\) is probably useful only for a suspended group\. For more information, see [Suspending and Resuming Scaling Processes](as-suspend-resume-processes.md)\.
 
 Amazon EC2 Auto Scaling creates a new scaling activity for terminating the unhealthy instance and then terminates it\. Later, another scaling activity launches a new instance to replace the terminated instance\.
 
@@ -43,19 +43,19 @@ When your instance is terminated, any associated Elastic IP addresses are disass
 
 If you have your own health check system, you can send the instance's health information directly from your system to Amazon EC2 Auto Scaling\. 
 
-Use the following [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/set-instance-health.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/set-instance-health.html) command to set the health state of the specified instance to `Unhealthy`:
+Use the following [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/set-instance-health.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/set-instance-health.html) command to set the health state of the specified instance to `Unhealthy`\.
 
 ```
 aws autoscaling set-instance-health --instance-id i-123abc45d --health-status Unhealthy
 ```
 
-Use the following describe\-auto\-scaling\-groups command to verify that the instance state is `Unhealthy`:
+Use the following [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/describe-auto-scaling-groups.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/describe-auto-scaling-groups.html) command to verify that the instance state is `Unhealthy`\.
 
 ```
 aws autoscaling describe-auto-scaling-groups --auto-scaling-group-names my-asg
 ```
 
-The following is an example response that shows that the health status of the instance is `Unhealthy` and that the instance is terminating:
+The following is an example response that shows that the health status of the instance is `Unhealthy` and that the instance is terminating\.
 
 ```
 {

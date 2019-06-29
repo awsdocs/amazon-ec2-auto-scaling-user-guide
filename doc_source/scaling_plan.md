@@ -17,7 +17,7 @@ Amazon EC2 Auto Scaling provides a number of ways to adjust scaling to best meet
 + [Auto Scaling Instance Termination](as-instance-termination.md)
 + [Lifecycle Hooks](lifecycle-hooks.md)
 + [Temporarily Removing Instances](as-enter-exit-standby.md)
-+ [Suspending and Resuming Scaling Processes](as-suspend-resume-processes.md)
++ [Suspending Scaling](as-suspend-resume-processes.md)
 
 ## Scaling Options<a name="scaling_typesof"></a>
 

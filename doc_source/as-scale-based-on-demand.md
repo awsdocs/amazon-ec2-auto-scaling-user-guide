@@ -9,6 +9,7 @@ When you configure dynamic scaling, you must define how to scale in response to 
 + [Simple and Step Scaling Policies for Amazon EC2 Auto Scaling](as-scaling-simple-step.md)
 + [Add a Scaling Policy to an Existing Auto Scaling Group](policy-updating-console.md)
 + [Scaling Based on Amazon SQS](as-using-sqs-queue.md)
++ [Deleting a Scaling Policy](deleting-scaling-policy.md)
 
 ## Scaling Policy Types<a name="as-scaling-types"></a>
 
@@ -31,4 +32,4 @@ When there are multiple policies in force at the same time, there's a chance tha
 
 When these situations occur, Amazon EC2 Auto Scaling chooses the policy that provides the largest capacity for both scale out and scale in\. Suppose, for example, that the policy for CPU utilization launches one instance, while the policy for the SQS queue launches two instances\. If the scale\-out criteria for both policies are met at the same time, Amazon EC2 Auto Scaling gives precedence to the SQS queue policy\. This results in the Auto Scaling group launching two instances\. 
 
-The approach of giving precedence to the policy that provides the largest capacity applies even when the policies use different criteria for scaling out\. For example, if one policy terminates three instances, another policy decreases capacity by 25 percent, and the group currently has eight instances, Amazon EC2 Auto Scaling gives precedence to the policy that provides the largest number of instances at that time\. This results in the Auto Scaling group terminating two instances \(25% of 8 = 2\)\.
+The approach of giving precedence to the policy that provides the largest capacity applies even when the policies use different criteria for scaling in\. For example, if one policy terminates three instances, another policy decreases the number of instances by 25 percent, and the group has eight instances at the time of scale in, Amazon EC2 Auto Scaling gives precedence to the policy that provides the largest number of instances for the group\. This results in the Auto Scaling group terminating two instances \(25% of 8 = 2\)\. The intention is to prevent Amazon EC2 Auto Scaling from removing too many instances\.

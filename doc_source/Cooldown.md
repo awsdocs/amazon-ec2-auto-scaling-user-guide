@@ -26,7 +26,7 @@ To help ensure that the Auto Scaling group for the application tier has the appr
 
 ![\[An example of how a CloudWatch alarm works with a scaling policy\]](http://docs.aws.amazon.com/autoscaling/ec2/userguide/images/cooldowns-example-scaling-policy-diagram.png)
 
-These instances use a configuration script to install and configure software before the instance is put into service\. As a result, it takes around two or three minutes from the time the instance launches until it comes into service\. The actual time depends on several factors, such as the size of the instance and whether there are startup scripts to complete\.
+These instances use a configuration script to install and configure software before the instance is put into service\. As a result, it takes around two or three minutes from the time the instance launches until it's fully in service\. The actual time depends on several factors, such as the size of the instance and whether there are startup scripts to complete\.
 
 Now a spike in traffic occurs, causing the CloudWatch alarm to fire\. When it does, the Auto Scaling group launches an instance to help with the increase in demand\. However, there's a problem: the instance takes a couple of minutes to launch\. During that time, the CloudWatch alarm could continue to fire, causing the Auto Scaling group to launch another instance each time the alarm fires\.
 

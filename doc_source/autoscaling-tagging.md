@@ -17,8 +17,8 @@ Tagging your instances enables you to see instance cost allocation by tag in you
 The following basic restrictions apply to tags:
 + The maximum number of tags per resource is 50\.
 + The maximum number of tags that you can add or remove using a single call is 25\.
-+ The maximum key length is 127 Unicode characters\.
-+ The maximum value length is 255 Unicode characters\.
++ The maximum key length is 128 Unicode characters\.
++ The maximum value length is 256 Unicode characters\.
 + Tag keys and values are case\-sensitive\.
 + Do not use the `aws:` prefix in your tag names or values, because it is reserved for AWS use\. You can't edit or delete tag names or values with this prefix, and they do not count toward your limit of tags per Auto Scaling group\.
 
@@ -37,10 +37,10 @@ If you have opted to propagate tags to your Amazon EC2 instances, the tags are m
 When you add a tag to your Auto Scaling group, you can specify whether it should be added to instances launched in the Auto Scaling group\. If you modify a tag, the updated version of the tag is added to instances launched in the Auto Scaling group after the change\. If you create or modify a tag for an Auto Scaling group, these changes are not made to instances that are already running in the Auto Scaling group\.
 
 **Topics**
-+ [Add or Modify Tags Using the AWS Management Console](#add-tags-console)
-+ [Add or Modify Tags Using the AWS CLI](#add-tags-aws-cli)
++ [Add or Modify Tags \(Console\)](#add-tags-console)
++ [Add or Modify Tags \(AWS CLI\)](#add-tags-aws-cli)
 
-### Add or Modify Tags Using the AWS Management Console<a name="add-tags-console"></a>
+### Add or Modify Tags \(Console\)<a name="add-tags-console"></a>
 
 Use the Amazon EC2 console to add or modify tags\.
 
@@ -60,18 +60,12 @@ Use the Amazon EC2 console to add or modify tags\.
 
 1. When you have finished adding tags, choose **Save**\.
 
-### Add or Modify Tags Using the AWS CLI<a name="add-tags-aws-cli"></a>
+### Add or Modify Tags \(AWS CLI\)<a name="add-tags-aws-cli"></a>
 
 Use the [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/create-or-update-tags.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/create-or-update-tags.html) command to create or modify a tag\. For example, the following command adds a tag with a key of "environment" and a value of "test\." The tag is also added to any instances launched in the Auto Scaling group after this change\. If a tag with this key already exists, the existing tag is replaced\.
 
 ```
-aws autoscaling create-or-update-tags --tags "ResourceId=my-asg,ResourceType=auto-scaling-group,Key=environment,Value=test,PropagateAtLaunch=true"
-```
-
-The following is an example response:
-
-```
-OK-Created/Updated tags
+aws autoscaling create-or-update-tags --tags ResourceId=my-asg,ResourceType=auto-scaling-group,Key=environment,Value=test,PropagateAtLaunch=true
 ```
 
 Use the following [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/describe-tags.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/describe-tags.html) command to list the tags for the specified Auto Scaling group\.
@@ -80,7 +74,7 @@ Use the following [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/
 aws autoscaling describe-tags --filters Name=auto-scaling-group,Values=my-asg
 ```
 
-The following is an example response:
+The following is an example response\.
 
 ```
 {
@@ -102,7 +96,7 @@ Alternatively, use the following [https://docs.aws.amazon.com/cli/latest/referen
 aws autoscaling describe-auto-scaling-groups --auto-scaling-group-name my-asg
 ```
 
-The following is an example response:
+The following is an example response\.
 
 ```
 {
@@ -135,12 +129,12 @@ The following is an example response:
 You can delete a tag associated with your Auto Scaling group at any time\.
 
 **Topics**
-+ [Delete Tags Using the AWS Management Console](#delete-tag-console)
-+ [Delete Tags Using the AWS CLI](#delete-tag-aws-cli)
++ [Delete Tags \(Console\)](#delete-tag-console)
++ [Delete Tags \(AWS CLI\)](#delete-tag-aws-cli)
 
-### Delete Tags Using the AWS Management Console<a name="delete-tag-console"></a>
+### Delete Tags \(Console\)<a name="delete-tag-console"></a>
 
-**To delete a tag using the console**
+**To delete a tag**
 
 1. Open the Amazon EC2 console at [https://console\.aws\.amazon\.com/ec2/](https://console.aws.amazon.com/ec2/)\.
 
@@ -154,7 +148,7 @@ You can delete a tag associated with your Auto Scaling group at any time\.
 
 1. Choose **Save**\.
 
-### Delete Tags Using the AWS CLI<a name="delete-tag-aws-cli"></a>
+### Delete Tags \(AWS CLI\)<a name="delete-tag-aws-cli"></a>
 
 Use the [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/delete-tags.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/delete-tags.html) command to delete a tag\. For example, the following command deletes a tag with a key of "environment\."
 

@@ -10,10 +10,6 @@ If the number of instances that you are detaching decreases the size of the Auto
 
 If you detach an instance from an Auto Scaling group that has an attached load balancer, the instance is deregistered from the load balancer\. If you detach an instance from an Auto Scaling group that has an attached target group, the instance is deregistered from the target group\. If connection draining is enabled for your load balancer, Amazon EC2 Auto Scaling waits for in\-flight requests to complete\.
 
-**Topics**
-+ [Detaching Instances Using the AWS Management Console](#detach-instance-console)
-+ [Detaching Instances Using the AWS CLI](#detach-instance-aws-cli)
-
 The examples use an Auto Scaling group with the following configuration:
 + Auto Scaling group name = `my-asg`
 + Minimum size = `1`
@@ -21,11 +17,11 @@ The examples use an Auto Scaling group with the following configuration:
 + Desired capacity = `4`
 + Availability Zone = `us-west-2a`
 
-## Detaching Instances Using the AWS Management Console<a name="detach-instance-console"></a>
+## Detaching Instances \(Console\)<a name="detach-instance-console"></a>
 
 Use the following procedure to detach an instance from your Auto Scaling group\.
 
-**To detach an instance from an existing Auto Scaling group using the console**
+**To detach an instance from an existing Auto Scaling group**
 
 1. Open the Amazon EC2 console at [https://console\.aws\.amazon\.com/ec2/](https://console.aws.amazon.com/ec2/)\.
 
@@ -37,13 +33,13 @@ Use the following procedure to detach an instance from your Auto Scaling group\.
 
 1. On the **Detach Instance** page, select the check box to launch a replacement instance, or leave it unchecked to decrement the desired capacity\. Choose **Detach Instance**\.
 
-## Detaching Instances Using the AWS CLI<a name="detach-instance-aws-cli"></a>
+## Detaching Instances \(AWS CLI\)<a name="detach-instance-aws-cli"></a>
 
 Use the following procedure to detach an instance from your Auto Scaling group\.
 
-**To detach an instance from an existing Auto Scaling group using the AWS CLI**
+**To detach an instance from an existing Auto Scaling group**
 
-1. List the current instances using the following [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/describe-auto-scaling-instances.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/describe-auto-scaling-instances.html) command:
+1. List the current instances using the following [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/describe-auto-scaling-instances.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/describe-auto-scaling-instances.html) command\.
 
    ```
    aws autoscaling describe-auto-scaling-instances
@@ -55,48 +51,69 @@ Use the following procedure to detach an instance from your Auto Scaling group\.
    {
        "AutoScalingInstances": [
            {
+               "ProtectedFromScaleIn": false,
                "AvailabilityZone": "us-west-2a",
-               "InstanceId": "i-2a2d8978",
+               "LaunchTemplate": {
+                   "LaunchTemplateName": "my-launch-template",
+                   "Version": "1",
+                   "LaunchTemplateId": "lt-050555ad16a3f9c7f"
+               },
+               "InstanceId": "i-05b4f7d5be44822a6",
                "AutoScalingGroupName": "my-asg",
                "HealthStatus": "HEALTHY",
-               "LifecycleState": "InService",
-               "LaunchConfigurationName": "my-lc"
+               "LifecycleState": "InService"
            },
            {
+               "ProtectedFromScaleIn": false,
                "AvailabilityZone": "us-west-2a",
-               "InstanceId": "i-5f2e8a0d",
+               "LaunchTemplate": {
+                   "LaunchTemplateName": "my-launch-template",
+                   "Version": "1",
+                   "LaunchTemplateId": "lt-050555ad16a3f9c7f"
+               },
+               "InstanceId": "i-0c20ac468fa3049e8",
                "AutoScalingGroupName": "my-asg",
                "HealthStatus": "HEALTHY",
-               "LifecycleState": "InService",
-               "LaunchConfigurationName": "my-lc"
-           }
+               "LifecycleState": "InService"
+           },
            {
+               "ProtectedFromScaleIn": false,
                "AvailabilityZone": "us-west-2a",
-               "InstanceId": "i-a52387f7",
+               "LaunchTemplate": {
+                   "LaunchTemplateName": "my-launch-template",
+                   "Version": "1",
+                   "LaunchTemplateId": "lt-050555ad16a3f9c7f"
+               },
+               "InstanceId": "i-0787762faf1c28619",
                "AutoScalingGroupName": "my-asg",
                "HealthStatus": "HEALTHY",
-               "LifecycleState": "InService",
-               "LaunchConfigurationName": "my-lc"
-           }
+               "LifecycleState": "InService"
+           },
            {
+               "ProtectedFromScaleIn": false,
                "AvailabilityZone": "us-west-2a",
-               "InstanceId": "i-f42d89a6",
+               "LaunchTemplate": {
+                   "LaunchTemplateName": "my-launch-template",
+                   "Version": "1",
+                   "LaunchTemplateId": "lt-050555ad16a3f9c7f"
+               },
+               "InstanceId": "i-0f280a4c58d319a8a",
                "AutoScalingGroupName": "my-asg",
                "HealthStatus": "HEALTHY",
-               "LifecycleState": "InService",
-               "LaunchConfigurationName": "my-lc"
+               "LifecycleState": "InService"
            }
        ]
    }
    ```
 
-1. Detach an instance and decrement the desired capacity using the following [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/detach-instances.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/detach-instances.html) command:
+1. Detach an instance and decrement the desired capacity using the following [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/detach-instances.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/detach-instances.html) command\.
 
    ```
-   aws autoscaling detach-instances --instance-ids i-2a2d8978 --auto-scaling-group-name my-asg --should-decrement-desired-capacity
+   aws autoscaling detach-instances --instance-ids i-05b4f7d5be44822a6 \
+     --auto-scaling-group-name my-asg --should-decrement-desired-capacity
    ```
 
-1. Verify that the instance is detached using the following describe\-auto\-scaling\-instances command:
+1. Verify that the instance is detached using the following [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/describe-auto-scaling-instances.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/describe-auto-scaling-instances.html) command\.
 
    ```
    aws autoscaling describe-auto-scaling-instances
@@ -108,28 +125,43 @@ Use the following procedure to detach an instance from your Auto Scaling group\.
    {
        "AutoScalingInstances": [
            {
+               "ProtectedFromScaleIn": false,
                "AvailabilityZone": "us-west-2a",
-               "InstanceId": "i-5f2e8a0d",
+               "LaunchTemplate": {
+                   "LaunchTemplateName": "my-launch-template",
+                   "Version": "1",
+                   "LaunchTemplateId": "lt-050555ad16a3f9c7f"
+               },
+               "InstanceId": "i-0c20ac468fa3049e8",
                "AutoScalingGroupName": "my-asg",
                "HealthStatus": "HEALTHY",
-               "LifecycleState": "InService",
-               "LaunchConfigurationName": "my-lc"
-           }
+               "LifecycleState": "InService"
+           },
            {
+               "ProtectedFromScaleIn": false,
                "AvailabilityZone": "us-west-2a",
-               "InstanceId": "i-a52387f7",
+               "LaunchTemplate": {
+                   "LaunchTemplateName": "my-launch-template",
+                   "Version": "1",
+                   "LaunchTemplateId": "lt-050555ad16a3f9c7f"
+               },
+               "InstanceId": "i-0787762faf1c28619",
                "AutoScalingGroupName": "my-asg",
                "HealthStatus": "HEALTHY",
-               "LifecycleState": "InService",
-               "LaunchConfigurationName": "my-lc"
-           }
+               "LifecycleState": "InService"
+           },
            {
+               "ProtectedFromScaleIn": false,
                "AvailabilityZone": "us-west-2a",
-               "InstanceId": "i-f42d89a6",
+               "LaunchTemplate": {
+                   "LaunchTemplateName": "my-launch-template",
+                   "Version": "1",
+                   "LaunchTemplateId": "lt-050555ad16a3f9c7f"
+               },
+               "InstanceId": "i-0f280a4c58d319a8a",
                "AutoScalingGroupName": "my-asg",
                "HealthStatus": "HEALTHY",
-               "LifecycleState": "InService",
-               "LaunchConfigurationName": "my-lc"
+               "LifecycleState": "InService"
            }
        ]
    }

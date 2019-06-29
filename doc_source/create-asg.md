@@ -10,11 +10,11 @@ The following procedure demonstrates how to create an Auto Scaling group using a
 **Prerequisites**  
 Create a launch configuration\. For more information, see [Creating a Launch Configuration](create-launch-config.md)\.
 
-**To create an Auto Scaling group using the console**
+**To create an Auto Scaling group using a launch configuration \(console\)**
 
 1. Open the Amazon EC2 console at [https://console\.aws\.amazon\.com/ec2/](https://console.aws.amazon.com/ec2/)\.
 
-1. On the navigation bar at the top of the screen, choose the same region that you used when you created the launch configuration\.
+1. On the navigation bar at the top of the screen, choose the same AWS Region that you used when you created the launch configuration\.
 
 1. On the navigation pane, under **Auto Scaling**, choose **Auto Scaling Groups**\.
 

@@ -42,7 +42,7 @@ Amazon EC2 Auto Scaling manages the launch and termination of these EC2 instance
 
 You can create as many Auto Scaling groups as you need\. For example, you can create an Auto Scaling group for each tier\.
 
-To distribute traffic between the instances in your Auto Scaling groups, you can introduce a load balancer into your architecture\. For more information, see [Using a Load Balancer With an Auto Scaling Group](autoscaling-load-balancer.md)\.
+To distribute traffic between the instances in your Auto Scaling groups, you can introduce a load balancer into your architecture\. For more information, see [Using a Load Balancer with an Auto Scaling Group](autoscaling-load-balancer.md)\.
 
 ## Example: Distributing Instances Across Availability Zones<a name="arch-AutoScalingMultiAZ"></a>
 

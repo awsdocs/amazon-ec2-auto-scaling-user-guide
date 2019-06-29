@@ -1,22 +1,26 @@
 # Controlling Access to Your Amazon EC2 Auto Scaling Resources<a name="control-access-using-iam"></a>
 
+ 
+
 Access to Amazon EC2 Auto Scaling requires credentials that AWS can use to authenticate your requests\. Those credentials must have [permissions](https://docs.aws.amazon.com/IAM/latest/UserGuide/access.html) to perform Amazon EC2 Auto Scaling actions\. 
 
-This topic provides details on how you can use AWS Identity and Access Management \(IAM\) to help secure your resources by controlling who can perform Amazon EC2 Auto Scaling actions\. 
+This topic provides details on how an IAM administrator can use AWS Identity and Access Management \(IAM\) to help secure your resources, by controlling who can perform Amazon EC2 Auto Scaling actions\. 
 
 By default, a brand new IAM user has no permissions to do anything\. To grant permissions to call Amazon EC2 Auto Scaling actions, you attach an IAM policy to the IAM users or groups that require the permissions it grants\. 
+
+For the policy that grants a user full access to Amazon EC2 Auto Scaling, see [Predefined AWS Managed Policies](#predefined-policies-auto-scaling)\. You can also create your own policies to specify allowed or denied actions and resources, as well as the conditions under which actions are allowed or denied\. For examples, see [Customer Managed Policy Examples](#example-policies-auto-scaling)\. However, we recommend that you first review the following introductory topics that explain the basic concepts and options for managing access to your Amazon EC2 Auto Scaling resources\. 
 
 ## Specifying Actions in a Policy<a name="policy-auto-scaling-actions"></a>
 
 You can specify any and all Amazon EC2 Auto Scaling actions in an IAM policy\. For more information, see [Actions](https://docs.aws.amazon.com/autoscaling/ec2/APIReference/API_Operations.html) in the *Amazon EC2 Auto Scaling API Reference*\.
 
-To specify a single policy, you can use the following prefix with the name of the action: `autoscaling:`\. For example:
+To specify a single policy, you can use the following prefix with the name of the action: `autoscaling:`\.
 
 ```
 "Action": "autoscaling:CreateAutoScalingGroup"
 ```
 
-To specify multiple actions in a single policy, enclose them in square brackets and separate them with commas, as follows:
+To specify multiple actions in a single policy, enclose them in square brackets and separate them with commas\.
 
 ```
 "Action": [
@@ -96,7 +100,7 @@ To specify a launch configuration with the `CreateLaunchConfiguration` action, y
 "Resource": "arn:aws:autoscaling:region:123456789012:launchConfiguration:*:launchConfigurationName/lc-name"
 ```
 
-Alternatively, you can use the `*` wildcard as the resource if you do not want to target a specific resource\. 
+Alternatively, if you do not want to target a specific resource, you can use the `*` wildcard as the resource\. 
 
 ```
 "Resource": "*"
@@ -146,7 +150,8 @@ The following condition keys are specific to Amazon EC2 Auto Scaling:
 + `autoscaling:TargetGroupARNs`
 + `autoscaling:VPCZoneIdentifiers`
 
-For a complete list of constrainable API actions, the supported condition keys for each action, and the AWS\-wide condition keys, see [Actions, Resources, and Condition Keys for Amazon EC2 Auto Scaling](https://docs.aws.amazon.com/IAM/latest/UserGuide/list_amazonec2autoscaling.html) and [AWS Global Condition Context Keys](https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_condition-keys.html) in the *IAM User Guide*\. 
+**Important**  
+For a complete list of constrainable API actions, the supported condition keys for each action, and the AWS\-wide condition keys, see [Actions, Resources, and Condition Keys for Amazon EC2 Auto Scaling](https://docs.aws.amazon.com/IAM/latest/UserGuide/list_amazonec2autoscaling.html) and [AWS Global Condition Context Keys](https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_condition-keys.html) in the *IAM User Guide*\.
 
 ## Predefined AWS Managed Policies<a name="predefined-policies-auto-scaling"></a>
 
@@ -160,9 +165,44 @@ The following are the AWS managed policies for Amazon EC2 Auto Scaling:
 
 You can also use the `AmazonEC2FullAccess` policy to grant full access to all Amazon EC2 resources and related services\. 
 
-## Customer Managed Policies<a name="example-policies-auto-scaling"></a>
+## Customer Managed Policy Examples<a name="example-policies-auto-scaling"></a>
 
-You can create custom IAM policies that grant your IAM users permissions to perform specific actions on specific resources\. The following are example policies for Amazon EC2 Auto Scaling\.
+You can create your own custom IAM policies to allow or deny permissions for IAM users or groups to perform Amazon EC2 Auto Scaling actions\. You can attach these custom policies to the IAM users or groups that require the specified permissions\. The following examples show permissions for several common use cases\.
+
+### Example: Restricting Which Service\-Linked Role Can Be Passed \(Using PassRole\)<a name="policy-example-pass-role"></a>
+
+If your users require the ability to pass custom service\-linked roles to an Auto Scaling group, attach a policy to the users or roles, based on the access that they need\. We recommend that you restrict this policy to only the service\-linked roles that your users must access\. 
+
+The following example is helpful for facilitating the security of your customer managed CMKs if you give different service\-linked roles access to different keys\. Depending on your needs, you might have a CMK for the development team, another for the QA team, and another for the finance team\. First, create a service\-linked role that has access to the required CMK, for example, a service\-linked role named `AWSServiceRoleForAutoScaling_devteamkeyaccess`\. Then, to grant permissions to pass that service\-linked role to an Auto Scaling group, attach the policy to your IAM users as shown\. 
+
+The policy in the following example grants users permissions to pass the `AWSServiceRoleForAutoScaling_devteamkeyaccess` role to create any Auto Scaling group whose name begins with *devteam*\. If they try to specify a different service\-linked role, they receive an error\. If they choose not to specify a service\-linked role, the default `AWSServiceRoleForAutoScaling` role is used instead\.
+
+```
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Action": "iam:PassRole",
+            "Resource": "arn:aws:iam::123456789012:role/aws-service-role/autoscaling.amazonaws.com/AWSServiceRoleForAutoScaling_devteamkeyaccess",
+            "Condition": {
+                "StringEquals": {
+                    "iam:PassedToService": [
+                        "autoscaling.amazonaws.com"
+                    ]
+                },
+                "StringLike": {
+                    "iam:AssociatedResourceARN": [
+                        "arn:aws:autoscaling:region:123456789012:autoScalingGroup:*:autoScalingGroupName/devteam*"
+                    ]
+                }
+            }
+        }
+    ]
+}
+```
+
+For more information, see [Service\-Linked Roles for Amazon EC2 Auto Scaling](autoscaling-service-linked-role.md) and [Required CMK Key Policy for Use with Encrypted Volumes](key-policy-requirements-EBS-encryption.md)\.
 
 ### Example: Require a Launch Template<a name="policy-example-launch-template"></a>
 
@@ -218,7 +258,7 @@ The following policy grants users permissions to use all Amazon EC2 Auto Scaling
 }
 ```
 
-The following policy grants users permissions to create a launch configuration if the instance type is `t2.micro` and the name of the launch configuration starts with **t2micro\-**\. They can specify a launch configuration for an Auto Scaling group only if its name starts with **t2micro\-**\.
+The following policy grants users permissions to create a launch configuration if the instance type is `t2.micro` and the name of the launch configuration starts with `t2micro-`\. They can specify a launch configuration for an Auto Scaling group only if its name starts with `t2micro-`\.
 
 ```
 {
@@ -228,7 +268,7 @@ The following policy grants users permissions to create a launch configuration i
       "Effect": "Allow",
       "Action": "autoscaling:CreateLaunchConfiguration",
       "Resource": [
-          "arn:aws:autoscaling:us-east-2:123456789012:launchConfiguration:*:launchConfigurationName/t2micro-*"
+          "arn:aws:autoscaling:region:123456789012:launchConfiguration:*:launchConfigurationName/t2micro-*"
       ],
       "Condition": {
           "StringEquals": { "autoscaling:InstanceType": "t2.micro" }
@@ -263,7 +303,7 @@ The following policy grants users permissions to use all Amazon EC2 Auto Scaling
 }
 ```
 
-The following policy grants users permissions to use all Amazon EC2 Auto Scaling actions that include the string `Scaling` in their names, as long as the Auto Scaling group has the tag **purpose=webserver**\. Because the `Describe` actions do not support resource\-level permissions, you must specify them in a separate statement without conditions\.
+The following policy grants users permissions to use all Amazon EC2 Auto Scaling actions that include the string `Scaling` in their names, as long as the Auto Scaling group has the tag `purpose=webserver`\. Because the `Describe` actions do not support resource\-level permissions, you must specify them in a separate statement without conditions\.
 
 ```
 {
@@ -312,7 +352,7 @@ The following policy grants users permissions to use all Amazon EC2 Auto Scaling
 
 To grant users permissions to create or tag an Auto Scaling group only if they specify specific tags, use the `aws:RequestTag` condition key\. To allow only specific tag keys, use the `aws:TagKeys` condition key with the `ForAnyValue` modifier\.
 
-The following policy requires users to tag any Auto Scaling groups with the tags **purpose=webserver** and **cost\-center=cc123**, and allows only the **purpose** and **cost\-center ** tags \(no other tags can be specified\)\.
+The following policy requires users to tag any Auto Scaling groups with the tags `purpose=webserver` and `cost-center=cc123`, and allows only the `purpose` and `cost-center ` tags \(no other tags can be specified\)\.
 
 ```
 {
@@ -335,7 +375,7 @@ The following policy requires users to tag any Auto Scaling groups with the tags
 }
 ```
 
-The following policy requires users to specify a tag with the key **environment** in the request\.
+The following policy requires users to specify a tag with the key `environment` in the request\.
 
 ```
 {
@@ -354,7 +394,7 @@ The following policy requires users to specify a tag with the key **environment*
 }
 ```
 
-The following policy requires users to specify at least one tag in the request, and allows only the **cost\-center** and **owner** keys\.
+The following policy requires users to specify at least one tag in the request, and allows only the `cost-center` and `owner` keys\.
 
 ```
 {
@@ -373,7 +413,7 @@ The following policy requires users to specify at least one tag in the request, 
 }
 ```
 
-The following policy grants users access to Auto Scaling groups with the tag **allowed=true** and allows them to apply only the tag **environment=test**\. Because launch configurations do not support tags and `Describe` actions do not support resource\-level permissions, you must specify them in a separate statement without conditions\.
+The following policy grants users access to Auto Scaling groups with the tag `allowed=true` and allows them to apply only the tag `environment=test`\. Because launch configurations do not support tags, and `Describe` actions do not support resource\-level permissions, you must specify them in a separate statement without conditions\.
 
 ```
 {
@@ -423,15 +463,15 @@ The following policy grants users permissions to use the `SetDesiredCapacity` ac
       "Effect": "Allow",
       "Action": "autoscaling:SetDesiredCapacity",
       "Resource": [
-          "arn:aws:autoscaling:us-east-2:123456789012:autoScalingGroup:7fe02b8e-7442-4c9e-8c8e-85fa99e9b5d9:autoScalingGroupName/group-1",
-          "arn:aws:autoscaling:us-east-2:123456789012:autoScalingGroup:9d8e8ea4-22e1-44c7-a14d-520f8518c2b9:autoScalingGroupName/group-2",
-          "arn:aws:autoscaling:us-east-2:123456789012:autoScalingGroup:60d6b363-ae8b-467c-947f-f1d308935521:autoScalingGroupName/group-3"
+          "arn:aws:autoscaling:region:123456789012:autoScalingGroup:7fe02b8e-7442-4c9e-8c8e-85fa99e9b5d9:autoScalingGroupName/group-1",
+          "arn:aws:autoscaling:region:123456789012:autoScalingGroup:9d8e8ea4-22e1-44c7-a14d-520f8518c2b9:autoScalingGroupName/group-2",
+          "arn:aws:autoscaling:region:123456789012:autoScalingGroup:60d6b363-ae8b-467c-947f-f1d308935521:autoScalingGroupName/group-3"
       ]
    }]
 }
 ```
 
-The following policy grants users permissions to use the `SetDesiredCapacity` action to change the capacity of any Auto Scaling group whose name begins with **group\-**\.
+The following policy grants users permissions to use the `SetDesiredCapacity` action to change the capacity of any Auto Scaling group whose name begins with `group-`\.
 
 ```
 {
@@ -440,7 +480,7 @@ The following policy grants users permissions to use the `SetDesiredCapacity` ac
       "Effect": "Allow",
       "Action": "autoscaling:SetDesiredCapacity",
       "Resource": [
-          "arn:aws:autoscaling:us-east-2:123456789012:autoScalingGroup:*:autoScalingGroupName/group-*"
+          "arn:aws:autoscaling:region:123456789012:autoScalingGroup:*:autoScalingGroupName/group-*"
       ]
    }]
 }

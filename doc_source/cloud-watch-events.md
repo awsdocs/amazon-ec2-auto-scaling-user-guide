@@ -1,8 +1,13 @@
 # Getting CloudWatch Events When Your Auto Scaling Group Scales<a name="cloud-watch-events"></a>
 
-It is useful to know when Amazon EC2 Auto Scaling is launching or terminating the EC2 instances in your Auto Scaling group\. You can configure Amazon EC2 Auto Scaling to send events to Amazon CloudWatch Events whenever your Auto Scaling group scales\.
+Amazon CloudWatch Events lets you automate AWS services and respond to system events such as application availability issues or resource changes\. Events from AWS services are delivered to CloudWatch Events nearly in real time\. You can write simple rules to indicate which events are of interest to you and what automated actions to take when an event matches a rule\.
 
-For more information, see the [Amazon CloudWatch Events User Guide](https://docs.aws.amazon.com/AmazonCloudWatch/latest/events/)\.
+CloudWatch Events lets you set a variety of targets—such as a Lambda function or an Amazon SNS topic—which receive events in JSON format\. For more information, see the [Amazon CloudWatch Events User Guide](https://docs.aws.amazon.com/AmazonCloudWatch/latest/events/)\.
+
+It is useful to know when Amazon EC2 Auto Scaling is launching or terminating the EC2 instances in your Auto Scaling group\. You can configure Amazon EC2 Auto Scaling to send events to CloudWatch Events whenever your Auto Scaling group scales\.
+
+**Note**  
+You can also receive a two\-minute warning when Spot Instances are about to be reclaimed by Amazon EC2\. For an example of the event for Spot Instance interruption, see [Spot Instance Interruption Notices](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/spot-interruptions.html#spot-instance-termination-notices) in the *Amazon EC2 User Guide for Linux Instances*\.
 
 **Topics**
 + [Auto Scaling Events](#cloudwatch-event-types)

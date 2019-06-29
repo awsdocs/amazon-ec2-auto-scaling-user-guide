@@ -29,14 +29,16 @@ For this step, you create a launch template that specifies the type of EC2 insta
 
 1. Open the Amazon EC2 console at [https://console\.aws\.amazon\.com/ec2/](https://console.aws.amazon.com/ec2/)\.
 
-1. On the navigation bar, select a region\. The Amazon EC2 Auto Scaling resources that you create are tied to the region you specify\. 
+1. On the navigation bar at the top of the screen, select an AWS Region\. The Amazon EC2 Auto Scaling resources that you create are tied to the region you specify\. 
 
-1. On the navigation pane, choose **Instances**, **Launch Templates**\.
+1. On the navigation pane, choose **Launch Templates**\.
 
 1. Choose **Create launch template**\.  
 ![\[Launch templates welcome screen\]](http://docs.aws.amazon.com/autoscaling/ec2/userguide/images/as-gs-lt-welcome-screen.png)
 
-1. Choose **Create a new template**\. Provide a name \(for example, `my_template`\) and description for the launch template\. 
+1. Choose **Create a new template**\. For **Launch template name**, enter a name \(for example, `my_template`\)\. 
+
+1. For **Template version description**, enter a description for the initial version of the launch template to help you remember what this template is used for \(for example, `test launch template for an Auto Scaling group`\)\. 
 
 1. For **AMI ID**, choose a version of Amazon Linux 2 \(HVM\) from the **Quick Start** list\. The Amazon Machine Image \(AMI\) serves as basic configuration templates for your instances\. 
 
@@ -48,13 +50,21 @@ If your account is less than 12 months old, you can use a `t2.micro` instance fo
 
 1. \(Optional\) For **Network type**, choose **VPC**\. 
 
-1. Skip **Security Groups** to configure a security group as part of the network interface\. You cannot specify security groups in both places\.
+1. Skip **Security Groups** to configure a security group in the next step\. When a network interface is specified, the security group must be a part of it\.
 
-1. For **Network interfaces**, configure **Auto\-assign public IP**, **Security group ID**, and **Delete on termination**\. To launch instances into a VPC, you must specify a security group that is created for that VPC\. You can leave the other fields empty and this creates a primary network interface with IP addresses that we select for your instances\. 
+1. For **Network interfaces**, do the following to specify the primary network interface:
+
+   1. Choose **Add network interface**\.
+
+   1. \(Optional\) To assign public IP addresses to instances in a nondefault VPC, for **Auto\-assign public IP**, choose **Enable**\. This allows your instances to communicate with the internet and other services in AWS\. 
+
+   1. For **Security group ID**, specify a security group for the network interface\.
+
+   1. For **Delete on termination**, choose whether the network interface is deleted when the Auto Scaling group scales in and terminates the instance to which the network interface is attached\. 
 
 1. \(Optional\) For **Storage \(Volumes\)**, specify volumes to attach to the instances in addition to the volumes specified by the AMI you specified\.
 
-1. \(Optional\) For **Tags**, specify one or more tags to associate with the instances and volumes\.
+1. \(Optional\) For **Instance Tags**, specify one or more tags to associate with the instances and volumes\.
 
 1. Choose **Create launch template**\.
 
@@ -85,7 +95,7 @@ A launch configuration is similar to a launch template, in that it specifies the
 
    1. For **Name**, type a name for your launch configuration \(for example, `my-first-lc`\)\.
 
-   1. For **Advanced Details**, select an IP address type\. If you want to connect to an instance in a VPC, you must select an option that assigns a public IP address\. If you want to connect to your instance but aren't sure whether you have a default VPC, select **Assign a public IP address to every instance**\.
+   1. For **Advanced Details**, select an IP address type\. If you want to provide internet connectivity to instances in a VPC, you must select an option that assigns a public IP address\. If you want to provide internet connectivity to your instances but aren't sure whether you have a default VPC, select **Assign a public IP address to every instance**\.
 
    1. Choose **Skip to review**\.
 
@@ -101,22 +111,22 @@ A launch configuration is similar to a launch template, in that it specifies the
 
 An Auto Scaling group is a collection of EC2 instances, and the core of Amazon EC2 Auto Scaling\. When you create an Auto Scaling group, you include information such as the subnets for the instances and the initial number of instances to start with\. 
 
-Use the following procedure to continue where you left off after creating the launch template\.
+Use the following procedure to continue where you left off after creating the launch configuration or template\.
 
-**To create an Auto Scaling group using a launch template**
+**To create an Auto Scaling group**
 
 1. For the **Configure Auto Scaling group details** step, do the following:
 
    1.  For **Group name**, type a name for your Auto Scaling group \(for example, `my-first-asg`\)\.   
 ![\[Auto Scaling group creation screen\]](http://docs.aws.amazon.com/autoscaling/ec2/userguide/images/as-gs-asg.png)
 
-   1. For **Launch template version**, choose whether the Auto Scaling group uses the default, the latest, or a specific version of the launch template when scaling out\.
+   1. \[Launch template\] For **Launch template version**, choose whether the Auto Scaling group uses the default, the latest, or a specific version of the launch template when scaling out\.
 
-   1. For **Fleet Composition**, choose **Adhere to the launch template**\. 
+   1. \[Launch template\] For **Fleet Composition**, choose **Adhere to the launch template**\. 
 
    1. Keep **Group size** set to the default value of `1` instance for this tutorial\.
 
-   1. Keep **Network** set to the default VPC for your chosen AWS region, or select your own VPC\. 
+   1. Keep **Network** set to the default VPC for your chosen AWS Region, or select your own VPC\. 
 
    1. For **Subnet**, choose a subnet for the VPC\. 
 **Note**  
@@ -168,6 +178,8 @@ Go to the next step if you would like to delete your basic infrastructure for au
 
 You can either delete your scaling infrastructure or delete just your Auto Scaling group and keep your launch template to use later\.
 
+If you launched an instance that is not within the [AWS Free Tier](https://aws.amazon.com/free/), you should terminate your instances to prevent additional charges\. The EC2 instance and the data associated will be deleted\.
+
 **To delete your Auto Scaling group**
 
 1. Open the Amazon EC2 console at [https://console\.aws\.amazon\.com/ec2/](https://console.aws.amazon.com/ec2/)\.
@@ -184,7 +196,7 @@ Skip this procedure if you would like to keep your launch template\.
 
 **To delete your launch template**
 
-1. On the navigation pane, choose **Instances**, **Launch Templates**\.
+1. On the navigation pane, choose **Launch Templates**\.
 
 1. Select your launch template\.
 

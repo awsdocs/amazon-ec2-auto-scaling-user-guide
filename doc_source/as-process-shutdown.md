@@ -5,14 +5,15 @@ To completely delete your scaling infrastructure, complete the following tasks\.
 **Topics**
 + [Delete Your Auto Scaling Group](#as-shutdown-lbs-delete-asg-cli)
 + [\(Optional\) Delete the Launch Configuration](#as-shutdown-lbs-delete-lc-cli)
++ [\(Optional\) Delete the Launch Template](#as-shutdown-lbs-delete-lt-cli)
 + [\(Optional\) Delete the Load Balancer](#as-shutdown-lbs-delete-lbs-cli)
 + [\(Optional\) Delete CloudWatch Alarms](#as-shutdown-delete-alarms-cli)
 
 ## Delete Your Auto Scaling Group<a name="as-shutdown-lbs-delete-asg-cli"></a>
 
-When you delete an Auto Scaling group, its desired, minimum, and maximum values are set to 0\. As a result, the instances are terminated\. Alternatively, you can terminate or detach the instances before you delete the Auto Scaling group\.
+When you delete an Auto Scaling group, its desired, minimum, and maximum values are set to 0\. As a result, the instances are terminated\. Deleting an instance also deletes any associated logs or data, and any volumes on the instance\. If do not want to terminate one or more instances, you can detach them before you delete the Auto Scaling group\.
 
-**To delete your Auto Scaling group using the console**
+**To delete your Auto Scaling group \(console\)**
 
 1. Open the Amazon EC2 console at [https://console\.aws\.amazon\.com/ec2/](https://console.aws.amazon.com/ec2/)\.
 
@@ -22,8 +23,8 @@ When you delete an Auto Scaling group, its desired, minimum, and maximum values 
 
 1. When prompted for confirmation, choose **Yes, Delete**\.
 
-**To delete your Auto Scaling group using the AWS CLI**  
-Use the following [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/delete-auto-scaling-group.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/delete-auto-scaling-group.html) command to delete the Auto Scaling group:
+**To delete your Auto Scaling group \(AWS CLI\)**  
+Use the following [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/delete-auto-scaling-group.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/delete-auto-scaling-group.html) command to delete the Auto Scaling group\. 
 
 ```
 aws autoscaling delete-auto-scaling-group --auto-scaling-group-name my-asg
@@ -33,7 +34,9 @@ aws autoscaling delete-auto-scaling-group --auto-scaling-group-name my-asg
 
 You can skip this step to keep the launch configuration for future use\.
 
-**To delete the launch configuration using the console**
+**To delete the launch configuration \(console\)**
+
+1. Open the Amazon EC2 console at [https://console\.aws\.amazon\.com/ec2/](https://console.aws.amazon.com/ec2/)\.
 
 1. On the navigation pane, under **Auto Scaling**, choose **Launch Configurations**\.
 
@@ -41,33 +44,73 @@ You can skip this step to keep the launch configuration for future use\.
 
 1. When prompted for confirmation, choose **Yes, Delete**\.
 
-**To delete the launch configuration using the AWS CLI**  
-Use the following [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/delete-launch-configuration.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/delete-launch-configuration.html) command:
+**To delete the launch configuration \(AWS CLI\)**  
+Use the following [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/delete-launch-configuration.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/delete-launch-configuration.html) command\.
 
 ```
-aws autoscaling delete-launch-configuration --launch-configuration-name my-lc
+aws autoscaling delete-launch-configuration --launch-configuration-name my-launch-config
+```
+
+## \(Optional\) Delete the Launch Template<a name="as-shutdown-lbs-delete-lt-cli"></a>
+
+You can delete your launch template or just one version of your launch template\. When you delete a launch template, all its versions are deleted\.
+
+You can skip this step to keep the launch template for future use\. 
+
+**To delete your launch template \(console\)**
+
+1. Open the Amazon EC2 console at [https://console\.aws\.amazon\.com/ec2/](https://console.aws.amazon.com/ec2/)\.
+
+1. On the navigation pane, choose **Launch Templates**\.
+
+1. Select your launch template and then do one of the following: 
+   + Choose **Actions**, **Delete template**\. When prompted for confirmation, choose **Delete launch template**\.
+   + Choose **Actions**, **Delete template version**\. Select the version to delete and choose **Delete launch template version**\.
+
+**To delete the launch template \(AWS CLI\)**  
+Use the following [https://docs.aws.amazon.com/cli/latest/reference/ec2/delete-launch-template.html](https://docs.aws.amazon.com/cli/latest/reference/ec2/delete-launch-template.html) command to delete your template and all its versions\.
+
+```
+aws ec2 delete-launch-template --launch-template-id lt-068f72b72934aff71
+```
+
+Alternatively, you can use the [https://docs.aws.amazon.com/cli/latest/reference/ec2/delete-launch-template-versions.html](https://docs.aws.amazon.com/cli/latest/reference/ec2/delete-launch-template-versions.html) command to delete a specific version of a launch template\. 
+
+```
+aws ec2 delete-launch-template-versions --launch-template-id lt-068f72b72934aff71 --versions 1
 ```
 
 ## \(Optional\) Delete the Load Balancer<a name="as-shutdown-lbs-delete-lbs-cli"></a>
 
-Skip this step if your Auto Scaling group is not registered with an Elastic Load Balancing load balancer, or if you want to keep the load balancer for future use\.
+Skip this step if your Auto Scaling group is not associated with an Elastic Load Balancing load balancer, or if you want to keep the load balancer for future use\. 
 
-**To delete your load balancer**
+**To delete your load balancer \(console\)**
 
-1. On the navigation pane, under **LOAD BALANCING**, choose **Load Balancers**\.
+1. Open the Amazon EC2 console at [https://console\.aws\.amazon\.com/ec2/](https://console.aws.amazon.com/ec2/)\.
+
+1. On the navigation pane, choose **Load Balancers**\.
 
 1. Choose the load balancer and choose **Actions**, **Delete**\.
 
 1. When prompted for confirmation, choose **Yes, Delete**\.
 
-**To delete the load balancer associated with the Auto Scaling group using the AWS CLI**  
-For Application Load Balancers and Network Load Balancers, use the following [https://docs.aws.amazon.com/cli/latest/reference/elbv2/delete-load-balancer.html](https://docs.aws.amazon.com/cli/latest/reference/elbv2/delete-load-balancer.html) command:
+**To delete your target group \(console\)**
+
+1. On the navigation pane, choose **Target Groups**\.
+
+1. Choose the target group and choose **Actions**, **Delete**\.
+
+1. When prompted for confirmation, choose **Yes**\.
+
+**To delete the load balancer associated with the Auto Scaling group \(AWS CLI\)**  
+For Application Load Balancers and Network Load Balancers, use the following [https://docs.aws.amazon.com/cli/latest/reference/elbv2/delete-load-balancer.html](https://docs.aws.amazon.com/cli/latest/reference/elbv2/delete-load-balancer.html) and [https://docs.aws.amazon.com/cli/latest/reference/elbv2/delete-target-group.html](https://docs.aws.amazon.com/cli/latest/reference/elbv2/delete-target-group.html) commands\.
 
 ```
 aws elbv2 delete-load-balancer --load-balancer-arn my-load-balancer-arn
+aws elbv2 delete-target-group --target-group-arn my-target-group-arn
 ```
 
-For Classic Load Balancers, use the following [https://docs.aws.amazon.com/cli/latest/reference/elb/delete-load-balancer.html](https://docs.aws.amazon.com/cli/latest/reference/elb/delete-load-balancer.html) command:
+For Classic Load Balancers, use the following [https://docs.aws.amazon.com/cli/latest/reference/elb/delete-load-balancer.html](https://docs.aws.amazon.com/cli/latest/reference/elb/delete-load-balancer.html) command\.
 
 ```
 aws elb delete-load-balancer --load-balancer-name my-load-balancer
@@ -75,24 +118,26 @@ aws elb delete-load-balancer --load-balancer-name my-load-balancer
 
 ## \(Optional\) Delete CloudWatch Alarms<a name="as-shutdown-delete-alarms-cli"></a>
 
+To delete any CloudWatch alarms associated with your Auto Scaling group, complete the following steps\. 
+
 You can skip this step if your Auto Scaling group is not associated with any CloudWatch alarms, or if you want to keep the alarms for future use\.
 
 **Note**  
-The CloudWatch alarms that are associated with your target tracking scaling policies are deleted automatically when you delete the scaling policies\.
+Deleting an Auto Scaling group automatically deletes the CloudWatch alarms that Amazon EC2 Auto Scaling manages for a target tracking scaling policy\. 
 
-**To delete the CloudWatch alarms using the console**
+**To delete the CloudWatch alarms \(console\)**
 
 1. Open the CloudWatch console at [https://console\.aws\.amazon\.com/cloudwatch/](https://console.aws.amazon.com/cloudwatch/)\.
 
 1. On the navigation pane, choose **Alarms**\.
 
-1. Choose the alarms and choose **Delete**\.
+1. Choose the alarms and choose **Action**, **Delete**\.
 
-1. When prompted for confirmation, choose **Yes, Delete**\.
+1. When prompted for confirmation, choose **Delete**\.
 
-**To delete the CloudWatch alarms using the AWS CLI**  
-Use the [https://docs.aws.amazon.com/cli/latest/reference/cloudwatch/delete-alarms.html](https://docs.aws.amazon.com/cli/latest/reference/cloudwatch/delete-alarms.html) command\. For example, use the following command to delete the `AddCapacity` and `RemoveCapacity` alarms:
+**To delete the CloudWatch alarms \(AWS CLI\)**  
+Use the [https://docs.aws.amazon.com/cli/latest/reference/cloudwatch/delete-alarms.html](https://docs.aws.amazon.com/cli/latest/reference/cloudwatch/delete-alarms.html) command\. You can delete one or more alarms at a time\. For example, use the following command to delete the `Step-Scaling-AlarmHigh-AddCapacity` and `Step-Scaling-AlarmLow-RemoveCapacity` alarms\.
 
 ```
-aws cloudwatch delete-alarms --alarm-name AddCapacity RemoveCapacity
+aws cloudwatch delete-alarms --alarm-name Step-Scaling-AlarmHigh-AddCapacity Step-Scaling-AlarmLow-RemoveCapacity
 ```

@@ -10,11 +10,11 @@ With launch templates, you choose the launch template and which specific version
 + You must have created a launch template that includes the parameters required to launch an EC2 instance\. For information about these parameters and the limitations that apply when creating a launch template for use with an Auto Scaling group, see [Creating a Launch Template for an Auto Scaling Group](create-launch-template.md)\.
 + You must have IAM permissions to create an Auto Scaling group using a launch template and also to create EC2 resources for the instances\. For more information, see [Controlling Access to Your Amazon EC2 Auto Scaling Resources](control-access-using-iam.md)\.
 
-**To create an Auto Scaling group using a launch template**
+**To create an Auto Scaling group using a launch template \(console\)**
 
 1. Open the Amazon EC2 console at [https://console\.aws\.amazon\.com/ec2/](https://console.aws.amazon.com/ec2/)\.
 
-1. On the navigation bar at the top of the screen, choose the same region that you used when you created the launch template\.
+1. On the navigation bar at the top of the screen, choose the same AWS Region that you used when you created the launch template\.
 
 1. In the navigation pane, choose **Auto Scaling Groups**\.
 

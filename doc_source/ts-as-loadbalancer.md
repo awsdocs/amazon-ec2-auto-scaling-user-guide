@@ -39,4 +39,4 @@ When your EC2 instances fail to launch due to issues with the load balancer asso
 
 ## The security token included in the request is invalid\. Validating load balancer configuration failed\.<a name="ts-as-loadbalancer-4"></a>
 + **Cause**: Your AWS account might have expired\.
-+ **Solution**: Check whether your AWS account is valid\. Go to [http://aws.amazon.com](http://aws.amazon.com) and choose **Sign Up Now** to open a new account\.
++ **Solution**: Check whether your AWS account is valid\. Go to https://aws\.amazon\.com/ and choose **Sign Up Now** to open a new account\.

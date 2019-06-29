@@ -17,7 +17,7 @@ Keep the following considerations in mind when creating a launch template for us
 + If you configure a network type \(VPC or EC2\-Classic\), subnet, and Availability Zone for your template, these settings are ignored in favor of what is specified in the Auto Scaling group\. 
 + If you specify a network interface, you must configure the security group as part of the network interface, and not in the **Security Groups** section of the template\. 
 + You cannot specify multiple network interfaces\.
-+ You cannot specify private IP addresses\. 
++ You cannot assign specific private IP addresses\. When an instance launches, a private address is allocated from the CIDR range of the subnet in which the instance is launched\. For more information on specifying CIDR ranges for your VPC or subnet, see the [Amazon VPC User Guide](https://docs.aws.amazon.com/vpc/latest/userguide/)\.
 + To specify an existing network interface to use, its device index must be 0 \(eth0\)\. For this scenario, you must use the CLI or API to create the Auto Scaling group\. When you create the group using the CLI create\-auto\-scaling\-group command or API CreateAutoScalingGroup action, you must specify the Availability Zones parameter instead of the subnet \(VPC zone identifier\) parameter\. 
 + You cannot use host placement affinity\.
 
@@ -27,7 +27,7 @@ Keep the following considerations in mind when creating a launch template for us
 
 1. In the navigation pane, choose **Launch Templates**\.
 
-1. Choose **Create a new template**\. Provide a name and description for the launch template\. 
+1. Choose **Create a new template**\. Enter a name and provide a description for the initial version of the launch template\. 
 
 1. If you choose to create the new template based on another template:
 
@@ -45,7 +45,7 @@ Keep the following considerations in mind when creating a launch template for us
 
    1. **Network type**: You can choose to specify whether to launch instances into a VPC or EC2\-Classic, if applicable\. However, the network type and Availability Zone settings of the launch template are ignored for Amazon EC2 Auto Scaling in favor of the settings of the Auto Scaling group\. 
 
-   1. **Security Groups**: Choose one or more [security groups](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-network-security.html), or leave blank to configure the security group as part of the network interface\. You cannot specify security groups in both places\. To launch instances into a VPC, you must specify a security group that is created for that VPC\.
+   1. **Security Groups**: Choose one or more [security groups](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-network-security.html), or leave blank to configure the security group as part of the network interface\. You cannot specify security groups in both places\. If you're using EC2\-Classic, you must use security groups created specifically for EC2\-Classic\.
 
 1. Under **Network interfaces**, choose **Add network interface** and provide the following optional information\. You can only specify one network interface\. Pay attention to the following fields:
 
@@ -57,9 +57,9 @@ Keep the following considerations in mind when creating a launch template for us
 
    1. **Subnet**: While you may choose to specify a subnet, it is ignored for Amazon EC2 Auto Scaling in favor of the settings of the Auto Scaling group\. 
 
-   1. **Auto\-assign public IP**: Specify whether to automatically assign a public IP address to the network interface\. 
+   1. **Auto\-assign public IP**: Specify whether to automatically assign a public IP address to the network interface with the device index of `eth0`\. This setting can only be enabled for a single, new network interface\. 
 
-   1. **Security group ID**: Enter the IDs of one or more [security groups](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-network-security.html) with which to associate the primary network interface \(eth0\)\. To launch instances into a VPC, you must specify a security group that is created for that VPC\.
+   1. **Security group ID**: Enter the IDs of one or more [security groups](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-network-security.html) with which to associate the primary network interface \(eth0\)\. Each security group must be configured for the VPC that your Auto Scaling group will launch instances into\. Separate the entries with commas\.
 
    1. **Delete on termination**: Choose whether the network interface is deleted when the Auto Scaling group scales in and terminates the instance to which the network interface is attached\.
 
@@ -79,17 +79,23 @@ Keep the following considerations in mind when creating a launch template for us
 
    1. **Delete on termination**: For Amazon EBS volumes, choose whether to delete the volume when the associated instance is terminated\. 
 
-   1. **Encrypted**: Choose **Yes** to encrypt new Amazon EBS volumes\. Amazon EBS volumes that are restored from encrypted snapshots are automatically encrypted\. Encrypted volumes can only be attached to [supported instance types](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EBSEncryption.html#EBSEncryption_supported_instances)\. 
+   1. **Encrypted**: Choose **Yes** to change the encryption state of an Amazon EBS volume\. The default effect of setting this parameter varies with the choice of volume source, as described in the table below\. You must in all cases have permission to use the specified CMK\. For more information about specifying encrypted volumes, see [Amazon EBS Encryption](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EBSEncryption.html) in the *Amazon EC2 User Guide for Linux Instances*\.   
+**Encryption Outcomes**    
+[\[See the AWS documentation website for more details\]](http://docs.aws.amazon.com/autoscaling/ec2/userguide/create-launch-template.html)
 
-   1. **Key**: If you chose to encrypt in the previous step, enter the master key you want to use when encrypting the volumes\. You can enter the default master key for your account, or you can enter any customer master key \(CMK\) that you have previously created using the AWS Key Management Service\. You can paste the full ARN of any key that you have access to\. For more information, see the [AWS Key Management Service Developer Guide](https://docs.aws.amazon.com/kms/latest/developerguide/)\.
+      \* If [encryption by default](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EBSEncryption.html#encryption-by-default) is enabled, all newly created volumes \(whether or not the **Encrypted** parameter is set to **Yes**\) are encrypted using the default CMK\. Setting both the **Encrypted** and **Key** parameters allows you to specify a non\-default CMK\. 
 
-1. For **Tags**, specify tags by providing key and value combinations\. You can tag the instances, the volumes, or both\.
+   1. \[Optional\] **Key**: If you chose **Yes** in the previous step, enter the customer master key \(CMK\) you want to use when encrypting the volumes\. You can enter any CMK that you have previously created using the AWS Key Management Service\. You can paste the full ARN of any key that you have access to\. For more information, see the [AWS Key Management Service Developer Guide](https://docs.aws.amazon.com/kms/latest/developerguide/) and the [Required CMK Key Policy for Use with Encrypted Volumes](key-policy-requirements-EBS-encryption.md) topic in this guide\.
+**Note**  
+Providing a CMK without also setting the **Encrypted** parameter results in an error\. 
+
+1. For **Instance tags**, specify tags by providing key and value combinations\. You can tag the instances, the volumes, or both\.
 
 1. For **Advanced Details**, expand the section to view the fields and specify any additional parameters for the instances\. For more information about this section and how each parameter can be used, see [Creating a Launch Template](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-launch-templates.html#create-launch-template) in the *Amazon EC2 User Guide for Linux Instances*\. 
    + **Purchasing option**: You have the option to request Spot Instances and specify the maximum price you are willing to pay per instance hour\. For this to work with an Auto Scaling group, you must specify a one\-time request with no end date\. For more information, see [Launching Spot Instances in Your Auto Scaling Group](asg-launch-spot-instances.md)\.
 **Important**  
-If you will specify multiple instance types and purchase options when you configure your Auto Scaling group, leave these fields empty\. For more information, see [Auto Scaling Groups with Multiple Instance Types and Purchase Options](asg-purchase-options.md)\.
-   + **IAM instance profile**: Specify an AWS Identity and Access Management \(IAM\) instance profile to associate with the instances\. For more information, see [IAM Role for Applications that Run on Amazon EC2 Instances](us-iam-role.md)\.
+If you plan to specify multiple instance types and purchase options when you configure your Auto Scaling group, leave these fields empty\. For more information, see [Auto Scaling Groups with Multiple Instance Types and Purchase Options](asg-purchase-options.md)\.
+   + **IAM instance profile**: Specify an AWS Identity and Access Management \(IAM\) instance profile to associate with the instances\. For more information, see [IAM Role for Applications That Run on Amazon EC2 Instances](us-iam-role.md)\.
    + **Shutdown behavior**: You can leave this field blank because it is ignored for Amazon EC2 Auto Scaling\. The default behavior of Amazon EC2 Auto Scaling is to terminate the instance\. 
    + **Termination protection**: Provides additional termination protection but is ignored for Amazon EC2 Auto Scaling when scaling in your Auto Scaling group\. To control whether an Auto Scaling group can terminate a particular instance when scaling in, use [Instance Protection](as-instance-termination.md#instance-protection)\.
    + **Monitoring**: Choose whether to enable detailed monitoring of the instances using Amazon CloudWatch\. Additional charges apply\. For more information, see [Monitoring Your Auto Scaling Groups and Instances Using Amazon CloudWatch](as-instance-monitoring.md)\.
@@ -103,16 +109,27 @@ If you will specify multiple instance types and purchase options when you config
 
 1. Choose **Create launch template**\.
 
+**To create a launch template from an existing instance**
+
+1. Open the Amazon EC2 console at [https://console\.aws\.amazon\.com/ec2/](https://console.aws.amazon.com/ec2/)\.
+
+1. In the navigation pane, choose **Instances**\.
+
+1. Select the instance and choose **Actions**, **Create template from instance**\.
+
+1. Provide a name and description\. Adjust any other launch parameters as required, and choose **Create Launch Template**\.
+
 **To create a launch template using the command line**
 
 You can use one of the following commands:
 + [https://docs.aws.amazon.com/cli/latest/reference/ec2/create-launch-template.html](https://docs.aws.amazon.com/cli/latest/reference/ec2/create-launch-template.html) \(AWS CLI\)
 + [https://docs.aws.amazon.com/powershell/latest/reference/items/New-EC2LaunchTemplate.html](https://docs.aws.amazon.com/powershell/latest/reference/items/New-EC2LaunchTemplate.html) \(AWS Tools for Windows PowerShell\)
 
-Create a launch template using the [https://docs.aws.amazon.com/cli/latest/reference/ec2/create-launch-template.html](https://docs.aws.amazon.com/cli/latest/reference/ec2/create-launch-template.html) command as follows\. Specify a value for `Groups` that corresponds to a security group for the VPC that your Auto Scaling group will launch instances into\.
+Create a launch template using the [https://docs.aws.amazon.com/cli/latest/reference/ec2/create-launch-template.html](https://docs.aws.amazon.com/cli/latest/reference/ec2/create-launch-template.html) command as follows\. Specify a value for `Groups` that corresponds to security groups for the VPC that your Auto Scaling group will launch instances into\. Specify the VPC and subnets as properties of the Auto Scaling group\.
 
 ```
-aws ec2 create-launch-template --launch-template-name my-template-for-auto-scaling --version-description version1 --launch-template-data '{"NetworkInterfaces":[{"DeviceIndex":0,"AssociatePublicIpAddress":true,"Groups":["sg-7c227019"],"DeleteOnTermination":true}],"ImageId":"ami-01e24be29428c15b2","InstanceType":"t2.micro","TagSpecifications": [{"ResourceType": "instance","Tags": [{"Key":"name","Value":"webserver"}]}]}'
+aws ec2 create-launch-template --launch-template-name my-template-for-auto-scaling --version-description version1 \
+--launch-template-data '{"NetworkInterfaces":[{"DeviceIndex":0,"AssociatePublicIpAddress":true,"Groups":["sg-7c227019"],"DeleteOnTermination":true}],"ImageId":"ami-01e24be29428c15b2","InstanceType":"t2.micro","TagSpecifications": [{"ResourceType":"instance","Tags":[{"Key":"purpose","Value":"webserver"}]}]}'
 ```
 
 Use the following [https://docs.aws.amazon.com/cli/latest/reference/ec2/describe-launch-templates.html](https://docs.aws.amazon.com/cli/latest/reference/ec2/describe-launch-templates.html) command to describe the launch template *my\-template\-for\-auto\-scaling*\.
@@ -137,15 +154,15 @@ The following is an example response:
             "LaunchTemplateId": "lt-068f72b72934aff71",
             "LaunchTemplateName": "my-template-for-auto-scaling",
             "VersionNumber": 1,
-            "CreatedBy": "arn:aws:iam::123456789012:user/AWS-CLI",
+            "CreatedBy": "arn:aws:iam::123456789012:user/Bob",
             "LaunchTemplateData": {
                 "TagSpecifications": [
                     {
                         "ResourceType": "instance",
                         "Tags": [
                             {
-                                "Value": "webserver",
-                                "Key": "name"
+                                "Key": "purpose",
+                                "Value": "webserver"
                             }
                         ]
                     }

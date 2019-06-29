@@ -13,22 +13,18 @@ When you attach instances, the desired capacity of the group increases by the nu
 
 If you attach an instance to an Auto Scaling group that has an attached load balancer, the instance is registered with the load balancer\. If you attach an instance to an Auto Scaling group that has an attached target group, the instance is registered with the target group\.
 
-**Topics**
-+ [Attaching an Instance Using the AWS Management Console](#attach-instance-console)
-+ [Attaching an Instance Using the AWS CLI](#attach-instance-aws-cli)
-
 The examples use an Auto Scaling group with the following configuration:
-+ Auto Scaling group name = **my\-asg**
-+ Minimum size = **1**
-+ Maximum size = **5**
-+ Desired capacity = **2**
-+ Availability Zone = **us\-west\-2a**
++ Auto Scaling group name = my\-asg
++ Minimum size = 1
++ Maximum size = 5
++ Desired capacity = 2
++ Availability Zone = us\-west\-2a
 
-## Attaching an Instance Using the AWS Management Console<a name="attach-instance-console"></a>
+## Attaching an Instance \(Console\)<a name="attach-instance-console"></a>
 
 You can attach an existing instance to an existing Auto Scaling group, or to a new Auto Scaling group as you create it\.
 
-**To attach an instance to a new Auto Scaling group using the console**
+**To attach an instance to a new Auto Scaling group**
 
 1. Open the Amazon EC2 console at [https://console\.aws\.amazon\.com/ec2/](https://console.aws.amazon.com/ec2/)\.
 
@@ -44,7 +40,7 @@ You can attach an existing instance to an existing Auto Scaling group, or to a n
 
 1. \(Optional\) To edit the settings for the Auto Scaling group, on the navigation pane, under **Auto Scaling**, choose **Auto Scaling Groups**\. Select the new Auto Scaling group, choose **Edit**, change the settings as needed, and then choose **Save**\.
 
-**To attach an instance to an existing Auto Scaling group using the console**
+**To attach an instance to an existing Auto Scaling group**
 
 1. Open the Amazon EC2 console at [https://console\.aws\.amazon\.com/ec2/](https://console.aws.amazon.com/ec2/)\.
 
@@ -60,11 +56,11 @@ You can attach an existing instance to an existing Auto Scaling group, or to a n
 
 1. If the instance doesn't meet the criteria, you get an error message with the details\. For example, the instance might not be in the same Availability Zone as the Auto Scaling group\. Choose **Close** and try again with an instance that meets the criteria\.
 
-## Attaching an Instance Using the AWS CLI<a name="attach-instance-aws-cli"></a>
+## Attaching an Instance \(AWS CLI\)<a name="attach-instance-aws-cli"></a>
 
-**To attach an instance to an Auto Scaling group using the AWS CLI**
+**To attach an instance to an Auto Scaling group**
 
-1. Describe a specific Auto Scaling group using the following [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/describe-auto-scaling-groups.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/describe-auto-scaling-groups.html) command:
+1. Describe a specific Auto Scaling group using the following [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/describe-auto-scaling-groups.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/describe-auto-scaling-groups.html) command\.
 
    ```
    aws autoscaling describe-auto-scaling-groups --auto-scaling-group-names my-asg
@@ -77,9 +73,14 @@ You can attach an existing instance to an existing Auto Scaling group, or to a n
        "AutoScalingGroups": [
            {
                "AutoScalingGroupARN": "arn",
-               "HealthCheckGracePeriod": 300,
+               "ServiceLinkedRoleARN": "arn",
+               "TargetGroupARNs": [],
                "SuspendedProcesses": [],
-               "DesiredCapacity": 2,
+               "LaunchTemplate": {
+                   "LaunchTemplateName": "my-launch-template",
+                   "Version": "1",
+                   "LaunchTemplateId": "lt-050555ad16a3f9c7f"
+               },
                "Tags": [],
                "EnabledMetrics": [],
                "LoadBalancerNames": [],
@@ -88,58 +89,75 @@ You can attach an existing instance to an existing Auto Scaling group, or to a n
                "MinSize": 1,
                "Instances": [
                    {
-                       "InstanceId": "i-a5e87793",
+                       "ProtectedFromScaleIn": false,
                        "AvailabilityZone": "us-west-2a",
+                       "LaunchTemplate": {
+                           "LaunchTemplateName": "my-launch-template",
+                           "Version": "1",
+                           "LaunchTemplateId": "lt-050555ad16a3f9c7f"
+                       },
+                       "InstanceId": "i-05b4f7d5be44822a6",
                        "HealthStatus": "Healthy",
-                       "LifecycleState": "InService",
-                       "LaunchConfigurationName": "my-lc"
+                       "LifecycleState": "Pending"
                    },
                    {
-                       "InstanceId": "i-a4e87792",
+                       "ProtectedFromScaleIn": false,
                        "AvailabilityZone": "us-west-2a",
+                       "LaunchTemplate": {
+                           "LaunchTemplateName": "my-launch-template",
+                           "Version": "1",
+                           "LaunchTemplateId": "lt-050555ad16a3f9c7f"
+                       },
+                       "InstanceId": "i-0c20ac468fa3049e8",
                        "HealthStatus": "Healthy",
-                       "LifecycleState": "InService",
-                       "LaunchConfigurationName": "my-lc"
+                       "LifecycleState": "InService"
                    }
                ],
                "MaxSize": 5,
-               "VPCZoneIdentifier": "subnet-e4f33493",
+               "VPCZoneIdentifier": "subnet-c87f2be0",
+               "HealthCheckGracePeriod": 300,
                "TerminationPolicies": [
                    "Default"
                ],
-               "LaunchConfigurationName": "my-lc",
-               "CreatedTime": "2014-12-12T23:30:42.611Z",
+               "CreatedTime": "2019-03-18T23:30:42.611Z",
                "AvailabilityZones": [
                    "us-west-2a"
                ],
-               "HealthCheckType": "EC2"
+               "HealthCheckType": "EC2",
+               "NewInstancesProtectedFromScaleIn": false,
+               "DesiredCapacity": 2
            }
        ]
    }
    ```
 
-1. Attach an instance to the Auto Scaling group using the following [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/attach-instances.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/attach-instances.html) command:
+1. Attach an instance to the Auto Scaling group using the following [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/attach-instances.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/attach-instances.html) command\.
 
    ```
-   aws autoscaling attach-instances --instance-ids i-a8e09d9c --auto-scaling-group-name my-asg
+   aws autoscaling attach-instances --instance-ids i-0787762faf1c28619 --auto-scaling-group-name my-asg
    ```
 
-1. To verify that the instance is attached, use the following [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/describe-auto-scaling-groups.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/describe-auto-scaling-groups.html) command:
+1. To verify that the instance is attached, use the following [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/describe-auto-scaling-groups.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/describe-auto-scaling-groups.html) command\.
 
    ```
    aws autoscaling describe-auto-scaling-groups --auto-scaling-group-names my-asg
    ```
 
-   The following example response shows that the desired capacity has increased by 1 to 3, and that there is a new instance, `i-a8e09d9c`: 
+   The following example response shows that the desired capacity has increased by 1 to 3, and that there is a new instance, `i-0787762faf1c28619`: 
 
    ```
    {
        "AutoScalingGroups": [
            {
                "AutoScalingGroupARN": "arn",
-               "HealthCheckGracePeriod": 300,
+               "ServiceLinkedRoleARN": "arn",
+               "TargetGroupARNs": [],
                "SuspendedProcesses": [],
-               "DesiredCapacity": 3,
+               "LaunchTemplate": {
+                   "LaunchTemplateName": "my-launch-template",
+                   "Version": "1",
+                   "LaunchTemplateId": "lt-050555ad16a3f9c7f"
+               },
                "Tags": [],
                "EnabledMetrics": [],
                "LoadBalancerNames": [],
@@ -148,38 +166,55 @@ You can attach an existing instance to an existing Auto Scaling group, or to a n
                "MinSize": 1,
                "Instances": [
                    {
-                       "InstanceId": "i-a8e09d9c",
+                       "ProtectedFromScaleIn": false,
                        "AvailabilityZone": "us-west-2a",
+                       "LaunchTemplate": {
+                           "LaunchTemplateName": "my-launch-template",
+                           "Version": "1",
+                           "LaunchTemplateId": "lt-050555ad16a3f9c7f"
+                       },
+                       "InstanceId": "i-05b4f7d5be44822a6",
                        "HealthStatus": "Healthy",
-                       "LifecycleState": "InService",
-                       "LaunchConfigurationName": "my-lc"
+                       "LifecycleState": "Pending"
                    },
                    {
-                       "InstanceId": "i-a5e87793",
+                       "ProtectedFromScaleIn": false,
                        "AvailabilityZone": "us-west-2a",
+                       "LaunchTemplate": {
+                           "LaunchTemplateName": "my-launch-template",
+                           "Version": "1",
+                           "LaunchTemplateId": "lt-050555ad16a3f9c7f"
+                       },
+                       "InstanceId": "i-0c20ac468fa3049e8",
                        "HealthStatus": "Healthy",
-                       "LifecycleState": "InService",
-                       "LaunchConfigurationName": "my-lc"
+                       "LifecycleState": "InService"
                    },
                    {
-                       "InstanceId": "i-a4e87792",
+                       "ProtectedFromScaleIn": false,
                        "AvailabilityZone": "us-west-2a",
+                       "LaunchTemplate": {
+                           "LaunchTemplateName": "my-launch-template",
+                           "Version": "1",
+                           "LaunchTemplateId": "lt-050555ad16a3f9c7f"
+                       },
+                       "InstanceId": "i-0787762faf1c28619",
                        "HealthStatus": "Healthy",
-                       "LifecycleState": "InService",
-                       "LaunchConfigurationName": "my-lc"
+                       "LifecycleState": "InService"
                    }
                ],
                "MaxSize": 5,
-               "VPCZoneIdentifier": "subnet-e4f33493",
+               "VPCZoneIdentifier": "subnet-c87f2be0",
+               "HealthCheckGracePeriod": 300,
                "TerminationPolicies": [
                    "Default"
                ],
-               "LaunchConfigurationName": "my-lc",
-               "CreatedTime": "2014-12-12T23:30:42.611Z",
+               "CreatedTime": "2019-03-18T23:30:42.611Z",
                "AvailabilityZones": [
                    "us-west-2a"
                ],
-               "HealthCheckType": "EC2"
+               "HealthCheckType": "EC2",
+               "NewInstancesProtectedFromScaleIn": false,
+               "DesiredCapacity": 3
            }
        ]
    }

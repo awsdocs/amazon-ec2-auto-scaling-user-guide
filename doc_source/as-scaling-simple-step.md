@@ -91,7 +91,7 @@ While scaling in, AWS considers instances that are terminating as part of the cu
 
 A scale\-in activity can't start while a scale\-out activity is in progress\.
 
-## Create an Auto Scaling Group with Step Scaling Policies<a name="policy-creating-asg-console"></a>
+## Create an Auto Scaling Group with Step Scaling Policies \(Console\)<a name="policy-creating-asg-console"></a>
 
 You can create a scaling policy that uses CloudWatch alarms to determine when your Auto Scaling group should scale out or scale in\. Each CloudWatch alarm watches a single metric and sends messages to Amazon EC2 Auto Scaling when the metric breaches a threshold that you specify in your policy\. You can use alarms to monitor any of the metrics that are sent to CloudWatch from the services in AWS that you're using\. Or, you can create and monitor your own metrics\.
 
@@ -99,7 +99,7 @@ When you create a CloudWatch alarm, you can specify an Amazon SNS topic to send 
 
 Use the console to create an Auto Scaling group with two scaling policies: a scale\-out policy that increases the capacity of the group by 30 percent, and a scale\-in policy that decreases the capacity of the group to two instances\.
 
-**To create an Auto Scaling group with scaling based on metrics**
+**To create an Auto Scaling group with step scaling policies**
 
 1. Open the Amazon EC2 console at [https://console\.aws\.amazon\.com/ec2/](https://console.aws.amazon.com/ec2/)\.
 
@@ -171,7 +171,7 @@ Use the console to create an Auto Scaling group with two scaling policies: a sca
 
    1. On the **Scaling Policies** tab, you can see the policies that you created for the Auto Scaling group\.
 
-## Configure Step Scaling Policies Using the AWS CLI<a name="policy-creating-aws-cli"></a>
+## Configure Step Scaling Policies \(AWS CLI\)<a name="policy-creating-aws-cli"></a>
 
 Use the AWS CLI as follows to configure step scaling policies for your Auto Scaling group\.
 
@@ -185,15 +185,18 @@ Use the AWS CLI as follows to configure step scaling policies for your Auto Scal
 Use the following [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/create-auto-scaling-group.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/create-auto-scaling-group.html) command to create an Auto Scaling group named `my-asg` using the launch configuration `my-launch-config`\. If you don't have a launch configuration that you'd like to use, you can create one\. For more information, see [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/create-launch-configuration.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/create-launch-configuration.html)\.
 
 ```
-aws autoscaling create-auto-scaling-group --auto-scaling-group-name my-asg --launch-configuration-name my-launch-config --max-size 5 --min-size 1 --availability-zones "us-west-2c"
+aws autoscaling create-auto-scaling-group --auto-scaling-group-name my-asg \
+  --launch-configuration-name my-launch-config \
+  --vpc-zone-identifier "subnet-5ea0c127,subnet-6194ea3b,subnet-c934b782" \
+  --max-size 5 --min-size 1
 ```
 
 ### Step 2: Create Scaling Policies<a name="policy-creating-policy-aws-cli"></a>
 
-You can create scaling policies that tell the Auto Scaling group what to do when the specified conditions change\.
+You can create step or simple scaling policies that tell the Auto Scaling group what to do when the load on the application changes\.
 
-**Example: my\-scaleout\-policy**  
-Use the following [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/put-scaling-policy.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/put-scaling-policy.html) command to create a step scaling policy named `my-scaleout-policy` with an adjustment type of `PercentChangeInCapacity` that increases the capacity of the group based on the following step adjustments \(assuming a CloudWatch alarm threshold of 60%\):
+**Example: my\-step\-scaleout\-policy**  
+Use the following [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/put-scaling-policy.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/put-scaling-policy.html) command to create a step scaling policy named `my-step-scaleout-policy` with an adjustment type of `PercentChangeInCapacity` that increases the capacity of the group based on the following step adjustments \(assuming a CloudWatch alarm threshold of 60%\):
 + Increase the instance count by 10% when the value of the metric is greater than or equal to 70% but less than 80% 
 + Increase the instance count by 20% when the value of the metric is greater than or equal to 80% but less than 90%
 + Increase the instance count by 30% when the value of the metric is greater than or equal to 90%
@@ -201,7 +204,7 @@ Use the following [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/
 ```
 aws autoscaling put-scaling-policy \
   --auto-scaling-group-name my-asg  \
-  --policy-name my-scaleout-policy \
+  --policy-name my-step-scaleout-policy \
   --policy-type StepScaling \
   --adjustment-type PercentChangeInCapacity \
   --metric-aggregation-type Average \
@@ -215,17 +218,17 @@ The output includes the ARN for the policy\. Store this ARN in a safe place\. Yo
 
 ```
 {
-    "PolicyARN": "arn:aws:autoscaling:us-west-2:123456789012:scalingPolicy:4ee9e543-86b5-4121-b53b-aa4c23b5bbcc:autoScalingGroupName/my-asg:policyName/my-scalein-policy
+    "PolicyARN": "arn:aws:autoscaling:region:123456789012:scalingPolicy:4ee9e543-86b5-4121-b53b-aa4c23b5bbcc:autoScalingGroupName/my-asg:policyName/my-step-scalein-policy
 }
 ```
 
-**Example: my\-scalein\-policy**  
-Use the following [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/put-scaling-policy.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/put-scaling-policy.html) command to create a step scaling policy named `my-scalein-policy` with an adjustment type of `ChangeInCapacity` that decreases the capacity of the group by 2 instances:
+**Example: my\-step\-scalein\-policy**  
+Use the following [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/put-scaling-policy.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/put-scaling-policy.html) command to create a step scaling policy named `my-step-scalein-policy` with an adjustment type of `ChangeInCapacity` that decreases the capacity of the group by 2 instances:
 
 ```
 aws autoscaling put-scaling-policy \
   --auto-scaling-group-name my-asg  \
-  --policy-name my-scalein-policy \
+  --policy-name my-step-scalein-policy \
   --policy-type StepScaling \
   --adjustment-type ChangeInCapacity \
   --step-adjustments MetricIntervalUpperBound=0.0,ScalingAdjustment=-2
@@ -235,7 +238,7 @@ The output includes the ARN that serves as a unique name for the policy\. Later,
 
 ```
 {
-    "PolicyARN": "arn:aws:autoscaling:us-west-2:123456789012:scalingPolicy:ac542982-cbeb-4294-891c-a5a941dfa787:autoScalingGroupName/my-asg:policyName/my-scaleout-policy
+    "PolicyARN": "arn:aws:autoscaling:region:123456789012:scalingPolicy:ac542982-cbeb-4294-891c-a5a941dfa787:autoScalingGroupName/my-asg:policyName/my-step-scaleout-policy
 }
 ```
 
@@ -247,14 +250,18 @@ Alternatively, you can create simple scaling policies by using the following CLI
 Use the following [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/put-scaling-policy.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/put-scaling-policy.html) command to create a simple scaling policy named `my-simple-scaleout-policy` with an adjustment type of `PercentChangeInCapacity` that increases the capacity of the group by 30 percent:
 
 ```
-aws autoscaling put-scaling-policy --policy-name my-simple-scaleout-policy --auto-scaling-group-name my-asg --scaling-adjustment 30 --adjustment-type PercentChangeInCapacity
+aws autoscaling put-scaling-policy --policy-name my-simple-scaleout-policy \
+  --auto-scaling-group-name my-asg --scaling-adjustment 30 \
+  --adjustment-type PercentChangeInCapacity
 ```
 
 **Example: my\-simple\-scalein\-policy**  
 Use the following [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/put-scaling-policy.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/put-scaling-policy.html) command to create a simple scaling policy named `my-simple-scalein-policy` with an adjustment type of `ChangeInCapacity` that decreases the capacity of the group by two instances:
 
 ```
-aws autoscaling put-scaling-policy --policy-name my-simple-scalein-policy --auto-scaling-group-name my-asg --scaling-adjustment -2 --adjustment-type ChangeInCapacity
+aws autoscaling put-scaling-policy --policy-name my-simple-scalein-policy \
+  --auto-scaling-group-name my-asg --scaling-adjustment -2 \
+  --adjustment-type ChangeInCapacity
 ```
 
 ### Step 3: Create CloudWatch Alarms<a name="policy-creating-alarms-aws-cli"></a>
@@ -266,11 +273,11 @@ Use the following CloudWatch [https://docs.aws.amazon.com/cli/latest/reference/c
 
 ```
 aws cloudwatch put-metric-alarm --alarm-name Step-Scaling-AlarmHigh-AddCapacity \
---metric-name CPUUtilization --namespace AWS/EC2 --statistic Average \
---period 120 --evaluation-periods 2 --threshold 60 \
---comparison-operator GreaterThanOrEqualToThreshold \
---dimensions "Name=AutoScalingGroupName,Value=my-asg" \
---alarm-actions PolicyARN
+  --metric-name CPUUtilization --namespace AWS/EC2 --statistic Average \
+  --period 120 --evaluation-periods 2 --threshold 60 \
+  --comparison-operator GreaterThanOrEqualToThreshold \
+  --dimensions "Name=AutoScalingGroupName,Value=my-asg" \
+  --alarm-actions PolicyARN
 ```
 
 **Example: RemoveCapacity**  
@@ -278,9 +285,9 @@ Use the following CloudWatch [https://docs.aws.amazon.com/cli/latest/reference/c
 
 ```
 aws cloudwatch put-metric-alarm --alarm-name Step-Scaling-AlarmLow-RemoveCapacity \
---metric-name CPUUtilization --namespace AWS/EC2 --statistic Average \
---period 120 --evaluation-periods 2 --threshold 40 \
---comparison-operator LessThanOrEqualToThreshold \
---dimensions "Name=AutoScalingGroupName,Value=my-asg" \
---alarm-actions PolicyARN
+  --metric-name CPUUtilization --namespace AWS/EC2 --statistic Average \
+  --period 120 --evaluation-periods 2 --threshold 40 \
+  --comparison-operator LessThanOrEqualToThreshold \
+  --dimensions "Name=AutoScalingGroupName,Value=my-asg" \
+  --alarm-actions PolicyARN
 ```

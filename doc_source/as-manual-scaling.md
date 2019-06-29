@@ -1,14 +1,8 @@
 # Manual Scaling for Amazon EC2 Auto Scaling<a name="as-manual-scaling"></a>
 
-At any time, you can change the size of an existing Auto Scaling group\. Update the desired capacity of the Auto Scaling group, or update the instances that are attached to the Auto Scaling group\.
+At any time, you can change the size of an existing Auto Scaling group manually\. You can either update the desired capacity of the Auto Scaling group, or update the instances that are attached to the Auto Scaling group\.
 
-**Topics**
-+ [Change the Size of Your Auto Scaling Group Using the Console](#as-manual-scaling-console)
-+ [Change the Size of Your Auto Scaling Group Using the AWS CLI](#as-manual-scaling-aws-cli)
-+ [Attach EC2 Instances to Your Auto Scaling Group](attach-instance-asg.md)
-+ [Detach EC2 Instances from Your Auto Scaling Group](detach-instance-asg.md)
-
-## Change the Size of Your Auto Scaling Group Using the Console<a name="as-manual-scaling-console"></a>
+## Changing the Size of Your Auto Scaling Group \(Console\)<a name="as-manual-scaling-console"></a>
 
 When you change the size of your Auto Scaling group, Amazon EC2 Auto Scaling manages the process of launching or terminating instances to maintain the new group size\.
 
@@ -38,25 +32,29 @@ Now, verify that your Auto Scaling group has launched one additional instance\.
 
 1. On the **Instances** tab, the **Lifecycle** column shows the state of your instances\. It takes a short time for an instance to launch\. After the instance starts, its state changes to `InService`\. You can see that your Auto Scaling group has launched `1` new instance, and it is in the `InService` state\.
 
-## Change the Size of Your Auto Scaling Group Using the AWS CLI<a name="as-manual-scaling-aws-cli"></a>
+## Changing the Size of Your Auto Scaling Group \(AWS CLI\)<a name="as-manual-scaling-aws-cli"></a>
 
-When you change the size of your Auto Scaling group, Amazon EC2 Auto Scaling manages the process of launching or terminating instances to maintain the new group size\.
+When you change the size of your Auto Scaling group, Amazon EC2 Auto Scaling manages the process of launching or terminating instances to maintain the new group size\. The default is not to wait for the default cooldown period to complete, but you can override the default behavior and wait for the cooldown period to complete\. For more information, see [Scaling Cooldowns for Amazon EC2 Auto Scaling](Cooldown.md)\.
 
 The following example assumes that you've created an Auto Scaling group with a minimum size of 1 and a maximum size of 5\. Therefore, the group currently has one running instance\.
 
-Use the [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/set-desired-capacity.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/set-desired-capacity.html) command to change the size of your Auto Scaling group, as shown in the following example:
+**To change the size of your Auto Scaling group**  
+Use the [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/set-desired-capacity.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/set-desired-capacity.html) command to change the size of your Auto Scaling group, as shown in the following example\.
 
 ```
-aws autoscaling set-desired-capacity --auto-scaling-group-name my-asg --desired-capacity 2
+aws autoscaling set-desired-capacity --auto-scaling-group-name my-asg \
+  --desired-capacity 2
 ```
 
-By default, the command does not wait for the cooldown period specified for the group to complete\. You can override the default behavior and wait for the cooldown period to complete by specifying the `–-honor-cooldown` option as shown in the following example\. For more information, see [Scaling Cooldowns for Amazon EC2 Auto Scaling](Cooldown.md)\.
+If you choose to honor the default cooldown period for your Auto Scaling group, you must specify the `–-honor-cooldown` option as shown in the following example\.
 
 ```
-aws autoscaling set-desired-capacity --auto-scaling-group-name my-asg --desired-capacity 2 --honor-cooldown
+aws autoscaling set-desired-capacity --auto-scaling-group-name my-asg \
+  --desired-capacity 2 --honor-cooldown
 ```
 
-Use the [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/describe-auto-scaling-groups.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/describe-auto-scaling-groups.html) command to confirm that the size of your Auto Scaling group has changed, as in the following example:
+**To verify the size of your Auto Scaling group**  
+Use the [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/describe-auto-scaling-groups.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/describe-auto-scaling-groups.html) command to confirm that the size of your Auto Scaling group has changed, as in the following example\.
 
 ```
 aws autoscaling describe-auto-scaling-groups --auto-scaling-group-name my-asg
@@ -69,9 +67,14 @@ The following is example output, with details about the group and instances laun
     "AutoScalingGroups": [
         {
             "AutoScalingGroupARN": "arn",
-            "HealthCheckGracePeriod": 300,
+            "ServiceLinkedRoleARN": "arn",
+            "TargetGroupARNs": [],
             "SuspendedProcesses": [],
-            "DesiredCapacity": 2,
+            "LaunchTemplate": {
+                "LaunchTemplateName": "my-launch-template",
+                "Version": "1",
+                "LaunchTemplateId": "lt-050555ad16a3f9c7f"
+            },
             "Tags": [],
             "EnabledMetrics": [],
             "LoadBalancerNames": [],
@@ -80,24 +83,43 @@ The following is example output, with details about the group and instances laun
             "MinSize": 1,
             "Instances": [
                 {
-                    "InstanceId": "i-33388a3f",
+                    "ProtectedFromScaleIn": false,
                     "AvailabilityZone": "us-west-2a",
+                    "LaunchTemplate": {
+                        "LaunchTemplateName": "my-launch-template",
+                        "Version": "1",
+                        "LaunchTemplateId": "lt-050555ad16a3f9c7f"
+                    },
+                    "InstanceId": "i-05b4f7d5be44822a6",
                     "HealthStatus": "Healthy",
-                    "LifecycleState": "InService",
-                    "LaunchConfigurationName": "my-lc"
+                    "LifecycleState": "Pending"
+                },
+                {
+                    "ProtectedFromScaleIn": false,
+                    "AvailabilityZone": "us-west-2a",
+                    "LaunchTemplate": {
+                        "LaunchTemplateName": "my-launch-template",
+                        "Version": "1",
+                        "LaunchTemplateId": "lt-050555ad16a3f9c7f"
+                    },
+                    "InstanceId": "i-0c20ac468fa3049e8",
+                    "HealthStatus": "Healthy",
+                    "LifecycleState": "InService"
                 }
             ],
             "MaxSize": 5,
-            "VPCZoneIdentifier": "subnet-e4f33493",
+            "VPCZoneIdentifier": "subnet-c87f2be0",
+            "HealthCheckGracePeriod": 300,
             "TerminationPolicies": [
                 "Default"
             ],
-            "LaunchConfigurationName": "my-lc",
-            "CreatedTime": "2014-12-12T23:30:42.611Z",
+            "CreatedTime": "2019-03-18T23:30:42.611Z",
             "AvailabilityZones": [
                 "us-west-2a"
             ],
-            "HealthCheckType": "EC2"
+            "HealthCheckType": "EC2",
+            "NewInstancesProtectedFromScaleIn": false,
+            "DesiredCapacity": 2
         }
     ]
 }

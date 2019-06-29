@@ -42,7 +42,7 @@ Make sure that you have enabled the IAM permissions that allow an IAM entity \(s
 
 ## Create the Service\-Linked Role \(Manual\)<a name="create-service-linked-role-manual"></a>
 
-Alternatively, you can create and then specify your own service\-linked role with a custom suffix when you create your Auto Scaling group\. This can be helpful if you must give different service\-linked roles access to different KMS keys\. You can also track which Auto Scaling group made an API call in your CloudTrail logs by noting the service\-linked role in use\.
+Alternatively, you can create and then specify your own service\-linked role with a custom suffix when you create your Auto Scaling group\. This can be helpful if you must give different service\-linked roles access to different customer master key \(CMK\) keys\. For more information, see [Required CMK Key Policy for Use with Encrypted Volumes](key-policy-requirements-EBS-encryption.md)\. You can also track which Auto Scaling group made an API call in your CloudTrail logs by noting the service\-linked role in use\. For the policy that restricts the access of IAM users or roles to a specific custom service\-linked role, see [Example: Restricting Which Service\-Linked Role Can Be Passed \(Using PassRole\)](control-access-using-iam.md#policy-example-pass-role)\. 
 
 To create a service\-linked role, you can use the IAM console, AWS CLI, or IAM API\. For more information, see [Creating a Service\-Linked Role](https://docs.aws.amazon.com/IAM/latest/UserGuide/using-service-linked-roles.html#create-service-linked-role) in the *IAM User Guide*\.
 
@@ -52,7 +52,7 @@ For example, use the following [https://docs.aws.amazon.com/cli/latest/reference
 aws iam create-service-linked-role --aws-service-name autoscaling.amazonaws.com --custom-suffix suffix
 ```
 
-The output of this command includes the ARN of the service\-linked role, which you can use to grant the service\-linked role access to your KMS keys\. 
+The output of this command includes the ARN of the service\-linked role, which you can use to grant the service\-linked role access to your CMK\. 
 
 ```
 {
@@ -96,4 +96,6 @@ You can use IAM to delete the default service\-linked role or one that you've cr
 
 If you delete the `AWSServiceRoleForAutoScaling` service\-linked role, Amazon EC2 Auto Scaling creates the role again when you create an Auto Scaling group but do not specify a different service\-linked role\.
 
-## <a name="slr-regions"></a>
+## Supported Regions for Amazon EC2 Auto Scaling Service\-Linked Roles<a name="slr-regions"></a>
+
+Amazon EC2 Auto Scaling supports using service\-linked roles in all of the AWS Regions where the service is available\. For more information, see [AWS Regions and Endpoints](https://docs.aws.amazon.com/general/latest/gr/rande.html)\.

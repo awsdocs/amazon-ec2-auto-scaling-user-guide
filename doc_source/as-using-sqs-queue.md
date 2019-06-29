@@ -27,47 +27,54 @@ To illustrate with an example, the current `ApproximateNumberOfMessages` is 1500
 
 The following examples create the custom metric and target tracking scaling policy that configures your Auto Scaling group to scale based on these calculations\.
 
-## Scaling with Amazon SQS Using the AWS CLI<a name="scale-sqs-queue-cli"></a>
+## Configure Scaling with Amazon SQS<a name="scale-sqs-queue-cli"></a>
 
 The following section shows you how to set up automatic scaling for an SQS queue using the AWS CLI\. The procedures assume that you already have a queue \(standard or FIFO\), an Auto Scaling group, and EC2 instances running the application that uses the queue\. 
 
-### Step 1: Create the CloudWatch Custom Metric<a name="create-sqs-cw-alarms-cli"></a>
+**Topics**
++ [Step 1: Create a CloudWatch Custom Metric](#create-sqs-cw-alarms-cli)
++ [Step 2: Create a Target Tracking Scaling Policy](#create-sqs-policies-cli)
++ [Step 3: Test Your Scaling Policy](#validate-sqs-scaling-cli)
 
-Create the custom calculated metric by first reading metrics from your AWS account\. Next, calculate the backlog per instance metric recommended in an earlier section\. Lastly, publish this number to CloudWatch at a 1\-minute granularity\. 
+### Step 1: Create a CloudWatch Custom Metric<a name="create-sqs-cw-alarms-cli"></a>
+
+Create the custom calculated metric by first reading metrics from your AWS account\. Then, calculate the backlog per instance metric recommended in an earlier section\. Lastly, publish this number to CloudWatch at a 1\-minute granularity\. 
 
 Wherever possible, you should scale on EC2 instance metrics with a 1\-minute frequency \(also known as detailed monitoring\) because that ensures a faster response to utilization changes\. Scaling on metrics with a 5\-minute frequency can result in slower response times and scaling on stale metric data\. By default, EC2 instances are enabled for basic monitoring, which means metric data for instances is available at 5\-minute intervals\. You can enable detailed monitoring to get metric data for instances at a 1\-minute frequency\. For more information, see [Monitoring Your Auto Scaling Groups and Instances Using Amazon CloudWatch](as-instance-monitoring.md)\.
 
-**To create the CloudWatch custom metric**
+**To create a CloudWatch custom metric**
 
 1. Use the SQS [https://docs.aws.amazon.com/cli/latest/reference/sqs/get-queue-attributes.html](https://docs.aws.amazon.com/cli/latest/reference/sqs/get-queue-attributes.html) command to get the number of messages waiting in the queue \(`ApproximateNumberOfMessages`\): 
 
    ```
-   aws sqs get-queue-attributes --queue-url https://sqs.us-west-2.amazonaws.com/123456789/MyQueue --attribute-names ApproximateNumberOfMessages
+   aws sqs get-queue-attributes --queue-url https://sqs.region.amazonaws.com/123456789/MyQueue \
+     --attribute-names ApproximateNumberOfMessages
    ```
 
 1. Use the [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/describe-auto-scaling-groups.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/describe-auto-scaling-groups.html) command to get the running capacity of the group, which is the number of instances in the `InService` lifecycle state\. This command returns the instances of an Auto Scaling group along with their lifecycle state\. 
 
    ```
-   aws autoscaling describe-auto-scaling-groups --auto-scaling-group-names MyAutoScalingGroup
+   aws autoscaling describe-auto-scaling-groups --auto-scaling-group-names my-asg
    ```
 
 1. Calculate the backlog per instance by dividing the `ApproximateNumberOfMessages` metric by the fleet's running capacity metric\. 
 
 1. Publish the results at a 1\-minute granularity as a CloudWatch custom metric using the AWS CLI or an API\. A custom metric is defined using a metric name and namespace of your choosing\. Namespaces for custom metrics cannot start with "AWS/"\. For more information about publishing custom metrics, see the [Publish Custom Metrics](https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/publishingMetrics.html) topic in the *Amazon CloudWatch User Guide*\.
 
-   Here is an example CLI [https://docs.aws.amazon.com/cli/latest/reference/cloudwatch/put-metric-data.html](https://docs.aws.amazon.com/cli/latest/reference/cloudwatch/put-metric-data.html) command:
+   Here is an example CLI [https://docs.aws.amazon.com/cli/latest/reference/cloudwatch/put-metric-data.html](https://docs.aws.amazon.com/cli/latest/reference/cloudwatch/put-metric-data.html) command\.
 
    ```
-   aws cloudwatch put-metric-data --metric-name MyBacklogPerInstance --namespace MyNamespace --unit None --value 20 --dimensions MyOptionalMetricDimensionName=MyOptionalMetricDimensionValue
+   aws cloudwatch put-metric-data --metric-name MyBacklogPerInstance --namespace MyNamespace \
+     --unit None --value 20 --dimensions MyOptionalMetricDimensionName=MyOptionalMetricDimensionValue
    ```
 
-After your application is emitting the desired metric, the data is sent to CloudWatch\. The metrics are visible in the CloudWatch console\. You can access them by logging into the AWS Management Console and navigating to the CloudWatch page\. You can view the metric by navigating to the metrics page or searching for your metric using the search box\. For help viewing metrics, see [View Available Metrics](https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/viewing_metrics_with_cloudwatch.html) in the *Amazon CloudWatch User Guide*\.
+After your application is emitting the desired metric, the data is sent to CloudWatch\. The metric is visible in the CloudWatch console\. You can access it by logging into the AWS Management Console and navigating to the CloudWatch page\. Then, view the metric by navigating to the metrics page or searching for it using the search box\. For help viewing metrics, see [View Available Metrics](https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/viewing_metrics_with_cloudwatch.html) in the *Amazon CloudWatch User Guide*\.
 
-### Step 2: Create the Scaling Policies<a name="create-sqs-policies-cli"></a>
+### Step 2: Create a Target Tracking Scaling Policy<a name="create-sqs-policies-cli"></a>
 
-Next, create a target tracking scaling policy that tells the Auto Scaling group what to do when conditions change\.
+Next, create a target tracking scaling policy that tells the Auto Scaling group to increase and decrease the number of running EC2 instances in the group dynamically when the load on the application changes\. You can use a target tracking scaling policy because the scaling metric is a utilization metric that increases and decreases proportionally to the capacity of the group\. 
 
-**To create scaling policies**
+**To create a target tracking scaling policy**
 
 1. Use the following command to specify a target value for your scaling policy in a `config.json` file in your home directory\. 
 
@@ -95,16 +102,17 @@ Next, create a target tracking scaling policy that tells the Auto Scaling group 
 1. Use the [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/put-scaling-policy.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/put-scaling-policy.html) command, along with the `config.json` file that you created in the previous step, to create your scaling policy:
 
    ```
-   aws autoscaling put-scaling-policy --policy-name MyScalingPolicy --auto-scaling-group-name MyAutoScalingGroup --policy-type TargetTrackingScaling --target-tracking-configuration file://~/config.json
+   aws autoscaling put-scaling-policy --policy-name my-scaling-policy --auto-scaling-group-name my-asg \
+     --policy-type TargetTrackingScaling --target-tracking-configuration file://~/config.json
    ```
 
    This creates two alarms: one for scaling out and one for scaling in\. It also returns the Amazon Resource Name \(ARN\) of the policy that is registered with CloudWatch, which CloudWatch uses to invoke scaling whenever the metric is in breach\. 
 
-### Step 3: Test Your Scaling Policies<a name="validate-sqs-scaling-cli"></a>
+### Step 3: Test Your Scaling Policy<a name="validate-sqs-scaling-cli"></a>
 
-You can test your scale\-out policy by increasing the number of messages in your SQS queue and then verifying that your Auto Scaling group has launched an additional EC2 instance\. Similarly, you can test your scale\-in policy by decreasing the number of messages in your SQS queue and then verifying that the Auto Scaling group has terminated an EC2 instance\.
+After your setup is complete, verify your scaling policy is working\. You can test it by increasing the number of messages in your SQS queue and then verifying that your Auto Scaling group has launched an additional EC2 instance, and also by decreasing the number of messages in your SQS queue and then verifying that the Auto Scaling group has terminated an EC2 instance\.
 
-**To test the scale\-out policy**
+**To test the scale\-out function**
 
 1. Follow the steps in [Tutorial: Sending a Message to an Amazon SQS Queue](https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-send-message.html) to add messages to your queue\. Make sure that you have increased the number of messages in the queue so that the backlog per instance metric exceeds the target value\.
 
@@ -113,10 +121,10 @@ You can test your scale\-out policy by increasing the number of messages in your
 1. Use the [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/describe-auto-scaling-groups.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/describe-auto-scaling-groups.html) command to verify that the group has launched an instance:
 
    ```
-   aws autoscaling describe-auto-scaling-groups --auto-scaling-group-name MyAutoScalingGroup
+   aws autoscaling describe-auto-scaling-groups --auto-scaling-group-name my-asg
    ```
 
-**To test the scale\-in policy**
+**To test the scale\-in function**
 
 1. Follow the steps in [Tutorial: Sending a Message to an Amazon SQS Queue](https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-send-message.html) to remove messages from the queue\. Make sure that you have decreased the number of messages in the queue so that the backlog per instance metric is below the target value\.
 
@@ -125,7 +133,5 @@ You can test your scale\-out policy by increasing the number of messages in your
 1. Use the [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/describe-auto-scaling-groups.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/describe-auto-scaling-groups.html) command to verify that the group has terminated an instance:
 
    ```
-   aws autoscaling describe-auto-scaling-groups --auto-scaling-group-name MyAutoScalingGroup
+   aws autoscaling describe-auto-scaling-groups --auto-scaling-group-name my-asg
    ```
-
-For more information about target tracking, see [Target Tracking Scaling Policies for Amazon EC2 Auto Scaling](as-scaling-target-tracking.md)\.

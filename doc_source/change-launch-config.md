@@ -4,7 +4,7 @@ An Auto Scaling group is associated with one launch configuration at a time, and
 
 After you change the launch configuration for an Auto Scaling group, any new instances are launched using the new configuration options, but existing instances are not affected\.
 
-**To change the launch configuration for an Auto Scaling group using the console**
+**To change the launch configuration for an Auto Scaling group \(console\)**
 
 1. Open the Amazon EC2 console at [https://console\.aws\.amazon\.com/ec2/](https://console.aws.amazon.com/ec2/)\.
 
@@ -20,7 +20,7 @@ After you change the launch configuration for an Auto Scaling group, any new ins
 
 1. Select the new launch configuration from **Launch Configuration** and choose **Save**\.
 
-**To change the launch configuration for an Auto Scaling group using the AWS CLI**
+**To change the launch configuration for an Auto Scaling group \(AWS CLI\)**
 
 1. Describe the current launch configuration using the [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/describe-launch-configurations.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/describe-launch-configurations.html) command\.
 
@@ -28,7 +28,7 @@ After you change the launch configuration for an Auto Scaling group, any new ins
 
 1. Update the launch configuration for the Auto Scaling group using the [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/update-auto-scaling-group.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/update-auto-scaling-group.html) command with the `--launch-configuration-names` parameter\.
 
-**To change the launch configuration for an Auto Scaling group using the Tools for Windows PowerShell**
+**To change the launch configuration for an Auto Scaling group \(Tools for Windows PowerShell\)**
 
 1. Describe the current launch configuration using the [https://docs.aws.amazon.com/powershell/latest/reference/items/Get-ASLaunchConfiguration.html](https://docs.aws.amazon.com/powershell/latest/reference/items/Get-ASLaunchConfiguration.html) command\.
 

@@ -13,7 +13,7 @@ When your EC2 instances fail to launch, you might get one or more of the followi
 + [AutoScalingGroup <Auto Scaling group name> not found\.](#ts-as-instancelaunchfailure-4)
 + [The requested Availability Zone is no longer supported\. Please retry your request\.\.\.](#ts-as-instancelaunchfailure-5)
 + [Your requested instance type \(<instance type>\) is not supported in your requested Availability Zone \(<instance Availability Zone>\)\.\.\.](#ts-as-instancelaunchfailure-6)
-+ [You are not subscribed to this service\. Please see http://aws\.amazon\.com\.](#ts-as-instancelaunchfailure-7)
++ [You are not subscribed to this service\. Please see https://aws\.amazon\.com/\.](#ts-as-instancelaunchfailure-7)
 + [Invalid device name upload\. Launching EC2 instance failed\.](#ts-as-instancelaunchfailure-8)
 + [Value \(<name associated with the instance storage device>\) for parameter virtualName is invalid\.\.\.](#ts-as-instancelaunchfailure-9)
 + [EBS block device mappings not supported for instance\-store AMIs\.](#ts-as-instancelaunchfailure-10)
@@ -66,9 +66,9 @@ When your EC2 instances fail to launch, you might get one or more of the followi
 + **Cause**: The instance type associated with your launch configuration might not be currently available in the Availability Zones specified in your Auto Scaling group\. 
 + **Solution**: Update your Auto Scaling group with the recommendations in the error message\.
 
-## You are not subscribed to this service\. Please see http://aws\.amazon\.com\.<a name="ts-as-instancelaunchfailure-7"></a>
+## You are not subscribed to this service\. Please see https://aws\.amazon\.com/\.<a name="ts-as-instancelaunchfailure-7"></a>
 + **Cause**: Your AWS account might have expired\. 
-+ **Solution**: Go to [http://aws.amazon.com](http://aws.amazon.com) and choose **Sign Up Now** to open a new account\. 
++ **Solution**: Go to https://aws\.amazon\.com/ and choose **Sign Up Now** to open a new account\. 
 
 ## Invalid device name upload\. Launching EC2 instance failed\.<a name="ts-as-instancelaunchfailure-8"></a>
 + **Cause**: The block device mappings in your launch configuration might contain block device names that are not available or currently not supported\. 

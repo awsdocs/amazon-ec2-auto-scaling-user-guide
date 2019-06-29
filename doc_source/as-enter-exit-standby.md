@@ -10,8 +10,8 @@ For example, you can change the launch configuration for an Auto Scaling group a
 **Topics**
 + [How the Standby State Works](#standby-state)
 + [Health Status of an Instance in a Standby State](#standby-instance-health-status)
-+ [Temporarily Remove an Instance Using the AWS Management Console](#standby-state-console)
-+ [Temporarily Remove an Instance Using the AWS CLI](#standby-state-aws-cli)
++ [Temporarily Remove an Instance \(Console\)](#standby-state-console)
++ [Temporarily Remove an Instance \(AWS CLI\)](#standby-state-aws-cli)
 
 ## How the Standby State Works<a name="standby-state"></a>
 
@@ -21,7 +21,7 @@ The standby state works as follows to help you temporarily remove an instance fr
 
 1. If there is a load balancer or target group attached to your Auto Scaling group, the instance is deregistered from the load balancer or target group\.
 
-1. By default, the desired capacity of your Auto Scaling group is decremented when you put an instance on standby\. This prevents the launch of an additional instance while you have this instance on standby\. Alternatively, you can specify that the capacity is not decremented\. This causes the Auto Scaling group to launch an additional instance to replace the one on standby\.
+1. By default, the value that you specified as your desired capacity is decremented when you put an instance on standby\. This prevents the launch of an additional instance while you have this instance on standby\. Alternatively, you can specify that your desired capacity is not decremented\. If you specify this option, the Auto Scaling group launches an instance to replace the one on standby\. The intention is to help you maintain capacity for your application while one or more instances are on standby\. 
 
 1. You can update or troubleshoot the instance\.
 
@@ -43,11 +43,11 @@ Amazon EC2 Auto Scaling does not perform health checks on instances that are in 
 
 For example, if you put a healthy instance on standby and then terminate it, Amazon EC2 Auto Scaling continues to report the instance as healthy\. If you return the terminated instance to service, Amazon EC2 Auto Scaling performs a health check on the instance, determines that it is terminating and unhealthy, and launches a replacement instance\.
 
-## Temporarily Remove an Instance Using the AWS Management Console<a name="standby-state-console"></a>
+## Temporarily Remove an Instance \(Console\)<a name="standby-state-console"></a>
 
 The following procedure demonstrates the general process for updating an instance that is currently in service\.
 
-**To temporarily remove an instance using the console**
+**To temporarily remove an instance**
 
 1. Open the Amazon EC2 console at [https://console\.aws\.amazon\.com/ec2/](https://console.aws.amazon.com/ec2/)\.
 
@@ -65,11 +65,11 @@ The following procedure demonstrates the general process for updating an instanc
 
 1. Select the instance, choose **Actions**, **Set to InService**\. On the **Set to InService** page, choose **Set to InService**\.
 
-## Temporarily Remove an Instance Using the AWS CLI<a name="standby-state-aws-cli"></a>
+## Temporarily Remove an Instance \(AWS CLI\)<a name="standby-state-aws-cli"></a>
 
 The following procedure demonstrates the general process for updating an instance that is currently in service\.
 
-**To temporarily remove an instance using the AWS CLI**
+**To temporarily remove an instance**
 
 1. Use the following [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/describe-auto-scaling-instances.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/describe-auto-scaling-instances.html) command to identify the instance to update:
 
@@ -83,14 +83,19 @@ The following procedure demonstrates the general process for updating an instanc
    {
        "AutoScalingInstances": [
            {
+               "ProtectedFromScaleIn": false,
                "AvailabilityZone": "us-west-2a",
-               "InstanceId": "i-5b73d709",
+               "LaunchTemplate": {
+                   "LaunchTemplateName": "my-launch-template",
+                   "Version": "1",
+                   "LaunchTemplateId": "lt-050555ad16a3f9c7f"
+               },
+               "InstanceId": "i-05b4f7d5be44822a6",
                "AutoScalingGroupName": "my-asg",
                "HealthStatus": "HEALTHY",
-               "LifecycleState": "InService",
-               "LaunchConfigurationName": "my-lc"
+               "LifecycleState": "InService"
            },
-           ...
+          ...
        ]
    }
    ```
@@ -98,7 +103,8 @@ The following procedure demonstrates the general process for updating an instanc
 1. Move the instance into a `Standby` state using the following [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/enter-standby.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/enter-standby.html) command\. The `--should-decrement-desired-capacity` option decreases the desired capacity so that the Auto Scaling group does not launch a replacement instance\.
 
    ```
-   aws autoscaling enter-standby --instance-ids i-5b73d709 --auto-scaling-group-name my-asg --should-decrement-desired-capacity
+   aws autoscaling enter-standby --instance-ids i-05b4f7d5be44822a6 \
+     --auto-scaling-group-name my-asg --should-decrement-desired-capacity
    ```
 
    The following is an example response:
@@ -107,13 +113,13 @@ The following procedure demonstrates the general process for updating an instanc
    {
        "Activities": [
            {
-               "Description": "Moving EC2 instance to Standby: i-5b73d709",
+               "Description": "Moving EC2 instance to Standby: i-05b4f7d5be44822a6",
                "AutoScalingGroupName": "my-asg",
                "ActivityId": "3b1839fe-24b0-40d9-80ae-bcd883c2be32",
                "Details": "{\"Availability Zone\":\"us-west-2a\"}",
                "StartTime": "2014-12-15T21:31:26.150Z",
                "Progress": 50,
-               "Cause": "At 2014-12-15T21:31:26Z instance i-5b73d709 was moved to standby 
+               "Cause": "At 2014-12-15T21:31:26Z instance i-05b4f7d5be44822a6 was moved to standby 
                  in response to a user request, shrinking the capacity from 4 to 3.",
                "StatusCode": "InProgress"
            }
@@ -121,10 +127,10 @@ The following procedure demonstrates the general process for updating an instanc
    }
    ```
 
-1. \(Optional\) Verify that the instance is in `Standby` using the following describe\-auto\-scaling\-instances command:
+1. \(Optional\) Verify that the instance is in `Standby` using the following describe\-auto\-scaling\-instances command\.
 
    ```
-   aws autoscaling describe-auto-scaling-instances --instance-ids i-5b73d709
+   aws autoscaling describe-auto-scaling-instances --instance-ids i-05b4f7d5be44822a6
    ```
 
    The following is an example response\. Notice that the status of the instance is now `Standby`\.
@@ -133,23 +139,29 @@ The following procedure demonstrates the general process for updating an instanc
    {
        "AutoScalingInstances": [
            {
+               "ProtectedFromScaleIn": false,
                "AvailabilityZone": "us-west-2a",
-               "InstanceId": "i-5b73d709",
+               "LaunchTemplate": {
+                   "LaunchTemplateName": "my-launch-template",
+                   "Version": "1",
+                   "LaunchTemplateId": "lt-050555ad16a3f9c7f"
+               },
+               "InstanceId": "i-05b4f7d5be44822a6",
                "AutoScalingGroupName": "my-asg",
                "HealthStatus": "HEALTHY",
-               "LifecycleState": "Standby",
-               "LaunchConfigurationName": "my-lc"
-           }
+               "LifecycleState": "Standby"
+           },
+          ...
        ]
    }
    ```
 
 1. You can update or troubleshoot your instance as needed\. When you have finished, continue with the next step to return the instance to service\.
 
-1. Put the instance back in service using the following [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/exit-standby.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/exit-standby.html) command:
+1. Put the instance back in service using the following [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/exit-standby.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/exit-standby.html) command\.
 
    ```
-   aws autoscaling exit-standby --instance-ids i-5b73d709 --auto-scaling-group-name my-asg
+   aws autoscaling exit-standby --instance-ids i-05b4f7d5be44822a6 --auto-scaling-group-name my-asg
    ```
 
    The following is an example response:
@@ -158,13 +170,13 @@ The following procedure demonstrates the general process for updating an instanc
    {
        "Activities": [
            {
-               "Description": "Moving EC2 instance out of Standby: i-5b73d709",
+               "Description": "Moving EC2 instance out of Standby: i-05b4f7d5be44822a6",
                "AutoScalingGroupName": "my-asg",
                "ActivityId": "db12b166-cdcc-4c54-8aac-08c5935f8389",
                "Details": "{\"Availability Zone\":\"us-west-2a\"}",
                "StartTime": "2014-12-15T21:46:14.678Z",
                "Progress": 30,
-               "Cause": "At 2014-12-15T21:46:14Z instance i-5b73d709 was moved out of standby in
+               "Cause": "At 2014-12-15T21:46:14Z instance i-05b4f7d5be44822a6 was moved out of standby in
                   response to a user request, increasing the capacity from 3 to 4.",
                "StatusCode": "PreInService"
            }
@@ -172,10 +184,10 @@ The following procedure demonstrates the general process for updating an instanc
    }
    ```
 
-1. \(Optional\) Verify that the instance is back in service using the following `describe-auto-scaling-instances` command:
+1. \(Optional\) Verify that the instance is back in service using the following `describe-auto-scaling-instances` command\.
 
    ```
-   aws autoscaling describe-auto-scaling-instances --instance-ids i-5b73d709
+   aws autoscaling describe-auto-scaling-instances --instance-ids i-05b4f7d5be44822a6
    ```
 
    The following is an example response\. Notice that the status of the instance is `InService`\.
@@ -184,13 +196,19 @@ The following procedure demonstrates the general process for updating an instanc
    {
        "AutoScalingInstances": [
            {
+               "ProtectedFromScaleIn": false,
                "AvailabilityZone": "us-west-2a",
-               "InstanceId": "i-5b73d709",
+               "LaunchTemplate": {
+                   "LaunchTemplateName": "my-launch-template",
+                   "Version": "1",
+                   "LaunchTemplateId": "lt-050555ad16a3f9c7f"
+               },
+               "InstanceId": "i-05b4f7d5be44822a6",
                "AutoScalingGroupName": "my-asg",
                "HealthStatus": "HEALTHY",
-               "LifecycleState": "InService",
-               "LaunchConfigurationName": "my-lc"
-           }
+               "LifecycleState": "InService"
+           },
+          ...
        ]
    }
    ```
