@@ -62,7 +62,7 @@ If you suspend either the `Launch` or `Terminate` process types, it can prevent 
 `ScheduledActions`
 + Amazon EC2 Auto Scaling does not execute scaling actions that are scheduled to run during the suspension period\. When you resume `ScheduledActions`, Amazon EC2 Auto Scaling only considers scheduled actions whose execution time has not yet passed\. 
 
-### Suspending Both Launch and Resume<a name="suspend-launch-terminate"></a>
+### Suspending Both Launch and Terminate<a name="suspend-launch-terminate"></a>
 
 When you suspend the `Launch` and `Terminate` process types together, the following happens: 
 + Your Auto Scaling group cannot initiate scaling activities or maintain its desired capacity\. 
