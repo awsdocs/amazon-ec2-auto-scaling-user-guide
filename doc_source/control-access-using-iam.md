@@ -171,11 +171,11 @@ You can create your own custom IAM policies to allow or deny permissions for IAM
 
 ### Example: Restricting Which Service\-Linked Role Can Be Passed \(Using PassRole\)<a name="policy-example-pass-role"></a>
 
-If your users require the ability to pass custom service\-linked roles to an Auto Scaling group, attach a policy to the users or roles, based on the access that they need\. We recommend that you restrict this policy to only the service\-linked roles that your users must access\. 
+If your users require the ability to pass custom suffix service\-linked roles to an Auto Scaling group, attach a policy to the users or roles, based on the access that they need\. We recommend that you restrict this policy to only the service\-linked roles that your users must access\. For more information about custom suffix service\-linked roles, see [Service\-Linked Roles for Amazon EC2 Auto Scaling](autoscaling-service-linked-role.md)\.
 
 The following example is helpful for facilitating the security of your customer managed CMKs if you give different service\-linked roles access to different keys\. Depending on your needs, you might have a CMK for the development team, another for the QA team, and another for the finance team\. First, create a service\-linked role that has access to the required CMK, for example, a service\-linked role named `AWSServiceRoleForAutoScaling_devteamkeyaccess`\. Then, to grant permissions to pass that service\-linked role to an Auto Scaling group, attach the policy to your IAM users as shown\. 
 
-The policy in the following example grants users permissions to pass the `AWSServiceRoleForAutoScaling_devteamkeyaccess` role to create any Auto Scaling group whose name begins with *devteam*\. If they try to specify a different service\-linked role, they receive an error\. If they choose not to specify a service\-linked role, the default `AWSServiceRoleForAutoScaling` role is used instead\.
+The policy in the following example grants users permissions to pass the `AWSServiceRoleForAutoScaling_devteamkeyaccess` role to create any Auto Scaling group whose name begins with *devteam*\. If they try to specify a different service\-linked role, they receive an error\. If they choose not to specify a service\-linked role, the default **AWSServiceRoleForAutoScaling** role is used instead\.
 
 ```
 {
@@ -201,8 +201,6 @@ The policy in the following example grants users permissions to pass the `AWSSer
     ]
 }
 ```
-
-For more information, see [Service\-Linked Roles for Amazon EC2 Auto Scaling](autoscaling-service-linked-role.md) and [Required CMK Key Policy for Use with Encrypted Volumes](key-policy-requirements-EBS-encryption.md)\.
 
 ### Example: Require a Launch Template<a name="policy-example-launch-template"></a>
 

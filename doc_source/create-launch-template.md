@@ -85,7 +85,7 @@ Keep the following considerations in mind when creating a launch template for us
 
       \* If [encryption by default](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EBSEncryption.html#encryption-by-default) is enabled, all newly created volumes \(whether or not the **Encrypted** parameter is set to **Yes**\) are encrypted using the default CMK\. Setting both the **Encrypted** and **Key** parameters allows you to specify a non\-default CMK\. 
 
-   1. \[Optional\] **Key**: If you chose **Yes** in the previous step, enter the customer master key \(CMK\) you want to use when encrypting the volumes\. You can enter any CMK that you have previously created using the AWS Key Management Service\. You can paste the full ARN of any key that you have access to\. For more information, see the [AWS Key Management Service Developer Guide](https://docs.aws.amazon.com/kms/latest/developerguide/) and the [Required CMK Key Policy for Use with Encrypted Volumes](key-policy-requirements-EBS-encryption.md) topic in this guide\.
+   1. \[Optional\] **Key**: If you chose **Yes** in the previous step, enter the customer master key \(CMK\) you want to use when encrypting the volumes\. Enter any CMK that you previously created using the AWS Key Management Service\. You can paste the full ARN of any key that you have access to\. For more information, see the [AWS Key Management Service Developer Guide](https://docs.aws.amazon.com/kms/latest/developerguide/) and the [Required CMK Key Policy for Use with Encrypted Volumes](key-policy-requirements-EBS-encryption.md) topic in this guide\.
 **Note**  
 Providing a CMK without also setting the **Encrypted** parameter results in an error\. 
 

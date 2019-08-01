@@ -33,7 +33,8 @@ You can use the console to create an Auto Scaling group from a running EC2 insta
 Use the following [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/create-auto-scaling-group.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/create-auto-scaling-group.html) command to create an Auto Scaling group, *my\-asg\-from\-instance*, from the EC2 instance `i-7f12e649`\.
 
 ```
-aws autoscaling create-auto-scaling-group --auto-scaling-group-name my-asg-from-instance --instance-id i-7f12e649 --min-size 1 --max-size 2 --desired-capacity 2
+aws autoscaling create-auto-scaling-group --auto-scaling-group-name my-asg-from-instance \
+  --instance-id i-7f12e649 --min-size 1 --max-size 2 --desired-capacity 2
 ```
 
 Use the following [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/describe-auto-scaling-groups.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/describe-auto-scaling-groups.html) command to describe the Auto Scaling group\.

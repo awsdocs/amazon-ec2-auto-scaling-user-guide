@@ -51,7 +51,8 @@ The commands that you use depend on whether your load balancer is a Classic Load
 1. Add a subnet to the Auto Scaling group using the following [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/update-auto-scaling-group.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/update-auto-scaling-group.html) command\.
 
    ```
-   aws autoscaling update-auto-scaling-group --auto-scaling-group-name my-asg --vpc-zone-identifier subnet-41767929 subnet-cb663da2 --min-size 2
+   aws autoscaling update-auto-scaling-group --auto-scaling-group-name my-asg \
+     --vpc-zone-identifier subnet-41767929 subnet-cb663da2 --min-size 2
    ```
 
 1. Verify that the instances in the new subnet are ready to accept traffic from the load balancer using the following [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/describe-auto-scaling-groups.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/describe-auto-scaling-groups.html) command\.
@@ -63,7 +64,8 @@ The commands that you use depend on whether your load balancer is a Classic Load
 1. Enable the new subnet for your Classic Load Balancer using the following [https://docs.aws.amazon.com/cli/latest/reference/elb/attach-load-balancer-to-subnets.html](https://docs.aws.amazon.com/cli/latest/reference/elb/attach-load-balancer-to-subnets.html) command\.
 
    ```
-   aws elb attach-load-balancer-to-subnets --load-balancer-name my-lb --subnets subnet-41767929
+   aws elb attach-load-balancer-to-subnets --load-balancer-name my-lb \
+     --subnets subnet-41767929
    ```
 
 **For an Auto Scaling group with a Classic Load Balancer in EC2\-Classic**
@@ -71,7 +73,8 @@ The commands that you use depend on whether your load balancer is a Classic Load
 1. Add an Availability Zone to the Auto Scaling group using the following [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/update-auto-scaling-group.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/update-auto-scaling-group.html) command\.
 
    ```
-   aws autoscaling update-auto-scaling-group --auto-scaling-group-name my-asg --availability-zones us-west-2a us-west-2b us-west-2c --min-size 3
+   aws autoscaling update-auto-scaling-group --auto-scaling-group-name my-asg \
+     --availability-zones us-west-2a us-west-2b us-west-2c --min-size 3
    ```
 
 1. Verify that the instances in the new Availability Zone are ready to accept traffic from the load balancer using the following [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/describe-auto-scaling-groups.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/describe-auto-scaling-groups.html) command\.
@@ -83,7 +86,8 @@ The commands that you use depend on whether your load balancer is a Classic Load
 1. Enable the new Availability Zone for your Classic Load Balancer using the following [https://docs.aws.amazon.com/cli/latest/reference/elb/enable-availability-zones-for-load-balancer.html](https://docs.aws.amazon.com/cli/latest/reference/elb/enable-availability-zones-for-load-balancer.html) command\.
 
    ```
-   aws elb enable-availability-zones-for-load-balancer --load-balancer-name my-lb --availability-zones us-west-2c
+   aws elb enable-availability-zones-for-load-balancer --load-balancer-name my-lb \
+     --availability-zones us-west-2c
    ```
 
 **For an Auto Scaling group with an Application Load Balancer**
@@ -91,7 +95,8 @@ The commands that you use depend on whether your load balancer is a Classic Load
 1. Add a subnet to the Auto Scaling group using the following [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/update-auto-scaling-group.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/update-auto-scaling-group.html) command\.
 
    ```
-   aws autoscaling update-auto-scaling-group --auto-scaling-group-name my-asg --vpc-zone-identifier subnet-41767929 subnet-cb663da2 --min-size 2
+   aws autoscaling update-auto-scaling-group --auto-scaling-group-name my-asg \
+     --vpc-zone-identifier subnet-41767929 subnet-cb663da2 --min-size 2
    ```
 
 1. Verify that the instances in the new subnet are ready to accept traffic from the load balancer using the following [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/describe-auto-scaling-groups.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/describe-auto-scaling-groups.html) command\.
@@ -103,5 +108,6 @@ The commands that you use depend on whether your load balancer is a Classic Load
 1. Enable the new subnet for your Application Load Balancer using the following [https://docs.aws.amazon.com/cli/latest/reference/elbv2/set-subnets.html](https://docs.aws.amazon.com/cli/latest/reference/elbv2/set-subnets.html) command\.
 
    ```
-   aws elbv2 set-subnets --load-balancer-arn my-lb-arn --subnets subnet-41767929 subnet-cb663da2
+   aws elbv2 set-subnets --load-balancer-arn my-lb-arn \
+     --subnets subnet-41767929 subnet-cb663da2
    ```

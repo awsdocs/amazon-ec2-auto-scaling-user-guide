@@ -46,5 +46,6 @@ Use the following procedure to add an `ELB` health check with a grace period of 
 Use the following [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/update-auto-scaling-group.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/update-auto-scaling-group.html) command to create a health check with a grace period of 300 seconds\.
 
 ```
-aws autoscaling update-auto-scaling-group --auto-scaling-group-name my-lb-asg --health-check-type ELB --health-check-grace-period 300
+aws autoscaling update-auto-scaling-group --auto-scaling-group-name my-lb-asg \
+  --health-check-type ELB --health-check-grace-period 300
 ```

@@ -16,13 +16,16 @@ Use the following procedure to merge `my-group-a` and `my-group-c` into a single
 1. Use the following [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/update-auto-scaling-group.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/update-auto-scaling-group.html) command to add the `us-west-2c` Availability Zone to the supported Availability Zones for `my-group-a`\. Increase the maximum size of this group to allow for the instances from both single\-zone groups\.
 
    ```
-   aws autoscaling update-auto-scaling-group --auto-scaling-group-name my-group-a --availability-zones "us-west-2a" "us-west-2c" –-max-size 10 –-min-size 4
+   aws autoscaling update-auto-scaling-group --auto-scaling-group-name my-group-a \
+     --availability-zones "us-west-2a" "us-west-2c" \
+     –-max-size 10 –-min-size 4
    ```
 
 1. Use the following [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/set-desired-capacity.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/set-desired-capacity.html) command to increase the size of `my-group-a`\.
 
    ```
-   aws autoscaling set-desired-capacity --auto-scaling-group-name my-group-a --desired-capacity 6
+   aws autoscaling set-desired-capacity --auto-scaling-group-name my-group-a \
+     --desired-capacity 6
    ```
 
 1. \(Optional\) Use the following [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/describe-auto-scaling-groups.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/describe-auto-scaling-groups.html) command to verify that `my-group-a` is at its new size\.
@@ -34,7 +37,8 @@ Use the following procedure to merge `my-group-a` and `my-group-c` into a single
 1. Use the following [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/update-auto-scaling-group.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/update-auto-scaling-group.html) command to remove the instances from `my-group-c`\.
 
    ```
-   aws autoscaling update-auto-scaling-group --auto-scaling-group-name my-group-c --min-size 0 --max-size 0
+   aws autoscaling update-auto-scaling-group --auto-scaling-group-name my-group-c \
+     --min-size 0 --max-size 0
    ```
 
 1. \(Optional\) Use the following [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/describe-auto-scaling-groups.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/describe-auto-scaling-groups.html) command to verify that no instances remain in `my-group-c`\.

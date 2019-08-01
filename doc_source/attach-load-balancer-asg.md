@@ -65,26 +65,30 @@ When you no longer need the load balancer, use the following procedure to detach
 Use the following [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/attach-load-balancers.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/attach-load-balancers.html) command to attach the specified load balancer to your Auto Scaling group\.
 
 ```
-aws autoscaling attach-load-balancers --auto-scaling-group-name my-asg --load-balancer-names my-lb
+aws autoscaling attach-load-balancers --auto-scaling-group-name my-asg \
+  --load-balancer-names my-lb
 ```
 
 **To attach a target group for an Application Load Balancer or Network Load Balancer**  
 Use the following [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/attach-load-balancer-target-groups.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/attach-load-balancer-target-groups.html) command to attach the specified target group to your Auto Scaling group\.
 
 ```
-aws autoscaling attach-load-balancer-target-groups --auto-scaling-group-name my-asg --target-group-arns my-targetgroup-arn
+aws autoscaling attach-load-balancer-target-groups --auto-scaling-group-name my-asg \
+  --target-group-arns my-targetgroup-arn
 ```
 
 **To detach a Classic Load Balancer**  
 Use the following [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/detach-load-balancers.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/detach-load-balancers.html) command to detach a load balancer from your Auto Scaling group if you no longer need it\.
 
 ```
-aws autoscaling detach-load-balancers --auto-scaling-group-name my-asg --load-balancer-names my-lb
+aws autoscaling detach-load-balancers --auto-scaling-group-name my-asg \
+  --load-balancer-names my-lb
 ```
 
 **To detach a target group for an Application Load Balancer or Network Load Balancer**  
 Use the following [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/detach-load-balancer-target-groups.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/detach-load-balancer-target-groups.html) command to detach a target group from your Auto Scaling group if you no longer need it\.
 
 ```
-aws autoscaling detach-load-balancer-target-groups --auto-scaling-group-name my-asg --target-group-arns my-targetgroup-arn
+aws autoscaling detach-load-balancer-target-groups --auto-scaling-group-name my-asg \
+  --target-group-arns my-targetgroup-arn
 ```

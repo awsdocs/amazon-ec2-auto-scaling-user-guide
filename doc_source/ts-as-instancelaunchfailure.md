@@ -110,7 +110,7 @@ When your EC2 instances fail to launch, you might get one or more of the followi
   1. Update your Auto Scaling group with a new placement group or launch configuration using the [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/update-auto-scaling-group.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/update-auto-scaling-group.html) command\.
 
 ## Client\.InternalError: Client error on launch\.<a name="ts-as-instancelaunchfailure-12"></a>
-+ **Cause**: This error can be caused when an Auto Scaling group attempts to launch an instance that has an encrypted EBS volume, but the [service\-linked role](autoscaling-service-linked-role.md) does not have access to the [customer managed CMK](https://docs.aws.amazon.com/kms/latest/developerguide/concepts.html) used to encrypt it\. 
++ **Cause**: This error can be caused when an Auto Scaling group attempts to launch an instance that has an encrypted EBS volume, but the service\-linked role does not have access to the customer managed CMK used to encrypt it\. For more information, see [Required CMK Key Policy for Use with Encrypted Volumes](key-policy-requirements-EBS-encryption.md)\.
 + **Solution**: Additional setup is required to allow the Auto Scaling group to launch instances\. The following table summarizes the steps for resolving the error\. For more information, see [https://forums\.aws\.amazon\.com/thread\.jspa?threadID=277523](https://forums.aws.amazon.com/thread.jspa?threadID=277523)\.
 
 

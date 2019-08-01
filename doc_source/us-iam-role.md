@@ -17,13 +17,15 @@ Create the IAM role that your application running on Amazon EC2 can assume\. Cho
 
 1. Open the IAM console at [https://console\.aws\.amazon\.com/iam/](https://console.aws.amazon.com/iam/)\.
 
-1. In the navigation pane, choose **Roles**, **Create new role**\.
+1. In the navigation pane, choose **Roles**, **Create role**\.
 
-1. On the **Select role type** page, choose **EC2** and the **EC2** use case\. Choose **Next: Permissions**\. 
+1. For **Select type of trusted entity**, choose **AWS service**\. 
 
-1. On the **Attach permissions policy** page, choose the AWS managed policies that contain the required permissions\.
+1. For **Choose the service that will use this role**, choose **EC2** and the **EC2** use case\. Choose **Next: Permissions**\. 
 
-1. On the **Review** page, type a name for the role and choose **Create role**\. 
+1. For **Attach permissions policies**, choose the AWS managed policies that contain the required permissions\. Choose **Next: Tags** and then **Next: Review**\.
+
+1. On the **Review** page, enter a name for the role and choose **Create role**\. 
 
 ## Create a Launch Configuration<a name="us-iam-role-create-launch"></a>
 

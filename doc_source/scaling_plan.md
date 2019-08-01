@@ -34,3 +34,6 @@ Scaling by schedule means that scaling actions are performed automatically as a 
 
 **Scale based on demand**  
 A more advanced way to scale your resources, using scaling policies, lets you define parameters that control the scaling process\. For example, you have a web application that currently runs on two instances and you want the CPU utilization of the Auto Scaling group to stay at around 50 percent when the load on the application changes\. This is useful for scaling in response to changing conditions, when you don't know when those conditions will change\. You can set up Amazon EC2 Auto Scaling to respond for you\. For more information, see [Dynamic Scaling for Amazon EC2 Auto Scaling](as-scale-based-on-demand.md)\.
+
+**Predictive scaling**  
+You can also use Amazon EC2 Auto Scaling in combination with AWS Auto Scaling to scale resources across multiple services\. AWS Auto Scaling can help you maintain optimal availability and performance by combining predictive scaling and dynamic scaling \(proactive and reactive approaches, respectively\) together to scale your Amazon EC2 capacity faster\. For more information, see the [AWS Auto Scaling User Guide](https://docs.aws.amazon.com/autoscaling/plans/userguide/)\.
