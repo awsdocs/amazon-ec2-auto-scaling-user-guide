@@ -14,7 +14,6 @@ Amazon EC2 Auto Scaling supports both default cooldown periods and scaling\-spec
 + [Scaling\-Specific Cooldowns](#cooldowns-scaling-specific)
 + [Cooldowns and Multiple Instances](#cooldowns-multiple-instances)
 + [Cooldowns and Lifecycle Hooks](#cooldowns-lifecycle-hooks)
-+ [Cooldowns and Spot Instances](#cooldowns-spot)
 
 ## Example: Cooldowns<a name="cooldown-example"></a>
 
@@ -61,7 +60,3 @@ With multiple instances, the cooldown period \(either the default cooldown or th
 You can add lifecycle hooks to your Auto Scaling groups\. These hooks enable you to control how instances launch and terminate within an Auto Scaling group\. You can perform actions on the instance before it is put into service or before it is terminated\.
 
 Lifecycle hooks can affect the impact of any cooldown periods configured for the Auto Scaling group, manual scaling, or a simple scaling policy\. The cooldown period does not begin until after the instance moves out of the wait state\.
-
-## Cooldowns and Spot Instances<a name="cooldowns-spot"></a>
-
-You can create Auto Scaling groups to use [Spot Instances](asg-launch-spot-instances.md) instead of On\-Demand or Reserved Instances\. The cooldown period begins when the bid for any Spot Instance is successful\.

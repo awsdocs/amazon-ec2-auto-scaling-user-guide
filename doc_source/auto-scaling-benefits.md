@@ -66,7 +66,7 @@ After certain actions occur, your Auto Scaling group can become unbalanced betwe
 + You change the Availability Zones for your group\.
 + You explicitly terminate or detach instances and the group becomes unbalanced\.
 + An Availability Zone that previously had insufficient capacity recovers and has additional capacity available\.
-+ An Availability Zone that previously had a Spot market price above your Spot bid price now has a market price below your bid price\.
++ An Availability Zone that previously had a Spot price above your maximum price now has a Spot price below your maximum price\.
 
 When rebalancing, Amazon EC2 Auto Scaling launches new instances before terminating the old ones, so that rebalancing does not compromise the performance or availability of your application\.
 
