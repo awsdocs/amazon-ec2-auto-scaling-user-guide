@@ -1,18 +1,14 @@
 # Using a Load Balancer with an Auto Scaling Group<a name="autoscaling-load-balancer"></a>
 
-The purpose of automatic scaling is to automatically increase the size of your Auto Scaling group when demand goes up and decrease it when demand goes down\. As capacity is increased or decreased, the Amazon EC2 instances being added or removed must be registered or deregistered with a load balancer\. This enables your application to automatically distribute incoming web traffic across such a dynamically changing number of instances\.
+A load balancer acts as a single point of contact for all incoming web traffic to your Auto Scaling group\. When an instance is added to your group, it needs to register with the load balancer or no traffic is routed to it\. When an instance is removed from your group, it must deregister from the load balancer or traffic continues to be routed to it\.
 
-Your load balancer acts as a single point of contact for all incoming web traffic to your Auto Scaling group\. When an instance is added to your Auto Scaling group, it needs to register with the load balancer or no traffic is routed to it\. When an instance is removed from your Auto Scaling group, it must deregister from the load balancer or traffic continues to be routed to it\.
+When you use your Elastic Load Balancing load balancer with an Auto Scaling group, it's not necessary to register your EC2 instances with the load balancer or target group\. With Elastic Load Balancing, instances that are launched by your Auto Scaling group are automatically registered with the load balancer or target group, and instances that are terminated by your Auto Scaling group are automatically deregistered from the load balancer or target group\.
 
-To use a load balancer with your Auto Scaling group, create the load balancer and then attach it to the group\. 
-
-You can also use an Elastic Load Balancing health check with your instances to make sure that traffic is routed only to the healthy instances\. For more information, see [Adding Elastic Load Balancing Health Checks to an Auto Scaling Group](as-add-elb-healthcheck.md)\.
+You can also configure Elastic Load Balancing health checks to monitor the health of registered instances so that the load balancer or target group only routes traffic to the healthy instances\.
 
 ## Elastic Load Balancing Types<a name="integrations-aws-elastic-load-balancing-types"></a>
 
 Elastic Load Balancing provides three types of load balancers that can be used with your Auto Scaling group: Classic Load Balancers, Application Load Balancers, and Network Load Balancers\. With Classic Load Balancers, instances are registered with the load balancer\. With Application Load Balancers and Network Load Balancers, instances are registered as targets with a target group\. 
-
-When you plan to use your load balancer with an Auto Scaling group, it's not necessary to register your EC2 instances with the load balancer or target group\. When you enable Elastic Load Balancing, instances that are launched by your Auto Scaling group are automatically registered with the load balancer or target group, and instances that are terminated by your Auto Scaling group are automatically deregistered from the load balancer or target group\.
 
 Classic Load Balancer  
 Routes and load balances either at the transport layer \(TCP/SSL\), or at the application layer \(HTTP/HTTPS\)\. A Classic Load Balancer supports either EC2\-Classic or a VPC\.

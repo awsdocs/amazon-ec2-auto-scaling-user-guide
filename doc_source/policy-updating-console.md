@@ -16,7 +16,7 @@ Use the console to add a scaling policy to an existing Auto Scaling group\. A sc
 
 1. If you are adding a target tracking scaling policy, use the following sub\-steps\. If you are using a simple or step scaling policy, skip to the next step\.
 
-   1. For **Name**, type a name for the policy\.
+   1. For **Name**, enter a name for the policy\.
 
    1. Choose a **Metric type** and specify a **Target value** for the metric\.
 
@@ -30,9 +30,9 @@ Use the console to add a scaling policy to an existing Auto Scaling group\. A sc
 **Note**  
 We recommend that you use the option to create scaling policies with steps\. To use a simple scaling policy, choose **Create a simple scaling policy** instead\. For more information about simple and step scaling, see [Simple and Step Scaling Policies for Amazon EC2 Auto Scaling](as-scaling-simple-step.md)\.
 
-   1. For **Name**, type a name for the policy, and then choose **Create new alarm**\.
+   1. For **Name**, enter a name for the policy, and then choose **Create new alarm**\.
 
-   1. On the **Create Alarm** page, choose **create topic**\. For **Send a notification to**, type a name for the SNS topic\. For **With these recipients**, type one or more email addresses to receive notification\. You can replace the default name for your alarm with a custom name\. Next, specify the metric and the criteria for the alarm, using **Whenever**, **Is**, and **For at least**\. Choose **Create Alarm**\.
+   1. On the **Create Alarm** page, choose **create topic**\. For **Send a notification to**, enter a name for the SNS topic\. For **With these recipients**, enter one or more email addresses to receive notification\. You can replace the default name for your alarm with a custom name\. Next, specify the metric and the criteria for the alarm, using **Whenever**, **Is**, and **For at least**\. Choose **Create Alarm**\.
 
    1. Specify the scaling activity for the policy using **Take the action**\. By default, the lower bound for this step adjustment is the alarm threshold and the upper bound is null \(positive infinity\)\. To add another step adjustment, choose **Add step**\.
 

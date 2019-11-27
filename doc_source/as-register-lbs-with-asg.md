@@ -15,7 +15,7 @@ Before you explore this tutorial, we recommend that you first review the followi
 ## Prerequisites<a name="as-register-lbs-prerequisites"></a>
 + \(Optional\) Create an IAM role that grants your application the access to AWS that it needs\.
 + Launch an instance\. Be sure to specify the IAM role \(if you created one\), and specify any configuration scripts that you need as user data\. Connect to the instance and customize it\. For example, you can install software and applications and copy data\. Test your application on your instance to ensure that your instance is configured correctly\. Create a custom Amazon Machine Image \(AMI\) from your instance\. You can terminate the instance if you no longer need it\.
-+ Create a load balancer\. Elastic Load Balancing supports three types of load balancers: Application Load Balancers, Network Load Balancers, and Classic Load Balancers\. You can attach any of these types of load balancers to your Auto Scaling group\. For more information, see [ Elastic Load Balancing Types ](autoscaling-load-balancer.md#integrations-aws-elastic-load-balancing-types)\.
++ Create a load balancer\. Elastic Load Balancing supports three types of load balancers: Application Load Balancers, Network Load Balancers, and Classic Load Balancers\. You can attach any of these types of load balancers to your Auto Scaling group\. For more information, see [ Elastic Load Balancing Types](autoscaling-load-balancer.md#integrations-aws-elastic-load-balancing-types)\.
 + Make sure that you choose the same Availability Zones for the load balancer that you plan to enable for your Auto Scaling group\. 
 
 ## Configure Scaling and Load Balancing \(Console\)<a name="as-register-lbs-console"></a>

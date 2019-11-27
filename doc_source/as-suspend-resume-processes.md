@@ -3,7 +3,7 @@
 This topic explains how to suspend and then resume one or more of the scaling processes for your Auto Scaling group\. It also describes the issues to consider when choosing to use the suspend\-resume feature of Amazon EC2 Auto Scaling\.
 
 **Important**  
-Use the standby feature instead of the suspend\-resume feature if you need to troubleshoot or reboot an instance\. For more information, see [Temporarily Removing Instances from Your Auto Scaling Group](as-enter-exit-standby.md)\. Use the instance protection feature to prevent specific instances from being terminated during automatic scale in\. For more information, see [Instance Protection](as-instance-termination.md#instance-protection)\.
+Use the standby feature instead of the suspend\-resume feature if you need to troubleshoot or reboot an instance\. For more information, see [Temporarily Removing Instances from Your Auto Scaling Group](as-enter-exit-standby.md)\. Use the instance scale\-in protection feature to prevent specific instances from being terminated during automatic scale in\. For more information, see [Instance Scale\-In Protection](as-instance-termination.md#instance-protection)\.
 
 In addition to suspensions that you initiate, Amazon EC2 Auto Scaling can also suspend processes for Auto Scaling groups that repeatedly fail to launch instances\. This is known as an *administrative suspension*\. An administrative suspension most commonly applies to Auto Scaling groups that have been trying to launch instances for over 24 hours but have not succeeded in launching any instances\. You can resume processes that were suspended by Amazon EC2 Auto Scaling for administrative reasons\.
 

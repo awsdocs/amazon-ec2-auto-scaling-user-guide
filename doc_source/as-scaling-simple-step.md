@@ -1,6 +1,6 @@
 # Simple and Step Scaling Policies for Amazon EC2 Auto Scaling<a name="as-scaling-simple-step"></a>
 
-With simple and step scaling policies, you choose scaling metrics and threshold values for the CloudWatch alarms that trigger the scaling process as well as define how your Auto Scaling group should be scaled when a threshold is in breach for a specified number of evaluation periods\. 
+With simple and step scaling policies, you choose scaling metrics and threshold values for the CloudWatch alarms that trigger the scaling process\. You also define how your Auto Scaling group should be scaled when a threshold is in breach for a specified number of evaluation periods\. 
 
 We recommend that you use step scaling policies instead of simple scaling policies, even if you have a single scaling adjustment\. Amazon EC2 Auto Scaling originally supported only simple scaling policies\. If you created your scaling policy before target tracking and step policies were introduced, your policy is treated as a simple scaling policy\. For more information, see [Simple Scaling Policies and Cooldowns](#SimpleScaling)\.
 
@@ -113,9 +113,9 @@ Use the console to create an Auto Scaling group with two scaling policies: a sca
 
 1. On the **Configure Auto Scaling group details** page, do the following:
 
-   1. For **Group name**, type a name for your Auto Scaling group\.
+   1. For **Group name**, enter a name for your Auto Scaling group\.
 
-   1. For **Group size**, type the desired capacity for your Auto Scaling group\.
+   1. For **Group size**, enter the desired capacity for your Auto Scaling group\.
 
    1. If the launch configuration specifies instances that require a VPC, such as T2 instances, you must select a VPC from **Network**\. Otherwise, if your AWS account supports EC2\-Classic and the instances don't require a VPC, you can select either `Launch into EC2-Classic` or a VPC\.
 
@@ -135,20 +135,18 @@ Use the console to create an Auto Scaling group with two scaling policies: a sca
    1. On the **Create Alarm** page, choose **create topic**\. For **Send a notification to**, type a name for the SNS topic\. For **With these recipients**, type one or more email addresses to receive notification\. You can replace the default name for your alarm with a custom name\. Next, specify the metric and the criteria for the policy\. For example, you can leave the default settings for **Whenever** \(Average of CPU Utilization\)\. For **Is**, choose `>=` and type `80` percent\. For **For at least**, type `1` consecutive period of `5 Minutes`\. Choose **Create Alarm**\.  
 ![\[Create Alarm\]](http://docs.aws.amazon.com/autoscaling/ec2/userguide/images/as-console-create-scaleout-alarm.png)
 
-   1. For **Take the action**, choose `Add`, type `30` in the next field, and then choose `percent of group`\. By default, the lower bound for this step adjustment is the alarm threshold and the upper bound is null \(positive infinity\)\.
+   1. For **Take the action**, choose `Add`, enter `30` in the next field, and then choose `percent of group`\. By default, the lower bound for this step adjustment is the alarm threshold and the upper bound is null \(positive infinity\)\.
 
-      To add another step adjustment, choose **Add step**\. To set a minimum number of instances to scale, update the number field in **Add instances in increments of at least 1 instance\(s\)**\.
-
-      \(Optional\) We recommend that you use the default to create scaling policies with steps\. To create simple scaling policies, choose **Create a simple scaling policy**\. For more information, see [Simple and Step Scaling Policies for Amazon EC2 Auto Scaling](#as-scaling-simple-step)\.  
+      To add another step adjustment, choose **Add step**\. To set a minimum number of instances to scale, update the number field in **Add instances in increments of at least 1 instance\(s\)**\.  
 ![\[Create scale-out policy\]](http://docs.aws.amazon.com/autoscaling/ec2/userguide/images/as-console-create-scaleout-policy.png)
 
    1. Specify an instance warm\-up value for **Instances need**, which allows you to control the amount of time until a newly launched instance can contribute to the CloudWatch metrics\. 
 
    1. Specify your scale\-in policy under **Decrease Group Size**\. You can optionally specify a name for the policy, then choose **Add new alarm**\.
 
-   1. On the **Create Alarm** page, you can select the same notification that you created for the scale\-out policy or create a new one for the scale\-in policy\. You can replace the default name for your alarm with a custom name\. Keep the default settings for **Whenever** \(Average of CPU Utilization\)\. For **Is**, choose `<=` and type `40` percent\. For **For at least**, type `1` consecutive period of `5 Minutes`\. Choose **Create Alarm**\.
+   1. On the **Create Alarm** page, you can select the same notification that you created for the scale\-out policy or create a new one for the scale\-in policy\. You can replace the default name for your alarm with a custom name\. Keep the default settings for **Whenever** \(Average of CPU Utilization\)\. For **Is**, choose `<=` and enter `40` percent\. For **For at least**, enter `1` consecutive period of `5 Minutes`\. Choose **Create Alarm**\.
 
-   1. For **Take the action**, choose `Remove`, type `2` in the next field, and then choose `instances`\. By default, the upper bound for this step adjustment is the alarm threshold and the lower bound is null \(negative infinity\)\. To add another step adjustment, choose **Add step**\.
+   1. For **Take the action**, choose `Remove`, enter `2` in the next field, and then choose `instances`\. By default, the upper bound for this step adjustment is the alarm threshold and the lower bound is null \(negative infinity\)\. To add another step adjustment, choose **Add step**\.
 
       \(Optional\) We recommend that you use the default to create scaling policies with steps\. To create simple scaling policies, choose **Create a simple scaling policy**\. For more information, see [Scaling Policy Types](as-scale-based-on-demand.md#as-scaling-types)\.  
 ![\[Create scale-out policy\]](http://docs.aws.amazon.com/autoscaling/ec2/userguide/images/as-console-create-scalein-policy.png)

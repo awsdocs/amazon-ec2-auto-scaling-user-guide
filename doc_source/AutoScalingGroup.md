@@ -25,5 +25,7 @@ This section provides detailed steps for creating an Auto Scaling group\. If you
 + [Tagging Auto Scaling Groups and Instances](autoscaling-tagging.md)
 + [Using a Load Balancer with an Auto Scaling Group](autoscaling-load-balancer.md)
 + [Launching Spot Instances in Your Auto Scaling Group](asg-launch-spot-instances.md)
++ [Instance Weighting for Amazon EC2 Auto Scaling](asg-instance-weighting.md)
++ [Replacing Auto Scaling Instances Based on Maximum Instance Lifetime](asg-max-instance-lifetime.md)
 + [Merging Your Auto Scaling Groups into a Single Multi\-Zone Group](merge-auto-scaling-groups.md)
 + [Deleting Your Auto Scaling Infrastructure](as-process-shutdown.md)

@@ -2,7 +2,7 @@
 
 An Auto Scaling group is associated with one launch configuration at a time, and you can't modify a launch configuration after you've created it\. To change the launch configuration for an Auto Scaling group, use an existing launch configuration as the basis for a new launch configuration\. Then, update the Auto Scaling group to use the new launch configuration\.
 
-After you change the launch configuration for an Auto Scaling group, any new instances are launched using the new configuration options, but existing instances are not affected\.
+After you change the launch configuration for an Auto Scaling group, any new instances are launched using the new configuration options, but existing instances are not affected\. In this situation, you can terminate existing instances in the Auto Scaling group to force a new instance to launch that uses the new configuration\. Or, you can allow automatic scaling to gradually replace older instances with newer instances based on your [termination policies](as-instance-termination.md)\. You can also automate deployment of the updated launch configuration with a few clicks through AWS CloudFormation\.
 
 **To change the launch configuration for an Auto Scaling group \(console\)**
 

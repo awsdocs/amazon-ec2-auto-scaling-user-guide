@@ -1,6 +1,6 @@
 # Launching Spot Instances in Your Auto Scaling Group<a name="asg-launch-spot-instances"></a>
 
-Spot Instances are a cost\-effective choice compared to On\-Demand Instances, if you can be flexible about when your applications run and if your applications can be interrupted\. This topic describes how to launch only Spot Instances in your Auto Scaling Group by specifying settings in a *launch configuration* or *launch template*, rather than in the Auto Scaling group itself\.
+Spot Instances are a cost\-effective choice compared to On\-Demand Instances, if you can be flexible about when your applications run and if your applications can be interrupted\. This topic describes how to launch only Spot Instances in your Auto Scaling group by specifying settings in a *launch configuration* or *launch template*, rather than in the Auto Scaling group itself\.
 
 **Important**  
 You can specify the same settings that are used to launch Spot Instances as part of the settings of an Auto Scaling group\. When you specify the settings as part of the Auto Scaling group, you can specify additional options\. For example, you can specify whether to launch only Spot Instances, or a combination of both On\-Demand Instances and Spot Instances\. For more information, see [Auto Scaling Groups with Multiple Instance Types and Purchase Options](asg-purchase-options.md)\. 

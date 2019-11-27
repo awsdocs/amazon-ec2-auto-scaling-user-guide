@@ -68,7 +68,7 @@ Wherever possible, you should scale on EC2 instance metrics with a 1\-minute fre
      --unit None --value 20 --dimensions MyOptionalMetricDimensionName=MyOptionalMetricDimensionValue
    ```
 
-After your application is emitting the desired metric, the data is sent to CloudWatch\. The metric is visible in the CloudWatch console\. You can access it by logging into the AWS Management Console and navigating to the CloudWatch page\. Then, view the metric by navigating to the metrics page or searching for it using the search box\. For help viewing metrics, see [View Available Metrics](https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/viewing_metrics_with_cloudwatch.html) in the *Amazon CloudWatch User Guide*\.
+After your application is emitting the desired metric, the data is sent to CloudWatch\. The metric is visible in the CloudWatch console\. You can access it by logging into the AWS Management Console and navigating to the CloudWatch page\. Then, view the metric by navigating to the metrics page or searching for it using the search box\. For information about viewing metrics, see [View Available Metrics](https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/viewing_metrics_with_cloudwatch.html) in the *Amazon CloudWatch User Guide*\.
 
 ### Step 2: Create a Target Tracking Scaling Policy<a name="create-sqs-policies-cli"></a>
 

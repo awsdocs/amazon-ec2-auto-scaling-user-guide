@@ -1,6 +1,6 @@
 # Manual Scaling for Amazon EC2 Auto Scaling<a name="as-manual-scaling"></a>
 
-At any time, you can change the size of an existing Auto Scaling group manually\. You can either update the desired capacity of the Auto Scaling group, or update the instances that are attached to the Auto Scaling group\.
+At any time, you can change the size of an existing Auto Scaling group manually\. You can either update the desired capacity of the Auto Scaling group, or update the instances that are attached to the Auto Scaling group\. Manually scaling your group can be useful when automatic scaling is not needed or when you need to hold capacity at a fixed number of instances\.
 
 ## Changing the Size of Your Auto Scaling Group \(Console\)<a name="as-manual-scaling-console"></a>
 

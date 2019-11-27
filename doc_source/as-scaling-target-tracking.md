@@ -55,9 +55,9 @@ Keep the following in mind when choosing a metric:
 
 1. On the **Configure Auto Scaling group details** page, do the following:
 
-   1. For **Group name**, type a name for your Auto Scaling group\.
+   1. For **Group name**, enter a name for your Auto Scaling group\.
 
-   1. For **Group size**, type the desired capacity for your Auto Scaling group\.
+   1. For **Group size**, enter the desired capacity for your Auto Scaling group\.
 
    1. If the launch configuration specifies instances that require a VPC, such as T2 instances, you must select a VPC from **Network**\. Otherwise, if your AWS account supports EC2\-Classic and the instances don't require a VPC, you can select either `Launch into EC2-Classic` or a VPC\.
 

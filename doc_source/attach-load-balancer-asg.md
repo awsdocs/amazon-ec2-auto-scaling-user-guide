@@ -1,5 +1,7 @@
 # Attaching a Load Balancer to Your Auto Scaling Group<a name="attach-load-balancer-asg"></a>
 
+This topic describes how to attach your Elastic Load Balancing load balancer to an existing Auto Scaling group\. To attach your load balancer to your Auto Scaling group when you create the group, see [Tutorial: Set Up a Scaled and Load\-Balanced Application](as-register-lbs-with-asg.md)\. 
+
 Amazon EC2 Auto Scaling integrates with Elastic Load Balancing to enable you to attach one or more load balancers to an existing Auto Scaling group\. After you attach the load balancer, it automatically registers the instances in the group and distributes incoming traffic across the instances\. 
 
 When you attach a load balancer, it enters the `Adding` state while registering the instances in the group\. After all instances in the group are registered with the load balancer, it enters the `Added` state\. After at least one registered instance passes the health checks, it enters the `InService` state\. After the load balancer enters the `InService` state, Amazon EC2 Auto Scaling can terminate and replace any instances that are reported as unhealthy\. If no registered instances pass the health checks \(for example, due to a misconfigured health check\), the load balancer doesn't enter the `InService` state\. Amazon EC2 Auto Scaling doesn't terminate and replace the instances\.
@@ -13,9 +15,9 @@ When you detach a load balancer, it enters the `Removing` state while deregister
 
 ## Prerequisites<a name="as-add-load-balancer-prerequisites"></a>
 
-Before you begin, create a load balancer in the same AWS Region as the Auto Scaling group\. Elastic Load Balancing supports three types of load balancers: Application Load Balancers, Network Load Balancers, and Classic Load Balancers\. You can attach any of these types of load balancers to your Auto Scaling group\. For more information, see [ Elastic Load Balancing Types ](autoscaling-load-balancer.md#integrations-aws-elastic-load-balancing-types)\.
+Before you begin, create an Application Load Balancer or Network Load Balancer in the same AWS Region as the Auto Scaling group\. We recommend the new load balancers, but you can still use a Classic Load Balancer if it supports the features you're looking for\. To learn more about the different types of load balancers, see [ Elastic Load Balancing Types](autoscaling-load-balancer.md#integrations-aws-elastic-load-balancing-types)\. 
 
-To configure the Auto Scaling group to use Elastic Load Balancing health check, see [Adding Elastic Load Balancing Health Checks to an Auto Scaling Group](as-add-elb-healthcheck.md)\.
+\(Optional\) To configure your Auto Scaling group to use Elastic Load Balancing health checks, see [Adding Elastic Load Balancing Health Checks to an Auto Scaling Group](as-add-elb-healthcheck.md)\.
 
 ## Add a Load Balancer \(Console\)<a name="as-add-load-balancer-console"></a>
 

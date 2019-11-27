@@ -9,7 +9,8 @@ Amazon EC2 Auto Scaling provides a number of ways to adjust scaling to best meet
 
 **Topics**
 + [Scaling Options](#scaling_typesof)
-+ [Maintaining the Size of Your Auto Scaling Group](as-maintain-instance-levels.md)
++ [Setting Capacity Limits](asg-capacity-limits.md)
++ [Maintaining a Fixed Number of Instances](as-maintain-instance-levels.md)
 + [Manual Scaling for Amazon EC2 Auto Scaling](as-manual-scaling.md)
 + [Scheduled Scaling](schedule_time.md)
 + [Dynamic Scaling](as-scale-based-on-demand.md)
@@ -24,7 +25,7 @@ Amazon EC2 Auto Scaling provides a number of ways to adjust scaling to best meet
 Amazon EC2 Auto Scaling provides several ways for you to scale your Auto Scaling group\.
 
 **Maintain current instance levels at all times**  
-You can configure your Auto Scaling group to maintain a specified number of running instances at all times\. To maintain the current instance levels, Amazon EC2 Auto Scaling performs a periodic health check on running instances within an Auto Scaling group\. When Amazon EC2 Auto Scaling finds an unhealthy instance, it terminates that instance and launches a new one\. For more information, see [Maintaining the Number of Instances in Your Auto Scaling Group](as-maintain-instance-levels.md)\.
+You can configure your Auto Scaling group to maintain a specified number of running instances at all times\. To maintain the current instance levels, Amazon EC2 Auto Scaling performs a periodic health check on running instances within an Auto Scaling group\. When Amazon EC2 Auto Scaling finds an unhealthy instance, it terminates that instance and launches a new one\. For more information, see [Maintaining a Fixed Number of Instances in Your Auto Scaling Group](as-maintain-instance-levels.md)\.
 
 **Manual scaling**  
 Manual scaling is the most basic way to scale your resources, where you specify only the change in the maximum, minimum, or desired capacity of your Auto Scaling group\. Amazon EC2 Auto Scaling manages the process of creating or terminating instances to maintain the updated capacity\. For more information, see [Manual Scaling for Amazon EC2 Auto Scaling](as-manual-scaling.md)\.
