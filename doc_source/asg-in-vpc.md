@@ -32,17 +32,26 @@ When you enable public IP addresses for your instances and launch them into a su
 
 ## Instance Placement Tenancy<a name="as-vpc-tenancy"></a>
 
-Dedicated Instances are physically isolated at the host hardware level from instances that aren't dedicated and from instances that belong to other AWS accounts\. When you create a VPC, by default its tenancy attribute is set to `default`\. In such a VPC, you can launch instances with a tenancy value of `dedicated` so that they run as single\-tenancy instances\. Otherwise, they run as shared\-tenancy instances by default\. If you set the tenancy attribute of a VPC to `dedicated`, all instances launched in the VPC run as single\-tenancy instances\. For more information, see [Dedicated Instances](https://docs.aws.amazon.com/vpc/latest/userguide/dedicated-instance.html) in the *Amazon VPC User Guide*\. For pricing information, see the [Amazon EC2 Dedicated Instances](https://aws.amazon.com/ec2/purchasing-options/dedicated-instances/) product page\.
+Tenancy defines how EC2 instances are distributed across physical hardware and affects pricing\. There are three tenancy options available: 
++ Shared \(`default`\) – Multiple AWS accounts may share the same physical hardware\. 
++ Dedicated instance \(`dedicated`\) – Your instance runs on single\-tenant hardware\. 
++ Dedicated host \(`host`\) – Your instance runs on a dedicated host, which is an isolated server with configurations that you can control\. 
+
+**Important**  
+You can configure tenancy for EC2 instances using a launch configuration or launch template\. However, the `host` tenancy value cannot be used with a launch configuration\. Use the `default` or `dedicated` tenancy values only\. To use a tenancy value of `host`, you must use a launch template\. For more information, see [Creating a Launch Template for an Auto Scaling Group](create-launch-template.md)\.
+
+Dedicated instances are physically isolated at the host hardware level from instances that aren't dedicated and from instances that belong to other AWS accounts\. When you create a VPC, by default its tenancy attribute is set to `default`\. In such a VPC, you can launch instances with a tenancy value of `dedicated` so that they run as single\-tenancy instances\. Otherwise, they run as shared\-tenancy instances by default\. If you set the tenancy attribute of a VPC to `dedicated`, all instances launched in the VPC run as single\-tenancy instances\. For more information, see [Dedicated Instances](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/dedicated-instance.html) in the *Amazon EC2 User Guide for Linux Instances*\. For pricing information, see the [Amazon EC2 Dedicated Instances](https://aws.amazon.com/ec2/purchasing-options/dedicated-instances/) product page\.
 
 When you create a launch configuration, the default value for the instance placement tenancy is `null` and the instance tenancy is controlled by the tenancy attribute of the VPC\. The following table summarizes the instance placement tenancy of the Auto Scaling instances launched in a VPC\.
 
 
 | Launch Configuration Tenancy | VPC Tenancy = default | VPC Tenancy = dedicated | 
 | --- | --- | --- | 
-|  not specified  |  shared\-tenancy instance  |  Dedicated Instance  | 
-|  `default`  |  shared\-tenancy instance  |  Dedicated Instance  | 
-|  `dedicated`  |  Dedicated Instance  |  Dedicated Instance  | 
+|  not specified  |  shared\-tenancy instance  |  dedicated instance  | 
+|   `default`   |  shared\-tenancy instance  |  dedicated instance  | 
+|   `dedicated`   |  dedicated instance  |  dedicated instance  | 
 
+**To configure tenancy using a launch configuration \(AWS CLI\)**  
 You can specify the instance placement tenancy for your launch configuration as `default` or `dedicated` using the [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/create-launch-configuration.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/create-launch-configuration.html) command with the `--placement-tenancy` option\. For example, the following command sets the launch configuration tenancy to `dedicated`:
 
 ```
@@ -55,7 +64,7 @@ You can use the following [https://docs.aws.amazon.com/cli/latest/reference/auto
 aws autoscaling describe-launch-configurations --launch-configuration-names my-launch-config
 ```
 
-The following is example output for a launch configuration that creates Dedicated Instances\. The `PlacementTenancy` parameter is only part of the output for this command when you explicitly set the instance placement tenancy\.
+The following is example output for a launch configuration that creates dedicated instances\. The `PlacementTenancy` parameter is only part of the output for this command when you explicitly set the instance placement tenancy\.
 
 ```
 {

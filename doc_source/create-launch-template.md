@@ -19,7 +19,8 @@ Keep the following considerations in mind when creating a launch template for us
 + You cannot specify multiple network interfaces\.
 + You cannot assign specific private IP addresses\. When an instance launches, a private address is allocated from the CIDR range of the subnet in which the instance is launched\. For more information on specifying CIDR ranges for your VPC or subnet, see the [Amazon VPC User Guide](https://docs.aws.amazon.com/vpc/latest/userguide/)\.
 + To specify an existing network interface to use, its device index must be 0 \(eth0\)\. For this scenario, you must use the CLI or API to create the Auto Scaling group\. When you create the group using the CLI create\-auto\-scaling\-group command or API CreateAutoScalingGroup action, you must specify the Availability Zones parameter instead of the subnet \(VPC zone identifier\) parameter\. 
-+ You cannot use host placement affinity\.
++ You cannot use host placement affinity or target a specific host by choosing a host ID\.
++ Support for host tenancy \(Dedicated Hosts\) is only available if you specify a host resource group\. For more information, see [Host Resource Groups](https://docs.aws.amazon.com/license-manager/latest/userguide/host-resource-groups.html) in the *AWS License Manager User Guide*\. Note that each AMI based on a license configuration association can be mapped to only one host resource group at a time\. 
 
 **To create a new launch template for an Auto Scaling group using the console**
 
@@ -85,7 +86,7 @@ Keep the following considerations in mind when creating a launch template for us
 
       \* If [encryption by default](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EBSEncryption.html#encryption-by-default) is enabled, all newly created volumes \(whether or not the **Encrypted** parameter is set to **Yes**\) are encrypted using the default CMK\. Setting both the **Encrypted** and **Key** parameters allows you to specify a non\-default CMK\. 
 
-   1. \[Optional\] **Key**: If you chose **Yes** in the previous step, enter the customer master key \(CMK\) you want to use when encrypting the volumes\. Enter any CMK that you previously created using the AWS Key Management Service\. You can paste the full ARN of any key that you have access to\. For more information, see the [AWS Key Management Service Developer Guide](https://docs.aws.amazon.com/kms/latest/developerguide/) and the [Required CMK Key Policy for Use with Encrypted Volumes](key-policy-requirements-EBS-encryption.md) topic in this guide\.
+   1. \[Optional\] **Key**: If you chose **Yes** in the previous step, enter the customer master key \(CMK\) you want to use when encrypting the volumes\. Enter any CMK that you previously created using the AWS Key Management Service\. You can paste the full ARN of any key that you have access to\. For more information, see the [AWS Key Management Service Developer Guide](https://docs.aws.amazon.com/kms/latest/developerguide/) and the [Required CMK Key Policy for Use with Encrypted Volumes](key-policy-requirements-EBS-encryption.md) topic in this guide\. Note: Amazon EBS does not support asymmetric CMKs\. 
 **Note**  
 Providing a CMK without also setting the **Encrypted** parameter results in an error\. 
 
@@ -102,7 +103,8 @@ If you plan to specify multiple instance types and purchase options when you con
    + **T2/T3 Unlimited**: \(Only valid for T2 and T3 instances\) Choose whether to enable applications to burst beyond the baseline for as long as needed\. Additional charges may apply\. For more information, see [Using an Auto Scaling Group to Launch a Burstable Performance Instance as Unlimited](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/burstable-performance-instances-how-to.html#burstable-performance-instances-auto-scaling-grp) in the *Amazon EC2 User Guide for Linux Instances*\.
    + **Placement group name**: Specify a placement group in which to launch the instances\. Not all instance types can be launched in a placement group\. If you configure an Auto Scaling group using a CLI command that specifies a different placement group, the setting is ignored in favor of the one specified for the Auto Scaling group\.
    + **EBS\-optimized instance**: Provides additional, dedicated capacity for Amazon EBS I/O\. Not all instance types support this feature, and additional charges apply\. 
-   + **Tenancy**: You can choose to run your instances either on shared hardware \(**Shared**\), or on isolated, dedicated hardware \(**Dedicated**\)\. Additional charges may apply\. You cannot choose **Dedicated host**\.
+   + **Tenancy**: You can choose to run your instances on shared hardware \(**Shared**\), on dedicated hardware \(**Dedicated**\), or, when using a host resource group, on Dedicated Hosts \(**Dedicated host**\)\. Additional charges may apply\. 
+   + **Tenancy host resource group**: Specify a host resource group for a BYOL AMI to use on Dedicated Hosts\. For more information, see [Host Resource Groups](https://docs.aws.amazon.com/license-manager/latest/userguide/host-resource-groups.html) in the *AWS License Manager User Guide*\. Note: You do not have to have already allocated Dedicated Hosts in your account before you use this feature\. Your instances will automatically launch onto Dedicated Hosts regardless\.
    + **RAM disk ID**: The ID of the RAM disk associated with the AMI\. Only valid for paravirtual \(PV\) AMIs\. 
    + **Kernel ID**: The ID of the kernel associated with the AMI\. Only valid for paravirtual \(PV\) AMIs\. 
    + **User data**: You can specify user data to configure an instance during launch, or to run a configuration script\. 

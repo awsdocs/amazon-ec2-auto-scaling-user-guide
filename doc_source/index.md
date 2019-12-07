@@ -43,6 +43,7 @@ Amazon's trademarks and trade dress may not be used in
       + [Expanding Your Scaled and Load-Balanced Application to an Additional Availability Zone](as-add-availability-zone.md)
    + [Launching Spot Instances in Your Auto Scaling Group](asg-launch-spot-instances.md)
    + [Instance Weighting for Amazon EC2 Auto Scaling](asg-instance-weighting.md)
+   + [Getting Recommendations for an Instance Type](asg-getting-recommendations.md)
    + [Replacing Auto Scaling Instances Based on Maximum Instance Lifetime](asg-max-instance-lifetime.md)
    + [Merging Your Auto Scaling Groups into a Single Multi-Zone Group](merge-auto-scaling-groups.md)
    + [Deleting Your Auto Scaling Infrastructure](as-process-shutdown.md)
