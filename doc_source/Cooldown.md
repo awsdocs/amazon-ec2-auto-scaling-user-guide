@@ -1,8 +1,8 @@
 # Scaling Cooldowns for Amazon EC2 Auto Scaling<a name="Cooldown"></a>
 
-The cooldown period helps to ensure that your Auto Scaling group doesn't launch or terminate additional instances before the previous scaling activity takes effect\. You can configure the length of time based on your instance warmup period or other application needs\. 
+The cooldown period ensures that your Auto Scaling group doesn't launch or terminate additional instances before the previous scaling activity takes effect\. You can configure the length of time based on your instance warm\-up period or other application needs\. 
 
-Amazon EC2 Auto Scaling supports cooldown periods when using simple scaling policies, but not when using other scaling policies\. After the Auto Scaling group dynamically scales using a simple scaling policy, it waits for the cooldown period to complete before resuming scaling activities\. You can use the default cooldown period associated with your Auto Scaling group, or you can override the default by specifying a cooldown period for your policy\. For more information about simple scaling, see [Simple and Step Scaling Policies for Amazon EC2 Auto Scaling](as-scaling-simple-step.md)\.
+Amazon EC2 Auto Scaling supports cooldown periods when using simple scaling policies, but not when using other scaling policies\. After the Auto Scaling group dynamically scales using a simple scaling policy, it waits for the cooldown period to complete before resuming scaling activities\. You can use the default cooldown period associated with your Auto Scaling group, or you can override the default by specifying a cooldown period for your policy\. For more information about simple scaling, see [Step and Simple Scaling Policies for Amazon EC2 Auto Scaling](as-scaling-simple-step.md)\.
 
 When you manually scale your Auto Scaling group, the default is not to wait for the cooldown period, but you can override the default and honor the cooldown period\. If an instance becomes unhealthy, the Auto Scaling group does not wait for the cooldown period to complete before replacing the unhealthy instance\. For more information about manual scaling, see [Manual Scaling for Amazon EC2 Auto Scaling](as-manual-scaling.md)\.
 
@@ -21,7 +21,7 @@ Consider the following scenario: you have a web application running in AWS\. Thi
 
 ![\[A basic network architecture with a web tier and application tier.\]](http://docs.aws.amazon.com/autoscaling/ec2/userguide/images/cooldown-example-start-diagram.png)
 
-To help ensure that the Auto Scaling group for the application tier has the appropriate number of EC2 instances, [create a CloudWatch alarm](as-instance-monitoring.md#CloudWatchAlarm) to scale out whenever the **CPUUtilization** metric for the instances exceeds 90 percent\. When the alarm occurs, the Auto Scaling group launches and configures another instance\.
+To help ensure that the Auto Scaling group for the application tier has the appropriate number of EC2 instances, [create a CloudWatch alarm](as-instance-monitoring.md#CloudWatchAlarm) to scale out whenever the `CPUUtilization` metric for the instances exceeds 90 percent\. When the alarm occurs, the Auto Scaling group launches and configures another instance\.
 
 ![\[An example of how a CloudWatch alarm works with a scaling policy\]](http://docs.aws.amazon.com/autoscaling/ec2/userguide/images/cooldowns-example-scaling-policy-diagram.png)
 
@@ -51,12 +51,12 @@ You can create a scaling\-specific cooldown period using the AWS Management Cons
 
 ## Cooldowns and Multiple Instances<a name="cooldowns-multiple-instances"></a>
 
-The preceding sections have provided examples that show how cooldown periods affect Auto Scaling groups when a single instance launches or terminates\. However, it is common for Auto Scaling groups to launch more than one instance at a time\. For example, you might choose to have the Auto Scaling group launch three instances when a specific metric threshold is met\.
+The preceding sections provided examples that show how cooldown periods affect Auto Scaling groups when a single instance launches or terminates\. However, it is common for Auto Scaling groups to launch more than one instance at a time\. For example, you might choose to have the Auto Scaling group launch three instances when a specific metric threshold is met\.
 
 With multiple instances, the cooldown period \(either the default cooldown or the scaling\-specific cooldown\) takes effect starting when the last instance launches\.
 
 ## Cooldowns and Lifecycle Hooks<a name="cooldowns-lifecycle-hooks"></a>
 
-You can add lifecycle hooks to your Auto Scaling groups\. These hooks enable you to control how instances launch and terminate within an Auto Scaling group\. You can perform actions on the instance before it is put into service or before it is terminated\.
+You can add lifecycle hooks to your Auto Scaling groups\. These hooks enable you to control how instances launch and terminate within an Auto Scaling group\. You can perform actions on an instance before it is put into service or before it is terminated\.
 
 Lifecycle hooks can affect the impact of any cooldown periods configured for the Auto Scaling group, manual scaling, or a simple scaling policy\. The cooldown period does not begin until after the instance moves out of the wait state\.

@@ -19,15 +19,23 @@ When you delete an Auto Scaling group, its desired, minimum, and maximum values 
 
 1. On the navigation pane, under **Auto Scaling**, choose **Auto Scaling Groups**\.
 
-1. On the **Auto Scaling Groups** page, choose your Auto Scaling group and choose **Actions**, **Delete**\. 
+1. On the **Auto Scaling Groups** page, select the check box next to your Auto Scaling group and choose **Delete** \(Old console: choose **Actions**, **Delete**\)\. 
 
-1. When prompted for confirmation, choose **Yes, Delete**\.
+1. When prompted for confirmation, choose **Delete**\.
+
+   A loading icon in the **Name** column indicates that the Auto Scaling group is being deleted\. The **Desired**, **Min**, and **Max** columns show `0` instances for the Auto Scaling group\. It takes a few minutes to terminate the instance and delete the group\. Refresh the list to see the current state\. 
 
 **To delete your Auto Scaling group \(AWS CLI\)**  
 Use the following [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/delete-auto-scaling-group.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/delete-auto-scaling-group.html) command to delete the Auto Scaling group\. 
 
 ```
 aws autoscaling delete-auto-scaling-group --auto-scaling-group-name my-asg
+```
+
+If the group has instances or scaling activities in progress, use the [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/delete-auto-scaling-group.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/delete-auto-scaling-group.html) command with the `--force-delete` option\. This will also terminate the Amazon EC2 instances\.
+
+```
+aws autoscaling delete-auto-scaling-group --auto-scaling-group-name my-asg --force-delete
 ```
 
 ## \(Optional\) Delete the Launch Configuration<a name="as-shutdown-lbs-delete-lc-cli"></a>

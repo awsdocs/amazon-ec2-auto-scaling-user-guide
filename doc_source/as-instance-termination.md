@@ -2,7 +2,7 @@
 
 With each Auto Scaling group, you can control when it adds instances \(referred to as *scaling out*\) or removes instances \(referred to as *scaling in*\) from your network architecture\. You can scale the size of your group manually by adjusting your desired capacity, or you can automate the process through the use of scheduled scaling or a scaling policy\.
 
-This topic describes the default termination policy as well as the options available to you to configure your own customized termination policies\. Using termination policies, you can control which instances you prefer to terminate first when a scale\-in event occurs\. 
+This topic describes the default termination policy and the options available to you to configure your own customized termination policies\. Using termination policies, you can control which instances you prefer to terminate first when a scale\-in event occurs\. 
 
 It also describes how to enable instance scale\-in protection to prevent specific instances from being terminated during automatic scale in\. For instances in an Auto Scaling group, use Amazon EC2 Auto Scaling features to protect an instance when a scale\-in event occurs\. If you want to protect your instance from being accidentally terminated, use Amazon EC2 termination protection\. 
 
@@ -78,7 +78,7 @@ Amazon EC2 Auto Scaling supports the following custom termination policies:
 
 1. For **Actions**, choose **Edit**\.
 
-1. On the **Details** tab, locate **Termination Policies**\. Choose one or more termination policies\. If you choose multiple policies, list them in the order in which they should apply\. If you use the **Default** policy, make it the last one in the list\.
+1. On the **Details** tab, locate **Termination policies** in **Advanced configuration**\. Choose one or more termination policies\. If you choose multiple policies, list them in the order in which they should apply\. If you use the **Default** policy, make it the last one in the list\.
 
 1. Choose **Save**\.
 
@@ -87,7 +87,7 @@ Use one of the following commands:
 + [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/create-auto-scaling-group.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/create-auto-scaling-group.html)
 + [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/update-auto-scaling-group.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/update-auto-scaling-group.html)
 
-You can use these policies individually, or combine them into a list of policies\. For example, use the following command to update an Auto Scaling group to use the `OldestLaunchConfiguration` policy first and then use the `ClosestToNextInstanceHour` policy:
+You can use these policies individually, or combine them into a list of policies\. For example, use the following command to update an Auto Scaling group to use the `OldestLaunchConfiguration` policy first and then use the `ClosestToNextInstanceHour` policy\.
 
 ```
 aws autoscaling update-auto-scaling-group --auto-scaling-group-name my-asg --termination-policies "OldestLaunchConfiguration" "ClosestToNextInstanceHour"
@@ -101,7 +101,7 @@ To control whether an Auto Scaling group can terminate a particular instance whe
 
 Instance scale\-in protection starts when the instance state is `InService`\. If you detach an instance that is protected from termination, its instance scale\-in protection setting is lost\. When you attach the instance to the group again, it inherits the current instance scale\-in protection setting of the group\.
 
- If all instances in an Auto Scaling group are protected from termination during scale in, and a scale\-in event occurs, its desired capacity is decremented\. However, the Auto Scaling group can't terminate the required number of instances until their instance protection settings are disabled\.
+ If all instances in an Auto Scaling group are protected from termination during scale in, and a scale\-in event occurs, its desired capacity is decremented\. However, the Auto Scaling group can't terminate the required number of instances until their instance scale\-in protection settings are disabled\.
 
 Instance scale\-in protection does not protect Auto Scaling instances from the following:
 + Manual termination through the Amazon EC2 console, the `terminate-instances` command, or the `TerminateInstances` action\. To protect Auto Scaling instances from manual termination, enable Amazon EC2 termination protection\. For more information, see [Enabling Termination Protection](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/terminating-instances.html#Using_ChangingDisableAPITermination) in the *Amazon EC2 User Guide for Linux Instances*\.
@@ -117,13 +117,14 @@ Instance scale\-in protection does not protect Auto Scaling instances from the f
 
 You can enable instance scale\-in protection when you create an Auto Scaling group\. By default, instance scale\-in protection is disabled\.
 
-**To enable instance scale\-in protection \(console\)**  
+**To enable instance scale\-in protection \(new console\)**  
+When you create the Auto Scaling group, on the **Configure group size and scaling policies** page, under **Instance scale\-in protection**, select the **Enable instance scale\-in protection** option\.
+
+**To enable instance scale\-in protection \(old console\)**  
 When you create the Auto Scaling group, on the **Configure Auto Scaling group details** page, under **Advanced Details**, select the `Protect From Scale In` option from **Instance Protection**\.
 
-![\[Enable Instance Protection using the wizard.\]](http://docs.aws.amazon.com/autoscaling/ec2/userguide/images/as-enable-instance-protection.png)
-
 **To enable instance scale\-in protection \(AWS CLI\)**  
-Use the following [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/create-auto-scaling-group.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/create-auto-scaling-group.html) command to enable instance scale\-in protection:
+Use the following [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/create-auto-scaling-group.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/create-auto-scaling-group.html) command to enable instance scale\-in protection\.
 
 ```
 aws autoscaling create-auto-scaling-group --auto-scaling-group-name my-asg --new-instances-protected-from-scale-in ...
@@ -143,19 +144,18 @@ You can enable or disable the instance scale\-in protection setting for an Auto 
 
 1. On the **Details** tab, choose **Edit**\.
 
-1. For **Instance Protection**, select **Protect From Scale In**\.  
-![\[View Instance Protection on the Details tab.\]](http://docs.aws.amazon.com/autoscaling/ec2/userguide/images/as-modify-instance-protection.png)
+1. In **Advanced configuration**, select **Enable instance scale\-in protection on all new instances by default** from **Instance scale\-in protection**\. \(Old console: For **Instance Protection**, select **Protect From Scale In**\.\) 
 
 1. Choose **Save**\.
 
 **To change the instance scale\-in protection setting for a group \(AWS CLI\)**  
-Use the following [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/update-auto-scaling-group.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/update-auto-scaling-group.html) command to enable instance scale\-in protection for the specified Auto Scaling group:
+Use the following [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/update-auto-scaling-group.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/update-auto-scaling-group.html) command to enable instance scale\-in protection for the specified Auto Scaling group\.
 
 ```
 aws autoscaling update-auto-scaling-group --auto-scaling-group-name my-asg --new-instances-protected-from-scale-in
 ```
 
-Use the following command to disable instance scale\-in protection for the specified group:
+Use the following command to disable instance scale\-in protection for the specified group\.
 
 ```
 aws autoscaling update-auto-scaling-group --auto-scaling-group-name my-asg --no-new-instances-protected-from-scale-in
@@ -169,24 +169,24 @@ By default, an instance gets its instance scale\-in protection setting from its 
 
 1. Open the Amazon EC2 console at [https://console\.aws\.amazon\.com/ec2/](https://console.aws.amazon.com/ec2/)\.
 
-1. On the navigation pane, choose **Auto Scaling Groups**\.
+1. On the navigation pane, under **Auto Scaling**, choose **Auto Scaling Groups**\.
 
-1. Select the Auto Scaling group\.
+1. Select your Auto Scaling group\.
 
-1. On the **Instances** tab, select the instance\.
+1. On the **Instance management** tab, in **Instances**, select an instance\. \(Old console: The **Instances** tab is where you can select the instance\.\) 
 
-1. To enable instance scale\-in protection, choose **Actions**, **Instance Protection**, **Set Scale In Protection**\. When prompted, choose **Set Scale In Protection**\.
+1. To enable instance scale\-in protection, choose **Actions**, **Set scale\-in protection**\. When prompted, choose **Set scale\-in protection**\.
 
-1. To disable instance scale\-in protection, choose **Actions**, **Instance Protection**, **Remove Scale In Protection**\. When prompted, choose **Remove Scale In Protection**\.
+1. To disable instance scale\-in protection, choose **Actions**, **Remove scale\-in protection**\. When prompted, choose **Remove scale\-in protection**\.
 
 **To change the instance scale\-in protection setting for an instance \(AWS CLI\)**  
-Use the following [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/set-instance-protection.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/set-instance-protection.html) command to enable instance scale\-in protection for the specified instance:
+Use the following [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/set-instance-protection.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/set-instance-protection.html) command to enable instance scale\-in protection for the specified instance\.
 
 ```
 aws autoscaling set-instance-protection --instance-ids i-5f2e8a0d --auto-scaling-group-name my-asg --protected-from-scale-in
 ```
 
-Use the following command to disable instance scale\-in protection for the specified instance:
+Use the following command to disable instance scale\-in protection for the specified instance\.
 
 ```
 aws autoscaling set-instance-protection --instance-ids i-5f2e8a0d --auto-scaling-group-name my-asg --no-protected-from-scale-in

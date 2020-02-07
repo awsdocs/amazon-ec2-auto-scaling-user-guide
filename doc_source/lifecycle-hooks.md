@@ -1,10 +1,10 @@
 # Amazon EC2 Auto Scaling Lifecycle Hooks<a name="lifecycle-hooks"></a>
 
-Lifecycle hooks enable you to perform custom actions by *pausing* instances as an Auto Scaling group launches or terminates them\. When an instance is paused, it remains in a wait state until either you complete the lifecycle action using the complete\-lifecycle\-action command or the `CompleteLifecycleAction` operation, or the timeout period ends \(one hour by default\)\.
+Lifecycle hooks enable you to perform custom actions by *pausing* instances as an Auto Scaling group launches or terminates them\. When an instance is paused, it remains in a wait state either until you complete the lifecycle action using the complete\-lifecycle\-action command or the `CompleteLifecycleAction` operation, or until the timeout period ends \(one hour by default\)\.
 
-For example, your newly launched instance completes its startup sequence and a lifecycle hook pauses the instance\. While the instance is in a wait state, you can install or configure software on it, making sure that your instance is fully ready before it starts receiving traffic\. For another example of the use of lifecycle hooks, when a scale\-in event occurs, the terminating instance is first deregistered from the load balancer \(if the Auto Scaling group is being used with Elastic Load Balancing\)\. Then, a lifecycle hook pauses the instance before it is terminated\. While the instance is in the wait state, you can, for example, connect to the instance and download logs or other data before the instance is fully terminated\. 
+For example, let's say that your newly launched instance completes its startup sequence and a lifecycle hook pauses the instance\. While the instance is in a wait state, you can install or configure software on it, making sure that your instance is fully ready before it starts receiving traffic\. For another example of the use of lifecycle hooks, let's say that when a scale\-in event occurs, the terminating instance is first deregistered from the load balancer \(if the Auto Scaling group is being used with Elastic Load Balancing\)\. Then, a lifecycle hook pauses the instance before it is terminated\. While the instance is in the wait state, you can, for example, connect to the instance and download logs or other data before the instance is fully terminated\. 
 
-Each Auto Scaling group can have multiple lifecycle hooks\. However, there is a limit on the number of hooks per Auto Scaling group\. For more information, see [Amazon EC2 Auto Scaling Limits](as-account-limits.md)\. 
+Each Auto Scaling group can have multiple lifecycle hooks\. However, there is a limit on the number of hooks per Auto Scaling group\. For more information, see [Amazon EC2 Auto Scaling Service Quotas](as-account-limits.md)\. 
 
 **Topics**
 + [How Lifecycle Hooks Work](#lifecycle-hooks-overview)
@@ -73,7 +73,7 @@ When you add a lifecycle hook to your Auto Scaling group, you can specify whethe
 
 **Topics**
 + [Add Lifecycle Hooks \(Console\)](#adding-lifecycle-hooks-console)
-+ [Add Lifecycle Hooks \(AWS CLI\)](#adding-lifecycle-hooks-aws-cli)
++ [Add Lifecycle Hooks \(AWS CLI\}](#adding-lifecycle-hooks-aws-cli)
 
 ### Add Lifecycle Hooks \(Console\)<a name="adding-lifecycle-hooks-console"></a>
 
@@ -87,25 +87,25 @@ Follow these steps to add a lifecycle hook to an existing Auto Scaling group\. Y
 
 1. Select your Auto Scaling group\.
 
-1. On the **Lifecycle Hooks** tab, choose **Create Lifecycle Hook**\.
+1. On the **Instance management** tab, in **Lifecycle hooks**, choose **Create lifecycle hook**\. \(Old console: The **Lifecycle Hooks** tab is where you can create a lifecycle hook\.\) 
 
 1. To define a lifecycle hook, do the following:
 
-   1. For **Lifecycle Hook Name**, specify a name for the lifecycle hook\.
+   1. For **Lifecycle hook name**, specify a name for the lifecycle hook\.
 
-   1. For **Lifecycle Transition**, choose **Instance Launch** or **Instance Terminate**\. 
+   1. For **Lifecycle transition**, choose **Instance launch** or **Instance terminate**\. 
 
-   1. Specify a timeout value for **Heartbeat Timeout**, which allows you to control the amount of time for the instances to remain in a wait state\. The value must be from 30 to 7200 seconds\. During the timeout period, you can, for example, log on to a newly launched instance, and install applications or perform custom actions\. 
+   1. Specify a timeout value for **Heartbeat timeout**, which allows you to control the amount of time for the instances to remain in a wait state\. The value must be from 30 to 7200 seconds\. During the timeout period, you can, for example, log on to a newly launched instance, and install applications or perform custom actions\. 
 
-   1. For **Default Result**, specify the action the Auto Scaling group takes when the lifecycle hook timeout elapses or if an unexpected failure occurs\. You can choose to either ABANDON or CONTINUE\.
+   1. For **Default result**, specify the action that the Auto Scaling group takes when the lifecycle hook timeout elapses or if an unexpected failure occurs\. You can choose to either ABANDON or CONTINUE\.
 
-      If the instance is launching, CONTINUE indicates that your actions were successful, and that the Auto Scaling group can put the instance into service\. Otherwise, ABANDON indicates that your custom actions were unsuccessful, and that the instance can be terminated\. If the instance is terminating, both ABANDON and CONTINUE allow the instance to terminate\. However, ABANDON stops any remaining actions, such as other lifecycle hooks, and CONTINUE allows any other lifecycle hooks to complete\.
+      If the instance is launching, CONTINUE indicates that your actions were successful, and that the Auto Scaling group can put the instance into service\. Otherwise, ABANDON indicates that your custom actions were unsuccessful, and that Auto Scaling can terminate the instance\. If the instance is terminating, both ABANDON and CONTINUE allow the instance to terminate\. However, ABANDON stops any remaining actions, such as other lifecycle hooks, and CONTINUE allows any other lifecycle hooks to complete\.
 
-   1. \(Optional\) For **Notification Metadata**, specify additional information that you want to include any time Amazon EC2 Auto Scaling sends a message to the notification target\. 
+   1. \(Optional\) For **Notification metadata**, specify additional information that you want to include any time that Amazon EC2 Auto Scaling sends a message to the notification target\. 
 
 1. Choose **Create**\.
 
-### Add Lifecycle Hooks \(AWS CLI\)<a name="adding-lifecycle-hooks-aws-cli"></a>
+### Add Lifecycle Hooks \(AWS CLI\}<a name="adding-lifecycle-hooks-aws-cli"></a>
 
 Create and update lifecycle hooks using the [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/put-lifecycle-hook.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/put-lifecycle-hook.html) command\.
 
@@ -123,7 +123,7 @@ aws autoscaling put-lifecycle-hook --lifecycle-hook-name my-hook --auto-scaling-
   --lifecycle-transition autoscaling:EC2_INSTANCE_TERMINATING
 ```
 
-To receive notifications using Amazon SNS or Amazon SQS, you must specify a notification target and an IAM role\. For more information, see [Configuring Lifecycle Hook Notifications](configuring-lifecycle-hook-notifications.md)\. 
+To receive notifications using Amazon SNS or Amazon SQS, you must specify a notification target and an IAM role\. For more information, see [Configuring Notifications for Amazon EC2 Auto Scaling Lifecycle Hooks](configuring-lifecycle-hook-notifications.md)\. 
 
 For example, add the following options to specify an SNS topic as the notification target\.
 
@@ -189,8 +189,8 @@ To generate a notification for a launch event, update the Auto Scaling group by 
 
 1. On the **Details** tab, choose **Edit**\.
 
-1. For **Desired**, increase the current value by 1\. If this value exceeds **Max**, you must also increase the value of **Max** by 1\.
+1. For **Desired capacity**, increase the current value by 1\. If this value exceeds **Maximum capacity**, you must also increase the value of **Maximum capacity** by 1\.
 
 1. Choose **Save**\.
 
-1. After a few minutes, you'll receive notification for the event\. If you do not need the additional instance that you launched for this test, you can decrease **Desired** by 1\. After a few minutes, you'll receive notification for the event\.
+1. After a few minutes, you'll receive notification for the event\. If you do not need the additional instance that you launched for this test, you can decrease **Desired capacity** by 1\. After a few minutes, you'll receive notification for the event\.

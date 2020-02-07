@@ -43,7 +43,7 @@ Provides commands for a broad set of AWS products, and is supported on Windows, 
 **AWS Tools for Windows PowerShell**  
 Provides commands for a broad set of AWS products for those who script in the PowerShell environment\. To get started, see the [AWS Tools for Windows PowerShell User Guide](https://docs.aws.amazon.com/powershell/latest/userguide/)\. For more information, see the [AWS Tools for PowerShell Cmdlet Reference](https://docs.aws.amazon.com/powershell/latest/reference/Index.html)\.
 
-For information about your credentials for accessing AWS, see [AWS Security Credentials](https://docs.aws.amazon.com/general/latest/gr/aws-security-credentials.html) in the *Amazon Web Services General Reference*\. For information about regions and endpoints for calls to Amazon EC2 Auto Scaling, visit [AWS Regions and Endpoints](https://docs.aws.amazon.com/general/latest/gr/rande.html#as_region) in the *AWS General Reference*\.
+For information about your credentials for accessing AWS, see [AWS Security Credentials](https://docs.aws.amazon.com/general/latest/gr/aws-security-credentials.html) in the *Amazon Web Services General Reference*\. For information about regions and endpoints for calls to Amazon EC2 Auto Scaling, see [Amazon EC2 Auto Scaling Regions and Endpoints](https://docs.aws.amazon.com/general/latest/gr/as.html) in the *AWS General Reference*\. 
 
 ## Pricing for Amazon EC2 Auto Scaling<a name="as-pricing"></a>
 

@@ -1,20 +1,37 @@
 # Dynamic Scaling for Amazon EC2 Auto Scaling<a name="as-scale-based-on-demand"></a>
 
-When you configure dynamic scaling, you must define how to scale in response to changing demand\. For example, you have a web application that currently runs on two instances and you want the CPU utilization of the Auto Scaling group to stay at around 50 percent when the load on the application changes\. This gives you extra capacity to handle traffic spikes without maintaining an excessive amount of idle resources\. You can configure your Auto Scaling group to scale automatically to meet this need\. The policy type determines how the scaling action is performed\. 
+When you configure dynamic scaling, you define how to scale the capacity of your Auto Scaling group in response to changing demand\. 
+
+For example, let's say that you have a web application that currently runs on two instances, and you want the CPU utilization of the Auto Scaling group to stay at around 50 percent when the load on the application changes\. This gives you extra capacity to handle traffic spikes without maintaining an excessive number of idle resources\. 
+
+You can configure your Auto Scaling group to scale dynamically to meet this need by creating a scaling policy\. Amazon EC2 Auto Scaling can then scale out your group \(add more instances\) to deal with high demand at peak times, and scale in your group \(run fewer instances\) to reduce costs during periods of low utilization\. 
 
 **Topics**
++ [How Scaling Policies Work](#as-how-scaling-policies-work)
 + [Scaling Policy Types](#as-scaling-types)
 + [Multiple Scaling Policies](#multiple-scaling-policy-resolution)
 + [Target Tracking Scaling Policies for Amazon EC2 Auto Scaling](as-scaling-target-tracking.md)
-+ [Simple and Step Scaling Policies for Amazon EC2 Auto Scaling](as-scaling-simple-step.md)
-+ [Add a Scaling Policy to an Existing Auto Scaling Group](policy-updating-console.md)
++ [Step and Simple Scaling Policies for Amazon EC2 Auto Scaling](as-scaling-simple-step.md)
 + [Scaling Based on Amazon SQS](as-using-sqs-queue.md)
 + [Deleting a Scaling Policy](deleting-scaling-policy.md)
+
+## How Scaling Policies Work<a name="as-how-scaling-policies-work"></a>
+
+A scaling policy instructs Amazon EC2 Auto Scaling to track a specific CloudWatch metric, and it defines what action to take when the associated CloudWatch alarm is in ALARM\. The metrics that are used to trigger an alarm are an aggregation of metrics coming from all of the instances in the Auto Scaling group\. \(For example, let's say you have an Auto Scaling group with two instances where one instance is at 60 percent CPU and the other is at 40 percent CPU\. On average, they are at 50 percent CPU\.\) When the policy is in effect, Amazon EC2 Auto Scaling adjusts the group's desired capacity up or down when the alarm is triggered\.
+
+When a scaling policy is executed, if the capacity calculation produces a number outside of the minimum and maximum size range of the group, Amazon EC2 Auto Scaling ensures that the new capacity never goes outside of the minimum and maximum size limits\. Capacity is measured in one of two ways: using the same units that you chose when you set the desired capacity in terms of instances, or using capacity units \(if [instance weighting](asg-instance-weighting.md) is applied\)\.
++ Example 1: An Auto Scaling group has a maximum capacity of 3, a current capacity of 2, and a scaling policy that adds 3 instances\. When executing this scaling policy, Amazon EC2 Auto Scaling adds only 1 instance to the group to prevent the group from exceeding its maximum size\. 
++ Example 2: An Auto Scaling group has a minimum capacity of 2, a current capacity of 3, and a scaling policy that removes 2 instances\. When executing this scaling policy, Amazon EC2 Auto Scaling removes only 1 instance from the group to prevent the group from becoming less than its minimum size\. 
+
+When the desired capacity reaches the maximum size limit, scaling out stops\. If demand drops and capacity decreases, Amazon EC2 Auto Scaling can scale out again\. 
+
+The exception is when you have two or more instance types in a group and use instance weighting\. In this case, Amazon EC2 Auto Scaling can scale out above the maximum size limit, but only by up to your maximum instance weight\. Its intention is to get as close to the new desired capacity as possible but still adhere to the allocation strategies that are specified for the group\. The allocation strategies determine which instance pools your instances come from\. The weights determine how many capacity units each instance contributes to the capacity of the group\. The heavier the weight, the higher the number\.
++ Example 3: An Auto Scaling group has a maximum capacity of 12, a current capacity of 10, and a scaling policy that adds 5 capacity units\. Instance types have one of three weights assigned: 1, 4, or 6\. When executing the scaling policy, Amazon EC2 Auto Scaling chooses to launch an instance type with a weight of 6 based on the allocation strategy\. The result of this scale\-out event is a group with a desired capacity of 12 and a current capacity of 16\. 
 
 ## Scaling Policy Types<a name="as-scaling-types"></a>
 
 Amazon EC2 Auto Scaling supports the following types of scaling policies:
-+ **Target tracking scaling**—Increase or decrease the current capacity of the group based on a target value for a specific metric\. This is similar to the way that your thermostat maintains the temperature of your home – you select a temperature and the thermostat does the rest\.
++ **Target tracking scaling**—Increase or decrease the current capacity of the group based on a target value for a specific metric\. This is similar to the way that your thermostat maintains the temperature of your home—you select a temperature and the thermostat does the rest\.
 + **Step scaling**—Increase or decrease the current capacity of the group based on a set of scaling adjustments, known as *step adjustments*, that vary based on the size of the alarm breach\.
 + **Simple scaling**—Increase or decrease the current capacity of the group based on a single scaling adjustment\.
 
@@ -32,4 +49,4 @@ When there are multiple policies in force at the same time, there's a chance tha
 
 When these situations occur, Amazon EC2 Auto Scaling chooses the policy that provides the largest capacity for both scale out and scale in\. Suppose, for example, that the policy for CPU utilization launches one instance, while the policy for the SQS queue launches two instances\. If the scale\-out criteria for both policies are met at the same time, Amazon EC2 Auto Scaling gives precedence to the SQS queue policy\. This results in the Auto Scaling group launching two instances\. 
 
-The approach of giving precedence to the policy that provides the largest capacity applies even when the policies use different criteria for scaling in\. For example, if one policy terminates three instances, another policy decreases the number of instances by 25 percent, and the group has eight instances at the time of scale in, Amazon EC2 Auto Scaling gives precedence to the policy that provides the largest number of instances for the group\. This results in the Auto Scaling group terminating two instances \(25% of 8 = 2\)\. The intention is to prevent Amazon EC2 Auto Scaling from removing too many instances\.
+The approach of giving precedence to the policy that provides the largest capacity applies even when the policies use different criteria for scaling in\. For example, if one policy terminates three instances, another policy decreases the number of instances by 25 percent, and the group has eight instances at the time of scale in, Amazon EC2 Auto Scaling gives precedence to the policy that provides the largest number of instances for the group\. This results in the Auto Scaling group terminating two instances \(25 percent of 8 = 2\)\. The intention is to prevent Amazon EC2 Auto Scaling from removing too many instances\.

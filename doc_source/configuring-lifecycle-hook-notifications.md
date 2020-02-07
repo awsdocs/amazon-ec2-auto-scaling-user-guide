@@ -3,7 +3,7 @@
 You can add a lifecycle hook to an Auto Scaling group that triggers a notification when an instance enters a wait state\. You can configure these notifications for a variety of reasons, for example, to invoke a Lambda function or to receive email notification so that you can perform a custom action\. This topic describes how to configure notifications using Amazon CloudWatch Events, Amazon SNS, and Amazon SQS\. Choose whichever option you prefer\. Alternatively, if you have a script that configures your instances when they launch, you do not need to receive notification when the lifecycle action occurs\.
 
 **Important**  
-AWS resources for notifications must always be created in the same AWS Region where you create your lifecycle hook\. For example, if you configure notifications using Amazon SNS, the Amazon SNS topic must reside in the same region as your lifecycle hook\. 
+AWS resources for notifications must always be created in the same AWS Region where you create your lifecycle hook\. For example, if you configure notifications using Amazon SNS, the Amazon SNS topic must reside in the same Region as your lifecycle hook\. 
 
 **Topics**
 + [Route Notifications to Lambda Using CloudWatch Events](#cloudwatch-events-notification)
@@ -24,7 +24,7 @@ You can use CloudWatch Events to set up a target to invoke a Lambda function whe
    aws events put-rule --name my-rule --event-pattern file://pattern.json --state ENABLED
    ```
 
-   The `pattern.json` for an instance launch lifecycle action is:
+   The following examples shows the `pattern.json` for an instance launch lifecycle action\.
 
    ```
    {
@@ -33,7 +33,7 @@ You can use CloudWatch Events to set up a target to invoke a Lambda function whe
    }
    ```
 
-   The `pattern.json` for an instance terminate lifecycle action is:
+   The following examples shows the `pattern.json` for an instance terminate lifecycle action\.
 
    ```
    {
@@ -87,13 +87,13 @@ You can use Amazon SNS to set up a notification target to receive notifications 
 
    1. Under **Select your use case**, choose **EC2 Auto Scaling Notification Access**, and then choose **Next:Permissions**\. 
 
-   1. Choose **Next:Tags**, \(optional\) add metadata to the role by attaching tags as key–value pairs, and then choose **Next:Review**\. 
+   1. Choose **Next:Tags**\. Optionally, you can add metadata to the role by attaching tags as key–value pairs\. Then choose **Next:Review**\. 
 
-   1. On the **Review** page, type a name for the role \(e\.g\. my\-notification\-role\) and choose **Create role**\. 
+   1. On the **Review** page, enter a name for the role \(for example, my\-notification\-role\), and choose **Create role**\. 
 
-   1. On the **Roles** page, choose the role you just created to open the **Summary** page\. Make a note of the **Role ARN**\. For example, `arn:aws:iam::123456789012:role/my-notification-role`\. You will specify the role ARN when you create the lifecycle hook in the next procedure\. 
+   1. On the **Roles** page, choose the role that you just created to open the **Summary** page\. Make a note of the **Role ARN**\. For example, `arn:aws:iam::123456789012:role/my-notification-role`\. You will specify the role ARN when you create the lifecycle hook in the next procedure\. 
 
-1. After you have followed these instructions, continue on to [Add Lifecycle Hooks \(AWS CLI\)](lifecycle-hooks.md#adding-lifecycle-hooks-aws-cli) as a next step\.
+1. After you have followed these instructions, continue on to [Add Lifecycle Hooks \(AWS CLI\}](lifecycle-hooks.md#adding-lifecycle-hooks-aws-cli) as a next step\.
 
 When the Auto Scaling group responds to a scale\-out or scale\-in event, it puts the instance in a wait state\. While the instance is in a wait state, a message is published to the notification target\. The message includes the following event data:
 + `LifecycleActionToken` — The lifecycle action token\.
@@ -103,7 +103,7 @@ When the Auto Scaling group responds to a scale\-out or scale\-in event, it puts
 + `EC2InstanceId` — The ID of the EC2 instance\.
 + `LifecycleTransition` — The lifecycle hook type\.
 
-For example:
+The following is a notification message example\.
 
 ```
 Service: AWS Auto Scaling
@@ -143,12 +143,12 @@ FIFO queues are not compatible with lifecycle hooks\.
 
    1. Under **Select your use case**, choose **EC2 Auto Scaling Notification Access**, and then choose **Next:Permissions**\. 
 
-   1. Choose **Next:Tags**, \(optional\) add metadata to the role by attaching tags as key–value pairs, and then choose **Next:Review**\. 
+   1. Choose **Next:Tags**\. Optionally, you can add metadata to the role by attaching tags as key–value pairs\. Then choose **Next:Review**\. 
 
-   1. On the **Review** page, type a name for the role \(e\.g\. my\-notification\-role\) and choose **Create role**\. 
+   1. On the **Review** page, enter a name for the role \(for example, my\-notification\-role\), and choose **Create role**\. 
 
-   1. On the **Roles** page, choose the role you just created to open the **Summary** page\. Make a note of the **Role ARN**\. For example, `arn:aws:iam::123456789012:role/my-notification-role`\. You will specify the role ARN when you create the lifecycle hook in the next procedure\. 
+   1. On the **Roles** page, choose the role you that just created to open the **Summary** page\. Make a note of the **Role ARN**\. For example, `arn:aws:iam::123456789012:role/my-notification-role`\. You will specify the role ARN when you create the lifecycle hook in the next procedure\. 
 
-1. After you have followed these instructions, continue on to [Add Lifecycle Hooks \(AWS CLI\)](lifecycle-hooks.md#adding-lifecycle-hooks-aws-cli) as a next step\.
+1. After you have followed these instructions, continue on to [Add Lifecycle Hooks \(AWS CLI\}](lifecycle-hooks.md#adding-lifecycle-hooks-aws-cli) as a next step\.
 
 When the Auto Scaling group responds to a scale\-out or scale\-in event, it puts the instance in a wait state\. While the instance is in a wait state, a message is published to the notification target\.

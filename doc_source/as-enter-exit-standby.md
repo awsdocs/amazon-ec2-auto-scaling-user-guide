@@ -55,15 +55,15 @@ The following procedure demonstrates the general process for updating an instanc
 
 1. Select the Auto Scaling group\.
 
-1. On the **Instances** tab, select the instance\.
+1. On the **Instance management** tab, in **Instances**, select an instance\. \(Old console: The **Instances** tab is where you can select the instance\.\) 
 
 1. Choose **Actions**, **Set to Standby**\.
 
-1. On the **Set to Standby** page, select the check box to launch a replacement instance\. Leave it unchecked to decrement the desired capacity\. Choose **Set to Standby**\.
+1. In the **Set to Standby** dialog box, select the check box to launch a replacement instance\. Leave it unchecked to decrement the desired capacity\. Choose **Set to Standby**\.
 
 1. You can update or troubleshoot your instance as needed\. When you have finished, continue with the next step to return the instance to service\.
 
-1. Select the instance, choose **Actions**, **Set to InService**\. On the **Set to InService** page, choose **Set to InService**\.
+1. Select the instance, choose **Actions**, **Set to InService**\. In the **Set to InService** dialog box, choose **Set to InService**\.
 
 ## Temporarily Remove an Instance \(AWS CLI\)<a name="standby-state-aws-cli"></a>
 
@@ -71,13 +71,13 @@ The following procedure demonstrates the general process for updating an instanc
 
 **To temporarily remove an instance**
 
-1. Use the following [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/describe-auto-scaling-instances.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/describe-auto-scaling-instances.html) command to identify the instance to update:
+1. Use the following [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/describe-auto-scaling-instances.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/describe-auto-scaling-instances.html) command to identify the instance to update\.
 
    ```
    aws autoscaling describe-auto-scaling-instances
    ```
 
-   The following is an example response:
+   The following is an example response\.
 
    ```
    {
@@ -107,7 +107,7 @@ The following procedure demonstrates the general process for updating an instanc
      --auto-scaling-group-name my-asg --should-decrement-desired-capacity
    ```
 
-   The following is an example response:
+   The following is an example response\.
 
    ```
    {
@@ -164,7 +164,7 @@ The following procedure demonstrates the general process for updating an instanc
    aws autoscaling exit-standby --instance-ids i-05b4f7d5be44822a6 --auto-scaling-group-name my-asg
    ```
 
-   The following is an example response:
+   The following is an example response\.
 
    ```
    {

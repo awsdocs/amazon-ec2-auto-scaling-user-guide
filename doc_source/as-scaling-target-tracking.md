@@ -12,7 +12,7 @@ We recommend that you scale on Amazon EC2 instance metrics with a 1\-minute freq
 
 Keep the following considerations in mind:
 + A target tracking scaling policy assumes that it should scale out your Auto Scaling group when the specified metric is above the target value\. You cannot use a target tracking scaling policy to scale out your Auto Scaling group when the specified metric is below the target value\.
-+ You may see gaps between the target value and the actual metric data points\. This is because we act conservatively by rounding up or down when determining how many instances to add or remove\. This prevents us from adding an insufficient number of instances or removing too many instances\. However, for smaller Auto Scaling groups with fewer instances, the utilization of the group may seem far from the target value\. For example, you set a target value of 50 percent for CPU utilization and your Auto Scaling group then exceeds the target\. We might determine that adding 1\.5 instances will decrease the CPU utilization to close to 50 percent\. Because it is not possible to add 1\.5 instances, we round up and add two instances\. This might decrease the CPU utilization to a value below 50 percent, but it ensures that your application has enough resources to support it\. Similarly, if we determine that removing 1\.5 instances increases your CPU utilization to above 50 percent, we remove just one instance\. 
++ You might see gaps between the target value and the actual metric data points\. This is because we act conservatively by rounding up or down when determining how many instances to add or remove\. This prevents us from adding an insufficient number of instances or removing too many instances\. However, for smaller Auto Scaling groups with fewer instances, the utilization of the group might seem far from the target value\. For example, let's say that you set a target value of 50 percent for CPU utilization and your Auto Scaling group then exceeds the target\. We might determine that adding 1\.5 instances will decrease the CPU utilization to close to 50 percent\. Because it is not possible to add 1\.5 instances, we round up and add two instances\. This might decrease the CPU utilization to a value below 50 percent, but it ensures that your application has enough resources to support it\. Similarly, if we determine that removing 1\.5 instances increases your CPU utilization to above 50 percent, we remove just one instance\. 
 + For larger Auto Scaling groups with more instances, the utilization is spread over a larger number of instances, in which case adding or removing instances causes less of a gap between the target value and the actual metric data points\.
 + To ensure application availability, the Auto Scaling group scales out proportionally to the metric as fast as it can, but scales in more gradually\.
 + An Auto Scaling group can have multiple scaling policies in force at the same time\. For more information, see [Multiple Scaling Policies](as-scale-based-on-demand.md#multiple-scaling-policy-resolution)\. 
@@ -32,58 +32,14 @@ You can use the Amazon EC2 console to apply a target tracking scaling policy bas
 You can choose other available Amazon CloudWatch metrics by specifying a customized metric\. 
 
 Keep the following in mind when choosing a metric:
-+ Not all metrics work for target tracking\. This can be important when you are specifying a customized metric\. The metric must be a valid utilization metric and describe how busy an instance is\. The metric value must increase or decrease proportionally to the number of instances in the Auto Scaling group\. That's so the metric data can be used to proportionally scale out or in the number of instances\. For example, the CPU utilization of an Auto Scaling group \(that is, the Amazon EC2 metric `CPUUtilization` with the metric dimension `AutoScalingGroupName`\) works, if the load on the Auto Scaling group is distributed across the instances\. 
++ Not all metrics work for target tracking\. This can be important when you are specifying a customized metric\. The metric must be a valid utilization metric and describe how busy an instance is\. The metric value must increase or decrease proportionally to the number of instances in the Auto Scaling group\. That's so the metric data can be used to proportionally scale out or in the number of instances\. For example, the CPU utilization of an Auto Scaling group works \(that is, the Amazon EC2 metric `CPUUtilization` with the metric dimension `AutoScalingGroupName`\), if the load on the Auto Scaling group is distributed across the instances\. 
 + The following metrics do not work for target tracking:
   + The number of requests received by the load balancer fronting the Auto Scaling group \(that is, the Elastic Load Balancing metric `RequestCount`\)\. The number of requests received by the load balancer doesn’t change based on the utilization of the Auto Scaling group\.
   + Load balancer request latency \(that is, the Elastic Load Balancing metric `Latency`\)\. Request latency can increase based on increasing utilization, but doesn’t necessarily change proportionally\.
-  + The CloudWatch SQS queue metric `ApproximateNumberOfMessagesVisible`\. The number of messages in a queue may not change proportionally to the size of the Auto Scaling group that processes messages from the queue\. However, a customized metric that measures the number of messages in the queue per EC2 instance in the Auto Scaling group can work\. For more information, see [Scaling Based on Amazon SQS](as-using-sqs-queue.md)\.
-+ A target tracking scaling policy does not scale in your Auto Scaling group when the specified metric has insufficient data unless you use the `ALBRequestCountPerTarget` metric\. This works because the `ALBRequestCountPerTarget` metric emits zeros for periods with no associated data, and the target tracking policy requires metric data to interpret a low utilization trend\. To have your Auto Scaling group scale in to 0 instances when no requests are routed to the target group, the group's minimum capacity must be set to 0\. 
+  + The CloudWatch SQS queue metric `ApproximateNumberOfMessagesVisible`\. The number of messages in a queue might not change proportionally to the size of the Auto Scaling group that processes messages from the queue\. However, a customized metric that measures the number of messages in the queue per EC2 instance in the Auto Scaling group can work\. For more information, see [Scaling Based on Amazon SQS](as-using-sqs-queue.md)\.
++ A target tracking scaling policy does not scale in your Auto Scaling group when the specified metric has insufficient data, unless you use the `ALBRequestCountPerTarget` metric\. This works because the `ALBRequestCountPerTarget` metric emits zeros for periods with no associated data, and the target tracking policy requires metric data to interpret a low utilization trend\. To have your Auto Scaling group scale in to 0 instances when no requests are routed to the target group, the group's minimum capacity must be set to 0\. 
 
-## Create an Auto Scaling Group with a Target Tracking Scaling Policy \(Console\)<a name="policy_creating"></a>
-
-**To create an Auto Scaling group with a target tracking scaling policy**
-
-1. Open the Amazon EC2 console at [https://console\.aws\.amazon\.com/ec2/](https://console.aws.amazon.com/ec2/)\.
-
-1. On the navigation pane, under **Auto Scaling**, choose **Auto Scaling Groups**\.
-
-1. Choose **Create Auto Scaling group**\.
-
-1. On the **Create Auto Scaling Group** page, do one of the following:
-   + Select **Create an Auto Scaling group from an existing launch configuration**, select an existing launch configuration, and then choose **Next Step**\.
-   + If you don't have a launch configuration that you'd like to use, choose **Create a new launch configuration** and follow the directions\. For more information, see [Creating a Launch Configuration](create-launch-config.md)\.
-
-1. On the **Configure Auto Scaling group details** page, do the following:
-
-   1. For **Group name**, enter a name for your Auto Scaling group\.
-
-   1. For **Group size**, enter the desired capacity for your Auto Scaling group\.
-
-   1. If the launch configuration specifies instances that require a VPC, such as T2 instances, you must select a VPC from **Network**\. Otherwise, if your AWS account supports EC2\-Classic and the instances don't require a VPC, you can select either `Launch into EC2-Classic` or a VPC\.
-
-   1. If you selected a VPC in the previous step, select one or more subnets from **Subnet**\. If you selected EC2\-Classic in the previous step, select one or more Availability Zones from **Availability Zone\(s\)**\.
-
-   1. Choose **Next: Configure scaling policies**\.
-
-1. <a name="policy-creating-scalingpolicies-console"></a>On the **Configure scaling policies** page, do the following:
-
-   1. Select **Use scaling policies to adjust the capacity of this group**\.
-
-   1. Specify the minimum and maximum size for your Auto Scaling group using the row that begins with **Scale between**\. For example, if your group is already at its maximum size, specify a new maximum in order to scale out\.
-
-   1. For **Scale Group Size**, specify a scaling policy\. You can optionally specify a name for the policy, and then choose a value for **Metric type**\.
-
-   1. Specify a **Target value** for the metric\.
-
-   1. Specify an instance warm\-up value for **Instances need**, which allows you to control the time until a newly launched instance can contribute to the CloudWatch metrics\.
-
-   1. Check the **Disable scale\-in** option to create only a scale\-out policy\. This allows you to create a separate scale\-in policy of a different type if wanted\.
-
-   1. Choose **Review**\.
-
-   1. On the **Review** page, choose **Create Auto Scaling group**\.
-
-## Instance Warmup<a name="as-target-tracking-scaling-warmup"></a>
+## Instance Warm\-up<a name="as-target-tracking-scaling-warmup"></a>
 
 You can specify the number of seconds that it takes for a newly launched instance to warm up\. Until its specified warm\-up time has expired, an instance is not counted toward the aggregated metrics of the Auto Scaling group\.
 
@@ -92,6 +48,34 @@ While scaling out, we do not consider instances that are warming up as part of t
 While scaling in, we consider instances that are terminating as part of the current capacity of the group\. Therefore, we don't remove more instances from the Auto Scaling group than necessary\.
 
 A scale\-in activity can't start while a scale\-out activity is in progress\.
+
+## Create a Target Tracking Scaling Policy for an Auto Scaling Group \(Console\)<a name="policy_creating"></a>
+
+**To create a target tracking scaling policy**
+
+1. Open the Amazon EC2 console at [https://console\.aws\.amazon\.com/ec2/](https://console.aws.amazon.com/ec2/)\.
+
+1. On the navigation pane, under **Auto Scaling**, choose **Auto Scaling Groups**\.
+
+1. Select your Auto Scaling group and verify that the minimum and maximum size limits are appropriately set\. For example, if your group is already at its maximum size, specify a new maximum in order to scale out\. Amazon EC2 Auto Scaling does not scale your group below the minimum capacity or above the maximum capacity\. To update your group, choose **Edit**, specify the minimum and maximum size, and then choose **Save**\. 
+
+1. On the **Automatic scaling** tab, in **Scaling policies**, choose **Add policy**\. \(Old console: The **Scaling Policies** tab is where you can add the policy\.\) 
+
+1. <a name="policy-creating-scalingpolicies-console"></a>To define a policy, do the following:
+
+   1. For **Policy type**, leave the default of **Target tracking scaling**\. 
+
+   1. Specify a name for the policy\.
+
+   1. Choose a metric for **Metric type**\.
+
+   1. Specify a **Target value** for the metric\.
+
+   1. \(Optional\) Specify an instance warm\-up value for **Instances need**\. This allows you to control the time until a newly launched instance can contribute to the CloudWatch metrics\.
+
+   1. \(Optional\) Select **Disable scale in to create only a scale\-out policy**\. This allows you to create a separate scale\-in policy of a different type if wanted\.
+
+1. Choose **Create**\.
 
 ## Create a Target Tracking Scaling Policy \(AWS CLI\)<a name="target-tracking-policy-creating-aws-cli"></a>
 
@@ -117,7 +101,7 @@ aws autoscaling create-auto-scaling-group --auto-scaling-group-name my-asg \
 You can create a target tracking scaling policy that tells the Auto Scaling group to increase and decrease the number of running EC2 instances in the group dynamically when the load on the application changes\. 
 
 **Example: target tracking configuration file**  
-The following is an example of a target tracking configuration file, which you should save as `config.json`:
+The following is an example of a target tracking configuration file, which you should save as `config.json`\.
 
 ```
 {
@@ -150,7 +134,7 @@ Alternatively, you can customize the metric used for scaling by creating a custo
 ```
 
 **Example: cpu40\-target\-tracking\-scaling\-policy**  
-Use the [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/put-scaling-policy.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/put-scaling-policy.html) command, along with the `config.json` file that you created previously, to create a scaling policy named `cpu40-target-tracking-scaling-policy` that keeps the average CPU utilization of the Auto Scaling group at 40 percent:
+Use the [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/put-scaling-policy.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/put-scaling-policy.html) command, along with the `config.json` file that you created previously, to create a scaling policy named `cpu40-target-tracking-scaling-policy` that keeps the average CPU utilization of the Auto Scaling group at 40 percent\.
 
 ```
 aws autoscaling put-scaling-policy --policy-name cpu40-target-tracking-scaling-policy \

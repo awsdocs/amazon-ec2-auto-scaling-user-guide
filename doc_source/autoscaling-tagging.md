@@ -6,7 +6,7 @@ Additionally, you can propagate the tags from the Auto Scaling group to the Amaz
 
 You can add one or more tags to an Auto Scaling group when you create it\. You can also add, list, edit, or delete tags for existing Auto Scaling groups\. 
 
-You can also control which IAM users and groups in your account have permission to create, edit, or delete tags\. For more information, see [Controlling Access to Your Amazon EC2 Auto Scaling Resources](control-access-using-iam.md)\. Keep in mind, however, that a policy that restricts your users from performing a tagging operation on an Auto Scaling group does not prevent them from manually changing the tags on the instances after they have launched\. For information about IAM policies for Amazon EC2, see [Controlling Access to Amazon EC2 Resources](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/UsingIAM.html) in the *Amazon EC2 User Guide for Linux Instances*\.
+You can also control which IAM users and groups in your account have permission to create, edit, or delete tags\. For more information, see [Example: Control Access Using Tags](security_iam_id-based-policy-examples.md#policy-example-tags)\. Keep in mind, however, that a policy that restricts your users from performing a tagging operation on an Auto Scaling group does not prevent them from manually changing the tags on the instances after they have launched\. For information about IAM policies for tagging \(or untagging\) Amazon EC2 resources, see [Example: Tagging Resources](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ExamplePolicies_EC2.html#iam-example-taggingresources) in the *Amazon EC2 User Guide for Linux Instances*\.
 
 **Important**  
 You can also add tags to instances by specifying the tags in your launch template\. However, use caution and ensure that you do not use duplicate keys for instance tags\. If you do so, Amazon EC2 Auto Scaling overrides the tag value from your launch template with the value for the same key specified by the Auto Scaling group\. For information about specifying tags in a launch template, see [Creating a Launch Template for an Auto Scaling Group](create-launch-template.md)\. By specifying the tags in a launch template, you can also add tags to Amazon EBS volumes on creation\. 
@@ -58,17 +58,19 @@ When you use the Amazon EC2 console to create an Auto Scaling group, you can spe
 
 1. Open the Amazon EC2 console at [https://console\.aws\.amazon\.com/ec2/](https://console.aws.amazon.com/ec2/)\.
 
-1. On the navigation pane, under **Auto Scaling**, choose **Auto Scaling Groups**\.
+1. In the navigation pane, choose **Auto Scaling Groups**\.
 
-1. Choose an existing group from the list\.
+1. Select the check box next to an existing group\.
 
-1. On the **Tags** tab, choose **Add/Edit tags**\. The **Add/Edit Auto Scaling Group Tags** page lists any existing tags for the Auto Scaling group\.
+   A new pane appears below the **Auto Scaling groups** pane, showing information about the group you selected\. 
+
+1. On the **Details** tab, under **Tags**, choose **Edit**\. \(Old console: On the **Tags** tab, choose **Add/Edit tags**\.\)
 
 1. To modify existing tags, edit **Key** and **Value**\.
 
-1. To add a new tag, choose **Add tag** and edit **Key** and **Value**\. You can keep **Tag New Instances** selected to add the tag to the instances launched in the Auto Scaling group automatically, and deselect it otherwise\.
+1. To add a new tag, choose **Add tag** and edit **Key** and **Value**\. You can keep **Tag new instances** selected to add the tag to the instances launched in the Auto Scaling group automatically, and deselect it otherwise\.
 
-1. When you have finished adding tags, choose **Save**\.
+1. When you have finished adding tags, choose **Update**\. \(Old console: Choose **Save**\.\)
 
 ### Add or Modify Tags \(AWS CLI\)<a name="add-tags-aws-cli"></a>
 
@@ -159,7 +161,23 @@ You can delete a tag associated with your Auto Scaling group at any time\.
 
 ### Delete Tags \(Console\)<a name="delete-tag-console"></a>
 
-**To delete a tag**
+**To delete a tag \(new console\)**
+
+1. Open the Amazon EC2 console at [https://console\.aws\.amazon\.com/ec2/](https://console.aws.amazon.com/ec2/)\.
+
+1. In the navigation pane, choose **Auto Scaling Groups**\.
+
+1. Select the check box next to an existing group\.
+
+   A new pane appears below the **Auto Scaling groups** pane, showing information about the group you selected\. 
+
+1. On the **Details** tab, under **Tags**, choose **Edit**\.
+
+1. Choose **Remove** next to the tag\.
+
+1. Choose **Update**\.
+
+**To delete a tag \(old console\)**
 
 1. Open the Amazon EC2 console at [https://console\.aws\.amazon\.com/ec2/](https://console.aws.amazon.com/ec2/)\.
 

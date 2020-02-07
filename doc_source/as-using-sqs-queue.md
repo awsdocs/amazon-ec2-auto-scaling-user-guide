@@ -23,7 +23,7 @@ The solution is to use a *backlog per instance* metric with the target value bei
 + **Backlog per instance**: To determine your backlog per instance, start with the Amazon SQS metric `ApproximateNumberOfMessages` to determine the length of the SQS queue \(number of messages available for retrieval from the queue\)\. Divide that number by the fleet's running capacity, which for an Auto Scaling group is the number of instances in the `InService` state, to get the backlog per instance\.
 + **Acceptable backlog per instance**: To determine your target value, first calculate what your application can accept in terms of latency\. Then, take the acceptable latency value and divide it by the average time that an EC2 instance takes to process a message\. 
 
-To illustrate with an example, the current `ApproximateNumberOfMessages` is 1500 and the fleet's running capacity is 10\. If the average processing time is 0\.1 seconds for each message and the longest acceptable latency is 10 seconds, then the acceptable backlog per instance is 10 / 0\.1, which equals 100\. This means that 100 is the target value for your target tracking policy\. Because the backlog per instance is currently at 150 \(1500 / 10\), your fleet scales out by five instances to maintain proportion to the target value\. 
+To illustrate with an example, let's say that the current `ApproximateNumberOfMessages` is 1500 and the fleet's running capacity is 10\. If the average processing time is 0\.1 seconds for each message and the longest acceptable latency is 10 seconds, then the acceptable backlog per instance is 10 / 0\.1, which equals 100\. This means that 100 is the target value for your target tracking policy\. Because the backlog per instance is currently at 150 \(1500 / 10\), your fleet scales out by five instances to maintain proportion to the target value\. 
 
 The following examples create the custom metric and target tracking scaling policy that configures your Auto Scaling group to scale based on these calculations\.
 
@@ -44,7 +44,7 @@ Wherever possible, you should scale on EC2 instance metrics with a 1\-minute fre
 
 **To create a CloudWatch custom metric**
 
-1. Use the SQS [https://docs.aws.amazon.com/cli/latest/reference/sqs/get-queue-attributes.html](https://docs.aws.amazon.com/cli/latest/reference/sqs/get-queue-attributes.html) command to get the number of messages waiting in the queue \(`ApproximateNumberOfMessages`\): 
+1. Use the SQS [https://docs.aws.amazon.com/cli/latest/reference/sqs/get-queue-attributes.html](https://docs.aws.amazon.com/cli/latest/reference/sqs/get-queue-attributes.html) command to get the number of messages waiting in the queue \(`ApproximateNumberOfMessages`\)\. 
 
    ```
    aws sqs get-queue-attributes --queue-url https://sqs.region.amazonaws.com/123456789/MyQueue \
@@ -99,7 +99,7 @@ Next, create a target tracking scaling policy that tells the Auto Scaling group 
    }
    ```
 
-1. Use the [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/put-scaling-policy.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/put-scaling-policy.html) command, along with the `config.json` file that you created in the previous step, to create your scaling policy:
+1. Use the [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/put-scaling-policy.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/put-scaling-policy.html) command, along with the `config.json` file that you created in the previous step, to create your scaling policy\.
 
    ```
    aws autoscaling put-scaling-policy --policy-name my-scaling-policy --auto-scaling-group-name my-asg \
@@ -110,7 +110,7 @@ Next, create a target tracking scaling policy that tells the Auto Scaling group 
 
 ### Step 3: Test Your Scaling Policy<a name="validate-sqs-scaling-cli"></a>
 
-After your setup is complete, verify your scaling policy is working\. You can test it by increasing the number of messages in your SQS queue and then verifying that your Auto Scaling group has launched an additional EC2 instance, and also by decreasing the number of messages in your SQS queue and then verifying that the Auto Scaling group has terminated an EC2 instance\.
+After your setup is complete, verify that your scaling policy is working\. You can test it by increasing the number of messages in your SQS queue and then verifying that your Auto Scaling group has launched an additional EC2 instance\. You can also test it by decreasing the number of messages in your SQS queue and then verifying that the Auto Scaling group has terminated an EC2 instance\.
 
 **To test the scale\-out function**
 
@@ -118,7 +118,7 @@ After your setup is complete, verify your scaling policy is working\. You can te
 
    It can take a few minutes for your changes to trigger the CloudWatch alarm\. 
 
-1. Use the [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/describe-auto-scaling-groups.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/describe-auto-scaling-groups.html) command to verify that the group has launched an instance:
+1. Use the [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/describe-auto-scaling-groups.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/describe-auto-scaling-groups.html) command to verify that the group has launched an instance\.
 
    ```
    aws autoscaling describe-auto-scaling-groups --auto-scaling-group-name my-asg
@@ -130,7 +130,7 @@ After your setup is complete, verify your scaling policy is working\. You can te
 
    It can take a few minutes for your changes to trigger the CloudWatch alarm\. 
 
-1. Use the [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/describe-auto-scaling-groups.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/describe-auto-scaling-groups.html) command to verify that the group has terminated an instance:
+1. Use the [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/describe-auto-scaling-groups.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/describe-auto-scaling-groups.html) command to verify that the group has terminated an instance\.
 
    ```
    aws autoscaling describe-auto-scaling-groups --auto-scaling-group-name my-asg

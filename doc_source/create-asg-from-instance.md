@@ -9,7 +9,7 @@ When you create an Auto Scaling group using an EC2 instance, Amazon EC2 Auto Sca
 **Limitations**  
 The following are limitations when creating an Auto Scaling group from an EC2 instance:
 + If the identified instance has tags, the tags are not copied to the `Tags` attribute of the new Auto Scaling group\.
-+ The Auto Scaling group includes the block device mapping from the AMI used to launch the instance; it does not include any block devices attached after instance launch\.
++ The Auto Scaling group includes the block device mapping from the AMI used to launch the instance\. It does not include any block devices attached after instance launch\.
 + If the identified instance is registered with one or more load balancers, the information about the load balancer is not copied to the load balancer or target group attribute of the new Auto Scaling group\.
 
 **Prerequisites**
@@ -43,7 +43,7 @@ Use the following [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/
 aws autoscaling describe-auto-scaling-groups --auto-scaling-group-name my-asg-from-instance
 ```
 
-The following example response shows that the desired capacity of the group is 2, the group has 2 running instances, and the launch configuration is also named *my\-asg\-from\-instance*\.
+The following example response shows that the desired capacity of the group is 2, the group has 2 running instances, and the launch configuration is named *my\-asg\-from\-instance*\.
 
 ```
 {

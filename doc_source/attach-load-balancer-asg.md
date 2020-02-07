@@ -10,8 +10,8 @@ When you detach a load balancer, it enters the `Removing` state while deregister
 
 **Topics**
 + [Prerequisites](#as-add-load-balancer-prerequisites)
-+ [Add a Load Balancer \(Console\)](#as-add-load-balancer-console)
-+ [Add a Load Balancer \(AWS CLI\)](#as-add-load-balancer-aws-cli)
++ [Attach a Load Balancer \(Console\)](#as-add-load-balancer-console)
++ [Attach a Load Balancer \(AWS CLI\)](#as-add-load-balancer-aws-cli)
 
 ## Prerequisites<a name="as-add-load-balancer-prerequisites"></a>
 
@@ -19,11 +19,33 @@ Before you begin, create an Application Load Balancer or Network Load Balancer i
 
 \(Optional\) To configure your Auto Scaling group to use Elastic Load Balancing health checks, see [Adding Elastic Load Balancing Health Checks to an Auto Scaling Group](as-add-elb-healthcheck.md)\.
 
-## Add a Load Balancer \(Console\)<a name="as-add-load-balancer-console"></a>
+## Attach a Load Balancer \(Console\)<a name="as-add-load-balancer-console"></a>
 
-Use the following procedure to attach a load balancer to an existing Auto Scaling group\. To attach your load balancer to your Auto Scaling group when you create the group, see [Tutorial: Set Up a Scaled and Load\-Balanced Application](as-register-lbs-with-asg.md)\.
+Use the following procedure to attach a load balancer to an existing Auto Scaling group\. 
 
 **To attach a load balancer to a group**
+
+1. Open the Amazon EC2 console at [https://console\.aws\.amazon\.com/ec2/](https://console.aws.amazon.com/ec2/)\.
+
+1. In the navigation pane, choose **Auto Scaling Groups**\.
+
+1. Select the check box next to an existing group\.
+
+   A new pane appears below the **Auto Scaling groups** pane, showing information about the group that you selected\. 
+
+1. On the **Details** tab, under **Load balancing**, choose **Edit**\.
+
+1. Under **Load balancing**, choose **Enable load balancing**\.
+
+1. Do one of the following:
+
+   1. Choose **Application Load Balancer or Network Load Balancer**, and then choose your target group\.
+
+   1. Choose **Classic Load Balancers**, and then choose your load balancer\.
+
+1. Choose **Update**\.
+
+**To attach a load balancer to a group \(old console\)**
 
 1. Open the Amazon EC2 console at [https://console\.aws\.amazon\.com/ec2/](https://console.aws.amazon.com/ec2/)\.
 
@@ -35,7 +57,7 @@ Use the following procedure to attach a load balancer to an existing Auto Scalin
 
 1. Do one of the following:
 
-   1. \[Classic Load Balancers\] For **Load Balancers**, choose your load balancer\.
+   1. \[Classic Load Balancers\] For **Classic Load Balancers**, choose your load balancer\.
 
    1. \[Application/Network Load Balancers\] For **Target Groups**, choose your target group\.
 
@@ -47,6 +69,26 @@ When you no longer need the load balancer, use the following procedure to detach
 
 1. Open the Amazon EC2 console at [https://console\.aws\.amazon\.com/ec2/](https://console.aws.amazon.com/ec2/)\.
 
+1. In the navigation pane, choose **Auto Scaling Groups**\.
+
+1. Select the check box next to an existing group\.
+
+   A new pane appears below the **Auto Scaling groups** pane, showing information about the group you selected\. 
+
+1. On the **Details** tab, under **Load balancing**, choose **Edit**\.
+
+1. Do one of the following:
+
+   1. Choose **Application Load Balancer or Network Load Balancer**, and then choose the delete icon next to the target group\.
+
+   1. Choose **Classic Load Balancers**, and then choose the delete icon next to the load balancer\. 
+
+1. Choose **Update**\. 
+
+**To detach a load balancer from a group \(old console\)**
+
+1. Open the Amazon EC2 console at [https://console\.aws\.amazon\.com/ec2/](https://console.aws.amazon.com/ec2/)\.
+
 1. On the navigation pane, under **Auto Scaling**, choose **Auto Scaling Groups**\.
 
 1. Choose an existing group from the list\.
@@ -55,21 +97,13 @@ When you no longer need the load balancer, use the following procedure to detach
 
 1. Do one of the following:
 
-   1. \[Classic Load Balancers\] For **Load Balancers**, remove the load balancer\.
+   1. \[Classic Load Balancers\] For **Classic Load Balancers**, remove the load balancer\.
 
    1. \[Application/Network Load Balancers\] For **Target Groups**, remove the target group\.
 
 1. Choose **Save**\.
 
-## Add a Load Balancer \(AWS CLI\)<a name="as-add-load-balancer-aws-cli"></a>
-
-**To attach a Classic Load Balancer**  
-Use the following [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/attach-load-balancers.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/attach-load-balancers.html) command to attach the specified load balancer to your Auto Scaling group\.
-
-```
-aws autoscaling attach-load-balancers --auto-scaling-group-name my-asg \
-  --load-balancer-names my-lb
-```
+## Attach a Load Balancer \(AWS CLI\)<a name="as-add-load-balancer-aws-cli"></a>
 
 **To attach a target group for an Application Load Balancer or Network Load Balancer**  
 Use the following [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/attach-load-balancer-target-groups.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/attach-load-balancer-target-groups.html) command to attach the specified target group to your Auto Scaling group\.
@@ -79,18 +113,26 @@ aws autoscaling attach-load-balancer-target-groups --auto-scaling-group-name my-
   --target-group-arns my-targetgroup-arn
 ```
 
-**To detach a Classic Load Balancer**  
-Use the following [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/detach-load-balancers.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/detach-load-balancers.html) command to detach a load balancer from your Auto Scaling group if you no longer need it\.
-
-```
-aws autoscaling detach-load-balancers --auto-scaling-group-name my-asg \
-  --load-balancer-names my-lb
-```
-
 **To detach a target group for an Application Load Balancer or Network Load Balancer**  
 Use the following [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/detach-load-balancer-target-groups.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/detach-load-balancer-target-groups.html) command to detach a target group from your Auto Scaling group if you no longer need it\.
 
 ```
 aws autoscaling detach-load-balancer-target-groups --auto-scaling-group-name my-asg \
   --target-group-arns my-targetgroup-arn
+```
+
+**To attach a Classic Load Balancer**  
+Use the following [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/attach-load-balancers.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/attach-load-balancers.html) command to attach the specified load balancer to your Auto Scaling group\.
+
+```
+aws autoscaling attach-load-balancers --auto-scaling-group-name my-asg \
+  --load-balancer-names my-lb
+```
+
+**To detach a Classic Load Balancer**  
+Use the following [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/detach-load-balancers.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/detach-load-balancers.html) command to detach a load balancer from your Auto Scaling group if you no longer need it\.
+
+```
+aws autoscaling detach-load-balancers --auto-scaling-group-name my-asg \
+  --load-balancer-names my-lb
 ```

@@ -1,35 +1,46 @@
 # Getting Started with Amazon EC2 Auto Scaling<a name="GettingStartedTutorial"></a>
 
-When you use Amazon EC2 Auto Scaling, you must use certain building blocks to get started\. This tutorial walks you through the process for setting up the basic infrastructure for Amazon EC2 Auto Scaling\. 
+When you use Amazon EC2 Auto Scaling, you must use certain building blocks to get started\. This tutorial walks you through the process for setting up building blocks to create a basic infrastructure for Amazon EC2 Auto Scaling\. 
 
-Before you create an Auto Scaling group for use with your application, review your application thoroughly as it runs in the AWS Cloud\. Take note of the following: 
-+ How long it takes to launch and configure a server\.
-+ What metrics have the most relevance to your application's performance\.
+Before you create an Auto Scaling group for use with your application, review your application thoroughly as it runs in the AWS Cloud\. Consider the following: 
 + How many Availability Zones the Auto Scaling group should span\.
 + What existing resources can be used, such as security groups or Amazon Machine Images \(AMIs\)\.
-+ Do you want to scale to increase or decrease capacity, or do you just want to ensure that a specific number of servers are always running? Keep in mind that Amazon EC2 Auto Scaling can do both simultaneously\.
++ Whether you want to scale to increase or decrease capacity, or if you just want to ensure that a specific number of servers are always running\. Keep in mind that Amazon EC2 Auto Scaling can do both simultaneously\.
++ What metrics have the most relevance to your application's performance\.
++ How long it takes to launch and configure a server\.
 
 The better you understand your application, the more effective you can make your Auto Scaling architecture\.
 
-The following instructions are for a configuration template that defines your EC2 instances, creates an Auto Scaling group to maintain a fixed number of instances even if an instance becomes unhealthy, and optionally deletes this basic infrastructure\. 
+The following instructions:
++ Create a configuration template that defines your EC2 instances\.
++ Create an Auto Scaling group to maintain a fixed number of instances even if an instance becomes unhealthy\.
++ Optionally, delete this basic infrastructure\.
 
-This tutorial assumes that you are familiar with launching EC2 instances and have already created a key pair and a security group\. For more information, see [Setting Up with Amazon EC2](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/get-set-up-for-amazon-ec2.html) in the *Amazon EC2 User Guide for Linux Instances*\. 
+This tutorial assumes that you are familiar with launching EC2 instances and that you have already created a key pair and a security group\. For more information, see [Setting Up with Amazon EC2](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/get-set-up-for-amazon-ec2.html) in the *Amazon EC2 User Guide for Linux Instances*\. 
+
+Amazon EC2 Auto Scaling has recently changed the Auto Scaling group interface\. By default, you're shown the old user interface, but you can switch to the new user interface\. This topic contains steps for both\. 
+
+To get started, you can launch a single [free tier](https://aws.amazon.com/free/) eligible Linux instance\. If you created your AWS account less than 12 months ago, and have not already exceeded the free tier benefits for Amazon EC2, it will not cost you anything to complete this tutorial, because we help you select options that are within the free tier benefits\. Otherwise, when you follow this tutorial, you incur the standard Amazon EC2 usage fees from the time that the instance launches until you delete the Auto Scaling group \(which is the final task of this tutorial\) and the instance status changes to `terminated`\. 
 
 **Topics**
 + [Step 1: Create a Launch Template](#gs-create-lt)
 + [Step 2: Create an Auto Scaling Group](#gs-create-asg)
 + [Step 3: Verify Your Auto Scaling Group](#gs-verify-asg)
-+ [Step 4: \(Optional\) Delete Your Scaling Infrastructure](#gs-delete-asg)
++ [Step 4: Next Steps](#gs-tutorial-next-steps)
++ [Step 5: \(Optional\) Delete Your Scaling Infrastructure](#gs-delete-asg)
 
 ## Step 1: Create a Launch Template<a name="gs-create-lt"></a>
 
-For this step, you create a launch template that specifies the type of EC2 instance that Amazon EC2 Auto Scaling creates for you\. Include information such as the ID of the Amazon Machine Image \(AMI\) to use, the instance type, key pairs, security groups, and block device mappings\.
+For this step, you create a launch template that specifies the type of EC2 instance that Amazon EC2 Auto Scaling creates for you\. Include information such as the ID of the Amazon Machine Image \(AMI\) to use, the instance type, the key pair, and security groups\. 
+
+**Note**  
+For detailed instructions for creating launch templates, see [Creating a Launch Template for an Auto Scaling Group](create-launch-template.md)\. 
 
 **To create a launch template for an Auto Scaling group**
 
 1. Open the Amazon EC2 console at [https://console\.aws\.amazon\.com/ec2/](https://console.aws.amazon.com/ec2/)\.
 
-1. On the navigation bar at the top of the screen, select an AWS Region\. The Amazon EC2 Auto Scaling resources that you create are tied to the region you specify\. 
+1. On the navigation bar at the top of the screen, select an AWS Region\. The Amazon EC2 Auto Scaling resources that you create are tied to the Region that you specify\. 
 
 1. On the navigation pane, choose **Launch Templates**\.
 
@@ -38,47 +49,35 @@ For this step, you create a launch template that specifies the type of EC2 insta
 
 1. Choose **Create a new template**\. For **Launch template name**, enter a name \(for example, `my_template`\)\. 
 
-1. For **Template version description**, enter a description for the initial version of the launch template to help you remember what this template is used for \(for example, `test launch template for an Auto Scaling group`\)\. 
+1. For **Template version description**, enter a description of the launch template to help you remember what this template is used for \(for example, `test launch template for an Auto Scaling group`\)\. 
 
-1. For **AMI ID**, choose a version of Amazon Linux 2 \(HVM\) from the **Quick Start** list\. The Amazon Machine Image \(AMI\) serves as basic configuration templates for your instances\. 
+1. For **AMI ID**, choose a version of Amazon Linux 2 \(HVM\) from the **Quick Start** list\. The Amazon Machine Image \(AMI\) serves as a basic configuration template for your instances\. 
 
 1. For **Instance type**, choose a hardware configuration that is compatible with the AMI that you specified\. Note that the free tier Linux server is a `t2.micro` instance\.
 **Note**  
 If your account is less than 12 months old, you can use a `t2.micro` instance for free within certain usage limits\. For more information, see [AWS Free Tier](https://aws.amazon.com/free/)\.
 
-1. \(Optional\) For **Key pair name**, type the name of the key pair to use when connecting to your instances\.
+1. \(Optional\) For **Key pair name**, choose an existing key pair\. You use key pairs to connect to an Amazon EC2 instance with SSH\. Connecting to an instance is not included as part of this tutorial\. Therefore, you don't need to specify a key pair unless you intend to connect to your instance\. 
 
-1. \(Optional\) For **Network type**, choose **VPC**\. 
+1. Leave **Network type** set to **VPC**\. 
 
-1. Skip **Security Groups** to configure a security group in the next step\. When a network interface is specified, the security group must be a part of it\.
+1. For **Security Groups**, specify the security group in the same VPC that you plan to use as the VPC for your Auto Scaling group\. If you don't specify a security group, your instance is automatically associated with the default security group for the VPC\.
 
-1. For **Network interfaces**, do the following to specify the primary network interface:
+1. You can leave **Network Interfaces** empty\. Leaving the setting empty creates a primary network interface with IP addresses that we select for your instance \(based on the subnet to which the network interface is established\)\. If instead you choose to specify a network interface, the security group must be a part of it\.
 
-   1. Choose **Add network interface**\.
-
-   1. \(Optional\) To assign public IP addresses to instances in a nondefault VPC, for **Auto\-assign public IP**, choose **Enable**\. This allows your instances to communicate with the internet and other services in AWS\. 
-
-   1. For **Security group ID**, specify a security group for the network interface\.
-
-   1. For **Delete on termination**, choose whether the network interface is deleted when the Auto Scaling group scales in and terminates the instance to which the network interface is attached\. 
-
-1. \(Optional\) For **Storage \(Volumes\)**, specify volumes to attach to the instances in addition to the volumes specified by the AMI you specified\.
-
-1. \(Optional\) For **Instance Tags**, specify one or more tags to associate with the instances and volumes\.
-
-1. Choose **Create launch template**\.
+1. Scroll down and choose **Create launch template**\.
 
 1. On the confirmation page, choose **Create Auto Scaling group**\.
 
-If you are not currently using launch templates, you can create a launch configuration instead\.
+If you are not currently using launch templates and prefer not to create one now, you can create a launch configuration instead\.
 
-A launch configuration is similar to a launch template, in that it specifies the type of EC2 instance that Amazon EC2 Auto Scaling creates for you\. Create the launch configuration by including information such as the ID of the Amazon Machine Image \(AMI\) to use, the instance type, the key pair, security groups, and block device mapping\. 
+A launch configuration is similar to a launch template, in that it specifies the type of EC2 instance that Amazon EC2 Auto Scaling creates for you\. You create the launch configuration by including information such as the ID of the Amazon Machine Image \(AMI\) to use, the instance type, the key pair, and security groups\. 
 
 **To create a launch configuration**
 
 1. Open the Amazon EC2 console at [https://console\.aws\.amazon\.com/ec2/](https://console.aws.amazon.com/ec2/)\.
 
-1. On the navigation bar, select a Region\. The Auto Scaling resources that you create are tied to the Region that you specify\. 
+1. On the navigation bar, select an AWS Region\. The Auto Scaling resources that you create are tied to the Region that you specify\. 
 
 1. On the navigation pane, under **Auto Scaling**, choose **Auto Scaling Groups**\.
 
@@ -89,13 +88,15 @@ A launch configuration is similar to a launch template, in that it specifies the
 
 1. For the **Choose AMI** step, there is a list of basic configurations, called Amazon Machine Images \(AMIs\), that serve as templates for your instances\. Choose **Select** for the Amazon Linux 2 AMI\. 
 
-1. For the **Choose Instance Type** step, select a hardware configuration for your instances\. We recommend that you keep the default, a `t2.micro` instance\. Choose **Next: Configure details**\.
+1. For the **Choose Instance Type** step, select a hardware configuration for your instance\. We recommend that you keep the default, a `t2.micro` instance\. Choose **Next: Configure details**\.
+**Note**  
+If your account is less than 12 months old, you can use a `t2.micro` instance for free within certain usage limits\. For more information, see [AWS Free Tier](https://aws.amazon.com/free/)\.
 
 1. For the **Configure details** step, do the following:
 
-   1. For **Name**, type a name for your launch configuration \(for example, `my-first-lc`\)\.
+   1. For **Name**, enter a name for your launch configuration \(for example, `my-first-lc`\)\.
 
-   1. For **Advanced Details**, select an IP address type\. If you want to provide internet connectivity to instances in a VPC, you must select an option that assigns a public IP address\. If you want to provide internet connectivity to your instances but aren't sure whether you have a default VPC, select **Assign a public IP address to every instance**\.
+   1. For **Advanced Details**, choose an IP address type\. To provide internet connectivity to instances in a VPC, choose an option that assigns a public IP address\. If an instance is launched into a default VPC, the default is to assign a public IP address\. If you want to provide internet connectivity to your instance but aren't sure whether you have a default VPC, choose **Assign a public IP address to every instance**\.
 
    1. Choose **Skip to review**\.
 
@@ -103,34 +104,62 @@ A launch configuration is similar to a launch template, in that it specifies the
 
 1. For the **Review** step, choose **Create launch configuration**\.
 
-1. Complete the **Select an existing key pair or create a new key pair** step as instructed\. You won't connect to your instance as part of this tutorial\. Therefore, you can select **Proceed without a key pair** unless you intend to connect to your instance\.
+1. Complete the **Select an existing key pair or create a new key pair** step as instructed\. Connecting to an instance is not included as part of this tutorial\. Therefore, you can select **Proceed without a key pair** unless you intend to connect to your instance\.
 
-1. Choose **Create launch configuration**\. The launch configuration is created and the wizard to create an Auto Scaling group is displayed\. 
+1. Choose **Create launch configuration**\. 
+
+1. Choose **Create an Auto Scaling group using this launch configuration**\. The wizard to create an Auto Scaling group is displayed\. 
 
 ## Step 2: Create an Auto Scaling Group<a name="gs-create-asg"></a>
 
-An Auto Scaling group is a collection of EC2 instances, and the core of Amazon EC2 Auto Scaling\. When you create an Auto Scaling group, you include information such as the subnets for the instances and the initial number of instances to start with\. 
+An Auto Scaling group is a collection of EC2 instances, and is the core of Amazon EC2 Auto Scaling\. When you create an Auto Scaling group, you include information such as the subnets for the instances and the initial number of instances to start with\. 
 
-Use the following procedure to continue where you left off after creating the launch configuration or template\.
+Use the following procedure to continue where you left off after creating either a launch template or a launch configuration\. 
 
-**To create an Auto Scaling group**
+**To create an Auto Scaling group \(new console\)**
+
+1. On the **Choose launch template or configuration** page, for **Auto Scaling group name**, enter a name for your Auto Scaling group\.
+
+1. For **Launch template**, choose one of the following options:
+
+   1. \[Launch template only\] Choose the launch template that you created and then choose the default version of the launch template to use when scaling out\. 
+
+   1. \[Launch configuration only\] Choose **Switch to launch configuration** and choose the launch configuration that you created\.
+
+1. Choose **Next**\. 
+
+   The **Configure settings** page appears, allowing you to configure network settings and giving you options for launching On\-Demand and Spot Instances across multiple instance types \(if you chose a launch template\)\.
+
+1. \[Launch template only\] Keep **Purchase options and instance types** set to **Adhere to the launch template** to quickly create and configure an Auto Scaling group\. 
+
+1. Keep **Network** set to the default VPC for your chosen AWS Region, or select your own VPC\. The default VPC is automatically configured to provide internet connectivity to your instance\. This VPC includes a public subnet in each Availability Zone in the Region\. 
+
+1. For **Subnet**, choose a subnet from each Availability Zone that you want to include\. Use subnets in multiple Availability Zones for high availability\. 
+
+1. Keep the rest of the defaults for this tutorial and choose **Skip to review**\. 
+**Note**  
+The initial size of the group is determined by its desired capacity\. The default value is `1` instance\. 
+
+1. On the **Review** page, review the information for the group, and then choose **Create Auto Scaling group**\.
+
+We recommend the new user interface, but you can still temporarily use the old user interface\.
+
+**To create an Auto Scaling group \(old console\)**
 
 1. For the **Configure Auto Scaling group details** step, do the following:
 
-   1.  For **Group name**, type a name for your Auto Scaling group \(for example, `my-first-asg`\)\.   
+   1.  For **Group name**, enter a name for your Auto Scaling group \(for example, `my-first-asg`\)\.   
 ![\[Auto Scaling group creation screen\]](http://docs.aws.amazon.com/autoscaling/ec2/userguide/images/as-gs-asg.png)
 
-   1. \[Launch template\] For **Launch template version**, choose whether the Auto Scaling group uses the default, the latest, or a specific version of the launch template when scaling out\.
+   1. \[Launch template\] For **Launch template version**, choose the default version of the launch template to use when scaling out\. 
 
    1. \[Launch template\] For **Fleet Composition**, choose **Adhere to the launch template**\. 
 
    1. Keep **Group size** set to the default value of `1` instance for this tutorial\.
 
-   1. Keep **Network** set to the default VPC for your chosen AWS Region, or select your own VPC\. 
+   1. Keep **Network** set to the default VPC for your chosen AWS Region, or select your own VPC\. The default VPC is automatically configured to provide internet connectivity to your instance\. This VPC includes a public subnet in each Availability Zone in the Region\. 
 
-   1. For **Subnet**, choose a subnet for the VPC\. 
-**Note**  
-You can choose the Availability Zone for your instance by choosing its corresponding default subnet\.
+   1. For **Subnet**, choose a subnet from each Availability Zone that you want to include\. Use subnets in multiple Availability Zones for high availability\. 
 
    1. Choose **Next: Configure scaling policies**\.
 
@@ -142,43 +171,46 @@ You can choose the Availability Zone for your instance by choosing its correspon
 
 ## Step 3: Verify Your Auto Scaling Group<a name="gs-verify-asg"></a>
 
-Now that you have created your Auto Scaling group, you are ready to verify that the group has launched an EC2 instance\.
+Now that you have created an Auto Scaling group, you are ready to verify that the group has launched an EC2 instance\.
+
+On the **Auto Scaling groups** page, complete the following procedure\. 
 
 **To verify that your Auto Scaling group has launched an EC2 instance**
 
-1. On the **Auto Scaling Groups** page, select the Auto Scaling group that you just created\.
+1. Select the check box next to the Auto Scaling group that you just created\. 
 
-1. The **Details** tab provides information about the Auto Scaling group\.  
-![\[Auto Scaling group details\]](http://docs.aws.amazon.com/autoscaling/ec2/userguide/images/as-gs-group-details.png)
+   The first tab available is the **Details** tab, showing information about the Auto Scaling group\.
 
-1. On the **Activity History** tab, the **Status** column shows the current status of your instance\. While your instance is launching, the status column shows `In progress`\. The status changes to `Successful` after the instance is launched\. You can also use the refresh button to see the current status of your instance\.
+1. Choose the second tab, **Activity**\. Under **Activity history**, you can view the progress of activities that are associated with the Auto Scaling group\. The **Status** column shows the current status of your instance\. While your instance is launching, the status column shows `PreInService`\. The status changes to `Successful` after the instance is launched\. You can also use the refresh button to see the current status of your instance\. \(Old console: The **Activity History** tab is where you can view the status of the instance\. While your instance is launching, the status column shows `In progress`\.\) 
 
-1. On the **Instances** tab, the **Lifecycle** column shows the state of your instance\. You can see that your Auto Scaling group has launched your EC2 instance, and that it is in the `InService` lifecycle state\. The **Health Status** column shows the result of the EC2 instance health check on your instance\.  
-![\[Auto Scaling group instances\]](http://docs.aws.amazon.com/autoscaling/ec2/userguide/images/as-gs-group-instances.png)
+1. On the **Instance management** tab, under **Instances**, you can view the status of the instance\. \(Old console: The **Instances** tab is where you can view the status of the instance\.\) 
+
+1. Verify that your instance launched successfully\. It takes a short time for an instance to launch\. The **Lifecycle** column shows the state of your instance\. Verify that your Auto Scaling group has launched your EC2 instance, and that it is in the `InService` lifecycle state\. The **Health status** column shows the result of the EC2 instance health check on your instance\.
 
 ### \(Optional\) Terminate an Instance in Your Auto Scaling Group<a name="gs-asg-terminate-instance"></a>
 
- If you want, you can try the following experiment to learn more about Amazon EC2 Auto Scaling\. The minimum size for your Auto Scaling group is one instance\. Therefore, if you terminate the running instance, Amazon EC2 Auto Scaling must launch a new instance to replace it\.
+If you want, you can use these steps to learn more about how Amazon EC2 Auto Scaling works, specifically, how it launches new instances when necessary\. The minimum size for the Auto Scaling group that you created in this tutorial is one instance\. Therefore, if you terminate that running instance, Amazon EC2 Auto Scaling must launch a new instance to replace it\.
 
-1. On the **Instances** tab, select the ID of the instance\. This shows you the instance on the **Instances** page\.
+1. On the **Instance management** tab \(Old console: **Instances** tab\), select the ID of the instance from the list of instances\. This shows you the instance on the **Instances** page\.
 
 1. Choose **Actions**, **Instance State**, **Terminate**\. When prompted for confirmation, choose **Yes, Terminate**\.
 
-1. On the navigation pane, choose **Auto Scaling Groups**\. Select your Auto Scaling group and choose the **Activity History** tab\. The default cooldown for the Auto Scaling group is 300 seconds \(5 minutes\), so it takes about 5 minutes until you see the scaling activity\. When the scaling activity starts, you see an entry for the termination of the first instance and an entry for the launch of a new instance\. The **Instances** tab shows the new instance only\.  
-![\[Auto Scaling group activity history\]](http://docs.aws.amazon.com/autoscaling/ec2/userguide/images/as-gs-group-activity-history.png)
+1. On the navigation pane, choose **Auto Scaling Groups**\. Select your Auto Scaling group and choose the **Activity** tab \(Old console: The **Activity History** tab\)\. The default cooldown for the Auto Scaling group is 300 seconds \(5 minutes\), so it takes about 5 minutes until you see the scaling activity\. In the activity history, when the scaling activity starts, you see an entry for the termination of the first instance and an entry for the launch of a new instance\. The **Instance management** tab \(Old console: The **Instances** tab\) shows the new instance only\.
 
-1. On the navigation pane, choose **Instances**\. This page shows both the terminated instance and the running instance\.
+1. On the navigation pane, choose **Instances**\. This page shows both the terminated instance and the new running instance\.
 
-Go to the next step if you would like to delete your basic infrastructure for automatic scaling\. Otherwise, you can use this infrastructure as your base and try one or more of the following:
-+ [Manual Scaling for Amazon EC2 Auto Scaling](as-manual-scaling.md)
-+ [Dynamic Scaling for Amazon EC2 Auto Scaling](as-scale-based-on-demand.md)
-+ [Getting Amazon SNS Notifications When Your Auto Scaling Group Scales](ASGettingNotifications.md)
+## Step 4: Next Steps<a name="gs-tutorial-next-steps"></a>
 
-## Step 4: \(Optional\) Delete Your Scaling Infrastructure<a name="gs-delete-asg"></a>
+Go to the next step if you would like to delete the basic infrastructure for automatic scaling that you just created\. Otherwise, you can use this infrastructure as your base and try one or more of the following:
++ Manually scale your Auto Scaling group\. For more information, see [Setting Capacity Limits](asg-capacity-limits.md) and [Manual Scaling](as-manual-scaling.md)\.
++ Learn how to automatically scale in response to changes in resource utilization\. If the load increases, your Auto Scaling group can scale out \(add instances\) to handle the demand\. For more information, see [Target Tracking Scaling Policies](as-scaling-target-tracking.md)\.
++ Configure an SNS notification to notify you whenever your Auto Scaling group scales\. For more information, see [Amazon SNS Notifications](ASGettingNotifications.md)\.
 
-You can either delete your scaling infrastructure or delete just your Auto Scaling group and keep your launch template to use later\.
+## Step 5: \(Optional\) Delete Your Scaling Infrastructure<a name="gs-delete-asg"></a>
 
-If you launched an instance that is not within the [AWS Free Tier](https://aws.amazon.com/free/), you should terminate your instances to prevent additional charges\. The EC2 instance and the data associated will be deleted\.
+You can either delete your scaling infrastructure or delete just your Auto Scaling group and keep your launch template or configuration to use later\.
+
+If you launched an instance that is not within the [AWS Free Tier](https://aws.amazon.com/free/), you should terminate your instances to prevent additional charges\. When you terminate the instance, the data associated with it will also be deleted\.
 
 **To delete your Auto Scaling group**
 
@@ -186,13 +218,13 @@ If you launched an instance that is not within the [AWS Free Tier](https://aws.a
 
 1. On the navigation pane, under **Auto Scaling**, choose **Auto Scaling Groups**\.
 
-1. Select your Auto Scaling group\.
+1. Select the check box next to your Auto Scaling group\.
 
-1. Choose **Actions**, **Delete**\. When prompted for confirmation, choose **Yes, Delete**\.
+1. Choose **Delete**\. \(Old console: Choose **Actions**, **Delete**\.\) When prompted for confirmation, choose **Delete**\.
 
-   The **Name** column indicates that the Auto Scaling group is being deleted\. The **Desired**, **Min**, and **Max** columns show `0` instances for the Auto Scaling group\.
+   A loading icon in the **Name** column indicates that the Auto Scaling group is being deleted\. When the deletion has occurred, the **Desired**, **Min**, and **Max** columns show `0` instances for the Auto Scaling group\. It takes a few minutes to terminate the instance and delete the group\. Refresh the list to see the current state\. 
 
-Skip this procedure if you would like to keep your launch template\.
+Skip the following procedure if you would like to keep your launch template\.
 
 **To delete your launch template**
 
@@ -202,7 +234,7 @@ Skip this procedure if you would like to keep your launch template\.
 
 1. Choose **Actions**, **Delete template**\. When prompted for confirmation, choose **Delete launch template**\.
 
-Skip this procedure if you would like to keep your launch configuration\.
+Skip the following procedure if you would like to keep your launch configuration\.
 
 **To delete your launch configuration**
 

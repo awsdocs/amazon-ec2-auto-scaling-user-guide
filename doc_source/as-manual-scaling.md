@@ -4,7 +4,7 @@ At any time, you can change the size of an existing Auto Scaling group manually\
 
 ## Changing the Size of Your Auto Scaling Group \(Console\)<a name="as-manual-scaling-console"></a>
 
-When you change the size of your Auto Scaling group, Amazon EC2 Auto Scaling manages the process of launching or terminating instances to maintain the new group size\.
+When you change the desired capacity of your Auto Scaling group, Amazon EC2 Auto Scaling manages the process of launching or terminating instances to maintain the new group size\.
 
 The following example assumes that you've created an Auto Scaling group with a minimum size of 1 and a maximum size of 5\. Therefore, the group currently has one running instance\.
 
@@ -18,23 +18,25 @@ The following example assumes that you've created an Auto Scaling group with a m
 
 1. On the **Details** tab, choose **Edit**\.
 
-1. For **Desired**, increase the desired capacity by one\. For example, if the current value is `1`, type `2`\.
+1. For **Desired capacity**, increase the desired capacity by one\. For example, if the current value is `1`, enter `2`\.
 
-   The desired capacity must be less than or equal to the maximum size of the group\. If your new value for **Desired** is greater than **Max**, you must update **Max** \.
+   The desired capacity must be less than or equal to the maximum size of the group\. If your new value for **Desired capacity** is greater than **Maximum capacity**, you must update **Maximum capacity**\.
 
-   When you are finished, choose **Save**\.
+1. When you are finished, choose **Save changes**\.
 
 Now, verify that your Auto Scaling group has launched one additional instance\.
 
 **To verify that the size of your Auto Scaling group has changed**
 
-1. On the **Activity History** tab, the **Status** column shows the current status of your instance\. Use the refresh button until you see the status of your instance change to **Successful**, indicating that your Auto Scaling group has successfully launched a new instance\.
+1. On the **Activity history** tab, the **Status** column shows the current status of your instance\. Use the refresh button until you see the status of your instance change to **Successful**\. This indicates that your Auto Scaling group has successfully launched a new instance\. 
+**Note**  
+If the instance fails to launch, you can find troubleshooting tips in [Troubleshooting Amazon EC2 Auto Scaling](CHAP_Troubleshooting.md)\.
 
-1. On the **Instances** tab, the **Lifecycle** column shows the state of your instances\. It takes a short time for an instance to launch\. After the instance starts, its state changes to `InService`\. You can see that your Auto Scaling group has launched `1` new instance, and it is in the `InService` state\.
+1. On the **Instance management** tab, in **Instances**, the **Lifecycle** column shows the state of your instances\. It takes a short time for an instance to launch\. After the instance starts, its state changes to `InService`\. You can see that your Auto Scaling group has launched `1` new instance, and it is in the `InService` state\.
 
 ## Changing the Size of Your Auto Scaling Group \(AWS CLI\)<a name="as-manual-scaling-aws-cli"></a>
 
-When you change the size of your Auto Scaling group, Amazon EC2 Auto Scaling manages the process of launching or terminating instances to maintain the new group size\. The default is not to wait for the default cooldown period to complete, but you can override the default behavior and wait for the cooldown period to complete\. For more information, see [Scaling Cooldowns for Amazon EC2 Auto Scaling](Cooldown.md)\.
+When you change the size of your Auto Scaling group, Amazon EC2 Auto Scaling manages the process of launching or terminating instances to maintain the new group size\. The default behavior is not to wait for the default cooldown period to complete, but you can override the default and wait for the cooldown period to complete\. For more information, see [Scaling Cooldowns for Amazon EC2 Auto Scaling](Cooldown.md)\.
 
 The following example assumes that you've created an Auto Scaling group with a minimum size of 1 and a maximum size of 5\. Therefore, the group currently has one running instance\.
 

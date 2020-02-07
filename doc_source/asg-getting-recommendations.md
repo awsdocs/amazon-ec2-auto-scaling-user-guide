@@ -5,7 +5,7 @@ AWS provides Amazon EC2 instance recommendations to help you improve performance
 To make recommendations, Compute Optimizer analyzes your existing instance specifications and recent metric history\. The compiled data is then used to recommend which Amazon EC2 instance types are best optimized to handle the existing performance workload\. Recommendations are returned along with per\-hour instance pricing\. 
 
 **Note**  
-To get recommendations from Compute Optimizer, you must first opt in to Compute Optimizer\. For more information, see [Getting Started with AWS Compute Optimizer](https://docs.aws.amazon.com/compute-optimizer/latest/ug/getting-started.html) in the *AWS Compute Optimizer User Guide*\. 
+To get recommendations from Compute Optimizer, you must first opt in to Compute Optimizer\. For more information, see [Getting Started with AWS AWS Compute Optimizer](https://docs.aws.amazon.com/compute-optimizer/latest/ug/getting-started.html) in the *AWS Compute Optimizer User Guide*\. 
 
 **Topics**
 + [Limitations](#compute-optimizer-limitations)
@@ -17,14 +17,14 @@ To get recommendations from Compute Optimizer, you must first opt in to Compute 
 
 Compute Optimizer currently generates recommendations for M, C, R, T, and X instance types\. Other instance types are not considered by Compute Optimizer\. When you use other instance types, they are excluded from the recommendations\. 
 
-The service does not generate recommendations for Auto Scaling groups that have a scaling policy attached to them, or that do not have the same values for desired, minimum, and maximum capacity\. In order for Compute Optimizer to analyze your Auto Scaling groups, they must be of a fixed size\. In addition, Compute Optimizer cannot be used to analyze EC2 instance usage for Auto Scaling groups associated with ECS clusters or for groups that support multiple instance types\.
+Compute Optimizer currently generates recommendations for Auto Scaling groups that have the same values for desired, minimum, and maximum capacity, and that are configured to launch a single instance type\. 
 
 ## Findings<a name="findings-classifications"></a>
 
 Compute Optimizer classifies its findings for Auto Scaling groups as follows:
 + **Not optimized** – An Auto Scaling group is considered not optimized when Compute Optimizer has identified a recommendation that can provide better performance for your workload\. 
 + **Optimized** – An Auto Scaling group is considered optimized when Compute Optimizer determines that the group is correctly provisioned to run your workload, based on the chosen instance type\. For optimized resources, Compute Optimizer might sometimes recommend a new generation instance type\. 
-+ **None** – There are no recommendations for this Auto Scaling group\. This might occur if you've been opted in to Computer Optimizer for less than 12 hours, or when the Auto Scaling group has been running for less than 30 hours, or when the Auto Scaling group or instance type is not supported by Compute Optimizer\. For more information, see [Limitations](#compute-optimizer-limitations) in the previous section\.
++ **None** – There are no recommendations for this Auto Scaling group\. This might occur if you've been opted in to Compute Optimizer for less than 12 hours, or when the Auto Scaling group has been running for less than 30 hours, or when the Auto Scaling group or instance type is not supported by Compute Optimizer\. For more information, see [Limitations](#compute-optimizer-limitations) in the previous section\.
 
 ## Viewing Recommendations<a name="viewing-recommendations"></a>
 
@@ -62,4 +62,4 @@ Before moving to a new instance type, consider the following:
 **Additional resources**  
 In addition to the topics on this page, see the following resources: 
 + [Amazon EC2 Instance Types](https://aws.amazon.com/ec2/instance-types/)
-+ [Compute Optimizer User Guide](https://docs.aws.amazon.com/compute-optimizer/latest/ug)
++ [AWS Compute Optimizer User Guide](https://docs.aws.amazon.com/compute-optimizer/latest/ug)

@@ -8,7 +8,7 @@ When creating an encrypted Amazon EBS snapshot or a launch template that specifi
 
 Amazon EC2 Auto Scaling does not need additional authorization to use the default AWS managed CMK to protect the encrypted volumes in your AWS account\. 
 
-If you specify a customer managed CMK for Amazon EBS encryption, you \(or your account administrator\) must give the appropriate [service\-linked role](autoscaling-service-linked-role.md) access to the CMK, so that Amazon EC2 Auto Scaling can launch instances on your behalf\. To do this, you must modify the CMK's key policy either when the CMK is created or at a later time\. 
+If you specify a customer managed CMK for Amazon EBS encryption, you must give the appropriate [service\-linked role](autoscaling-service-linked-role.md) access to the CMK so that Amazon EC2 Auto Scaling can launch instances on your behalf\. To do this, you must modify the CMK's key policy either when the CMK is created or at a later time\. 
 
 ## Configuring Key Policies<a name="configuring-key-policies"></a>
 
@@ -38,7 +38,7 @@ Add the following two policy statements to the key policy of the customer manage
 
 ```
 {
-   "Sid": "Allow use of the CMK",
+   "Sid": "Allow service-linked role use of the CMK",
    "Effect": "Allow",
    "Principal": {
        "AWS": [
@@ -85,7 +85,7 @@ First, add the following two policy statements to the CMK's key policy, replacin
 
 ```
 {
-   "Sid": "Allow use of the key in account 111122223333",
+   "Sid": "Allow external account 111122223333 use of the CMK",
    "Effect": "Allow",
    "Principal": {
        "AWS": [
@@ -105,7 +105,7 @@ First, add the following two policy statements to the CMK's key policy, replacin
 
 ```
 {
-   "Sid": "Allow attachment of persistent resources in account 111122223333",
+   "Sid": "Allow attachment of persistent resources in external account 111122223333",
    "Effect": "Allow",
    "Principal": {
        "AWS": [
@@ -136,7 +136,7 @@ For this command to succeed, the user making the request must have permissions f
   "Version": "2012-10-17",
   "Statement": [
     {
-      "Sid": "AllowCreationOfGrant",
+      "Sid": "Allow creation of grant for the CMK in external account 444455556666",
       "Effect": "Allow",
       "Action": "kms:CreateGrant",
       "Resource": "arn:aws:kms:us-west-2:444455556666:key/1a2b3c4d-5e6f-1a2b-3c4d-5e6f1a2b3c4d"

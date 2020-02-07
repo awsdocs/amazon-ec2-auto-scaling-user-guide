@@ -58,7 +58,7 @@ This section discusses the key considerations in implementing instance weighting
 + Set your weights and desired capacity so that the desired capacity is at least two to three times larger than your largest weight\. 
 + If you choose to set your own maximum price for Spot, you must specify a price *per instance hour* that is high enough for your most expensive instance type\. Amazon EC2 Auto Scaling provisions Spot Instances if the current Spot price in an Availability Zone is below your maximum price and capacity is available\. If the request for Spot Instances cannot be fulfilled in one Spot Instance pool, it keeps trying in other Spot pools to leverage the cost savings of Spot Instances\. 
 
-With instance weighting\. the following new behaviors are introduced:
+With instance weighting, the following new behaviors are introduced:
 + Current capacity will either be at the desired capacity or above it\. Because Amazon EC2 Auto Scaling wants to provision instances until the desired capacity is totally fulfilled, an overage can happen\. For example, suppose that you specify two instance types, `c5.2xlarge` and `c5.12xlarge`, and you assign instance weights of 2 for `c5.2xlarge` and 12 for `c5.12xlarge`\. If there are 5 units remaining to fulfill the desired capacity, and Amazon EC2 Auto Scaling provisions a `c5.12xlarge`, the desired capacity is exceeded by 7 units\. 
 + When Amazon EC2 Auto Scaling provisions instances to reach the desired capacity, distributing instances across Availability Zones and respecting the allocation strategies for On\-Demand and Spot Instances both take precedence over avoiding overages\. 
 + Amazon EC2 Auto Scaling can overstep the maximum capacity limit to maintain balance across Availability Zones, using your preferred allocation strategies\. The hard limit enforced by Amazon EC2 Auto Scaling is a value that is equal to your desired capacity plus your largest weight\.
@@ -77,7 +77,7 @@ Before creating Auto Scaling groups using instance weighting, we recommend that 
 The following examples show how to use the AWS CLI to add weights when you create Auto Scaling groups, and to add or modify weights for existing Auto Scaling groups\. You can configure a variety of parameters in a JSON file, and then reference the JSON file as the sole parameter for your Auto Scaling group\. 
 
 **To add weights to an Auto Scaling group on creation**
-+ Use the [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/create-auto-scaling-group.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/create-auto-scaling-group.html) command to create a new Auto Scaling group that specifies the following:
++ Use the [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/create-auto-scaling-group.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/create-auto-scaling-group.html) command to create a new Auto Scaling group\. For example, the following command creates a new Auto Scaling group and adds instance weighting by specifying the following:
   + The percentage of the group to launch as On\-Demand Instances \(`0`\) and a base number of On\-Demand Instances to start with \(`10`\)
   + The allocation strategy for Spot Instances in each Availability Zone \(`capacity-optimized`\)
   + The instance types to launch in priority order \(`m4.16xlarge`, `m5.24xlarge`\)

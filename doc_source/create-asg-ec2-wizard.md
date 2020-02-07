@@ -22,7 +22,7 @@ You can create a launch configuration and an Auto Scaling group in a single proc
 
 1. Review the details of the launch configuration, and then choose **Create launch configuration** to choose a key pair and create the launch configuration\.
 
-1. On the **Configure Auto Scaling group details** page, the launch configuration you created is already selected for you, and the number of instances you specified in the Amazon EC2 launch wizard is populated for **Group size**\. Enter a name for the group, specify a VPC and subnet \(if required\), and then choose **Next: Configure scaling policies**\. 
+1. On the **Configure Auto Scaling group details** page, the launch configuration that you created is already selected for you, and the number of instances you specified in the Amazon EC2 launch wizard is populated for **Group size**\. Enter a name for the group, specify a VPC and subnet \(if required\), and then choose **Next: Configure scaling policies**\. 
 
 1. On the **Configure scaling policies** page, choose one of the following options, and then choose **Review**:
    + To manually adjust the size of the Auto Scaling group as needed, choose **Keep this group at its initial size**\. For more information, see [Manual Scaling for Amazon EC2 Auto Scaling](as-manual-scaling.md)\.

@@ -1,6 +1,6 @@
 # Troubleshooting Auto Scaling: Capacity Limits<a name="ts-as-capacity"></a>
 
-This page provides information about issues with the capacity limits of your Auto Scaling group, potential causes, and the steps you can take to resolve the issues\. For more information about Amazon EC2 Auto Scaling limits, see [Amazon EC2 Auto Scaling Limits](as-account-limits.md)\.
+This page provides information about issues with the capacity limits of your Auto Scaling group, potential causes, and the steps you can take to resolve the issues\. For more information about Amazon EC2 Auto Scaling limits, see [Amazon EC2 Auto Scaling Service Quotas](as-account-limits.md)\.
 
 To retrieve an error message, see [Retrieving an Error Message](CHAP_Troubleshooting.md#RetrievingErrors)\.
 

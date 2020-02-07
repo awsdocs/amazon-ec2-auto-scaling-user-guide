@@ -5,7 +5,7 @@ You can establish a private connection between your virtual private cloud \(VPC\
 Interface VPC endpoints are powered by AWS PrivateLink, a feature that enables private communication between AWS services using private IP addresses\. For more information, see [AWS PrivateLink](https://aws.amazon.com/privatelink)\.
 
 **Note**  
-You must explicitly enable each API that you want to access through an interface VCP endpoint\. For example, you might need to also configure an interface VPC endpoint for `ec2.region.amazonaws.com` to use when calling the Amazon EC2 API operations\. For more information, see [Interface VPC Endpoints \(AWS PrivateLink\)](https://docs.aws.amazon.com/vpc/latest/userguide/vpce-interface.html) in the *Amazon VPC User Guide*\. 
+You must explicitly enable each API that you want to access through an interface VPC endpoint\. For example, you might need to also configure an interface VPC endpoint for `ec2.region.amazonaws.com` to use when calling the Amazon EC2 API operations\. For more information, see [Interface VPC Endpoints \(AWS PrivateLink\)](https://docs.aws.amazon.com/vpc/latest/userguide/vpce-interface.html) in the *Amazon VPC User Guide*\.
 
 Amazon EC2 Auto Scaling currently supports VPC endpoints in all Regions except China \(Beijing\) and China \(Ningxia\)\.
 

@@ -1,7 +1,7 @@
 # Amazon EC2 Auto Scaling User Guide
 
 -----
-*****Copyright &copy; 2019 Amazon Web Services, Inc. and/or its affiliates. All rights reserved.*****
+*****Copyright &copy; 2020 Amazon Web Services, Inc. and/or its affiliates. All rights reserved.*****
 
 -----
 Amazon's trademarks and trade dress may not be used in 
@@ -17,7 +17,7 @@ Amazon's trademarks and trade dress may not be used in
 + [What Is Amazon EC2 Auto Scaling?](what-is-amazon-ec2-auto-scaling.md)
    + [Benefits of Auto Scaling](auto-scaling-benefits.md)
    + [Auto Scaling Lifecycle](AutoScalingGroupLifecycle.md)
-   + [Amazon EC2 Auto Scaling Limits](as-account-limits.md)
+   + [Amazon EC2 Auto Scaling Service Quotas](as-account-limits.md)
 + [Setting Up Amazon EC2 Auto Scaling](setting-up.md)
 + [Getting Started with Amazon EC2 Auto Scaling](GettingStartedTutorial.md)
 + [Tutorial: Set Up a Scaled and Load-Balanced Application](as-register-lbs-with-asg.md)
@@ -56,8 +56,7 @@ Amazon's trademarks and trade dress may not be used in
    + [Scheduled Scaling for Amazon EC2 Auto Scaling](schedule_time.md)
    + [Dynamic Scaling for Amazon EC2 Auto Scaling](as-scale-based-on-demand.md)
       + [Target Tracking Scaling Policies for Amazon EC2 Auto Scaling](as-scaling-target-tracking.md)
-      + [Simple and Step Scaling Policies for Amazon EC2 Auto Scaling](as-scaling-simple-step.md)
-      + [Add a Scaling Policy to an Existing Auto Scaling Group](policy-updating-console.md)
+      + [Step and Simple Scaling Policies for Amazon EC2 Auto Scaling](as-scaling-simple-step.md)
       + [Scaling Based on Amazon SQS](as-using-sqs-queue.md)
       + [Deleting a Scaling Policy](deleting-scaling-policy.md)
    + [Scaling Cooldowns for Amazon EC2 Auto Scaling](Cooldown.md)
@@ -72,10 +71,17 @@ Amazon's trademarks and trade dress may not be used in
    + [Getting CloudWatch Events When Your Auto Scaling Group Scales](cloud-watch-events.md)
    + [Getting Amazon SNS Notifications When Your Auto Scaling Group Scales](ASGettingNotifications.md)
    + [Logging Amazon EC2 Auto Scaling API Calls with AWS CloudTrail](logging-using-cloudtrail.md)
-+ [Controlling Access to Your Amazon EC2 Auto Scaling Resources](control-access-using-iam.md)
-   + [Service-Linked Roles for Amazon EC2 Auto Scaling](autoscaling-service-linked-role.md)
-   + [Required CMK Key Policy for Use with Encrypted Volumes](key-policy-requirements-EBS-encryption.md)
-   + [IAM Role for Applications That Run on Amazon EC2 Instances](us-iam-role.md)
++ [Security in Amazon EC2 Auto Scaling](security.md)
+   + [Amazon EC2 Auto Scaling and Data Protection](ec2-auto-scaling-data-protection.md)
+   + [Identity and Access Management for Amazon EC2 Auto Scaling](security-iam.md)
+      + [How Amazon EC2 Auto Scaling Works with IAM](control-access-using-iam.md)
+      + [Service-Linked Roles for Amazon EC2 Auto Scaling](autoscaling-service-linked-role.md)
+      + [IAM Role for Applications That Run on Amazon EC2 Instances](us-iam-role.md)
+      + [Amazon EC2 Auto Scaling Identity-Based Policy Examples](security_iam_id-based-policy-examples.md)
+      + [Required CMK Key Policy for Use with Encrypted Volumes](key-policy-requirements-EBS-encryption.md)
+   + [Compliance Validation for Amazon EC2 Auto Scaling](ec2-auto-scaling-compliance.md)
+   + [Resilience in Amazon EC2 Auto Scaling](disaster-recovery-resiliency.md)
+   + [Infrastructure Security in Amazon EC2 Auto Scaling](infrastructure-security.md)
    + [Amazon EC2 Auto Scaling and Interface VPC Endpoints](ec2-auto-scaling-vpc-endpoints.md)
 + [Troubleshooting Amazon EC2 Auto Scaling](CHAP_Troubleshooting.md)
    + [Troubleshooting Amazon EC2 Auto Scaling: EC2 Instance Launch Failures](ts-as-instancelaunchfailure.md)
