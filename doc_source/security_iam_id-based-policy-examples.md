@@ -1,6 +1,6 @@
 # Amazon EC2 Auto Scaling Identity\-Based Policy Examples<a name="security_iam_id-based-policy-examples"></a>
 
-By default, IAM users and roles don't have permission to create or modify Amazon EC2 Auto Scaling resources\. They also can't perform tasks using the AWS Management Console, AWS CLI, or AWS API\. An IAM administrator must create IAM policies that grant users and roles permission to perform specific API operations on the specified resources they need\. The administrator must then attach those policies to the IAM users or groups that require those permissions\.
+By default, IAM users and roles don't have permission to create or modify Amazon EC2 Auto Scaling resources\. They also can't perform tasks using the AWS Management Console, AWS CLI, or AWS API\. An IAM administrator must create IAM policies that give users and roles permission to perform specific API operations on the specified resources they need\. The administrator must then attach those policies to the IAM users or groups that require those permissions\.
 
 To learn how to create an IAM identity\-based policy using these example JSON policy documents, see [Creating Policies on the JSON Tab](https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies_create.html#access_policies_create-json-editor) in the *IAM User Guide*\.
 
@@ -21,7 +21,7 @@ The following shows an example of a permissions policy\.
       "Effect": "Allow",
       "Action": "autoscaling:CreateLaunchConfiguration",
       "Resource": [
-          "arn:aws:autoscaling:region:123456789012:launchConfiguration:*:launchConfigurationName/qateamaccess-*"
+          "arn:aws:autoscaling:region:123456789012:launchConfiguration:*:launchConfigurationName/qateam-*"
       ],
       "Condition": {
           "StringEquals": { "autoscaling:InstanceType": "t2.micro" }
@@ -35,7 +35,7 @@ The following shows an example of a permissions policy\.
       ],
       "Resource": "*",
       "Condition": {
-          "StringLikeIfExists": { "autoscaling:LaunchConfigurationName": "qateamaccess-*" }
+          "StringLikeIfExists": { "autoscaling:LaunchConfigurationName": "qateam-*" }
       }
    },
    {
@@ -49,7 +49,7 @@ The following shows an example of a permissions policy\.
 }
 ```
 
-The preceding sample policy gives users permissions to create a launch configuration if the instance type is `t2.micro`, and the name of the launch configuration starts with `qateamaccess-`\. They can specify a launch configuration for an Auto Scaling group only if its name starts with `qateamaccess-`\. The `Describe` actions do not support resource\-level permissions, and therefore are in a separate statement without conditions\. For more information about the elements within an IAM policy statement, see [Amazon EC2 Auto Scaling Identity\-Based Policies](control-access-using-iam.md#security_iam_service-with-iam-id-based-policies)\.
+The preceding sample policy gives users permissions to create a launch configuration if the instance type is `t2.micro`, and the name of the launch configuration starts with `qateam-`\. They can specify a launch configuration for an Auto Scaling group only if its name starts with `qateam-`\. The `Describe` actions do not support resource\-level permissions, and therefore are in a separate statement without conditions\. For more information about the elements within an IAM policy statement, see [Amazon EC2 Auto Scaling Identity\-Based Policies](control-access-using-iam.md#security_iam_service-with-iam-id-based-policies)\.
 
 There are also additional API actions for IAM, Amazon EC2, CloudWatch, Elastic Load Balancing, and Amazon SNS that may be required depending on what access you want to provide for a user\. For example, access to the `iam:PassRole` action is required to use an [instance profile](#policy-example-pass-IAM-role), and access to the `ec2:RunInstances` action is required to use a [launch template](#policy-example-launch-template)\.
 
@@ -113,15 +113,16 @@ The following shows an example of a permissions policy that allows users to work
               "autoscaling:DeleteLaunchConfiguration",
               "autoscaling:DescribeLaunchConfigurations",
               "ec2:DescribeImages",
+              "ec2:DescribeVolumes",
               "ec2:DescribeInstances",
               "ec2:DescribeInstanceAttribute",
               "ec2:DescribeKeyPairs",
               "ec2:DescribeSecurityGroups",
               "ec2:DescribeSpotInstanceRequests",
+              "ec2:DescribeSpotPriceHistory",
               "ec2:DescribeVpcClassicLink",
               "ec2:DescribeVpcs",
-              "ec2:DescribeSubnets",
-              "ec2:DescribeAvailabilityZones"
+              "ec2:DescribeSubnets"
             ],
             "Resource": "*"
         }
@@ -130,15 +131,16 @@ The following shows an example of a permissions policy that allows users to work
 ```
 
 You can add API actions to this policy to provide more options for users, for example:
++ `iam:ListInstanceProfiles`: To choose an instance profile\.
 + `ec2:CreateSecurityGroup`: To create a new security group\.
 + `ec2:AuthorizeSecurityGroupIngress`: To add inbound rules\.
 + `ec2:CreateKeyPair`: To create a new key pair\.
 
-### Example: Require a Launch Template<a name="policy-example-launch-template"></a>
+### Example: Require the Latest or Default Version of a Launch Template<a name="policy-example-launch-template"></a>
 
-The following policy gives users permissions to create and update Auto Scaling groups, provided that they use a launch template and specify either the `Latest` or `Default` version of the launch template\. 
+The following policy gives users permissions to create and update Auto Scaling groups to use a launch template, provided that they specify either the `Latest` or `Default` version of the launch template\. 
 
-To complete the configuration, you must grant users permission to use the `ec2:RunInstances` API action\. Users without this permission receive an error that they're not authorized to use the launch template\. In this example \(second statement\), users can use all launch templates whose name starts with `qateamaccess-`\.  
+To complete the configuration, you must give users permission to use the `ec2:RunInstances` API action\. Users without this permission receive an error that they're not authorized to use the launch template\. In this example \(second statement\), users can use all launch templates whose name starts with `qateam-`\.  
 
 The last statement gives users access to all Auto Scaling groups and Amazon EC2 resources in your account\. Instead of listing each action explicitly as in the previous example, you can specify `ec2:Describe*` to describe all Amazon EC2 resources\. Because the `Describe` actions do not support resource\-level permissions, you must specify them in a separate statement without conditions\.
 
@@ -165,7 +167,7 @@ The last statement gives users access to all Auto Scaling groups and Amazon EC2 
             "Resource": "*",
             "Condition": {
                 "ArnLike": {
-                   "ec2:LaunchTemplate": "arn:aws:ec2:region:123456789012:launch-template/qateamaccess-*" 
+                   "ec2:LaunchTemplate": "arn:aws:ec2:region:123456789012:launch-template/qateam-*" 
                 }
             }
         },
@@ -181,12 +183,11 @@ The last statement gives users access to all Auto Scaling groups and Amazon EC2 
 }
 ```
 
-Note that the `autoscaling:LaunchTemplateVersionSpecified` condition key accepts the following values:
-+ `true` \- Ensures that a launch template version is specified\. 
-+ `false` \- Ensures that either the `Latest` or `Default` launch template version is specified\. 
-+ `null` \- Ensures that a launch template is not specified\.
+You can add API actions to this policy to provide more options for users, for example:
++ `ec2:CreateLaunchTemplate`: To create a new launch template\.
++ `ec2:CreateLaunchTemplateVersion`: To create a new version of a launch template\.
 
-For information about permissions for creating and managing launch templates, see [Controlling the Use of Launch Templates ](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-launch-templates.html#launch-template-permissions) in the *Amazon EC2 User Guide for Linux Instances*\. 
+However, be cautious about granting these permissions\. For more information, see [Controlling the Use of Launch Templates ](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-launch-templates.html#launch-template-permissions) in the *Amazon EC2 User Guide for Linux Instances*\. 
 
 ### Example: Create and Manage Auto Scaling Groups and Scaling Policies<a name="policy-example-scaling"></a>
 
@@ -252,7 +253,7 @@ The following policy gives users permissions to use all Amazon EC2 Auto Scaling 
 
 ### Example: Control Access Using Tags<a name="policy-example-tags"></a>
 
-To grant users permissions to create or tag an Auto Scaling group only if they specify certain tags, use the `aws:RequestTag` condition key\. To allow only specific tag keys, use the `aws:TagKeys` condition key with the `ForAnyValue` modifier\.
+To give users permissions to create or tag an Auto Scaling group only if they specify certain tags, use the `aws:RequestTag` condition key\. To allow only specific tag keys, use the `aws:TagKeys` condition key with the `ForAnyValue` modifier\.
 
 The following policy requires users to tag any Auto Scaling groups with the tags `purpose=webserver` and `cost-center=cc123`, and allows only the `purpose` and `cost-center` tags \(no other tags can be specified\)\.
 
@@ -388,6 +389,30 @@ The following policy gives users permissions to use the `SetDesiredCapacity` act
 }
 ```
 
+### Example: Restrict Which Scaling Policies Can Be Deleted<a name="policy-example-delete-policy"></a>
+
+The following policy allows users to use the `autoscaling:DeletePolicy` action to delete a scaling policy but denies the action if the Auto Scaling group being acted upon has the tag `environment=production`\.
+
+```
+{
+   "Version": "2012-10-17",
+   "Statement": [
+      {
+      "Effect": "Allow",
+      "Action": "autoscaling:DeletePolicy",
+      "Resource": "*"
+   },
+   {
+      "Effect": "Deny",
+      "Action": "autoscaling:DeletePolicy",
+      "Resource": "*",
+      "Condition": {
+          "StringEquals": { "autoscaling:ResourceTag/environment": "production" }
+      }
+   }]
+}
+```
+
 ### Example: Restrict Which Service\-Linked Role Can Be Passed \(Using PassRole\)<a name="policy-example-pass-role"></a>
 
 If your users require the ability to pass custom suffix service\-linked roles to an Auto Scaling group, attach a policy to the users or roles, based on the access that they need\. We recommend that you restrict this policy to only the service\-linked roles that your users must access\. For more information about custom suffix service\-linked roles, see [Service\-Linked Roles for Amazon EC2 Auto Scaling](autoscaling-service-linked-role.md)\.
@@ -432,7 +457,7 @@ The user that you want to create an Auto Scaling group using a launch template o
         {
             "Effect": "Allow",
             "Action": "iam:PassRole",
-            "Resource": "arn:aws:iam::123456789012:role/qateamaccess-*",
+            "Resource": "arn:aws:iam::123456789012:role/qateam-*",
             "Condition": {
                 "StringEquals": {
                     "iam:PassedToService": [

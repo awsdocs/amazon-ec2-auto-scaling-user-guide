@@ -102,7 +102,21 @@ If you specify multiple `Condition` elements in a statement, or multiple keys in
 
 Amazon EC2 Auto Scaling defines its own set of condition keys and also supports using some global condition keys\. To see all AWS global condition keys, see [AWS Global Condition Context Keys](https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_condition-keys.html) in the *IAM User Guide*\.
 
-To see a list of Amazon EC2 Auto Scaling condition keys, see [Condition Keys for Amazon EC2 Auto Scaling](https://docs.aws.amazon.com/IAM/latest/UserGuide/list_amazonec2autoscaling.html#amazonec2autoscaling-policy-keys) in the *IAM User Guide*\. To learn with which actions and resources you can use a condition key, see [Actions Defined by Amazon EC2 Auto Scaling](https://docs.aws.amazon.com/IAM/latest/UserGuide/list_amazonec2autoscaling.html#amazonec2autoscaling-actions-as-permissions) in the *IAM User Guide*\.
+The following condition keys are specific to Amazon EC2 Auto Scaling:
++ `autoscaling:ImageId`
++ `autoscaling:InstanceType`
++ `autoscaling:InstanceTypes`
++ `autoscaling:LaunchConfigurationName`
++ `autoscaling:LaunchTemplateVersionSpecified`
++ `autoscaling:LoadBalancerNames`
++ `autoscaling:MaxSize`
++ `autoscaling:MinSize`
++ `autoscaling:ResourceTag/key`
++ `autoscaling:SpotPrice`
++ `autoscaling:TargetGroupARNs`
++ `autoscaling:VPCZoneIdentifiers`
+
+To learn with which actions and resources you can use a condition key, see [Actions Defined by Amazon EC2 Auto Scaling](https://docs.aws.amazon.com/IAM/latest/UserGuide/list_amazonec2autoscaling.html#amazonec2autoscaling-actions-as-permissions) in the *IAM User Guide*\.
 
 ### Examples<a name="security_iam_service-with-iam-id-based-policies-examples"></a>
 

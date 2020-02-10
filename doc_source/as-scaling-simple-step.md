@@ -106,7 +106,7 @@ A scale\-in activity can't start while a scale\-out activity is in progress\.
 
 ## Create Step Scaling Policies for an Auto Scaling Group \(Console\)<a name="policy-creating-asg-console"></a>
 
-The following procedure shows you how to use the console to create an Auto Scaling group with two step scaling policies: a scale\-out policy that increases the capacity of the group by 30 percent, and a scale\-in policy that decreases the capacity of the group to two instances\.
+The following procedure shows you how to use the Amazon EC2 Auto Scaling console to create two step scaling policies: a scale\-out policy that increases the capacity of the group by 30 percent, and a scale\-in policy that decreases the capacity of the group to two instances\.
 
 Your step scaling policy uses CloudWatch alarms to determine when your Auto Scaling group should scale out or scale in\. Each CloudWatch alarm watches a single metric and sends messages to Amazon EC2 Auto Scaling when the metric breaches a threshold that you specify in your policy\. You can use alarms to monitor any of the metrics that are sent to CloudWatch from the services in AWS that you're using\. Or, you can create and monitor your own metrics\. When you create a CloudWatch alarm, you can specify an Amazon SNS topic to send an email notification to when the alarm changes state\.
 

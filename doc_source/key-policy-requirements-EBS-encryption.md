@@ -81,7 +81,7 @@ Add the following two policy statements to the key policy of the customer manage
 
 If your customer managed CMK is in a different account than the Auto Scaling group, you must use a grant in combination with the key policy to allow access to the CMK\. For more information, see [Using Grants](https://docs.aws.amazon.com/kms/latest/developerguide/grants.html) in the *AWS Key Management Service Developer Guide*\. 
 
-First, add the following two policy statements to the CMK's key policy, replacing the example ARN with the ARN of the external account, and specifying the account in which the key can be used\. The `GrantIsForAWSResource` condition is not included to allow an IAM user or role in the specified account to create the grant using the CLI command that follows\.
+First, add the following two policy statements to the CMK's key policy, replacing the example ARN with the ARN of the external account, and specifying the account in which the key can be used\. This allows you to use IAM policies to give an IAM user or role in the specified account permission to create a grant for the CMK using the CLI command that follows\. Giving the AWS account full access to the CMK does not by itself give any IAM users or roles access to the CMK\.
 
 ```
 {
