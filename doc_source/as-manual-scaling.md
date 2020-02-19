@@ -28,7 +28,7 @@ Now, verify that your Auto Scaling group has launched one additional instance\.
 
 **To verify that the size of your Auto Scaling group has changed**
 
-1. On the **Activity history** tab, the **Status** column shows the current status of your instance\. Use the refresh button until you see the status of your instance change to **Successful**\. This indicates that your Auto Scaling group has successfully launched a new instance\. 
+1. On the **Activity** tab, in **Activity history**, the **Status** column shows the current status of your instance\. Use the refresh button until you see the status of your instance change to **Successful**\. This indicates that your Auto Scaling group has successfully launched a new instance\. 
 **Note**  
 If the instance fails to launch, you can find troubleshooting tips in [Troubleshooting Amazon EC2 Auto Scaling](CHAP_Troubleshooting.md)\.
 

@@ -6,7 +6,7 @@ The following procedure works for creating a new launch template\. The new templ
 
 **Prerequisites**
 
-For information about the required IAM permissions, see [Controlling the Use of Launch Templates](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-launch-templates.html#launch-template-permissions) in the *Amazon EC2 User Guide for Linux Instances*\. 
+For information about the required IAM permissions, see [Controlling the Use of Launch Templates](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-launch-templates.html#launch-template-permissions) in the *Amazon EC2 User Guide for Linux Instances*\. For information about the required permissions to create and update Auto Scaling groups to use a launch template, see [Amazon EC2 Auto Scaling Identity\-Based Policy Examples](security_iam_id-based-policy-examples.md)\.
 
 **Considerations**
 

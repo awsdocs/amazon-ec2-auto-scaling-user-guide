@@ -40,7 +40,7 @@ The `AWS/AutoScaling` namespace includes the following metrics for your groups t
 | GroupInServiceCapacity | The number of capacity units that are running as part of the Auto Scaling group\. **Reporting criteria**: Reported if metrics collection is enabled\. | 
 | GroupPendingCapacity |  The number of capacity units that are pending\.  **Reporting criteria**: Reported if metrics collection is enabled\.  | 
 | GroupStandbyCapacity |  The number of capacity units that are in a `Standby` state\. **Reporting criteria**: Reported if metrics collection is enabled\.  | 
-| GroupTerminatingCapacity |  The number of capacity units that are in the process of terminating\. This metric does not include instances that are in service or pending\.  **Reporting criteria**: Reported if metrics collection is enabled\.  | 
+| GroupTerminatingCapacity |  The number of capacity units that are in the process of terminating\.  **Reporting criteria**: Reported if metrics collection is enabled\.  | 
 | GroupTotalCapacity |  The total number of capacity units in the Auto Scaling group\. **Reporting criteria**: Reported if metrics collection is enabled\.  | 
 
 ## Dimensions for Auto Scaling Group Metrics<a name="as-group-metric-dimensions"></a>

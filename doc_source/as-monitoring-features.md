@@ -25,3 +25,6 @@ AWS CloudTrail enables you to track the calls made to the Amazon EC2 Auto Scalin
 
 **CloudWatch Logs**  
 CloudWatch Logs enable you to monitor, store, and access your log files from Amazon EC2 instances, CloudTrail, and other sources\. CloudWatch Logs can monitor information in the log files and notify you when certain thresholds are met\. You can also archive your log data in highly durable storage\. For more information, see the [Amazon CloudWatch Logs User Guide](https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/)\.
+
+**AWS Personal Health Dashboard**  
+The Personal Health Dashboard \(PHD\) displays information, and also provides notifications that are triggered by changes in the health of AWS resources\. The information is presented in two ways: on a dashboard that shows recent and upcoming events organized by category, and in a full event log that shows all events from the past 90 days\. For more information, see [Personal Health Dashboard Notifications for Amazon EC2 Auto Scaling](monitoring-personal-health-dashboard.md)\.

@@ -31,6 +31,8 @@ If you have custom health checks, you can send the information from your health 
 
 Frequently, an Auto Scaling instance that has just come into service needs to warm up before it can pass the health check\. Amazon EC2 Auto Scaling waits until the health check grace period ends before checking the health status of the instance\. Amazon EC2 status checks and Elastic Load Balancing health checks can complete before the health check grace period expires\. However, Amazon EC2 Auto Scaling does not act on them until the health check grace period expires\. To provide ample warm\-up time for your instances, ensure that the health check grace period covers the expected startup time for your application\. If you add a lifecycle hook, the grace period does not start until the lifecycle hook actions are completed and the instance enters the `InService` state\.
 
+The health check grace period is in seconds\. So if, for example, you specify 300 seconds, you get a five\-minute time period\.
+
 ## Replacing Unhealthy Instances<a name="replace-unhealthy-instance"></a>
 
 After an instance has been marked unhealthy because of an Amazon EC2 or Elastic Load Balancing health check, it is almost immediately scheduled for replacement\. It never automatically recovers its health\. You can intervene manually by calling the [https://docs.aws.amazon.com/autoscaling/ec2/APIReference/API_SetInstanceHealth.html](https://docs.aws.amazon.com/autoscaling/ec2/APIReference/API_SetInstanceHealth.html) action \(or the set\-instance\-health command\) to set the instance's health status back to healthy\. If the instance is already terminating, you get an error\. Because the interval between marking an instance unhealthy and its actual termination is so small, attempting to set an instance's health status back to healthy with the `SetInstanceHealth` action \(or, set\-instance\-health command\) is probably useful only for a suspended group\. For more information, see [Suspending and Resuming Scaling Processes](as-suspend-resume-processes.md)\.
@@ -64,11 +66,16 @@ The following is an example response that shows that the health status of the in
             ....
             "Instances": [
                 {
-                    "InstanceId": "i-123abc45d",
+                    "ProtectedFromScaleIn": false,
                     "AvailabilityZone": "us-west-2a",
+                    "LaunchTemplate": {
+                        "LaunchTemplateName": "my-launch-template",
+                        "Version": "1",
+                        "LaunchTemplateId": "lt-050555ad16a3f9c7f"
+                    },
+                    "InstanceId": "i-123abc45d",
                     "HealthStatus": "Unhealthy",
-                    "LifecycleState": "Terminating",
-                    "LaunchConfigurationName": "my-lc"
+                    "LifecycleState": "Terminating"
                 },
                 ...
             ]

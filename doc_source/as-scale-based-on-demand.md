@@ -13,6 +13,8 @@ You can configure your Auto Scaling group to scale dynamically to meet this need
 + [Target Tracking Scaling Policies for Amazon EC2 Auto Scaling](as-scaling-target-tracking.md)
 + [Step and Simple Scaling Policies for Amazon EC2 Auto Scaling](as-scaling-simple-step.md)
 + [Scaling Based on Amazon SQS](as-using-sqs-queue.md)
++ [Verifying a Scaling Activity for an Auto Scaling Group](as-verify-scaling-activity.md)
++ [Disabling a Scaling Policy for an Auto Scaling Group](as-enable-disable-scaling-policy.md)
 + [Deleting a Scaling Policy](deleting-scaling-policy.md)
 
 ## How Scaling Policies Work<a name="as-how-scaling-policies-work"></a>

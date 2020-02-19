@@ -80,7 +80,7 @@ Amazon SNS sends a confirmation email to the email address you specified in the 
 
 Make sure that you open the email from AWS Notifications and choose the link to confirm the subscription before you continue with the next step\.
 
-You will receive an acknowledgement message from AWS\. Amazon SNS is now configured to receive notifications and send the notification as an email to the email address that you specified\.
+You will receive an acknowledgment message from AWS\. Amazon SNS is now configured to receive notifications and send the notification as an email to the email address that you specified\.
 
 ## Configure Your Auto Scaling Group to Send Notifications<a name="as-configure-asg-for-sns"></a>
 

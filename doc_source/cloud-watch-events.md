@@ -248,15 +248,15 @@ Use the following procedure to create a Lambda function to handle an Auto Scalin
 
 1. If you are new to Lambda, you see a welcome page; choose **Get Started Now**; otherwise, choose **Create a Lambda function**\.
 
-1. On the **Select blueprint** page, type `hello-world` for **Filter**, and then select the **hello\-world** blueprint\.
+1. On the **Select blueprint** page, enter `hello-world` for **Filter**, and then select the **hello\-world** blueprint\.
 
 1. On the **Configure triggers** page, choose **Next**\.
 
 1. On the **Configure function** page, do the following:
 
-   1. Type a name and description for the Lambda function\.
+   1. Enter a name and description for the Lambda function\.
 
-   1. Edit the code for the Lambda function\. For example, the following code simply logs the event:
+   1. Edit the code for the Lambda function\. For example, the following code simply logs the event\.
 
       ```
       console.log('Loading function');
@@ -294,7 +294,7 @@ Use the following procedure to route Auto Scaling events to your Lambda function
 
 1. Choose **Configure details**\.
 
-1. For **Rule definition**, type a name and description for your rule\.
+1. For **Rule definition**, enter a name and description for your rule\.
 
 1. Choose **Create rule**\.
 
