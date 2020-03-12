@@ -2,16 +2,16 @@
 
 The default health checks for an Auto Scaling group are EC2 status checks only\. If an instance fails these status checks, the Auto Scaling group considers the instance unhealthy and replaces it\. For more information, see [Health Checks for Auto Scaling Instances](healthcheck.md)\. 
 
-If you attached one or more load balancers or target groups to your Auto Scaling group, by default the group does not consider an instance unhealthy and replace it if it fails the load balancer health checks\. 
+You can attach one or more target groups \(Application Load Balancers and Network Load Balancers\), one or more load balancers \(Classic Load Balancers\), or both to your Auto Scaling group\. However, by default, the group does not consider an instance unhealthy and replace it if it fails the Elastic Load Balancing health checks\. 
 
-However, you can optionally configure the Auto Scaling group to use Elastic Load Balancing health checks\. This ensures that the group can determine an instance's health based on additional tests provided by the load balancer\. The load balancer periodically sends pings, attempts connections, or sends requests to test the EC2 instances\. These tests are called health checks\. 
+To ensure that the group can determine an instance's health based on additional tests provided by the load balancer, you can optionally configure the Auto Scaling group to use Elastic Load Balancing health checks\. The load balancer periodically sends pings, attempts connections, or sends requests to test the EC2 instances\. These tests are called health checks\. 
 
 To learn more about Elastic Load Balancing health checks, see the following topics:
 + [Configure Health Checks for Your Classic Load Balancer](https://docs.aws.amazon.com/elasticloadbalancing/latest/classic/elb-healthchecks.html) in the *User Guide for Classic Load Balancers*
 + [Health Checks for Your Target Groups](https://docs.aws.amazon.com/elasticloadbalancing/latest/application/target-group-health-checks.html) in the *User Guide for Application Load Balancers*
 + [Health Checks for Your Target Groups](https://docs.aws.amazon.com/elasticloadbalancing/latest/network/target-group-health-checks.html) in the *User Guide for Network Load Balancers*
 
-If you configure the Auto Scaling group to use Elastic Load Balancing health checks, it considers the instance unhealthy if it fails either the EC2 status checks or the load balancer health checks\. If you attach multiple load balancers to an Auto Scaling group, all of them must report that the instance is healthy in order for it to consider the instance healthy\. If one load balancer reports an instance as unhealthy, the Auto Scaling group replaces the instance, even if other load balancers report it as healthy\. 
+If you configure the Auto Scaling group to use Elastic Load Balancing health checks, it considers the instance unhealthy if it fails either the EC2 status checks or the Elastic Load Balancing health checks\. If you attach multiple load balancer target groups or Classic Load Balancers to the group, all of them must report that the instance is healthy in order for it to consider the instance healthy\. If any one of them reports an instance as unhealthy, the Auto Scaling group replaces the instance, even if other ones report it as healthy\. 
 
 The following procedures show how to add Elastic Load Balancing health checks to your Auto Scaling group\.
 

@@ -7,6 +7,8 @@ After you replace the launch configuration for an Auto Scaling group, any new in
 **Prerequisites**  
 Before you can replace a launch configuration in an Auto Scaling group, you must first create your launch template\. The easiest way to create a launch template is to copy it from the launch configuration\. For more information, see [Copying a Launch Configuration to a Launch Template](copy-launch-config.md)\.
 
+When you replace a launch configuration with a launch template, your `ec2:RunInstances` permissions are checked\. If you are attempting to use a launch template and you do not have sufficient permissions, you receive an error that you're not authorized to use the launch template\.
+
 **To replace the launch configuration for an Auto Scaling group**
 
 1. Open the Amazon EC2 console at [https://console\.aws\.amazon\.com/ec2/](https://console.aws.amazon.com/ec2/)\.

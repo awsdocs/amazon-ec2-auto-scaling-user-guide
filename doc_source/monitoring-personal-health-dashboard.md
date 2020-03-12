@@ -1,6 +1,6 @@
 # Personal Health Dashboard Notifications for Amazon EC2 Auto Scaling<a name="monitoring-personal-health-dashboard"></a>
 
-Your Personal Health Dashboard \(PHD\) provides support for notifications that come from Amazon EC2 Auto Scaling\. These notifications provide awareness and remediation guidance for resource performance or availability issues that may affect your applications\.
+Your Personal Health Dashboard \(PHD\) provides support for notifications that come from Amazon EC2 Auto Scaling\. These notifications provide awareness and remediation guidance for resource performance or availability issues that may affect your applications\. Only events that are specific to missing security groups and launch templates are currently available\. 
 
 The Personal Health Dashboard is part of the AWS Health service\. It requires no setup and can be viewed by any user that is authenticated in your account\. For more information, see [Getting Started with the AWS Personal Health Dashboard](https://docs.aws.amazon.com/health/latest/ug/getting-started-phd.html)\. 
 

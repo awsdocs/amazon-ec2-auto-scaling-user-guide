@@ -132,9 +132,14 @@ Amazon EC2 Auto Scaling does not support Access Control Lists \(ACLs\)\.
 
 ## Authorization Based on Amazon EC2 Auto Scaling Tags<a name="security_iam_service-with-iam-tags"></a>
 
-You can attach tags to Amazon EC2 Auto Scaling resources or pass tags in a request to Amazon EC2 Auto Scaling\. To control access based on tags, you provide tag information in the [condition element](https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_elements_condition.html) of a policy using the `autoscaling:ResourceTag/key-name`, `aws:RequestTag/key-name`, or `aws:TagKeys` condition keys\. For more information about tagging Amazon EC2 Auto Scaling resources, see [Tagging Auto Scaling Groups and Instances](autoscaling-tagging.md)\.
+You can apply tag\-based, resource\-level permissions in the identity\-based policies that you create for Amazon EC2 Auto Scaling\. This gives you better control over which resources a user can create, modify, use, or delete\.
 
-To view an example identity\-based policy for limiting access to a resource based on the tags on that resource, see [Example: Control Access Using Tags](security_iam_id-based-policy-examples.md#policy-example-tags)\.
+To use tags with IAM policies, you provide tag information in the [condition element](https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_elements_condition.html) of a policy using the following condition keys:
++ Use `autoscaling:ResourceTag/tag-key: tag-value` to allow \(or deny\) user actions on Auto Scaling groups with specific tags\. 
++ Use `aws:RequestTag/tag-key: tag-value` to require that a specific tag be present \(or not present\) in a request\. 
++ Use `aws:TagKeys [tag-key, ...]` to require that specific tag keys be present \(or not present\) in a request\. 
+
+To view an example policy for controlling access to an Auto Scaling group based on the tags on that Auto Scaling group, see [Control Which Scaling Policies Can Be Deleted](security_iam_id-based-policy-examples.md#policy-example-delete-policy)\. For other examples for controlling access based on tags, see [Amazon EC2 Auto Scaling Identity\-Based Policy Examples](security_iam_id-based-policy-examples.md)\. 
 
 ## Amazon EC2 Auto Scaling IAM Roles<a name="security_iam_service-with-iam-roles"></a>
 
@@ -148,13 +153,13 @@ Amazon EC2 Auto Scaling supports using temporary credentials\.
 
 ### Service\-Linked Roles<a name="security_iam_service-with-iam-roles-service-linked"></a>
 
-[Service\-linked roles](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_terms-and-concepts.html#iam-term-service-linked-role) allow AWS services to access resources in other services to complete an action on your behalf\. Service\-linked roles appear in your IAM account and are owned by the service\. An IAM administrator can view but not edit the permissions for service\-linked roles\.
+Service\-linked roles allow AWS services to access resources in other services to complete an action on your behalf\. Service\-linked roles appear in your IAM account and are owned by the service\. An IAM administrator can view but not edit the permissions for service\-linked roles\.
 
 Amazon EC2 Auto Scaling supports service\-linked roles\. For details about creating or managing Amazon EC2 Auto Scaling service\-linked roles, see [Service\-Linked Roles for Amazon EC2 Auto Scaling](autoscaling-service-linked-role.md)\.
 
 ### Service Roles<a name="security_iam_service-with-iam-roles-service"></a>
 
-This feature allows a service to assume a [service role](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_terms-and-concepts.html#iam-term-service-role) on your behalf\. This role allows the service to access resources in other services to complete an action on your behalf\. Service roles appear in your IAM account and are owned by the account\. This means that an IAM administrator can change the permissions for this role\. However, doing so might break the functionality of the service\.
+This feature allows a service to assume a [service role](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_terms-and-concepts.html#iam-term-service-role) on your behalf\. This role allows the service to access resources in other services to complete an action on your behalf\. An IAM administrator can change the permissions for this role\. However, doing so might break the functionality of the service\.
 
 Amazon EC2 Auto Scaling supports service roles for lifecycle hook notifications\. For more information, see [Amazon EC2 Auto Scaling Lifecycle Hooks](lifecycle-hooks.md)\.
 

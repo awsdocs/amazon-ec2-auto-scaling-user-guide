@@ -12,13 +12,11 @@ Before you create an Auto Scaling group for use with your application, review yo
 The better you understand your application, the more effective you can make your Auto Scaling architecture\.
 
 The following instructions:
-+ Create a configuration template that defines your EC2 instances\.
++ Create a configuration template that defines your EC2 instances\. You can choose either the launch template or the launch configuration instructions, based on your preference\. 
 + Create an Auto Scaling group to maintain a fixed number of instances even if an instance becomes unhealthy\.
 + Optionally, delete this basic infrastructure\.
 
 This tutorial assumes that you are familiar with launching EC2 instances and that you have already created a key pair and a security group\. For more information, see [Setting Up with Amazon EC2](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/get-set-up-for-amazon-ec2.html) in the *Amazon EC2 User Guide for Linux Instances*\. 
-
-Amazon EC2 Auto Scaling has recently changed the Auto Scaling group interface\. By default, you're shown the old user interface, but you can switch to the new user interface\. This topic contains steps for both\. 
 
 To get started, you can launch a single [free tier](https://aws.amazon.com/free/) eligible Linux instance\. If you created your AWS account less than 12 months ago, and have not already exceeded the free tier benefits for Amazon EC2, it will not cost you anything to complete this tutorial, because we help you select options that are within the free tier benefits\. Otherwise, when you follow this tutorial, you incur the standard Amazon EC2 usage fees from the time that the instance launches until you delete the Auto Scaling group \(which is the final task of this tutorial\) and the instance status changes to `terminated`\. 
 
@@ -33,10 +31,12 @@ To get started, you can launch a single [free tier](https://aws.amazon.com/free/
 
 For this step, you create a launch template that specifies the type of EC2 instance that Amazon EC2 Auto Scaling creates for you\. Include information such as the ID of the Amazon Machine Image \(AMI\) to use, the instance type, the key pair, and security groups\. 
 
-**Note**  
-For detailed instructions for creating launch templates, see [Creating a Launch Template for an Auto Scaling Group](create-launch-template.md)\. 
+For detailed instructions for creating launch templates, see [Creating a Launch Template for an Auto Scaling Group](create-launch-template.md)\.
 
-**To create a launch template for an Auto Scaling group**
+**Note**  
+Alternatively, you can use a launch configuration to create an Auto Scaling group instead of using a launch template\. For the launch configuration instructions, see [Create a launch configuration](#id-gs-create-lc)\.
+
+**To create a launch template**
 
 1. Open the Amazon EC2 console at [https://console\.aws\.amazon\.com/ec2/](https://console.aws.amazon.com/ec2/)\.
 
@@ -116,7 +116,13 @@ An Auto Scaling group is a collection of EC2 instances, and is the core of Amazo
 
 Use the following procedure to continue where you left off after creating either a launch template or a launch configuration\. 
 
+**Note**  
+Amazon EC2 Auto Scaling has recently changed the Auto Scaling group interface\. By default, you're shown the old user interface, but you can switch to the new user interface\. This topic contains steps for both\.  
+To switch to the new user interface, on the **Auto Scaling Groups** page, on the banner at the top of the page, choose **Go to the new console**\. 
+
 **To create an Auto Scaling group \(new console\)**
+
+1. From the new console, on the **Auto Scaling groups** page, choose **Create an Auto Scaling group**\.
 
 1. On the **Choose launch template or configuration** page, for **Auto Scaling group name**, enter a name for your Auto Scaling group\.
 
@@ -185,17 +191,27 @@ On the **Auto Scaling groups** page, complete the following procedure\.
 
 1. On the **Instance management** tab, under **Instances**, you can view the status of the instance\. \(Old console: The **Instances** tab is where you can view the status of the instance\.\) 
 
-1. Verify that your instance launched successfully\. It takes a short time for an instance to launch\. The **Lifecycle** column shows the state of your instance\. Verify that your Auto Scaling group has launched your EC2 instance, and that it is in the `InService` lifecycle state\. The **Health status** column shows the result of the EC2 instance health check on your instance\.
+1. Verify that your instance launched successfully\. It takes a short time for an instance to launch\. 
+
+   The **Lifecycle** column shows the state of your instance\. Verify that your Auto Scaling group has launched your EC2 instance, and that it is in the `InService` lifecycle state\. 
+
+   The **Health status** column shows the result of the EC2 instance health check on your instance\.
 
 ### \(Optional\) Terminate an Instance in Your Auto Scaling Group<a name="gs-asg-terminate-instance"></a>
 
-If you want, you can use these steps to learn more about how Amazon EC2 Auto Scaling works, specifically, how it launches new instances when necessary\. The minimum size for the Auto Scaling group that you created in this tutorial is one instance\. Therefore, if you terminate that running instance, Amazon EC2 Auto Scaling must launch a new instance to replace it\.
+You can use these steps to learn more about how Amazon EC2 Auto Scaling works, specifically, how it launches new instances when necessary\. The minimum size for the Auto Scaling group that you created in this tutorial is one instance\. Therefore, if you terminate that running instance, Amazon EC2 Auto Scaling must launch a new instance to replace it\.
 
-1. On the **Instance management** tab \(Old console: **Instances** tab\), select the ID of the instance from the list of instances\. This shows you the instance on the **Instances** page\.
+1. On the **Instance management** tab, under **Instances**, select the ID of the instance\. \(Old console: The **Instances** tab is where you can select the ID of the instance\.\)
+
+   This takes you to the **Instances** page in the Amazon EC2 console, where you can terminate the instance\.
 
 1. Choose **Actions**, **Instance State**, **Terminate**\. When prompted for confirmation, choose **Yes, Terminate**\.
 
-1. On the navigation pane, choose **Auto Scaling Groups**\. Select your Auto Scaling group and choose the **Activity** tab \(Old console: The **Activity History** tab\)\. The default cooldown for the Auto Scaling group is 300 seconds \(5 minutes\), so it takes about 5 minutes until you see the scaling activity\. In the activity history, when the scaling activity starts, you see an entry for the termination of the first instance and an entry for the launch of a new instance\. The **Instance management** tab \(Old console: The **Instances** tab\) shows the new instance only\.
+1. On the navigation pane, choose **Auto Scaling Groups**\. Select your Auto Scaling group and choose the **Activity** tab\. \(Old console: **Activity History** tab\)\. 
+
+   The default cooldown for the Auto Scaling group is 300 seconds \(5 minutes\), so it takes about 5 minutes until you see the scaling activity\. In the activity history, when the scaling activity starts, you see an entry for the termination of the first instance and an entry for the launch of a new instance\. 
+
+1. On the **Instance management** tab, the **Instances** section shows the new instance only\. \(Old console: The **Instances** tab is where you can see this\.\)
 
 1. On the navigation pane, choose **Instances**\. This page shows both the terminated instance and the new running instance\.
 

@@ -10,7 +10,7 @@ The following sections describe how to create and manage Amazon EC2 Auto Scaling
 
 There are two types of Amazon EC2 Auto Scaling service\-linked roles:
 + The default service\-linked role for your account, named **AWSServiceRoleForAutoScaling**\. This role is automatically assigned to your Auto Scaling groups unless you specify a different service\-linked role\. 
-+ A service\-linked role with a custom suffix that you specify when you create the role, for example, **AWSServiceRoleForAutoScaling\_mysuffix**\.
++ A service\-linked role with a custom suffix that you specify when you create the role, for example, **AWSServiceRoleForAutoScaling\_*mysuffix***\.
 
 The permissions of a custom suffix service\-linked role are identical to those of the default service\-linked role\. In both cases, you cannot edit the roles, and you also cannot delete them if they are still in use by an Auto Scaling group\. The only difference is the role name suffix\. 
 
@@ -24,7 +24,7 @@ If you create customer managed CMKs that not all users should have access to, fo
 
 1. Give the service\-linked role access to a customer managed CMK\. For more information about the key policy that allows the CMK to be used by a service\-linked role, see [Required CMK Key Policy for Use with Encrypted Volumes](key-policy-requirements-EBS-encryption.md)\. 
 
-1. Give IAM users or roles access to the service\-linked role that you created\. For more information about creating the IAM policy, see [Example: Restrict Which Service\-Linked Role Can Be Passed \(Using PassRole\)](security_iam_id-based-policy-examples.md#policy-example-pass-role)\. If users try to specify a service\-linked role without permission to pass that role to the service, they receive an error\.
+1. Give IAM users or roles access to the service\-linked role that you created\. For more information about creating the IAM policy, see [Control Which Service\-Linked Role Can Be Passed \(Using PassRole\)](security_iam_id-based-policy-examples.md#policy-example-pass-role)\. If users try to specify a service\-linked role without permission to pass that role to the service, they receive an error\.
 
 ## Permissions Granted by the Service\-Linked Role<a name="service-linked-role-permissions"></a>
 
@@ -73,14 +73,14 @@ Amazon EC2 Auto Scaling began supporting service\-linked roles in March 2018\. I
 
 1. Choose **Next: Permissions**, **Next: Tags**, and then **Next: Review**\. Note: You cannot attach tags to service\-linked roles during creation\. 
 
-1. On the **Review** page, leave **Role name** blank to create a service\-linked role with the name `AWSServiceRoleForAutoScaling`, or enter a suffix to create a service\-linked role with the name `AWSServiceRoleForAutoScaling`\_*suffix*\.
+1. On the **Review** page, leave **Role name** blank to create a service\-linked role with the name **AWSServiceRoleForAutoScaling**, or enter a suffix to create a service\-linked role with the name **AWSServiceRoleForAutoScaling**\_*suffix*\.
 
 1. \(Optional\) For **Role description**, edit the description for the service\-linked role\. 
 
 1. Choose **Create role**\. 
 
 **To create a service\-linked role \(AWS CLI\)**  
-Use the following [https://docs.aws.amazon.com/cli/latest/reference/iam/create-service-linked-role.html](https://docs.aws.amazon.com/cli/latest/reference/iam/create-service-linked-role.html) CLI command to create a service\-linked role for Amazon EC2 Auto Scaling with the name `AWSServiceRoleForAutoScaling`\_*suffix*\. 
+Use the following [https://docs.aws.amazon.com/cli/latest/reference/iam/create-service-linked-role.html](https://docs.aws.amazon.com/cli/latest/reference/iam/create-service-linked-role.html) CLI command to create a service\-linked role for Amazon EC2 Auto Scaling with the name **AWSServiceRoleForAutoScaling\_*suffix***\. 
 
 ```
 aws iam create-service-linked-role --aws-service-name autoscaling.amazonaws.com --custom-suffix suffix

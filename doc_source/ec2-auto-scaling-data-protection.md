@@ -20,3 +20,6 @@ You can configure your Auto Scaling group to encrypt Amazon EBS volume data stor
 For more information about protecting your data managed within the Amazon EC2 service, such as EBS volumes and snapshots, see [Data Protection in Amazon EC2](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/data-protection.html) and [Encryption by Default](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EBSEncryption.html#encryption-by-default) in the *Amazon EC2 User Guide for Linux Instances*\.
 
 For more information about AWS KMS, see [What is AWS Key Management Service?](https://docs.aws.amazon.com/kms/latest/developerguide/overview.html)
+
+**Related topics**
++ [Data Protection in Amazon EC2](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/data-protection.html) in the *Amazon EC2 User Guide for Linux Instances*

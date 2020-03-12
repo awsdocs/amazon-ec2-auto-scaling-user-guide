@@ -20,6 +20,7 @@ We recommend that you read the Amazon EC2 topics first\. See [Identity and Acces
 + [Access Control](#access-control)
 + [How Amazon EC2 Auto Scaling Works with IAM](control-access-using-iam.md)
 + [Service\-Linked Roles for Amazon EC2 Auto Scaling](autoscaling-service-linked-role.md)
-+ [IAM Role for Applications That Run on Amazon EC2 Instances](us-iam-role.md)
 + [Amazon EC2 Auto Scaling Identity\-Based Policy Examples](security_iam_id-based-policy-examples.md)
++ [Launch Template Support](ec2-auto-scaling-launch-template-permissions.md)
++ [IAM Role for Applications That Run on Amazon EC2 Instances](us-iam-role.md)
 + [Required CMK Key Policy for Use with Encrypted Volumes](key-policy-requirements-EBS-encryption.md)

@@ -9,6 +9,8 @@ For instances in an Auto Scaling group, you must create a launch template or lau
 **Note**  
 When you use the IAM console to create a role for Amazon EC2, the console guides you through the steps for creating the role and automatically creates an instance profile with the same name as the IAM role\. 
 
+For more information, see [IAM Roles for Amazon EC2](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/iam-roles-for-amazon-ec2.html) in the *Amazon EC2 User Guide for Linux Instances*\. 
+
 ## Prerequisites<a name="us-iam-role-prereq"></a>
 
 Create the IAM role that your application running on Amazon EC2 can assume\. Choose the appropriate permissions so that the application that is subsequently given the role can make the specific API calls that it needs\. 
@@ -29,6 +31,8 @@ As a best practice, we strongly recommend that you create the role so that it ha
 1. For **Attach permissions policies**, choose the AWS managed policies that contain the required permissions\. Choose **Next: Tags** and then **Next: Review**\.
 
 1. On the **Review** page, enter a name for the role and choose **Create role**\. 
+
+When using an instance profile, the `iam:PassRole` permission is needed on the IAM user who creates an Auto Scaling group using a launch template or launch configuration that specifies an instance profile\. For an example policy, see [Control Which IAM Roles Can Be Passed \(Using PassRole\)](security_iam_id-based-policy-examples.md#policy-example-pass-IAM-role)\.
 
 ## Create a Launch Configuration<a name="us-iam-role-create-launch"></a>
 

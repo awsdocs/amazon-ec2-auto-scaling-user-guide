@@ -1,12 +1,13 @@
 # Monitoring Your Auto Scaling Groups and Instances Using Amazon CloudWatch<a name="as-instance-monitoring"></a>
 
-Amazon CloudWatch enables you to retrieve statistics as an ordered set of time\-series data, known as metrics\. You can use these metrics to verify that your system is performing as expected\.
+*Metrics* are the fundamental concept in CloudWatch\. A metric represents a time\-ordered set of data points that are published to CloudWatch\. Think of a metric as a variable to monitor, and the data points as representing the values of that variable over time\. You can use these metrics to verify that your system is performing as expected\. 
 
-Amazon EC2 sends metrics to CloudWatch that describe your Auto Scaling instances\. These metrics are available for any EC2 instance, not just those in an Auto Scaling group \(see [Monitoring Your Instances Using CloudWatch](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-cloudwatch.html) in the *Amazon EC2 User Guide for Linux Instances*\)\.
+Amazon EC2 Auto Scaling publishes data points to CloudWatch about your Auto Scaling groups\. The metrics are available at 1\-minute granularity\. This interval is not configurable\. You must enable these metrics\. The following sections guide you through enabling them\.
 
-Auto Scaling groups can send metrics to CloudWatch that describe the group itself\. You must enable these metrics\. These metrics are available at 1\-minute granularity\. This interval is not configurable\. 
+Amazon EC2 publishes data points to CloudWatch that describe your Auto Scaling instances\. The interval for Amazon EC2 instance monitoring is configurable\. The following sections provide instructions for configuring instance monitoring for your Auto Scaling instances\.
 
-The interval for Amazon EC2 instance monitoring is configurable\. For more information, see [Configure Monitoring for Auto Scaling Instances](#enable-as-instance-metrics)\.
+**Note**  
+Amazon EC2 monitoring is available for any EC2 instance, not just those in an Auto Scaling group\. For more information, see [Monitoring Your Instances Using CloudWatch](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-cloudwatch.html) in the *Amazon EC2 User Guide for Linux Instances*\.
 
 **Topics**
 + [Auto Scaling Group Metrics](#as-group-metrics)
