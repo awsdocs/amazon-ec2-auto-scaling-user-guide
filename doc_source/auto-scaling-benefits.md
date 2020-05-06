@@ -9,6 +9,7 @@ Adding Amazon EC2 Auto Scaling to your application architecture is one way to ma
 + [Example: Covering Variable Demand](#autoscaling-benefits-example)
 + [Example: Web App Architecture](#autoscaling-design-example)
 + [Example: Distributing Instances Across Availability Zones](#arch-AutoScalingMultiAZ)
++ [Rebalancing Activities](#AutoScalingBehavior.InstanceUsage)
 
 ## Example: Covering Variable Demand<a name="autoscaling-benefits-example"></a>
 
