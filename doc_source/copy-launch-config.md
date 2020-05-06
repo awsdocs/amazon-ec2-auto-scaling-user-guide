@@ -1,6 +1,6 @@
 # Copying a Launch Configuration to a Launch Template<a name="copy-launch-config"></a>
 
-Use the following procedure to copy the options from an existing launch configuration to create a new launch template\.
+Use the following procedure to copy the options from an existing launch configuration to create a new launch template\. This action can only be performed from the console\.
 
 You can create launch templates from existing launch configurations to make it easy for you to update your Auto Scaling groups to use launch templates\. Like launch configurations, launch templates can contain all or some of the parameters to launch an instance\. With launch templates, you can also create multiple versions of a template to make it faster and easier to launch new instances\. 
 

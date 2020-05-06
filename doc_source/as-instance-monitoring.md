@@ -2,9 +2,9 @@
 
 *Metrics* are the fundamental concept in CloudWatch\. A metric represents a time\-ordered set of data points that are published to CloudWatch\. Think of a metric as a variable to monitor, and the data points as representing the values of that variable over time\. You can use these metrics to verify that your system is performing as expected\. 
 
-Amazon EC2 Auto Scaling publishes data points to CloudWatch about your Auto Scaling groups\. The metrics are available at 1\-minute granularity\. This interval is not configurable\. You must enable these metrics\. The following sections guide you through enabling them\.
+Amazon EC2 Auto Scaling publishes data points to CloudWatch about your Auto Scaling groups\. The metrics are available at 1\-minute granularity at no additional charge, but you must enable them\. By doing this, you get continuous visibility into the operations of your Auto Scaling groups so that you can quickly respond to changes in your workloads\. The following sections guide you through enabling them\.
 
-Amazon EC2 publishes data points to CloudWatch that describe your Auto Scaling instances\. The interval for Amazon EC2 instance monitoring is configurable\. The following sections provide instructions for configuring instance monitoring for your Auto Scaling instances\.
+Amazon EC2 publishes data points to CloudWatch that describe your Auto Scaling instances\. The interval for Amazon EC2 instance monitoring is configurable\. You can choose between 1\-minute and 5\-minute granularity, as described in the sections that follow\.
 
 **Note**  
 Amazon EC2 monitoring is available for any EC2 instance, not just those in an Auto Scaling group\. For more information, see [Monitoring Your Instances Using CloudWatch](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-cloudwatch.html) in the *Amazon EC2 User Guide for Linux Instances*\.
@@ -50,7 +50,7 @@ To filter the metrics for your Auto Scaling group by group name, use the `AutoSc
 
 ## Enable Auto Scaling Group Metrics<a name="as-enable-group-metrics"></a>
 
-When you enable Auto Scaling group metrics, Auto Scaling sends sampled data to CloudWatch every minute\.
+When you enable Auto Scaling group metrics, your Auto Scaling group sends sampled data to CloudWatch every minute\. There is no charge for enabling these metrics\. 
 
 **To enable group metrics \(console\)**
 

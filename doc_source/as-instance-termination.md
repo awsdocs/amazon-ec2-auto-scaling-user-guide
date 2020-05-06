@@ -101,7 +101,7 @@ To control whether an Auto Scaling group can terminate a particular instance whe
 
 Instance scale\-in protection starts when the instance state is `InService`\. If you detach an instance that is protected from termination, its instance scale\-in protection setting is lost\. When you attach the instance to the group again, it inherits the current instance scale\-in protection setting of the group\.
 
- If all instances in an Auto Scaling group are protected from termination during scale in, and a scale\-in event occurs, its desired capacity is decremented\. However, the Auto Scaling group can't terminate the required number of instances until their instance scale\-in protection settings are disabled\.
+If all instances in an Auto Scaling group are protected from termination during scale in, and a scale\-in event occurs, its desired capacity is decremented\. However, the Auto Scaling group can't terminate the required number of instances until their instance scale\-in protection settings are disabled\.
 
 Instance scale\-in protection does not protect Auto Scaling instances from the following:
 + Manual termination through the Amazon EC2 console, the `terminate-instances` command, or the `TerminateInstances` action\. To protect Auto Scaling instances from manual termination, enable Amazon EC2 termination protection\. For more information, see [Enabling Termination Protection](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/terminating-instances.html#Using_ChangingDisableAPITermination) in the *Amazon EC2 User Guide for Linux Instances*\.
@@ -132,7 +132,7 @@ aws autoscaling create-auto-scaling-group --auto-scaling-group-name my-asg --new
 
 ### Modify the Instance Scale\-In Protection Setting for a Group<a name="instance-protection-modify"></a>
 
-You can enable or disable the instance scale\-in protection setting for an Auto Scaling group\.
+You can enable or disable the instance scale\-in protection setting for an Auto Scaling group\. When the instance scale\-in protection setting is enabled, all new instances launched after enabling it will have instance scale\-in protection enabled\. Previously launched instances are not protected from scale in unless you enable the instance scale\-in protection setting for each instance individually\.
 
 **To change the instance scale\-in protection setting for a group \(console\)**
 

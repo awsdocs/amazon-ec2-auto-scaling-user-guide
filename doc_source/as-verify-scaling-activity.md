@@ -12,7 +12,7 @@ After you create a scaling policy, Amazon EC2 Auto Scaling starts evaluating the
 
    The **Instances** column shows the number of instances currently running\. While an instance is being launched or terminated, the **Status** column displays a status of "Updating capacity\." Wait for a few minutes, and then refresh the view to see the latest status\. After a scaling activity completes, notice that the **Instances** and **Desired capacity** columns show new values\. 
 **Note**  
-If you are using instance weighting, the **Weighted capacity** column measures the number of capacity units the group contains\. If this column is hidden, choose the gear\-shaped icon in the top\-right corner of the section and then enable **Weighted capacity**\.
+If you're using instance weighting, the **Weighted capacity** column measures the number of capacity units that the group contains\. If this column is hidden, choose the gear\-shaped icon in the top\-right corner of the section and then enable **Weighted capacity**\.
 
 1. Select the check box next to the Auto Scaling group\. 
 

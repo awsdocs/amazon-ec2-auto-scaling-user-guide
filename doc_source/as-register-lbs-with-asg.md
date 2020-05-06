@@ -3,7 +3,7 @@
 **Important**  
 Before you explore this tutorial, we recommend that you first review the following introductory tutorial: [Getting Started with Amazon EC2 Auto Scaling](GettingStartedTutorial.md)\.
 
-Registering your Auto Scaling group with an Elastic Load Balancing load balancer helps you set up a load\-balanced application\. Elastic Load Balancing works with Amazon EC2 Auto Scaling to load balance incoming traffic across your healthy Amazon EC2 instances\. This increases the scalability and availability of your application\. You can enable Elastic Load Balancing within a single Availability Zone or multiple Availability Zones to increase the fault tolerance of your applications\. For more information, see [Using a Load Balancer with an Auto Scaling Group](autoscaling-load-balancer.md)\. 
+Registering your Auto Scaling group with an Elastic Load Balancing load balancer helps you set up a load\-balanced application\. Elastic Load Balancing works with Amazon EC2 Auto Scaling to load balance incoming traffic across your healthy Amazon EC2 instances\. This increases the scalability and availability of your application\. You can enable Elastic Load Balancing within a single Availability Zone or multiple Availability Zones to increase the fault tolerance of your applications\. For more information, see [Elastic Load Balancing and Amazon EC2 Auto Scaling](autoscaling-load-balancer.md)\. 
 
 In this tutorial, we cover the basics steps for setting up a load\-balanced application when the Auto Scaling group is created\. To register an existing Auto Scaling group with a load balancer, see [Attaching a Load Balancer](attach-load-balancer-asg.md) instead\.
 

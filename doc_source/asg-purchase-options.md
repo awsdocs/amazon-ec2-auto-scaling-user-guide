@@ -1,14 +1,15 @@
 # Auto Scaling Groups with Multiple Instance Types and Purchase Options<a name="asg-purchase-options"></a>
 
-You can launch and automatically scale a fleet of On\-Demand Instances and Spot Instances within a single Auto Scaling group\. In addition to receiving discounts for using Spot Instances, if you specify instance types for which you have matching Reserved Instances, your discounted rate of the regular On\-Demand Instance pricing also applies\. The only difference between On\-Demand Instances and Reserved Instances is that you must purchase the Reserved Instances in advance\. All of these factors combined help you to optimize your cost savings for Amazon EC2 instances, while making sure that you obtain the desired scale and performance for your application\. 
+You can launch and automatically scale a fleet of On\-Demand Instances and Spot Instances within a single Auto Scaling group\. In addition to receiving discounts for using Spot Instances, you can use Reserved Instances or a Savings Plan to receive discounted rates of the regular On\-Demand Instance pricing\. All of these factors combined help you to optimize your cost savings for Amazon EC2 instances, while making sure that you obtain the desired scale and performance for your application\.
 
 You first specify the common configuration parameters in a launch template, and choose it when you create an Auto Scaling group\. When you configure the Auto Scaling group, you can:
-+ Specify how much On\-Demand and Spot capacity to launch and an optional On\-Demand base portion\.
-+ Choose one or more instance types for the instances \(optionally overriding the instance type specified by the launch template\)\.
++ Choose one or more instance types for the group \(optionally overriding the instance type that is specified by the launch template\)\.
 + Assign each instance type an individual weight\. Doing so might be useful, for example, if the instance types offer different vCPU, memory, storage, or network bandwidth capabilities\.
-+ Define how Amazon EC2 Auto Scaling should distribute your capacity across instance types within each purchasing option\.
++ Specify how much On\-Demand and Spot capacity to launch, and specify an optional On\-Demand base portion\.
++ Prioritize instance types that can benefit from Reserved Instance or Savings Plan discount pricing\.
++ Define how Amazon EC2 Auto Scaling should distribute your Spot capacity across instance types\.
 
-You enhance availability by deploying your application across multiple instance types running in multiple Availability Zones\. You can use just one instance type, but it is a best practice to use a few instance types to avoid trying to launch instances from instance pools with insufficient capacity\. If the Auto Scaling group's request for Spot Instances cannot be fulfilled in one Spot Instance pool, it keeps trying in other Spot Instance pools rather than launching On\-Demand Instances, so that you can leverage the cost savings of Spot Instances\. 
+You enhance availability by deploying your application across multiple instance types running in multiple Availability Zones\. You can use just one instance type, but it is a best practice to use a few instance types to allow Amazon EC2 Auto Scaling to launch another instance type in the event that there is insufficient instance capacity in your chosen Availability Zones\. With Spot Instances, if there is insufficient instance capacity, Amazon EC2 Auto Scaling keeps trying in other Spot Instance pools \(determined by your choice of instance types and allocation strategy\) rather than launching On\-Demand Instances, so that you can leverage the cost savings of Spot Instances\.
 
 ## Allocation Strategies<a name="asg-allocation-strategies"></a>
 
@@ -18,9 +19,13 @@ In each case, Amazon EC2 Auto Scaling first tries to ensure that your instances 
 
 ### On\-Demand Instances<a name="asg-od-strategy"></a>
 
-The allocation strategy for On\-Demand Instances is `prioritized`\. Amazon EC2 Auto Scaling uses the order of instance types in the list of launch template overrides to determine which instance type to use first when fulfilling On\-Demand capacity\.
+The allocation strategy for On\-Demand Instances is `prioritized`\. Amazon EC2 Auto Scaling uses the order of instance types in the list of launch template overrides to determine which instance type to use first when fulfilling On\-Demand capacity\. For example, let's say that you specified three launch template overrides in the following order: `c5.large`, `c4.large`, and `c3.large`\. When your On\-Demand Instances are launched, the Auto Scaling group fulfills On\-Demand capacity by starting with `c5.large`, then `c4.large`, and then `c3.large`\. 
 
-For example, let's say that you specified three launch template overrides in the following order: `c5.large`, `c4.large`, and `c3.large`\. When your On\-Demand Instances are launched, the Auto Scaling group fulfills On\-Demand capacity by starting with `c5.large`, then `c4.large`, and then `c3.large`\. If you have unused Reserved Instances for `c4.large`, you can set the priority of your instance types to give the highest priority to your Reserved Instances by specifying `c4.large` as the highest priority instance type\. When a `c4.large` instance launches, you receive the Reserved Instance pricing\.
+Consider the following when managing the priority order of your On\-Demand Instances:
+
+You can pay for usage upfront to get significant discounts for On\-Demand Instances by using either Reserved Instances or Savings Plans\. For more information about Reserved Instances or Savings Plans, see the [EC2 pricing](https://aws.amazon.com/ec2/pricing/) page\. 
++ With Reserved Instances, your discounted rate of the regular On\-Demand Instance pricing applies if Amazon EC2 Auto Scaling launches matching instance types\. That means that if you have unused Reserved Instances for `c4.large`, you can set the instance type priority to give the highest priority for your Reserved Instances to a `c4.large` instance type\. When a `c4.large` instance launches, you receive the Reserved Instance pricing\. 
++ With Savings Plans, your discounted rate of the regular On\-Demand Instance pricing applies when using either Amazon EC2 Instance Savings Plans or Compute Savings Plans\. Because of the flexible nature of Savings Plans, you have greater flexibility in prioritizing your instance types\. As long as you use instance types that are covered by your Savings Plan, you can set them in any order of priority and even occasionally change their order entirely, and continue to receive the discounted rate provided by your Savings Plan\. To learn more about Savings Plans, see the [Savings Plans User Guide](https://docs.aws.amazon.com/savingsplans/latest/userguide/)\.
 
 ### Spot Instances<a name="asg-spot-strategy"></a>
 
@@ -28,7 +33,7 @@ Amazon EC2 Auto Scaling provides two types of allocation strategies that can be 
 
 `capacity-optimized`  
 Amazon EC2 Auto Scaling allocates your instances from the Spot Instance pool with optimal capacity for the number of instances that are launching\. Deploying in this way helps you make the most efficient use of spare EC2 capacity\.   
-With Spot Instances, pricing changes slowly over time based on long\-term trends in supply and demand, but capacity fluctuates in real time\. The `capacity-optimized` strategy automatically launches Spot Instances into the most available pools by looking at real\-time capacity data and predicting which are the most available\. This works well for workloads such as big data and analytics, image and media rendering, machine learning, and high performance computing that may have a higher cost of interruption associated with restarting work and checkpointing\. By offering the possibility of fewer interruptions, the `capacity-optimized` strategy can lower the overall cost of your workload\.
+With Spot Instances, the pricing changes slowly over time based on long\-term trends in supply and demand, but capacity fluctuates in real time\. The `capacity-optimized` strategy automatically launches Spot Instances into the most available pools by looking at real\-time capacity data and predicting which are the most available\. This works well for workloads such as big data and analytics, image and media rendering, and machine learning\. It also works well for high performance computing that may have a higher cost of interruption associated with restarting work and checkpointing\. By offering the possibility of fewer interruptions, the `capacity-optimized` strategy can lower the overall cost of your workload\.
 
 `lowest-price`  
 Amazon EC2 Auto Scaling allocates your instances from the number \(N\) of Spot Instance pools that you specify and from the pools with the lowest price per unit at the time of fulfillment\.   
@@ -75,7 +80,7 @@ The behavior of the Auto Scaling group as it increases in size is as follows:
 
 ## Best Practices for Spot Instances<a name="asg-spot-best-practices"></a>
 
-Before you create your Auto Scaling group to request Spot Instances, review [Spot Best Practices](https://aws.amazon.com/ec2/spot/getting-started/#Spot_Best_Practices)\. Use these best practices when you plan your request so that you can provision the type of instances you want at the lowest possible price\. We also recommend that you do the following: 
+Before you create your Auto Scaling group to request Spot Instances, review [Spot Best Practices](https://aws.amazon.com/ec2/spot/getting-started/#Spot_Best_Practices)\. Use these best practices when you plan your request so that you can provision the type of instances that you want at the lowest possible price\. We also recommend that you do the following: 
 + Use the default maximum price, which is the On\-Demand price\. You pay only the Spot price for the Spot Instances that you launch\. If the Spot price is within your maximum price, whether your request is fulfilled depends on availability\. For more information, see [Pricing and Savings](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-spot-instances.html#spot-pricing) in the *Amazon EC2 User Guide for Linux Instances*\. 
 + Create your Auto Scaling group with multiple instance types\. Because prices fluctuate independently for each instance type in an Availability Zone, you can often get more compute capacity for the same price when you have instance type flexibility\.
 + Similarly, don't limit yourself to only the most popular instance types\. Because prices adjust based on long\-term demand, popular instance types \(such as recently launched instance families\), tend to have more price adjustments\. Picking older\-generation instance types that are less popular tends to result in lower costs and fewer interruptions\.
@@ -88,11 +93,11 @@ If you intend to specify a maximum price, use the AWS CLI or API to create the A
 
 Your launch template is configured for use with an Auto Scaling group\. For more information, see [Creating a Launch Template for an Auto Scaling Group](create-launch-template.md)\.
 
-IAM users can create an Auto Scaling group using a launch template only if they have permissions to call the `ec2:RunInstances` action\. For more information, see [Amazon EC2 Auto Scaling Identity\-Based Policy Examples](security_iam_id-based-policy-examples.md)\.
+IAM users can create an Auto Scaling group using a launch template only if they have permissions to call the `ec2:RunInstances` action\. For more information, see [Launch Template Support](ec2-auto-scaling-launch-template-permissions.md)\.
 
-## Creating an Auto Scaling Group with Multiple Purchase Options<a name="create-asg-multiple-purchase-options"></a>
+## Creating an Auto Scaling Group \(Console\)<a name="create-asg-multiple-purchase-options"></a>
 
-Follow these steps to create a fleet of On\-Demand Instances and Spot Instances that you can scale\. 
+Follow these steps to create a fleet of On\-Demand Instances and Spot Instances that you can scale\.
 
 Amazon EC2 Auto Scaling has changed the Auto Scaling group interface\. By default, you're shown the old user interface, but you can switch to the new user interface\. This topic contains steps for both\. 
 
@@ -134,7 +139,7 @@ Amazon EC2 Auto Scaling has changed the Auto Scaling group interface\. By defaul
 
 1. \(Optional\) To use [instance weighting](asg-instance-weighting.md), assign each instance type a relative weight that corresponds to how much the instance should count toward the capacity of the Auto Scaling group\.
 
-1. Under **Network**, for **VPC**, choose the VPC for the security groups that you specified in your launch template\. Launching instances using a combination of instance types and purchase options is not supported in EC2\-Classic\. 
+1. Under **Network**, for **VPC**, choose the VPC for the security groups that you specified in your launch template\. Launching instances using multiple instance types and purchase options is not supported in EC2\-Classic\. 
 
 1. For **Subnet**, choose one or more subnets in the specified VPC\. Use subnets in multiple Availability Zones for high availability\. For more information about high availability with Amazon EC2 Auto Scaling, see [Distributing Instances Across Availability Zones](auto-scaling-benefits.md#arch-AutoScalingMultiAZ)\.
 
@@ -184,9 +189,9 @@ Amazon EC2 Auto Scaling has changed the Auto Scaling group interface\. By defaul
 
 1. For **Instance Types**, do the following:
 
-   1. \(Optional\) Choose the instance types to use as overrides\. By default, a single instance type is specified by the chosen launch template, but it can be changed if you want to specify a different instance type\. When choosing multiple instance types, the order in which you add instance types sets their priority for On\-Demand Instances\. The instance type at the top of the list is prioritized the highest when the Auto Scaling group launches your On\-Demand capacity\. Otherwise, you can remove the instance types now and add them later as needed\. 
+   1. Choose the instance types to use as overrides\. By default, a single instance type is specified by the chosen launch template, but it can be changed if you want to specify a different instance type\. When choosing multiple instance types, the order in which you add instance types sets their priority for On\-Demand Instances\. The instance type at the top of the list is prioritized the highest when the Auto Scaling group launches your On\-Demand capacity\. 
 
-   1. \(Optional\) To use [instance weighting](asg-instance-weighting.md), assign each instance type a relative weight that corresponds with how much the instance should count toward the capacity of the Auto Scaling group\.
+   1. \(Optional\) To use [instance weighting](asg-instance-weighting.md), assign each instance type a relative weight that corresponds with how much the instance should count toward the desired capacity of the Auto Scaling group\.
 
 1. For **Instances Distribution**, choose whether to keep or edit the default settings\. Clearing the box for **Use the default settings to get started quickly** allows you to edit the default settings\. 
 
@@ -198,9 +203,7 @@ Amazon EC2 Auto Scaling has changed the Auto Scaling group interface\. By defaul
 
 1. For **Group size**, enter the initial number of instances for your Auto Scaling group\.
 
-1. For **Network**, choose a VPC for your Auto Scaling group\.
-**Note**  
-Launching instances using a combination of instance types and purchase options is not supported in EC2\-Classic\. 
+1. For **Network**, choose a VPC for your Auto Scaling group\. Launching instances using multiple instance types and purchase options is not supported in EC2\-Classic\. 
 
 1. For **Subnet**, choose one or more subnets in the specified VPC\. Use subnets in multiple Availability Zones for high availability\. For more information about high availability with Amazon EC2 Auto Scaling, see [Distributing Instances Across Availability Zones](auto-scaling-benefits.md#arch-AutoScalingMultiAZ)\.
 
@@ -222,10 +225,9 @@ Launching instances using a combination of instance types and purchase options i
 
 1. On the **Auto Scaling group creation status** page, choose **Close**\.
 
-**To create an Auto Scaling group with multiple purchase options using the command line**  
-You can use one of the following commands:
-+ [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/create-auto-scaling-group.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/create-auto-scaling-group.html) \(AWS CLI\)
-+ [https://docs.aws.amazon.com/powershell/latest/reference/items/New-ASAutoScalingGroup.html](https://docs.aws.amazon.com/powershell/latest/reference/items/New-ASAutoScalingGroup.html) \(AWS Tools for Windows PowerShell\)
+## Creating an Auto Scaling Group \(AWS CLI\)<a name="create-asg-multiple-purchase-options-aws-cli"></a>
+
+The following examples show how to create an Auto Scaling group with multiple purchase options using the AWS CLI [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/create-auto-scaling-group.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/create-auto-scaling-group.html) command\.
 
 **Example: Launch Spot Instances using the `capacity-optimized` allocation strategy**
 

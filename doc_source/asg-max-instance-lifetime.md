@@ -1,15 +1,18 @@
 # Replacing Auto Scaling Instances Based on Maximum Instance Lifetime<a name="asg-max-instance-lifetime"></a>
 
-The maximum instance lifetime feature does the work of replacing instances that have been in service for the maximum amount of time allowed\. This topic describes the key aspects of this feature and how to configure it for your Auto Scaling group\.
+When you use the AWS Management Console to update an Auto Scaling group, or when you use an AWS CLI or API operation to create or update an Auto Scaling group, you can set the optional maximum instance lifetime parameter\. The maximum instance lifetime feature does the work of replacing instances that have been in service for the maximum amount of time allowed\. For example, this feature supports common compliance use cases, such as being required to replace your instances on a schedule due to internal security policies or external compliance controls\. This topic describes the key aspects of this feature and how to configure it for your Auto Scaling group\.
 
-To get started, configure a maximum instance lifetime limit for your Auto Scaling group\. This limit specifies the maximum amount of time \(in seconds\) that an instance can be in service\. The maximum duration applies to current and future instances in the group\. As an instance approaches its maximum duration, it is terminated by AWS, and cannot be used again\.
+The maximum instance lifetime specifies the maximum amount of time \(in seconds\) that an instance can be in service\. The maximum duration applies to all current and future instances in the group\. As an instance approaches its maximum duration, it is terminated and replaced, and cannot be used again\.
 
-Note that instances are not guaranteed to be terminated at the end of their maximum duration\. In some situations, Amazon EC2 Auto Scaling might need to start replacing instances immediately after you configure the maximum instance lifetime limit\. The intention is to avoid replacing all instances at the same time\. 
+When configuring the maximum instance lifetime for your Auto Scaling group, you must specify a value of at least 604,800 seconds \(7 days\)\. To clear a previously set value, specify a new value of 0\.
 
-Optionally, you can use instance protection if you do not want to replace specific instances in your Auto Scaling group\. For more information, see [Instance Scale\-In Protection](as-instance-termination.md#instance-protection)\.
+Note that instances are not guaranteed to be replaced only at the end of their maximum duration\. In some situations, Amazon EC2 Auto Scaling might need to start replacing instances immediately after you configure the maximum instance lifetime parameter\. The intention of this more aggressive behavior is to avoid replacing all instances at the same time\. 
 
-**Important**  
-Make sure that the length of time you specify is at least 604,800 seconds \(7 days\)\. This is the minimum requirement for maximum instance lifetime\. To clear a previously set value, specify a new value of 0\.
+Depending on the maximum duration specified and the size of the Auto Scaling group, the rate of replacement may vary\. In general, Amazon EC2 Auto Scaling replaces instances one at a time, with a pause in between replacements\. However, the rate of replacement will be higher when there is not enough time to replace each instance individually based on the maximum duration that you specified\. In this case, Amazon EC2 Auto Scaling will replace several instances at once, by up to 10 percent of the current capacity of your Auto Scaling group at a time\.
+
+To manage the rate of replacement, you can do the following:
++ Set the maximum instance lifetime limit to a longer period of time to space out the replacements\. This is helpful for groups that have a large number of instances to replace\.
++ Add extra time between certain replacements by using instance protection to temporarily prevent individual instances in your Auto Scaling group from being replaced\. When you're ready to replace these instances, remove instance protection from each individual instance\. For more information, see [Instance Scale\-In Protection](as-instance-termination.md#instance-protection)\.
 
 **To configure maximum instance lifetime \(console\)**  
 Create the Auto Scaling group in the usual way\. After creating the Auto Scaling group, edit the group to specify the maximum instance lifetime\. 
@@ -23,7 +26,7 @@ For new Auto Scaling groups, use the [https://docs.aws.amazon.com/cli/latest/ref
 aws autoscaling create-auto-scaling-group --cli-input-json file://~/config.json
 ```
 
-The following is an example `config.json` file\. 
+The following is an example `config.json` file that shows a maximum instance lifetime of `2592000` seconds \(30 days\)\.
 
 ```
 {

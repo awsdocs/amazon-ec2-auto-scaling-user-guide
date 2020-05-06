@@ -7,12 +7,10 @@ Interface VPC endpoints are powered by AWS PrivateLink, a feature that enables p
 **Note**  
 You must explicitly enable each API that you want to access through an interface VPC endpoint\. For example, you might need to also configure an interface VPC endpoint for `ec2.region.amazonaws.com` to use when calling the Amazon EC2 API operations\. For more information, see [Interface VPC Endpoints \(AWS PrivateLink\)](https://docs.aws.amazon.com/vpc/latest/userguide/vpce-interface.html) in the *Amazon VPC User Guide*\.
 
-Amazon EC2 Auto Scaling currently supports VPC endpoints in all Regions except China \(Beijing\) and China \(Ningxia\)\.
-
 ## Create an Interface VPC Endpoint<a name="create-vpce-as"></a>
 
 Create an endpoint for Amazon EC2 Auto Scaling using the following service name:
-+ **com\.amazonaws\.*region*\.autoscaling**  — Creates an endpoint for the Amazon EC2 Auto Scaling API operations\. 
++ **com\.amazonaws\.*region*\.autoscaling** — Creates an endpoint for the Amazon EC2 Auto Scaling API operations\.
 
 For more information, see [Creating an Interface Endpoint](https://docs.aws.amazon.com/vpc/latest/userguide/vpce-interface.html#create-interface-endpoint) in the *Amazon VPC User Guide*\. 
 

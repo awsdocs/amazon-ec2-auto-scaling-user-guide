@@ -288,7 +288,7 @@ Use the following [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/
 ```
 aws autoscaling put-scaling-policy --policy-name my-simple-scale-in-policy \
   --auto-scaling-group-name my-asg --scaling-adjustment -2 \
-  --adjustment-type ChangeInCapacity
+  --adjustment-type ChangeInCapacity --cooldown 180
 ```
 
 ### Step 3: Create CloudWatch Alarms<a name="policy-creating-alarms-aws-cli"></a>

@@ -1,6 +1,6 @@
 # Instance Weighting for Amazon EC2 Auto Scaling<a name="asg-instance-weighting"></a>
 
-When you configure an Auto Scaling group to launch multiple instance types, you have the option of defining the number of capacity units that each instance contributes to the capacity of the group, using *instance weighting*\. This allows you to specify the relative weight of each instance type in a way that directly maps to the performance of your application\. You can weight your instances to suit your specific application needs, for example, by the cores \(vCPUs\) or by memory \(GiBs\)\. 
+When you configure an Auto Scaling group to launch multiple instance types, you have the option of defining the number of capacity units that each instance contributes to the desired capacity of the group, using *instance weighting*\. This allows you to specify the relative weight of each instance type in a way that directly maps to the performance of your application\. You can weight your instances to suit your specific application needs, for example, by the cores \(vCPUs\) or by memory \(GiBs\)\. 
 
 For example, let's say that you run a compute\-intensive application that performs best with at least 8 vCPUs and 15 GiB of RAM\. If you use `c5.2xlarge` as your base unit, any of the following EC2 instance types would meet your application needs\. 
 

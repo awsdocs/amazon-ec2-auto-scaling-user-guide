@@ -5,11 +5,12 @@ Adding Amazon EC2 Auto Scaling to your application architecture is one way to ma
 + Better availability\. Amazon EC2 Auto Scaling helps ensure that your application always has the right amount of capacity to handle the current traffic demand\. 
 + Better cost management\. Amazon EC2 Auto Scaling can dynamically increase and decrease capacity as needed\. Because you pay for the EC2 instances you use, you save money by launching instances when they are needed and terminating them when they aren't\.
 
-**Topics**
+**Contents**
 + [Example: Covering Variable Demand](#autoscaling-benefits-example)
 + [Example: Web App Architecture](#autoscaling-design-example)
 + [Example: Distributing Instances Across Availability Zones](#arch-AutoScalingMultiAZ)
-+ [Rebalancing Activities](#AutoScalingBehavior.InstanceUsage)
+  + [Instance Distribution](#AutoScalingBehavior.Rebalancing)
+  + [Rebalancing Activities](#AutoScalingBehavior.InstanceUsage)
 
 ## Example: Covering Variable Demand<a name="autoscaling-benefits-example"></a>
 
@@ -43,7 +44,7 @@ Amazon EC2 Auto Scaling manages the launch and termination of these EC2 instance
 
 You can create as many Auto Scaling groups as you need\. For example, you can create an Auto Scaling group for each tier\.
 
-To distribute traffic between the instances in your Auto Scaling groups, you can introduce a load balancer into your architecture\. For more information, see [Using a Load Balancer with an Auto Scaling Group](autoscaling-load-balancer.md)\.
+To distribute traffic between the instances in your Auto Scaling groups, you can introduce a load balancer into your architecture\. For more information, see [Elastic Load Balancing and Amazon EC2 Auto Scaling](autoscaling-load-balancer.md)\.
 
 ## Example: Distributing Instances Across Availability Zones<a name="arch-AutoScalingMultiAZ"></a>
 

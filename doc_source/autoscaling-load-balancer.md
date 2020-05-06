@@ -1,10 +1,16 @@
-# Using a Load Balancer with an Auto Scaling Group<a name="autoscaling-load-balancer"></a>
+# Elastic Load Balancing and Amazon EC2 Auto Scaling<a name="autoscaling-load-balancer"></a>
 
 A load balancer acts as a single point of contact for all incoming web traffic to your Auto Scaling group\. When an instance is added to your group, it needs to register with the load balancer or no traffic is routed to it\. When an instance is removed from your group, it must deregister from the load balancer or traffic continues to be routed to it\.
 
 When you use your Elastic Load Balancing load balancer with an Auto Scaling group, it's not necessary to register your EC2 instances with the load balancer or target group\. With Elastic Load Balancing, instances that are launched by your Auto Scaling group are automatically registered with the load balancer or target group, and instances that are terminated by your Auto Scaling group are automatically deregistered from the load balancer or target group\.
 
 You can also configure Elastic Load Balancing health checks to monitor the health of registered instances so that the load balancer or target group only routes traffic to the healthy instances\.
+
+**Topics**
++ [Elastic Load Balancing Types](#integrations-aws-elastic-load-balancing-types)
++ [Attaching a Load Balancer](attach-load-balancer-asg.md)
++ [Adding ELB Health Checks](as-add-elb-healthcheck.md)
++ [Adding an Availability Zone](as-add-availability-zone.md)
 
 ## Elastic Load Balancing Types<a name="integrations-aws-elastic-load-balancing-types"></a>
 
@@ -26,11 +32,3 @@ To learn more about Elastic Load Balancing, see the following topics:
 + [What Is a Classic Load Balancer?](https://docs.aws.amazon.com/elasticloadbalancing/latest/classic/introduction.html)
 + [What Is an Application Load Balancer?](https://docs.aws.amazon.com/elasticloadbalancing/latest/application/introduction.html)
 + [What Is a Network Load Balancer?](https://docs.aws.amazon.com/elasticloadbalancing/latest/network/introduction.html)
-
-For information about integrating Amazon EC2 Auto Scaling with Elastic Load Balancing, see the following topics:
-
-**Topics**
-+ [Elastic Load Balancing Types](#integrations-aws-elastic-load-balancing-types)
-+ [Attaching a Load Balancer to Your Auto Scaling Group](attach-load-balancer-asg.md)
-+ [Adding Elastic Load Balancing Health Checks to an Auto Scaling Group](as-add-elb-healthcheck.md)
-+ [Expanding Your Scaled and Load\-Balanced Application to an Additional Availability Zone](as-add-availability-zone.md)

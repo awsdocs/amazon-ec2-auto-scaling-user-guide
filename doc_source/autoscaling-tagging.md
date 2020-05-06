@@ -1,15 +1,12 @@
 # Tagging Auto Scaling Groups and Instances<a name="autoscaling-tagging"></a>
 
-You can organize and manage your Auto Scaling groups by assigning your own metadata to each group as *tags*\. You specify a *key* and a *value* for each tag\. A key can be a general category, such as "project," "owner," or "environment," with specific associated values\. For example, to differentiate between your testing and production environments, you could assign each Auto Scaling group a tag with a key of "environment\." Use a value of "test" to indicate your test environment or "production" to indicate your production environment\. We recommend that you use a consistent set of tags to assist you in tracking your Auto Scaling groups\. 
+Tags help you to categorize your Auto Scaling groups in different ways, for example, by purpose, owner, or environment\. 
 
-Additionally, you can propagate the tags from the Auto Scaling group to the Amazon EC2 instances it launches\. Tagging your instances enables you to see instance cost allocation by tag in your AWS bill\. For more information, see [Using Cost Allocation Tags](https://docs.aws.amazon.com/awsaccountbilling/latest/aboutv2/cost-alloc-tags.html) in the *AWS Billing and Cost Management User Guide*\.
-
-You can add one or more tags to an Auto Scaling group when you create it\. You can also add, list, edit, or delete tags for existing Auto Scaling groups\. 
+You can add multiple tags to each Auto Scaling group\. Additionally, you can propagate the tags from the Auto Scaling group to the Amazon EC2 instances it launches\. Tagging your instances enables you to see instance cost allocation by tag in your AWS bill\. For more information, see [Using Cost Allocation Tags](https://docs.aws.amazon.com/awsaccountbilling/latest/aboutv2/cost-alloc-tags.html) in the *AWS Billing and Cost Management User Guide*\.
 
 You can also control which IAM users and groups in your account have permission to create, edit, or delete tags\. For more information, see [Control Which Tag Keys and Tag Values Can Be Used](security_iam_id-based-policy-examples.md#policy-example-tags)\. Keep in mind, however, that a policy that restricts your users from performing a tagging operation on an Auto Scaling group does not prevent them from manually changing the tags on the instances after they have launched\. For information about IAM policies for tagging \(or untagging\) Amazon EC2 resources, see [Example: Tagging Resources](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ExamplePolicies_EC2.html#iam-example-taggingresources) in the *Amazon EC2 User Guide for Linux Instances*\.
 
-**Important**  
-You can also add tags to instances by specifying the tags in your launch template\. However, use caution and ensure that you do not use duplicate keys for instance tags\. If you do so, Amazon EC2 Auto Scaling overrides the tag value from your launch template with the value for the same key specified by the Auto Scaling group\. For information about specifying tags in a launch template, see [Creating a Launch Template for an Auto Scaling Group](create-launch-template.md)\. By specifying the tags in a launch template, you can also add tags to Amazon EBS volumes on creation\. 
+Tags are not propagated to Amazon EBS volumes\. To add tags to Amazon EBS volumes, specify the tags in a launch template but use caution when configuring instance tags in your launch template\. If the launch template specifies an instance tag with a key that is also specified for the Auto Scaling group, Amazon EC2 Auto Scaling overrides the value of that instance tag with the value specified by the Auto Scaling group\. For information about specifying tags in a launch template, see [Creating a Launch Template for an Auto Scaling Group](create-launch-template.md)\.
 
 **Topics**
 + [Tag Restrictions](#tag_restrictions)
@@ -30,8 +27,7 @@ The following basic restrictions apply to tags:
 ## Tagging Lifecycle<a name="tag-lifecycle"></a>
 
 If you have opted to propagate tags to your Amazon EC2 instances, the tags are managed as follows:
-+ In most cases, when an Auto Scaling group launches instances, it adds tags to the instances during resource creation rather than after the resource is created\. 
-  + The exception is when you use a launch configuration to launch Spot Instances\. For this scenario, your Auto Scaling group adds tags while the instances are in the `Pending` lifecycle state\. If you have a lifecycle hook, the tags are available when the instance enters the `Pending:Wait` lifecycle state\. For more information, see [Auto Scaling Lifecycle](AutoScalingGroupLifecycle.md)\. If you need the Auto Scaling group to add tags to instances as part of the same API call that launches the Spot Instances, consider migrating to launch templates\. For more information, see [Launch Templates](LaunchTemplates.md)\. 
++ When an Auto Scaling group launches instances, it adds tags to the instances during resource creation rather than after the resource is created\. 
 + The Auto Scaling group automatically adds a tag to the instances with a key of `aws:autoscaling:groupName` and a value of the name of the Auto Scaling group\. 
 + When you attach existing instances, the Auto Scaling group adds the tags to the instances, overwriting any existing tags with the same tag key\. In addition, it adds a tag with a key of `aws:autoscaling:groupName` and a value of the name of the Auto Scaling group\.
 + When you detach an instance from an Auto Scaling group, it removes only the `aws:autoscaling:groupName` tag\.
