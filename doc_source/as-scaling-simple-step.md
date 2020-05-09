@@ -64,7 +64,7 @@ The following points summarize the behavior of the scaling configuration in rela
 + If the metric value gets to 40, the desired capacity of the group decreases by 1 instance, to 13 instances, based on the second step adjustment of the scale\-in policy \(remove 10 percent of 14 instances, 1\.4 instances, rounded down to 1 instance\)\. If the metric value falls to 30 even after this decrease in capacity, the desired capacity of the group decreases by another 3 instances, to 10 instances\. This is based on the third step adjustment of the scale\-in policy \(remove 30 percent of 13 instances, 3\.9 instances, rounded down to 3 instances\)\.
 
 When you specify the step adjustments for your scaling policy, note the following:
-+ If you are using the AWS Management Console, you specify the upper and lower bounds as absolute values\. If you are using the API or the CLI, you specify the upper and lower bounds relative to the breach threshold\. 
++ If you are using the AWS Management Console, you specify the upper and lower bounds as absolute values\. If you are using the AWS CLI or AWS SDKs, you specify the upper and lower bounds relative to the breach threshold\. 
 + The ranges of your step adjustments can't overlap or have a gap\.
 + Only one step adjustment can have a null lower bound \(negative infinity\)\. If one step adjustment has a negative lower bound, then there must be a step adjustment with a null lower bound\.
 + Only one step adjustment can have a null upper bound \(positive infinity\)\. If one step adjustment has a positive upper bound, then there must be a step adjustment with a null upper bound\.

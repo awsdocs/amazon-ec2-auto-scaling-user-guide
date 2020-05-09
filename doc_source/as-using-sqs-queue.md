@@ -14,7 +14,7 @@ The solution is to use a *backlog per instance* metric with the target value bei
 + **Backlog per instance**: To calculate your backlog per instance, start with the `ApproximateNumberOfMessages` queue attribute to determine the length of the SQS queue \(number of messages available for retrieval from the queue\)\. Divide that number by the fleet's running capacity, which for an Auto Scaling group is the number of instances in the `InService` state, to get the backlog per instance\.
 + **Acceptable backlog per instance**: To calculate your target value, first determine what your application can accept in terms of latency\. Then, take the acceptable latency value and divide it by the average time that an EC2 instance takes to process a message\. 
 
-To illustrate with an example, let's say that the current `ApproximateNumberOfMessages` is 1500 and the fleet's running capacity is 10\. If the average processing time is 0\.1 seconds for each message and the longest acceptable latency is 10 seconds, then the acceptable backlog per instance is 10 / 0\.1, which equals 100\. This means that 100 is the target value for your target tracking policy\. Because the backlog per instance is currently at 150 \(1500 / 10\), your fleet scales out by five instances to maintain proportion to the target value\. 
+To illustrate with an example, let's say that the current `ApproximateNumberOfMessages` is 1500 and the fleet's running capacity is 10\. If the average processing time is 0\.1 seconds for each message and the longest acceptable latency is 10 seconds, then the acceptable backlog per instance is 10 / 0\.1, which equals 100\. This means that 100 is the target value for your target tracking policy\. If the backlog per instance is currently at 150 \(1500 / 10\), your fleet scales out, and it scale out by five instances to maintain proportion to the target value\.
 
 The following procedures demonstrate how to publish the custom metric and create the target tracking scaling policy that configures your Auto Scaling group to scale based on these calculations\.
 
@@ -30,11 +30,11 @@ The following diagram illustrates the architecture of this configuration\.
 ## Limitations and Prerequisites<a name="scale-sqs-queue-limitations"></a>
 
 To use this configuration, you need to be aware of the following limitations:
-+ You must use the AWS CLI, an SDK, or the CloudWatch API to publish your custom metric to CloudWatch\. You can then monitor your metric with the AWS Management Console\.
++ You must use the AWS CLI or AWS SDKs to publish your custom metric to CloudWatch\. You can then monitor your metric with the AWS Management Console\.
 + The SQS queue metric `ApproximateNumberOfMessages` is not in CloudWatch\. You can only get the value of this metric using the SQS [https://docs.aws.amazon.com/cli/latest/reference/sqs/get-queue-attributes.html](https://docs.aws.amazon.com/cli/latest/reference/sqs/get-queue-attributes.html) command or the [GetQueueAttributes](https://docs.aws.amazon.com/AWSSimpleQueueService/latest/APIReference/API_GetQueueAttributes.html) operation\.
-+ After publishing your custom metric, you must use the AWS CLI, an SDK, or the Amazon EC2 Auto Scaling API to create a target tracking scaling policy with a customized metric specification\. 
++ After publishing your custom metric, you must use the AWS CLI or AWS SDKs to create a target tracking scaling policy with a customized metric specification\. 
 
-The following sections direct you to use the CLI for the tasks you need to perform\. Make sure that you have the CLI [installed](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-install.html) and [configured](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-configure.html)\. 
+The following sections direct you to use the AWS CLI for the tasks you need to perform\. Make sure that you have the CLI [installed](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-install.html) and [configured](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-configure.html)\. 
 
 Before you begin, you must have an Amazon SQS queue to use\. The following sections assume that you already have a queue \(standard or FIFO\), an Auto Scaling group, and EC2 instances running the application that uses the queue\. For more information about Amazon SQS, see the [Amazon Simple Queue Service Developer Guide](https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/)\.
 
@@ -111,8 +111,9 @@ After publishing your custom metric, create a target tracking scaling policy wit
 1. Use the [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/put-scaling-policy.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/put-scaling-policy.html) command, along with the `config.json` file that you created in the previous step, to create your scaling policy\.
 
    ```
-   aws autoscaling put-scaling-policy --policy-name my-scaling-policy --auto-scaling-group-name my-asg \
-     --policy-type TargetTrackingScaling --target-tracking-configuration file://~/config.json
+   aws autoscaling put-scaling-policy --policy-name sqs100-target-tracking-scaling-policy \
+     --auto-scaling-group-name my-asg --policy-type TargetTrackingScaling \
+     --target-tracking-configuration file://~/config.json
    ```
 
    This creates two alarms: one for scaling out and one for scaling in\. It also returns the Amazon Resource Name \(ARN\) of the policy that is registered with CloudWatch, which CloudWatch uses to invoke scaling whenever the metric is in breach\. 

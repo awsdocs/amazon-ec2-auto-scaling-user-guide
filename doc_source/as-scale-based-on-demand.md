@@ -16,6 +16,7 @@ You can configure your Auto Scaling group to scale dynamically to meet this need
 + [Verifying a Scaling Activity for an Auto Scaling Group](as-verify-scaling-activity.md)
 + [Disabling a Scaling Policy for an Auto Scaling Group](as-enable-disable-scaling-policy.md)
 + [Deleting a Scaling Policy](deleting-scaling-policy.md)
++ [Example Scaling Policies for the AWS Command Line Interface \(AWS CLI\)](examples-scaling-policies.md)
 
 ## How Scaling Policies Work<a name="as-how-scaling-policies-work"></a>
 

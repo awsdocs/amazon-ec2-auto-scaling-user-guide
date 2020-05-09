@@ -49,9 +49,9 @@ Instances can remain in a wait state for a finite period of time\. The default i
 
 The maximum amount of time that you can keep an instance in a wait state is 48 hours or 100 times the heartbeat timeout, whichever is smaller\.
 
-### Cooldowns and Simple Scaling<a name="lifecycle-hook-cooldowns"></a>
+### Cooldown Periods for Simple Scaling<a name="lifecycle-hook-cooldowns"></a>
 
-When an Auto Scaling group launches or terminates an instance due to a simple scaling policy, a [cooldown](Cooldown.md) takes effect\. The cooldown period helps ensure that the Auto Scaling group does not launch or terminate more instances than needed\. When a lifecycle action occurs, and an instance enters the wait state, scaling activities due to simple scaling policies are paused\. When the instance enters the `InService` state, the cooldown period starts\. When the cooldown period expires, any paused scaling activities resume\.
+When an Auto Scaling group launches or terminates an instance due to a simple scaling policy, a cooldown period takes effect\. The cooldown period helps ensure that the Auto Scaling group does not launch or terminate more instances than needed before the effects of previous simple scaling activities are visible\. When a lifecycle action occurs, and an instance enters the wait state, scaling activities due to simple scaling policies are paused\. When a newly launched instance enters the `InService` state, the cooldown period starts\. For more information, see [Scaling Cooldowns for Amazon EC2 Auto Scaling](Cooldown.md)\.
 
 ### Health Check Grace Period<a name="lifecycle-hook-health-check-grace-period"></a>
 

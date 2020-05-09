@@ -61,6 +61,7 @@ Amazon's trademarks and trade dress may not be used in
       + [Verifying a Scaling Activity for an Auto Scaling Group](as-verify-scaling-activity.md)
       + [Disabling a Scaling Policy for an Auto Scaling Group](as-enable-disable-scaling-policy.md)
       + [Deleting a Scaling Policy](deleting-scaling-policy.md)
+      + [Example Scaling Policies for the AWS Command Line Interface (AWS CLI)](examples-scaling-policies.md)
    + [Scaling Cooldowns for Amazon EC2 Auto Scaling](Cooldown.md)
    + [Controlling Which Auto Scaling Instances Terminate During Scale In](as-instance-termination.md)
    + [Amazon EC2 Auto Scaling Lifecycle Hooks](lifecycle-hooks.md)

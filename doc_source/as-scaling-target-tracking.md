@@ -23,7 +23,7 @@ Keep the following considerations in mind:
 
 ## Choosing Metrics<a name="available-metrics"></a>
 
-You can use the Amazon EC2 console to apply a target tracking scaling policy based on a predefined metric\. Alternatively, you can use the Amazon EC2 Auto Scaling CLI or API to apply a scaling policy based on a predefined or customized metric\. The following predefined metrics are available: 
+You can use the Amazon EC2 console to apply a target tracking scaling policy based on a predefined metric\. Alternatively, you can use the AWS CLI or AWS SDKs to apply a scaling policy based on a predefined or customized metric\. The following predefined metrics are available: 
 + `ASGAverageCPUUtilization`—Average CPU utilization of the Auto Scaling group\. 
 + `ASGAverageNetworkIn`—Average number of bytes received on all network interfaces by the Auto Scaling group\. 
 + `ASGAverageNetworkOut`—Average number of bytes sent out on all network interfaces by the Auto Scaling group\. 
