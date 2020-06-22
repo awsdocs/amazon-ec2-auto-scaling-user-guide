@@ -2,20 +2,24 @@
 
 When you edit an Auto Scaling group that has an existing launch configuration, you have the option of replacing the launch configuration with a launch template\. This lets you use launch templates with any Auto Scaling groups that you currently use\. In doing so, you can take advantage of the versioning and other features of launch templates\. 
 
-After you replace the launch configuration for an Auto Scaling group, any new instances are launched using the new launch template, but existing instances are not affected\. In this situation, you can terminate existing instances in the Auto Scaling group to force a new instance to launch that uses your launch template\. Or, you can allow automatic scaling to gradually replace older instances with newer instances based on your [termination policies](as-instance-termination.md)\. You can also automate deployment of the update with a few clicks through AWS CloudFormation\.
+After you replace the launch configuration for an Auto Scaling group, any new instances are launched using the new launch template, but existing instances are not affected\. In this situation, you can allow automatic scaling to gradually replace older instances with newer instances based on your [termination policies](as-instance-termination.md)\. With the maximum instance lifetime and instance refresh features, you can also replace existing instances in the Auto Scaling group to launch new instances that use the launch template\. For more information, see [Replacing Auto Scaling Instances Based on Maximum Instance Lifetime](asg-max-instance-lifetime.md) and [Replacing Auto Scaling Instances Based on an Instance Refresh](asg-instance-refresh.md)\.
 
 **Prerequisites**  
 Before you can replace a launch configuration in an Auto Scaling group, you must first create your launch template\. The easiest way to create a launch template is to copy it from the launch configuration\. For more information, see [Copying a Launch Configuration to a Launch Template](copy-launch-config.md)\.
 
-When you replace a launch configuration with a launch template, your `ec2:RunInstances` permissions are checked\. If you are attempting to use a launch template and you do not have sufficient permissions, you receive an error that you're not authorized to use the launch template\.
+When you replace a launch configuration with a launch template, your `ec2:RunInstances` permissions are checked\. If you are attempting to use a launch template and you do not have sufficient permissions, you receive an error that you're not authorized to use the launch template\. For information about the required IAM permissions, see [Launch Template Support](ec2-auto-scaling-launch-template-permissions.md)\.
 
 **To replace the launch configuration for an Auto Scaling group**
 
 1. Open the Amazon EC2 console at [https://console\.aws\.amazon\.com/ec2/](https://console.aws.amazon.com/ec2/)\.
 
-1. In the navigation pane, choose **Auto Scaling Groups**\.
+1. On the navigation pane, under **AUTO SCALING**, choose **Auto Scaling Groups**\.
 
-1. Select the Auto Scaling group and choose **Details, Edit**\. 
+1. Select the check box next to your Auto Scaling group\. 
+
+   A split pane opens up in the bottom part of the page, showing information about the group that's selected\. 
+
+1. Choose **Details, Edit**\. 
 
 1. For **Launch Instances Using**, choose the **Launch Template** option\.
 

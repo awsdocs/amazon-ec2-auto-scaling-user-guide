@@ -230,7 +230,7 @@ Amazon EC2 Auto Scaling allows you to restrict the size of the Auto Scaling grou
 
 ### Control Which IAM Roles Can Be Passed \(Using PassRole\)<a name="policy-example-pass-IAM-role"></a>
 
-If you want a user to be able to create an Auto Scaling group using a launch template or launch configuration that specifies an instance profile \(a container for an IAM role\), you must use a policy that includes a statement allowing the user to pass the role, like the following example\. By specifying the ARN, the policy grants the user the permission to pass only roles whose name begins with `qateam-`\. For more information, see [IAM Role for Applications That Run on Amazon EC2 Instances](us-iam-role.md)\.
+If you want a user to be able to create Amazon EC2 Auto Scaling resources that specify an instance profile \(a container for an IAM role\), you must use a policy that includes a statement allowing the user to pass the role, like the following example\. By specifying the ARN, the policy grants the user the permission to pass only roles whose name begins with `qateam-`\. For more information, see [IAM Role for Applications That Run on Amazon EC2 Instances](us-iam-role.md)\.
 
 ```
 {

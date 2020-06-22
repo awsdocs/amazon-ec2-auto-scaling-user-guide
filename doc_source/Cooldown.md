@@ -1,15 +1,15 @@
 # Scaling Cooldowns for Amazon EC2 Auto Scaling<a name="Cooldown"></a>
 
-The cooldown period helps you prevent your Auto Scaling group from launching or terminating additional instances before the effects of previous activities are visible\. You can configure the length of time based on your instance start\-up time or other application needs\.
+A scaling cooldown helps you prevent your Auto Scaling group from launching or terminating additional instances before the effects of previous activities are visible\.
 
-When you use a simple scaling policy for dynamic scaling, after the Auto Scaling group scales using a simple scaling policy, it waits for the cooldown period to complete before any further scaling activities due to simple scaling policies can start\. An adequate cooldown period helps to prevent the initiation of a scaling activity based on stale metrics\. By default, all simple scaling policies use the default cooldown period associated with your Auto Scaling group, but you can configure a different cooldown period for certain policies, as described in the following sections\. 
-
-Note that Amazon EC2 Auto Scaling honors cooldown periods when using simple scaling policies, but not when using other scaling policies or scheduled scaling\. For more information about simple scaling, see [Step and Simple Scaling Policies](as-scaling-simple-step.md)\. 
+When you use simple scaling, after the Auto Scaling group scales using a simple scaling policy, it waits for a cooldown period to complete before any further scaling activities due to simple scaling policies can start\. An adequate cooldown period helps to prevent the initiation of an additional scaling activity based on stale metrics\. By default, all simple scaling policies use the default cooldown period associated with your Auto Scaling group, but you can configure a different cooldown period for certain policies, as described in the following sections\. For more information about simple scaling, see [Step and Simple Scaling Policies](as-scaling-simple-step.md)\. 
 
 **Important**  
-In most cases, a target tracking scaling policy or a step scaling policy is more optimal for scaling performance than waiting for a fixed period of time to pass after there is a scaling activity\. For a scaling policy that changes the size of your Auto Scaling group proportionally as the value of the scaling metric decreases or increases, we recommend target tracking over either simple scaling or step scaling\.
+In most cases, a target tracking scaling policy or a step scaling policy is more optimal for scaling performance than waiting for a fixed period of time to pass after there is a scaling activity\. For a scaling policy that changes the size of your Auto Scaling group proportionally as the value of the scaling metric decreases or increases, we recommend [target tracking](as-scaling-target-tracking.md) over either simple scaling or step scaling\.
 
-When you manually scale your Auto Scaling group using the AWS CLI or AWS SDKs, the default is not to wait for the cooldown period to complete, but you can override this behavior and honor the cooldown period\. If an instance becomes unhealthy, the Auto Scaling group does not wait for the cooldown period to complete before replacing the unhealthy instance\. For more information about manual scaling, see [Manual Scaling for Amazon EC2 Auto Scaling](as-manual-scaling.md)\.
+During a cooldown period, when a scheduled action starts at the scheduled time, or when scaling activities due to target tracking or step scaling policies start, they can trigger a scaling activity immediately without waiting for the cooldown period to expire\. If an instance becomes unhealthy, Amazon EC2 Auto Scaling also does not wait for the cooldown period to complete before replacing the unhealthy instance\.
+
+When you manually scale your Auto Scaling group, the default is not to wait for the cooldown period to complete, but you can override this behavior and honor the cooldown period when you call the API\. 
 
 **Topics**
 + [Default Cooldown Period](#cooldown-default)
@@ -20,7 +20,7 @@ When you manually scale your Auto Scaling group using the AWS CLI or AWS SDKs, t
 
 ## Default Cooldown Period<a name="cooldown-default"></a>
 
-A default cooldown period automatically applies to any scaling activities for simple scaling policies, and you can optionally request to have it apply to your manual scaling activities\. 
+A default cooldown period automatically applies to any scaling activities for simple scaling policies, and you can optionally request to have it apply to your manual scaling activities\. You can configure the length of time based on your instance startup time or other application needs\.
 
 ![\[A flowchart showing how a default cooldown affects scaling actions.\]](http://docs.aws.amazon.com/autoscaling/ec2/userguide/images/cooldowns-default-diagram.png)
 
@@ -36,7 +36,7 @@ Use one of the following commands:
 
 ## Scaling\-Specific Cooldown Period<a name="cooldowns-scaling-specific"></a>
 
-In addition to specifying the default cooldown period for your Auto Scaling group, you can create cooldowns that apply to a specific simple scaling policy and manual scaling\. A scaling\-specific cooldown period overrides the default cooldown period\.
+In addition to specifying the default cooldown period for your Auto Scaling group, you can create cooldowns that apply to a specific simple scaling policy\. A scaling\-specific cooldown period overrides the default cooldown period\.
 
 One common use for a scaling\-specific cooldown period is with a scale\-in policy\. Because this policy terminates instances, Amazon EC2 Auto Scaling needs less time to determine whether to terminate additional instances\. Terminating instances should be a much quicker operation than launching instances\. The default cooldown period of 300 seconds is therefore too long\. In this case, a scaling\-specific cooldown period with a lower value of 180 seconds for your scale\-in policy can help you reduce costs by allowing the group to scale in faster\. 
 
@@ -66,8 +66,11 @@ With multiple instances, the cooldown period \(either the default cooldown or th
 
 ## Cooldowns and Lifecycle Hooks<a name="cooldowns-lifecycle-hooks"></a>
 
-You have the option to add lifecycle hooks to your Auto Scaling groups\. These hooks enable you to control how instances launch and terminate within an Auto Scaling group so that you can perform custom actions on an instance before it is put into service or before it is terminated\. For more information, see [Amazon EC2 Auto Scaling Lifecycle Hooks](lifecycle-hooks.md)\.
+You have the option to add lifecycle hooks to your Auto Scaling groups\. These hooks enable you to control how instances launch and terminate within an Auto Scaling group so that you can perform custom actions on an instance before it is put into service or before it is terminated\. When a lifecycle action occurs, and an instance enters the wait state, scaling activities due to simple scaling policies are paused\. For more information, see [Amazon EC2 Auto Scaling Lifecycle Hooks](lifecycle-hooks.md)\.
 
-Lifecycle hooks can affect the impact of any cooldown periods configured for the Auto Scaling group\. The cooldown period does not begin until after the instance moves out of the wait state \(after the lifecycle hook execution is complete\)\.
+Lifecycle hooks can affect the start time of any cooldown periods configured for the Auto Scaling group\. For example, consider an Auto Scaling group that has a lifecycle hook that supports a custom action at instance launch\. When the application experiences an increase in demand due to a simple scaling policy, the group launches an instance to add capacity\. Because there is a lifecycle hook, the instance is put into the `Pending:Wait` state, which means that it is not available to handle traffic yet\. When the instance enters the wait state, scaling activities due to simple scaling policies are paused\. When the instance enters the `InService` state, the cooldown period starts\. When the cooldown period expires, any scaling activities that are triggered after the cooldown period can resume\.
 
-Consider an Auto Scaling group that has a lifecycle hook that supports a custom action at instance launch\. When the application experiences an increase in demand due to a simple scaling policy, the group launches an instance to add capacity\. Because there is a lifecycle hook, the instance is put into the `Pending:Wait` state, which means that it is not available to handle traffic yet\. When the instance enters the wait state, scaling activities due to simple scaling policies are paused\. When the instance enters the `InService` state, the cooldown period starts\. When the cooldown period expires, any scaling activities that are triggered after the cooldown period can resume\.
+**Not all cooldowns are applied after the execution of lifecycle hooks**  
+Usually, when an instance is terminating, the cooldown period does not begin until after the instance moves out of the `Terminating:Wait` state \(after the lifecycle hook execution is complete\)\. 
+
+However, with Elastic Load Balancing, the Auto Scaling group starts the cooldown period when the terminating instance finishes connection draining \(deregistration delay\) by the load balancer and does not wait for the lifecycle hook\. This is helpful for groups that have simple scaling policies for both scale in and scale out\. The intention of a cooldown period is to allow the next scaling activity to occur as soon as the effects of the previous activities are visible\. If an instance is terminating and then demand for your application suddenly increases, any scaling activities due to simple scaling policies that are paused can resume after connection draining and a cooldown period finishes\. Otherwise, waiting to complete all three activities—connection draining, a lifecycle hook, and a cooldown period— significantly increases the amount of time that the Auto Scaling group needs to pause scaling\.

@@ -28,7 +28,7 @@ You can attach an existing instance to an existing Auto Scaling group, or to a n
 
 1. Open the Amazon EC2 console at [https://console\.aws\.amazon\.com/ec2/](https://console.aws.amazon.com/ec2/)\.
 
-1. On the navigation pane, choose **Instances**, and then select an instance\.
+1. On the navigation pane, under **INSTANCES**, choose **Instances**, and then select an instance\.
 
 1. Choose **Actions**, **Instance Settings**, **Attach to Auto Scaling Group**\.
 
@@ -36,15 +36,15 @@ You can attach an existing instance to an existing Auto Scaling group, or to a n
 
    The new Auto Scaling group is created using a new launch configuration with the same name that you specified for the Auto Scaling group\. The launch configuration gets its settings \(for example, security group and IAM role\) from the instance that you attached\. The Auto Scaling group gets settings \(for example, Availability Zone and subnet\) from the instance that you attached, and has a desired capacity and maximum size of `1`\.
 
-1. \(Optional\) To edit the settings for the Auto Scaling group, on the navigation pane, under **Auto Scaling**, choose **Auto Scaling Groups**\. Select the new Auto Scaling group, choose **Edit**, change the settings as needed, and then choose **Save**\.
+1. \(Optional\) To edit the settings for the Auto Scaling group, on the navigation pane, under **AUTO SCALING**, choose **Auto Scaling Groups**\. Select the check box next to the new Auto Scaling group, choose the **Edit** button that is above the list of groups, change the settings as needed, and then choose **Update**\. 
 
 **To attach an instance to an existing Auto Scaling group**
 
 1. Open the Amazon EC2 console at [https://console\.aws\.amazon\.com/ec2/](https://console.aws.amazon.com/ec2/)\.
 
-1. \(Optional\) On the navigation pane, under **Auto Scaling**, choose **Auto Scaling Groups**\. Select the Auto Scaling group and verify that the maximum size of the Auto Scaling group is large enough that you can add another instance\. Otherwise, choose **Edit**, increase the maximum size, and then choose **Save**\.
+1. \(Optional\) On the navigation pane, under **AUTO SCALING**, choose **Auto Scaling Groups**\. Select the Auto Scaling group and verify that the maximum size of the Auto Scaling group is large enough that you can add another instance\. Otherwise, on the **Details** tab, increase the maximum capacity\. 
 
-1. On the navigation pane, choose **Instances**, and then select an instance\.
+1. On the navigation pane, under **INSTANCES**, choose **Instances**, and then select an instance\.
 
 1. Choose **Actions**, **Instance Settings**, **Attach to Auto Scaling Group**\.
 

@@ -51,9 +51,11 @@ The following procedure demonstrates the general process for updating an instanc
 
 1. Open the Amazon EC2 console at [https://console\.aws\.amazon\.com/ec2/](https://console.aws.amazon.com/ec2/)\.
 
-1. On the navigation pane, under **Auto Scaling**, choose **Auto Scaling Groups**\.
+1. On the navigation pane, under **AUTO SCALING**, choose **Auto Scaling Groups**\.
 
-1. Select the Auto Scaling group\.
+1. Select the check box next to the Auto Scaling group\.
+
+   A split pane opens up in the bottom part of the **Auto Scaling groups** page, showing information about the group that's selected\. 
 
 1. On the **Instance management** tab, in **Instances**, select an instance\. \(Old console: The **Instances** tab is where you can select the instance\.\) 
 

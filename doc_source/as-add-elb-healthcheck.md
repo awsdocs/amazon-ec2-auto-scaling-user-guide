@@ -1,19 +1,20 @@
 # Adding Elastic Load Balancing Health Checks to an Auto Scaling Group<a name="as-add-elb-healthcheck"></a>
 
-The default health checks for an Auto Scaling group are EC2 status checks only\. If an instance fails these status checks, the Auto Scaling group considers the instance unhealthy and replaces it\. For more information, see [Health Checks for Auto Scaling Instances](healthcheck.md)\. 
+The default health checks for an Auto Scaling group are EC2 status checks only\. If an instance fails these status checks, the Auto Scaling group considers the instance unhealthy and replaces it\. 
 
-You can attach one or more target groups \(Application Load Balancers and Network Load Balancers\), one or more load balancers \(Classic Load Balancers\), or both to your Auto Scaling group\. However, by default, the group does not consider an instance unhealthy and replace it if it fails the Elastic Load Balancing health checks\. 
+You can attach one or more target groups \(Application Load Balancers and Network Load Balancers\), one or more load balancers \(Classic Load Balancers\), or both to your Auto Scaling group\. However, by default, the group does not consider an instance unhealthy and replace it if it fails the Elastic Load Balancing \(ELB\) health checks\. 
 
-To ensure that the group can determine an instance's health based on additional tests provided by the load balancer, you can optionally configure the Auto Scaling group to use Elastic Load Balancing health checks\. The load balancer periodically sends pings, attempts connections, or sends requests to test the EC2 instances\. These tests are called health checks\. 
+To ensure that the group can determine an instance's health based on additional tests provided by the load balancer, you can configure the Auto Scaling group to use ELB health checks\. The load balancer periodically sends pings, attempts connections, or sends requests to test the EC2 instances\. These tests are called health checks\. 
 
-To learn more about Elastic Load Balancing health checks, see the following topics:
-+ [Configure Health Checks for Your Classic Load Balancer](https://docs.aws.amazon.com/elasticloadbalancing/latest/classic/elb-healthchecks.html) in the *User Guide for Classic Load Balancers*
-+ [Health Checks for Your Target Groups](https://docs.aws.amazon.com/elasticloadbalancing/latest/application/target-group-health-checks.html) in the *User Guide for Application Load Balancers*
-+ [Health Checks for Your Target Groups](https://docs.aws.amazon.com/elasticloadbalancing/latest/network/target-group-health-checks.html) in the *User Guide for Network Load Balancers*
+If you configure the Auto Scaling group to use ELB health checks, it considers the instance unhealthy if it fails either the EC2 status checks or the ELB health checks\. If you attach multiple load balancer target groups or Classic Load Balancers to the group, all of them must report that the instance is healthy in order for it to consider the instance healthy\. If any one of them reports an instance as unhealthy, the Auto Scaling group replaces the instance, even if other ones report it as healthy\. 
 
-If you configure the Auto Scaling group to use Elastic Load Balancing health checks, it considers the instance unhealthy if it fails either the EC2 status checks or the Elastic Load Balancing health checks\. If you attach multiple load balancer target groups or Classic Load Balancers to the group, all of them must report that the instance is healthy in order for it to consider the instance healthy\. If any one of them reports an instance as unhealthy, the Auto Scaling group replaces the instance, even if other ones report it as healthy\. 
+See the following topics:
++ To configure health checks for your Application Load Balancer, see [Health Checks for Your Target Groups](https://docs.aws.amazon.com/elasticloadbalancing/latest/application/target-group-health-checks.html) in the *User Guide for Application Load Balancers*\.
++ To configure health checks for your Network Load Balancer, see [Health Checks for Your Target Groups](https://docs.aws.amazon.com/elasticloadbalancing/latest/network/target-group-health-checks.html) in the *User Guide for Network Load Balancers*\.
++ To configure health checks for your Classic Load Balancer, see [Configure Health Checks for Your Classic Load Balancer](https://docs.aws.amazon.com/elasticloadbalancing/latest/classic/elb-healthchecks.html) in the *User Guide for Classic Load Balancers*\.
++ For more information about Amazon EC2 Auto Scaling health checks, see [Health Checks for Auto Scaling Instances](healthcheck.md)\. 
 
-The following procedures show how to add Elastic Load Balancing health checks to your Auto Scaling group\.
+The following procedures show how to add ELB health checks to your Auto Scaling group\.
 
 **Topics**
 + [Adding Health Checks \(Console\)](#as-add-elb-healthcheck-console)
@@ -21,25 +22,25 @@ The following procedures show how to add Elastic Load Balancing health checks to
 
 ## Adding Health Checks \(Console\)<a name="as-add-elb-healthcheck-console"></a>
 
-Use the following procedure to add an Elastic Load Balancing \(ELB\) health check with a grace period of 300 seconds to an Auto Scaling group with an attached load balancer\.
+Use the following procedure to add an ELB health check with a grace period of 300 seconds to an Auto Scaling group with an attached load balancer\.
 
 **To add health checks**
 
 1. Open the Amazon EC2 console at [https://console\.aws\.amazon\.com/ec2/](https://console.aws.amazon.com/ec2/)\.
 
-1. On the navigation pane, choose **Auto Scaling Groups**\.
+1. On the navigation pane, under **AUTO SCALING**, choose **Auto Scaling Groups**\.
 
 1. Select the check box next to an existing group\.
 
-   A new pane appears below the **Auto Scaling groups** pane, showing information about the group you selected\.
+   A split pane opens up in the bottom part of the **Auto Scaling groups** page, showing information about the group that's selected\. 
 
-1. On the **Details** tab, under **Health checks**, choose **Edit**\. \(Old console: On the **Details** tab, choose **Edit**\.\)
+1. On the **Details** tab, choose **Health checks**, **Edit**\. \(Old console: On the **Details** tab, choose **Edit**\.\)
 
 1. For **Health check type**, select **Enable ELB health checks**\. \(Old console: Select **ELB**\.\)
 
 1. For **Health check grace period**, enter `300`\.
 
-1. Choose **Update**\. \(Old console: Choose **Save**\.\)
+1. Choose **Update**\.
 
 1. On the **Instance management** tab, under **Instances**, you can view the health status of instances\. \(Old console: The **Instances** tab is where you can view the health status of instances\.\) The **Health Status** column displays the results of the newly added health checks\.
 

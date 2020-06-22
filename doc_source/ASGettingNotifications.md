@@ -90,9 +90,11 @@ You can configure your Auto Scaling group to send notifications to Amazon SNS wh
 
 1. Open the Amazon EC2 console at [https://console\.aws\.amazon\.com/ec2/](https://console.aws.amazon.com/ec2/)\.
 
-1. On the navigation pane, under **Auto Scaling**, choose **Auto Scaling Groups**\.
+1. On the navigation pane, under **AUTO SCALING**, choose **Auto Scaling Groups**\.
 
-1. Select your Auto Scaling group\.
+1. Select the check box next to your Auto Scaling group\.
+
+   A split pane opens up in the bottom part of the page, showing information about the group that's selected\. 
 
 1. On the **Notifications** tab, choose **Create notification**\.
 
@@ -120,7 +122,7 @@ To generate a notification for a launch event, update the Auto Scaling group by 
 
 1. Open the Amazon EC2 console at [https://console\.aws\.amazon\.com/ec2/](https://console.aws.amazon.com/ec2/)\.
 
-1. On the navigation pane, under **Auto Scaling**, choose **Auto Scaling Groups**\.
+1. On the navigation pane, under **AUTO SCALING**, choose **Auto Scaling Groups**\.
 
 1. Select your Auto Scaling group\.
 
@@ -215,7 +217,7 @@ You can delete your Amazon EC2 Auto Scaling notification configuration at any ti
 
 1. Open the Amazon EC2 console at [https://console\.aws\.amazon\.com/ec2/](https://console.aws.amazon.com/ec2/)\.
 
-1. On the navigation pane, under **Auto Scaling**, choose **Auto Scaling Groups**\.
+1. On the navigation pane, under **AUTO SCALING**, choose **Auto Scaling Groups**\.
 
 1. Select your Auto Scaling group\.
 

@@ -54,19 +54,19 @@ When you use the Amazon EC2 console to create an Auto Scaling group, you can spe
 
 1. Open the Amazon EC2 console at [https://console\.aws\.amazon\.com/ec2/](https://console.aws.amazon.com/ec2/)\.
 
-1. In the navigation pane, choose **Auto Scaling Groups**\.
+1. On the navigation pane, under **AUTO SCALING**, choose **Auto Scaling Groups**\.
 
-1. Select the check box next to an existing group\.
+1. Select the check box next to the Auto Scaling group\.
 
-   A new pane appears below the **Auto Scaling groups** pane, showing information about the group you selected\. 
+   A split pane opens up in the bottom part of the **Auto Scaling groups** page, showing information about the group that's selected\. 
 
-1. On the **Details** tab, under **Tags**, choose **Edit**\. \(Old console: On the **Tags** tab, choose **Add/Edit tags**\.\)
+1. On the **Details** tab, choose **Tags**, **Edit**\. \(Old console: On the **Tags** tab, choose **Add/Edit tags**\.\)
 
 1. To modify existing tags, edit **Key** and **Value**\.
 
 1. To add a new tag, choose **Add tag** and edit **Key** and **Value**\. You can keep **Tag new instances** selected to add the tag to the instances launched in the Auto Scaling group automatically, and deselect it otherwise\.
 
-1. When you have finished adding tags, choose **Update**\. \(Old console: Choose **Save**\.\)
+1. When you have finished adding tags, choose **Update**\.
 
 ### Add or Modify Tags \(AWS CLI\)<a name="add-tags-aws-cli"></a>
 
@@ -161,13 +161,15 @@ You can delete a tag associated with your Auto Scaling group at any time\.
 
 1. Open the Amazon EC2 console at [https://console\.aws\.amazon\.com/ec2/](https://console.aws.amazon.com/ec2/)\.
 
-1. In the navigation pane, choose **Auto Scaling Groups**\.
+1. On the navigation pane, under **AUTO SCALING**, choose **Auto Scaling Groups**\.
+
+1. The original console is open by default\. To access the new console, on the banner at the top of the page, choose **Go to the new console**\.
 
 1. Select the check box next to an existing group\.
 
-   A new pane appears below the **Auto Scaling groups** pane, showing information about the group you selected\. 
+   A split pane opens up in the bottom part of the **Auto Scaling groups** page, showing information about the group that's selected\. 
 
-1. On the **Details** tab, under **Tags**, choose **Edit**\.
+1. On the **Details** tab, choose **Tags**, **Edit**\.
 
 1. Choose **Remove** next to the tag\.
 
@@ -177,7 +179,7 @@ You can delete a tag associated with your Auto Scaling group at any time\.
 
 1. Open the Amazon EC2 console at [https://console\.aws\.amazon\.com/ec2/](https://console.aws.amazon.com/ec2/)\.
 
-1. On the navigation pane, under **Auto Scaling**, choose **Auto Scaling Groups**\.
+1. On the navigation pane, under **AUTO SCALING**, choose **Auto Scaling Groups**\.
 
 1. Choose an existing group from the list\.
 

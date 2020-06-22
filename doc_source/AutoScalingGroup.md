@@ -31,5 +31,6 @@ This section provides detailed steps for creating an Auto Scaling group\. If you
 + [Launching Spot Instances in Your Auto Scaling Group](asg-launch-spot-instances.md)
 + [Getting Recommendations for an Instance Type](asg-getting-recommendations.md)
 + [Replacing Auto Scaling Instances Based on Maximum Instance Lifetime](asg-max-instance-lifetime.md)
++ [Replacing Auto Scaling Instances Based on an Instance Refresh](asg-instance-refresh.md)
 + [Merging Your Auto Scaling Groups into a Single Multi\-Zone Group](merge-auto-scaling-groups.md)
 + [Deleting Your Auto Scaling Infrastructure](as-process-shutdown.md)

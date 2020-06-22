@@ -30,9 +30,11 @@ You can create scheduled actions that scale one time only or that scale on a rec
 
 1. Open the Amazon EC2 console at [https://console\.aws\.amazon\.com/ec2/](https://console.aws.amazon.com/ec2/)\.
 
-1. On the navigation pane, under **Auto Scaling**, choose **Auto Scaling Groups**\.
+1. On the navigation pane, under **AUTO SCALING**, choose **Auto Scaling Groups**\.
 
-1. Select your Auto Scaling group\.
+1. Select the check box next to your Auto Scaling group\.
+
+   A split pane opens up in the bottom part of the **Auto Scaling groups** page, showing information about the group that's selected\. 
 
 1. On the **Automatic scaling** tab, in **Scheduled actions**, choose **Create scheduled action**\. \(Old console: The **Scheduled Actions** tab is where you can create a scheduled action\.\) 
 
@@ -53,9 +55,11 @@ If your requirements change, you can update a scheduled action\.
 
 1. Open the Amazon EC2 console at [https://console\.aws\.amazon\.com/ec2/](https://console.aws.amazon.com/ec2/)\.
 
-1. On the navigation pane, under **Auto Scaling**, choose **Auto Scaling Groups**\.
+1. On the navigation pane, under **AUTO SCALING**, choose **Auto Scaling Groups**\.
 
-1. Select your Auto Scaling group\.
+1. Select the check box next to your Auto Scaling group\.
+
+   A split pane opens up in the bottom part of the **Auto Scaling groups** page, showing information about the group that's selected\. 
 
 1. On the **Automatic scaling** tab, in **Scheduled actions**, select a scheduled action\. \(Old console: The **Scheduled Actions** tab is where you can select the scheduled action\.\) 
 
@@ -66,7 +70,7 @@ If your requirements change, you can update a scheduled action\.
    + Update the specified recurrence as needed\.
    + Update the start and end time as needed\.
 
-1. Choose **Save**\.
+1. Choose **Save changes**\.
 
 ### Delete a Scheduled Action<a name="delete-sch-action"></a>
 
@@ -76,7 +80,7 @@ When you no longer need a scheduled action, you can delete it\.
 
 1. Open the Amazon EC2 console at [https://console\.aws\.amazon\.com/ec2/](https://console.aws.amazon.com/ec2/)\.
 
-1. On the navigation pane, under **Auto Scaling**, choose **Auto Scaling Groups**\.
+1. On the navigation pane, under **AUTO SCALING**, choose **Auto Scaling Groups**\.
 
 1. Select your Auto Scaling group\.
 

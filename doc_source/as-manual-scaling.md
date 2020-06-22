@@ -12,17 +12,19 @@ The following example assumes that you've created an Auto Scaling group with a m
 
 1. Open the Amazon EC2 console at [https://console\.aws\.amazon\.com/ec2/](https://console.aws.amazon.com/ec2/)\.
 
-1. On the navigation pane, under **Auto Scaling**, choose **Auto Scaling Groups**\.
+1. On the navigation pane, under **AUTO SCALING**, choose **Auto Scaling Groups**\.
 
-1. Select your Auto Scaling group\.
+1. Select the check box next to your Auto Scaling group\.
 
-1. On the **Details** tab, choose **Edit**\.
+   A split pane opens up in the bottom part of the **Auto Scaling groups** page, showing information about the group that's selected\. 
+
+1. On the **Details** tab, choose **Group details**, **Edit**\. \(Old console: On the **Details** tab, choose **Edit**\.\)
 
 1. For **Desired capacity**, increase the desired capacity by one\. For example, if the current value is `1`, enter `2`\.
 
    The desired capacity must be less than or equal to the maximum size of the group\. If your new value for **Desired capacity** is greater than **Maximum capacity**, you must update **Maximum capacity**\.
 
-1. When you are finished, choose **Save changes**\.
+1. When you are finished, choose **Update**\.
 
 Now, verify that your Auto Scaling group has launched one additional instance\.
 

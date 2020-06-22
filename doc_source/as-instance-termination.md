@@ -16,7 +16,7 @@ Auto Scaling groups with [different types of purchase options](asg-purchase-opti
 
 ## Default Termination Policy<a name="default-termination-policy"></a>
 
-The default termination policy is designed to help ensure that your instances span Availability Zones evenly for high availability\. The default policy is kept generic and flexible to cover a range of scenarios\. 
+The default termination policy is designed to help ensure that your instances [span Availability Zones evenly for high availability](auto-scaling-benefits.md#arch-AutoScalingMultiAZ)\. The default policy is kept generic and flexible to cover a range of scenarios\. 
 
 The default termination policy behavior is as follows:
 
@@ -51,8 +51,6 @@ When the threshold for the scale\-out policy is met, the policy takes effect and
 
 When the threshold for the scale\-in policy is met, the policy takes effect and the Auto Scaling group terminates one of the instances\. If you did not assign a specific termination policy to the group, it uses the default termination policy\. It selects the Availability Zone with two instances, and terminates the instance launched from the oldest launch configuration\. If the instances were launched from the same launch configuration, the Auto Scaling group selects the instance that is closest to the next billing hour and terminates it\.
 
-For more information about high availability with Amazon EC2 Auto Scaling, see [Distributing Instances Across Availability Zones](auto-scaling-benefits.md#arch-AutoScalingMultiAZ)\.
-
 ## Customizing the Termination Policy<a name="custom-termination-policy"></a>
 
 You have the option of replacing the default policy with a customized one to support common use cases like keeping instances that have the current version of your application\. 
@@ -72,15 +70,17 @@ Amazon EC2 Auto Scaling supports the following custom termination policies:
 
 1. Open the Amazon EC2 console at [https://console\.aws\.amazon\.com/ec2/](https://console.aws.amazon.com/ec2/)\.
 
-1. On the navigation pane, choose **Auto Scaling Groups**\.
+1. On the navigation pane, under **AUTO SCALING**, choose **Auto Scaling Groups**\.
 
-1. Select the Auto Scaling group\.
+1. Select the check box next to the Auto Scaling group\.
 
-1. For **Actions**, choose **Edit**\.
+   A split pane opens up in the bottom part of the **Auto Scaling groups** page, showing information about the group that's selected\. 
 
-1. On the **Details** tab, locate **Termination policies** in **Advanced configuration**\. Choose one or more termination policies\. If you choose multiple policies, list them in the order in which they should apply\. If you use the **Default** policy, make it the last one in the list\.
+1. On the **Details** tab, choose **Advanced configurations**, **Edit**\. \(Old console: On the **Details** tab, choose **Edit**\.\)
 
-1. Choose **Save**\.
+1. For **Termination policies**, choose one or more termination policies\. If you choose multiple policies, list them in the order in which they should apply\. If you use the **Default** policy, make it the last one in the list\.
+
+1. Choose **Update**\.
 
 **To customize a termination policy \(AWS CLI\)**  
 Use one of the following commands:
@@ -138,15 +138,17 @@ You can enable or disable the instance scale\-in protection setting for an Auto 
 
 1. Open the Amazon EC2 console at [https://console\.aws\.amazon\.com/ec2/](https://console.aws.amazon.com/ec2/)\.
 
-1. On the navigation pane, choose **Auto Scaling Groups**\.
+1. On the navigation pane, under **AUTO SCALING**, choose **Auto Scaling Groups**\.
 
-1. Select the Auto Scaling group\.
+1. Select check box next to the Auto Scaling group\.
 
-1. On the **Details** tab, choose **Edit**\.
+   A split pane opens up in the bottom part of the **Auto Scaling groups** page, showing information about the group that's selected\. 
 
-1. In **Advanced configuration**, select **Enable instance scale\-in protection on all new instances by default** from **Instance scale\-in protection**\. \(Old console: For **Instance Protection**, select **Protect From Scale In**\.\) 
+1. On the **Details** tab, choose **Advanced configurations**, **Edit**\. \(Old console: On the **Details** tab, choose **Edit**\.\)
 
-1. Choose **Save**\.
+1. For **Instance scale\-in protection**, select **Enable instance scale\-in protection**\. \(Old console: For **Instance Protection**, select **Protect From Scale In**\.\) 
+
+1. Choose **Update**\.
 
 **To change the instance scale\-in protection setting for a group \(AWS CLI\)**  
 Use the following [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/update-auto-scaling-group.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/update-auto-scaling-group.html) command to enable instance scale\-in protection for the specified Auto Scaling group\.
@@ -169,9 +171,11 @@ By default, an instance gets its instance scale\-in protection setting from its 
 
 1. Open the Amazon EC2 console at [https://console\.aws\.amazon\.com/ec2/](https://console.aws.amazon.com/ec2/)\.
 
-1. On the navigation pane, under **Auto Scaling**, choose **Auto Scaling Groups**\.
+1. On the navigation pane, under **AUTO SCALING**, choose **Auto Scaling Groups**\.
 
-1. Select your Auto Scaling group\.
+1. Select the check box next to your Auto Scaling group\.
+
+   A split pane opens up in the bottom part of the **Auto Scaling groups** page, showing information about the group that's selected\. 
 
 1. On the **Instance management** tab, in **Instances**, select an instance\. \(Old console: The **Instances** tab is where you can select the instance\.\) 
 

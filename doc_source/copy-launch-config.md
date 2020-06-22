@@ -8,7 +8,7 @@ You can create launch templates from existing launch configurations to make it e
 
 1. Open the Amazon EC2 console at [https://console\.aws\.amazon\.com/ec2/](https://console.aws.amazon.com/ec2/)\.
 
-1. In the navigation pane, choose **Launch Configurations**\.
+1. On the navigation pane, under **AUTO SCALING**, choose **Launch Configurations**\.
 
 1. Select the launch configuration you want to copy and choose **Copy to launch template**\. This sets up a new launch template with the same name and options as the launch configuration you selected\.
 

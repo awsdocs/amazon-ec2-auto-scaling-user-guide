@@ -25,7 +25,7 @@ You can attach a policy to your VPC endpoint to control access to the Amazon EC2
 + The actions that can be performed\.
 + The resource on which the actions can be performed\.
 
-The following example shows a VPC endpoint policy that denies everyone permission to create a scaling policy through the endpoint\. The example policy also grants everyone permission to perform all other actions\.
+The following example shows a VPC endpoint policy that denies everyone permission to delete a scaling policy through the endpoint\. The example policy also grants everyone permission to perform all other actions\.
 
 ```
 {
@@ -37,7 +37,7 @@ The following example shows a VPC endpoint policy that denies everyone permissio
             "Principal": "*"
         },
         {
-            "Action": "autoscaling:PutScalingPolicy",
+            "Action": "autoscaling:DeleteScalingPolicy",
             "Effect": "Deny",
             "Resource": "*",
             "Principal": "*"

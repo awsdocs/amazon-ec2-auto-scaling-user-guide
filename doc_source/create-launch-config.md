@@ -15,7 +15,7 @@ An Auto Scaling group is associated with one launch configuration at a time, and
 
 1. On the navigation bar at the top of the screen, the current region is displayed\. Select a region for your Auto Scaling group that meets your needs\.
 
-1. On the navigation pane, under **Auto Scaling**, choose **Launch Configurations**\. 
+1. On the navigation pane, under **AUTO SCALING**, choose **Launch Configurations**\. 
 
 1. On the next page, choose **Create launch configuration**\.
 

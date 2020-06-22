@@ -107,7 +107,9 @@ Amazon EC2 Auto Scaling has changed the Auto Scaling group interface\. By defaul
 
 1. On the navigation bar at the top of the screen, choose the same AWS Region that you used when you created the launch template\.
 
-1. In the navigation pane, choose **Auto Scaling Groups**\.
+1. On the navigation pane, under **AUTO SCALING**, choose **Auto Scaling Groups**\.
+
+1. The original console is open by default\. To access the new console, on the banner at the top of the page, choose **Go to the new console**\.
 
 1. Choose **Create an Auto Scaling group**\.
 
@@ -175,7 +177,7 @@ Amazon EC2 Auto Scaling has changed the Auto Scaling group interface\. By defaul
 
 1. On the navigation bar at the top of the screen, choose the same AWS Region that you used when you created the launch template\.
 
-1. In the navigation pane, choose **Auto Scaling Groups**\.
+1. On the navigation pane, under **AUTO SCALING**, choose **Auto Scaling Groups**\.
 
 1. Choose **Create Auto Scaling group**\.
 

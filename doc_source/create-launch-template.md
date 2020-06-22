@@ -20,13 +20,13 @@ Keep the following considerations in mind when creating a launch template for us
 + You cannot assign specific private IP addresses\. When an instance launches, a private address is allocated from the CIDR range of the subnet in which the instance is launched\. For more information on specifying CIDR ranges for your VPC or subnet, see the [Amazon VPC User Guide](https://docs.aws.amazon.com/vpc/latest/userguide/)\.
 + To specify an existing network interface to use, its device index must be 0 \(eth0\)\. For this scenario, you must use the CLI or API to create the Auto Scaling group\. When you create the group using the CLI create\-auto\-scaling\-group command or API CreateAutoScalingGroup action, you must specify the Availability Zones parameter instead of the subnet \(VPC zone identifier\) parameter\. 
 + You cannot use host placement affinity or target a specific host by choosing a host ID\.
-+ Support for host tenancy \(Dedicated Hosts\) is only available if you specify a host resource group\. For more information, see [Host Resource Groups](https://docs.aws.amazon.com/license-manager/latest/userguide/host-resource-groups.html) in the *AWS License Manager User Guide*\. Note that each AMI based on a license configuration association can be mapped to only one host resource group at a time\. 
++ Support for Dedicated Hosts \(host tenancy\) is only available if you specify a host resource group\. For more information, see [Host Resource Groups](https://docs.aws.amazon.com/license-manager/latest/userguide/host-resource-groups.html) in the *AWS License Manager User Guide*\. Note that each AMI based on a license configuration association can be mapped to only one host resource group at a time\. 
 
 **To create a new launch template for an Auto Scaling group \(new EC2 console\)**
 
 1. Open the Amazon EC2 console at [https://console\.aws\.amazon\.com/ec2/](https://console.aws.amazon.com/ec2/)\.
 
-1. In the navigation pane, choose **Launch Templates**\.
+1. On the navigation pane, under **INSTANCES**, choose **Launch Templates**\.
 
 1. Choose **Create launch template**\. Enter a name and provide a description for the initial version of the launch template\.
 
@@ -88,7 +88,7 @@ Providing a CMK without also setting the **Encrypted** parameter results in an e
 
    1. **Delete on termination**: Choose whether the network interface is deleted when the Auto Scaling group scales in and terminates the instance to which the network interface is attached\.
 
-1. For **Advanced Details**, expand the section to view the fields and specify any additional parameters for the instances\. 
+1. For **Advanced details**, expand the section to view the fields and specify any additional parameters for the instances\. 
    + **Purchasing option**: You have the option to request Spot Instances and specify the maximum price you are willing to pay per instance hour\. For this to work with an Auto Scaling group, you must specify a one\-time request with no end date\. For more information, see [Launching Spot Instances in Your Auto Scaling Group](asg-launch-spot-instances.md)\.
 **Important**  
 If you plan to specify multiple instance types and purchase options when you configure your Auto Scaling group, leave these fields empty\. For more information, see [Auto Scaling Groups with Multiple Instance Types and Purchase Options](asg-purchase-options.md)\.
@@ -115,7 +115,7 @@ If you are not currently using the new EC2 console, you can create a launch temp
 
 1. Open the Amazon EC2 console at [https://console\.aws\.amazon\.com/ec2/](https://console.aws.amazon.com/ec2/)\.
 
-1. In the navigation pane, choose **Launch Templates**\.
+1. On the navigation pane, under **INSTANCES**, choose **Launch Templates**\.
 
 1. Choose **Create a new template**\. Enter a name and provide a description for the initial version of the launch template\. 
 
@@ -151,7 +151,7 @@ If you are not currently using the new EC2 console, you can create a launch temp
 
 1. Open the Amazon EC2 console at [https://console\.aws\.amazon\.com/ec2/](https://console.aws.amazon.com/ec2/)\.
 
-1. In the navigation pane, choose **Instances**\.
+1. On the navigation pane, under **INSTANCES**, choose **Instances**\.
 
 1. Select the instance and choose **Actions**, **Create Template from Instance**\.
 

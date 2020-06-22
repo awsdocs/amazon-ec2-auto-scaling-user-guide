@@ -30,13 +30,15 @@ Use the following procedure to attach a load balancer to an existing Auto Scalin
 
 1. Open the Amazon EC2 console at [https://console\.aws\.amazon\.com/ec2/](https://console.aws.amazon.com/ec2/)\.
 
-1. In the navigation pane, choose **Auto Scaling Groups**\.
+1. On the navigation pane, under **AUTO SCALING**, choose **Auto Scaling Groups**\.
+
+1. The original console is open by default\. To access the new console, on the banner at the top of the page, choose **Go to the new console**\.
 
 1. Select the check box next to an existing group\.
 
-   A new pane appears below the **Auto Scaling groups** pane, showing information about the group that you selected\. 
+   A split pane opens up in the bottom part of the **Auto Scaling groups** page, showing information about the group that's selected\. 
 
-1. On the **Details** tab, under **Load balancing**, choose **Edit**\.
+1. On the **Details** tab, choose **Load balancing**, **Edit**\.
 
 1. Under **Load balancing**, do one of the following:
 
@@ -50,7 +52,7 @@ Use the following procedure to attach a load balancer to an existing Auto Scalin
 
 1. Open the Amazon EC2 console at [https://console\.aws\.amazon\.com/ec2/](https://console.aws.amazon.com/ec2/)\.
 
-1. On the navigation pane, under **Auto Scaling**, choose **Auto Scaling Groups**\.
+1. On the navigation pane, under **AUTO SCALING**, choose **Auto Scaling Groups**\.
 
 1. Choose an existing group from the list\.
 
@@ -70,13 +72,15 @@ When you no longer need the load balancer, use the following procedure to detach
 
 1. Open the Amazon EC2 console at [https://console\.aws\.amazon\.com/ec2/](https://console.aws.amazon.com/ec2/)\.
 
-1. In the navigation pane, choose **Auto Scaling Groups**\.
+1. On the navigation pane, under **AUTO SCALING**, choose **Auto Scaling Groups**\.
+
+1. The original console is open by default\. To access the new console, on the banner at the top of the page, choose **Go to the new console**\.
 
 1. Select the check box next to an existing group\.
 
-   A new pane appears below the **Auto Scaling groups** pane, showing information about the group that you selected\. 
+   A split pane opens up in the bottom part of the **Auto Scaling groups** page, showing information about the group that's selected\. 
 
-1. On the **Details** tab, under **Load balancing**, choose **Edit**\.
+1. On the **Details** tab, choose **Load balancing**, **Edit**\.
 
 1. Under **Load balancing**, do one of the following:
 
@@ -90,7 +94,7 @@ When you no longer need the load balancer, use the following procedure to detach
 
 1. Open the Amazon EC2 console at [https://console\.aws\.amazon\.com/ec2/](https://console.aws.amazon.com/ec2/)\.
 
-1. On the navigation pane, under **Auto Scaling**, choose **Auto Scaling Groups**\.
+1. On the navigation pane, under **AUTO SCALING**, choose **Auto Scaling Groups**\.
 
 1. Choose an existing group from the list\.
 

@@ -90,7 +90,7 @@ Record the policy's Amazon Resource Name \(ARN\)\. You need the ARN when you cre
 ```
 aws autoscaling put-scaling-policy --policy-name my-simple-scale-out-policy \
   --auto-scaling-group-name my-asg --scaling-adjustment 30 \
-  --adjustment-type PercentChangeInCapacity
+  --adjustment-type PercentChangeInCapacity --min-adjustment-magnitude 2
 ```
 
 Record the policy's Amazon Resource Name \(ARN\)\. You need the ARN when you create the CloudWatch alarm\.
@@ -99,7 +99,7 @@ Record the policy's Amazon Resource Name \(ARN\)\. You need the ARN when you cre
 
 ```
 aws autoscaling put-scaling-policy --policy-name my-simple-scale-in-policy \
-  --auto-scaling-group-name my-asg --scaling-adjustment -2 \
+  --auto-scaling-group-name my-asg --scaling-adjustment -1 \
   --adjustment-type ChangeInCapacity --cooldown 180
 ```
 

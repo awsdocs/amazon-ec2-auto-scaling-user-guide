@@ -2,13 +2,13 @@
 
 An Auto Scaling group is associated with one launch configuration at a time, and you can't modify a launch configuration after you've created it\. To change the launch configuration for an Auto Scaling group, use an existing launch configuration as the basis for a new launch configuration\. Then, update the Auto Scaling group to use the new launch configuration\.
 
-After you change the launch configuration for an Auto Scaling group, any new instances are launched using the new configuration options, but existing instances are not affected\. In this situation, you can terminate existing instances in the Auto Scaling group to force a new instance to launch that uses the new configuration\. Or, you can allow automatic scaling to gradually replace older instances with newer instances based on your [termination policies](as-instance-termination.md)\. You can also automate deployment of the updated launch configuration with a few clicks through AWS CloudFormation\.
+After you change the launch configuration for an Auto Scaling group, any new instances are launched using the new configuration options, but existing instances are not affected\. In this situation, you can allow automatic scaling to gradually replace older instances with newer instances based on your [termination policies](as-instance-termination.md)\. With the maximum instance lifetime and instance refresh features, you can also replace existing instances in the Auto Scaling group to launch new instances that use the new configuration\. For more information, see [Replacing Auto Scaling Instances Based on Maximum Instance Lifetime](asg-max-instance-lifetime.md) and [Replacing Auto Scaling Instances Based on an Instance Refresh](asg-instance-refresh.md)\.
 
 **To change the launch configuration for an Auto Scaling group \(console\)**
 
 1. Open the Amazon EC2 console at [https://console\.aws\.amazon\.com/ec2/](https://console.aws.amazon.com/ec2/)\.
 
-1. In the navigation pane, choose **Launch Configurations**\.
+1. On the navigation pane, under **AUTO SCALING**, choose **Launch Configurations**\.
 
 1. Select the launch configuration and choose **Actions**, **Copy launch configuration**\. This sets up a new launch configuration with the same options as the original, but with "Copy" added to the name\.
 
@@ -16,7 +16,11 @@ After you change the launch configuration for an Auto Scaling group, any new ins
 
 1. On the confirmation page, choose **View your Auto Scaling groups**\.
 
-1. Select the Auto Scaling group and choose **Details**, **Edit**\.
+1. Select the check box next to the Auto Scaling group\. 
+
+   A split pane opens up in the bottom part of the page, showing information about the group that's selected\. 
+
+1. Choose **Details**, **Edit**\. 
 
 1. Select the new launch configuration from **Launch Configuration** and choose **Save**\.
 

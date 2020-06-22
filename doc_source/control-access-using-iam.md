@@ -76,6 +76,7 @@ The following Amazon EC2 Auto Scaling actions do not support resource\-level per
 + `DescribeAutoScalingGroups`
 + `DescribeAutoScalingInstances`
 + `DescribeAutoScalingNotificationTypes`
++ `DescribeInstanceRefreshes`
 + `DescribeLaunchConfigurations`
 + `DescribeLifecycleHooks`
 + `DescribeLifecycleHookTypes`

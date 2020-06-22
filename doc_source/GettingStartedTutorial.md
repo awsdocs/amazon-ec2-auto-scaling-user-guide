@@ -42,7 +42,7 @@ Alternatively, you can use a launch configuration to create an Auto Scaling grou
 
 1. On the navigation bar at the top of the screen, select an AWS Region\. The Amazon EC2 Auto Scaling resources that you create are tied to the Region that you specify\. 
 
-1. On the navigation pane, choose **Launch Templates**\.
+1. On the navigation pane, under **INSTANCES**, choose **Launch Templates**\.
 
 1. Choose **Create launch template**\.  
 ![\[Launch templates welcome screen\]](http://docs.aws.amazon.com/autoscaling/ec2/userguide/images/as-gs-lt-welcome-screen.png)
@@ -79,7 +79,7 @@ A launch configuration is similar to a launch template, in that it specifies the
 
 1. On the navigation bar, select an AWS Region\. The Auto Scaling resources that you create are tied to the Region that you specify\. 
 
-1. On the navigation pane, under **Auto Scaling**, choose **Auto Scaling Groups**\.
+1. On the navigation pane, under **AUTO SCALING**, choose **Auto Scaling Groups**\.
 
 1. On the **Welcome to Auto Scaling** page, choose **Create Auto Scaling group**\.  
 ![\[Image NOT FOUND\]](http://docs.aws.amazon.com/autoscaling/ec2/userguide/images/as-console-first-time-user-screen.png)
@@ -101,6 +101,8 @@ If your account is less than 12 months old, you can use a `t2.micro` instance fo
    1. Choose **Skip to review**\.
 
 1. For the **Review** step, choose **Edit security groups**\. Follow the instructions to choose an existing security group, and then choose **Review**\.
+**Note**  
+If you have not already created a security group, the wizard automatically defines the `AutoScaling-Security-Group-x` security group to allow you to connect to your instances\. The `AutoScaling-Security-Group-x` security group enables all IP addresses \(0\.0\.0\.0/0\) and allows inbound traffic on port 22 \(SSH\) for Linux instances or port 3389 \(RDP\) for Windows instances depending on the AMI you specified\.
 
 1. For the **Review** step, choose **Create launch configuration**\.
 
@@ -157,9 +159,9 @@ We recommend the new user interface, but you can still temporarily use the old u
    1.  For **Group name**, enter a name for your Auto Scaling group \(for example, `my-first-asg`\)\.   
 ![\[Auto Scaling group creation screen\]](http://docs.aws.amazon.com/autoscaling/ec2/userguide/images/as-gs-asg.png)
 
-   1. \[Launch template\] For **Launch template version**, choose the default version of the launch template to use when scaling out\. 
+   1. \[Launch template only\] For **Launch template version**, choose the default version of the launch template to use when scaling out\. 
 
-   1. \[Launch template\] For **Fleet Composition**, choose **Adhere to the launch template**\. 
+   1. \[Launch template only\] For **Fleet Composition**, choose **Adhere to the launch template**\. 
 
    1. Keep **Group size** set to the default value of `1` instance for this tutorial\.
 
@@ -185,15 +187,15 @@ On the **Auto Scaling groups** page, complete the following procedure\.
 
 1. Select the check box next to the Auto Scaling group that you just created\. 
 
-   The first tab available is the **Details** tab, showing information about the Auto Scaling group\.
+   A split pane opens up in the bottom part of the **Auto Scaling groups** page, showing information about the group\. The first tab available is the **Details** tab, showing information about the Auto Scaling group\.
 
 1. Choose the second tab, **Activity**\. Under **Activity history**, you can view the progress of activities that are associated with the Auto Scaling group\. The **Status** column shows the current status of your instance\. While your instance is launching, the status column shows `PreInService`\. The status changes to `Successful` after the instance is launched\. You can also use the refresh button to see the current status of your instance\. \(Old console: The **Activity History** tab is where you can view the status of the instance\. While your instance is launching, the status column shows `In progress`\.\) 
 
-1. On the **Instance management** tab, under **Instances**, you can view the status of the instance\. \(Old console: The **Instances** tab is where you can view the status of the instance\.\) 
+1. On the **Instance management** tab, under **Instances**, you can view the status of the instance\. \(Old console: The **Instances** tab is where you can see this\.\)
 
 1. Verify that your instance launched successfully\. It takes a short time for an instance to launch\. 
 
-   The **Lifecycle** column shows the state of your instance\. Verify that your Auto Scaling group has launched your EC2 instance, and that it is in the `InService` lifecycle state\. 
+   The **Lifecycle** column shows the state of your instance\. Initially, your instance is in the `Pending` state\. After an instance is ready to receive traffic, its state is `InService`\.
 
    The **Health status** column shows the result of the EC2 instance health check on your instance\.
 
@@ -201,19 +203,19 @@ On the **Auto Scaling groups** page, complete the following procedure\.
 
 You can use these steps to learn more about how Amazon EC2 Auto Scaling works, specifically, how it launches new instances when necessary\. The minimum size for the Auto Scaling group that you created in this tutorial is one instance\. Therefore, if you terminate that running instance, Amazon EC2 Auto Scaling must launch a new instance to replace it\.
 
-1. On the **Instance management** tab, under **Instances**, select the ID of the instance\. \(Old console: The **Instances** tab is where you can select the ID of the instance\.\)
+1. On the **Instance management** tab, under **Instances**, select the ID of the instance\. \(Old console: The **Instances** tab is where you can do this\.\)
 
    This takes you to the **Instances** page in the Amazon EC2 console, where you can terminate the instance\.
 
 1. Choose **Actions**, **Instance State**, **Terminate**\. When prompted for confirmation, choose **Yes, Terminate**\.
 
-1. On the navigation pane, choose **Auto Scaling Groups**\. Select your Auto Scaling group and choose the **Activity** tab\. \(Old console: **Activity History** tab\)\. 
+1. On the navigation pane, under **AUTO SCALING**, choose **Auto Scaling Groups**\. Select your Auto Scaling group and choose the **Activity** tab\. \(Old console: **Activity History** tab\)\. 
 
    The default cooldown for the Auto Scaling group is 300 seconds \(5 minutes\), so it takes about 5 minutes until you see the scaling activity\. In the activity history, when the scaling activity starts, you see an entry for the termination of the first instance and an entry for the launch of a new instance\. 
 
-1. On the **Instance management** tab, the **Instances** section shows the new instance only\. \(Old console: The **Instances** tab is where you can see this\.\)
+1. On the **Instance management** tab, the **Instances** section shows the new instance only\. 
 
-1. On the navigation pane, choose **Instances**\. This page shows both the terminated instance and the new running instance\.
+1. On the navigation pane, under **INSTANCES**, choose **Instances**\. This page shows both the terminated instance and the new running instance\.
 
 ## Step 4: Next Steps<a name="gs-tutorial-next-steps"></a>
 
@@ -232,7 +234,7 @@ If you launched an instance that is not within the [AWS Free Tier](https://aws.a
 
 1. Open the Amazon EC2 console at [https://console\.aws\.amazon\.com/ec2/](https://console.aws.amazon.com/ec2/)\.
 
-1. On the navigation pane, under **Auto Scaling**, choose **Auto Scaling Groups**\.
+1. On the navigation pane, under **AUTO SCALING**, choose **Auto Scaling Groups**\.
 
 1. Select the check box next to your Auto Scaling group\.
 
@@ -244,7 +246,7 @@ Skip the following procedure if you would like to keep your launch template\.
 
 **To delete your launch template**
 
-1. On the navigation pane, choose **Launch Templates**\.
+1. On the navigation pane, under **INSTANCES**, choose **Launch Templates**\.
 
 1. Select your launch template\.
 
@@ -254,7 +256,7 @@ Skip the following procedure if you would like to keep your launch configuration
 
 **To delete your launch configuration**
 
-1. On the navigation pane, under **Auto Scaling**, choose **Launch Configurations**\.
+1. On the navigation pane, under **AUTO SCALING**, choose **Launch Configurations**\.
 
 1. Select your launch configuration\.
 

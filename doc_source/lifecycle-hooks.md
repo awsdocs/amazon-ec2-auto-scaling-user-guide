@@ -51,7 +51,7 @@ The maximum amount of time that you can keep an instance in a wait state is 48 h
 
 ### Cooldown Periods for Simple Scaling<a name="lifecycle-hook-cooldowns"></a>
 
-When an Auto Scaling group launches or terminates an instance due to a simple scaling policy, a cooldown period takes effect\. The cooldown period helps ensure that the Auto Scaling group does not launch or terminate more instances than needed before the effects of previous simple scaling activities are visible\. When a lifecycle action occurs, and an instance enters the wait state, scaling activities due to simple scaling policies are paused\. When a newly launched instance enters the `InService` state, the cooldown period starts\. For more information, see [Scaling Cooldowns for Amazon EC2 Auto Scaling](Cooldown.md)\.
+When an Auto Scaling group launches or terminates an instance due to a simple scaling policy, a cooldown period takes effect\. The cooldown period helps ensure that the Auto Scaling group does not launch or terminate more instances than needed before the effects of previous simple scaling activities are visible\. When a lifecycle action occurs, and an instance enters the wait state, scaling activities due to simple scaling policies are paused\. When the lifecycle hook execution finishes, the cooldown period starts\. If you set a long interval for the cooldown period, it will take more time for scaling to resume\. For more information, see [Scaling Cooldowns for Amazon EC2 Auto Scaling](Cooldown.md)\.
 
 ### Health Check Grace Period<a name="lifecycle-hook-health-check-grace-period"></a>
 
@@ -83,9 +83,11 @@ Follow these steps to add a lifecycle hook to an existing Auto Scaling group\. Y
 
 1. Open the Amazon EC2 console at [https://console\.aws\.amazon\.com/ec2/](https://console.aws.amazon.com/ec2/)\.
 
-1. On the navigation pane, under **Auto Scaling**, choose **Auto Scaling Groups**\.
+1. On the navigation pane, under **AUTO SCALING**, choose **Auto Scaling Groups**\.
 
-1. Select your Auto Scaling group\.
+1. Select the check box next to your Auto Scaling group\.
+
+   A split pane opens up in the bottom part of the **Auto Scaling groups** page, showing information about the group that's selected\. 
 
 1. On the **Instance management** tab, in **Lifecycle hooks**, choose **Create lifecycle hook**\. \(Old console: The **Lifecycle Hooks** tab is where you can create a lifecycle hook\.\) 
 
@@ -183,14 +185,16 @@ To generate a notification for a launch event, update the Auto Scaling group by 
 
 1. Open the Amazon EC2 console at [https://console\.aws\.amazon\.com/ec2/](https://console.aws.amazon.com/ec2/)\.
 
-1. On the navigation pane, under **Auto Scaling**, choose **Auto Scaling Groups**\.
+1. On the navigation pane, under **AUTO SCALING**, choose **Auto Scaling Groups**\.
 
-1. Select your Auto Scaling group\.
+1. Select the check box next to your Auto Scaling group\.
 
-1. On the **Details** tab, choose **Edit**\.
+   A split pane opens up in the bottom part of the **Auto Scaling groups** page, showing information about the group that's selected\. 
+
+1. On the **Details** tab, choose **Group details**, **Edit**\. \(Old console: On the **Details** tab, choose **Edit**\.\)
 
 1. For **Desired capacity**, increase the current value by 1\. If this value exceeds **Maximum capacity**, you must also increase the value of **Maximum capacity** by 1\.
 
-1. Choose **Save**\.
+1. Choose **Update**\.
 
 1. After a few minutes, you'll receive notification for the event\. If you do not need the additional instance that you launched for this test, you can decrease **Desired capacity** by 1\. After a few minutes, you'll receive notification for the event\.

@@ -19,21 +19,21 @@ Use the following procedure to expand your Auto Scaling group to an additional s
 
 1. Open the Amazon EC2 console at [https://console\.aws\.amazon\.com/ec2/](https://console.aws.amazon.com/ec2/)\.
 
-1. In the navigation pane, choose **Auto Scaling Groups**\.
+1. On the navigation pane, under **AUTO SCALING**, choose **Auto Scaling Groups**\.
 
 1. Select the check box next to an existing group\.
 
-   A new pane appears below the **Auto Scaling groups** pane, showing information about the group you selected\. 
+   A split pane opens up in the bottom part of the **Auto Scaling groups** page, showing information about the group that's selected\. 
 
-1. On the **Details** tab, under **Network**, choose **Edit**\. \(Old console: On the **Details** tab, choose **Edit**\.\)
+1. On the **Details** tab, choose **Network**, **Edit**\. \(Old console: On the **Details** tab, choose **Edit**\.\)
 
 1. In **Subnets**, choose the subnet corresponding to the Availability Zone\.
 
-1. Choose **Update**\. \(Old console: Choose **Save**\.\)
+1. Choose **Update**\.
 
 1. To update the Availability Zones for your load balancer so that it shares the same zones as your Auto Scaling group, complete the following steps:
 
-   1. On the navigation pane, choose **Load Balancers**\.
+   1. On the navigation pane, under **LOAD BALANCING**, choose **Load Balancers**\.
 
    1. Choose your load balancer\.
 

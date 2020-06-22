@@ -11,13 +11,13 @@ To completely delete your scaling infrastructure, complete the following tasks\.
 
 ## Delete Your Auto Scaling Group<a name="as-shutdown-lbs-delete-asg-cli"></a>
 
-When you delete an Auto Scaling group, its desired, minimum, and maximum values are set to 0\. As a result, the instances are terminated\. Deleting an instance also deletes any associated logs or data, and any volumes on the instance\. If do not want to terminate one or more instances, you can detach them before you delete the Auto Scaling group\.
+When you delete an Auto Scaling group, its desired, minimum, and maximum values are set to 0\. As a result, the instances are terminated\. Deleting an instance also deletes any associated logs or data, and any volumes on the instance\. If do not want to terminate one or more instances, you can detach them before you delete the Auto Scaling group\. If the group has scaling policies, deleting the group deletes the policies, the underlying alarm actions, and any alarm that no longer has an associated action\.
 
 **To delete your Auto Scaling group \(console\)**
 
 1. Open the Amazon EC2 console at [https://console\.aws\.amazon\.com/ec2/](https://console.aws.amazon.com/ec2/)\.
 
-1. On the navigation pane, under **Auto Scaling**, choose **Auto Scaling Groups**\.
+1. On the navigation pane, under **AUTO SCALING**, choose **Auto Scaling Groups**\.
 
 1. On the **Auto Scaling Groups** page, select the check box next to your Auto Scaling group and choose **Delete** \(Old console: choose **Actions**, **Delete**\)\. 
 
@@ -46,7 +46,7 @@ You can skip this step to keep the launch configuration for future use\.
 
 1. Open the Amazon EC2 console at [https://console\.aws\.amazon\.com/ec2/](https://console.aws.amazon.com/ec2/)\.
 
-1. On the navigation pane, under **Auto Scaling**, choose **Launch Configurations**\.
+1. On the navigation pane, under **AUTO SCALING**, choose **Launch Configurations**\.
 
 1. On the **Launch Configurations** page, choose your launch configuration and choose **Actions**, **Delete launch configuration**\.
 
@@ -69,7 +69,7 @@ You can skip this step to keep the launch template for future use\.
 
 1. Open the Amazon EC2 console at [https://console\.aws\.amazon\.com/ec2/](https://console.aws.amazon.com/ec2/)\.
 
-1. On the navigation pane, choose **Launch Templates**\.
+1. On the navigation pane, under **INSTANCES**, choose **Launch Templates**\.
 
 1. Select your launch template and then do one of the following: 
    + Choose **Actions**, **Delete template**\. When prompted for confirmation, choose **Delete launch template**\.
@@ -96,7 +96,7 @@ Skip this step if your Auto Scaling group is not associated with an Elastic Load
 
 1. Open the Amazon EC2 console at [https://console\.aws\.amazon\.com/ec2/](https://console.aws.amazon.com/ec2/)\.
 
-1. On the navigation pane, choose **Load Balancers**\.
+1. On the navigation pane, under **LOAD BALANCING**, choose **Load Balancers**\.
 
 1. Choose the load balancer and choose **Actions**, **Delete**\.
 
@@ -104,7 +104,7 @@ Skip this step if your Auto Scaling group is not associated with an Elastic Load
 
 **To delete your target group \(console\)**
 
-1. On the navigation pane, choose **Target Groups**\.
+1. On the navigation pane, under **LOAD BALANCING**, choose **Target Groups**\.
 
 1. Choose the target group and choose **Actions**, **Delete**\.
 

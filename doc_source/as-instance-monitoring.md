@@ -50,15 +50,17 @@ To filter the metrics for your Auto Scaling group by group name, use the `AutoSc
 
 ## Enable Auto Scaling Group Metrics<a name="as-enable-group-metrics"></a>
 
-When you enable Auto Scaling group metrics, your Auto Scaling group sends sampled data to CloudWatch every minute\. There is no charge for enabling these metrics\. 
+When you enable Auto Scaling group metrics, your Auto Scaling group sends sampled data to CloudWatch every minute\. There is no charge for enabling these metrics\.
 
 **To enable group metrics \(console\)**
 
 1. Open the Amazon EC2 console at [https://console\.aws\.amazon\.com/ec2/](https://console.aws.amazon.com/ec2/)\.
 
-1. In the navigation pane, choose **Auto Scaling Groups**\.
+1. On the navigation pane, under **AUTO SCALING**, choose **Auto Scaling Groups**\.
 
-1. Select your Auto Scaling group\.
+1. Select the check box next to your Auto Scaling group\.
+
+   A split pane opens up in the bottom part of the page, showing information about the group that's selected\. 
 
 1. On the **Monitoring** tab, for **Auto Scaling Metrics**, choose **Enable Group Metrics Collection**\. If you don't see this option, select **Auto Scaling** for **Display**\.  
 ![\[Enable Auto Scaling group metrics collection.\]](http://docs.aws.amazon.com/autoscaling/ec2/userguide/images/monitoring_group_metrics_enable.png)
@@ -67,7 +69,7 @@ When you enable Auto Scaling group metrics, your Auto Scaling group sends sample
 
 1. Open the Amazon EC2 console at [https://console\.aws\.amazon\.com/ec2/](https://console.aws.amazon.com/ec2/)\.
 
-1. In the navigation pane, choose **Auto Scaling Groups**\.
+1. On the navigation pane, under **AUTO SCALING**, choose **Auto Scaling Groups**\.
 
 1. Select your Auto Scaling group\.
 
@@ -131,7 +133,7 @@ Alternatively, you can view these metrics using the CloudWatch console\.
 
 1. Open the Amazon EC2 console at [https://console\.aws\.amazon\.com/ec2/](https://console.aws.amazon.com/ec2/)\.
 
-1. In the navigation pane, choose **Auto Scaling Groups**\.
+1. On the navigation pane, under **AUTO SCALING**, choose **Auto Scaling Groups**\.
 
 1. Select your Auto Scaling group\.
 
@@ -185,48 +187,45 @@ aws cloudwatch list-metrics --namespace "AWS/AutoScaling" --metric-name GroupDes
 
 ## Create Amazon CloudWatch Alarms<a name="CloudWatchAlarm"></a>
 
-One purpose for monitoring metrics is to verify that your application is performing as expected\. If a metric goes beyond what you consider an acceptable threshold, you can have a CloudWatch alarm trigger an action\. You can specify any of the alarm actions that are supported by CloudWatch\.
+One purpose for monitoring metrics is to verify that your application is performing as expected\. In Amazon CloudWatch, you can create an alarm that sends a notification when the value of a certain metric is beyond what you consider an acceptable threshold\. 
 
-You configure an alarm by identifying the metric to monitor\. For example, you can configure an alarm to watch over the average CPU usage of the EC2 instances in your Auto Scaling group\. The action can be a notification that is sent to you when the average CPU usage of the group breaches the threshold that you specified for the consecutive periods you specified\. For example, if the metric stays at or above 70 percent for 4 consecutive periods of 1 minute each\. 
+Start by identifying the metric to monitor\. For example, you can configure an alarm to watch over the average CPU utilization of the EC2 instances in your Auto Scaling group\. The action can be a notification that is sent to you when the average CPU utilization of the group's instances breaches the threshold that you specified for the consecutive periods you specified\. For example, if the metric stays at or above 70 percent for 4 consecutive periods of 1 minute each\. 
 
 For more information, see [Using Amazon CloudWatch Alarms](https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/AlarmThatSendsEmail.html) in the *Amazon CloudWatch User Guide*\.
 
-**To create a CloudWatch alarm based on average CPU utilization**
+**To create a CloudWatch alarm for your Auto Scaling group**
 
 1. Open the CloudWatch console at [https://console\.aws\.amazon\.com/cloudwatch/](https://console.aws.amazon.com/cloudwatch/)\.
 
-1. In the navigation pane, choose **Alarms**, **Create Alarm**\.
+1. If necessary, change the region\. From the navigation bar, select the region where your Auto Scaling group resides\.
 
-1. Choose **Select Metric** and then **EC2**\. 
+1. On the navigation pane, choose **Alarms** and then choose **Create alarm**\.
 
-1. Choose a metric category to filter the results\. To see the Auto Scaling group metrics, choose **By Auto Scaling Group**\. If you only want the metrics for individual instances, choose **Per\-Instance Metrics**\. 
+1. Choose **Select metric**\. 
 
-1. Select a metric as follows:
+1. On the **All metrics** tab, select a metric as follows:
+   + To display only the metrics reported for your Auto Scaling groups, choose **EC2**, and then choose **By Auto Scaling Group**\. To view the metrics for a single Auto Scaling group, type its name in the search field\. 
+   + Select the row that contains the metric for the Auto Scaling group that you want to create an alarm on\. 
+   + Choose **Select metric**\. The **Specify metric and conditions** page appears, showing a graph and other information about the metric\. 
 
-   1. Select the row that contains the Auto Scaling group or instance that you want to create an alarm on and the **CPUUtilization** metric\. 
-
-   1. Choose the **Graphed metrics** tab\. 
-
-   1. Under **Statistic**, choose **Average**\.
-
-   1. Under **Period**, choose the evaluation period for the alarm, for example, 1 minute\. When evaluating the alarm, each period is aggregated into one data point\. 
+1. For **Period**, choose the evaluation period for the alarm, for example, 1 minute\. When evaluating the alarm, each period is aggregated into one data point\. 
 **Note**  
 A shorter period creates a more sensitive alarm\.
 
-   1. Choose **Select metric**\.
+1. Under **Conditions**, do the following:
+   + For **Threshold type**, choose **Static**\.
+   + For **Whenever `metric` is**, specify whether you want the value of the metric to be greater than, greater than or equal to, less than, or less than or equal to the threshold to trigger the alarm\. Then, under **than**, enter the threshold value that you want to trigger the alarm\.
 
-1. Under **Conditions**, define the alarm by defining the threshold condition\. For example, you can define a threshold to trigger the alarm whenever the value of the metric is greater than or equal to 70 percent\.
-
-1. Under **Additional configuration**, for **Datapoints to alarm**, specify how many datapoints \(evaluation periods\) must be in the ALARM state to trigger the alarm, for example, 4 out of 4\. This creates an alarm that goes to ALARM state if that many consecutive periods are breaching\. 
-
-1. For **Missing data treatment**, choose one of the options\. For a metric that continually reports data, such as CPUUtilization, you might want to choose **Treat missing data as bad \(breaching threshold\)**, as missing datapoints may indicate that something is wrong\. For more information, see [Configuring How CloudWatch Alarms Treat Missing Data](https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/AlarmThatSendsEmail.html#alarms-and-missing-data) in the *Amazon CloudWatch User Guide*\.
-
-1. Choose **Next**\.
-
-1. Under **Configure actions**, define the action to take\. 
+1. Under **Additional configuration**, do the following:
+   + For **Datapoints to alarm**, enter the number of data points \(evaluation periods\) during which the metric value must meet the threshold conditions to trigger the alarm\. For example, two consecutive periods of 5 minutes would take 10 minutes to trigger the alarm\.
+   + For **Missing data treatment**, choose what you want the alarm to do if some data is missing\. For more information, see [Configuring How CloudWatch Alarms Treat Missing Data](https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/AlarmThatSendsEmail.html#alarms-and-missing-data) in the *Amazon CloudWatch User Guide*\.
 
 1. Choose **Next**\.
 
-1. Under **Add a description**, enter a name and description for the alarm and choose **Next**\.
+1. Under **Notification**, you can choose or create the Amazon SNS topic you want to use to receive notifications\. Otherwise, you can remove the notification now and add one later when you are ready\.
+
+1. Choose **Next**\.
+
+1. Enter a name and, optionally, a description for the alarm, and then choose **Next**\.
 
 1. Choose **Create Alarm**\.

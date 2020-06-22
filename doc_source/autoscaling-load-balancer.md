@@ -1,10 +1,16 @@
 # Elastic Load Balancing and Amazon EC2 Auto Scaling<a name="autoscaling-load-balancer"></a>
 
-A load balancer acts as a single point of contact for all incoming web traffic to your Auto Scaling group\. When an instance is added to your group, it needs to register with the load balancer or no traffic is routed to it\. When an instance is removed from your group, it must deregister from the load balancer or traffic continues to be routed to it\.
+Elastic Load Balancing is used to automatically distribute your incoming application traffic across all the EC2 instances that you are running\. You can use Elastic Load Balancing to manage incoming requests by optimally routing traffic so that no one instance is overwhelmed\. 
 
-When you use your Elastic Load Balancing load balancer with an Auto Scaling group, it's not necessary to register your EC2 instances with the load balancer or target group\. With Elastic Load Balancing, instances that are launched by your Auto Scaling group are automatically registered with the load balancer or target group, and instances that are terminated by your Auto Scaling group are automatically deregistered from the load balancer or target group\.
+To use Elastic Load Balancing with your Auto Scaling group, you set up a load balancer and then you [attach the load balancer to your Auto Scaling group](attach-load-balancer-asg.md) to register the group with the load balancer\. 
 
-You can also configure Elastic Load Balancing health checks to monitor the health of registered instances so that the load balancer or target group only routes traffic to the healthy instances\.
+Your load balancer acts as a single point of contact for all incoming web traffic to your Auto Scaling group\. When an instance is added to your group, it needs to register with the load balancer or no traffic is routed to it\. When an instance is removed from your group, it must deregister from the load balancer or traffic continues to be routed to it\.
+
+When you use Elastic Load Balancing with your Auto Scaling group, it's not necessary to register your EC2 instances with the load balancer\. Instances that are launched by your Auto Scaling group are automatically registered with the load balancer\. Likewise, instances that are terminated by your Auto Scaling group are automatically deregistered from the load balancer\.
+
+After registering a load balancer with your Auto Scaling group, you can configure your Auto Scaling group to use Elastic Load Balancing metrics such as the request count per target \(or other metrics\) to scale the number of instances in the group as the demand on your instances changes\.
+
+You can also optionally enable Elastic Load Balancing health checks to check the health of instances in your Auto Scaling group based on health checks provided by Elastic Load Balancing\.
 
 **Topics**
 + [Elastic Load Balancing Types](#integrations-aws-elastic-load-balancing-types)

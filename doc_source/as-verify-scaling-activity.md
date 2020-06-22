@@ -6,7 +6,9 @@ After you create a scaling policy, Amazon EC2 Auto Scaling starts evaluating the
 
 1. Open the Amazon EC2 console at [https://console\.aws\.amazon\.com/ec2/](https://console.aws.amazon.com/ec2/)\.
 
-1. On the navigation pane, under **Auto Scaling**, choose **Auto Scaling Groups**\.
+1. On the navigation pane, under **AUTO SCALING**, choose **Auto Scaling Groups**\.
+
+1. The original console is open by default\. To access the new console, on the banner at the top of the page, choose **Go to the new console**\.
 
 1. Search for the name of the Auto Scaling group\.
 
@@ -15,6 +17,8 @@ After you create a scaling policy, Amazon EC2 Auto Scaling starts evaluating the
 If you're using instance weighting, the **Weighted capacity** column measures the number of capacity units that the group contains\. If this column is hidden, choose the gear\-shaped icon in the top\-right corner of the section and then enable **Weighted capacity**\.
 
 1. Select the check box next to the Auto Scaling group\. 
+
+   A split pane opens up in the bottom part of the **Auto Scaling groups** page, showing information about the group that's selected\. 
 
    1. On the **Activity** tab, under **Activity history**, the **Status** column shows whether your Auto Scaling group has successfully launched or terminated instances\.
 

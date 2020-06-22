@@ -304,7 +304,7 @@ To test your rule, change the size of your Auto Scaling group\. If you used the 
 
 1. Open the Amazon EC2 console at [https://console\.aws\.amazon\.com/ec2/](https://console.aws.amazon.com/ec2/)\.
 
-1. On the navigation pane, choose **Auto Scaling Groups**, and then select your Auto Scaling group\.
+1. On the navigation pane, under **AUTO SCALING**, choose **Auto Scaling Groups**, and then select your Auto Scaling group\.
 
 1. On the **Details** tab, choose **Edit**\.
 

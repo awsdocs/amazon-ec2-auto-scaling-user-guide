@@ -32,7 +32,7 @@ As a best practice, we strongly recommend that you create the role so that it ha
 
 1. On the **Review** page, enter a name for the role and choose **Create role**\. 
 
-When using an instance profile, the `iam:PassRole` permission is needed on the IAM user who creates an Auto Scaling group using a launch template or launch configuration that specifies an instance profile\. For an example policy, see [Control Which IAM Roles Can Be Passed \(Using PassRole\)](security_iam_id-based-policy-examples.md#policy-example-pass-IAM-role)\.
+The `iam:PassRole` permission is needed on the IAM user who creates or updates an Auto Scaling group using a launch template that specifies an instance profile, or who creates a launch configuration that specifies an instance profile\. For an example policy, see [Control Which IAM Roles Can Be Passed \(Using PassRole\)](security_iam_id-based-policy-examples.md#policy-example-pass-IAM-role)\.
 
 ## Create a Launch Configuration<a name="us-iam-role-create-launch"></a>
 
