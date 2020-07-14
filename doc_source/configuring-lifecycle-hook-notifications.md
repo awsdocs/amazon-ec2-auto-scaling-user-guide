@@ -1,24 +1,24 @@
 # Configuring Notifications for Amazon EC2 Auto Scaling Lifecycle Hooks<a name="configuring-lifecycle-hook-notifications"></a>
 
-You can add a lifecycle hook to an Auto Scaling group that triggers a notification when an instance enters a wait state\. You can configure these notifications for a variety of reasons, for example, to invoke a Lambda function or to receive email notification so that you can perform a custom action\. This topic describes how to configure notifications using Amazon CloudWatch Events, Amazon SNS, and Amazon SQS\. Choose whichever option you prefer\. Alternatively, if you have a script that configures your instances when they launch, you do not need to receive notification when the lifecycle action occurs\.
+You can add a lifecycle hook to an Auto Scaling group that triggers a notification when an instance enters a wait state\. You can configure these notifications for a variety of reasons, for example, to invoke a Lambda function or to receive email notification so that you can perform a custom action\. This topic describes how to configure notifications using Amazon EventBridge, Amazon SNS, and Amazon SQS\. Choose whichever option you prefer\. Alternatively, if you have a script that configures your instances when they launch, you do not need to receive notification when the lifecycle action occurs\.
 
 **Important**  
 AWS resources for notifications must always be created in the same AWS Region where you create your lifecycle hook\. For example, if you configure notifications using Amazon SNS, the Amazon SNS topic must reside in the same Region as your lifecycle hook\. 
 
 **Topics**
-+ [Route Notifications to Lambda Using CloudWatch Events](#cloudwatch-events-notification)
++ [Route Notifications to Lambda Using EventBridge](#cloudwatch-events-notification)
 + [Receive Notification Using Amazon SNS](#sns-notifications)
 + [Receive Notification Using Amazon SQS](#sqs-notifications)
 
-## Route Notifications to Lambda Using CloudWatch Events<a name="cloudwatch-events-notification"></a>
+## Route Notifications to Lambda Using EventBridge<a name="cloudwatch-events-notification"></a>
 
-You can use CloudWatch Events to set up a target to invoke a Lambda function when a lifecycle action occurs\.
+You can use EventBridge to set up a target to invoke a Lambda function when a lifecycle action occurs\.
 
-**To set up notifications using CloudWatch Events**
+**To set up notifications using EventBridge**
 
 1. Create a Lambda function using the steps in [Create a Lambda Function](cloud-watch-events.md#create-lambda-function) and note its Amazon Resource Name \(ARN\)\. For example, `arn:aws:lambda:region:123456789012:function:my-function`\.
 
-1. Create a CloudWatch Events rule that matches the lifecycle action using the following [https://docs.aws.amazon.com/cli/latest/reference/events/put-rule.html](https://docs.aws.amazon.com/cli/latest/reference/events/put-rule.html) command\.
+1. Create an EventBridge rule that matches the lifecycle action using the following [https://docs.aws.amazon.com/cli/latest/reference/events/put-rule.html](https://docs.aws.amazon.com/cli/latest/reference/events/put-rule.html) command\.
 
    ```
    aws events put-rule --name my-rule --event-pattern file://pattern.json --state ENABLED
@@ -42,7 +42,7 @@ You can use CloudWatch Events to set up a target to invoke a Lambda function whe
    }
    ```
 
-1. Grant the rule permission to invoke your Lambda function using the following [https://docs.aws.amazon.com/cli/latest/reference/lambda/add-permission.html](https://docs.aws.amazon.com/cli/latest/reference/lambda/add-permission.html) command\. This command trusts the CloudWatch Events service principal \(`events.amazonaws.com`\) and scopes permissions to the specified rule\.
+1. Grant the rule permission to invoke your Lambda function using the following [https://docs.aws.amazon.com/cli/latest/reference/lambda/add-permission.html](https://docs.aws.amazon.com/cli/latest/reference/lambda/add-permission.html) command\. This command trusts the EventBridge service principal \(`events.amazonaws.com`\) and scopes permissions to the specified rule\.
 
    ```
    aws lambda add-permission --function-name LogScheduledEvent --statement-id my-scheduled-event \

@@ -54,7 +54,7 @@ Keep the following in mind when choosing a metric:
 
 To ensure a faster response to changes in the metric value, we recommend that you scale on metrics with a 1\-minute frequency\. Scaling on metrics with a 5\-minute frequency can result in slower response times and scaling on stale metric data\. 
 
-To get this level of data for Amazon EC2 metrics, you must specifically enable detailed monitoring\. By default, Amazon EC2 instances are enabled for basic monitoring, which means metric data for instances is available at 5\-minute frequency\. For more information, see [Configure Monitoring for Auto Scaling Instances](as-instance-monitoring.md#enable-as-instance-metrics)\.
+To get this level of data for Amazon EC2 metrics, you must specifically enable detailed monitoring\. By default, Amazon EC2 instances are enabled for basic monitoring, which means metric data for instances is available at 5\-minute frequency\. For more information, see [Configuring Monitoring for Auto Scaling Instances](enable-as-instance-metrics.md)\.
 
 ### Instance Warm\-up<a name="as-target-tracking-scaling-warmup"></a>
 

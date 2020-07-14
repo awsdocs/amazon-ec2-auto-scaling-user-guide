@@ -55,8 +55,9 @@ The behavior of the Auto Scaling group as it increases in size is as follows:
 **Example: Scaling behavior**  
 
 | Instances Distribution | Total Number of Running Instances Across Purchase Options | 
-| --- | --- | 
-|  | 10 | 20 | 30 | 40 | 
+| --- |--- |
+|  | **10** | **20** | **30** | **40** | 
+| --- |--- |--- |--- |--- |
 | Example 1 |  |  |  |  | 
 | On\-Demand base: 10 | 10 | 10 | 10 | 10 | 
 | On\-Demand percentage above base: 50% | 0 | 5 | 10 | 15 | 
@@ -85,7 +86,7 @@ Before you create your Auto Scaling group to request Spot Instances, review [Spo
 + Create your Auto Scaling group with multiple instance types\. Because prices fluctuate independently for each instance type in an Availability Zone, you can often get more compute capacity for the same price when you have instance type flexibility\.
 + Similarly, don't limit yourself to only the most popular instance types\. Because prices adjust based on long\-term demand, popular instance types \(such as recently launched instance families\), tend to have more price adjustments\. Picking older\-generation instance types that are less popular tends to result in lower costs and fewer interruptions\.
 + If you chose the `lowest-price` allocation strategy and you run a web service, specify a high number of Spot pools, for example, N=10\. Specifying a high number of Spot pools reduces the impact of Spot Instance interruptions if a pool in one of the Availability Zones becomes temporarily unavailable\. If you run batch processing or other non\-mission critical applications, you can specify a lower number of Spot pools, for example, N=2\. This helps to ensure that you provision Spot Instances from only the very lowest priced Spot pools available per Availability Zone\. 
-+ Use Spot Instance interruption notices to monitor the status of your Spot Instances\. For example, you can set up a rule in Amazon CloudWatch Events that automatically sends the EC2 Spot two\-minute warning to an Amazon SNS topic, an AWS Lambda function, or another target\. For more information, see [Spot Instance Interruption Notices](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/spot-interruptions.html#spot-instance-termination-notices) in the *Amazon EC2 User Guide for Linux Instances* and the [Amazon CloudWatch Events User Guide](https://docs.aws.amazon.com/AmazonCloudWatch/latest/events/)\.
++ Use Spot Instance interruption notices to monitor the status of your Spot Instances\. For example, you can set up a rule in Amazon EventBridge that automatically sends the EC2 Spot two\-minute warning to an Amazon SNS topic, an AWS Lambda function, or another target\. For more information, see [Spot Instance Interruption Notices](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/spot-interruptions.html#spot-instance-termination-notices) in the *Amazon EC2 User Guide for Linux Instances* and the [Amazon EventBridge User Guide](https://docs.aws.amazon.com/eventbridge/latest/userguide/)\.
 
 If you intend to specify a maximum price, use the AWS CLI or AWS SDKs to create the Auto Scaling group, but be cautious\. If your maximum price is lower than the Spot price for the instance types that you selected, your Spot Instances are not launched\. 
 

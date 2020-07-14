@@ -125,6 +125,8 @@ To view examples of Amazon EC2 Auto Scaling identity\-based policies, see [Amazo
 
 ## Amazon EC2 Auto Scaling Resource\-Based Policies<a name="security_iam_service-with-iam-resource-based-policies"></a>
 
+Other AWS services, such as Amazon Simple Storage Service, support resource\-based permissions policies\. For example, you can attach a permissions policy to an S3 bucket to manage access permissions to that bucket\.
+
 Amazon EC2 Auto Scaling does not support resource\-based policies\.
 
 ## Access Control Lists \(ACLs\)<a name="security_iam_service-with-iam-acls"></a>
@@ -140,7 +142,9 @@ To use tags with IAM policies, you provide tag information in the [condition ele
 + Use `aws:RequestTag/tag-key: tag-value` to require that a specific tag be present \(or not present\) in a request\. 
 + Use `aws:TagKeys [tag-key, ...]` to require that specific tag keys be present \(or not present\) in a request\. 
 
-To view an example policy for controlling access to an Auto Scaling group based on the tags on that Auto Scaling group, see [Control Which Scaling Policies Can Be Deleted](security_iam_id-based-policy-examples.md#policy-example-delete-policy)\. For other examples for controlling access based on tags, see [Amazon EC2 Auto Scaling Identity\-Based Policy Examples](security_iam_id-based-policy-examples.md)\. 
+To view an example policy for controlling access to an Auto Scaling group based on the tags on that Auto Scaling group, see [Control Which Scaling Policies Can Be Deleted](security_iam_id-based-policy-examples.md#policy-example-delete-policy)\. 
+
+For additional examples for controlling access based on tags, see [Amazon EC2 Auto Scaling Identity\-Based Policy Examples](security_iam_id-based-policy-examples.md)\. 
 
 ## Amazon EC2 Auto Scaling IAM Roles<a name="security_iam_service-with-iam-roles"></a>
 

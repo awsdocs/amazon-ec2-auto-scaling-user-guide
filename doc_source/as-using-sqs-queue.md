@@ -30,11 +30,10 @@ The following diagram illustrates the architecture of this configuration\.
 ## Limitations and Prerequisites<a name="scale-sqs-queue-limitations"></a>
 
 To use this configuration, you need to be aware of the following limitations:
-+ You must use the AWS CLI or AWS SDKs to publish your custom metric to CloudWatch\. You can then monitor your metric with the AWS Management Console\.
-+ The SQS queue metric `ApproximateNumberOfMessages` is not in CloudWatch\. You can only get the value of this metric using the SQS [https://docs.aws.amazon.com/cli/latest/reference/sqs/get-queue-attributes.html](https://docs.aws.amazon.com/cli/latest/reference/sqs/get-queue-attributes.html) command or the [GetQueueAttributes](https://docs.aws.amazon.com/AWSSimpleQueueService/latest/APIReference/API_GetQueueAttributes.html) operation\.
++ You must use the AWS CLI or AWS SDKs to publish your custom metric to CloudWatch\. You can then monitor your metric with the AWS Management Console\. 
 + After publishing your custom metric, you must use the AWS CLI or AWS SDKs to create a target tracking scaling policy with a customized metric specification\. 
 
-The following sections direct you to use the AWS CLI for the tasks you need to perform\. Make sure that you have the CLI [installed](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-install.html) and [configured](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-configure.html)\. 
+The following sections direct you to use the AWS CLI for the tasks you need to perform\. For example, to get metric data that reflects the present use of the queue, you use the SQS [https://docs.aws.amazon.com/cli/latest/reference/sqs/get-queue-attributes.html](https://docs.aws.amazon.com/cli/latest/reference/sqs/get-queue-attributes.html) command\. Make sure that you have the CLI [installed](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-install.html) and [configured](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-configure.html)\. 
 
 Before you begin, you must have an Amazon SQS queue to use\. The following sections assume that you already have a queue \(standard or FIFO\), an Auto Scaling group, and EC2 instances running the application that uses the queue\. For more information about Amazon SQS, see the [Amazon Simple Queue Service Developer Guide](https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/)\.
 

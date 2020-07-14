@@ -24,7 +24,7 @@ After you add lifecycle hooks to your Auto Scaling group, they work as follows:
 1. The lifecycle hook puts the instance into a wait state \(`Pending:Wait` or `Terminating:Wait`\)\. The instance is paused until you continue or the timeout period ends\.
 
 1. You can perform a custom action using one or more of the following options:
-   + Define a CloudWatch Events target to invoke a Lambda function when a lifecycle action occurs\. The Lambda function is invoked when Amazon EC2 Auto Scaling submits an event for a lifecycle action to CloudWatch Events\. The event contains information about the instance that is launching or terminating, and a token that you can use to control the lifecycle action\.
+   + Define an EventBridge target to invoke a Lambda function when a lifecycle action occurs\. The Lambda function is invoked when Amazon EC2 Auto Scaling submits an event for a lifecycle action to EventBridge\. The event contains information about the instance that is launching or terminating, and a token that you can use to control the lifecycle action\.
    + Define a notification target for the lifecycle hook\. Amazon EC2 Auto Scaling sends a message to the notification target\. The message contains information about the instance that is launching or terminating, and a token that you can use to control the lifecycle action\.
    + Create a script that runs on the instance as the instance starts\. The script can control the lifecycle action using the ID of the instance on which it runs\.
 
@@ -63,7 +63,7 @@ You can use lifecycle hooks with Spot Instances\. However, a lifecycle hook does
 
 ## Prepare for Notifications<a name="preparing-for-notification"></a>
 
-You can configure notifications for when an instance enters a wait state\. You can use Amazon CloudWatch Events, Amazon SNS, or Amazon SQS to receive the notifications\. For more information, see [Configuring Lifecycle Hook Notifications](configuring-lifecycle-hook-notifications.md)\.
+You can configure notifications for when an instance enters a wait state\. You can use Amazon EventBridge, Amazon SNS, or Amazon SQS to receive the notifications\. For more information, see [Configuring Lifecycle Hook Notifications](configuring-lifecycle-hook-notifications.md)\.
 
 Alternatively, if you have a script that configures your instances when they launch, you do not need to receive notification when the lifecycle action occurs\. If you are not doing so already, update your script to retrieve the instance ID of the instance from the instance metadata\. For more information, see [Retrieving Instance Metadata](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-instance-metadata.html#instancedata-data-retrieval) in the *Amazon EC2 User Guide for Linux Instances*\. 
 

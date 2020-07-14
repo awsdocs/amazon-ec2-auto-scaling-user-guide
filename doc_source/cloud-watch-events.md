@@ -1,28 +1,35 @@
-# Getting CloudWatch Events When Your Auto Scaling Group Scales<a name="cloud-watch-events"></a>
+# Automating Amazon EC2 Auto Scaling with EventBridge<a name="cloud-watch-events"></a>
 
-Amazon CloudWatch Events lets you automate AWS services and respond to system events such as application availability issues or resource changes\. Events from AWS services are delivered to CloudWatch Events nearly in real time\. You can write simple rules to indicate which events are of interest to you and what automated actions to take when an event matches a rule\.
+Amazon EventBridge, formerly called CloudWatch Events, lets you automate AWS services and respond to system events such as application availability issues or resource changes\. Events from AWS services are delivered to EventBridge in near real time\. Based on the rules that you create, EventBridge invokes one or more target actions when an event matches the values that you specify in a rule\. The actions that can be automatically triggered include the following: 
++ Invoking an AWS Lambda function
++ Invoking Amazon EC2 Run Command
++ Relaying the event to Amazon Kinesis Data Streams
++ Activating an AWS Step Functions state machine
++ Notifying an Amazon SNS topic or an Amazon SQS queue 
 
-CloudWatch Events lets you set a variety of targets—such as a Lambda function or an Amazon SNS topic—which receive events in JSON format\. For more information, see the [Amazon CloudWatch Events User Guide](https://docs.aws.amazon.com/AmazonCloudWatch/latest/events/)\.
+As an example of a situation in which EventBridge can be useful, you might invoke a Lambda function whenever your Auto Scaling group scales\. First, create your Lambda function, then create an EventBridge rule that triggers on events emitted by Amazon EC2 Auto Scaling, as described in the following sections\. For an example of automation that you can create when a lifecycle action occurs, see [Amazon EC2 Auto Scaling Lifecycle Hooks](lifecycle-hooks.md)\.
 
-It is useful to know when Amazon EC2 Auto Scaling is launching or terminating the EC2 instances in your Auto Scaling group\. You can configure Amazon EC2 Auto Scaling to send events to CloudWatch Events whenever your Auto Scaling group scales\.
+You can also create a rule that triggers on an Amazon EC2 Auto Scaling API call via CloudTrail\. For more information, see [Creating an EventBridge Rule That Triggers on an AWS API Call Using AWS CloudTrail](https://docs.aws.amazon.com/eventbridge/latest/userguide/create-eventbridge-cloudtrail-rule.html) in the *Amazon EventBridge User Guide*\. 
+
+For more information, see the [Amazon EventBridge User Guide](https://docs.aws.amazon.com/eventbridge/latest/userguide/)\.
 
 **Note**  
-You can also receive a two\-minute warning when Spot Instances are about to be reclaimed by Amazon EC2\. For an example of the event for Spot Instance interruption, see [Spot Instance Interruption Notices](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/spot-interruptions.html#spot-instance-termination-notices) in the *Amazon EC2 User Guide for Linux Instances*\.
+When Amazon EC2 is going to interrupt your Spot Instance, it emits an event two minutes prior to the actual interruption\. You can also create an EventBridge rule to capture these events\. For more information, see [Spot Instance Interruption Notices](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/spot-interruptions.html#spot-instance-termination-notices) in the *Amazon EC2 User Guide for Linux Instances*\.
 
-**Topics**
+**Contents**
 + [Auto Scaling Events](#cloudwatch-event-types)
+  + [EC2 Instance\-launch Lifecycle Action](#launch-lifecycle-action)
+  + [EC2 Instance Launch Successful](#launch-successful)
+  + [EC2 Instance Launch Unsuccessful](#launch-unsuccessful)
+  + [EC2 Instance\-terminate Lifecycle Action](#terminate-lifecycle-action)
+  + [EC2 Instance Terminate Successful](#terminate-successful)
+  + [EC2 Instance Terminate Unsuccessful](#terminate-unsuccessful)
 + [Create a Lambda Function](#create-lambda-function)
 + [Route Events to Your Lambda Function](#create-rule)
 
 ## Auto Scaling Events<a name="cloudwatch-event-types"></a>
 
-Amazon EC2 Auto Scaling supports sending events to CloudWatch Events when the following events occur:
-+ [EC2 Instance\-launch Lifecycle Action](#launch-lifecycle-action)
-+ [EC2 Instance Launch Successful](#launch-successful)
-+ [EC2 Instance Launch Unsuccessful](#launch-unsuccessful)
-+ [EC2 Instance\-terminate Lifecycle Action](#terminate-lifecycle-action)
-+ [EC2 Instance Terminate Successful](#terminate-successful)
-+ [EC2 Instance Terminate Unsuccessful](#terminate-unsuccessful)
+You can configure EventBridge to send events to the configured target when the following events occur: 
 
 ### EC2 Instance\-launch Lifecycle Action<a name="launch-lifecycle-action"></a>
 
@@ -240,7 +247,7 @@ The following is example data for this event\.
 
 ## Create a Lambda Function<a name="create-lambda-function"></a>
 
-Use the following procedure to create a Lambda function to handle an Auto Scaling event\.
+Use the following procedure to create a Lambda function using the **hello\-world** blueprint to serve as the target for events\.
 
 **To create a Lambda function**
 
@@ -268,7 +275,7 @@ Use the following procedure to create a Lambda function to handle an Auto Scalin
       };
       ```
 
-   1. For **Role**, choose **Choose an existing role** if you have an existing role that you'd like to use, and then choose your role from **Existing role**\. Alternatively, to create a new role, choose one of the other options for **Role** and then follow the directions\.
+   1. For **Role**, choose **Choose an existing role**\. For **Existing role**, select your basic execution role\. Otherwise, create a basic execution role\.
 
    1. \(Optional\) For **Advanced settings**, make any changes that you need\.
 
@@ -278,25 +285,41 @@ Use the following procedure to create a Lambda function to handle an Auto Scalin
 
 ## Route Events to Your Lambda Function<a name="create-rule"></a>
 
-Use the following procedure to route Auto Scaling events to your Lambda function\.
+Create a rule that matches selected events and route them to your Lambda function to take action\. 
 
-**To route events to your Lambda function**
+**To create a rule that routes events to your Lambda function**
 
-1. Open the CloudWatch console at [https://console\.aws\.amazon\.com/cloudwatch/](https://console.aws.amazon.com/cloudwatch/)\.
+1. Open the Amazon EventBridge console at [https://console\.aws\.amazon\.com/events/](https://console.aws.amazon.com/events/)\.
 
-1. On the navigation pane, choose **Events**\.
-
-1. Choose **Create rule**\.
-
-1. For **Event selector**, choose **Auto Scaling** as the event source\. By default, the rule applies to all Auto Scaling events for all of your Auto Scaling groups\. Alternatively, you can select specific events or a specific Auto Scaling group\.
-
-1. For **Targets**, choose **Add target**\. Choose **Lambda function** as the target type, and then select your Lambda function\.
-
-1. Choose **Configure details**\.
-
-1. For **Rule definition**, enter a name and description for your rule\.
+1. In the navigation pane, choose **Rules**\.
 
 1. Choose **Create rule**\.
+
+1. Enter a name and description for the rule\.
+
+1. For **Define pattern**, do the following:
+
+   1. Choose **Event Pattern**\.
+
+   1. Choose **Pre\-defined by service**\.
+
+   1. For **Service provider**, choose **AWS**\.
+
+   1. For **Service Name**, choose **Auto Scaling**\.
+
+   1. For **Event type**, choose **Instance Launch and Terminate**\.
+
+   1. To capture all successful and unsuccessful instance launch and terminate events, choose **Any instance event**\.
+
+   1. By default, the rule matches any Auto Scaling group in the Region\. To make the rule match a specific Auto Scaling group, choose **Specific group name\(s\)** and select one or more Auto Scaling groups\.
+
+1. For **Select event bus**, choose **AWS default event bus**\. When an AWS service in your account emits an event, it always goes to your account’s default event bus\. 
+
+1. For **Target**, choose **Lambda function**\.
+
+1. For **Function**, select the Lambda function that you created\.
+
+1. Choose **Create**\.
 
 To test your rule, change the size of your Auto Scaling group\. If you used the example code for your Lambda function, it logs the event to CloudWatch Logs\.
 
@@ -306,9 +329,9 @@ To test your rule, change the size of your Auto Scaling group\. If you used the 
 
 1. On the navigation pane, under **AUTO SCALING**, choose **Auto Scaling Groups**, and then select your Auto Scaling group\.
 
-1. On the **Details** tab, choose **Edit**\.
+1. On the **Details** tab, choose **Edit** from the right side of the page\.
 
-1. Change the value of **Desired**, and then choose **Save**\.
+1. Change the value of **Desired capacity**, and then choose **Update**\.
 
 1. Open the CloudWatch console at [https://console\.aws\.amazon\.com/cloudwatch/](https://console.aws.amazon.com/cloudwatch/)\.
 

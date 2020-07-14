@@ -222,7 +222,7 @@ You can use these steps to learn more about how Amazon EC2 Auto Scaling works, s
 Go to the next step if you would like to delete the basic infrastructure for automatic scaling that you just created\. Otherwise, you can use this infrastructure as your base and try one or more of the following:
 + Manually scale your Auto Scaling group\. For more information, see [Setting Capacity Limits](asg-capacity-limits.md) and [Manual Scaling](as-manual-scaling.md)\.
 + Learn how to automatically scale in response to changes in resource utilization\. If the load increases, your Auto Scaling group can scale out \(add instances\) to handle the demand\. For more information, see [Target Tracking Scaling Policies](as-scaling-target-tracking.md)\.
-+ Configure an SNS notification to notify you whenever your Auto Scaling group scales\. For more information, see [Amazon SNS Notifications](ASGettingNotifications.md)\.
++ Configure an SNS notification to notify you whenever your Auto Scaling group scales\. For more information, see [Monitoring with Amazon SNS Notifications](ASGettingNotifications.md)\.
 
 ## Step 5: \(Optional\) Delete Your Scaling Infrastructure<a name="gs-delete-asg"></a>
 
