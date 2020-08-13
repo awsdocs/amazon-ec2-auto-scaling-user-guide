@@ -1,8 +1,8 @@
-# Troubleshooting Amazon EC2 Auto Scaling: AMI Issues<a name="ts-as-ami"></a>
+# Troubleshooting Amazon EC2 Auto Scaling: AMI issues<a name="ts-as-ami"></a>
 
 This page provides information about the issues associated with your AMIs, potential causes, and the steps you can take to resolve the issues\.
 
-To retrieve an error message, see [Retrieving an Error Message](CHAP_Troubleshooting.md#RetrievingErrors)\.
+To retrieve an error message, see [Retrieving an error message](CHAP_Troubleshooting.md#RetrievingErrors)\.
 
 When your EC2 instances fail to launch due to issues with your AMI, you might get one or more of the following error messages\.
 

@@ -1,4 +1,4 @@
-# Merging Your Auto Scaling Groups into a Single Multi\-Zone Group<a name="merge-auto-scaling-groups"></a>
+# Merging your Auto Scaling groups into a single multi\-zone group<a name="merge-auto-scaling-groups"></a>
 
 To merge separate single\-zone Auto Scaling groups into a single group spanning multiple Availability Zones, rezone one of the single\-zone groups into a multi\-zone group\. Then, delete the other groups\. This works for groups with or without a load balancer, as long as the new multi\-zone group is in one of the same Availability Zones as the original single\-zone groups\.
 
@@ -7,7 +7,7 @@ The following examples assume that you have two identical groups in two differen
 + Maximum size = 5
 + Desired capacity = 3
 
-## Merge Zones \(AWS CLI\)<a name="as-merge-groups-aws-cli"></a>
+## Merge zones \(AWS CLI\)<a name="as-merge-groups-aws-cli"></a>
 
 Use the following procedure to merge `my-group-a` and `my-group-c` into a single group that covers both `us-west-2a` and `us-west-2c`\.
 

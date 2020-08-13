@@ -1,9 +1,9 @@
-# Auto Scaling Resources<a name="as-resources"></a>
+# Amazon EC2 Auto Scaling resources<a name="as-resources"></a>
 
 The following related resources can help you as you work with this service\.
 + **[Amazon EC2 Auto Scaling](https://aws.amazon.com/ec2/autoscaling/)** – The primary web page for information about Amazon EC2 Auto Scaling\.
-+ **[Amazon EC2 Technical FAQ](https://aws.amazon.com/ec2/faqs/)** – The answers to questions customers ask about Amazon EC2 and Amazon EC2 Auto Scaling\.
-+ **[Amazon EC2 Discussion Forum](https://forums.aws.amazon.com/forum.jspa?forumID=30)** – Get help from the community\.
++ **[Amazon EC2 technical FAQ](https://aws.amazon.com/ec2/faqs/)** – The answers to questions customers ask about Amazon EC2 and Amazon EC2 Auto Scaling\.
++ **[Amazon EC2 discussion forum](https://forums.aws.amazon.com/forum.jspa?forumID=30)** – Get help from the community\.
 + **[AWS Auto Scaling User Guide](https://docs.aws.amazon.com/autoscaling/plans/userguide/)** – The AWS Auto Scaling console makes it easier for you to use the scaling features of multiple services\. With AWS Auto Scaling, you can also simplify the process of defining dynamic scaling policies for your Auto Scaling groups and use predictive scaling to scale your Amazon EC2 capacity in advance of predicted traffic changes\. 
 
 The following additional resources are available to help you learn more about AWS\.

@@ -1,8 +1,8 @@
-# Required CMK Key Policy for Use with Encrypted Volumes<a name="key-policy-requirements-EBS-encryption"></a>
+# Required CMK key policy for use with encrypted volumes<a name="key-policy-requirements-EBS-encryption"></a>
 
 When creating an encrypted Amazon EBS snapshot or a launch template that specifies encrypted volumes, or enabling encryption by default, you can choose one of the following AWS Key Management Service customer master keys \(CMK\) to encrypt your data: 
 + [AWS managed CMK](https://docs.aws.amazon.com/kms/latest/developerguide/concepts.html#aws-managed-cmk) — An encryption key in your account that Amazon EBS creates, owns, and manages\. This is the default encryption key for a new account\. The AWS managed CMK is used for encryption unless you specify a customer managed CMK\. 
-+ [Customer managed CMK](https://docs.aws.amazon.com/kms/latest/developerguide/concepts.html#customer-cmk) — A custom encryption key that you create, own, and manage\. For more information, see [Creating Keys](https://docs.aws.amazon.com/kms/latest/developerguide/create-keys.html) in the *AWS Key Management Service Developer Guide*\. 
++ [Customer managed CMK](https://docs.aws.amazon.com/kms/latest/developerguide/concepts.html#customer-cmk) — A custom encryption key that you create, own, and manage\. For more information, see [Creating keys](https://docs.aws.amazon.com/kms/latest/developerguide/create-keys.html) in the *AWS Key Management Service Developer Guide*\. 
 
   Note: Amazon EBS does not support asymmetric CMKs\. 
 
@@ -10,7 +10,7 @@ Amazon EC2 Auto Scaling does not need additional authorization to use the defaul
 
 If you specify a customer managed CMK for Amazon EBS encryption, you must give the appropriate [service\-linked role](autoscaling-service-linked-role.md) access to the CMK so that Amazon EC2 Auto Scaling can launch instances on your behalf\. To do this, you must modify the CMK's key policy either when the CMK is created or at a later time\. 
 
-## Configuring Key Policies<a name="configuring-key-policies"></a>
+## Configuring key policies<a name="configuring-key-policies"></a>
 
 Use the examples on this page to configure a key policy to give Amazon EC2 Auto Scaling access to your customer managed CMK\. You must, at minimum, add two policy statements to your CMK's key policy for it to work with Amazon EC2 Auto Scaling\.
 + The first statement allows the IAM identity specified in the `Principal` element to use the CMK directly\. It includes permissions to perform the AWS KMS `Encrypt`, `Decrypt`, `ReEncrypt*`, `GenerateDataKey*`, and `DescribeKey` operations on the CMK\. 
@@ -23,16 +23,16 @@ For each of the following examples, arguments that must be replaced, such as a k
 See the following resources:
 + To create a CMK with the AWS CLI, see [create\-key](https://docs.aws.amazon.com/cli/latest/reference/kms/create-key.html)\.
 + To update a CMK policy with the AWS CLI, see [put\-key\-policy](https://docs.aws.amazon.com/cli/latest/reference/kms/put-key-policy.html)\.
-+ To find a key ID and Amazon Resource Name \(ARN\), see [Finding the Key ID and ARN](https://docs.aws.amazon.com/kms/latest/developerguide/viewing-keys.html#find-cmk-id-arn) in the *AWS Key Management Service Developer Guide*\. 
-+ For information about Amazon EC2 Auto Scaling service\-linked roles, see [Service\-Linked Roles for Amazon EC2 Auto Scaling](autoscaling-service-linked-role.md)\.
++ To find a key ID and Amazon Resource Name \(ARN\), see [Finding the key ID and ARN](https://docs.aws.amazon.com/kms/latest/developerguide/viewing-keys.html#find-cmk-id-arn) in the *AWS Key Management Service Developer Guide*\. 
++ For information about Amazon EC2 Auto Scaling service\-linked roles, see [Service\-linked roles for Amazon EC2 Auto Scaling](autoscaling-service-linked-role.md)\.
 
 **Editing Key Policies in the Console**  
-The examples in the following sections show only how to add statements to a key policy, which is just one way of changing a key policy\. The easiest way to change a key policy is to use the IAM console's default view for key policies and make an IAM entity \(user or role\) one of the *key users* for the appropriate key policy\. For more information, see [Using the AWS Management Console Default View](https://docs.aws.amazon.com/kms/latest/developerguide/key-policy-modifying.html#key-policy-modifying-how-to-console-default-view) in the *AWS Key Management Service Developer Guide*\. 
+The examples in the following sections show only how to add statements to a key policy, which is just one way of changing a key policy\. The easiest way to change a key policy is to use the IAM console's default view for key policies and make an IAM entity \(user or role\) one of the *key users* for the appropriate key policy\. For more information, see [Using the AWS Management Console default view](https://docs.aws.amazon.com/kms/latest/developerguide/key-policy-modifying.html#key-policy-modifying-how-to-console-default-view) in the *AWS Key Management Service Developer Guide*\. 
 
 **Important**  
 Be cautious\. The console's default view policy statements include permissions to perform AWS KMS `Revoke` operations on the CMK\. If you give an AWS account access to a CMK in your account, and you accidentally revoke the grant that gave them this permission, external users can no longer access their encrypted data or the key that was used to encrypt their data\. 
 
-## Example: CMK Key Policy Sections That Allow Access to the CMK<a name="policy-example-cmk-access"></a>
+## Example: CMK key policy sections that allow access to the CMK<a name="policy-example-cmk-access"></a>
 
 Add the following two policy statements to the key policy of the customer managed CMK, replacing the example ARN with the ARN of the appropriate service\-linked role that is allowed access to the CMK\. In this example, the policy sections give the service\-linked role named **AWSServiceRoleForAutoScaling** permissions to use the customer managed CMK\. 
 
@@ -77,9 +77,9 @@ Add the following two policy statements to the key policy of the customer manage
 }
 ```
 
-## Example: CMK Key Policy Sections That Allow Cross\-Account Access to the CMK<a name="policy-example-cmk-cross-account-access"></a>
+## Example: CMK key policy sections that allow cross\-account access to the CMK<a name="policy-example-cmk-cross-account-access"></a>
 
-If your customer managed CMK is in a different account than the Auto Scaling group, you must use a grant in combination with the key policy to allow access to the CMK\. For more information, see [Using Grants](https://docs.aws.amazon.com/kms/latest/developerguide/grants.html) in the *AWS Key Management Service Developer Guide*\. 
+If your customer managed CMK is in a different account than the Auto Scaling group, you must use a grant in combination with the key policy to allow access to the CMK\. For more information, see [Using grants](https://docs.aws.amazon.com/kms/latest/developerguide/grants.html) in the *AWS Key Management Service Developer Guide*\. 
 
 First, add the following two policy statements to the CMK's key policy, replacing the example ARN with the ARN of the external account, and specifying the account in which the key can be used\. This allows you to use IAM policies to give an IAM user or role in the specified account permission to create a grant for the CMK using the CLI command that follows\. Giving the AWS account full access to the CMK does not by itself give any IAM users or roles access to the CMK\.
 

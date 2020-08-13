@@ -1,4 +1,4 @@
-# Setting Capacity Limits for Your Auto Scaling Group<a name="asg-capacity-limits"></a>
+# Setting capacity limits for your Auto Scaling group<a name="asg-capacity-limits"></a>
 
 You configure the size of your Auto Scaling group by setting the minimum, maximum, and desired capacity\. The minimum and maximum capacity are required to create an Auto Scaling group, while the desired capacity is optional\. If you do not define your desired capacity up front, it defaults to your minimum capacity\. 
 

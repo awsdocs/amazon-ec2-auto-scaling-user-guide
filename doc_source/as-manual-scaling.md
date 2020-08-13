@@ -1,8 +1,8 @@
-# Manual Scaling for Amazon EC2 Auto Scaling<a name="as-manual-scaling"></a>
+# Manual scaling for Amazon EC2 Auto Scaling<a name="as-manual-scaling"></a>
 
 At any time, you can change the size of an existing Auto Scaling group manually\. You can either update the desired capacity of the Auto Scaling group, or update the instances that are attached to the Auto Scaling group\. Manually scaling your group can be useful when automatic scaling is not needed or when you need to hold capacity at a fixed number of instances\.
 
-## Changing the Size of Your Auto Scaling Group \(Console\)<a name="as-manual-scaling-console"></a>
+## Changing the size of your Auto Scaling group \(console\)<a name="as-manual-scaling-console"></a>
 
 When you change the desired capacity of your Auto Scaling group, Amazon EC2 Auto Scaling manages the process of launching or terminating instances to maintain the new group size\.
 
@@ -36,9 +36,9 @@ If the instance fails to launch, you can find troubleshooting tips in [Troublesh
 
 1. On the **Instance management** tab, in **Instances**, the **Lifecycle** column shows the state of your instances\. It takes a short time for an instance to launch\. After the instance starts, its state changes to `InService`\. You can see that your Auto Scaling group has launched `1` new instance, and it is in the `InService` state\.
 
-## Changing the Size of Your Auto Scaling Group \(AWS CLI\)<a name="as-manual-scaling-aws-cli"></a>
+## Changing the size of your Auto Scaling group \(AWS CLI\)<a name="as-manual-scaling-aws-cli"></a>
 
-When you change the size of your Auto Scaling group, Amazon EC2 Auto Scaling manages the process of launching or terminating instances to maintain the new group size\. The default behavior is not to wait for the default cooldown period to complete, but you can override the default and wait for the cooldown period to complete\. For more information, see [Scaling Cooldowns for Amazon EC2 Auto Scaling](Cooldown.md)\.
+When you change the size of your Auto Scaling group, Amazon EC2 Auto Scaling manages the process of launching or terminating instances to maintain the new group size\. The default behavior is not to wait for the default cooldown period to complete, but you can override the default and wait for the cooldown period to complete\. For more information, see [Scaling cooldowns for Amazon EC2 Auto Scaling](Cooldown.md)\.
 
 The following example assumes that you've created an Auto Scaling group with a minimum size of 1 and a maximum size of 5\. Therefore, the group currently has one running instance\.
 

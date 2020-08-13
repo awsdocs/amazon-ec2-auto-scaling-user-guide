@@ -1,10 +1,35 @@
-# Changing the Launch Configuration for an Auto Scaling Group<a name="change-launch-config"></a>
+# Changing the launch configuration for an Auto Scaling group<a name="change-launch-config"></a>
 
 An Auto Scaling group is associated with one launch configuration at a time, and you can't modify a launch configuration after you've created it\. To change the launch configuration for an Auto Scaling group, use an existing launch configuration as the basis for a new launch configuration\. Then, update the Auto Scaling group to use the new launch configuration\.
 
-After you change the launch configuration for an Auto Scaling group, any new instances are launched using the new configuration options, but existing instances are not affected\. In this situation, you can allow automatic scaling to gradually replace older instances with newer instances based on your [termination policies](as-instance-termination.md)\. With the maximum instance lifetime and instance refresh features, you can also replace existing instances in the Auto Scaling group to launch new instances that use the new configuration\. For more information, see [Replacing Auto Scaling Instances Based on Maximum Instance Lifetime](asg-max-instance-lifetime.md) and [Replacing Auto Scaling Instances Based on an Instance Refresh](asg-instance-refresh.md)\.
+After you change the launch configuration for an Auto Scaling group, any new instances are launched using the new configuration options, but existing instances are not affected\. To update the existing instances, terminate them so that they are replaced by your Auto Scaling group, or allow automatic scaling to gradually replace older instances with newer instances based on your [termination policies](as-instance-termination.md)\. 
 
-**To change the launch configuration for an Auto Scaling group \(console\)**
+**Note**  
+With the maximum instance lifetime and instance refresh features, you can also replace all instances in the Auto Scaling group to launch new instances that use the new launch configuration\. For more information, see [Replacing Auto Scaling instances based on maximum instance lifetime](asg-max-instance-lifetime.md) and [Replacing Auto Scaling instances based on an instance refresh](asg-instance-refresh.md)\.
+
+**To change the launch configuration for an Auto Scaling group \(new console\)**
+
+1. Open the Amazon EC2 console at [https://console\.aws\.amazon\.com/ec2/](https://console.aws.amazon.com/ec2/)\.
+
+1. On the navigation pane, under **AUTO SCALING**, choose **Launch Configurations**\.
+
+1. Select the launch configuration and choose **Actions**, **Copy launch configuration**\. This sets up a new launch configuration with the same options as the original, but with "Copy" added to the name\.
+
+1. On the **Copy Launch Configuration** page, edit the configuration options as needed and choose **Create launch configuration**\.
+
+1. On the navigation pane, under **AUTO SCALING**, choose **Auto Scaling Groups**\.
+
+1. Select the check box next to the Auto Scaling group\. 
+
+   A split pane opens up in the bottom part of the page, showing information about the group that's selected\. 
+
+1. On the **Details** tab, choose **Launch configuration**, **Edit**\.
+
+1. For **Launch configuration**, select the new launch configuration\.
+
+1. When you have finished, choose **Update**\. 
+
+**To change the launch configuration for an Auto Scaling group \(old console\)**
 
 1. Open the Amazon EC2 console at [https://console\.aws\.amazon\.com/ec2/](https://console.aws.amazon.com/ec2/)\.
 

@@ -1,4 +1,4 @@
-# Creating an Auto Scaling Group Using the Amazon EC2 Launch Wizard<a name="create-asg-ec2-wizard"></a>
+# Creating an Auto Scaling group using the Amazon EC2 launch wizard<a name="create-asg-ec2-wizard"></a>
 
 You can create a launch configuration and an Auto Scaling group in a single procedure by using the Amazon EC2 launch wizard\. This is useful if you're launching more than one instance, and want to create a new launch configuration and Auto Scaling group from settings you've already selected in the Amazon EC2 launch wizard\. You cannot use this option to create an Auto Scaling group using an existing launch configuration\.
 
@@ -25,7 +25,7 @@ You can create a launch configuration and an Auto Scaling group in a single proc
 1. On the **Configure Auto Scaling group details** page, the launch configuration that you created is already selected for you, and the number of instances you specified in the Amazon EC2 launch wizard is populated for **Group size**\. Enter a name for the group, specify a VPC and subnet \(if required\), and then choose **Next: Configure scaling policies**\. 
 
 1. On the **Configure scaling policies** page, choose one of the following options, and then choose **Review**:
-   + To manually adjust the size of the Auto Scaling group as needed, choose **Keep this group at its initial size**\. For more information, see [Manual Scaling for Amazon EC2 Auto Scaling](as-manual-scaling.md)\.
+   + To manually adjust the size of the Auto Scaling group as needed, choose **Keep this group at its initial size**\. For more information, see [Manual scaling for Amazon EC2 Auto Scaling](as-manual-scaling.md)\.
    + To automatically adjust the size of the Auto Scaling group based on criteria that you specify, choose **Use scaling policies to adjust the capacity of this group** and follow the directions\. For more information, see [Configure Scaling Policies](as-scaling-target-tracking.md#policy-creating-scalingpolicies-console)\.
 
 1. On the **Review** page, you can optionally add tags or notifications, and edit other configuration details\. When you have finished, choose **Create Auto Scaling group**\.

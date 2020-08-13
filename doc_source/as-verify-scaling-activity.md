@@ -1,6 +1,6 @@
-# Verifying a Scaling Activity for an Auto Scaling Group<a name="as-verify-scaling-activity"></a>
+# Verifying a scaling activity for an Auto Scaling group<a name="as-verify-scaling-activity"></a>
 
-After you create a scaling policy, Amazon EC2 Auto Scaling starts evaluating the policy against the metric\. The metric alarm goes to ALARM state when the metric breaches the threshold for a specified number of evaluation periods\. This means that a scaling policy could trigger a scaling action soon after it's created\. After Amazon EC2 Auto Scaling changes capacity in response to a scaling policy, you can verify the scaling activity in your account\. If you want to receive email notification from Amazon EC2 Auto Scaling informing you that a scaling action was triggered, follow the instructions in [Getting Amazon SNS Notifications When Your Auto Scaling Group Scales](ASGettingNotifications.md)\.
+After you create a scaling policy, Amazon EC2 Auto Scaling starts evaluating the policy against the metric\. The metric alarm goes to ALARM state when the metric breaches the threshold for a specified number of evaluation periods\. This means that a scaling policy could trigger a scaling action soon after it's created\. After Amazon EC2 Auto Scaling changes capacity in response to a scaling policy, you can verify the scaling activity in your account\. If you want to receive email notification from Amazon EC2 Auto Scaling informing you that a scaling action was triggered, follow the instructions in [Getting Amazon SNS notifications when your Auto Scaling group scales](ASGettingNotifications.md)\.
 
 **To view the scaling activities for your Auto Scaling group \(new console\)**
 

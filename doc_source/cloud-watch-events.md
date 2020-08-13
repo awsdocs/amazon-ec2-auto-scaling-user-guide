@@ -7,31 +7,31 @@ Amazon EventBridge, formerly called CloudWatch Events, lets you automate AWS ser
 + Activating an AWS Step Functions state machine
 + Notifying an Amazon SNS topic or an Amazon SQS queue 
 
-As an example of a situation in which EventBridge can be useful, you might invoke a Lambda function whenever your Auto Scaling group scales\. First, create your Lambda function, then create an EventBridge rule that triggers on events emitted by Amazon EC2 Auto Scaling, as described in the following sections\. For an example of automation that you can create when a lifecycle action occurs, see [Amazon EC2 Auto Scaling Lifecycle Hooks](lifecycle-hooks.md)\.
+As an example of a situation in which EventBridge can be useful, you might invoke a Lambda function whenever your Auto Scaling group scales\. First, create your Lambda function, then create an EventBridge rule that triggers on events emitted by Amazon EC2 Auto Scaling, as described in the following sections\. For an example of automation that you can create when a lifecycle action occurs, see [Amazon EC2 Auto Scaling lifecycle hooks](lifecycle-hooks.md)\.
 
-You can also create a rule that triggers on an Amazon EC2 Auto Scaling API call via CloudTrail\. For more information, see [Creating an EventBridge Rule That Triggers on an AWS API Call Using AWS CloudTrail](https://docs.aws.amazon.com/eventbridge/latest/userguide/create-eventbridge-cloudtrail-rule.html) in the *Amazon EventBridge User Guide*\. 
+You can also create a rule that triggers on an Amazon EC2 Auto Scaling API call via CloudTrail\. For more information, see [Creating an EventBridge rule that triggers on an AWS API call using AWS CloudTrail](https://docs.aws.amazon.com/eventbridge/latest/userguide/create-eventbridge-cloudtrail-rule.html) in the *Amazon EventBridge User Guide*\. 
 
 For more information, see the [Amazon EventBridge User Guide](https://docs.aws.amazon.com/eventbridge/latest/userguide/)\.
 
 **Note**  
-When Amazon EC2 is going to interrupt your Spot Instance, it emits an event two minutes prior to the actual interruption\. You can also create an EventBridge rule to capture these events\. For more information, see [Spot Instance Interruption Notices](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/spot-interruptions.html#spot-instance-termination-notices) in the *Amazon EC2 User Guide for Linux Instances*\.
+When Amazon EC2 is going to interrupt your Spot Instance, it emits an event two minutes prior to the actual interruption\. You can also create an EventBridge rule to capture these events\. For more information, see [Spot instance interruption notices](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/spot-interruptions.html#spot-instance-termination-notices) in the *Amazon EC2 User Guide for Linux Instances*\.
 
 **Contents**
-+ [Auto Scaling Events](#cloudwatch-event-types)
-  + [EC2 Instance\-launch Lifecycle Action](#launch-lifecycle-action)
-  + [EC2 Instance Launch Successful](#launch-successful)
-  + [EC2 Instance Launch Unsuccessful](#launch-unsuccessful)
-  + [EC2 Instance\-terminate Lifecycle Action](#terminate-lifecycle-action)
-  + [EC2 Instance Terminate Successful](#terminate-successful)
-  + [EC2 Instance Terminate Unsuccessful](#terminate-unsuccessful)
-+ [Create a Lambda Function](#create-lambda-function)
-+ [Route Events to Your Lambda Function](#create-rule)
++ [Auto Scaling events](#cloudwatch-event-types)
+  + [EC2 instance\-launch lifecycle action](#launch-lifecycle-action)
+  + [EC2 instance launch successful](#launch-successful)
+  + [EC2 instance launch unsuccessful](#launch-unsuccessful)
+  + [EC2 instance\-terminate lifecycle action](#terminate-lifecycle-action)
+  + [EC2 instance terminate successful](#terminate-successful)
+  + [EC2 instance terminate unsuccessful](#terminate-unsuccessful)
++ [Create a Lambda function](#create-lambda-function)
++ [Route events to your Lambda function](#create-rule)
 
-## Auto Scaling Events<a name="cloudwatch-event-types"></a>
+## Auto Scaling events<a name="cloudwatch-event-types"></a>
 
 You can configure EventBridge to send events to the configured target when the following events occur: 
 
-### EC2 Instance\-launch Lifecycle Action<a name="launch-lifecycle-action"></a>
+### EC2 instance\-launch lifecycle action<a name="launch-lifecycle-action"></a>
 
 Amazon EC2 Auto Scaling moved an instance to a `Pending:Wait` state due to a lifecycle hook\.
 
@@ -61,7 +61,7 @@ The following is example data for this event\.
 }
 ```
 
-### EC2 Instance Launch Successful<a name="launch-successful"></a>
+### EC2 instance launch successful<a name="launch-successful"></a>
 
 Amazon EC2 Auto Scaling successfully launched an instance\.
 
@@ -100,7 +100,7 @@ The following is example data for this event\.
 }
 ```
 
-### EC2 Instance Launch Unsuccessful<a name="launch-unsuccessful"></a>
+### EC2 instance launch unsuccessful<a name="launch-unsuccessful"></a>
 
 Amazon EC2 Auto Scaling failed to launch an instance\.
 
@@ -138,7 +138,7 @@ The following is example data for this event\.
 }
 ```
 
-### EC2 Instance\-terminate Lifecycle Action<a name="terminate-lifecycle-action"></a>
+### EC2 instance\-terminate lifecycle action<a name="terminate-lifecycle-action"></a>
 
 Amazon EC2 Auto Scaling moved an instance to a `Terminating:Wait` state due to a lifecycle hook\.
 
@@ -168,7 +168,7 @@ The following is example data for this event\.
 }
 ```
 
-### EC2 Instance Terminate Successful<a name="terminate-successful"></a>
+### EC2 instance terminate successful<a name="terminate-successful"></a>
 
 Amazon EC2 Auto Scaling successfully terminated an instance\.
 
@@ -207,7 +207,7 @@ The following is example data for this event\.
 }
 ```
 
-### EC2 Instance Terminate Unsuccessful<a name="terminate-unsuccessful"></a>
+### EC2 instance terminate unsuccessful<a name="terminate-unsuccessful"></a>
 
 Amazon EC2 Auto Scaling failed to terminate an instance\.
 
@@ -245,7 +245,7 @@ The following is example data for this event\.
 }
 ```
 
-## Create a Lambda Function<a name="create-lambda-function"></a>
+## Create a Lambda function<a name="create-lambda-function"></a>
 
 Use the following procedure to create a Lambda function using the **hello\-world** blueprint to serve as the target for events\.
 
@@ -283,7 +283,7 @@ Use the following procedure to create a Lambda function using the **hello\-world
 
 1. On the **Review** page, choose **Create function**\.
 
-## Route Events to Your Lambda Function<a name="create-rule"></a>
+## Route events to your Lambda function<a name="create-rule"></a>
 
 Create a rule that matches selected events and route them to your Lambda function to take action\. 
 
@@ -313,7 +313,7 @@ Create a rule that matches selected events and route them to your Lambda functio
 
    1. By default, the rule matches any Auto Scaling group in the Region\. To make the rule match a specific Auto Scaling group, choose **Specific group name\(s\)** and select one or more Auto Scaling groups\.
 
-1. For **Select event bus**, choose **AWS default event bus**\. When an AWS service in your account emits an event, it always goes to your account’s default event bus\. 
+1. For **Select event bus**, choose **AWS default event bus**\. When an AWS service in your account emits an event, it always goes to your account's default event bus\. 
 
 1. For **Target**, choose **Lambda function**\.
 

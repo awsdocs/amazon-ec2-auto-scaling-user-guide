@@ -1,8 +1,8 @@
-# Creating an Auto Scaling Group Using an EC2 Instance<a name="create-asg-from-instance"></a>
+# Creating an Auto Scaling group using an EC2 instance<a name="create-asg-from-instance"></a>
 
 When you create an Auto Scaling group, you must specify the necessary information to configure the Amazon EC2 instances, the subnets for the instances, and the initial number of instances\.
 
-To configure Amazon EC2 instances, you can specify a launch configuration, a launch template, or an EC2 instance\. The following procedure demonstrates how to create an Auto Scaling group using an EC2 instance\. To use a launch configuration or a launch template, see [Creating an Auto Scaling Group Using a Launch Configuration](create-asg.md) or [Creating an Auto Scaling Group Using a Launch Template](create-asg-launch-template.md)\.
+To configure Amazon EC2 instances, you can specify a launch configuration, a launch template, or an EC2 instance\. The following procedure demonstrates how to create an Auto Scaling group using an EC2 instance\. To use a launch configuration or a launch template, see [Creating an Auto Scaling group using a launch configuration](create-asg.md) or [Creating an Auto Scaling group using a launch template](create-asg-launch-template.md)\.
 
 When you create an Auto Scaling group using an EC2 instance, Amazon EC2 Auto Scaling creates a launch configuration for you and associates it with the Auto Scaling group\. This launch configuration has the same name as the Auto Scaling group, and it derives its attributes from the specified instance, such as AMI ID, instance type, and Availability Zone\.
 
@@ -21,14 +21,14 @@ Before you begin, find the ID of the EC2 instance using the Amazon EC2 console o
 + The AMI used to launch the instance must still exist\.
 
 **Topics**
-+ [Create an Auto Scaling Group from an EC2 Instance \(Console\)](#create-asg-from-instance-console)
-+ [Create an Auto Scaling Group from an EC2 Instance \(AWS CLI\)](#create-asg-from-instance-aws-cli)
++ [Create an Auto Scaling group from an EC2 instance \(console\)](#create-asg-from-instance-console)
++ [Create an Auto Scaling group from an EC2 instance \(AWS CLI\)](#create-asg-from-instance-aws-cli)
 
-## Create an Auto Scaling Group from an EC2 Instance \(Console\)<a name="create-asg-from-instance-console"></a>
+## Create an Auto Scaling group from an EC2 instance \(console\)<a name="create-asg-from-instance-console"></a>
 
-You can use the console to create an Auto Scaling group from a running EC2 instance and add the instance to the new Auto Scaling group\. For more information, see [Attach EC2 Instances to Your Auto Scaling Group](attach-instance-asg.md)\.
+You can use the console to create an Auto Scaling group from a running EC2 instance and add the instance to the new Auto Scaling group\. For more information, see [Attach EC2 instances to your Auto Scaling group](attach-instance-asg.md)\.
 
-## Create an Auto Scaling Group from an EC2 Instance \(AWS CLI\)<a name="create-asg-from-instance-aws-cli"></a>
+## Create an Auto Scaling group from an EC2 instance \(AWS CLI\)<a name="create-asg-from-instance-aws-cli"></a>
 
 Use the following [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/create-auto-scaling-group.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/create-auto-scaling-group.html) command to create an Auto Scaling group, *my\-asg\-from\-instance*, from the EC2 instance `i-7f12e649`\.
 

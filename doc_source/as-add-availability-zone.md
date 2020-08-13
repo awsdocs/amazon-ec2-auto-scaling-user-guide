@@ -1,4 +1,4 @@
-# Expanding Your Scaled and Load\-Balanced Application to an Additional Availability Zone<a name="as-add-availability-zone"></a>
+# Expanding your scaled and load\-balanced application to an additional Availability Zone<a name="as-add-availability-zone"></a>
 
 You can take advantage of the safety and reliability of geographic redundancy by spanning your Auto Scaling group across multiple Availability Zones within a Region and then attaching a load balancer to distribute incoming traffic across those zones\. Incoming traffic is distributed equally across all Availability Zones enabled for your load balancer\.
 
@@ -10,10 +10,10 @@ When one Availability Zone becomes unhealthy or unavailable, Amazon EC2 Auto Sca
 You can expand the availability of your scaled and load\-balanced application by adding an Availability Zone to your Auto Scaling group and then enabling that zone for your load balancer\. After you've enabled the new Availability Zone, the load balancer begins to route traffic equally among all the enabled zones\. 
 
 **Topics**
-+ [Add an Availability Zone \(Console\)](#as-add-az-console)
++ [Add an Availability Zone \(console\)](#as-add-az-console)
 + [Add an Availability Zone \(AWS CLI\)](#as-add-az-aws-cli)
 
-## Add an Availability Zone \(Console\)<a name="as-add-az-console"></a>
+## Add an Availability Zone \(console\)<a name="as-add-az-console"></a>
 
 Use the following procedure to expand your Auto Scaling group to an additional subnet\.
 

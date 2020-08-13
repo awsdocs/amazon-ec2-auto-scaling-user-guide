@@ -1,4 +1,4 @@
-# Attach EC2 Instances to Your Auto Scaling Group<a name="attach-instance-asg"></a>
+# Attach EC2 instances to your Auto Scaling group<a name="attach-instance-asg"></a>
 
 Amazon EC2 Auto Scaling provides you with an option to enable automatic scaling for one or more EC2 instances by attaching them to your existing Auto Scaling group\. After the instances are attached, they become a part of the Auto Scaling group\.
 
@@ -20,7 +20,7 @@ The examples use an Auto Scaling group with the following configuration:
 + Desired capacity = 2
 + Availability Zone = us\-west\-2a
 
-## Attaching an Instance \(Console\)<a name="attach-instance-console"></a>
+## Attaching an instance \(console\)<a name="attach-instance-console"></a>
 
 You can attach an existing instance to an existing Auto Scaling group, or to a new Auto Scaling group as you create it\.
 
@@ -52,7 +52,7 @@ You can attach an existing instance to an existing Auto Scaling group, or to a n
 
 1. If the instance doesn't meet the criteria, you get an error message with the details\. For example, the instance might not be in the same Availability Zone as the Auto Scaling group\. Choose **Close** and try again with an instance that meets the criteria\.
 
-## Attaching an Instance \(AWS CLI\)<a name="attach-instance-aws-cli"></a>
+## Attaching an instance \(AWS CLI\)<a name="attach-instance-aws-cli"></a>
 
 **To attach an instance to an Auto Scaling group**
 

@@ -1,28 +1,27 @@
-# Attaching a Load Balancer to Your Auto Scaling Group<a name="attach-load-balancer-asg"></a>
+# Attaching a load balancer to your Auto Scaling group<a name="attach-load-balancer-asg"></a>
 
-This topic describes how to attach your Elastic Load Balancing load balancer to an existing Auto Scaling group\. To attach your load balancer to your Auto Scaling group when you create the group, see [Tutorial: Set Up a Scaled and Load\-Balanced Application](as-register-lbs-with-asg.md)\. 
+This topic describes how to attach your Elastic Load Balancing load balancer to an existing Auto Scaling group\. To attach your load balancer to your Auto Scaling group when you create the group, see [Tutorial: Set up a scaled and load\-balanced application](as-register-lbs-with-asg.md)\. 
 
-Amazon EC2 Auto Scaling integrates with Elastic Load Balancing to enable you to attach one or more load balancers to an existing Auto Scaling group\. After you attach the load balancer, it automatically registers the instances in the group and distributes incoming traffic across the instances\. 
+Amazon EC2 Auto Scaling integrates with Elastic Load Balancing to enable you to insert one or more Classic Load Balancers or a single Application Load Balancer or Network Load Balancer with multiple target groups in front of your Auto Scaling group\. To learn more about the different types of load balancers, see [ Elastic Load Balancing types](autoscaling-load-balancer.md#integrations-aws-elastic-load-balancing-types)\. 
 
 When you attach a load balancer, it enters the `Adding` state while registering the instances in the group\. After all instances in the group are registered with the load balancer, it enters the `Added` state\. After at least one registered instance passes the health checks, it enters the `InService` state\. After the load balancer enters the `InService` state, Amazon EC2 Auto Scaling can terminate and replace any instances that are reported as unhealthy\. If no registered instances pass the health checks \(for example, due to a misconfigured health check\), the load balancer doesn't enter the `InService` state\. Amazon EC2 Auto Scaling doesn't terminate and replace the instances\.
 
-When you detach a load balancer, it enters the `Removing` state while deregistering the instances in the group\. The instances remain running after they are deregistered\. If connection draining is enabled, Elastic Load Balancing waits for in\-flight requests to complete or for the maximum timeout to expire \(whichever comes first\) before deregistering the instances\. By default, connection draining is enabled for Application Load Balancers but must be enabled for Classic Load Balancers\. For more information, see [Connection Draining](https://docs.aws.amazon.com/elasticloadbalancing/latest/classic/config-conn-drain.html) in the *User Guide for Classic Load Balancers*\.
+When you detach a load balancer, it enters the `Removing` state while deregistering the instances in the group\. The instances remain running after they are deregistered\. If connection draining is enabled, Elastic Load Balancing waits for in\-flight requests to complete or for the maximum timeout to expire \(whichever comes first\) before deregistering the instances\. By default, connection draining is enabled for Application Load Balancers but must be enabled for Classic Load Balancers\. For more information, see [Connection draining](https://docs.aws.amazon.com/elasticloadbalancing/latest/classic/config-conn-drain.html) in the *User Guide for Classic Load Balancers*\.
 
 **Topics**
 + [Prerequisites](#as-add-load-balancer-prerequisites)
-+ [Attach a Load Balancer \(Console\)](#as-add-load-balancer-console)
-+ [Attach a Load Balancer \(AWS CLI\)](#as-add-load-balancer-aws-cli)
++ [Attach a load balancer \(console\)](#as-add-load-balancer-console)
++ [Attach a load balancer \(AWS CLI\)](#as-add-load-balancer-aws-cli)
 
 ## Prerequisites<a name="as-add-load-balancer-prerequisites"></a>
 
-Before you begin, create an Application Load Balancer or Network Load Balancer in the same AWS Region as the Auto Scaling group\. We recommend the new load balancers, but you can still use a Classic Load Balancer if it supports the features you're looking for\. To learn more about the different types of load balancers, see [ Elastic Load Balancing Types](autoscaling-load-balancer.md#integrations-aws-elastic-load-balancing-types)\. 
+Before you begin, create an Application Load Balancer or Network Load Balancer in the same AWS Region as the Auto Scaling group\. We recommend the new load balancers, but you can still use a Classic Load Balancer if it supports the features you're looking for\. 
 
-\(Optional\) To configure your Auto Scaling group to use Elastic Load Balancing health checks, see [Adding Elastic Load Balancing Health Checks to an Auto Scaling Group](as-add-elb-healthcheck.md)\.
+\(Optional\) To configure your Auto Scaling group to use Elastic Load Balancing health checks, see [Adding Elastic Load Balancing health checks to an Auto Scaling group](as-add-elb-healthcheck.md)\.
 
-**Note**  
-Amazon EC2 Auto Scaling has changed the Auto Scaling group interface\. By default, you're shown the old user interface, but you can switch to the new user interface\. This topic contains steps for both\. 
+Amazon EC2 Auto Scaling has changed the user interface\. By default, you're shown the new user interface, but you can choose to return to the old user interface\. This topic contains steps for each\. 
 
-## Attach a Load Balancer \(Console\)<a name="as-add-load-balancer-console"></a>
+## Attach a load balancer \(console\)<a name="as-add-load-balancer-console"></a>
 
 Use the following procedure to attach a load balancer to an existing Auto Scaling group\. 
 
@@ -31,8 +30,6 @@ Use the following procedure to attach a load balancer to an existing Auto Scalin
 1. Open the Amazon EC2 console at [https://console\.aws\.amazon\.com/ec2/](https://console.aws.amazon.com/ec2/)\.
 
 1. On the navigation pane, under **AUTO SCALING**, choose **Auto Scaling Groups**\.
-
-1. The original console is open by default\. To access the new console, on the banner at the top of the page, choose **Go to the new console**\.
 
 1. Select the check box next to an existing group\.
 
@@ -74,8 +71,6 @@ When you no longer need the load balancer, use the following procedure to detach
 
 1. On the navigation pane, under **AUTO SCALING**, choose **Auto Scaling Groups**\.
 
-1. The original console is open by default\. To access the new console, on the banner at the top of the page, choose **Go to the new console**\.
-
 1. Select the check box next to an existing group\.
 
    A split pane opens up in the bottom part of the **Auto Scaling groups** page, showing information about the group that's selected\. 
@@ -108,7 +103,7 @@ When you no longer need the load balancer, use the following procedure to detach
 
 1. Choose **Save**\.
 
-## Attach a Load Balancer \(AWS CLI\)<a name="as-add-load-balancer-aws-cli"></a>
+## Attach a load balancer \(AWS CLI\)<a name="as-add-load-balancer-aws-cli"></a>
 
 **To attach a target group for an Application Load Balancer or Network Load Balancer**  
 Use the following [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/attach-load-balancer-target-groups.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/attach-load-balancer-target-groups.html) command to attach the specified target group to your Auto Scaling group\.

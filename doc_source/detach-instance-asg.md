@@ -1,10 +1,10 @@
-# Detach EC2 Instances from Your Auto Scaling Group<a name="detach-instance-asg"></a>
+# Detach EC2 instances from your Auto Scaling group<a name="detach-instance-asg"></a>
 
 You can remove \(detach\) an instance from an Auto Scaling group\. After the instances are detached, you can manage them independently from the rest of the Auto Scaling group\. By detaching an instance, you can:
-+ Move an instance out of one Auto Scaling group and attach it to a different group\. For more information, see [Attach EC2 Instances to Your Auto Scaling Group](attach-instance-asg.md)\.
++ Move an instance out of one Auto Scaling group and attach it to a different group\. For more information, see [Attach EC2 instances to your Auto Scaling group](attach-instance-asg.md)\.
 + Test an Auto Scaling group by creating it using existing instances running your application\. You can then detach these instances from the Auto Scaling group when your tests are complete\.
 
-When you detach instances, you have the option of decrementing the desired capacity for the Auto Scaling group by the number of instances that you are detaching\. If you choose not to decrement the capacity, Amazon EC2 Auto Scaling launches new instances to replace the ones that you detach\. If you decrement the capacity but detach multiple instances from the same Availability Zone, Amazon EC2 Auto Scaling can rebalance the Availability Zones unless you suspend the `AZRebalance` process\. For more information, see [Scaling Processes](as-suspend-resume-processes.md#process-types)\.
+When you detach instances, you have the option of decrementing the desired capacity for the Auto Scaling group by the number of instances that you are detaching\. If you choose not to decrement the capacity, Amazon EC2 Auto Scaling launches new instances to replace the ones that you detach\. If you decrement the capacity but detach multiple instances from the same Availability Zone, Amazon EC2 Auto Scaling can rebalance the Availability Zones unless you suspend the `AZRebalance` process\. For more information, see [Scaling processes](as-suspend-resume-processes.md#process-types)\.
 
 If the number of instances that you are detaching decreases the size of the Auto Scaling group below its minimum capacity, you must decrement the minimum capacity for the group before you can detach the instances\.
 
@@ -17,7 +17,7 @@ The examples use an Auto Scaling group with the following configuration:
 + Desired capacity = `4`
 + Availability Zone = `us-west-2a`
 
-## Detaching Instances \(Console\)<a name="detach-instance-console"></a>
+## Detaching instances \(console\)<a name="detach-instance-console"></a>
 
 Use the following procedure to detach an instance from your Auto Scaling group\.
 
@@ -35,7 +35,7 @@ Use the following procedure to detach an instance from your Auto Scaling group\.
 
 1. In the **Detach instance** dialog box, select the check box to launch a replacement instance, or leave it unchecked to decrement the desired capacity\. Choose **Detach instance**\.
 
-## Detaching Instances \(AWS CLI\)<a name="detach-instance-aws-cli"></a>
+## Detaching instances \(AWS CLI\)<a name="detach-instance-aws-cli"></a>
 
 Use the following procedure to detach an instance from your Auto Scaling group\.
 

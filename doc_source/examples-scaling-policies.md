@@ -1,8 +1,8 @@
-# Example Scaling Policies for the AWS Command Line Interface \(AWS CLI\)<a name="examples-scaling-policies"></a>
+# Example scaling policies for the AWS Command Line Interface \(AWS CLI\)<a name="examples-scaling-policies"></a>
 
 You can create scaling policies for Amazon EC2 Auto Scaling through the AWS Management Console, AWS CLI, or AWS SDKs\. 
 
-The following examples show how you can create scaling policies with the AWS CLI [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/put-scaling-policy.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/put-scaling-policy.html) command\. For introductory exercises for creating scaling policies from the AWS CLI, see [Target Tracking Scaling Policies](as-scaling-target-tracking.md) and [Step and Simple Scaling Policies](as-scaling-simple-step.md)\. 
+The following examples show how you can create scaling policies with the AWS CLI [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/put-scaling-policy.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/put-scaling-policy.html) command\. For introductory exercises for creating scaling policies from the AWS CLI, see [Target tracking scaling policies](as-scaling-target-tracking.md) and [Step and simple scaling policies](as-scaling-simple-step.md)\. 
 
 **Example 1: To apply a target tracking scaling policy with a predefined metric specification**
 

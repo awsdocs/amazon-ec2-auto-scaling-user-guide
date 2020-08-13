@@ -1,4 +1,4 @@
-# Replacing Auto Scaling Instances Based on an Instance Refresh<a name="asg-instance-refresh"></a>
+# Replacing Auto Scaling instances based on an instance refresh<a name="asg-instance-refresh"></a>
 
 When a configuration change requires replacing instances, and you have a large number of instances in your Auto Scaling group, it can be difficult to manually replace instances a few at a time\. With an instance refresh, it's easier to update the instances in your Auto Scaling group\. 
 
@@ -6,7 +6,7 @@ During an instance refresh, Amazon EC2 Auto Scaling takes a set of instances out
 
 This feature is helpful, for example, when you have a new launch template or launch configuration that specifies a new AMI or new user data\. You just need to update your Auto Scaling group to specify the new launch template or launch configuration\. Then start an instance refresh to immediately begin the process of replacing all instances in the group\.
 
-Instance refreshes depend on health checks to determine whether your application is healthy enough to consider a replacement successful\. For more information, see [Health Checks for Auto Scaling Instances](healthcheck.md)\. 
+Instance refreshes depend on health checks to determine whether your application is healthy enough to consider a replacement successful\. For more information, see [Health checks for Auto Scaling instances](healthcheck.md)\. 
 
 Before starting an instance refresh, you can configure the minimum healthy percentage to control the level of disruption to your application\. If your application doesn't pass health checks, the rolling update process waits for a time period of up to 60 minutes after it reaches the minimum healthy threshold before it eventually fails\. The intention is to give it time to recover in case of a temporary issue\. If the rolling update process fails, any instances that were already replaced are not rolled back to their previous configuration\. To fix a failed instance refresh, first resolve the underlying issue that caused the update to fail, and then initiate another instance refresh\. 
 
@@ -19,7 +19,7 @@ The following are things to consider when starting an instance refresh, to help 
 
 You can start or cancel an instance refresh using the AWS Management Console, the AWS CLI, or an AWS SDK\. You can cancel an instance refresh anytime, but any instances that have already been replaced are not rolled back to their previous configuration\. 
 
-## Start or Cancel an Instance Refresh<a name="instance-refresh-configure"></a>
+## Start or cancel an instance refresh<a name="instance-refresh-configure"></a>
 
 Before you begin, make sure that your Auto Scaling group is already associated with a new launch template or launch configuration\. 
 
@@ -28,8 +28,6 @@ Before you begin, make sure that your Auto Scaling group is already associated w
 1. Open the Amazon EC2 console at [https://console\.aws\.amazon\.com/ec2/](https://console.aws.amazon.com/ec2/)\.
 
 1. In the navigation pane, under **AUTO SCALING**, choose **Auto Scaling Groups**\.
-
-1. The original console is open by default\. To access the new console, on the banner at the top of the page, choose **Go to the new console**\. 
 
 1. Select the check box next to your Auto Scaling group\.
 
@@ -60,8 +58,6 @@ Before you begin, make sure that your Auto Scaling group is already associated w
 1. Open the Amazon EC2 console at [https://console\.aws\.amazon\.com/ec2/](https://console.aws.amazon.com/ec2/)\.
 
 1. In the navigation pane, under **AUTO SCALING**, choose **Auto Scaling Groups**\.
-
-1. The original console is open by default\. To access the new console, on the banner at the top of the page, choose **Go to the new console**\. 
 
 1. Select the check box next to the Auto Scaling group\.
 

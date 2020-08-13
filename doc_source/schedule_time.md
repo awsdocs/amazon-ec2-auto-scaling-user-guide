@@ -1,4 +1,4 @@
-# Scheduled Scaling for Amazon EC2 Auto Scaling<a name="schedule_time"></a>
+# Scheduled scaling for Amazon EC2 Auto Scaling<a name="schedule_time"></a>
 
 Scheduled scaling allows you to set your own scaling schedule\. For example, let's say that every week the traffic to your web application starts to increase on Wednesday, remains high on Thursday, and starts to decrease on Friday\. You can plan your scaling actions based on the predictable traffic patterns of your web application\. Scaling actions are performed automatically as a function of time and date\. 
 
@@ -18,11 +18,11 @@ When you create a scheduled action, keep the following in mind:
 + A scheduled action must have a unique time value\. If you attempt to schedule an activity at a time when another scaling activity is already scheduled, the call is rejected with an error message noting the conflict\.
 + You can create a maximum of 125 scheduled actions per Auto Scaling group\.
 + A scheduled action does not persist in your account once it has reached its end time\.
-+ You can temporarily disable scheduled scaling without deleting your scheduled actions\. For more information, see [Suspending and Resuming Scaling Processes](as-suspend-resume-processes.md)\.
++ You can temporarily disable scheduled scaling without deleting your scheduled actions\. For more information, see [Suspending and resuming scaling processes](as-suspend-resume-processes.md)\.
 + Cooldown periods are not supported\. 
-+ You can also schedule scaling actions for resources beyond Amazon EC2\. For more information, see [Scheduled Scaling](https://docs.aws.amazon.com/autoscaling/application/userguide/application-auto-scaling-scheduled-scaling.html) in the *Application Auto Scaling User Guide*\.
++ You can also schedule scaling actions for resources beyond Amazon EC2\. For more information, see [Scheduled scaling](https://docs.aws.amazon.com/autoscaling/application/userguide/application-auto-scaling-scheduled-scaling.html) in the *Application Auto Scaling User Guide*\.
 
-## Create and Manage Scheduled Actions \(Console\)<a name="create-sch-actions"></a>
+## Create and manage scheduled actions \(console\)<a name="create-sch-actions"></a>
 
 You can create scheduled actions that scale one time only or that scale on a recurring schedule using the console\. Complete the following procedure to create a scheduled action to scale your Auto Scaling group\.
 
@@ -47,7 +47,7 @@ You can create scheduled actions that scale one time only or that scale on a rec
 
 1. Choose **Create**\.
 
-### Update a Scheduled Action<a name="update-sch-action"></a>
+### Update a scheduled action<a name="update-sch-action"></a>
 
 If your requirements change, you can update a scheduled action\.
 
@@ -72,7 +72,7 @@ If your requirements change, you can update a scheduled action\.
 
 1. Choose **Save changes**\.
 
-### Delete a Scheduled Action<a name="delete-sch-action"></a>
+### Delete a scheduled action<a name="delete-sch-action"></a>
 
 When you no longer need a scheduled action, you can delete it\.
 
@@ -90,7 +90,7 @@ When you no longer need a scheduled action, you can delete it\.
 
 1. When prompted for confirmation, choose **Yes, Delete**\.
 
-## Create and Manage Scheduled Actions \(AWS CLI\)<a name="create-sch-actions-aws-cli"></a>
+## Create and manage scheduled actions \(AWS CLI\)<a name="create-sch-actions-aws-cli"></a>
 
 You can create and update scheduled actions that scale one time only or that scale on a recurring schedule using the [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/put-scheduled-update-group-action.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/put-scheduled-update-group-action.html) command\. 
 
@@ -119,7 +119,7 @@ aws autoscaling put-scheduled-update-group-action --scheduled-action-name my-rec
   --auto-scaling-group-name my-asg --recurrence "30 0 1 1,6,12 *" --desired-capacity 3
 ```
 
-### Delete a Scheduled Action<a name="delete-sch-actions-aws-cli"></a>
+### Delete a scheduled action<a name="delete-sch-actions-aws-cli"></a>
 
 **To delete a scheduled action**  
 Use the following [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/delete-scheduled-action.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/delete-scheduled-action.html) command\.

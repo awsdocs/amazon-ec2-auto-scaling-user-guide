@@ -1,4 +1,4 @@
-# Disabling a Scaling Policy for an Auto Scaling Group<a name="as-enable-disable-scaling-policy"></a>
+# Disabling a scaling policy for an Auto Scaling group<a name="as-enable-disable-scaling-policy"></a>
 
 This topic describes how to temporarily disable a scaling policy so it won't initiate changes to the number of instances the Auto Scaling group contains\. When you disable a scaling policy, the configuration details are preserved, so you can quickly re\-enable the policy\. This is easier than temporarily deleting a policy when you don't need it, and recreating it later\. 
 

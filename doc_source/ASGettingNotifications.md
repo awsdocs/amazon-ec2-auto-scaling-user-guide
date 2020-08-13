@@ -1,4 +1,4 @@
-# Getting Amazon SNS Notifications When Your Auto Scaling Group Scales<a name="ASGettingNotifications"></a>
+# Getting Amazon SNS notifications when your Auto Scaling group scales<a name="ASGettingNotifications"></a>
 
 You can be notified when Amazon EC2 Auto Scaling is launching or terminating the EC2 instances in your Auto Scaling group\. You manage notifications using Amazon Simple Notification Service \(Amazon SNS\)\. 
 
@@ -11,15 +11,16 @@ Notifications are useful for designing event\-driven applications\. If you use n
 AWS provides various tools that you can use to send notifications\. Alternatively, you can use EventBridge and Amazon SNS to send notifications when your Auto Scaling groups launch or terminate instances\. In EventBridge, the rule describes which events you're notified about\. In Amazon SNS, the topic describes what kind of notification you receive\. Using this option, you can decide if certain events should trigger a Lambda function instead\. For more information, see [Automating Amazon EC2 Auto Scaling with EventBridge](cloud-watch-events.md)\. 
 
 **Contents**
-+ [SNS Notifications](#auto-scaling-sns-notifications)
-+ [Configuring Amazon SNS Notifications for Amazon EC2 Auto Scaling](#as-configure-sns)
-  + [Create an Amazon SNS Topic](#as-sns-create-topic)
-  + [Subscribe to the Amazon SNS Topic](#as-sns-subscribe-topic)
-  + [Confirm Your Amazon SNS Subscription](#as-sns-confirm-subscription)
-  + [Configure Your Auto Scaling Group to Send Notifications](#as-configure-asg-for-sns)
-  + [Delete the Notification Configuration](#delete-settingupnotifications)
++ [SNS notifications](#auto-scaling-sns-notifications)
++ [Configuring Amazon SNS notifications for Amazon EC2 Auto Scaling](#as-configure-sns)
+  + [Create an Amazon SNS topic](#as-sns-create-topic)
+  + [Subscribe to the Amazon SNS topic](#as-sns-subscribe-topic)
+  + [Confirm your Amazon SNS subscription](#as-sns-confirm-subscription)
+  + [Configure your Auto Scaling group to send notifications](#as-configure-asg-for-sns)
+  + [Test the notification](#testing-hook-notifications)
+  + [Delete the notification configuration](#delete-settingupnotifications)
 
-## SNS Notifications<a name="auto-scaling-sns-notifications"></a>
+## SNS notifications<a name="auto-scaling-sns-notifications"></a>
 
 Amazon EC2 Auto Scaling supports sending Amazon SNS notifications when the following events occur\.
 
@@ -60,11 +61,11 @@ EC2InstanceId: i-0598c7d356eba48d7
 Details: {"Subnet ID":"subnet-id","Availability Zone":"zone"}
 ```
 
-## Configuring Amazon SNS Notifications for Amazon EC2 Auto Scaling<a name="as-configure-sns"></a>
+## Configuring Amazon SNS notifications for Amazon EC2 Auto Scaling<a name="as-configure-sns"></a>
 
 To use Amazon SNS to send email notifications, you must first create a *topic* and then subscribe your email addresses to the topic\.
 
-### Create an Amazon SNS Topic<a name="as-sns-create-topic"></a>
+### Create an Amazon SNS topic<a name="as-sns-create-topic"></a>
 
  An SNS topic is a logical access point, a communication channel your Auto Scaling group uses to send the notifications\. You create a topic by specifying a name for your topic\.
 
@@ -74,13 +75,13 @@ When you create a topic name, the name must meet the following requirements:
 
 For more information, see [Tutorial: Creating an Amazon SNS topic](https://docs.aws.amazon.com/sns/latest/dg/sns-tutorial-create-topic.html) in the *Amazon Simple Notification Service Developer Guide*\.
 
-### Subscribe to the Amazon SNS Topic<a name="as-sns-subscribe-topic"></a>
+### Subscribe to the Amazon SNS topic<a name="as-sns-subscribe-topic"></a>
 
 To receive the notifications that your Auto Scaling group sends to the topic, you must subscribe an endpoint to the topic\. In this procedure, for **Endpoint**, specify the email address where you want to receive the notifications from Amazon EC2 Auto Scaling\.
 
 For more information, see [Tutorial: Subscribing an endpoint to an Amazon SNS topic](https://docs.aws.amazon.com/sns/latest/dg/sns-tutorial-create-subscribe-endpoint-to-topic.html) in the *Amazon Simple Notification Service Developer Guide*\.
 
-### Confirm Your Amazon SNS Subscription<a name="as-sns-confirm-subscription"></a>
+### Confirm your Amazon SNS subscription<a name="as-sns-confirm-subscription"></a>
 
 Amazon SNS sends a confirmation email to the email address you specified in the previous step\.
 
@@ -88,7 +89,7 @@ Make sure that you open the email from AWS Notifications and choose the link to 
 
 You will receive an acknowledgment message from AWS\. Amazon SNS is now configured to receive notifications and send the notification as an email to the email address that you specified\.
 
-### Configure Your Auto Scaling Group to Send Notifications<a name="as-configure-asg-for-sns"></a>
+### Configure your Auto Scaling group to send notifications<a name="as-configure-asg-for-sns"></a>
 
 You can configure your Auto Scaling group to send notifications to Amazon SNS when a scaling event, such as launching instances or terminating instances, takes place\. Amazon SNS sends a notification with information about the instances to the email address that you specified\.
 
@@ -119,7 +120,29 @@ Use the following [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/
 aws autoscaling put-notification-configuration --auto-scaling-group-name my-asg --topic-arn arn --notification-types "autoscaling:EC2_INSTANCE_LAUNCH" "autoscaling:EC2_INSTANCE_TERMINATE"
 ```
 
-### Delete the Notification Configuration<a name="delete-settingupnotifications"></a>
+### Test the notification<a name="testing-hook-notifications"></a>
+
+To generate a notification for a launch event, update the Auto Scaling group by increasing the desired capacity of the Auto Scaling group by 1\. You receive a notification within a few minutes after instance launch\.
+
+**To change the desired capacity \(console\)**
+
+1. Open the Amazon EC2 console at [https://console\.aws\.amazon\.com/ec2/](https://console.aws.amazon.com/ec2/)\.
+
+1. On the navigation pane, under **AUTO SCALING**, choose **Auto Scaling Groups**\.
+
+1. Select the check box next to your Auto Scaling group\.
+
+   A split pane opens up in the bottom part of the **Auto Scaling groups** page, showing information about the group that's selected\. 
+
+1. On the **Details** tab, choose **Group details**, **Edit**\. \(Old console: On the **Details** tab, choose **Edit**\.\)
+
+1. For **Desired capacity**, increase the current value by 1\. If this value exceeds **Maximum capacity**, you must also increase the value of **Maximum capacity** by 1\.
+
+1. Choose **Update**\.
+
+1. After a few minutes, you'll receive notification for the event\. If you do not need the additional instance that you launched for this test, you can decrease **Desired capacity** by 1\. After a few minutes, you'll receive notification for the event\.
+
+### Delete the notification configuration<a name="delete-settingupnotifications"></a>
 
 You can delete your Amazon EC2 Auto Scaling notification configuration if it is no longer being used\.
 

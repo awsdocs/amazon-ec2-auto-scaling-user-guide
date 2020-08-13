@@ -1,15 +1,15 @@
-# Deleting Your Auto Scaling Infrastructure<a name="as-process-shutdown"></a>
+# Deleting your Auto Scaling infrastructure<a name="as-process-shutdown"></a>
 
 To completely delete your scaling infrastructure, complete the following tasks\.
 
 **Topics**
-+ [Delete Your Auto Scaling Group](#as-shutdown-lbs-delete-asg-cli)
-+ [\(Optional\) Delete the Launch Configuration](#as-shutdown-lbs-delete-lc-cli)
-+ [\(Optional\) Delete the Launch Template](#as-shutdown-lbs-delete-lt-cli)
-+ [\(Optional\) Delete the Load Balancer](#as-shutdown-lbs-delete-lbs-cli)
-+ [\(Optional\) Delete CloudWatch Alarms](#as-shutdown-delete-alarms-cli)
++ [Delete your Auto Scaling group](#as-shutdown-lbs-delete-asg-cli)
++ [\(Optional\) Delete the launch configuration](#as-shutdown-lbs-delete-lc-cli)
++ [\(Optional\) Delete the launch template](#as-shutdown-lbs-delete-lt-cli)
++ [\(Optional\) Delete the load balancer and target groups](#as-shutdown-lbs-delete-lbs-cli)
++ [\(Optional\) Delete CloudWatch alarms](#as-shutdown-delete-alarms-cli)
 
-## Delete Your Auto Scaling Group<a name="as-shutdown-lbs-delete-asg-cli"></a>
+## Delete your Auto Scaling group<a name="as-shutdown-lbs-delete-asg-cli"></a>
 
 When you delete an Auto Scaling group, its desired, minimum, and maximum values are set to 0\. As a result, the instances are terminated\. Deleting an instance also deletes any associated logs or data, and any volumes on the instance\. If do not want to terminate one or more instances, you can detach them before you delete the Auto Scaling group\. If the group has scaling policies, deleting the group deletes the policies, the underlying alarm actions, and any alarm that no longer has an associated action\.
 
@@ -38,7 +38,7 @@ If the group has instances or scaling activities in progress, use the [https://d
 aws autoscaling delete-auto-scaling-group --auto-scaling-group-name my-asg --force-delete
 ```
 
-## \(Optional\) Delete the Launch Configuration<a name="as-shutdown-lbs-delete-lc-cli"></a>
+## \(Optional\) Delete the launch configuration<a name="as-shutdown-lbs-delete-lc-cli"></a>
 
 You can skip this step to keep the launch configuration for future use\.
 
@@ -59,7 +59,7 @@ Use the following [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/
 aws autoscaling delete-launch-configuration --launch-configuration-name my-launch-config
 ```
 
-## \(Optional\) Delete the Launch Template<a name="as-shutdown-lbs-delete-lt-cli"></a>
+## \(Optional\) Delete the launch template<a name="as-shutdown-lbs-delete-lt-cli"></a>
 
 You can delete your launch template or just one version of your launch template\. When you delete a launch template, all its versions are deleted\.
 
@@ -88,7 +88,7 @@ Alternatively, you can use the [https://docs.aws.amazon.com/cli/latest/reference
 aws ec2 delete-launch-template-versions --launch-template-id lt-068f72b72934aff71 --versions 1
 ```
 
-## \(Optional\) Delete the Load Balancer<a name="as-shutdown-lbs-delete-lbs-cli"></a>
+## \(Optional\) Delete the load balancer and target groups<a name="as-shutdown-lbs-delete-lbs-cli"></a>
 
 Skip this step if your Auto Scaling group is not associated with an Elastic Load Balancing load balancer, or if you want to keep the load balancer for future use\. 
 
@@ -124,7 +124,7 @@ For Classic Load Balancers, use the following [https://docs.aws.amazon.com/cli/l
 aws elb delete-load-balancer --load-balancer-name my-load-balancer
 ```
 
-## \(Optional\) Delete CloudWatch Alarms<a name="as-shutdown-delete-alarms-cli"></a>
+## \(Optional\) Delete CloudWatch alarms<a name="as-shutdown-delete-alarms-cli"></a>
 
 To delete any CloudWatch alarms associated with your Auto Scaling group, complete the following steps\. 
 

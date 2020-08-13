@@ -1,11 +1,11 @@
-# Tutorial: Set Up a Scaled and Load\-Balanced Application<a name="as-register-lbs-with-asg"></a>
+# Tutorial: Set up a scaled and load\-balanced application<a name="as-register-lbs-with-asg"></a>
 
 **Important**  
-Before you explore this tutorial, we recommend that you first review the following introductory tutorial: [Getting Started with Amazon EC2 Auto Scaling](GettingStartedTutorial.md)\.
+Before you explore this tutorial, we recommend that you first review the following introductory tutorial: [Getting started with Amazon EC2 Auto Scaling](GettingStartedTutorial.md)\.
 
 Registering your Auto Scaling group with an Elastic Load Balancing load balancer helps you set up a load\-balanced application\. Elastic Load Balancing works with Amazon EC2 Auto Scaling to distribute incoming traffic across your healthy Amazon EC2 instances\. This increases the scalability and availability of your application\. You can enable Elastic Load Balancing within multiple Availability Zones to increase the fault tolerance of your applications\. 
 
-In this tutorial, we cover the basics steps for setting up a load\-balanced application when the Auto Scaling group is created\. To register an existing Auto Scaling group with a load balancer, see [Attaching a Load Balancer](attach-load-balancer-asg.md) instead\.
+In this tutorial, we cover the basics steps for setting up a load\-balanced application when the Auto Scaling group is created\. To register an existing Auto Scaling group with a load balancer, see [Attaching a load balancer](attach-load-balancer-asg.md) instead\.
 
 Elastic Load Balancing supports three types of load balancers: Application Load Balancers, Network Load Balancers, and Classic Load Balancers\. We recommend that you use either Application Load Balancers or Network Load Balancers\. However, you can still use a Classic Load Balancer if it supports the features that your application needs\. 
 
@@ -18,34 +18,34 @@ The procedure for deploying this scalable, load\-balanced architecture for dynam
 
 **Topics**
 + [Prerequisites](#as-register-lbs-prerequisites)
-+ [Deploy Your Application \(Console\)](#as-register-lbs-console)
-+ [Deploy Your Application \(AWS CLI\)](#as-lbs-app-cli)
-+ [Next Steps](#as-lbs-app-next-steps)
-+ [Clean Up Your AWS Resources](#as-lbs-app-clean-up)
++ [Deploy your application \(console\)](#as-register-lbs-console)
++ [Deploy your application \(AWS CLI\)](#as-lbs-app-cli)
++ [Next steps](#as-lbs-app-next-steps)
++ [Clean up your AWS resources](#as-lbs-app-clean-up)
 
 ## Prerequisites<a name="as-register-lbs-prerequisites"></a>
-+ You have a load balancer and target group created to use\. With Application Load Balancers or Network Load Balancers, your Auto Scaling group is registered to a target group that is associated with the load balancer\. Make sure that you choose the same Availability Zones for the load balancer that you plan to enable for your Auto Scaling group\. For more information, see [Getting Started with Elastic Load Balancing](https://docs.aws.amazon.com/elasticloadbalancing/latest/userguide/load-balancer-getting-started.html) in the *Elastic Load Balancing User Guide*\.
++ You have a load balancer and target group created to use\. With Application Load Balancers or Network Load Balancers, your Auto Scaling group is registered to a target group that is associated with the load balancer\. Make sure that you choose the same Availability Zones for the load balancer that you plan to enable for your Auto Scaling group\. For more information, see [Getting started with Elastic Load Balancing](https://docs.aws.amazon.com/elasticloadbalancing/latest/userguide/load-balancer-getting-started.html) in the *Elastic Load Balancing User Guide*\.
 + You have a security group for your launch template or launch configuration that allows access from the load balancer on the listener port \(usually port 80 for HTTP traffic\) and the port on which you want Elastic Load Balancing to perform health checks\. For more information, see the applicable documentation:
-  + [Target Security Groups](https://docs.aws.amazon.com/elasticloadbalancing/latest/application/target-group-register-targets.html#target-security-groups) in the *User Guide for Application Load Balancers*
-  + [Target Security Groups](https://docs.aws.amazon.com/elasticloadbalancing/latest/network/target-group-register-targets.html#target-security-groups) in the *User Guide for Network Load Balancers*
-  + [Security Groups for Instances in a VPC](https://docs.aws.amazon.com/elasticloadbalancing/latest/classic/elb-security-groups.html#elb-vpc-instance-security-groups) in the *User Guide for Classic Load Balancers*
+  + [Target security groups](https://docs.aws.amazon.com/elasticloadbalancing/latest/application/target-group-register-targets.html#target-security-groups) in the *User Guide for Application Load Balancers*
+  + [Target security groups](https://docs.aws.amazon.com/elasticloadbalancing/latest/network/target-group-register-targets.html#target-security-groups) in the *User Guide for Network Load Balancers*
+  + [Security groups for instances in a VPC](https://docs.aws.amazon.com/elasticloadbalancing/latest/classic/elb-security-groups.html#elb-vpc-instance-security-groups) in the *User Guide for Classic Load Balancers*
 
   If your instances will have public IP addresses, you can also optionally allow SSH traffic if you need to connect to the instances\. 
 + \(Optional\) You have an IAM role that grants your application the access to AWS that it needs\.
 + \(Optional\) You have an Amazon Machine Image \(AMI\) defined to be the source template for your Amazon EC2 instances\. To create one now, launch an instance\. Specify the IAM role \(if you created one\) and any configuration scripts that you need as user data\. Connect to the instance and customize it\. For example, installing software and applications, copying data, and attaching additional EBS volumes\. Test your applications on your instance to ensure that your instance is configured correctly\. Save this updated configuration as a custom AMI\. You can terminate the instance if you won't need it later\. Instances launched from this new custom AMI include the customizations that you made when you created the AMI\. 
 + This tutorial refers to the default VPC, but you can use your own VPC\. In the latter case, make sure that your VPC has a subnet mapped to each Availability Zone of the AWS Region you are working in\. At minimum, you must have two public subnets available to create the load balancer and either two private subnets or two public subnets to create your Auto Scaling group and register it with the load balancer\.
 
-## Deploy Your Application \(Console\)<a name="as-register-lbs-console"></a>
+## Deploy your application \(console\)<a name="as-register-lbs-console"></a>
 
 The following sections step you through the process of deploying your application\. 
 
 **Topics**
-+ [Create a Launch Template](#as-register-lbs-create-lt-console)
-+ [Create a Launch Configuration](#as-register-lbs-create-lc-console)
-+ [Create an Auto Scaling Group](#as-register-lbs-create-asg-console)
-+ [\(Optional\) Verify That Your Load Balancer Is Attached](#as-register-lbs-verify-console)
++ [Create a launch template](#as-register-lbs-create-lt-console)
++ [Create a launch configuration](#as-register-lbs-create-lc-console)
++ [Create an Auto Scaling group](#as-register-lbs-create-asg-console)
++ [\(Optional\) Verify that your load balancer is attached](#as-register-lbs-verify-console)
 
-### Create a Launch Template<a name="as-register-lbs-create-lt-console"></a>
+### Create a launch template<a name="as-register-lbs-create-lt-console"></a>
 
 You must have either a launch template or a launch configuration\. If you already have a launch template that you'd like to use, skip this step\.
 
@@ -85,7 +85,7 @@ You must have either a launch template or a launch configuration\. If you alread
 
 1. On the confirmation page, choose **EC2** from the breadcrumbs at the top of the page\. On the navigation pane, under **AUTO SCALING**, choose **Auto Scaling Groups**\.
 
-### Create a Launch Configuration<a name="as-register-lbs-create-lc-console"></a>
+### Create a launch configuration<a name="as-register-lbs-create-lc-console"></a>
 
 If you already have a launch configuration that you'd like to use, skip this step\.
 
@@ -127,7 +127,7 @@ Do not choose **Proceed without a key pair** if you will need to connect to your
 
 1. On the confirmation page, choose **View your Auto Scaling groups**\.
 
-### Create an Auto Scaling Group<a name="as-register-lbs-create-asg-console"></a>
+### Create an Auto Scaling group<a name="as-register-lbs-create-asg-console"></a>
 
 After completing the instructions above, you're ready to proceed with the wizard to create an Auto Scaling group\. 
 
@@ -140,8 +140,6 @@ Use the following procedure to continue where you left off after creating your l
    1. Open the Amazon EC2 console at [https://console\.aws\.amazon\.com/ec2/](https://console.aws.amazon.com/ec2/)\.
 
    1. On the navigation pane, under **AUTO SCALING**, choose **Auto Scaling Groups**\.
-
-1. The original console is open by default\. To access the new console, on the banner at the top of the page, choose **Go to the new console**\. 
 
 1. Choose **Create an Auto Scaling group**\.
 
@@ -165,7 +163,7 @@ Use the following procedure to continue where you left off after creating your l
 
 1. Choose **Next**\. 
 
-1. On the **Specify load balancing and health checks** page, under **Load balancing**, choose **Enable load balancing**\.
+1. On the **Configure advanced options** page, under **Load balancing**, choose **Enable load balancing**\.
 
 1. Do one of the following:
 
@@ -219,9 +217,9 @@ Use the following procedure to continue where you left off after creating your l
 
 1. Review the details of your Auto Scaling group\. You can choose **Edit** to make changes\. When you are finished, choose **Create Auto Scaling group**\.
 
-After you have created the Auto Scaling group with the load balancer attached, the load balancer automatically registers new instances as they come online\. You have only one instance at this point, so there isn't much to register\. However, you can now add additional instances by updating the desired capacity of the group\. For step\-by\-step instructions, see [Manual Scaling](as-manual-scaling.md)\. 
+After you have created the Auto Scaling group with the load balancer attached, the load balancer automatically registers new instances as they come online\. You have only one instance at this point, so there isn't much to register\. However, you can now add additional instances by updating the desired capacity of the group\. For step\-by\-step instructions, see [Manual scaling](as-manual-scaling.md)\. 
 
-### \(Optional\) Verify That Your Load Balancer Is Attached<a name="as-register-lbs-verify-console"></a>
+### \(Optional\) Verify that your load balancer is attached<a name="as-register-lbs-verify-console"></a>
 
 **To verify that your load balancer is attached \(new console\)**
 
@@ -233,7 +231,7 @@ After you have created the Auto Scaling group with the load balancer attached, t
 
 1. On the **Instance management** tab, under **Instances**, you can verify that your instances launched successfully\. Initially, your instances are in the `Pending` state\. After an instance is ready to receive traffic, its state is `InService`\. The **Health status** column shows the result of the Amazon EC2 Auto Scaling health checks on your instances\. Although an instance may be marked as healthy, the load balancer will only send traffic to instances that pass the load balancer health checks\.
 
-1. Verify that your instances are registered with the load balancer\. On the navigation pane of the EC2 console, under **LOAD BALANCING**, choose **Target Groups**\. Select your target group, and then choose the **Targets** tab\. If the state of your instances is `initial`, it's possible that they are still registering\. The load balancer periodically sends a health check request to each instance using the specified port, protocol, and ping path\. When the state of your instances is `healthy`, they are ready for use\.
+1. Verify that your instances are registered with the load balancer\. On the navigation pane of the EC2 console, under **LOAD BALANCING**, choose **Target Groups**\. Select your target group, and then choose the **Targets** tab\. If the state of your instances is `initial`, it's probably because they are still in the process of being registered, or they have not passed the minimum number of health checks to be considered healthy\. When the state of your instances is `healthy`, they are ready for use\.
 
 **To verify that your load balancer is attached \(old console\)**
 
@@ -243,18 +241,18 @@ After you have created the Auto Scaling group with the load balancer attached, t
 
 1. On the **Instances** tab, you can view the status of the instances that are currently running\. Initially, your instances are in the `Pending` state\. After an instance is ready to receive traffic, its state is `InService`\. The **Health status** column shows the result of the Amazon EC2 Auto Scaling health checks on your instances\. Although an instance may be marked as healthy, the load balancer will only send traffic to instances that pass the load balancer health checks\.
 
-1. Verify that your instances are registered with the load balancer\. On the navigation pane of the EC2 console, under **LOAD BALANCING**, choose **Target Groups**\. Select your target group, and then choose the **Targets** tab\. If the state of your instances is `initial`, it's possible that they are still registering\. The load balancer periodically sends a health check request to each instance using the specified port, protocol, and ping path\. When the state of your instances is `healthy`, they are ready for use\.
+1. Verify that your instances are registered with the load balancer\. On the navigation pane of the EC2 console, under **LOAD BALANCING**, choose **Target Groups**\. Select your target group, and then choose the **Targets** tab\. If the state of your instances is `initial`, it's probably because they are still in the process of being registered, or they have not passed the minimum number of health checks to be considered healthy\. When the state of your instances is `healthy`, they are ready for use\.
 
-## Deploy Your Application \(AWS CLI\)<a name="as-lbs-app-cli"></a>
+## Deploy your application \(AWS CLI\)<a name="as-lbs-app-cli"></a>
 
 The following sections step you through the process of deploying your application\. 
 
 **Topics**
-+ [Create a Launch Template](#as-lbs-app-create-lt-cli)
-+ [Create a Launch Configuration](#as-lbs-app-create-lc-cli)
-+ [Create an Auto Scaling Group with a Load Balancer](#as-lbs-app-create-asg-cli)
++ [Create a launch template](#as-lbs-app-create-lt-cli)
++ [Create a launch configuration](#as-lbs-app-create-lc-cli)
++ [Create an Auto Scaling group with a load balancer](#as-lbs-app-create-asg-cli)
 
-### Create a Launch Template<a name="as-lbs-app-create-lt-cli"></a>
+### Create a launch template<a name="as-lbs-app-create-lt-cli"></a>
 
 If you already have a launch template that you'd like to use, skip this step\.
 
@@ -266,7 +264,7 @@ aws ec2 create-launch-template --launch-template-name my-launch-template --versi
   --launch-template-data '{"NetworkInterfaces":[{"DeviceIndex":0,"Groups":["sg-903004f8"],"DeleteOnTermination":true}],"ImageId":"ami-01e24be29428c15b2","InstanceType":"t2.micro"}'
 ```
 
-### Create a Launch Configuration<a name="as-lbs-app-create-lc-cli"></a>
+### Create a launch configuration<a name="as-lbs-app-create-lc-cli"></a>
 
 If you already have a launch configuration that you'd like to use, skip this step\.
 
@@ -278,7 +276,7 @@ aws autoscaling create-launch-configuration --launch-configuration-name my-launc
   --image-id ami-01e24be29428c15b2 --instance-type t2.micro --security-groups sg-903004f8
 ```
 
-### Create an Auto Scaling Group with a Load Balancer<a name="as-lbs-app-create-asg-cli"></a>
+### Create an Auto Scaling group with a load balancer<a name="as-lbs-app-create-asg-cli"></a>
 
 You can attach an existing load balancer to an Auto Scaling group when you create the group\. You can use either a launch configuration or a launch template to automatically configure the instances that your Auto Scaling group launches\. 
 
@@ -304,14 +302,14 @@ aws autoscaling create-auto-scaling-group --auto-scaling-group-name my-asg \
   --max-size 5 --min-size 1 --desired-capacity 2
 ```
 
-## Next Steps<a name="as-lbs-app-next-steps"></a>
+## Next steps<a name="as-lbs-app-next-steps"></a>
 
 Now that you have completed this tutorial, you can learn more:
-+ You can configure your Auto Scaling group to use a scaling policy to automatically increase or decrease the number of instances as the demand on your instances changes\. This allows the group to handle changes in the amount of traffic that your application receives\. For more information, see [Target Tracking Scaling Policies](as-scaling-target-tracking.md)\. 
-+ If you would like to learn how to create automated schedules for scaling, [Scheduled Scaling](schedule_time.md) provides an introduction to scheduling an Auto Scaling group to scale using one\-time or recurring scaling actions\.
-+ You can configure your Auto Scaling group to use Elastic Load Balancing health checks\. If you enable load balancer health checks and an instance fails the health checks, the Auto Scaling group considers the instance unhealthy and replaces it\. For more information, see [Adding ELB Health Checks](as-add-elb-healthcheck.md)\.
++ You can configure your Auto Scaling group to use a scaling policy to automatically increase or decrease the number of instances as the demand on your instances changes\. This allows the group to handle changes in the amount of traffic that your application receives\. For more information, see [Target tracking scaling policies](as-scaling-target-tracking.md)\. 
++ If you would like to learn how to create automated schedules for scaling, [Scheduled scaling](schedule_time.md) provides an introduction to scheduling an Auto Scaling group to scale using one\-time or recurring scaling actions\.
++ You can configure your Auto Scaling group to use Elastic Load Balancing health checks\. If you enable load balancer health checks and an instance fails the health checks, the Auto Scaling group considers the instance unhealthy and replaces it\. For more information, see [Adding ELB health checks](as-add-elb-healthcheck.md)\.
 + You can expand your application to an additional Availability Zone in the same AWS Region to increase fault tolerance in the event of a service disruption\. For more information, see [Adding an Availability Zone](as-add-availability-zone.md)\.
 
-## Clean Up Your AWS Resources<a name="as-lbs-app-clean-up"></a>
+## Clean up your AWS resources<a name="as-lbs-app-clean-up"></a>
 
-You've now successfully completed the tutorial\. To avoid unnecessary charges to your account for resources that you aren't using, you should clean up the resources that you created just for this tutorial\. For step\-by\-step instructions, see [Deleting Your Auto Scaling Infrastructure](as-process-shutdown.md)\.
+You've now successfully completed the tutorial\. To avoid unnecessary charges to your account for resources that you aren't using, you should clean up the resources that you created just for this tutorial\. For step\-by\-step instructions, see [Deleting your Auto Scaling infrastructure](as-process-shutdown.md)\.

@@ -1,20 +1,20 @@
-# Tagging Auto Scaling Groups and Instances<a name="autoscaling-tagging"></a>
+# Tagging Auto Scaling groups and instances<a name="autoscaling-tagging"></a>
 
 Tags help you to categorize your Auto Scaling groups in different ways, for example, by purpose, owner, or environment\. 
 
-You can add multiple tags to each Auto Scaling group\. Additionally, you can propagate the tags from the Auto Scaling group to the Amazon EC2 instances it launches\. Tagging your instances enables you to see instance cost allocation by tag in your AWS bill\. For more information, see [Using Cost Allocation Tags](https://docs.aws.amazon.com/awsaccountbilling/latest/aboutv2/cost-alloc-tags.html) in the *AWS Billing and Cost Management User Guide*\.
+You can add multiple tags to each Auto Scaling group\. Additionally, you can propagate the tags from the Auto Scaling group to the Amazon EC2 instances it launches\. Tagging your instances enables you to see instance cost allocation by tag in your AWS bill\. For more information, see [Using cost allocation tags](https://docs.aws.amazon.com/awsaccountbilling/latest/aboutv2/cost-alloc-tags.html) in the *AWS Billing and Cost Management User Guide*\.
 
-You can also control which IAM users and groups in your account have permission to create, edit, or delete tags\. For more information, see [Control Which Tag Keys and Tag Values Can Be Used](security_iam_id-based-policy-examples.md#policy-example-tags)\. Keep in mind, however, that a policy that restricts your users from performing a tagging operation on an Auto Scaling group does not prevent them from manually changing the tags on the instances after they have launched\. For information about IAM policies for tagging \(or untagging\) Amazon EC2 resources, see [Example: Tagging Resources](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ExamplePolicies_EC2.html#iam-example-taggingresources) in the *Amazon EC2 User Guide for Linux Instances*\.
+You can also control which IAM users and groups in your account have permission to create, edit, or delete tags\. For more information, see [Control which tag keys and tag values can be used](security_iam_id-based-policy-examples.md#policy-example-tags)\. Keep in mind, however, that a policy that restricts your users from performing a tagging operation on an Auto Scaling group does not prevent them from manually changing the tags on the instances after they have launched\. For information about IAM policies for tagging \(or untagging\) Amazon EC2 resources, see [Example: Tagging resources](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ExamplePolicies_EC2.html#iam-example-taggingresources) in the *Amazon EC2 User Guide for Linux Instances*\.
 
-Tags are not propagated to Amazon EBS volumes\. To add tags to Amazon EBS volumes, specify the tags in a launch template but use caution when configuring instance tags in your launch template\. If the launch template specifies an instance tag with a key that is also specified for the Auto Scaling group, Amazon EC2 Auto Scaling overrides the value of that instance tag with the value specified by the Auto Scaling group\. For information about specifying tags in a launch template, see [Creating a Launch Template for an Auto Scaling Group](create-launch-template.md)\.
+Tags are not propagated to Amazon EBS volumes\. To add tags to Amazon EBS volumes, specify the tags in a launch template but use caution when configuring instance tags in your launch template\. If the launch template specifies an instance tag with a key that is also specified for the Auto Scaling group, Amazon EC2 Auto Scaling overrides the value of that instance tag with the value specified by the Auto Scaling group\. For information about specifying tags in a launch template, see [Creating a launch template for an Auto Scaling group](create-launch-template.md)\.
 
 **Topics**
-+ [Tag Restrictions](#tag_restrictions)
-+ [Tagging Lifecycle](#tag-lifecycle)
-+ [Add or Modify Tags for Your Auto Scaling Group](#add-tags)
-+ [Delete Tags](#delete-tag)
++ [Tag restrictions](#tag_restrictions)
++ [Tagging lifecycle](#tag-lifecycle)
++ [Add or modify tags for your Auto Scaling group](#add-tags)
++ [Delete tags](#delete-tag)
 
-## Tag Restrictions<a name="tag_restrictions"></a>
+## Tag restrictions<a name="tag_restrictions"></a>
 
 The following basic restrictions apply to tags:
 + The maximum number of tags per resource is 50\.
@@ -24,7 +24,7 @@ The following basic restrictions apply to tags:
 + Tag keys and values are case\-sensitive\.
 + Do not use the `aws:` prefix in your tag names or values, because it is reserved for AWS use\. You can't edit or delete tag names or values with this prefix, and they do not count toward your limit of tags per Auto Scaling group\.
 
-## Tagging Lifecycle<a name="tag-lifecycle"></a>
+## Tagging lifecycle<a name="tag-lifecycle"></a>
 
 If you have opted to propagate tags to your Amazon EC2 instances, the tags are managed as follows:
 + When an Auto Scaling group launches instances, it adds tags to the instances during resource creation rather than after the resource is created\. 
@@ -33,15 +33,15 @@ If you have opted to propagate tags to your Amazon EC2 instances, the tags are m
 + When you detach an instance from an Auto Scaling group, it removes only the `aws:autoscaling:groupName` tag\.
 + When you scale in manually or the Auto Scaling group automatically scales in, it removes all tags from the instances that are terminating\.
 
-## Add or Modify Tags for Your Auto Scaling Group<a name="add-tags"></a>
+## Add or modify tags for your Auto Scaling group<a name="add-tags"></a>
 
 When you add a tag to your Auto Scaling group, you can specify whether it should be added to instances launched in the Auto Scaling group\. If you modify a tag, the updated version of the tag is added to instances launched in the Auto Scaling group after the change\. If you create or modify a tag for an Auto Scaling group, these changes are not made to instances that are already running in the Auto Scaling group\.
 
 **Topics**
-+ [Add or Modify Tags \(Console\)](#add-tags-console)
-+ [Add or Modify Tags \(AWS CLI\)](#add-tags-aws-cli)
++ [Add or modify tags \(console\)](#add-tags-console)
++ [Add or modify tags \(AWS CLI\)](#add-tags-aws-cli)
 
-### Add or Modify Tags \(Console\)<a name="add-tags-console"></a>
+### Add or modify tags \(console\)<a name="add-tags-console"></a>
 
 Use the Amazon EC2 console to:
 + Add tags to new Auto Scaling groups when you create them
@@ -68,7 +68,7 @@ When you use the Amazon EC2 console to create an Auto Scaling group, you can spe
 
 1. When you have finished adding tags, choose **Update**\.
 
-### Add or Modify Tags \(AWS CLI\)<a name="add-tags-aws-cli"></a>
+### Add or modify tags \(AWS CLI\)<a name="add-tags-aws-cli"></a>
 
 The following examples show how to use the AWS CLI to add tags when you create Auto Scaling groups, and to add or modify tags for existing Auto Scaling groups\. 
 
@@ -147,23 +147,21 @@ The following examples show how to use the AWS CLI to add tags when you create A
   }
   ```
 
-## Delete Tags<a name="delete-tag"></a>
+## Delete tags<a name="delete-tag"></a>
 
 You can delete a tag associated with your Auto Scaling group at any time\.
 
 **Topics**
-+ [Delete Tags \(Console\)](#delete-tag-console)
-+ [Delete Tags \(AWS CLI\)](#delete-tag-aws-cli)
++ [Delete tags \(console\)](#delete-tag-console)
++ [Delete tags \(AWS CLI\)](#delete-tag-aws-cli)
 
-### Delete Tags \(Console\)<a name="delete-tag-console"></a>
+### Delete tags \(console\)<a name="delete-tag-console"></a>
 
 **To delete a tag \(new console\)**
 
 1. Open the Amazon EC2 console at [https://console\.aws\.amazon\.com/ec2/](https://console.aws.amazon.com/ec2/)\.
 
 1. On the navigation pane, under **AUTO SCALING**, choose **Auto Scaling Groups**\.
-
-1. The original console is open by default\. To access the new console, on the banner at the top of the page, choose **Go to the new console**\.
 
 1. Select the check box next to an existing group\.
 
@@ -189,7 +187,7 @@ You can delete a tag associated with your Auto Scaling group at any time\.
 
 1. Choose **Save**\.
 
-### Delete Tags \(AWS CLI\)<a name="delete-tag-aws-cli"></a>
+### Delete tags \(AWS CLI\)<a name="delete-tag-aws-cli"></a>
 
 Use the [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/delete-tags.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/delete-tags.html) command to delete a tag\. For example, the following command deletes a tag with a key of `env`\.
 

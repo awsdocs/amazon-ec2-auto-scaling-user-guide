@@ -1,4 +1,4 @@
-# Target Tracking Scaling Policies for Amazon EC2 Auto Scaling<a name="as-scaling-target-tracking"></a>
+# Target tracking scaling policies for Amazon EC2 Auto Scaling<a name="as-scaling-target-tracking"></a>
 
 With target tracking scaling policies, you select a scaling metric and set a target value\. Amazon EC2 Auto Scaling creates and manages the CloudWatch alarms that trigger the scaling policy and calculates the scaling adjustment based on the metric and the target value\. The scaling policy adds or removes capacity as required to keep the metric at, or close to, the specified target value\. In addition to keeping the metric close to the target value, a target tracking scaling policy also adjusts to changes in the metric due to a changing load pattern\. 
 
@@ -10,13 +10,13 @@ Depending on your application needs, you might find that one of these popular sc
 
 **Contents**
 + [Considerations](#target-tracking-considerations)
-  + [Choosing Metrics](#available-metrics)
-  + [Monitoring Amazon EC2 Metrics](#target-tracking-monitoring)
-  + [Instance Warm\-up](#as-target-tracking-scaling-warmup)
-+ [Create a Target Tracking Scaling Policy \(Console\)](#policy_creating)
-+ [Create a Target Tracking Scaling Policy \(AWS CLI\)](#target-tracking-policy-creating-aws-cli)
-  + [Step 1: Create an Auto Scaling Group](#policy-creating-tt-aws-cli)
-  + [Step 2: Create a Target Tracking Scaling Policy](#policy-creating-ttt-aws-cli)
+  + [Choosing metrics](#available-metrics)
+  + [Monitoring Amazon EC2 metrics](#target-tracking-monitoring)
+  + [Instance warm\-up](#as-target-tracking-scaling-warmup)
++ [Create a target tracking scaling policy \(console\)](#policy_creating)
++ [Create a target tracking scaling policy \(AWS CLI\)](#target-tracking-policy-creating-aws-cli)
+  + [Step 1: Create an Auto Scaling group](#policy-creating-tt-aws-cli)
+  + [Step 2: Create a target tracking scaling policy](#policy-creating-ttt-aws-cli)
 
 ## Considerations<a name="target-tracking-considerations"></a>
 
@@ -25,11 +25,11 @@ Before you create a target tracking scaling policy for your Auto Scaling group, 
 + You might see gaps between the target value and the actual metric data points\. This is because we act conservatively by rounding up or down when determining how many instances to add or remove\. This prevents us from adding an insufficient number of instances or removing too many instances\. However, for smaller Auto Scaling groups with fewer instances, the utilization of the group might seem far from the target value\. For example, let's say that you set a target value of 50 percent for CPU utilization and your Auto Scaling group then exceeds the target\. We might determine that adding 1\.5 instances will decrease the CPU utilization to close to 50 percent\. Because it is not possible to add 1\.5 instances, we round up and add two instances\. This might decrease the CPU utilization to a value below 50 percent, but it ensures that your application has enough resources to support it\. Similarly, if we determine that removing 1\.5 instances increases your CPU utilization to above 50 percent, we remove just one instance\. 
 + For larger Auto Scaling groups with more instances, the utilization is spread over a larger number of instances, in which case adding or removing instances causes less of a gap between the target value and the actual metric data points\.
 + To ensure application availability, the Auto Scaling group scales out proportionally to the metric as fast as it can, but scales in more gradually\.
-+ You can have multiple target tracking scaling policies for an Auto Scaling group, provided that each of them uses a different metric\. The intention of Amazon EC2 Auto Scaling is to always prioritize availability, so its behavior differs depending on whether the target tracking policies are ready for scale out or scale in\. It will scale out the Auto Scaling group if any of the target tracking policies are ready for scale out, but will scale in only if all of the target tracking policies \(with the scale\-in portion enabled\) are ready to scale in\. For more information, see [Multiple Scaling Policies](as-scale-based-on-demand.md#multiple-scaling-policy-resolution)\. 
++ You can have multiple target tracking scaling policies for an Auto Scaling group, provided that each of them uses a different metric\. The intention of Amazon EC2 Auto Scaling is to always prioritize availability, so its behavior differs depending on whether the target tracking policies are ready for scale out or scale in\. It will scale out the Auto Scaling group if any of the target tracking policies are ready for scale out, but will scale in only if all of the target tracking policies \(with the scale\-in portion enabled\) are ready to scale in\. For more information, see [Multiple scaling policies](as-scale-based-on-demand.md#multiple-scaling-policy-resolution)\. 
 + You can disable the scale\-in portion of a target tracking scaling policy\. This feature provides you with the flexibility to scale in your Auto Scaling group using a different method\. For example, you can use a different scaling policy type for scale in while using a target tracking scaling policy for scale out\. 
 + Do not edit or delete the CloudWatch alarms that are configured for the target tracking scaling policy\. CloudWatch alarms that are associated with your target tracking scaling policies are managed by AWS and deleted automatically when no longer needed\. 
 
-### Choosing Metrics<a name="available-metrics"></a>
+### Choosing metrics<a name="available-metrics"></a>
 
 In a target tracking scaling policy, you can use predefined or customized metrics\. 
 
@@ -44,19 +44,19 @@ You can choose other available Amazon CloudWatch metrics or your own metrics in 
 Keep the following in mind when choosing a metric:
 + Not all metrics work for target tracking\. This can be important when you are specifying a customized metric\. The metric must be a valid utilization metric and describe how busy an instance is\. The metric value must increase or decrease proportionally to the number of instances in the Auto Scaling group\. That's so the metric data can be used to proportionally scale out or in the number of instances\. For example, the CPU utilization of an Auto Scaling group works \(that is, the Amazon EC2 metric `CPUUtilization` with the metric dimension `AutoScalingGroupName`\), if the load on the Auto Scaling group is distributed across the instances\. 
 + The following metrics do not work for target tracking:
-  + The number of requests received by the load balancer fronting the Auto Scaling group \(that is, the Elastic Load Balancing metric `RequestCount`\)\. The number of requests received by the load balancer doesn’t change based on the utilization of the Auto Scaling group\.
-  + Load balancer request latency \(that is, the Elastic Load Balancing metric `Latency`\)\. Request latency can increase based on increasing utilization, but doesn’t necessarily change proportionally\.
-  + The CloudWatch Amazon SQS queue metric `ApproximateNumberOfMessagesVisible`\. The number of messages in a queue might not change proportionally to the size of the Auto Scaling group that processes messages from the queue\. However, a customized metric that measures the number of messages in the queue per EC2 instance in the Auto Scaling group can work\. For more information, see [Scaling Based on Amazon SQS](as-using-sqs-queue.md)\.
+  + The number of requests received by the load balancer fronting the Auto Scaling group \(that is, the Elastic Load Balancing metric `RequestCount`\)\. The number of requests received by the load balancer doesn't change based on the utilization of the Auto Scaling group\.
+  + Load balancer request latency \(that is, the Elastic Load Balancing metric `Latency`\)\. Request latency can increase based on increasing utilization, but doesn't necessarily change proportionally\.
+  + The CloudWatch Amazon SQS queue metric `ApproximateNumberOfMessagesVisible`\. The number of messages in a queue might not change proportionally to the size of the Auto Scaling group that processes messages from the queue\. However, a customized metric that measures the number of messages in the queue per EC2 instance in the Auto Scaling group can work\. For more information, see [Scaling based on Amazon SQS](as-using-sqs-queue.md)\.
 + A target tracking scaling policy does not scale in your Auto Scaling group when the specified metric has insufficient data, unless you use the `ALBRequestCountPerTarget` metric\. This works because the `ALBRequestCountPerTarget` metric emits zeros for periods with no associated data, and the target tracking policy requires metric data to interpret a low utilization trend\. To have your Auto Scaling group scale in to 0 instances when no requests are routed to the target group, the group's minimum capacity must be set to 0\. 
 + To use the `ALBRequestCountPerTarget` metric, you must specify the `ResourceLabel` parameter to identify the target group that is associated with the metric\. 
 
-### Monitoring Amazon EC2 Metrics<a name="target-tracking-monitoring"></a>
+### Monitoring Amazon EC2 metrics<a name="target-tracking-monitoring"></a>
 
 To ensure a faster response to changes in the metric value, we recommend that you scale on metrics with a 1\-minute frequency\. Scaling on metrics with a 5\-minute frequency can result in slower response times and scaling on stale metric data\. 
 
-To get this level of data for Amazon EC2 metrics, you must specifically enable detailed monitoring\. By default, Amazon EC2 instances are enabled for basic monitoring, which means metric data for instances is available at 5\-minute frequency\. For more information, see [Configuring Monitoring for Auto Scaling Instances](enable-as-instance-metrics.md)\.
+To get this level of data for Amazon EC2 metrics, you must specifically enable detailed monitoring\. By default, Amazon EC2 instances are enabled for basic monitoring, which means metric data for instances is available at 5\-minute frequency\. For more information, see [Configuring monitoring for Auto Scaling instances](enable-as-instance-metrics.md)\.
 
-### Instance Warm\-up<a name="as-target-tracking-scaling-warmup"></a>
+### Instance warm\-up<a name="as-target-tracking-scaling-warmup"></a>
 
 When you create a target tracking scaling policy, you can specify the number of seconds that it takes for a newly launched instance to warm up\. Until its specified warm\-up time has expired, an instance is not counted toward the aggregated metrics of the Auto Scaling group\. 
 
@@ -66,7 +66,7 @@ While scaling in, we consider instances that are terminating as part of the curr
 
 A scale\-in activity can't start while a scale\-out activity is in progress\.
 
-## Create a Target Tracking Scaling Policy \(Console\)<a name="policy_creating"></a>
+## Create a target tracking scaling policy \(console\)<a name="policy_creating"></a>
 
 **To create a target tracking scaling policy**
 
@@ -100,15 +100,15 @@ A scale\-in activity can't start while a scale\-out activity is in progress\.
 
 1. Choose **Create**\.
 
-## Create a Target Tracking Scaling Policy \(AWS CLI\)<a name="target-tracking-policy-creating-aws-cli"></a>
+## Create a target tracking scaling policy \(AWS CLI\)<a name="target-tracking-policy-creating-aws-cli"></a>
 
 Use the AWS CLI as follows to configure target tracking scaling policies for your Auto Scaling group\.
 
 **Topics**
-+ [Step 1: Create an Auto Scaling Group](#policy-creating-tt-aws-cli)
-+ [Step 2: Create a Target Tracking Scaling Policy](#policy-creating-ttt-aws-cli)
++ [Step 1: Create an Auto Scaling group](#policy-creating-tt-aws-cli)
++ [Step 2: Create a target tracking scaling policy](#policy-creating-ttt-aws-cli)
 
-### Step 1: Create an Auto Scaling Group<a name="policy-creating-tt-aws-cli"></a>
+### Step 1: Create an Auto Scaling group<a name="policy-creating-tt-aws-cli"></a>
 
 Use the [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/create-auto-scaling-group.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/create-auto-scaling-group.html) command to create an Auto Scaling group named `my-asg` using the launch configuration `my-launch-config`\. If you don't have a launch configuration that you'd like to use, you can create one by calling [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/create-launch-configuration.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/create-launch-configuration.html)\.
 
@@ -119,7 +119,7 @@ aws autoscaling create-auto-scaling-group --auto-scaling-group-name my-asg \
   --max-size 5 --min-size 1
 ```
 
-### Step 2: Create a Target Tracking Scaling Policy<a name="policy-creating-ttt-aws-cli"></a>
+### Step 2: Create a target tracking scaling policy<a name="policy-creating-ttt-aws-cli"></a>
 
 After you have created the Auto Scaling group, you can create a target tracking scaling policy that instructs Amazon EC2 Auto Scaling to increase and decrease the number of running EC2 instances in the group dynamically when the load on the application changes\. 
 

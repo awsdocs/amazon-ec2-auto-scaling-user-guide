@@ -1,12 +1,12 @@
-# Scaling Based on Amazon SQS<a name="as-using-sqs-queue"></a>
+# Scaling based on Amazon SQS<a name="as-using-sqs-queue"></a>
 
 This section shows you how to scale your Auto Scaling group in response to changes in system load in an Amazon Simple Queue Service \(Amazon SQS\) queue\. To learn more about how you can use Amazon SQS, see the [Amazon Simple Queue Service Developer Guide](https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/)\.
 
 There are some scenarios where you might think about scaling in response to activity in an Amazon SQS queue\. For example, suppose that you have a web app that lets users upload images and use them online\. In this scenario, each image requires resizing and encoding before it can be published\. The app runs on EC2 instances in an Auto Scaling group, and it's configured to handle your typical upload rates\. Unhealthy instances are terminated and replaced to maintain current instance levels at all times\. The app places the raw bitmap data of the images in an SQS queue for processing\. It processes the images and then publishes the processed images where they can be viewed by users\. The architecture for this scenario works well if the number of image uploads doesn't vary over time\. But if the number of uploads changes over time, you might consider using dynamic scaling to scale the capacity of your Auto Scaling group\.
 
-## Using Target Tracking with the Right Metric<a name="scale-sqs-queue-custom-metric"></a>
+## Using target tracking with the right metric<a name="scale-sqs-queue-custom-metric"></a>
 
-If you use a target tracking scaling policy based on a custom Amazon SQS queue metric, dynamic scaling can adjust to the demand curve of your application more effectively\. For more information about choosing metrics for target tracking, see [Choosing Metrics](as-scaling-target-tracking.md#available-metrics)\.
+If you use a target tracking scaling policy based on a custom Amazon SQS queue metric, dynamic scaling can adjust to the demand curve of your application more effectively\. For more information about choosing metrics for target tracking, see [Choosing metrics](as-scaling-target-tracking.md#available-metrics)\.
 
 The issue with using a CloudWatch Amazon SQS metric like `ApproximateNumberOfMessagesVisible` for target tracking is that the number of messages in the queue might not change proportionally to the size of the Auto Scaling group that processes messages from the queue\. That's because the number of messages in your SQS queue does not solely define the number of instances needed\. The number of instances in your Auto Scaling group can be driven by multiple factors, including how long it takes to process a message and the acceptable amount of latency \(queue delay\)\. 
 
@@ -27,7 +27,7 @@ The following diagram illustrates the architecture of this configuration\.
 
 ![\[Amazon EC2 Auto Scaling using queues architectural diagram\]](http://docs.aws.amazon.com/autoscaling/ec2/userguide/images/sqs-as-custom-metric-diagram.png)
 
-## Limitations and Prerequisites<a name="scale-sqs-queue-limitations"></a>
+## Limitations and prerequisites<a name="scale-sqs-queue-limitations"></a>
 
 To use this configuration, you need to be aware of the following limitations:
 + You must use the AWS CLI or AWS SDKs to publish your custom metric to CloudWatch\. You can then monitor your metric with the AWS Management Console\. 
@@ -37,16 +37,16 @@ The following sections direct you to use the AWS CLI for the tasks you need to p
 
 Before you begin, you must have an Amazon SQS queue to use\. The following sections assume that you already have a queue \(standard or FIFO\), an Auto Scaling group, and EC2 instances running the application that uses the queue\. For more information about Amazon SQS, see the [Amazon Simple Queue Service Developer Guide](https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/)\.
 
-## Configure Scaling Based on Amazon SQS<a name="scale-sqs-queue-cli"></a>
+## Configure scaling based on Amazon SQS<a name="scale-sqs-queue-cli"></a>
 
 **Topics**
-+ [Step 1: Create a CloudWatch Custom Metric](#create-sqs-cw-alarms-cli)
-+ [Step 2: Create a Target Tracking Scaling Policy](#create-sqs-policies-cli)
-+ [Step 3: Test Your Scaling Policy](#validate-sqs-scaling-cli)
++ [Step 1: Create a CloudWatch custom metric](#create-sqs-cw-alarms-cli)
++ [Step 2: Create a target tracking scaling policy](#create-sqs-policies-cli)
++ [Step 3: Test your scaling policy](#validate-sqs-scaling-cli)
 
-### Step 1: Create a CloudWatch Custom Metric<a name="create-sqs-cw-alarms-cli"></a>
+### Step 1: Create a CloudWatch custom metric<a name="create-sqs-cw-alarms-cli"></a>
 
-A custom metric is defined using a metric name and namespace of your choosing\. Namespaces for custom metrics cannot start with "AWS/"\. For more information about publishing custom metrics, see the [Publish Custom Metrics](https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/publishingMetrics.html) topic in the *Amazon CloudWatch User Guide*\.
+A custom metric is defined using a metric name and namespace of your choosing\. Namespaces for custom metrics cannot start with "AWS/"\. For more information about publishing custom metrics, see the [Publish custom metrics](https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/publishingMetrics.html) topic in the *Amazon CloudWatch User Guide*\.
 
 Follow this procedure to create the custom metric by first reading information from your AWS account\. Then, calculate the backlog per instance metric, as recommended in an earlier section\. Lastly, publish this number to CloudWatch at a 1\-minute granularity\. Whenever possible, we strongly recommend that you scale on metrics with a 1\-minute granularity to ensure a faster response to changes in system load\. 
 
@@ -76,9 +76,9 @@ Follow this procedure to create the custom metric by first reading information f
      --unit None --value 20 --dimensions MyOptionalMetricDimensionName=MyOptionalMetricDimensionValue
    ```
 
-After your application is emitting the desired metric, the data is sent to CloudWatch\. The metric is visible in the CloudWatch console\. You can access it by logging into the AWS Management Console and navigating to the CloudWatch page\. Then, view the metric by navigating to the metrics page or by searching for it using the search box\. For information about viewing metrics, see [View Available Metrics](https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/viewing_metrics_with_cloudwatch.html) in the *Amazon CloudWatch User Guide*\.
+After your application is emitting the desired metric, the data is sent to CloudWatch\. The metric is visible in the CloudWatch console\. You can access it by logging into the AWS Management Console and navigating to the CloudWatch page\. Then, view the metric by navigating to the metrics page or by searching for it using the search box\. For information about viewing metrics, see [View available metrics](https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/viewing_metrics_with_cloudwatch.html) in the *Amazon CloudWatch User Guide*\.
 
-### Step 2: Create a Target Tracking Scaling Policy<a name="create-sqs-policies-cli"></a>
+### Step 2: Create a target tracking scaling policy<a name="create-sqs-policies-cli"></a>
 
 After publishing your custom metric, create a target tracking scaling policy with a customized metric specification\. 
 
@@ -117,13 +117,13 @@ After publishing your custom metric, create a target tracking scaling policy wit
 
    This creates two alarms: one for scaling out and one for scaling in\. It also returns the Amazon Resource Name \(ARN\) of the policy that is registered with CloudWatch, which CloudWatch uses to invoke scaling whenever the metric is in breach\. 
 
-### Step 3: Test Your Scaling Policy<a name="validate-sqs-scaling-cli"></a>
+### Step 3: Test your scaling policy<a name="validate-sqs-scaling-cli"></a>
 
 After your setup is complete, verify that your scaling policy is working\. You can test it by increasing the number of messages in your SQS queue and then verifying that your Auto Scaling group has launched an additional EC2 instance\. You can also test it by decreasing the number of messages in your SQS queue and then verifying that the Auto Scaling group has terminated an EC2 instance\.
 
 **To test the scale\-out function**
 
-1. Follow the steps in [Tutorial: Sending a Message to an Amazon SQS Queue](https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-send-message.html) to add messages to your queue\. Make sure that you have increased the number of messages in the queue so that the backlog per instance metric exceeds the target value\.
+1. Follow the steps in [Tutorial: Sending a message to an Amazon SQS queue](https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-send-message.html) to add messages to your queue\. Make sure that you have increased the number of messages in the queue so that the backlog per instance metric exceeds the target value\.
 
    It can take a few minutes for your changes to trigger the CloudWatch alarm\. 
 
@@ -135,7 +135,7 @@ After your setup is complete, verify that your scaling policy is working\. You c
 
 **To test the scale\-in function**
 
-1. Follow the steps in [Tutorial: Sending a Message to an Amazon SQS Queue](https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-send-message.html) to remove messages from the queue\. Make sure that you have decreased the number of messages in the queue so that the backlog per instance metric is below the target value\.
+1. Follow the steps in [Tutorial: Sending a message to an Amazon SQS queue](https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-send-message.html) to remove messages from the queue\. Make sure that you have decreased the number of messages in the queue so that the backlog per instance metric is below the target value\.
 
    It can take a few minutes for your changes to trigger the CloudWatch alarm\. 
 

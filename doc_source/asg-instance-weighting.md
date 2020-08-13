@@ -1,11 +1,11 @@
-# Instance Weighting for Amazon EC2 Auto Scaling<a name="asg-instance-weighting"></a>
+# Instance weighting for Amazon EC2 Auto Scaling<a name="asg-instance-weighting"></a>
 
 When you configure an Auto Scaling group to launch multiple instance types, you have the option of defining the number of capacity units that each instance contributes to the desired capacity of the group, using *instance weighting*\. This allows you to specify the relative weight of each instance type in a way that directly maps to the performance of your application\. You can weight your instances to suit your specific application needs, for example, by the cores \(vCPUs\) or by memory \(GiBs\)\. 
 
 For example, let's say that you run a compute\-intensive application that performs best with at least 8 vCPUs and 15 GiB of RAM\. If you use `c5.2xlarge` as your base unit, any of the following EC2 instance types would meet your application needs\. 
 
 
-**Instance Types Example**  
+**Instance types example**  
 
 | Instance type | vCPU | Memory \(GiB\) | 
 | --- | --- | --- | 
@@ -19,12 +19,12 @@ By default, all instance types are treated as the same weight\. In other words, 
 
 With instance weighting, however, you assign a number value that specifies how many capacity units to associate with each instance type\. For example, if the instances are of different sizes, a `c5.2xlarge` instance could have the weight of 2, and a `c5.4xlarge` \(which is two times bigger\) could have the weight of 4, and so on\. Then, when Amazon EC2 Auto Scaling launches instances, their weights count toward your desired capacity\. 
 
-## Price Per Unit Hour<a name="weights-price-per-unit-hour"></a>
+## Price per unit hour<a name="weights-price-per-unit-hour"></a>
 
 The following table compares the hourly price for Spot Instances in different Availability Zones in US East \(N\. Virginia, Ohio\) with the price for On\-Demand Instances in the same Region\. The prices shown are example pricing and not current pricing\. These are your costs *per instance hour*\. 
 
 
-**Example: Spot Pricing Per Instance Hour**  
+**Example: Spot pricing per instance hour**  
 
 | Instance type | us\-east\-1a | us\-east\-1b | us\-east\-1c | On\-Demand pricing | 
 | --- | --- | --- | --- | --- | 
@@ -39,7 +39,7 @@ With instance weighting, you can evaluate your costs based on what you use *per 
 The easiest way to understand how the price *per unit hour* calculation works with weighted instances is with an example\. For example, for ease of calculation, let's say you want to launch Spot Instances only in us\-east\-1a\. The *per unit hour price* is captured below\.
 
 
-**Example: Spot Price Per Unit Hour Example**  
+**Example: Spot Price per unit hour example**  
 
 | Instance type | us\-east\-1a | Instance weight | Price per unit hour  | 
 | --- | --- | --- | --- | 
@@ -68,11 +68,11 @@ Note the following when adding or modifying weights for existing groups:
 + When modifying existing instance weights, Amazon EC2 Auto Scaling will launch or terminate instances to reach your desired capacity based on the new weights\. 
 + If you remove an instance type, any running instances of that instance type will continue to have their last updated weight values, even though the instance type has been removed\.
 
-## Add or Modify Weights for Your Auto Scaling Group<a name="add-weights"></a>
+## Add or modify weights for your Auto Scaling group<a name="add-weights"></a>
 
 You can add weights to an existing Auto Scaling group, or to a new Auto Scaling group as you create it\. You can also update an existing Auto Scaling group to define new configuration options \(Spot/On\-Demand usage, Spot allocation strategy, instance types\)\. If you change how many Spot or On\-Demand Instances you want, Amazon EC2 Auto Scaling gradually replaces existing instances to match the new purchase options\. 
 
-Before creating Auto Scaling groups using instance weighting, we recommend that you become familiar with launching groups with multiple instance types\. For more information and additional examples, see [Auto Scaling Groups with Multiple Instance Types and Purchase Options](asg-purchase-options.md)\.
+Before creating Auto Scaling groups using instance weighting, we recommend that you become familiar with launching groups with multiple instance types\. For more information and additional examples, see [Auto Scaling groups with multiple instance types and purchase options](asg-purchase-options.md)\.
 
 The following examples show how to use the AWS CLI to add weights when you create Auto Scaling groups, and to add or modify weights for existing Auto Scaling groups\. You can configure a variety of parameters in a JSON file, and then reference the JSON file as the sole parameter for your Auto Scaling group\. 
 
