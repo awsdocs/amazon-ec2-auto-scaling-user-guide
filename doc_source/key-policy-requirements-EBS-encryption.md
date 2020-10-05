@@ -136,7 +136,7 @@ For this command to succeed, the user making the request must have permissions f
   "Version": "2012-10-17",
   "Statement": [
     {
-      "Sid": "Allow creation of grant for the CMK in external account 444455556666",
+      "Sid": "AllowCreationOfGrantForTheCMKinExternalAccount444455556666",
       "Effect": "Allow",
       "Action": "kms:CreateGrant",
       "Resource": "arn:aws:kms:us-west-2:444455556666:key/1a2b3c4d-5e6f-1a2b-3c4d-5e6f1a2b3c4d"
