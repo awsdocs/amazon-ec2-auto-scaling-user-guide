@@ -1,4 +1,4 @@
-# Getting recommendations for an instance type<a name="asg-getting-recommendations"></a>
+# Getting recommendations for an instance type from AWS Compute Optimizer<a name="asg-getting-recommendations"></a>
 
 AWS provides Amazon EC2 instance recommendations to help you improve performance, save money, or both, by using features powered by AWS Compute Optimizer\. You can use these recommendations to decide whether to move to a new instance type\. 
 
@@ -15,16 +15,16 @@ To get recommendations from Compute Optimizer, you must first opt in to Compute 
 
 ## Limitations<a name="compute-optimizer-limitations"></a>
 
-Compute Optimizer currently generates recommendations for M, C, R, T, and X instance types\. Other instance types are not considered by Compute Optimizer\. When you use other instance types, they are excluded from the recommendations\. 
+Compute Optimizer generates recommendations for instances in Auto Scaling groups that are configured to launch and run M, C, R, T, and X instance types\. However, it does not generate recommendations for \-g instance types powered by AWS Graviton2 processors \(e\.g\., C6g\), and for \-n instance types that have higher network bandwidth performance \(e\.g\., M5n\)\. 
 
-Compute Optimizer currently generates recommendations for Auto Scaling groups that have the same values for desired, minimum, and maximum capacity, and that are configured to launch a single instance type\. 
+The Auto Scaling groups must also be configured to run a single instance type \(i\.e\., no mixed instance types\), must not have a scaling policy attached to them, and have the same values for desired, minimum, and maximum capacity \(i\.e\., an Auto Scaling group with a fixed number of instances\)\. Compute Optimizer generates recommendations for instances in Auto Scaling groups that meet *all* of these configuration requirements\. 
 
 ## Findings<a name="findings-classifications"></a>
 
 Compute Optimizer classifies its findings for Auto Scaling groups as follows:
 + **Not optimized** – An Auto Scaling group is considered not optimized when Compute Optimizer has identified a recommendation that can provide better performance for your workload\. 
 + **Optimized** – An Auto Scaling group is considered optimized when Compute Optimizer determines that the group is correctly provisioned to run your workload, based on the chosen instance type\. For optimized resources, Compute Optimizer might sometimes recommend a new generation instance type\. 
-+ **None** – There are no recommendations for this Auto Scaling group\. This might occur if you've been opted in to Compute Optimizer for less than 12 hours, or when the Auto Scaling group has been running for less than 30 hours, or when the Auto Scaling group or instance type is not supported by Compute Optimizer\. For more information, see [Limitations](#compute-optimizer-limitations) in the previous section\.
++ **None** – There are no recommendations for this Auto Scaling group\. This might occur if you've been opted in to Compute Optimizer for less than 12 hours, or when the Auto Scaling group has been running for less than 30 hours, or when the Auto Scaling group or instance type is not supported by Compute Optimizer\. For more information, see the [Limitations](#compute-optimizer-limitations) section\.
 
 ## Viewing recommendations<a name="viewing-recommendations"></a>
 

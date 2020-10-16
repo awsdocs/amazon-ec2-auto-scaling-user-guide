@@ -3,7 +3,7 @@
 Monitoring is an important part of maintaining the reliability, availability, and performance of Amazon EC2 Auto Scaling and your AWS solutions\. AWS provides the following monitoring tools to watch Amazon EC2 Auto Scaling, report when something is wrong, and take automatic actions when appropriate:
 
 **Health Checks**  
-Amazon EC2 Auto Scaling periodically performs health checks on the instances in your Auto Scaling group and identifies any instances that are unhealthy\. You can configure Auto Scaling groups to determine the health status of an instance using a combination of Amazon EC2 status checks, Elastic Load Balancing health checks, and custom health checks\. For more information, see [Health checks for Auto Scaling instances](healthcheck.md)\.
+Amazon EC2 Auto Scaling periodically performs health checks on the instances in your Auto Scaling group\. If an instance does not pass its health check, it is marked unhealthy and will be terminated while Amazon EC2 Auto Scaling launches a new instance in replacement\. For more information, see [Health checks for Auto Scaling instances](healthcheck.md)\.
 
 **AWS Personal Health Dashboard**  
 The Personal Health Dashboard \(PHD\) displays information, and also provides notifications that are triggered by changes in the health of AWS resources\. The information is presented in two ways: on a dashboard that shows recent and upcoming events organized by category, and in a full event log that shows all events from the past 90 days\. For more information, see [Personal Health Dashboard notifications for Amazon EC2 Auto Scaling](monitoring-personal-health-dashboard.md)\.

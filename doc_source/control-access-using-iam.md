@@ -8,9 +8,10 @@ Specific IAM permissions and an Amazon EC2 Auto Scaling service\-linked role are
 **Topics**
 + [Amazon EC2 Auto Scaling identity\-based policies](#security_iam_service-with-iam-id-based-policies)
 + [Amazon EC2 Auto Scaling resource\-based policies](#security_iam_service-with-iam-resource-based-policies)
-+ [Access control lists \(ACLs\)](#security_iam_service-with-iam-acls)
++ [Access Control Lists \(ACLs\)](#security_iam_service-with-iam-acls)
 + [Authorization based on Amazon EC2 Auto Scaling tags](#security_iam_service-with-iam-tags)
 + [Amazon EC2 Auto Scaling IAM roles](#security_iam_service-with-iam-roles)
++ [Learn more about IAM permission policies](#auto-scaling-resources-about-iam)
 
 ## Amazon EC2 Auto Scaling identity\-based policies<a name="security_iam_service-with-iam-id-based-policies"></a>
 
@@ -42,7 +43,7 @@ To see a list of Amazon EC2 Auto Scaling actions, see [Actions](https://docs.aws
 
 The `Resource` element specifies the object or objects to which the action applies\. Statements must include either a `Resource` or a `NotResource` element\. You specify a resource using an ARN or using the wildcard \(\*\) to indicate that the statement applies to all resources\.
 
-You can restrict access to specific Auto Scaling groups and launch configurations by using their ARNs to identify the resource that the IAM policy applies to\. For more information about the format of ARNs, see [Amazon Resource Names \(ARNs\) and AWS service namespaces](https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html)\.
+You can restrict access to specific Auto Scaling groups and launch configurations by using their ARNs to identify the resource that the IAM policy applies to\. For more information about the format of ARNs, see [Amazon Resource Names \(ARNs\)](https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html) in the *AWS General Reference*\.
 
 An Auto Scaling group has the following ARN\.
 
@@ -95,7 +96,7 @@ To learn with which actions you can specify the ARN of each resource, see [Actio
 
 ### Condition keys<a name="policy-auto-scaling-condition-keys"></a>
 
-The `Condition` element \(or `Condition` *block*\) lets you specify conditions in which a statement is in effect\. The `Condition` element is optional\. You can build conditional expressions that use [condition operators](https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_elements_condition_operators.html), such as equals or less than, to match the condition in the policy with values in the request\. 
+The `Condition` element \(or `Condition` *block*\) lets you specify conditions in which a statement is in effect\. The `Condition` element is optional\. You can create conditional expressions that use [condition operators](https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_elements_condition_operators.html), such as equals or less than, to match the condition in the policy with values in the request\. 
 
 If you specify multiple `Condition` elements in a statement, or multiple keys in a single `Condition` element, AWS evaluates them using a logical `AND` operation\. If you specify multiple values for a single condition key, AWS evaluates the condition using a logical `OR` operation\. All of the conditions must be met before the statement's permissions are granted\.
 
@@ -120,11 +121,7 @@ The following condition keys are specific to Amazon EC2 Auto Scaling:
 + `autoscaling:TargetGroupARNs`
 + `autoscaling:VPCZoneIdentifiers`
 
-To learn with which actions and resources you can use a condition key, see [Actions defined by Amazon EC2 Auto Scaling](https://docs.aws.amazon.com/IAM/latest/UserGuide/list_amazonec2autoscaling.html#amazonec2autoscaling-actions-as-permissions) in the *IAM User Guide*\.
-
-### Examples<a name="security_iam_service-with-iam-id-based-policies-examples"></a>
-
-To view examples of Amazon EC2 Auto Scaling identity\-based policies, see [Amazon EC2 Auto Scaling identity\-based policy examples](security_iam_id-based-policy-examples.md)\.
+To learn with which actions and resources you can use a condition key, see [Actions, resources, and condition keys for Amazon EC2 Auto Scaling](https://docs.aws.amazon.com/IAM/latest/UserGuide/list_amazonec2autoscaling.html) in the *IAM User Guide*\.
 
 ## Amazon EC2 Auto Scaling resource\-based policies<a name="security_iam_service-with-iam-resource-based-policies"></a>
 
@@ -132,7 +129,7 @@ Other AWS services, such as Amazon Simple Storage Service, support resource\-bas
 
 Amazon EC2 Auto Scaling does not support resource\-based policies\.
 
-## Access control lists \(ACLs\)<a name="security_iam_service-with-iam-acls"></a>
+## Access Control Lists \(ACLs\)<a name="security_iam_service-with-iam-acls"></a>
 
 Amazon EC2 Auto Scaling does not support Access Control Lists \(ACLs\)\. 
 
@@ -145,9 +142,9 @@ To use tags with IAM policies, you provide tag information in the [condition ele
 + Use `aws:RequestTag/tag-key: tag-value` to require that a specific tag be present \(or not present\) in a request\. 
 + Use `aws:TagKeys [tag-key, ...]` to require that specific tag keys be present \(or not present\) in a request\. 
 
-To view an example policy for controlling access to an Auto Scaling group based on the tags on that Auto Scaling group, see [Control which scaling policies can be deleted](security_iam_id-based-policy-examples.md#policy-example-delete-policy)\. 
+To see examples of identity\-based policies based on tags, see [Amazon EC2 Auto Scaling identity\-based policy examples](security_iam_id-based-policy-examples.md)\. 
 
-For additional examples for controlling access based on tags, see [Amazon EC2 Auto Scaling identity\-based policy examples](security_iam_id-based-policy-examples.md)\. 
+To view an example policy that controls who can delete scaling policies based on the tags on the Auto Scaling group, see [Control which scaling policies can be deleted](security_iam_id-based-policy-examples.md#policy-example-delete-policy)\.
 
 ## Amazon EC2 Auto Scaling IAM roles<a name="security_iam_service-with-iam-roles"></a>
 
@@ -174,3 +171,13 @@ Amazon EC2 Auto Scaling supports service roles for lifecycle hook notifications\
 ### Choosing an IAM role in Amazon EC2 Auto Scaling<a name="security_iam_service-with-iam-roles-choose"></a>
 
 If you have previously created an IAM role that your applications running on Amazon EC2 can assume, you can choose this role when you create a launch template or launch configuration\. Amazon EC2 Auto Scaling provides you with a list of roles to choose from\. When creating these roles, it's important to associate least privilege IAM policies that restrict access to the specific API calls that the application requires\. For more information, see [IAM role for applications that run on Amazon EC2 instances](us-iam-role.md)\. 
+
+## Learn more about IAM permission policies<a name="auto-scaling-resources-about-iam"></a>
+
+Use the following topics to learn more about creating IAM permission policies to control who can or cannot use specific API actions\.
++ Amazon EC2 Auto Scaling
+  + [Actions, resources, and condition keys for Amazon EC2 Auto Scaling](https://docs.aws.amazon.com/IAM/latest/UserGuide/list_amazonec2autoscaling.html) in the *IAM User Guide*
+  + [Amazon EC2 Auto Scaling identity\-based policy examples](security_iam_id-based-policy-examples.md)
++ Amazon EC2 launch templates
+  + [Actions, resources, and condition keys for Amazon EC2](https://docs.aws.amazon.com/IAM/latest/UserGuide/list_amazonec2.html) in the *IAM User Guide*
+  + [Launch template support](ec2-auto-scaling-launch-template-permissions.md)

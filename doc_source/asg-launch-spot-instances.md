@@ -1,9 +1,11 @@
-# Launching Spot Instances in your Auto Scaling group<a name="asg-launch-spot-instances"></a>
+# Requesting Spot Instances for fault\-tolerant and flexible applications<a name="asg-launch-spot-instances"></a>
 
-Spot Instances are a cost\-effective choice compared to On\-Demand Instances, if you can be flexible about when your applications run and if your applications can be interrupted\. This topic describes how to launch only Spot Instances in your Auto Scaling group by specifying settings in a *launch configuration* or *launch template*, rather than in the Auto Scaling group itself\.
+Amazon EC2 Spot Instances are spare capacity available at steep discounts compared to the EC2 On\-Demand price\. You can use Spot Instances for various fault\-tolerant and flexible applications\.
+
+This topic describes how to launch only Spot Instances in your Auto Scaling group by specifying settings in a launch configuration, rather than in the Auto Scaling group itself\. The information in this topic also applies to Auto Scaling groups that request Spot Instances with a launch template\. 
 
 **Important**  
-You can specify the same settings that are used to launch Spot Instances as part of the settings of an Auto Scaling group\. When you specify the settings as part of the Auto Scaling group, you can specify additional options\. For example, you can specify whether to launch only Spot Instances, or a combination of both On\-Demand Instances and Spot Instances\. For more information, see [Auto Scaling groups with multiple instance types and purchase options](asg-purchase-options.md)\. 
+Spot Instances are typically used to supplement On\-Demand Instances\. For this scenario, you can specify the same settings that are used to launch Spot Instances as part of the settings of an Auto Scaling group\. When you specify the settings as part of the Auto Scaling group, you can request to launch Spot Instances only after launching a certain number of On\-Demand Instances and then continue to launch some combination of On\-Demand Instances and Spot Instances as the group scales\. For more information, see [Auto Scaling groups with multiple instance types and purchase options](asg-purchase-options.md)\. 
 
 Before launching Spot Instances using Amazon EC2 Auto Scaling, we recommend that you become familiar with launching and managing Spot Instances using Amazon EC2\. For more information, see [Spot Instances](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-spot-instances.html) in the *Amazon EC2 User Guide for Linux Instances*\.
 

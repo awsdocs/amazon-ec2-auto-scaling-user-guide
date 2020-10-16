@@ -7,7 +7,7 @@ After you change the launch configuration for an Auto Scaling group, any new ins
 **Note**  
 With the maximum instance lifetime and instance refresh features, you can also replace all instances in the Auto Scaling group to launch new instances that use the new launch configuration\. For more information, see [Replacing Auto Scaling instances based on maximum instance lifetime](asg-max-instance-lifetime.md) and [Replacing Auto Scaling instances based on an instance refresh](asg-instance-refresh.md)\.
 
-**To change the launch configuration for an Auto Scaling group \(new console\)**
+**To change the launch configuration for an Auto Scaling group \(console\)**
 
 1. Open the Amazon EC2 console at [https://console\.aws\.amazon\.com/ec2/](https://console.aws.amazon.com/ec2/)\.
 
@@ -28,26 +28,6 @@ With the maximum instance lifetime and instance refresh features, you can also r
 1. For **Launch configuration**, select the new launch configuration\.
 
 1. When you have finished, choose **Update**\. 
-
-**To change the launch configuration for an Auto Scaling group \(old console\)**
-
-1. Open the Amazon EC2 console at [https://console\.aws\.amazon\.com/ec2/](https://console.aws.amazon.com/ec2/)\.
-
-1. On the navigation pane, under **AUTO SCALING**, choose **Launch Configurations**\.
-
-1. Select the launch configuration and choose **Actions**, **Copy launch configuration**\. This sets up a new launch configuration with the same options as the original, but with "Copy" added to the name\.
-
-1. On the **Copy Launch Configuration** page, edit the configuration options as needed and choose **Create launch configuration**\.
-
-1. On the confirmation page, choose **View your Auto Scaling groups**\.
-
-1. Select the check box next to the Auto Scaling group\. 
-
-   A split pane opens up in the bottom part of the page, showing information about the group that's selected\. 
-
-1. Choose **Details**, **Edit**\. 
-
-1. Select the new launch configuration from **Launch Configuration** and choose **Save**\.
 
 **To change the launch configuration for an Auto Scaling group \(AWS CLI\)**
 

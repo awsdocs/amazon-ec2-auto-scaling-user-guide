@@ -94,7 +94,7 @@ You can suspend and resume individual processes or all processes\.
 
    A split pane opens up in the bottom part of the **Auto Scaling groups** page, showing information about the group that's selected\. 
 
-1. On the **Details** tab, choose **Advanced configurations**, **Edit**\. \(Old console: On the **Details** tab, choose **Edit**\.\)
+1. On the **Details** tab, choose **Advanced configurations**, **Edit**\.
 
 1. For **Suspended processes**, choose the process to suspend\.
 

@@ -36,7 +36,7 @@ You can create scheduled actions that scale one time only or that scale on a rec
 
    A split pane opens up in the bottom part of the **Auto Scaling groups** page, showing information about the group that's selected\. 
 
-1. On the **Automatic scaling** tab, in **Scheduled actions**, choose **Create scheduled action**\. \(Old console: The **Scheduled Actions** tab is where you can create a scheduled action\.\) 
+1. On the **Automatic scaling** tab, in **Scheduled actions**, choose **Create scheduled action**\.
 
 1. In the **Create scheduled action** dialog box, do the following:
    + For **Name**, enter a name for the scheduled action\.
@@ -61,7 +61,7 @@ If your requirements change, you can update a scheduled action\.
 
    A split pane opens up in the bottom part of the **Auto Scaling groups** page, showing information about the group that's selected\. 
 
-1. On the **Automatic scaling** tab, in **Scheduled actions**, select a scheduled action\. \(Old console: The **Scheduled Actions** tab is where you can select the scheduled action\.\) 
+1. On the **Automatic scaling** tab, in **Scheduled actions**, select a scheduled action\.
 
 1. Choose **Actions**, **Edit**\.
 
@@ -84,7 +84,7 @@ When you no longer need a scheduled action, you can delete it\.
 
 1. Select your Auto Scaling group\.
 
-1. On the **Automatic scaling** tab, in **Scheduled actions**, select a scheduled action\. \(Old console: The **Scheduled Actions** tab is where you can select the scheduled action\.\) 
+1. On the **Automatic scaling** tab, in **Scheduled actions**, select a scheduled action\.
 
 1. Choose **Actions**, **Delete**\.
 

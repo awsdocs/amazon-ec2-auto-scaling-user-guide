@@ -12,7 +12,7 @@ Before you can replace a launch configuration in an Auto Scaling group, you must
 
 When you replace a launch configuration with a launch template, your `ec2:RunInstances` permissions are checked\. If you are attempting to use a launch template and you do not have sufficient permissions, you receive an error that you're not authorized to use the launch template\. For information about the required IAM permissions, see [Launch template support](ec2-auto-scaling-launch-template-permissions.md)\.
 
-**To replace the launch configuration for an Auto Scaling group \(new console\)**
+**To replace the launch configuration for an Auto Scaling group \(console\)**
 
 1. Open the Amazon EC2 console at [https://console\.aws\.amazon\.com/ec2/](https://console.aws.amazon.com/ec2/)\.
 
@@ -31,26 +31,6 @@ When you replace a launch configuration with a launch template, your `ec2:RunIns
 1. For **Version**, select the launch template version, as needed\. After you create versions of a launch template, you can choose whether the Auto Scaling group uses the default or the latest version of the launch template when scaling out\.
 
 1. When you have finished, choose **Update**\. 
-
-**To replace the launch configuration for an Auto Scaling group \(old console\)**
-
-1. Open the Amazon EC2 console at [https://console\.aws\.amazon\.com/ec2/](https://console.aws.amazon.com/ec2/)\.
-
-1. On the navigation pane, under **AUTO SCALING**, choose **Auto Scaling Groups**\.
-
-1. Select the check box next to your Auto Scaling group\. 
-
-   A split pane opens up in the bottom part of the page, showing information about the group that's selected\. 
-
-1. Choose **Details, Edit**\. 
-
-1. For **Launch Instances Using**, choose the **Launch Template** option\.
-
-1. For **Launch Template**, select your launch template\.
-
-1. For **Launch Template Version**, select the launch template version, as needed\. After you create versions of a launch template, you can choose whether the Auto Scaling group uses the default or the latest version of the launch template when scaling out\.
-
-1. When you have finished, choose **Save**\. 
 
 **To replace a launch configuration using the command line**
 

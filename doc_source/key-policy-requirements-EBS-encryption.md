@@ -1,16 +1,19 @@
 # Required CMK key policy for use with encrypted volumes<a name="key-policy-requirements-EBS-encryption"></a>
 
-When creating an encrypted Amazon EBS snapshot or a launch template that specifies encrypted volumes, or enabling encryption by default, you can choose one of the following AWS Key Management Service customer master keys \(CMK\) to encrypt your data: 
+Amazon EC2 Auto Scaling supports [service\-linked roles](autoscaling-service-linked-role.md), a new type of IAM role that gives you a more secure and transparent way to delegate permissions to AWS services\. Amazon EC2 Auto Scaling service\-linked roles are predefined by Amazon EC2 Auto Scaling and include all the permissions that the service requires to call other AWS services on your behalf\. The predefined permissions also include access to your AWS managed customer master keys \(CMKs\)\. However, they do not include access to your customer managed CMKs, allowing you to maintain full control over these keys\.
+
+## Configuring key policies<a name="configuring-key-policies"></a>
+
+When creating an encrypted Amazon EBS snapshot or a launch template that specifies encrypted volumes, or enabling encryption by default, you can choose one of the following AWS Key Management Service CMKs to encrypt your data: 
 + [AWS managed CMK](https://docs.aws.amazon.com/kms/latest/developerguide/concepts.html#aws-managed-cmk) — An encryption key in your account that Amazon EBS creates, owns, and manages\. This is the default encryption key for a new account\. The AWS managed CMK is used for encryption unless you specify a customer managed CMK\. 
 + [Customer managed CMK](https://docs.aws.amazon.com/kms/latest/developerguide/concepts.html#customer-cmk) — A custom encryption key that you create, own, and manage\. For more information, see [Creating keys](https://docs.aws.amazon.com/kms/latest/developerguide/create-keys.html) in the *AWS Key Management Service Developer Guide*\. 
 
   Note: Amazon EBS does not support asymmetric CMKs\. 
 
+If you specify a customer managed CMK for Amazon EBS encryption, you must give the appropriate service\-linked role access to the CMK so that Amazon EC2 Auto Scaling can launch instances on your behalf\. To do this, you must modify the CMK's key policy either when the CMK is created or at a later time\. 
+
+**Note**  
 Amazon EC2 Auto Scaling does not need additional authorization to use the default AWS managed CMK to protect the encrypted volumes in your AWS account\. 
-
-If you specify a customer managed CMK for Amazon EBS encryption, you must give the appropriate [service\-linked role](autoscaling-service-linked-role.md) access to the CMK so that Amazon EC2 Auto Scaling can launch instances on your behalf\. To do this, you must modify the CMK's key policy either when the CMK is created or at a later time\. 
-
-## Configuring key policies<a name="configuring-key-policies"></a>
 
 Use the examples on this page to configure a key policy to give Amazon EC2 Auto Scaling access to your customer managed CMK\. You must, at minimum, add two policy statements to your CMK's key policy for it to work with Amazon EC2 Auto Scaling\.
 + The first statement allows the IAM identity specified in the `Principal` element to use the CMK directly\. It includes permissions to perform the AWS KMS `Encrypt`, `Decrypt`, `ReEncrypt*`, `GenerateDataKey*`, and `DescribeKey` operations on the CMK\. 

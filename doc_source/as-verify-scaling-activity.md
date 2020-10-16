@@ -2,13 +2,11 @@
 
 After you create a scaling policy, Amazon EC2 Auto Scaling starts evaluating the policy against the metric\. The metric alarm goes to ALARM state when the metric breaches the threshold for a specified number of evaluation periods\. This means that a scaling policy could trigger a scaling action soon after it's created\. After Amazon EC2 Auto Scaling changes capacity in response to a scaling policy, you can verify the scaling activity in your account\. If you want to receive email notification from Amazon EC2 Auto Scaling informing you that a scaling action was triggered, follow the instructions in [Getting Amazon SNS notifications when your Auto Scaling group scales](ASGettingNotifications.md)\.
 
-**To view the scaling activities for your Auto Scaling group \(new console\)**
+**To view the scaling activities for your Auto Scaling group \(console\)**
 
 1. Open the Amazon EC2 console at [https://console\.aws\.amazon\.com/ec2/](https://console.aws.amazon.com/ec2/)\.
 
 1. On the navigation pane, under **AUTO SCALING**, choose **Auto Scaling Groups**\.
-
-1. The original console is open by default\. To access the new console, on the banner at the top of the page, choose **Go to the new console**\.
 
 1. Search for the name of the Auto Scaling group\.
 

@@ -80,7 +80,7 @@ A scale\-in activity can't start while a scale\-out activity is in progress\.
 
 1. Verify that the minimum and maximum size limits are appropriately set\. For example, if your group is already at its maximum size, specify a new maximum in order to scale out\. Amazon EC2 Auto Scaling does not scale your group below the minimum capacity or above the maximum capacity\. To update your group, on the **Details** tab, change the current settings for minimum and maximum capacity\. 
 
-1. On the **Automatic scaling** tab, in **Scaling policies**, choose **Add policy**\. \(Old console: The **Scaling Policies** tab is where you can add the policy\.\) 
+1. On the **Automatic scaling** tab, in **Scaling policies**, choose **Add policy**\.
 
 1. <a name="policy-creating-scalingpolicies-console"></a>To define a policy, do the following:
 

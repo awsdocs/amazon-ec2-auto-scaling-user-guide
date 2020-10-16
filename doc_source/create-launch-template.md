@@ -125,7 +125,7 @@ The following steps discuss the most useful settings to pay attention to\. For m
 
 1. For **Advanced details**, expand the section to view the fields\.
 
-1. For **Purchasing option**, you can choose **Request Spot Instances** to request Spot Instances at the Spot price, capped at the On\-Demand price, and choose **Customize** to change the default Spot Instance settings\. For an Auto Scaling group, you must specify a one\-time request with no end date \(the default\)\. For more information, see [Launching Spot Instances in your Auto Scaling group](asg-launch-spot-instances.md)\. 
+1. For **Purchasing option**, you can choose **Request Spot Instances** to request Spot Instances at the Spot price, capped at the On\-Demand price, and choose **Customize** to change the default Spot Instance settings\. For an Auto Scaling group, you must specify a one\-time request with no end date \(the default\)\. For more information, see [Requesting Spot Instances for fault\-tolerant and flexible applications](asg-launch-spot-instances.md)\. 
 **Note**  
 If you leave this setting disabled, you can request Spot Instances later in your Auto Scaling group\. This also gives you the option of specifying multiple instance types\. That way, if Amazon EC2 needs to reclaim your Spot Instances, we can launch replacement instances from another Spot pool after the Spot Instances in your group are terminated\. For more information, see [Auto Scaling groups with multiple instance types and purchase options](asg-purchase-options.md)\.
 
@@ -135,7 +135,7 @@ If you leave this setting disabled, you can request Spot Instances later in your
 
 1. For **Detailed CloudWatch monitoring**, choose whether to enable the instances to publish metric data at 1\-minute intervals to Amazon CloudWatch\. Additional charges apply\. For more information, see [Configuring monitoring for Auto Scaling instances](enable-as-instance-metrics.md)\.
 
-1. For **T2/T3 Unlimited**, choose whether to enable applications to burst beyond the baseline for as long as needed\. This field is only valid for T2, T3, and T3a instances\. Additional charges may apply\. For more information, see [Using an Auto Scaling group to launch a burstable performance instance as unlimited](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/burstable-performance-instances-how-to.html#burstable-performance-instances-auto-scaling-grp) in the *Amazon EC2 User Guide for Linux Instances*\.
+1. For **T2/T3 Unlimited**, choose whether to enable applications to burst beyond the baseline for as long as needed\. This field is only valid for T2, T3, and T3a instances\. Additional charges may apply\. For more information, see [Using an Auto Scaling group to launch a burstable performance instance as Unlimited](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/burstable-performance-instances-how-to.html#burstable-performance-instances-auto-scaling-grp) in the *Amazon EC2 User Guide for Linux Instances*\.
 
 1. For **Placement group name**, you can specify a placement group in which to launch the instances\. Not all instance types can be launched in a placement group\. If you configure an Auto Scaling group using a CLI command that specifies a different placement group, the setting is ignored in favor of the one specified for the Auto Scaling group\.
 
@@ -145,7 +145,7 @@ If you leave this setting disabled, you can request Spot Instances later in your
 
    If you chose **Dedicated Hosts**, complete the following information:
 
-   1. For **Tenancy host resource group**, you can specify a host resource group for a BYOL AMI to use on Dedicated Hosts\. You do not have to have already allocated Dedicated Hosts in your account before you use this feature\. Your instances will automatically launch onto Dedicated Hosts regardless\. Note that an AMI based on a license configuration association can be mapped to only one host resource group at a time\. For more information, see [Host Resource Groups](https://docs.aws.amazon.com/license-manager/latest/userguide/host-resource-groups.html) in the *AWS License Manager User Guide*\. 
+   1. For **Tenancy host resource group**, you can specify a host resource group for a BYOL AMI to use on Dedicated Hosts\. You do not have to have already allocated Dedicated Hosts in your account before you use this feature\. Your instances will automatically launch onto Dedicated Hosts regardless\. Note that an AMI based on a license configuration association can be mapped to only one host resource group at a time\. For more information, see [Host resource groups](https://docs.aws.amazon.com/license-manager/latest/userguide/host-resource-groups.html) in the *AWS License Manager User Guide*\. 
 
 1. For **License configurations**, specify the license configuration to use\. You can launch instances against the specified license configuration to track your license usage\. For more information, see [Create a license configuration](https://docs.aws.amazon.com/license-manager/latest/userguide/create-license-configuration.html) in the *AWS License Manager User Guide*\.
 
@@ -171,9 +171,11 @@ If you leave this setting disabled, you can request Spot Instances later in your
 
 1. On the navigation pane, under **INSTANCES**, choose **Instances**\.
 
-1. Select the instance and choose **Actions**, **Create Template from Instance**\.
+1. Select the instance and choose **Actions**, **Create template from instance**\.
 
-1. Provide a name and description\. Adjust any other launch parameters as required, and choose **Create Launch Template**\.
+1. Provide a name and description\. Adjust any other launch parameters as required, and choose **Create launch template**\. 
+
+1. To create an Auto Scaling group, choose **Create Auto Scaling group** from the confirmation page\.
 
 ## Creating a launch template \(AWS CLI\)<a name="create-launch-template-aws-cli"></a>
 

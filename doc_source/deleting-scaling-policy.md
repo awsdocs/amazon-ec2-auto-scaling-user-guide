@@ -12,7 +12,7 @@ After you no longer need a scaling policy, you can delete it\. Depending on the 
 
    A split pane opens up in the bottom part of the **Auto Scaling groups** page, showing information about the group that's selected\. 
 
-1. On the **Automatic scaling** tab, in **Scaling policies**, select a scaling policy, and then choose **Actions**, **Delete**\. \(Old console: The **Scaling Policies** tab is where you can delete the policy\.\) 
+1. On the **Automatic scaling** tab, in **Scaling policies**, select a scaling policy, and then choose **Actions**, **Delete**\.
 
 1. When prompted for confirmation, choose **Yes, Delete**\.
 

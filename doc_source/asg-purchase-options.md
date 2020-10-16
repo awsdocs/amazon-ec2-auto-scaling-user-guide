@@ -100,9 +100,7 @@ IAM users can create an Auto Scaling group using a launch template only if they 
 
 Follow these steps to create a fleet of On\-Demand Instances and Spot Instances that you can scale\.
 
-Amazon EC2 Auto Scaling has changed the user interface\. By default, you're shown the new user interface, but you can choose to return to the old user interface\. This topic contains steps for each\. 
-
-**To create an Auto Scaling group with multiple purchase options \(new console\)**
+**To create an Auto Scaling group with multiple purchase options \(console\)**
 
 1. Open the Amazon EC2 console at [https://console\.aws\.amazon\.com/ec2/](https://console.aws.amazon.com/ec2/)\.
 
@@ -169,62 +167,6 @@ Amazon EC2 Auto Scaling has changed the user interface\. By default, you're show
 1. \(Optional\) To add tags, choose **Add tag**, provide a tag key and value for each tag, and then choose **Next**\. For more information, see [Tagging Auto Scaling groups and instances](autoscaling-tagging.md)\.
 
 1. On the **Review** page, choose **Create Auto Scaling group**\.
-
-**To create an Auto Scaling group with multiple purchase options \(old console\)**
-
-1. Open the Amazon EC2 console at [https://console\.aws\.amazon\.com/ec2/](https://console.aws.amazon.com/ec2/)\.
-
-1. On the navigation bar at the top of the screen, choose the same AWS Region that you used when you created the launch template\.
-
-1. On the navigation pane, under **AUTO SCALING**, choose **Auto Scaling Groups**\.
-
-1. Choose **Create Auto Scaling group**\.
-
-1. Choose **Launch Template**, choose your launch template, and then choose **Next Step**\.
-
-1. On the **Configure Auto Scaling group details** page, for **Group name**, enter a name for your Auto Scaling group\.
-
-1. For **Launch template version**, choose whether the Auto Scaling group uses the default, the latest, or a specific version of the launch template when scaling out\.
-
-1. For **Fleet Composition**, choose **Combine purchase options and instances** to launch instances across multiple instance types using both On\-Demand and Spot purchase options\.
-
-1. For **Instance Types**, do the following:
-
-   1. Choose the instance types to use as overrides\. By default, a single instance type is specified by the chosen launch template, but it can be changed if you want to specify a different instance type\. When choosing multiple instance types, the order in which you add instance types sets their priority for On\-Demand Instances\. The instance type at the top of the list is prioritized the highest when the Auto Scaling group launches your On\-Demand capacity\. 
-
-   1. \(Optional\) To use [instance weighting](asg-instance-weighting.md), assign each instance type a relative weight that corresponds with how much the instance should count toward the desired capacity of the Auto Scaling group\.
-
-1. For **Instances Distribution**, choose whether to keep or edit the default settings\. Clearing the box for **Use the default settings to get started quickly** allows you to edit the default settings\. 
-
-1. If you chose to edit the default settings, provide the following information\. 
-   + For **Maximum Spot Price**, choose **Use default** to cap your maximum Spot price at the On\-Demand price\. Or choose **Set your maximum price** and enter a value to specify the maximum price you are willing to pay per instance per hour for Spot Instances\.
-   + For **Spot Allocation Strategy**, the default is **Launch Spot Instances optimally based on the available Spot capacity per Availability Zone**\. To use the lowest price strategy instead, choose **Diversify Spot Instances across your N lowest priced instance types per Availability Zone**, and then enter the number of Spot pools to use, or accept the default \(2\)\.
-   + For **Optional On\-Demand Base**, specify the minimum number of instances for the Auto Scaling group's initial capacity that must be fulfilled by On\-Demand Instances\.
-   + For **On\-Demand Percentage Above Base**, specify the percentages of On\-Demand Instances and Spot Instances for your additional capacity beyond the optional On\-Demand base amount\. 
-
-1. For **Group size**, enter the initial number of instances for your Auto Scaling group\.
-
-1. For **Network**, choose a VPC for your Auto Scaling group\. Launching instances using multiple instance types and purchase options is not supported in EC2\-Classic\. 
-
-1. For **Subnet**, choose one or more subnets in the specified VPC\. Use subnets in multiple Availability Zones for high availability\. For more information about high availability with Amazon EC2 Auto Scaling, see [Distributing Instances Across Availability Zones](auto-scaling-benefits.md#arch-AutoScalingMultiAZ)\.
-
-1. \(Optional\) To register your Amazon EC2 instances with a load balancer, choose **Advanced Details**, choose **Receive traffic from one or more load balancers**, and choose one or more Classic Load Balancers or target groups\.
-
-1. Choose **Next: Configure scaling policies**\.
-
-1. On the **Configure scaling policies** page, choose one of the following options, and then choose **Next: Configure Notifications**:
-   + To manually adjust the size of the Auto Scaling group as needed, choose **Keep this group at its initial size**\. For more information, see [Manual scaling for Amazon EC2 Auto Scaling](as-manual-scaling.md)\.
-   + To automatically adjust the size of the Auto Scaling group based on criteria that you specify, choose **Use scaling policies to adjust the capacity of this group** and follow the directions\. For more information, see [Configure Scaling Policies](as-scaling-target-tracking.md#policy-creating-scalingpolicies-console)\.
-
-1. \(Optional\) To receive notifications, choose **Add notification**, configure the notification, and then choose **Next: Configure Tags**\.
-
-1. \(Optional\) To add tags, choose **Edit tags**, provide a tag key and value for each tag, and then choose **Review**\.
-
-   Alternatively, you can add tags later on\. For more information, see [Tagging Auto Scaling groups and instances](autoscaling-tagging.md)\.
-
-1. On the **Review** page, choose **Create Auto Scaling group**\.
-
-1. On the **Auto Scaling group creation status** page, choose **Close**\.
 
 ## Creating an Auto Scaling group \(AWS CLI\)<a name="create-asg-multiple-purchase-options-aws-cli"></a>
 

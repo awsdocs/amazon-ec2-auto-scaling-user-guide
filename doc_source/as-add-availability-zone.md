@@ -15,7 +15,7 @@ You can expand the availability of your scaled and load\-balanced application by
 
 ## Add an Availability Zone \(console\)<a name="as-add-az-console"></a>
 
-Use the following procedure to expand your Auto Scaling group to an additional subnet\.
+Use the following procedure to expand your Auto Scaling group to a subnet in an additional Availability Zone\.
 
 1. Open the Amazon EC2 console at [https://console\.aws\.amazon\.com/ec2/](https://console.aws.amazon.com/ec2/)\.
 
@@ -25,7 +25,7 @@ Use the following procedure to expand your Auto Scaling group to an additional s
 
    A split pane opens up in the bottom part of the **Auto Scaling groups** page, showing information about the group that's selected\. 
 
-1. On the **Details** tab, choose **Network**, **Edit**\. \(Old console: On the **Details** tab, choose **Edit**\.\)
+1. On the **Details** tab, choose **Network**, **Edit**\.
 
 1. In **Subnets**, choose the subnet corresponding to the Availability Zone\.
 

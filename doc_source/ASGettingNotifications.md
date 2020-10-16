@@ -103,13 +103,13 @@ You can configure your Auto Scaling group to send notifications to Amazon SNS wh
 
    A split pane opens up in the bottom part of the page, showing information about the group that's selected\. 
 
-1. On the **Activity** tab, choose **Activity notifications**, **Create notification**\. \(Old console: On the **Notifications** tab, choose **Create notification**\.\)
+1. On the **Activity** tab, choose **Activity notifications**, **Create notification**\.
 
 1. On the **Create notifications** pane, do the following:
 
-   1. For **SNS Topic**, select your SNS topic\. \(Old console: For **Send a notification to:**, select your SNS topic\.\)
+   1. For **SNS Topic**, select your SNS topic\.
 
-   1. For **Event types**, select the events to send the notifications\. \(Old console: For **Whenever instances**, select the events to send the notifications for\.\)
+   1. For **Event types**, select the events to send the notifications\.
 
    1. Choose **Create**\.
 
@@ -134,7 +134,7 @@ To generate a notification for a launch event, update the Auto Scaling group by 
 
    A split pane opens up in the bottom part of the **Auto Scaling groups** page, showing information about the group that's selected\. 
 
-1. On the **Details** tab, choose **Group details**, **Edit**\. \(Old console: On the **Details** tab, choose **Edit**\.\)
+1. On the **Details** tab, choose **Group details**, **Edit**\.
 
 1. For **Desired capacity**, increase the current value by 1\. If this value exceeds **Maximum capacity**, you must also increase the value of **Maximum capacity** by 1\.
 
@@ -154,7 +154,7 @@ You can delete your Amazon EC2 Auto Scaling notification configuration if it is 
 
 1. Select your Auto Scaling group\.
 
-1. On the **Activity** tab, select the check box next to the notification you want to delete and then choose **Actions**, **Delete**\. \(Old console: On the **Notifications** tab, choose **Delete** next to the notification\.\)
+1. On the **Activity** tab, select the check box next to the notification you want to delete and then choose **Actions**, **Delete**\.
 
 **To delete Amazon EC2 Auto Scaling notification configuration \(AWS CLI\)**  
 Use the following delete\-notification\-configuration command\.

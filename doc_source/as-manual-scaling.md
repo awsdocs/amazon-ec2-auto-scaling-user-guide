@@ -18,7 +18,7 @@ The following example assumes that you've created an Auto Scaling group with a m
 
    A split pane opens up in the bottom part of the **Auto Scaling groups** page, showing information about the group that's selected\. 
 
-1. On the **Details** tab, choose **Group details**, **Edit**\. \(Old console: On the **Details** tab, choose **Edit**\.\)
+1. On the **Details** tab, choose **Group details**, **Edit**\.
 
 1. For **Desired capacity**, increase the desired capacity by one\. For example, if the current value is `1`, enter `2`\.
 

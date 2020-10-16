@@ -10,4 +10,6 @@ Keep in mind that whenever you create an Auto Scaling group, you must specify a 
 + [Creating a launch configuration](create-launch-config.md)
 + [Creating a launch configuration using an EC2 instance](create-lc-with-instanceID.md)
 + [Changing the launch configuration for an Auto Scaling group](change-launch-config.md)
++ [Requesting Spot Instances for fault\-tolerant and flexible applications](asg-launch-spot-instances.md)
++ [Configuring instance tenancy with Amazon EC2 Auto Scaling](auto-scaling-dedicated-instances.md)
 + [Launching Auto Scaling instances in a VPC](asg-in-vpc.md)

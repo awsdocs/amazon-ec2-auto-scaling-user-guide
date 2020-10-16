@@ -35,8 +35,6 @@ You can enable and disable Auto Scaling group metrics using the AWS Management C
 
 1. On the **Monitoring** tab, select the **Auto Scaling group metrics collection**, **Enable** check box located at the top of the page under **Auto Scaling**\. 
 
-   \(Old console: On the **Monitoring** tab, for **Auto Scaling Metrics**, choose **Enable Group Metrics Collection**\. If you don't see this option, select **Auto Scaling** for **Display**\.\)
-
 **To disable group metrics \(console\)**
 
 1. Open the Amazon EC2 console at [https://console\.aws\.amazon\.com/ec2/](https://console.aws.amazon.com/ec2/)\.
@@ -46,8 +44,6 @@ You can enable and disable Auto Scaling group metrics using the AWS Management C
 1. Select your Auto Scaling group\.
 
 1. On the **Monitoring** tab, clear the **Auto Scaling group metrics collection**, **Enable** check box\. 
-
-   \(Old console: On the **Monitoring** tab, for **Auto Scaling Metrics**, choose **Disable Group Metrics Collection**\.\)
 
 **To enable group metrics \(AWS CLI\)**  
 Enable one or more group metrics using the [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/enable-metrics-collection.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/enable-metrics-collection.html) command\. For example, the following command enables the GroupDesiredCapacity metric\.

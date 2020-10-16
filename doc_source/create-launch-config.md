@@ -16,7 +16,7 @@ An Auto Scaling group is associated with one launch configuration at a time, and
 
 ## Creating your launch configuration \(console\)<a name="create-launch-configuration"></a>
 
-**To create a launch configuration \(new console\)**
+**To create a launch configuration \(console\)**
 
 1. Open the Amazon EC2 console at [https://console\.aws\.amazon\.com/ec2/](https://console.aws.amazon.com/ec2/)\.
 
@@ -26,21 +26,31 @@ An Auto Scaling group is associated with one launch configuration at a time, and
 
 1. Choose **Create launch configuration**, and enter a name for your launch configuration\. 
 
-1. For **Amazon machine image \(AMI\) **, choose an AMI\. To find a specific AMI, you can [find a suitable AMI](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/finding-an-ami.html), make note of its ID, and enter the ID as search criteria\.
+1. For **Amazon machine image \(AMI\) **, choose an AMI\. To find a specific AMI, you can[ find a suitable AMI](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/finding-an-ami.html), make note of its ID, and enter the ID as search criteria\.
+
+   To get the ID of the Amazon Linux 2 AMI:
+
+   1. Open the Amazon EC2 console at [https://console\.aws\.amazon\.com/ec2/](https://console.aws.amazon.com/ec2/)\.
+
+   1. In the navigation pane, under **Instances**, choose **Instances**, and then choose **Launch instances**\.
+
+   1. On the **Quick Start** tab of the **Choose an Amazon Machine Image** page, note the ID of the AMI next to **Amazon Linux 2 AMI \(HVM\)**\.
 
 1. For **Instance type**, select a hardware configuration for your instances\.
 
-1. In **Additional configuration**, pay attention to the following fields:
+1. Under **Additional configuration**, pay attention to the following fields:
 
-   1. \(Optional\) For **Purchasing option**, you can choose **Request Spot Instances** to request Spot Instances at the Spot price, capped at the On\-Demand price\. Optionally, you can specify a maximum price per instance hour for your Spot Instances\. For more information, see [Launching Spot Instances in your Auto Scaling group](asg-launch-spot-instances.md)\. 
+   1. \(Optional\) For **Purchasing option**, you can choose **Request Spot Instances** to request Spot Instances at the Spot price, capped at the On\-Demand price\. Optionally, you can specify a maximum price per instance hour for your Spot Instances\. 
+**Note**  
+Spot Instances are a cost\-effective choice compared to On\-Demand Instances, if you can be flexible about when your applications run and if your applications can be interrupted\. For more information, see [Requesting Spot Instances for fault\-tolerant and flexible applications](asg-launch-spot-instances.md)\. 
 
    1. \(Optional\) For **IAM instance profile**, choose a role to associate with the instances\. For more information, see [IAM role for applications that run on Amazon EC2 instances](us-iam-role.md)\.
 
    1. \(Optional\) For **Monitoring**, choose whether to enable the instances to publish metric data at 1\-minute intervals to Amazon CloudWatch by enabling detailed monitoring\. Additional charges apply\. For more information, see [Configuring monitoring for Auto Scaling instances](enable-as-instance-metrics.md)\.
 
-   1. \(Optional\) For **User data**, you can specify user data to configure an instance during launch, or to run a configuration script after the instance starts\. 
+   1. \(Optional\) For **Advanced details**, **User data**, you can specify user data to configure an instance during launch, or to run a configuration script after the instance starts\. 
 
-   1. \(Optional\) For **Advanced Details**, **IP Address Type**, choose whether to assign a [public IP address](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-instance-addressing.html#public-ip-addresses) to the group's instances\. This setting takes precedence over settings you configure for the subnets\. If you do not set a value, the default is to use the auto\-assign public IP settings of the subnets that your instances are launched into\.
+   1. \(Optional\) For **Advanced details**, **IP address type**, choose whether to assign a [public IP address](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-instance-addressing.html#public-ip-addresses) to the group's instances\. If you do not set a value, the default is to use the auto\-assign public IP settings of the subnets that your instances are launched into\.
 
 1. \(Optional\) For **Storage \(volumes\)**, if you don't need additional storage, you can skip this section\. Otherwise, to specify volumes to attach to the instances in addition to the volumes specified by the AMI, choose **Add new volume**\. Then choose the desired options and associated values for **Devices**, **Snapshot**, **Size**, **Volume type**, **IOPS**, **Throughput**, **Delete on termination**, and **Encrypted**\.
 
@@ -55,44 +65,6 @@ An Auto Scaling group is associated with one launch configuration at a time, and
 If you need to connect to your instances, do not choose **Proceed without a key pair**\.
 
 1. Select the acknowledgment check box, and then choose **Create launch configuration**\.
-
-**To create a launch configuration \(old console\)**
-
-1. Open the Amazon EC2 console at [https://console\.aws\.amazon\.com/ec2/](https://console.aws.amazon.com/ec2/)\.
-
-1. On the navigation bar at the top of the screen, select your AWS Region\. 
-
-1. On the navigation pane, under **AUTO SCALING**, choose **Launch Configurations**\. 
-
-1. On the next page, choose **Create launch configuration**\.
-
-1. On the **Choose AMI** page, select an AMI\.
-
-1. On the **Choose Instance Type** page, select a hardware configuration for your instance\. Choose **Next: Configure details**\.
-
-1. On the **Configure Details** page, do the following:
-
-   1. For **Name**, enter a name for your launch configuration\.
-
-   1. \(Optional\) For **Purchasing option**, you can request Spot Instances at the Spot price, capped at the On\-Demand price\. Optionally, you can specify a maximum price per instance hour for your Spot Instances\. For more information, see [Launching Spot Instances in your Auto Scaling group](asg-launch-spot-instances.md)\.
-
-   1. \(Optional\) For **IAM role**, select a role to associate with the instances\. For more information, see [IAM role for applications that run on Amazon EC2 instances](us-iam-role.md)\.
-
-   1. \(Optional\) By default, basic monitoring is enabled for your Auto Scaling instances\. To enable detailed monitoring for your Auto Scaling instances, select **Enable CloudWatch detailed monitoring**\. For more information, see [Configuring monitoring for Auto Scaling instances](enable-as-instance-metrics.md)\.
-
-   1. \(Optional\) For **User data**, you can specify user data to configure an instance during launch, or to run a configuration script after the instance starts\.
-
-   1. \(Optional\) For **Advanced Details**, **IP Address Type**, choose whether to assign a [public IP address](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-instance-addressing.html#public-ip-addresses) to the group's instances\. This setting takes precedence over settings you configure for the subnets\. If you do not set a value, the default is to use the auto\-assign public IP settings of the subnets that your instances are launched into\. 
-
-   1. Choose **Skip to review**\.
-
-1. On the **Review** page, choose **Edit security groups**\. Follow the instructions to choose an existing security group, and then choose **Review**\.
-
-1. On the **Review** page, choose **Create launch configuration**\.
-
-1. For **Select an existing key pair or create a new key pair**, select one of the listed options\. Select the acknowledgment check box, and then choose **Create launch configuration**\.
-**Warning**  
-If you need to connect to your instances, do not choose **Proceed without a key pair**\.
 
 ## Creating a launch configuration \(AWS CLI\)<a name="create-launch-configuration-aws-cli"></a>
 
@@ -117,7 +89,7 @@ You can find more details on configuring the Instance Metadata Service in the fo
 
 Use the following procedure to configure IMDS options in a launch configuration\. After you create your launch configuration, you can associate it with your Auto Scaling group\. If you associate the launch configuration with an existing Auto Scaling group, the existing launch configuration is disassociated from the Auto Scaling group, and existing instances will require replacement to use the IMDS options that you specified in the new launch configuration\. For more information, see [Changing the launch configuration for an Auto Scaling group](change-launch-config.md)\.
 
-**To configure IMDS in a launch configuration \(new console\)**
+**To configure IMDS in a launch configuration \(console\)**
 
 1. Open the Amazon EC2 console at [https://console\.aws\.amazon\.com/ec2/](https://console.aws.amazon.com/ec2/)\.
 

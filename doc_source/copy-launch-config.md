@@ -4,7 +4,7 @@ Use the following procedure to copy the options from an existing launch configur
 
 You can create launch templates from existing launch configurations to make it easy for you to update your Auto Scaling groups to use launch templates\. Like launch configurations, launch templates can contain all or some of the parameters to launch an instance\. With launch templates, you can also create multiple versions of a template to make it faster and easier to launch new instances\. 
 
-**To create a launch template from a launch configuration**
+**To create a launch template from a launch configuration \(console\)**
 
 1. Open the Amazon EC2 console at [https://console\.aws\.amazon\.com/ec2/](https://console.aws.amazon.com/ec2/)\.
 

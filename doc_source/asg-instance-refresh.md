@@ -23,7 +23,7 @@ You can start or cancel an instance refresh using the AWS Management Console, th
 
 Before you begin, make sure that your Auto Scaling group is already associated with a new launch template or launch configuration\. 
 
-**To start an instance refresh \(new console\)**
+**To start an instance refresh \(console\)**
 
 1. Open the Amazon EC2 console at [https://console\.aws\.amazon\.com/ec2/](https://console.aws.amazon.com/ec2/)\.
 
@@ -41,7 +41,7 @@ Before you begin, make sure that your Auto Scaling group is already associated w
 
 1. Choose **Start**\. 
 
-**To check the status of an instance refresh \(new console\)**
+**To check the status of an instance refresh \(console\)**
 
 1. On the **Instance refresh** tab, under **Instance refreshes**, you can determine the status of your request by looking at the **Status** column\. The operation goes into `Pending` status while it is initializing\. The status should then quickly change to `InProgress`\. When all instances are updated, the status changes to `Successful`\.
 
@@ -53,7 +53,7 @@ Before you begin, make sure that your Auto Scaling group is already associated w
 
 1. On the **Instance management** tab, under **Instances**, you can verify that your instances launched successfully\. Initially, your instances are in the `Pending` state\. After an instance is ready to receive traffic, its state is `InService`\. The **Health status** column shows the result of the health checks on your instances\.
 
-**To cancel an instance refresh \(new console\)**
+**To cancel an instance refresh \(console\)**
 
 1. Open the Amazon EC2 console at [https://console\.aws\.amazon\.com/ec2/](https://console.aws.amazon.com/ec2/)\.
 

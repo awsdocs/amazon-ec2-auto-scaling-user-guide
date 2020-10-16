@@ -12,10 +12,6 @@ Amazon EC2 Auto Scaling provides specific and descriptive errors to help you tro
 
 ## General troubleshooting issues<a name="troubleshooting-general"></a>
 
-### Procedures in this guide do not match the console<a name="ts-new-console-procedures"></a>
-
-The procedures in this guide are written to reflect the new console design for Amazon EC2 Auto Scaling\. If you are using the older version of the console, many of the concepts and basic procedures in this guide still apply\. To access help in the new console, choose the information icon\.
-
 ### Permissions required for a launch template are missing<a name="ts-launch-template-permissions"></a>
 
 You can add a launch template to a new Auto Scaling group or to an existing Auto Scaling group\. If you are attempting to use a launch template, and you do not have sufficient permissions, you receive an error that you're not authorized to use the launch template\. For information about the permissions necessary to work with launch templates, see [Launch template support](ec2-auto-scaling-launch-template-permissions.md)\.

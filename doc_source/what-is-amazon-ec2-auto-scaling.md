@@ -6,7 +6,7 @@ For example, the following Auto Scaling group has a minimum size of one instance
 
 ![\[An illustration of a basic Auto Scaling group.\]](http://docs.aws.amazon.com/autoscaling/ec2/userguide/images/as-basic-diagram.png)
 
-For more information about the benefits of Amazon EC2 Auto Scaling, see [Benefits of Amazon EC2 Auto Scaling](auto-scaling-benefits.md)\.
+For more information about the benefits of Amazon EC2 Auto Scaling, see [Amazon EC2 Auto Scaling benefits](auto-scaling-benefits.md)\.
 
 ## Auto Scaling components<a name="as-component-intro"></a>
 
@@ -23,7 +23,7 @@ The following table describes the key components of Amazon EC2 Auto Scaling\.
 
 ## Getting started<a name="what-is-auto-scaling-next-steps"></a>
 
-If you're new to Amazon EC2 Auto Scaling, we recommend that you review [Auto Scaling instance lifecycle](AutoScalingGroupLifecycle.md) before you begin\.
+If you're new to Amazon EC2 Auto Scaling, we recommend that you review [Amazon EC2 Auto Scaling instance lifecycle](AutoScalingGroupLifecycle.md) before you begin\.
 
 To begin, complete the [Getting started with Amazon EC2 Auto Scaling](GettingStartedTutorial.md) tutorial to create an Auto Scaling group and see how it responds when an instance in that group terminates\. If you already have running EC2 instances, you can create an Auto Scaling group using an existing EC2 instance, and remove the instance from the group at any time\.
 

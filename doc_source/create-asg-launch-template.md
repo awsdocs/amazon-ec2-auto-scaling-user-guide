@@ -12,9 +12,7 @@ The Auto Scaling group specifies the desired capacity and additional information
 + You must have created a launch template that includes the parameters required to launch an EC2 instance\. For information about these parameters and the limitations that apply when creating a launch template for use with an Auto Scaling group, see [Creating a launch template for an Auto Scaling group](create-launch-template.md)\.
 + You must have IAM permissions to create an Auto Scaling group using a launch template and also to create EC2 resources for the instances\. For more information, see [Launch template support](ec2-auto-scaling-launch-template-permissions.md)\.
 
-Amazon EC2 Auto Scaling has changed the user interface\. By default, you're shown the new user interface, but you can choose to return to the old user interface\. This topic contains steps for each\. 
-
-**To create an Auto Scaling group using a launch template \(new console\)**
+**To create an Auto Scaling group using a launch template \(console\)**
 
 1. Open the Amazon EC2 console at [https://console\.aws\.amazon\.com/ec2/](https://console.aws.amazon.com/ec2/)\.
 
@@ -36,7 +34,7 @@ Amazon EC2 Auto Scaling has changed the user interface\. By default, you're show
 
 1. On the **Configure settings** page, for **Purchase options and instance types**, choose **Adhere to the launch template** to use the EC2 instance type and purchase option that are specified in the launch template\. 
 
-1. Under **Network**, for **VPC**, choose the VPC for the security groups that you specified in your launch template\. Launching instances using a combination of instance types and purchase options is not supported in EC2\-Classic\. 
+1. Under **Network**, for **VPC**, choose the VPC for the security groups that you specified in your launch template\.
 
 1. For **Subnet**, choose one or more subnets in the specified VPC\. Use subnets in multiple Availability Zones for high availability\. For more information about high availability with Amazon EC2 Auto Scaling, see [Distributing Instances Across Availability Zones](auto-scaling-benefits.md#arch-AutoScalingMultiAZ)\.
 
@@ -65,50 +63,6 @@ Amazon EC2 Auto Scaling has changed the user interface\. By default, you're show
 1. \(Optional\) To add tags, choose **Add tag**, provide a tag key and value for each tag, and then choose **Next**\. For more information, see [Tagging Auto Scaling groups and instances](autoscaling-tagging.md)\.
 
 1. On the **Review** page, choose **Create Auto Scaling group**\.
-
-**To create an Auto Scaling group using a launch template \(old console\)**
-
-1. Open the Amazon EC2 console at [https://console\.aws\.amazon\.com/ec2/](https://console.aws.amazon.com/ec2/)\.
-
-1. On the navigation bar at the top of the screen, choose the same AWS Region that you used when you created the launch template\.
-
-1. On the navigation pane, under **AUTO SCALING**, choose **Auto Scaling Groups**\.
-
-1. Choose **Create Auto Scaling group**\.
-
-1. Choose **Launch Template**, choose your launch template, and then choose **Next Step**\.
-
-1. On the **Configure Auto Scaling group details** page, for **Group name**, enter a name for your Auto Scaling group\.
-
-1. For **Launch template version**, choose whether the Auto Scaling group uses the default, the latest, or a specific version of the launch template when scaling out\.
-
-1. For **Fleet Composition**, choose **Adhere to the launch template** to use the EC2 instance type and purchase option that are specified in the launch template\. 
-**Note**  
-Alternatively, to launch instances across multiple instance types using both On\-Demand and Spot purchase options, choose **Combine purchase options and instances**\. For more information, see [Auto Scaling groups with multiple instance types and purchase options](asg-purchase-options.md)\.
-
-1. For **Group size**, enter the initial number of instances for your Auto Scaling group\.
-
-1. For **Network**, choose a VPC for your Auto Scaling group\.
-
-1. For **Subnet**, choose one or more subnets in the specified VPC\. Use subnets in multiple Availability Zones for high availability\. For more information about high availability with Amazon EC2 Auto Scaling, see [Distributing Instances Across Availability Zones](auto-scaling-benefits.md#arch-AutoScalingMultiAZ)\.
-
-1. \(Optional\) To register your Amazon EC2 instances with a load balancer, choose **Advanced Details**, choose **Receive traffic from one or more load balancers**, and choose one or more Classic Load Balancers or target groups\.
-
-1. Choose **Next: Configure scaling policies**\.
-
-1. On the **Configure scaling policies** page, choose one of the following options, and then choose **Next: Configure Notifications**:
-   + To manually adjust the size of the Auto Scaling group as needed, choose **Keep this group at its initial size**\. For more information, see [Manual scaling for Amazon EC2 Auto Scaling](as-manual-scaling.md)\.
-   + To automatically adjust the size of the Auto Scaling group based on criteria that you specify, choose **Use scaling policies to adjust the capacity of this group** and follow the directions\. For more information, see [Configure Scaling Policies](as-scaling-target-tracking.md#policy-creating-scalingpolicies-console)\.
-
-1. \(Optional\) To receive notifications, choose **Add notification**, configure the notification, and then choose **Next: Configure Tags**\.
-
-1. \(Optional\) To add tags, choose **Edit tags**, provide a tag key and value for each tag, and then choose **Review**\.
-
-   Alternatively, you can add tags later on\. For more information, see [Tagging Auto Scaling groups and instances](autoscaling-tagging.md)\.
-
-1. On the **Review** page, choose **Create Auto Scaling group**\.
-
-1. On the **Auto Scaling group creation status** page, choose **Close**\.
 
 **To create an Auto Scaling group using the command line**
 

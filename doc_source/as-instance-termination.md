@@ -77,7 +77,7 @@ Amazon EC2 Auto Scaling always balances instances across Availability Zones firs
 
    A split pane opens up in the bottom part of the **Auto Scaling groups** page, showing information about the group that's selected\. 
 
-1. On the **Details** tab, choose **Advanced configurations**, **Edit**\. \(Old console: On the **Details** tab, choose **Edit**\.\)
+1. On the **Details** tab, choose **Advanced configurations**, **Edit**\.
 
 1. For **Termination policies**, choose one or more termination policies\. If you choose multiple policies, list them in the order in which they should apply\. If you use the **Default** policy, make it the last one in the list\.
 
@@ -118,11 +118,8 @@ Instance scale\-in protection does not protect Auto Scaling instances from the f
 
 You can enable instance scale\-in protection when you create an Auto Scaling group\. By default, instance scale\-in protection is disabled\.
 
-**To enable instance scale\-in protection \(new console\)**  
+**To enable instance scale\-in protection \(console\)**  
 When you create the Auto Scaling group, on the **Configure group size and scaling policies** page, under **Instance scale\-in protection**, select the **Enable instance scale\-in protection** option\.
-
-**To enable instance scale\-in protection \(old console\)**  
-When you create the Auto Scaling group, on the **Configure Auto Scaling group details** page, under **Advanced Details**, select the `Protect From Scale In` option from **Instance Protection**\.
 
 **To enable instance scale\-in protection \(AWS CLI\)**  
 Use the following [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/create-auto-scaling-group.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/create-auto-scaling-group.html) command to enable instance scale\-in protection\.
@@ -145,9 +142,9 @@ You can enable or disable the instance scale\-in protection setting for an Auto 
 
    A split pane opens up in the bottom part of the **Auto Scaling groups** page, showing information about the group that's selected\. 
 
-1. On the **Details** tab, choose **Advanced configurations**, **Edit**\. \(Old console: On the **Details** tab, choose **Edit**\.\)
+1. On the **Details** tab, choose **Advanced configurations**, **Edit**\.
 
-1. For **Instance scale\-in protection**, select **Enable instance scale\-in protection**\. \(Old console: For **Instance Protection**, select **Protect From Scale In**\.\) 
+1. For **Instance scale\-in protection**, select **Enable instance scale\-in protection**\.
 
 1. Choose **Update**\.
 
@@ -178,7 +175,7 @@ By default, an instance gets its instance scale\-in protection setting from its 
 
    A split pane opens up in the bottom part of the **Auto Scaling groups** page, showing information about the group that's selected\. 
 
-1. On the **Instance management** tab, in **Instances**, select an instance\. \(Old console: The **Instances** tab is where you can select the instance\.\) 
+1. On the **Instance management** tab, in **Instances**, select an instance\.
 
 1. To enable instance scale\-in protection, choose **Actions**, **Set scale\-in protection**\. When prompted, choose **Set scale\-in protection**\.
 

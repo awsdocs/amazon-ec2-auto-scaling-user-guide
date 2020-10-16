@@ -35,7 +35,7 @@ The following illustration shows the transitions between instance states in this
 
 ![\[Instances enter and exit the standby state.\]](http://docs.aws.amazon.com/autoscaling/ec2/userguide/images/standby_lifecycle.png)
 
-For more information about the complete lifecycle of instances in an Auto Scaling group, see [Auto Scaling instance lifecycle](AutoScalingGroupLifecycle.md)\.
+For more information about the complete lifecycle of instances in an Auto Scaling group, see [Amazon EC2 Auto Scaling instance lifecycle](AutoScalingGroupLifecycle.md)\.
 
 ## Health status of an instance in a standby state<a name="standby-instance-health-status"></a>
 
@@ -57,7 +57,7 @@ The following procedure demonstrates the general process for updating an instanc
 
    A split pane opens up in the bottom part of the **Auto Scaling groups** page, showing information about the group that's selected\. 
 
-1. On the **Instance management** tab, in **Instances**, select an instance\. \(Old console: The **Instances** tab is where you can select the instance\.\) 
+1. On the **Instance management** tab, in **Instances**, select an instance\.
 
 1. Choose **Actions**, **Set to Standby**\.
 

@@ -31,7 +31,7 @@ Use the following procedure to detach an instance from your Auto Scaling group\.
 
    A split pane opens up in the bottom part of the **Auto Scaling groups** page, showing information about the group that's selected\. 
 
-1. On the **Instance management** tab, in **Instances**, select an instance and choose **Actions**, **Detach**\. \(Old console: The **Instances** tab is where you can detach the instance\.\) 
+1. On the **Instance management** tab, in **Instances**, select an instance and choose **Actions**, **Detach**\.
 
 1. In the **Detach instance** dialog box, select the check box to launch a replacement instance, or leave it unchecked to decrement the desired capacity\. Choose **Detach instance**\.
 

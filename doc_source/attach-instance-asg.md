@@ -30,9 +30,9 @@ You can attach an existing instance to an existing Auto Scaling group, or to a n
 
 1. On the navigation pane, under **INSTANCES**, choose **Instances**, and then select an instance\.
 
-1. Choose **Actions**, **Instance Settings**, **Attach to Auto Scaling Group**\.
+1. Choose **Actions**, **Instance settings**, **Attach to Auto Scaling Group**\.
 
-1. On the **Attach to Auto Scaling Group** page, select **a new Auto Scaling group**, enter a name for the group, and then choose **Attach**\.
+1. On the **Attach to Auto Scaling group** page, for **Auto Scaling Group**, enter a name for the group, and then choose **Attach**\.
 
    The new Auto Scaling group is created using a new launch configuration with the same name that you specified for the Auto Scaling group\. The launch configuration gets its settings \(for example, security group and IAM role\) from the instance that you attached\. The Auto Scaling group gets settings \(for example, Availability Zone and subnet\) from the instance that you attached, and has a desired capacity and maximum size of `1`\.
 
@@ -46,9 +46,9 @@ You can attach an existing instance to an existing Auto Scaling group, or to a n
 
 1. On the navigation pane, under **INSTANCES**, choose **Instances**, and then select an instance\.
 
-1. Choose **Actions**, **Instance Settings**, **Attach to Auto Scaling Group**\.
+1. Choose **Actions**, **Instance settings**, **Attach to Auto Scaling Group**\.
 
-1. On the **Attach to Auto Scaling Group** page, select **an existing Auto Scaling group**, select an instance, and then choose **Attach**\.
+1. On the **Attach to Auto Scaling group** page, for **Auto Scaling Group**, select the Auto Scaling group, and then choose **Attach**\.
 
 1. If the instance doesn't meet the criteria, you get an error message with the details\. For example, the instance might not be in the same Availability Zone as the Auto Scaling group\. Choose **Close** and try again with an instance that meets the criteria\.
 

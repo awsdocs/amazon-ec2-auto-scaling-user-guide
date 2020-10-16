@@ -19,7 +19,7 @@ When you delete an Auto Scaling group, its desired, minimum, and maximum values 
 
 1. On the navigation pane, under **AUTO SCALING**, choose **Auto Scaling Groups**\.
 
-1. On the **Auto Scaling Groups** page, select the check box next to your Auto Scaling group and choose **Delete** \(Old console: choose **Actions**, **Delete**\)\. 
+1. On the **Auto Scaling Groups** page, select the check box next to your Auto Scaling group and choose **Delete**\. 
 
 1. When prompted for confirmation, choose **Delete**\.
 

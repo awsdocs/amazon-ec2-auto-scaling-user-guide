@@ -178,11 +178,11 @@ While you are configuring your scaling policies, you can create the alarms at th
 
 1. Verify that the minimum and maximum size limits are appropriately set\. For example, if your group is already at its maximum size, you need to specify a new maximum in order to scale out\. Amazon EC2 Auto Scaling does not scale your group below the minimum capacity or above the maximum capacity\. To update your group, on the **Details** tab, change the current settings for minimum and maximum capacity\. 
 
-1. On the **Automatic scaling** tab, in **Scaling policies**, choose **Add policy**\. \(Old console: The **Scaling Policies** tab is where you can add the policy\.\) 
+1. On the **Automatic scaling** tab, in **Scaling policies**, choose **Add policy**\.
 
 1. To define a policy for scale out \(increase capacity\), do the following:
 
-   1. For **Policy type**, choose **Step scaling**\. \(Old console: Choose **Create a scaling policy with steps**\.\) 
+   1. For **Policy type**, choose **Step scaling**\.
 
    1. Specify a name for the policy\. 
 
@@ -206,7 +206,7 @@ While you are configuring your scaling policies, you can create the alarms at th
 
 1. To define a policy for scale in \(decrease capacity\), do the following:
 
-   1. For **Policy type**, choose **Step scaling**\. \(Old console: Choose **Create a scaling policy with steps**\.\) 
+   1. For **Policy type**, choose **Step scaling**\.
 
    1. Specify a name for the policy\. 
 

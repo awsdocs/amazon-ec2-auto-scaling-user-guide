@@ -1,4 +1,4 @@
-# Benefits of Amazon EC2 Auto Scaling<a name="auto-scaling-benefits"></a>
+# Amazon EC2 Auto Scaling benefits<a name="auto-scaling-benefits"></a>
 
 Adding Amazon EC2 Auto Scaling to your application architecture is one way to maximize the benefits of the AWS Cloud\. When you use Amazon EC2 Auto Scaling, your applications gain the following benefits:
 + Better fault tolerance\. Amazon EC2 Auto Scaling can detect when an instance is unhealthy, terminate it, and launch an instance to replace it\. You can also configure Amazon EC2 Auto Scaling to use multiple Availability Zones\. If one Availability Zone becomes unavailable, Amazon EC2 Auto Scaling can launch instances in another one to compensate\.

@@ -33,115 +33,13 @@ When you enable public IP addresses for your instances and launch them into a su
 
 ## Instance placement tenancy<a name="as-vpc-tenancy"></a>
 
-Tenancy defines how EC2 instances are distributed across physical hardware and affects pricing\. There are three tenancy options available: 
-+ Shared \(`default`\) — Multiple AWS accounts may share the same physical hardware\. 
-+ Dedicated Instance \(`dedicated`\) — Your instance runs on single\-tenant hardware\. 
-+ Dedicated Host \(`host`\) — Your instance runs on a physical server with EC2 instance capacity fully dedicated to your use, an isolated server with configurations that you can control\. 
-
-**Important**  
-You can configure tenancy for EC2 instances using a launch configuration or launch template\. However, the `host` tenancy value cannot be used with a launch configuration\. Use the `default` or `dedicated` tenancy values only\. To use a tenancy value of `host`, you must use a launch template\. For more information, see [Creating a launch template for an Auto Scaling group](create-launch-template.md)\.
-
-Dedicated Instances are physically isolated at the host hardware level from instances that aren't dedicated and from instances that belong to other AWS accounts\. When you create a VPC, by default its tenancy attribute is set to `default`\. In such a VPC, you can launch instances with a tenancy value of `dedicated` so that they run as single\-tenancy instances\. Otherwise, they run as shared\-tenancy instances by default\. If you set the tenancy attribute of a VPC to `dedicated`, all instances launched in the VPC run as single\-tenancy instances\. For more information, see [Dedicated instances](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/dedicated-instance.html) in the *Amazon EC2 User Guide for Linux Instances*\. For pricing information, see the [Amazon EC2 dedicated instances](https://aws.amazon.com/ec2/purchasing-options/dedicated-instances/) product page\.
-
-When you create a launch configuration, the default value for the instance placement tenancy is `null` and the instance tenancy is controlled by the tenancy attribute of the VPC\. The following table summarizes the instance placement tenancy of the Auto Scaling instances launched in a VPC\.
-
-
-| Launch configuration tenancy | VPC tenancy = default | VPC tenancy = dedicated | 
-| --- | --- | --- | 
-|  not specified  |  shared\-tenancy instance  |  dedicated instance  | 
-|   `default`   |  shared\-tenancy instance  |  dedicated instance  | 
-|   `dedicated`   |  dedicated instance  |  dedicated instance  | 
-
-**To configure tenancy using a launch configuration \(AWS CLI\)**  
-You can specify the instance placement tenancy for your launch configuration as `default` or `dedicated` using the [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/create-launch-configuration.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/create-launch-configuration.html) command with the `--placement-tenancy` option\. For example, the following command sets the launch configuration tenancy to `dedicated`\.
-
-```
-aws autoscaling create-launch-configuration --launch-configuration-name my-launch-config --placement-tenancy dedicated --image-id ...
-```
-
-You can use the following [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/describe-launch-configurations.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/describe-launch-configurations.html) command to verify the instance placement tenancy of the launch configuration\.
-
-```
-aws autoscaling describe-launch-configurations --launch-configuration-names my-launch-config
-```
-
-The following is example output for a launch configuration that creates dedicated instances\. The `PlacementTenancy` parameter is only part of the output for this command when you explicitly set the instance placement tenancy\.
-
-```
-{
-    "LaunchConfigurations": [
-        {
-            "UserData": null,
-            "EbsOptimized": false,
-            "PlacementTenancy": "dedicated",
-            "LaunchConfigurationARN": "arn",
-            "InstanceMonitoring": {
-                "Enabled": true
-            },
-            "ImageId": "ami-b5a7ea85",
-            "CreatedTime": "2015-03-08T23:39:49.011Z",
-            "BlockDeviceMappings": [],
-            "KeyName": null,
-            "SecurityGroups": [],
-            "LaunchConfigurationName": "my-launch-config",
-            "KernelId": null,
-            "RamdiskId": null,
-            "InstanceType": "m3.medium"
-        }
-    ]
-```
+By default, all instances in the VPC run as shared tenancy instances\. Amazon EC2 Auto Scaling also supports Dedicated Instances and Dedicated Hosts\. However, support for Dedicate Hosts is only available for Auto Scaling groups that use a launch template\. For more information, see [Configuring instance tenancy with Amazon EC2 Auto Scaling](auto-scaling-dedicated-instances.md)\.
 
 ## Linking EC2\-Classic instances to a VPC<a name="as-ClassicLink"></a>
 
 If you are launching the instances in your Auto Scaling group in EC2\-Classic, you can link them to a VPC using *ClassicLink*\. ClassicLink enables you to associate one or more security groups for the VPC with the EC2\-Classic instances in your Auto Scaling group\. It enables communication between these linked EC2\-Classic instances and instances in the VPC using private IP addresses\. For more information, see [ClassicLink](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/vpc-classiclink.html) in the *Amazon EC2 User Guide for Linux Instances*\.
 
 If you have running EC2\-Classic instances in your Auto Scaling group, you can link them to a VPC with ClassicLink enabled\. For more information, see [Linking an instance to a VPC](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/vpc-classiclink.html#classiclink-link-instance) in the *Amazon EC2 User Guide for Linux Instances*\. Alternatively, you can update the Auto Scaling group to use a launch configuration that automatically links the EC2\-Classic instances to a VPC at launch\. Then, terminate the running instances and let the Auto Scaling group launch new instances that are linked to the VPC\.
-
-### Link to a VPC \(console\)<a name="as-ClassicLink-console"></a>
-
-Use the following procedure to create a launch configuration that links EC2\-Classic instances to the specified VPC and update an existing Auto Scaling group to use the launch configuration\.
-
-**To link EC2\-Classic instances in an Auto Scaling group to a VPC \(old console\)**
-
-1. Verify that the VPC has ClassicLink enabled\. For more information, see [Viewing your ClassicLink\-enabled VPCs](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/vpc-classiclink.html#classiclink-describe-vpcs-instances) in the *Amazon EC2 User Guide for Linux Instances*\.
-
-1. Create a security group for the VPC that you are going to link EC2\-Classic instances to\. Add rules to control communication between the linked EC2\-Classic instances and instances in the VPC\.
-
-1. Open the Amazon EC2 console at [https://console\.aws\.amazon\.com/ec2/](https://console.aws.amazon.com/ec2/)\.
-
-1. On the navigation pane, under **AUTO SCALING**, choose **Launch Configurations**\. 
-
-1. Choose **Create launch configuration**\.
-
-1. On the **Choose AMI** page, select an AMI\.
-
-1. On the **Choose an Instance Type** page, select an instance type, and then choose **Next: Configure details**\.
-
-1. On the **Configure details** page, do the following:
-
-   1. Enter a name for your launch configuration\.
-
-   1. Expand **Advanced Details**, select the **IP Address Type** that you need, and then select **Link to VPC**\.
-
-   1. For **VPC**, select the VPC with ClassicLink enabled from step 1\.
-
-   1. For **Security Groups**, select the security group from step 2\.
-
-   1. Choose **Skip to review**\.
-
-1. On the **Review** page, make any changes that you need, and then choose **Create launch configuration**\. For **Select an existing key pair or create a new key pair**, select an option, select the acknowledgment check box \(if present\), and then choose **Create launch configuration**\.
-
-1. When prompted, follow the directions to create an Auto Scaling group that uses the new launch configuration\. Be sure to select **Launch into EC2\-Classic** for **Network**\. Otherwise, choose **Cancel** and then add your launch configuration to an existing Auto Scaling group as follows:
-
-   1. On the navigation pane, under **AUTO SCALING**, choose **Auto Scaling Groups**\.
-
-   1. Select the check box next to your Auto Scaling group\.
-
-      A split pane opens up in the bottom part of the page, showing information about the group that's selected\. 
-
-   1. Choose **Actions**, **Edit**\.
-
-   1. For **Launch Configuration**, select your new launch configuration and then choose **Save**\.
 
 ### Link to a VPC \(AWS CLI\)<a name="as-ClassicLink-cli"></a>
 
@@ -173,13 +71,13 @@ Use the following procedure to create a launch configuration that links EC2\-Cla
 ## More resources for learning about VPCs<a name="auto-scaling-resources-about-vpcs"></a>
 
 Use the following topics to learn more about VPCs and subnets\.
-+ Private Subnets in a VPC
++ Private subnets in a VPC
   + [VPC with public and private subnets \(NAT\)](https://docs.aws.amazon.com/vpc/latest/userguide/VPC_Scenario2.html)
   + [NAT instances](https://docs.aws.amazon.com/vpc/latest/userguide/VPC_NAT_Instance.html)
   + [High availability for Amazon VPC NAT instances: An example](https://aws.amazon.com/articles/2781451301784570)
-+ Public Subnets in a VPC
++ Public subnets in a VPC
   + [VPC with a single public subnet](https://docs.aws.amazon.com/vpc/latest/userguide/VPC_Scenario1.html)
-+ General VPC Information
++ General VPC information
   + [Amazon VPC User Guide](https://docs.aws.amazon.com/vpc/latest/userguide/)
   + [VPC peering](https://docs.aws.amazon.com/vpc/latest/userguide/vpc-peering.html)
   + [Elastic network interfaces](https://docs.aws.amazon.com/vpc/latest/userguide/VPC_ElasticNetworkInterfaces.html)

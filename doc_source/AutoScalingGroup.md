@@ -18,18 +18,19 @@ When a Spot Instance is terminated, the Auto Scaling group attempts to launch a 
 
 When instances are launched, if you specified multiple Availability Zones, the desired capacity is distributed across these Availability Zones\. If a scaling action occurs, Amazon EC2 Auto Scaling automatically maintains balance across all of the Availability Zones that you specify\.
 
-This section provides detailed steps for creating an Auto Scaling group\. If you're new to Auto Scaling groups, start with [Getting started with Amazon EC2 Auto Scaling](GettingStartedTutorial.md) to learn about the various building blocks that are used in Amazon EC2 Auto Scaling\. 
+If you're new to Auto Scaling groups, start by creating a launch template or a launch configuration and then use it to create an Auto Scaling group in which all instances have the same instance attributes\. You can set the following instance attributes by specifying them as part of the launch template or launch configuration: AMI, block devices, key pair, instance type, security groups, user data, EC2 instance monitoring, instance profile, kernel, ramdisk, the tenancy of the instance, whether the instance has a public IP address, and whether the instance is EBS\-optimized\. The [Getting started with Amazon EC2 Auto Scaling](GettingStartedTutorial.md) tutorial provides a quick introduction to the various building blocks that are used in Amazon EC2 Auto Scaling\.
+
+If you already have running EC2 instances, you can create an Auto Scaling group using an existing EC2 instance\. For more information, see [Creating an Auto Scaling group using an EC2 instance](create-asg-from-instance.md)\.
 
 **Topics**
 + [Auto Scaling groups with multiple instance types and purchase options](asg-purchase-options.md)
 + [Creating an Auto Scaling group using a launch template](create-asg-launch-template.md)
++ [Creating an Auto Scaling group using the Amazon EC2 launch wizard](create-asg-ec2-wizard.md)
 + [Creating an Auto Scaling group using a launch configuration](create-asg.md)
 + [Creating an Auto Scaling group using an EC2 instance](create-asg-from-instance.md)
-+ [Creating an Auto Scaling group using the Amazon EC2 launch wizard](create-asg-ec2-wizard.md)
 + [Tagging Auto Scaling groups and instances](autoscaling-tagging.md)
 + [Elastic Load Balancing and Amazon EC2 Auto Scaling](autoscaling-load-balancer.md)
-+ [Launching Spot Instances in your Auto Scaling group](asg-launch-spot-instances.md)
-+ [Getting recommendations for an instance type](asg-getting-recommendations.md)
++ [Getting recommendations for an instance type from AWS Compute Optimizer](asg-getting-recommendations.md)
 + [Replacing Auto Scaling instances based on maximum instance lifetime](asg-max-instance-lifetime.md)
 + [Replacing Auto Scaling instances based on an instance refresh](asg-instance-refresh.md)
 + [Merging your Auto Scaling groups into a single multi\-zone group](merge-auto-scaling-groups.md)

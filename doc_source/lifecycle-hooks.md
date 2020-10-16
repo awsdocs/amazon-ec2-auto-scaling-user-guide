@@ -34,7 +34,7 @@ The following illustration shows the transitions between instance states in this
 
 ![\[The lifecycle of instances using lifecycle hooks.\]](http://docs.aws.amazon.com/autoscaling/ec2/userguide/images/lifecycle_hooks.png)
 
-For more information about the complete lifecycle of instances in an Auto Scaling group, see [Auto Scaling instance lifecycle](AutoScalingGroupLifecycle.md)\.
+For more information about the complete lifecycle of instances in an Auto Scaling group, see [Amazon EC2 Auto Scaling instance lifecycle](AutoScalingGroupLifecycle.md)\.
 
 ## Considerations<a name="lifecycle-hook-considerations"></a>
 
@@ -65,7 +65,7 @@ You can use lifecycle hooks with Spot Instances\. However, a lifecycle hook does
 
 You can configure notifications for when an instance enters a wait state\. You can use Amazon EventBridge, Amazon SNS, or Amazon SQS to receive the notifications\. For more information, see [Configuring lifecycle hook notifications](configuring-lifecycle-hook-notifications.md)\.
 
-Alternatively, if you have a script that configures your instances when they launch, you do not need to receive notification when the lifecycle action occurs\. If you are not doing so already, update your script to retrieve the instance ID of the instance from the instance metadata\. For more information, see [Retrieving instance metadata](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-instance-metadata.html#instancedata-data-retrieval) in the *Amazon EC2 User Guide for Linux Instances*\. 
+Alternatively, if you have a script that configures your instances when they launch, you do not need to receive notification when the lifecycle action occurs\. If you are not doing so already, update your script to retrieve the instance ID of the instance from the instance metadata\. For more information, see [Retrieving instance metadata](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/instancedata-data-retrieval.html) in the *Amazon EC2 User Guide for Linux Instances*\. 
 
 ## Add lifecycle hooks<a name="adding-lifecycle-hooks"></a>
 
@@ -89,7 +89,7 @@ Follow these steps to add a lifecycle hook to an existing Auto Scaling group\. Y
 
    A split pane opens up in the bottom part of the **Auto Scaling groups** page, showing information about the group that's selected\. 
 
-1. On the **Instance management** tab, in **Lifecycle hooks**, choose **Create lifecycle hook**\. \(Old console: The **Lifecycle Hooks** tab is where you can create a lifecycle hook\.\) 
+1. On the **Instance management** tab, in **Lifecycle hooks**, choose **Create lifecycle hook**\.
 
 1. To define a lifecycle hook, do the following:
 
@@ -191,7 +191,7 @@ To generate a notification for a launch event, update the Auto Scaling group by 
 
    A split pane opens up in the bottom part of the **Auto Scaling groups** page, showing information about the group that's selected\. 
 
-1. On the **Details** tab, choose **Group details**, **Edit**\. \(Old console: On the **Details** tab, choose **Edit**\.\)
+1. On the **Details** tab, choose **Group details**, **Edit**\.
 
 1. For **Desired capacity**, increase the current value by 1\. If this value exceeds **Maximum capacity**, you must also increase the value of **Maximum capacity** by 1\.
 

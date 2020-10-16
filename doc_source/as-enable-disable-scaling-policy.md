@@ -6,13 +6,11 @@ When a scaling policy is disabled, the Auto Scaling group does not scale out or 
 
 Note that disabled scaling policies still count toward your quotas on the number of scaling policies that you can add to an Auto Scaling group\. 
 
-**To disable a scaling policy \(new console\)**
+**To disable a scaling policy \(console\)**
 
 1. Open the Amazon EC2 console at [https://console\.aws\.amazon\.com/ec2/](https://console.aws.amazon.com/ec2/)\.
 
 1. On the navigation pane, under **AUTO SCALING**, choose **Auto Scaling Groups**\.
-
-1. The original console is open by default\. To access the new console, on the banner at the top of the page, choose **Go to the new console**\.
 
 1. Select the check box next to the Auto Scaling group\.
 

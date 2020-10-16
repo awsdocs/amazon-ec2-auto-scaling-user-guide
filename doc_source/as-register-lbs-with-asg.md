@@ -49,7 +49,7 @@ The following sections step you through the process of deploying your applicatio
 
 You must have either a launch template or a launch configuration\. If you already have a launch template that you'd like to use, skip this step\.
 
-**To create a launch template \(new console\)**
+**To create a launch template \(console\)**
 
 1. Open the Amazon EC2 console at [https://console\.aws\.amazon\.com/ec2/](https://console.aws.amazon.com/ec2/)\.
 
@@ -61,11 +61,11 @@ You must have either a launch template or a launch configuration\. If you alread
 
 1. Enter a name and provide a description for the initial version of the launch template\.
 
-1. For **Amazon machine image \(AMI\)**, enter the ID of the AMI for your instances\. 
+1. For **Amazon machine image \(AMI\)**, enter the ID of the AMI for your instances as search criteria\. 
 
 1. For **Instance type**, select a hardware configuration for your instances that is compatible with the AMI that you specified\.
 
-1. \(Optional\) For **Key pair \(login\)**, enter the name of the key pair to use when connecting to your instances\.
+1. \(Optional\) For **Key pair \(login\)**, choose the key pair to use when connecting to your instances\.
 
 1. For **Network interfaces**, do the following:
 
@@ -73,7 +73,7 @@ You must have either a launch template or a launch configuration\. If you alread
 
    1. \(Optional\) For **Auto\-assign public IP**, keep the default value, **Don't include in launch template**\. When you create your Auto Scaling group, you can assign a public IP address to instances in your Auto Scaling group by using subnets that have the public IP addressing attribute enabled, such as the default subnets in the default VPC\. Alternatively, if you don't need to connect to your instances, you can choose **Disable** to prevent instances in your group from receiving traffic directly from the Internet\. In this case, they will receive traffic only from the load balancer\.
 
-   1. For **Security group ID**, specify a security group for your instances\. 
+   1. For **Security group ID**, specify a security group for your instances from the same VPC as the load balancer\. 
 
    1. For **Delete on termination**, choose **Yes** so that the network interface is deleted when the Auto Scaling group scales in and terminates the instance to which the network interface is attached\. 
 
@@ -83,57 +83,55 @@ You must have either a launch template or a launch configuration\. If you alread
 
 1. Choose **Create launch template**\. 
 
-1. On the confirmation page, choose **EC2** from the breadcrumbs at the top of the page\. On the navigation pane, under **AUTO SCALING**, choose **Auto Scaling Groups**\.
+1. On the confirmation page, choose **Create Auto Scaling group**\.
 
 ### Create a launch configuration<a name="as-register-lbs-create-lc-console"></a>
 
 If you already have a launch configuration that you'd like to use, skip this step\.
 
-**To create a launch configuration**
+**To create a launch configuration \(console\)**
 
 1. Open the Amazon EC2 console at [https://console\.aws\.amazon\.com/ec2/](https://console.aws.amazon.com/ec2/)\.
 
+1. On the navigation pane, under **AUTO SCALING**, choose **Launch Configurations**\. 
+
 1. On the navigation bar at the top of the screen, choose the AWS Region where the load balancer was created\.
 
-1. On the navigation pane, under **AUTO SCALING**, choose **Launch Configurations**\.
+1. Choose **Create launch configuration**, and enter a name for your launch configuration\. 
 
-1. Choose **Create launch configuration**\.
+1. For **Amazon machine image \(AMI\)**, enter the ID of the AMI for your instances as search criteria\. 
 
-1. On the **Choose AMI** page, select the AMI for your instances\. 
+1. For **Instance type**, select a hardware configuration for your instance\.
 
-1. On the **Choose Instance Type** page, select a hardware configuration for your instance, and then choose **Next: Configure details**\.
+1. Under **Additional configuration**, pay attention to the following fields:
 
-1. On the **Configure Details** page, do the following:
+   1. \(Optional\) To securely distribute credentials to your EC2 instance, for **IAM instance profile**, select your IAM role\. For more information, see [IAM role for applications that run on Amazon EC2 instances](us-iam-role.md)\.
 
-   1. For **Name**, enter a name for your launch configuration\.
+   1. \(Optional\) To specify user data or a configuration script for your instance, paste it into **Advanced details**, **User data**\.
 
-   1. \(Optional\) To securely distribute credentials to your EC2 instance, select your IAM role\.
+   1. \(Optional\) For **Advanced details**, **IP address type**, keep the default value\. When you create your Auto Scaling group, you can assign a public IP address to instances in your Auto Scaling group by using subnets that have the public IP addressing attribute enabled, such as the default subnets in the default VPC\. Alternatively, if you don't need to connect to your instances, you can choose **Do not assign a public IP address to any instances** to prevent instances in your group from receiving traffic directly from the Internet\. In this case, they will receive traffic only from the load balancer\.
 
-   1. \(Optional\) To specify user data or a configuration script for your instance, for **Advanced Details**, **User data**, paste your configuration script\.
+1. For **Security groups**, choose an existing security group from the same VPC as the load balancer\. If you leave the **Create a new security group** option selected, a default SSH rule is configured for Amazon EC2 instances running Linux\. A default RDP rule is configured for Amazon EC2 instances running Windows\. 
 
-   1. \(Optional\) For **Advanced Details**, **IP Address Type**, keep the default value\. When you create your Auto Scaling group, you can assign a public IP address to instances in your Auto Scaling group by using subnets that have the public IP addressing attribute enabled, such as the default subnets in the default VPC\. Alternatively, if you don't need to connect to your instances, you can choose **Do not assign a public IP address to any instances** to prevent instances in your group from receiving traffic directly from the Internet\. In this case, they will receive traffic only from the load balancer\.
+1. For **Key pair \(login\)**, choose an option under **Key pair options**\. 
 
-   1. Choose **Skip to review**\.
+   If you've already configured an Amazon EC2 instance key pair, you can choose it here\. 
 
-1. On the **Review** page, choose **Edit security groups**\. You can select an existing security group or create a new one\. When you are finished, choose **Review**\. 
-**Note**  
-If you have not already created a security group, the wizard automatically defines the `AutoScaling-Security-Group-x` security group to allow you to connect to your instances\. The `AutoScaling-Security-Group-x` security group enables all IP addresses \(0\.0\.0\.0/0\) and allows inbound traffic on port 22 \(SSH\) for Linux instances or port 3389 \(RDP\) for Windows instances depending on the AMI you specified\.
+   If you don't already have an Amazon EC2 instance key pair, choose **Create a new key pair** and give it a recognizable name\. Choose **Download key pair** to download the key pair to your computer\. 
+**Important**  
+If you need to connect to your instances, do not choose **Proceed without a key pair**\.
 
-1. On the **Review** page, choose **Create launch configuration**\.
+1. Select the acknowledgment check box, and then choose **Create launch configuration**\.
 
-1. When prompted, select an existing key pair, create a new key pair, or proceed without a key pair\. Select the acknowledgment check box, and then choose **Create launch configuration**\.
-**Warning**  
-Do not choose **Proceed without a key pair** if you will need to connect to your instances\.
-
-1. On the confirmation page, choose **View your Auto Scaling groups**\.
+1. Select the check box next to the name of your new launch configuration and choose **Actions**, **Create Auto Scaling group**\. 
 
 ### Create an Auto Scaling group<a name="as-register-lbs-create-asg-console"></a>
 
 After completing the instructions above, you're ready to proceed with the wizard to create an Auto Scaling group\. 
 
-Use the following procedure to continue where you left off after creating your launch template or launch configuration\. A new console is available for Amazon EC2 Auto Scaling\. Choose either the new console or the old console instructions based on the console that you are using\.
+Use the following procedure to continue where you left off after creating your launch template or launch configuration\. 
 
-**To create an Auto Scaling group \(new console\)**
+**To create an Auto Scaling group \(console\)**
 
 1. If you have not yet navigated to the **Auto Scaling groups** page, do the following:
 
@@ -177,69 +175,17 @@ Use the following procedure to continue where you left off after creating your l
 
 1. On the **Review** page, review the details of your Auto Scaling group\. You can choose **Edit** to make changes\. When you are finished, choose **Create Auto Scaling group**\.
 
-**To create an Auto Scaling group \(old console\)**
-
-1. If you have not yet navigated to the **Auto Scaling Groups** page, do the following:
-
-   1. Open the Amazon EC2 console at [https://console\.aws\.amazon\.com/ec2/](https://console.aws.amazon.com/ec2/)\.
-
-   1. On the navigation pane, under **AUTO SCALING**, choose **Auto Scaling Groups**\.
-
-1. Choose **Create Auto Scaling group**\. 
-
-1. On the **Create Auto Scaling Group** page, choose **Launch Configuration** and choose an existing launch configuration, or choose **Launch Template** and choose your launch template, and then choose **Next Step**\. 
-
-1. On the **Configure Auto Scaling group details** page, do the following:
-
-   1. For **Group name**, enter a name for your Auto Scaling group\.
-
-   1. \[Launch template only\] For **Launch template version**, choose whether the Auto Scaling group uses the default, the latest, or a specific version of the launch template when scaling out\.
-
-   1. \[Launch template only\] For **Fleet Composition**, choose **Adhere to the launch template** to use the EC2 instance type and purchase option that are specified in the launch template\. 
-
-   1. Keep **Group size** set to the default value of `1` instance for this tutorial\. 
-
-   1. For **Network**, choose the VPC that you used for your load balancer\. If you chose the default VPC, it is automatically configured to provide internet connectivity to your instances\. This VPC includes a public subnet in each Availability Zone in the Region\. 
-
-   1. For **Subnet**, choose one or more subnets from each Availability Zone that you want to include, based on which Availability Zones the load balancer is in\.
-
-   1. For **Advanced Details**, select **Receive traffic from Elastic Load Balancer\(s\)** and then do one of the following:
-      + \[Classic Load Balancers only\] Select your load balancer from **Load Balancers**\.
-      + \[Application/Network Load Balancers only\] Select your target group from **Target Groups**\.
-
-   1. \(Optional\) To use Elastic Load Balancing health checks, choose **ELB** for **Advanced Details**, **Health Check Type**\.
-
-   1. Choose **Next: Configure scaling policies**\.
-
-1. On the **Configure scaling policies** page, select **Keep this group at its initial size**\.
-
-1. When you have finished configuring the Auto Scaling group, choose **Review**\.
-
-1. Review the details of your Auto Scaling group\. You can choose **Edit** to make changes\. When you are finished, choose **Create Auto Scaling group**\.
-
 After you have created the Auto Scaling group with the load balancer attached, the load balancer automatically registers new instances as they come online\. You have only one instance at this point, so there isn't much to register\. However, you can now add additional instances by updating the desired capacity of the group\. For step\-by\-step instructions, see [Manual scaling](as-manual-scaling.md)\. 
 
 ### \(Optional\) Verify that your load balancer is attached<a name="as-register-lbs-verify-console"></a>
 
-**To verify that your load balancer is attached \(new console\)**
+**To verify that your load balancer is attached \(console\)**
 
-1. From the **Auto Scaling Groups** page, if you're seeing the old user interface, switch to the new user interface by choosing **Go to the new console** from the banner at the top of the page\.
-
-1. Select the check box next to your Auto Scaling group\.
+1. From the **Auto Scaling groups** page, select the check box next to your Auto Scaling group\.
 
 1. On the **Details** tab, **Load balancing** shows any attached load balancer target groups or Classic Load Balancers\.
 
 1. On the **Instance management** tab, under **Instances**, you can verify that your instances launched successfully\. Initially, your instances are in the `Pending` state\. After an instance is ready to receive traffic, its state is `InService`\. The **Health status** column shows the result of the Amazon EC2 Auto Scaling health checks on your instances\. Although an instance may be marked as healthy, the load balancer will only send traffic to instances that pass the load balancer health checks\.
-
-1. Verify that your instances are registered with the load balancer\. On the navigation pane of the EC2 console, under **LOAD BALANCING**, choose **Target Groups**\. Select your target group, and then choose the **Targets** tab\. If the state of your instances is `initial`, it's probably because they are still in the process of being registered, or they have not passed the minimum number of health checks to be considered healthy\. When the state of your instances is `healthy`, they are ready for use\.
-
-**To verify that your load balancer is attached \(old console\)**
-
-1. From the **Auto Scaling Groups** page, select your Auto Scaling group\.
-
-1. On the **Details** tab, **Load Balancers** shows any attached load balancers, and **Target Groups** shows any attached target groups\.
-
-1. On the **Instances** tab, you can view the status of the instances that are currently running\. Initially, your instances are in the `Pending` state\. After an instance is ready to receive traffic, its state is `InService`\. The **Health status** column shows the result of the Amazon EC2 Auto Scaling health checks on your instances\. Although an instance may be marked as healthy, the load balancer will only send traffic to instances that pass the load balancer health checks\.
 
 1. Verify that your instances are registered with the load balancer\. On the navigation pane of the EC2 console, under **LOAD BALANCING**, choose **Target Groups**\. Select your target group, and then choose the **Targets** tab\. If the state of your instances is `initial`, it's probably because they are still in the process of being registered, or they have not passed the minimum number of health checks to be considered healthy\. When the state of your instances is `healthy`, they are ready for use\.
 

@@ -1,6 +1,6 @@
 # Adding Elastic Load Balancing health checks to an Auto Scaling group<a name="as-add-elb-healthcheck"></a>
 
-The default health checks for an Auto Scaling group are EC2 status checks only\. If an instance fails these status checks, the Auto Scaling group considers the instance unhealthy and replaces it\. 
+The default health checks for an Auto Scaling group are EC2 status checks only\. If an instance fails these status checks, it is marked unhealthy and will be terminated while Amazon EC2 Auto Scaling launches a new instance in replacement\. 
 
 You can attach one or more target groups \(Application Load Balancers and Network Load Balancers\), one or more load balancers \(Classic Load Balancers\), or both to your Auto Scaling group\. However, by default, the group does not consider an instance unhealthy and replace it if it fails the health checks provided by Elastic Load Balancing\. 
 
@@ -34,15 +34,15 @@ Use the following procedure to add an `ELB` health check with a grace period of 
 
    A split pane opens up in the bottom part of the **Auto Scaling groups** page, showing information about the group that's selected\. 
 
-1. On the **Details** tab, choose **Health checks**, **Edit**\. \(Old console: On the **Details** tab, choose **Edit**\.\)
+1. On the **Details** tab, choose **Health checks**, **Edit**\.
 
-1. For **Health check type**, select **Enable ELB health checks**\. \(Old console: Select **ELB**\.\)
+1. For **Health check type**, select **Enable ELB health checks**\.
 
 1. For **Health check grace period**, enter `300`\.
 
 1. Choose **Update**\.
 
-1. On the **Instance management** tab, under **Instances**, you can view the health status of instances\. \(Old console: The **Instances** tab is where you can view the health status of instances\.\) The **Health Status** column displays the results of the newly added health checks\.
+1. On the **Instance management** tab, under **Instances**, you can view the health status of instances\. The **Health Status** column displays the results of the newly added health checks\.
 
 ## Adding health checks \(AWS CLI\)<a name="as-add-elb-healthcheck-aws-cli"></a>
 

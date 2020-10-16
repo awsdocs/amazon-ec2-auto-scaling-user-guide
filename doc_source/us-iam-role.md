@@ -18,7 +18,7 @@ Create the IAM role that your application running on Amazon EC2 can assume\. Cho
 **Important**  
 As a best practice, we strongly recommend that you create the role so that it has the minimum permissions to other AWS services that your application requires\. <a name="create-iam-role-console"></a>
 
-**To create an IAM role**
+**To create an IAM role \(console\)**
 
 1. Open the IAM console at [https://console\.aws\.amazon\.com/iam/](https://console.aws.amazon.com/iam/)\.
 
@@ -36,7 +36,7 @@ The `iam:PassRole` permission is needed on the IAM user who creates or updates a
 
 ## Create a launch configuration<a name="us-iam-role-create-launch"></a>
 
-When you create the launch configuration using the AWS Management Console, on the **Configure Details** page, select the role from **IAM role**\. For more information, see [Creating a launch configuration](create-launch-config.md)\.
+When you create the launch configuration using the AWS Management Console, in the **Additional configuration** section, select the role from **IAM instance profile**\. For more information, see [Creating a launch configuration](create-launch-config.md)\.
 
 When you create the launch configuration using the [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/create-launch-configuration.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/create-launch-configuration.html) command from the AWS CLI, specify the name of the instance profile as shown in the following example\.
 
@@ -48,7 +48,7 @@ aws autoscaling create-launch-configuration --launch-configuration-name my-lc-wi
 
 ## Create a launch template<a name="us-iam-role-create-lt"></a>
 
-When you create the launch template using the AWS Management Console, in the **Advanced Details** section, select the role from **IAM instance profile**\. For more information, see [Creating a launch template for an Auto Scaling group](create-launch-template.md)\.
+When you create the launch template using the AWS Management Console, in the **Advanced details** section, select the role from **IAM instance profile**\. For more information, see [Configuring advanced settings for your launch template](create-launch-template.md#advanced-settings-for-your-launch-template)\.
 
 When you create the launch template using the [https://docs.aws.amazon.com/cli/latest/reference/ec2/create-launch-template.html](https://docs.aws.amazon.com/cli/latest/reference/ec2/create-launch-template.html) command from the AWS CLI, specify the name of the instance profile as shown in the following example\.
 
