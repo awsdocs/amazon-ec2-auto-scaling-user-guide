@@ -19,7 +19,7 @@ After an instance is fully configured and passes the initial health checks, it i
 Amazon EC2 Auto Scaling health checks use the results of the Amazon EC2 status checks to determine the health status of an instance\. If the instance is in any state other than `running` or if the system status is `impaired`, Amazon EC2 Auto Scaling considers the instance to be unhealthy and launches a replacement instance\. This includes when the instance has any of the following states:
 + `stopping`
 + `stopped`
-+ `terminating`
++ `shutting-down`
 + `terminated`
 
 The EC2 status checks do not require any special configuration and are always enabled\. This includes both instance status checks and system status checks\. For more information, see [Types of status checks](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/monitoring-system-instance-status-check.html#types-of-instance-status-checks) in the *Amazon EC2 User Guide for Linux Instances*\. 

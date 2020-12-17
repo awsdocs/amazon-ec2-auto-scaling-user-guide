@@ -14,7 +14,8 @@ Keep in mind the following information when creating a launch template for use w
 A launch template lets you configure additional settings in your Auto Scaling group to launch multiple instance types and combine On\-Demand and Spot purchase options, as described in [Auto Scaling groups with multiple instance types and purchase options](asg-purchase-options.md)\. Launching instances with such a combination is not supported:  
 If you specify a Spot Instance request in the launch template
 In EC2\-Classic
-Creating a launch template also enables you to take advantage of features of Amazon EC2 such as Dedicated Hosts\. Support for Dedicated Hosts \(host tenancy\) is only available if you specify a host resource group\. You cannot target a specific host ID or use host placement affinity\.
+A launch template also enables you to take advantage of newer features of Amazon EC2 such as the current generation of EBS volume types \(gp3 and io2\), EBS volume tagging, T2 Unlimited instances, and Dedicated Hosts\. 
+Support for Dedicated Hosts \(host tenancy\) is only available if you specify a host resource group\. You cannot target a specific host ID or use host placement affinity\.
 A launch template lets you configure a network type \(VPC or EC2\-Classic\), subnet, and Availability Zone\. However, these settings are ignored in favor of what is specified in the Auto Scaling group\. 
 
 ## Creating your launch template \(console\)<a name="create-launch-template-for-auto-scaling"></a>
@@ -34,6 +35,8 @@ Follow these steps to configure your launch template for the following:
 1. On the navigation pane, under **INSTANCES**, choose **Launch Templates**\.
 
 1. Choose **Create launch template**\. Enter a name and provide a description for the initial version of the launch template\.
+
+1. Under **Auto Scaling guidance**, select the check box to have Amazon EC2 provide guidance to help create a template to use with Amazon EC2 Auto Scaling\. 
 
 1. Under **Launch template contents**, fill out each required field and any optional fields to use as your instance launch specification\.
 
@@ -79,41 +82,49 @@ Providing a CMK without also setting the **Encrypted** parameter results in an e
 
 1. For **Instance tags**, specify tags by providing key and value combinations\. You can tag the instances, the volumes, or both\.
 
-1. To change the default network interface, see [Changing the default network interface](#change-network-interface)\. Skip this step if you want to keep the default network interface\.
+1. To change the default network interface, see [Changing the default network interface](#change-network-interface)\. Skip this step if you want to keep the default network interface \(the primary network interface\)\.
 
 1. To configure advanced settings, see [Configuring advanced settings for your launch template](#advanced-settings-for-your-launch-template)\. Otherwise, choose **Create launch template**\. 
 
+1. To create an Auto Scaling group, choose **Create Auto Scaling group** from the confirmation page\.
+
 ### Changing the default network interface<a name="change-network-interface"></a>
 
-An Auto Scaling group can connect to the network only on the *primary network interface* \(eth0\)\. You can change the default primary network interface by following this procedure\. This allows you to define, for example, whether you want to assign a public IP address to each instance instead of defaulting to the auto\-assign public IP setting on the subnet\.
+This section shows you how to change the default network interface\. This allows you to define, for example, whether you want to assign a public IP address to each instance instead of defaulting to the auto\-assign public IP setting on the subnet\.
 
 **Considerations and limitations**
 
-When changing the default network interface, keep in mind the following considerations and limitations:
+When specifying a network interface, keep in mind the following considerations and limitations:
 + You must configure the security group as part of the network interface, and not in the **Security groups** section of the template\. You cannot specify security groups in both places\.
-+ You cannot specify multiple network interfaces\. 
-+ You cannot assign specific private IP addresses\. When an instance launches, a private address is allocated from the CIDR range of the subnet in which the instance is launched\. For more information on specifying CIDR ranges for your VPC or subnet, see the [Amazon VPC User Guide](https://docs.aws.amazon.com/vpc/latest/userguide/)\.
-+ You can only launch one instance if you specify a network interface ID for **Network interface**\. For this to work, you must use the AWS CLI or an SDK to create the Auto Scaling group\. When you create the group, you must specify the Availability Zone, but not the subnet ID\. Also, you can specify an existing network interface only if it has a device index of 0\.
++ You cannot assign specific private IP addresses to your Auto Scaling instances\. When an instance launches, a private address is allocated from the CIDR range of the subnet in which the instance is launched\. For more information on specifying CIDR ranges for your VPC or subnet, see the [Amazon VPC User Guide](https://docs.aws.amazon.com/vpc/latest/userguide/)\.
++ You can launch only one instance if you specify an existing network interface ID\. For this to work, you must use the AWS CLI or an SDK to create the Auto Scaling group\. When you create the group, you must specify the Availability Zone, but not the subnet ID\. Also, you can specify an existing network interface only if it has a device index of 0\. 
++ You cannot auto\-assign a public IP address if you specify more than one network interface\. You also cannot specify duplicate device indexes across network interfaces\. 
 
 **To change the default network interface**
 
 1. Under **Network interfaces**, choose **Add network interface**\.
 
-1. Specify the primary network interface \(eth0\), paying attention to the following fields:
+1. Specify the primary network interface, paying attention to the following fields:
 
-   1. **Device**: Specify `eth0` as the device name \(the device for which the device index is 0\)\. 
+   1. **Device index**: Specify the device index\. Enter `0` for the primary network interface \(eth0\)\. 
 
    1. **Network interface**: Leave blank to create a new network interface when an instance is launched, or enter the ID of an existing network interface\. If you specify an ID, this limits your Auto Scaling group to one instance\. 
 
    1. **Description**: Enter a descriptive name\.
 
-   1. **Subnet**: While you may choose to specify a subnet, it is ignored for Amazon EC2 Auto Scaling in favor of the settings of the Auto Scaling group\. 
+   1. **Subnet**: While you can choose to specify a subnet, it is ignored for Amazon EC2 Auto Scaling in favor of the settings of the Auto Scaling group\. 
 
-   1. **Auto\-assign public IP**: Choose whether to assign a [public IP address](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-instance-addressing.html#public-ip-addresses) to the group's instances\. This setting takes precedence over settings you configure for the subnets\. If you do not set a value, the default is to use the auto\-assign public IP settings of the subnets that your instances are launched into\.
+   1. **Auto\-assign public IP**: Choose whether to automatically assign a [public IP address](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-instance-addressing.html#public-ip-addresses) to the network interface with the device index of 0\. This setting takes precedence over settings that you configure for the subnets\. If you do not set a value, the default is to use the auto\-assign public IP settings of the subnets that your instances are launched into\. 
 
-   1. **Security group ID**: Enter the IDs of one or more [security groups](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-network-security.html)\. Each security group must be configured for the VPC that your Auto Scaling group will launch instances into\. Separate the entries with commas\.
+   1. **Security groups**: Choose one or more [security groups](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-network-security.html)\. Each security group must be configured for the VPC that your Auto Scaling group will launch instances into\.
 
-   1. **Delete on termination**: Choose whether the network interface is deleted when the Auto Scaling group scales in and terminates the instance to which the network interface is attached\.
+   1. **Delete on termination**: Choose whether the network interface is deleted when the Auto Scaling group scales in and terminates the instance to which the network interface is attached\. 
+
+   1. **Elastic Fabric Adapter**: Indicates whether the network interface is an Elastic Fabric Adapter\. For more information, see [Elastic Fabric Adapter](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/efa.html) in the *Amazon EC2 User Guide for Linux Instances*\. 
+
+   1. **Network card index**: Attaches the network interface to a specific network card when using an instance type that supports multiple network cards\. The primary network interface \(eth0\) must be assigned to network card index 0\. Defaults to 0 if not specified\. For more information, see [Network cards](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-eni.html#network-cards) in the *Amazon EC2 User Guide for Linux Instances*\. 
+
+1. To add a secondary network interface, choose **Add network interface**\.
 
 ### Configuring advanced settings for your launch template<a name="advanced-settings-for-your-launch-template"></a>
 
@@ -127,7 +138,7 @@ The following steps discuss the most useful settings to pay attention to\. For m
 
 1. For **Purchasing option**, you can choose **Request Spot Instances** to request Spot Instances at the Spot price, capped at the On\-Demand price, and choose **Customize** to change the default Spot Instance settings\. For an Auto Scaling group, you must specify a one\-time request with no end date \(the default\)\. For more information, see [Requesting Spot Instances for fault\-tolerant and flexible applications](asg-launch-spot-instances.md)\. 
 **Note**  
-If you leave this setting disabled, you can request Spot Instances later in your Auto Scaling group\. This also gives you the option of specifying multiple instance types\. That way, if Amazon EC2 needs to reclaim your Spot Instances, we can launch replacement instances from another Spot pool after the Spot Instances in your group are terminated\. For more information, see [Auto Scaling groups with multiple instance types and purchase options](asg-purchase-options.md)\.
+If you leave this setting disabled, you can request Spot Instances later in your Auto Scaling group\. This also gives you the option of specifying multiple instance types\. That way, if Amazon EC2 needs to reclaim your Spot Instances, we can launch replacement instances from another Spot pool\. For more information, see [Auto Scaling groups with multiple instance types and purchase options](asg-purchase-options.md)\.
 
 1. For **IAM instance profile**, you can specify an AWS Identity and Access Management \(IAM\) instance profile to associate with the instances\. When you choose an instance profile, you associate the corresponding IAM role with the EC2 instances\. For more information, see [IAM role for applications that run on Amazon EC2 instances](us-iam-role.md)\.
 
@@ -163,6 +174,8 @@ If you leave this setting disabled, you can request Spot Instances later in your
 
 1. Choose **Create launch template**\.
 
+1. To create an Auto Scaling group, choose **Create Auto Scaling group** from the confirmation page\.
+
 ## Creating a launch template from an existing instance \(console\)<a name="create-launch-template-from-instance"></a>
 
 **To create a launch template from an existing instance**
@@ -184,65 +197,3 @@ If you leave this setting disabled, you can request Spot Instances later in your
 You can use one of the following commands:
 + [https://docs.aws.amazon.com/cli/latest/reference/ec2/create-launch-template.html](https://docs.aws.amazon.com/cli/latest/reference/ec2/create-launch-template.html) \(AWS CLI\)
 + [https://docs.aws.amazon.com/powershell/latest/reference/items/New-EC2LaunchTemplate.html](https://docs.aws.amazon.com/powershell/latest/reference/items/New-EC2LaunchTemplate.html) \(AWS Tools for Windows PowerShell\)
-
-Create a launch template using the [https://docs.aws.amazon.com/cli/latest/reference/ec2/create-launch-template.html](https://docs.aws.amazon.com/cli/latest/reference/ec2/create-launch-template.html) command as follows\. Specify a value for `Groups` that corresponds to security groups for the VPC that your Auto Scaling group will launch instances into\. Specify the VPC and subnets as properties of the Auto Scaling group\.
-
-```
-aws ec2 create-launch-template --launch-template-name my-template-for-auto-scaling --version-description version1 \
-  --launch-template-data '{"NetworkInterfaces":[{"DeviceIndex":0,"AssociatePublicIpAddress":true,"Groups":["sg-7c227019"],"DeleteOnTermination":true}],"ImageId":"ami-01e24be29428c15b2","InstanceType":"t2.micro","TagSpecifications": [{"ResourceType":"instance","Tags":[{"Key":"purpose","Value":"webserver"}]}]}'
-```
-
-Use the following [https://docs.aws.amazon.com/cli/latest/reference/ec2/describe-launch-templates.html](https://docs.aws.amazon.com/cli/latest/reference/ec2/describe-launch-templates.html) command to describe the launch template *my\-template\-for\-auto\-scaling*\.
-
-```
-aws ec2 describe-launch-templates --launch-template-names my-template-for-auto-scaling
-```
-
-Use the following [https://docs.aws.amazon.com/cli/latest/reference/ec2/describe-launch-template-versions.html](https://docs.aws.amazon.com/cli/latest/reference/ec2/describe-launch-template-versions.html) command to describe the versions of the specified launch template *my\-template\-for\-auto\-scaling*\.
-
-```
-aws ec2 describe-launch-template-versions --launch-template-id lt-068f72b72934aff71
-```
-
-The following is an example response\.
-
-```
-{
-    "LaunchTemplateVersions": [
-        {
-            "VersionDescription": "version1",
-            "LaunchTemplateId": "lt-068f72b72934aff71",
-            "LaunchTemplateName": "my-template-for-auto-scaling",
-            "VersionNumber": 1,
-            "CreatedBy": "arn:aws:iam::123456789012:user/Bob",
-            "LaunchTemplateData": {
-                "TagSpecifications": [
-                    {
-                        "ResourceType": "instance",
-                        "Tags": [
-                            {
-                                "Key": "purpose",
-                                "Value": "webserver"
-                            }
-                        ]
-                    }
-                ],
-                "ImageId": "ami-01e24be29428c15b2",
-                "InstanceType": "t2.micro",
-                "NetworkInterfaces": [
-                    {
-                        "DeviceIndex": 0,
-                        "DeleteOnTermination": true,
-                        "Groups": [
-                            "sg-7c227019"
-                        ],
-                        "AssociatePublicIpAddress": true
-                    }
-                ]
-            },
-            "DefaultVersion": true,
-            "CreateTime": "2019-02-28T19:52:27.000Z"
-        }
-    ]
-}
-```

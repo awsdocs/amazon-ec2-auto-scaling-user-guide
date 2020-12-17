@@ -19,9 +19,10 @@ To view the current quotas for your account, open the Amazon EC2 console at [htt
 **Scaling policy quotas**
 + Step adjustments per scaling policy: 20
 
-**Auto Scaling API quotas**
+**API\-specific limits**
 + You can use [https://docs.aws.amazon.com/autoscaling/ec2/APIReference/API_AttachInstances.html](https://docs.aws.amazon.com/autoscaling/ec2/APIReference/API_AttachInstances.html), [https://docs.aws.amazon.com/autoscaling/ec2/APIReference/API_DetachInstances.html](https://docs.aws.amazon.com/autoscaling/ec2/APIReference/API_DetachInstances.html), [https://docs.aws.amazon.com/autoscaling/ec2/APIReference/API_EnterStandby.html](https://docs.aws.amazon.com/autoscaling/ec2/APIReference/API_EnterStandby.html), and [https://docs.aws.amazon.com/autoscaling/ec2/APIReference/API_ExitStandby.html](https://docs.aws.amazon.com/autoscaling/ec2/APIReference/API_ExitStandby.html) with at most 20 instance IDs at a time\.
 + You can use [https://docs.aws.amazon.com/autoscaling/ec2/APIReference/API_AttachLoadBalancers.html](https://docs.aws.amazon.com/autoscaling/ec2/APIReference/API_AttachLoadBalancers.html) and [https://docs.aws.amazon.com/autoscaling/ec2/APIReference/API_DetachLoadBalancers.html](https://docs.aws.amazon.com/autoscaling/ec2/APIReference/API_DetachLoadBalancers.html) with at most 10 load balancers at a time\.
 + You can use [https://docs.aws.amazon.com/autoscaling/ec2/APIReference/API_AttachLoadBalancerTargetGroups.html](https://docs.aws.amazon.com/autoscaling/ec2/APIReference/API_AttachLoadBalancerTargetGroups.html) and [https://docs.aws.amazon.com/autoscaling/ec2/APIReference/API_DetachLoadBalancerTargetGroups.html](https://docs.aws.amazon.com/autoscaling/ec2/APIReference/API_DetachLoadBalancerTargetGroups.html) with at most 10 target groups at a time\.
++ You can use [https://docs.aws.amazon.com/autoscaling/ec2/APIReference/API_SetInstanceProtection.html](https://docs.aws.amazon.com/autoscaling/ec2/APIReference/API_SetInstanceProtection.html) with at most 50 instances at a time\.
 
 For information about the service quotas for other services, see [Service endpoints and quotas](https://docs.aws.amazon.com/general/latest/gr/aws-service-information.html) in the *Amazon Web Services General Reference*\.

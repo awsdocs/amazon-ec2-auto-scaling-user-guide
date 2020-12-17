@@ -9,4 +9,4 @@ With Availability Zones, you can design and operate applications and databases t
 For more information about AWS Regions and Availability Zones, see [AWS global infrastructure](http://aws.amazon.com/about-aws/global-infrastructure/)\.
 
 **Related topics**
-+ [Resilience in amazon EC2](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/disaster-recovery-resiliency.html) in the *Amazon EC2 User Guide for Linux Instances*
++ [Resilience in Amazon EC2](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/disaster-recovery-resiliency.html) in the *Amazon EC2 User Guide for Linux Instances*

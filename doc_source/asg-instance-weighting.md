@@ -1,4 +1,4 @@
-# Instance weighting for Amazon EC2 Auto Scaling<a name="asg-instance-weighting"></a>
+# Configuring instance weighting for Amazon EC2 Auto Scaling<a name="asg-instance-weighting"></a>
 
 When you configure an Auto Scaling group to launch multiple instance types, you have the option of defining the number of capacity units that each instance contributes to the desired capacity of the group, using *instance weighting*\. This allows you to specify the relative weight of each instance type in a way that directly maps to the performance of your application\. You can weight your instances to suit your specific application needs, for example, by the cores \(vCPUs\) or by memory \(GiBs\)\. 
 
@@ -78,7 +78,7 @@ The following examples show how to use the AWS CLI to add weights when you creat
 
 **To add weights to an Auto Scaling group on creation**
 + Use the [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/create-auto-scaling-group.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/create-auto-scaling-group.html) command to create a new Auto Scaling group\. For example, the following command creates a new Auto Scaling group and adds instance weighting by specifying the following:
-  + The percentage of the group to launch as On\-Demand Instances \(`0`\) and a base number of On\-Demand Instances to start with \(`10`\)
+  + The percentage of the group to launch as On\-Demand Instances \(`0`\) 
   + The allocation strategy for Spot Instances in each Availability Zone \(`capacity-optimized`\)
   + The instance types to launch in priority order \(`m4.16xlarge`, `m5.24xlarge`\)
   + The instance weights that correspond to the relative size difference \(vCPUs\) between instance types \(`16`, `24`\)
@@ -112,7 +112,6 @@ The following examples show how to use the AWS CLI to add weights when you creat
               ]
           },
           "InstancesDistribution": {
-              "OnDemandBaseCapacity": 10,
               "OnDemandPercentageAboveBaseCapacity": 0,
               "SpotAllocationStrategy": "capacity-optimized"
           }
@@ -203,7 +202,7 @@ The following examples show how to use the AWS CLI to add weights when you creat
                   },
                   "InstancesDistribution": {
                       "OnDemandAllocationStrategy": "prioritized",
-                      "OnDemandBaseCapacity": 10,
+                      "OnDemandBaseCapacity": 0,
                       "OnDemandPercentageAboveBaseCapacity": 0,
                       "SpotAllocationStrategy": "capacity-optimized"
                   }

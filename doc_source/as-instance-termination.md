@@ -18,7 +18,7 @@ Note the following about Auto Scaling groups with a [mixed instances policy](asg
   + [Modify the instance scale\-in protection setting for an instance](#instance-protection-instance)
 + [Common termination policy scenarios for Amazon EC2 Auto Scaling](common-scenarios-termination.md)
   + [Scale\-in events](common-scenarios-termination.md#common-scenarios-termination-scale-in)
-  + [Rebalancing activities](common-scenarios-termination.md#common-scenarios-termination-rebalancing)
+  + [Rebalancing across Availability Zones](common-scenarios-termination.md#common-scenarios-termination-rebalancing)
     + [Availability outage](common-scenarios-termination.md#common-scenarios-termination-outage)
     + [Changes to Availability Zones](common-scenarios-termination.md#common-scenarios-termination-new-zone)
     + [Removing instances](common-scenarios-termination.md#common-scenarios-termination-removed-instances)

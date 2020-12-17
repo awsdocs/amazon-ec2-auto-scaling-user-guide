@@ -4,7 +4,7 @@ The following are common termination policy scenarios for Amazon EC2 Auto Scalin
 
 **Topics**
 + [Scale\-in events](#common-scenarios-termination-scale-in)
-+ [Rebalancing activities](#common-scenarios-termination-rebalancing)
++ [Rebalancing across Availability Zones](#common-scenarios-termination-rebalancing)
 + [Instance refreshes](#common-scenarios-termination-instance-types)
 
 ## Scale\-in events<a name="common-scenarios-termination-scale-in"></a>
@@ -25,7 +25,7 @@ If you did not assign a specific termination policy to the group, it uses the de
 
 Note that the default termination policy works for Auto Scaling groups created with a launch template or with a launch configuration\. You can move your Auto Scaling groups from using launch configurations to launch templates at any time and continue to use the default termination policy\. The default termination policy will continue to terminate instances launched from the oldest launch configuration until there are no more remaining instances created from a launch configuration\. After that, it terminates instances launched from the oldest launch template\.
 
-## Rebalancing activities<a name="common-scenarios-termination-rebalancing"></a>
+## Rebalancing across Availability Zones<a name="common-scenarios-termination-rebalancing"></a>
 
 [Rebalancing activities](auto-scaling-benefits.md#AutoScalingBehavior.InstanceUsage) occur to proactively balance your instances across Availability Zones evenly for high availability\. For example, rebalancing can be necessary when there's an availability outage, when there are changes to the Availability Zones, and when you remove instances\. When terminating instances due to rebalancing activities, the termination policy determines which instances are terminated\. 
 

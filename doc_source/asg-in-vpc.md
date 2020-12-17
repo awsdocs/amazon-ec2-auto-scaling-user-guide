@@ -1,14 +1,12 @@
 # Launching Auto Scaling instances in a VPC<a name="asg-in-vpc"></a>
 
-Amazon Virtual Private Cloud \(Amazon VPC\) enables you to define a virtual networking environment in a private, isolated section of the AWS Cloud\. You have complete control over your virtual networking environment\. For more information, see the *[Amazon VPC User Guide](https://docs.aws.amazon.com/vpc/latest/userguide/)*\.
+Amazon Virtual Private Cloud \(Amazon VPC\) enables you to define a virtual networking environment in a private, isolated section of the AWS Cloud\. You have complete control over your virtual networking environment\.
 
 Within a virtual private cloud \(VPC\), you can launch AWS resources such as an Auto Scaling group\. An Auto Scaling group in a VPC works essentially the same way as it does on Amazon EC2 and supports the same set of features\.
 
 A subnet in Amazon VPC is a subdivision within an Availability Zone defined by a segment of the IP address range of the VPC\. Using subnets, you can group your instances based on your security and operational needs\. A subnet resides entirely within the Availability Zone it was created in\. You launch Auto Scaling instances within the subnets\.
 
-To enable communication between the internet and the instances in your subnets, you must create an internet gateway and attach it to your VPC\. An internet gateway enables your resources within the subnets to connect to the internet through the Amazon EC2 network edge\. If a subnet's traffic is routed to an internet gateway, the subnet is known as a *public* subnet\. If a subnet's traffic is not routed to an internet gateway, the subnet is known as a *private* subnet\. Use a public subnet for resources that must be connected to the internet, and a private subnet for resources that need not be connected to the internet\.
-
-Before you can launch your Auto Scaling instances in a new VPC, you must first create your VPC environment\. After you create your VPC and subnets, you launch Auto Scaling instances within the subnets\. The easiest way to create a VPC with one public subnet is to use the VPC wizard\. For more information, see the [Amazon VPC Getting Started Guide](https://docs.aws.amazon.com/AmazonVPC/latest/GettingStartedGuide/)\.
+To enable communication between the internet and the instances in your subnets, you must create an internet gateway and attach it to your VPC\. An internet gateway enables your resources within the subnets to connect to the internet through the Amazon EC2 network edge\. If a subnet's traffic is routed to an internet gateway, the subnet is known as a *public* subnet\. If a subnet's traffic is not routed to an internet gateway, the subnet is known as a *private* subnet\. Use a public subnet for resources that must be connected to the internet, and a private subnet for resources that need not be connected to the internet\. For more information about giving internet access to instances in a VPC, see [Accessing the internet](https://docs.aws.amazon.com/vpc/latest/userguide/how-it-works.html#what-is-connectivity) in the *Amazon VPC User Guide*\.
 
 **Topics**
 + [Default VPC](#as-defaultVPC)
@@ -22,6 +20,8 @@ Before you can launch your Auto Scaling instances in a new VPC, you must first c
 If you created your AWS account after December 4, 2013 or you are creating your Auto Scaling group in a new AWS Region, we create a default VPC for you\. Your default VPC comes with a default subnet in each Availability Zone\. If you have a default VPC, your Auto Scaling group is created in the default VPC by default\.
 
 For information about default VPCs and checking whether your account comes with a default VPC, see [Your default VPC and subnets](https://docs.aws.amazon.com/vpc/latest/userguide/default-vpc.html#launching-into) in the *Amazon VPC Developer Guide*\. 
+
+Before you can launch your Auto Scaling instances in a nondefault VPC, you must first create your VPC environment\. After you create your VPC and subnets, you launch Auto Scaling instances within the subnets\. For more information about creating a VPC, see the *[Amazon VPC User Guide](https://docs.aws.amazon.com/vpc/latest/userguide/)*\.
 
 ## IP addressing in a VPC<a name="as-vpc-ipaddress"></a>
 

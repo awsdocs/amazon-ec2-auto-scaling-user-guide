@@ -1,7 +1,7 @@
 # Creating a launch configuration<a name="create-launch-config"></a>
 
 **Important**  
-We recommend that you create Auto Scaling groups from launch templates to ensure that you're getting the latest features from Amazon EC2\. For more information, see [Creating a launch template for an Auto Scaling group](create-launch-template.md)\.
+We strongly recommend that you create Auto Scaling groups from launch templates to ensure that you're getting the latest features from Amazon EC2\. For more information, see [Creating a launch template for an Auto Scaling group](create-launch-template.md)\. We provide information about launch configurations for customers who have not yet migrated from launch configurations to launch templates\. 
 
 When you create a launch configuration, you must specify information about the EC2 instances to launch\. Include the Amazon Machine Image \(AMI\), instance type, key pair, security groups, and block device mapping\. Alternatively, you can create a launch configuration using attributes from a running EC2 instance\. For more information, see [Creating a launch configuration using an EC2 instance](create-lc-with-instanceID.md)\.
 

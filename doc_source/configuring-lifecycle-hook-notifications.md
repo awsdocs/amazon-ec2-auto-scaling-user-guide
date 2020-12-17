@@ -12,7 +12,9 @@ AWS resources for notifications must always be created in the same AWS Region wh
 
 ## Route notifications to Lambda using EventBridge<a name="cloudwatch-events-notification"></a>
 
-You can use EventBridge to set up a target to invoke a Lambda function when a lifecycle action occurs\.
+You can use EventBridge to set up a target to invoke a Lambda function when a lifecycle action occurs\. 
+
+You can also choose from other target types\. For more information, see the [Amazon EventBridge User Guide](https://docs.aws.amazon.com/eventbridge/latest/userguide/)\. For an example of a configuration that uses a Systems Manager automation document as an event target, see the article [Run code before terminating an EC2 Auto Scaling instance](http://aws.amazon.com/blogs/infrastructure-and-automation/run-code-before-terminating-an-ec2-auto-scaling-instance) on the AWS blog\. 
 
 **To set up notifications using EventBridge**
 

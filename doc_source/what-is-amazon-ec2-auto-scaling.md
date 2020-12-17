@@ -18,7 +18,7 @@ The following table describes the key components of Amazon EC2 Auto Scaling\.
 |  |  | 
 | --- |--- |
 |  ![\[A graphic representing an Auto Scaling group.\]](http://docs.aws.amazon.com/autoscaling/ec2/userguide/images/group-graphic.png)  |   Groups Your EC2 instances are organized into *groups* so that they can be treated as a logical unit for the purposes of scaling and management\. When you create a group, you can specify its minimum, maximum, and, desired number of EC2 instances\. For more information, see [Auto Scaling groups](AutoScalingGroup.md)\.   | 
-|  ![\[A graphic representing a launch configuration.\]](http://docs.aws.amazon.com/autoscaling/ec2/userguide/images/launch-configuration-graphic.png)  |   Configuration templates Your group uses a *launch template* or a *launch configuration* as a configuration template for its EC2 instances\. You can specify information such as the AMI ID, instance type, key pair, security groups, and block device mapping for your instances\. For more information, see [Launch templates](LaunchTemplates.md) and [Launch configurations](LaunchConfiguration.md)\.   | 
+|  ![\[A graphic representing a launch configuration.\]](http://docs.aws.amazon.com/autoscaling/ec2/userguide/images/launch-configuration-graphic.png)  |   Configuration templates Your group uses a *launch template*, or a *launch configuration* \(not recommended, offers fewer features\), as a configuration template for its EC2 instances\. You can specify information such as the AMI ID, instance type, key pair, security groups, and block device mapping for your instances\. For more information, see [Launch templates](LaunchTemplates.md) and [Launch configurations](LaunchConfiguration.md)\.   | 
 |  ![\[A graphic representing scaling options.\]](http://docs.aws.amazon.com/autoscaling/ec2/userguide/images/scaling-plan-graphic.png)  |   Scaling options Amazon EC2 Auto Scaling provides several ways for you to scale your Auto Scaling groups\. For example, you can configure a group to scale based on the occurrence of specified conditions \(dynamic scaling\) or on a schedule\. For more information, see [Scaling options](scaling_plan.md#scaling_typesof)\.   | 
 
 ## Getting started<a name="what-is-auto-scaling-next-steps"></a>
@@ -47,11 +47,11 @@ For information about your credentials for accessing AWS, see [AWS security cred
 
 ## Pricing for Amazon EC2 Auto Scaling<a name="as-pricing"></a>
 
-There are no additional fees with Amazon EC2 Auto Scaling, so it's easy to try it out and see how it can benefit your AWS architecture\.
+There are no additional fees with Amazon EC2 Auto Scaling, so it's easy to try it out and see how it can benefit your AWS architecture\. You only pay for the AWS resources \(for example, EC2 instances and CloudWatch alarms\) that you use\.
 
 ## PCI DSS compliance<a name="pci-dss-compliance"></a>
 
-Auto Scaling supports the processing, storage, and transmission of credit card data by a merchant or service provider, and has been validated as being compliant with Payment Card Industry \(PCI\) Data Security Standard \(DSS\)\. For more information about PCI DSS, including how to request a copy of the AWS PCI Compliance Package, see [PCI DSS Level 1](https://aws.amazon.com/compliance/pci-dss-level-1-faqs/)\. 
+Amazon EC2 Auto Scaling supports the processing, storage, and transmission of credit card data by a merchant or service provider, and has been validated as being compliant with Payment Card Industry \(PCI\) Data Security Standard \(DSS\)\. For more information about PCI DSS, including how to request a copy of the AWS PCI Compliance Package, see [PCI DSS Level 1](https://aws.amazon.com/compliance/pci-dss-level-1-faqs/)\. 
 
 ## Related services<a name="related-services"></a>
 

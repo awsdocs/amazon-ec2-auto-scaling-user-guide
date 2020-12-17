@@ -7,9 +7,7 @@ Registering your Auto Scaling group with an Elastic Load Balancing load balancer
 
 In this tutorial, we cover the basics steps for setting up a load\-balanced application when the Auto Scaling group is created\. To register an existing Auto Scaling group with a load balancer, see [Attaching a load balancer](attach-load-balancer-asg.md) instead\.
 
-Elastic Load Balancing supports three types of load balancers: Application Load Balancers, Network Load Balancers, and Classic Load Balancers\. We recommend that you use either Application Load Balancers or Network Load Balancers\. However, you can still use a Classic Load Balancer if it supports the features that your application needs\. 
-
-For more information, see [Elastic Load Balancing and Amazon EC2 Auto Scaling](autoscaling-load-balancer.md)\. 
+Elastic Load Balancing supports different types of load balancers, including Application Load Balancers, Network Load Balancers, and Classic Load Balancers\. In most cases, we recommend that you use an Application Load Balancer or a Network Load Balancer\. However, you can still use a Classic Load Balancer if it supports the features that your application needs\. For more information, see [Elastic Load Balancing and Amazon EC2 Auto Scaling](autoscaling-load-balancer.md)\.
 
 The procedure for deploying this scalable, load\-balanced architecture for dynamic traffic consists of the following steps\. 
 + \(Optional\) Create the launch template or launch configuration that will serve as a template for your instances\. Choose either the launch template or the launch configuration instructions, based on your preference\. Skip this step if you want to use your own launch template or launch configuration\.
@@ -165,7 +163,7 @@ Use the following procedure to continue where you left off after creating your l
 
 1. Do one of the following:
 
-   1. Choose **Application Load Balancer or Network Load Balancer**, and then choose your load balancer target group\.
+   1. Choose **Load balancer target groups**, and then choose the target group for the load balancer you created\.
 
    1. Choose **Classic Load Balancers**, and then choose your load balancer\.
 

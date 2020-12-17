@@ -4,7 +4,7 @@ When you use the AWS Management Console to update an Auto Scaling group, or when
 
 The maximum instance lifetime specifies the maximum amount of time \(in seconds\) that an instance can be in service\. The maximum duration applies to all current and future instances in the group\. As an instance approaches its maximum duration, it is terminated and replaced, and cannot be used again\.
 
-When configuring the maximum instance lifetime for your Auto Scaling group, you must specify a value of at least 604,800 seconds \(7 days\)\. To clear a previously set value, specify a new value of 0\.
+When configuring the maximum instance lifetime for your Auto Scaling group, you must specify a value of at least 86,400 seconds \(1 day\)\. To clear a previously set value, specify a new value of 0\.
 
 Note that instances are not guaranteed to be replaced only at the end of their maximum duration\. In some situations, Amazon EC2 Auto Scaling might need to start replacing instances immediately after you configure the maximum instance lifetime parameter\. The intention of this more aggressive behavior is to avoid replacing all instances at the same time\. 
 

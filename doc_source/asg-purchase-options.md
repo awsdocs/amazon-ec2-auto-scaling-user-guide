@@ -8,8 +8,18 @@ You first specify the common configuration parameters in a launch template, and 
 + Specify how much On\-Demand and Spot capacity to launch, and specify an optional On\-Demand base portion\.
 + Prioritize instance types that can benefit from Reserved Instance or Savings Plan discount pricing\.
 + Define how Amazon EC2 Auto Scaling should distribute your Spot capacity across instance types\.
++ Enable Capacity Rebalancing\. When you turn on Capacity Rebalancing, Amazon EC2 Auto Scaling attempts to launch a Spot Instance whenever Amazon EC2 notifies that a Spot Instance is at an elevated risk of interruption\. After launching a new instance, it then terminates an old instance\. For more information, see [Amazon EC2 Auto Scaling Capacity Rebalancing](capacity-rebalance.md)\.
 
 You enhance availability by deploying your application across multiple instance types running in multiple Availability Zones\. You can use just one instance type, but it is a best practice to use a few instance types to allow Amazon EC2 Auto Scaling to launch another instance type in the event that there is insufficient instance capacity in your chosen Availability Zones\. With Spot Instances, if there is insufficient instance capacity, Amazon EC2 Auto Scaling keeps trying in other Spot Instance pools \(determined by your choice of instance types and allocation strategy\) rather than launching On\-Demand Instances, so that you can leverage the cost savings of Spot Instances\.
+
+**Topics**
++ [Allocation strategies](#asg-allocation-strategies)
++ [Controlling the proportion of On\-Demand instances](#asg-instances-distribution)
++ [Best practices for Spot Instances](#asg-spot-best-practices)
++ [Prerequisites](#asg-prerequisites)
++ [Creating an Auto Scaling group with Spot and On\-Demand Instances \(console\)](#create-asg-multiple-purchase-options-console)
++ [Creating an Auto Scaling group with Spot and On\-Demand Instances \(AWS CLI\)](#create-asg-multiple-purchase-options-aws-cli)
++ [Configuring overrides](asg-override-options.md)
 
 ## Allocation strategies<a name="asg-allocation-strategies"></a>
 
@@ -85,8 +95,8 @@ Before you create your Auto Scaling group to request Spot Instances, review [Spo
 + Use the default maximum price, which is the On\-Demand price\. You pay only the Spot price for the Spot Instances that you launch\. If the Spot price is within your maximum price, whether your request is fulfilled depends on availability\. For more information, see [Pricing and savings](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-spot-instances.html#spot-pricing) in the *Amazon EC2 User Guide for Linux Instances*\. 
 + Create your Auto Scaling group with multiple instance types\. Because capacity fluctuates independently for each instance type in an Availability Zone, you can often get more compute capacity when you have instance type flexibility\.
 + Similarly, don't limit yourself to only the most popular instance types\. Because prices adjust based on long\-term demand, popular instance types \(such as recently launched instance families\), tend to have more price adjustments\. Picking older\-generation instance types that are less popular tends to result in lower costs and fewer interruptions\.
-+ If you chose the `lowest-price` allocation strategy and you run a web service, specify a high number of Spot pools, for example, N=10\. Specifying a high number of Spot pools reduces the impact of Spot Instance interruptions if a pool in one of the Availability Zones becomes temporarily unavailable\. If you run batch processing or other non\-mission critical applications, you can specify a lower number of Spot pools, for example, N=2\. This helps to ensure that you provision Spot Instances from only the very lowest priced Spot pools available per Availability Zone\. 
-+ Use Spot Instance interruption notices to monitor the status of your Spot Instances\. For example, you can set up a rule in Amazon EventBridge that automatically sends the EC2 Spot two\-minute warning to an Amazon SNS topic, an AWS Lambda function, or another target\. For more information, see [Spot Instance interruption notices](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/spot-interruptions.html#spot-instance-termination-notices) in the *Amazon EC2 User Guide for Linux Instances* and the [Amazon EventBridge User Guide](https://docs.aws.amazon.com/eventbridge/latest/userguide/)\.
++ We recommend that you use the `capacity-optimized` allocation strategy\. This means that Amazon EC2 Auto Scaling launches instances using Spot pools that are optimally chosen based on the available Spot capacity, which helps you reduce the possibility of a Spot interruption\. 
++ If you choose the `lowest-price` allocation strategy and you run a web service, specify a high number of Spot pools, for example, N=10\. Specifying a high number of Spot pools reduces the impact of Spot Instance interruptions if a pool in one of the Availability Zones becomes temporarily unavailable\. If you run batch processing or other non\-mission critical applications, you can specify a lower number of Spot pools, for example, N=2\. This helps to ensure that you provision Spot Instances from only the very lowest priced Spot pools available per Availability Zone\. 
 
 If you intend to specify a maximum price, use the AWS CLI or AWS SDKs to create the Auto Scaling group, but be cautious\. If your maximum price is lower than the Spot price for the instance types that you selected, your Spot Instances are not launched\. 
 
@@ -94,13 +104,13 @@ If you intend to specify a maximum price, use the AWS CLI or AWS SDKs to create 
 
 Your launch template is configured for use with an Auto Scaling group\. For more information, see [Creating a launch template for an Auto Scaling group](create-launch-template.md)\.
 
-IAM users can create an Auto Scaling group using a launch template only if they have permissions to call the `ec2:RunInstances` action\. For more information, see [Launch template support](ec2-auto-scaling-launch-template-permissions.md)\.
+You can create an Auto Scaling group using a launch template only if you have permissions to call the `ec2:RunInstances` action\. For more information, see [Launch template support](ec2-auto-scaling-launch-template-permissions.md)\.
 
-## Creating an Auto Scaling group \(console\)<a name="create-asg-multiple-purchase-options"></a>
+## Creating an Auto Scaling group with Spot and On\-Demand Instances \(console\)<a name="create-asg-multiple-purchase-options-console"></a>
 
-Follow these steps to create a fleet of On\-Demand Instances and Spot Instances that you can scale\.
+Follow these steps to create a fleet of Spot Instances and On\-Demand Instances that you can scale\.
 
-**To create an Auto Scaling group with multiple purchase options \(console\)**
+**To create an Auto Scaling group with Spot and On\-Demand Instances**
 
 1. Open the Amazon EC2 console at [https://console\.aws\.amazon\.com/ec2/](https://console.aws.amazon.com/ec2/)\.
 
@@ -120,17 +130,19 @@ Follow these steps to create a fleet of On\-Demand Instances and Spot Instances 
 
    1. Verify that your launch template supports all of the options that you are planning to use, and then choose **Next**\.
 
-1. On the **Configure settings** page, for **Purchase options and instance types**, choose **Combine purchase options and instance types**\.
+1. On the **Configure settings** page, for **Instance purchase options**, choose **Combine purchase options and instance types**\.
 
 1. Under **Instances distribution**, do the following: 
 
    You can skip these steps if you want to keep the default settings\. 
 
-   1. For **Optional On\-Demand base**, specify the minimum number of instances for the Auto Scaling group's initial capacity that must be fulfilled by On\-Demand Instances\. 
+   1. For **On\-Demand base capacity**, specify the minimum number of instances for the Auto Scaling group's initial capacity that must be fulfilled by On\-Demand Instances\. 
 
    1. For **On\-Demand percentage above base**, specify the percentages of On\-Demand Instances and Spot Instances for your additional capacity beyond the optional On\-Demand base amount\. 
 
    1. For **Spot allocation strategy per Availability Zone**, we recommend that you keep the default setting of **Capacity optimized**\. If you prefer not to keep the default, choose **Lowest price**, and then enter the number of lowest priced Spot Instance pools to diversify across\.
+
+   1. For **Capacity rebalance**, choose whether to enable or disable Capacity Rebalancing\. For more information, see [Amazon EC2 Auto Scaling Capacity Rebalancing](capacity-rebalance.md)\. 
 
 1. For **Instance types**, choose which types of instances can be launched, using our recommendations as a starting point\. Otherwise, you can delete the instance types and add them later as needed\. 
 
@@ -168,19 +180,24 @@ Follow these steps to create a fleet of On\-Demand Instances and Spot Instances 
 
 1. On the **Review** page, choose **Create Auto Scaling group**\.
 
-## Creating an Auto Scaling group \(AWS CLI\)<a name="create-asg-multiple-purchase-options-aws-cli"></a>
+## Creating an Auto Scaling group with Spot and On\-Demand Instances \(AWS CLI\)<a name="create-asg-multiple-purchase-options-aws-cli"></a>
 
-The following examples show how to create an Auto Scaling group with multiple purchase options using the AWS CLI [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/create-auto-scaling-group.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/create-auto-scaling-group.html) command\.
+The following examples show how to create an Auto Scaling group with multiple purchase options using the AWS CLI\.
 
-**Example: Launch Spot Instances using the `capacity-optimized` allocation strategy**
+**Note**  
+These examples show how to use a configuration file formatted in JSON or YAML\. If you use AWS CLI version 1, you must specify a JSON\-formatted configuration file\. If you use AWS CLI version 2, you can specify a configuration file formatted in either YAML or JSON\.
+
+### Example 1: Launch Spot Instances using the `capacity-optimized` allocation strategy<a name="capacity-optimized-aws-cli"></a>
 
 The following [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/create-auto-scaling-group.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/create-auto-scaling-group.html) command creates an Auto Scaling group that specifies the following:
 + The percentage of the group to launch as On\-Demand Instances \(`0`\) and a base number of On\-Demand Instances to start with \(`1`\)
-+ The instance types to launch in priority order \(`c3.large`, `c4.large`, `c5.large`\) 
++ The instance types to launch in priority order \(`c5.large`, `c5a.large`, `m5.large`, `m5a.large`, `c4.large`, `m4.large`, `c3.large`, `m3.large`\) 
 + The subnets in which to launch the instances \(`subnet-5ea0c127`, `subnet-6194ea3b`, `subnet-c934b782`\), each corresponding to a different Availability Zone
 + The launch template \(`my-launch-template`\) and the launch template version \(`$Default`\)
 
-When Amazon EC2 Auto Scaling attempts to fulfill your On\-Demand capacity, it launches the `c3.large` instance type first\. The Spot Instances come from the optimal Spot pool in each Availability Zone based on Spot Instance capacity\.
+When Amazon EC2 Auto Scaling attempts to fulfill your On\-Demand capacity, it launches the `c5.large` instance type first\. The Spot Instances come from the optimal Spot pool in each Availability Zone based on Spot Instance capacity\.
+
+#### JSON<a name="capacity-optimized-aws-cli-json"></a>
 
 ```
 aws autoscaling create-auto-scaling-group --cli-input-json file://~/config.json
@@ -199,13 +216,28 @@ The following is an example `config.json` file\.
             },
             "Overrides": [
                 {
-                    "InstanceType": "c3.large"
+                    "InstanceType": "c5.large"
+                },
+                {
+                    "InstanceType": "c5a.large"
+                },
+                {
+                    "InstanceType": "m5.large"
+                },
+                {
+                    "InstanceType": "m5a.large"
                 },
                 {
                     "InstanceType": "c4.large"
                 },
                 {
-                    "InstanceType": "c5.large"
+                    "InstanceType": "m4.large"
+                },
+                {
+                    "InstanceType": "c3.large"
+                },
+                {
+                    "InstanceType": "m3.large"
                 }
             ]
         },
@@ -218,20 +250,58 @@ The following is an example `config.json` file\.
     "MinSize": 1,
     "MaxSize": 5,
     "DesiredCapacity": 3,
-    "VPCZoneIdentifier": "subnet-5ea0c127,subnet-6194ea3b,subnet-c934b782",
-    "Tags": []
+    "VPCZoneIdentifier": "subnet-5ea0c127,subnet-6194ea3b,subnet-c934b782"
 }
 ```
 
-**Example: Launch Spot Instances using the `lowest-price` allocation strategy diversified over two pools**
+#### YAML<a name="capacity-optimized-aws-cli-yaml"></a>
+
+Alternatively, you can use the following [https://awscli.amazonaws.com/v2/documentation/api/latest/reference/autoscaling/create-auto-scaling-group.html](https://awscli.amazonaws.com/v2/documentation/api/latest/reference/autoscaling/create-auto-scaling-group.html) command to create the Auto Scaling group, referencing a YAML file as the sole parameter for your Auto Scaling group instead of a JSON file\.
+
+```
+aws autoscaling create-auto-scaling-group --cli-input-yaml file://~/config.yaml
+```
+
+The following is an example `config.yaml` file\. 
+
+```
+---
+AutoScalingGroupName: my-asg
+MixedInstancesPolicy:
+  LaunchTemplate:
+    LaunchTemplateSpecification:
+      LaunchTemplateName: my-launch-template
+      Version: $Default
+    Overrides:
+    - InstanceType: c5.large
+    - InstanceType: c5a.large
+    - InstanceType: m5.large
+    - InstanceType: m5a.large
+    - InstanceType: c4.large
+    - InstanceType: m4.large
+    - InstanceType: c3.large
+    - InstanceType: m3.large
+  InstancesDistribution:
+    OnDemandBaseCapacity: 1
+    OnDemandPercentageAboveBaseCapacity: 0
+    SpotAllocationStrategy: capacity-optimized
+MinSize: 1
+MaxSize: 5
+DesiredCapacity: 3
+VPCZoneIdentifier: subnet-5ea0c127,subnet-6194ea3b,subnet-c934b782
+```
+
+### Example 2: Launch Spot Instances using the `lowest-price` allocation strategy diversified over two pools<a name="lowest-price-aws-cli"></a>
 
 The following [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/create-auto-scaling-group.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/create-auto-scaling-group.html) command creates an Auto Scaling group that specifies the following:
 + The percentage of the group to launch as On\-Demand Instances \(`50`\) without also specifying a base number of On\-Demand Instances to start with
-+ The instance types to launch in priority order \(`c3.large`, `c4.large`, `c5.large`\) 
++ The instance types to launch in priority order \(`c5.large`, `c5a.large`, `m5.large`, `m5a.large`, `c4.large`, `m4.large`, `c3.large`, `m3.large`\) 
 + The subnets in which to launch the instances \(`subnet-5ea0c127`, `subnet-6194ea3b`, `subnet-c934b782`\), each corresponding to a different Availability Zone
 + The launch template \(`my-launch-template`\) and the launch template version \(`$Latest`\)
 
-When Amazon EC2 Auto Scaling attempts to fulfill your On\-Demand capacity, it launches the `c3.large` instance type first\. For your Spot capacity, Amazon EC2 Auto Scaling attempts to launch the Spot Instances evenly across the two lowest\-priced pools in each Availability Zone\. 
+When Amazon EC2 Auto Scaling attempts to fulfill your On\-Demand capacity, it launches the `c5.large` instance type first\. For your Spot capacity, Amazon EC2 Auto Scaling attempts to launch the Spot Instances evenly across the two lowest\-priced pools in each Availability Zone\. 
+
+#### JSON<a name="lowest-price-aws-cli-json"></a>
 
 ```
 aws autoscaling create-auto-scaling-group --cli-input-json file://~/config.json
@@ -250,13 +320,28 @@ The following is an example `config.json` file\.
             },
             "Overrides": [
                 {
-                    "InstanceType": "c3.large"
+                    "InstanceType": "c5.large"
+                },
+                {
+                    "InstanceType": "c5a.large"
+                },
+                {
+                    "InstanceType": "m5.large"
+                },
+                {
+                    "InstanceType": "m5a.large"
                 },
                 {
                     "InstanceType": "c4.large"
                 },
                 {
-                    "InstanceType": "c5.large"
+                    "InstanceType": "m4.large"
+                },
+                {
+                    "InstanceType": "c3.large"
+                },
+                {
+                    "InstanceType": "m3.large"
                 }
             ]
         },
@@ -269,10 +354,48 @@ The following is an example `config.json` file\.
     "MinSize": 1,
     "MaxSize": 5,
     "DesiredCapacity": 3,
-    "VPCZoneIdentifier": "subnet-5ea0c127,subnet-6194ea3b,subnet-c934b782",
-    "Tags": []
+    "VPCZoneIdentifier": "subnet-5ea0c127,subnet-6194ea3b,subnet-c934b782"
 }
 ```
+
+#### YAML<a name="lowest-price-aws-cli-yaml"></a>
+
+Alternatively, you can use the following [https://awscli.amazonaws.com/v2/documentation/api/latest/reference/autoscaling/create-auto-scaling-group.html](https://awscli.amazonaws.com/v2/documentation/api/latest/reference/autoscaling/create-auto-scaling-group.html) command to create the Auto Scaling group, referencing a YAML file as the sole parameter for your Auto Scaling group instead of a JSON file\. 
+
+```
+aws autoscaling create-auto-scaling-group --cli-input-yaml file://~/config.yaml
+```
+
+The following is an example `config.yaml` file\. 
+
+```
+---
+AutoScalingGroupName: my-asg
+MixedInstancesPolicy:
+  LaunchTemplate:
+    LaunchTemplateSpecification:
+      LaunchTemplateName: my-launch-template
+      Version: $Default
+    Overrides:
+    - InstanceType: c5.large
+    - InstanceType: c5a.large
+    - InstanceType: m5.large
+    - InstanceType: m5a.large
+    - InstanceType: c4.large
+    - InstanceType: m4.large
+    - InstanceType: c3.large
+    - InstanceType: m3.large
+  InstancesDistribution:
+    OnDemandPercentageAboveBaseCapacity: 50
+    SpotAllocationStrategy: lowest-price
+    SpotInstancePools: 2
+MinSize: 1
+MaxSize: 5
+DesiredCapacity: 3
+VPCZoneIdentifier: subnet-5ea0c127,subnet-6194ea3b,subnet-c934b782
+```
+
+### Verifying that the group has launched instances<a name="verify-launch-aws-cli"></a>
 
 **To verify that the group has launched instances**  
 Use the following [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/describe-auto-scaling-groups.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/describe-auto-scaling-groups.html) command\.
@@ -287,11 +410,8 @@ The following example response shows that the desired capacity is `3` and that t
 {
     "AutoScalingGroups": [
         {
+            "AutoScalingGroupName": "my-asg",
             "AutoScalingGroupARN": "arn",
-            "ServiceLinkedRoleARN": "arn",
-            "TargetGroupARNs": [],
-            "SuspendedProcesses": [],
-            "DesiredCapacity": 3,
             "MixedInstancesPolicy": {
                 "InstancesDistribution": {
                     "SpotAllocationStrategy": "lowest-price",
@@ -308,26 +428,40 @@ The following example response shows that the desired capacity is `3` and that t
                     },
                     "Overrides": [
                         {
-                            "InstanceType": "c3.large"
+                            "InstanceType": "c5.large"
+                        },
+                        {
+                            "InstanceType": "c5a.large"
+                        },
+                        {
+                            "InstanceType": "m5.large"
+                        },
+                        {
+                            "InstanceType": "m5a.large"
                         },
                         {
                             "InstanceType": "c4.large"
                         },
                         {
-                            "InstanceType": "c5.large"
+                            "InstanceType": "m4.large"
+                        },
+                        {
+                            "InstanceType": "c3.large"
+                        },
+                        {
+                            "InstanceType": "m3.large"
                         }
                     ]
                 }
             },
-            "EnabledMetrics": [],
-            "Tags": [],
-            "AutoScalingGroupName": "my-asg",
-            "DefaultCooldown": 300,
-            "MinSize": 1,
+            "MinSize":1,
+            "MaxSize":5,
+            "DesiredCapacity":3,
             "Instances": [
                 {
                     "ProtectedFromScaleIn": false,
                     "AvailabilityZone": "us-west-2a",
+                    "InstanceType":"c5.large",
                     "LaunchTemplate": {
                         "LaunchTemplateName": "my-launch-template",
                         "Version": "1",
@@ -340,6 +474,7 @@ The following example response shows that the desired capacity is `3` and that t
                 {
                     "ProtectedFromScaleIn": false,
                     "AvailabilityZone": "us-west-2b",
+                    "InstanceType":"m5.large",
                     "LaunchTemplate": {
                         "LaunchTemplateName": "my-launch-template",
                         "Version": "1",
@@ -352,6 +487,7 @@ The following example response shows that the desired capacity is `3` and that t
                 {
                     "ProtectedFromScaleIn": false,
                     "AvailabilityZone": "us-west-2c",
+                    "InstanceType":"c5.large",
                     "LaunchTemplate": {
                         "LaunchTemplateName": "my-launch-template",
                         "Version": "1",
@@ -362,24 +498,10 @@ The following example response shows that the desired capacity is `3` and that t
                     "LifecycleState": "InService"
                 }
             ],
-            "MaxSize": 5,
-            "VPCZoneIdentifier": "subnet-5ea0c127,subnet-6194ea3b,subnet-c934b782",
-            "HealthCheckGracePeriod": 0,
-            "TerminationPolicies": [
-                "Default"
-            ],
-            "LoadBalancerNames": [],
-            "CreatedTime": "2019-02-17T02:29:12.853Z",
-            "AvailabilityZones": [
-                "us-west-2a",
-                "us-west-2b",
-                "us-west-2c"
-            ],
-            "HealthCheckType": "EC2",
-            "NewInstancesProtectedFromScaleIn": false
+          ...
         }
     ]
 }
 ```
 
-For additional examples, see [Instance weighting for Amazon EC2 Auto Scaling](asg-instance-weighting.md)\. 
+For additional examples, see [Specifying a different launch template for an instance type](asg-launch-template-overrides.md), [Configuring instance weighting for Amazon EC2 Auto Scaling](asg-instance-weighting.md), and [Amazon EC2 Auto Scaling Capacity Rebalancing](capacity-rebalance.md)\. 

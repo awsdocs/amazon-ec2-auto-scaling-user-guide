@@ -44,7 +44,7 @@ The Auto Scaling group specifies the desired capacity and additional information
 
 1. \(Optional\) On the **Configure advanced options** page, configure the following options, and then choose **Next**:
 
-   1. To register your Amazon EC2 instances with a load balancer, choose **Enable load balancing**, and choose an existing load balancer or create a new one\. If you use an Application Load Balancer or Network Load Balancer, choose a target group where you register targets by instance ID\. 
+   1. To register your Amazon EC2 instances with a load balancer, choose an existing load balancer or create a new one\. For more information, see [Elastic Load Balancing and Amazon EC2 Auto Scaling](autoscaling-load-balancer.md)\.
 
    1. To enable your Elastic Load Balancing \(`ELB`\) health checks, for **Health checks**, choose **ELB** under **Health check type**\. These health checks are optional when you enable load balancing\. 
 

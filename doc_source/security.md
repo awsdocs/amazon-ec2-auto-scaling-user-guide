@@ -10,7 +10,7 @@ This documentation helps you understand how to apply the shared responsibility m
 
 **Topics**
 + [Amazon EC2 Auto Scaling and data protection](ec2-auto-scaling-data-protection.md)
-+ [Identity and access management for Amazon EC2 Auto Scaling](security-iam.md)
++ [Identity and Access Management for Amazon EC2 Auto Scaling](security-iam.md)
 + [Compliance validation for Amazon EC2 Auto Scaling](ec2-auto-scaling-compliance.md)
 + [Resilience in Amazon EC2 Auto Scaling](disaster-recovery-resiliency.md)
 + [Infrastructure security in Amazon EC2 Auto Scaling](infrastructure-security.md)

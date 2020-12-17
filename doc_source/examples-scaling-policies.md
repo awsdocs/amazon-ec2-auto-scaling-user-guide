@@ -49,7 +49,7 @@ aws autoscaling put-scaling-policy --policy-name alb1000-target-tracking-scaling
   "TargetValue": 1000.0,
   "PredefinedMetricSpecification": {
     "PredefinedMetricType": "ALBRequestCountPerTarget",
-    "ResourceLabel": "app/EC2Co-EcsEl-1TKLTMITMM0EO/f37c06a68c1748aa/targetgroup/EC2Co-Defau-LDNM7Q3ZH1ZN/6d4ea56ca2d6a18d"
+    "ResourceLabel": "app/my-alb/778d41231b141a0f/targetgroup/my-alb-target-group/943f017f100becff"
   },
   "DisableScaleIn": true
 }
