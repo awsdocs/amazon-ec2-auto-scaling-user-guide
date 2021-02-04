@@ -4,14 +4,14 @@ You can configure Amazon EC2 Auto Scaling to monitor and automatically respond t
 
 ## How it works<a name="auto-scaling-capacity-rebalance-how-it-works"></a>
 
-Amazon EC2 Auto Scaling is aware of EC2 instance rebalance recommendation notifications\. Amazon EC2 emits these notifications when Spot Instances are at elevated risk of interruption\. When Capacity Rebalancing is enabled for an Auto Scaling group, Amazon EC2 Auto Scaling attempts to proactively replace Spot Instances in the group that have received a rebalance recommendation, providing the opportunity to rebalance your workload to new Spot Instances that are not at elevated risk of interruption\. This means that your workload can continue to process the work while Amazon EC2 Auto Scaling launches a new Spot Instance before an existing instance is interrupted\. You can also optionally use a lifecycle hook to perform a custom action on instances before termination\.
+Amazon EC2 Auto Scaling is aware of EC2 instance rebalance recommendation notifications\. The Amazon EC2 Spot service emits these notifications when Spot Instances are at elevated risk of interruption\. When Capacity Rebalancing is enabled for an Auto Scaling group, Amazon EC2 Auto Scaling attempts to proactively replace Spot Instances in the group that have received a rebalance recommendation, providing the opportunity to rebalance your workload to new Spot Instances that are not at elevated risk of interruption\. This means that your workload can continue to process the work while Amazon EC2 Auto Scaling launches a new Spot Instance before an existing instance is interrupted\. You can also optionally use a lifecycle hook to perform a custom action on instances before termination\.
 
 For more information about EC2 instance rebalance recommendations, see [EC2 instance rebalance recommendations](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/rebalance-recommendations.html) in the *Amazon EC2 User Guide for Linux Instances*\. 
 
 For more details and a walkthrough of the Capacity Rebalancing feature, see the blog post [Proactively manage Spot Instance lifecycle using the new Capacity Rebalancing feature for EC2 Auto Scaling](http://aws.amazon.com/blogs/compute/proactively-manage-spot-instance-lifecycle-using-the-new-capacity-rebalancing-feature-for-ec2-auto-scaling) on the AWS Compute Blog\. 
 
 **Note**  
-When Capacity Rebalancing is disabled, Amazon EC2 Auto Scaling replaces Spot Instances after Amazon EC2 interrupts the instances and their health check fails\. Amazon EC2 always gives both an EC2 instance rebalance recommendation and a Spot two\-minute instance interruption notice before an instance is interrupted\. 
+When Capacity Rebalancing is disabled, Amazon EC2 Auto Scaling replaces Spot Instances after the Amazon EC2 Spot service interrupts the instances and their health check fails\. Amazon EC2 always gives both an EC2 instance rebalance recommendation and a Spot two\-minute instance interruption notice before an instance is interrupted\. 
 
 **Contents**
 + [How it works](#auto-scaling-capacity-rebalance-how-it-works)
@@ -273,6 +273,6 @@ If you don't have a termination lifecycle hook, use the following procedure to c
 
 1. Choose **Create**\.
 
-1. \(Optional\) To add an action to your lifecycle hook, [follow these steps](configuring-lifecycle-hook-notifications.md) to configure an AWS Lambda function or another target\. Otherwise, for an Amazon EC2 instance to run an action automatically, you must configure it to run scripts\. We recommend that you script your shutdown sequence to be completed in under one to two minutes to ensure that there is enough time to complete tasks before instance termination\. 
+1. \(Optional\) To add an action to your lifecycle hook, [follow these steps](configuring-lifecycle-hook-notifications.md) to configure an AWS Lambda function or another target\. Otherwise, for an EC2 instance to run an action automatically, you must configure it to run scripts\. We recommend that you script your shutdown sequence to be completed in under one to two minutes to ensure that there is enough time to complete tasks before instance termination\. 
 
 For more information, see [Amazon EC2 Auto Scaling lifecycle hooks](lifecycle-hooks.md)\. 

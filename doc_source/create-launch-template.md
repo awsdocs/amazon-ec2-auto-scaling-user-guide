@@ -14,7 +14,7 @@ Keep in mind the following information when creating a launch template for use w
 A launch template lets you configure additional settings in your Auto Scaling group to launch multiple instance types and combine On\-Demand and Spot purchase options, as described in [Auto Scaling groups with multiple instance types and purchase options](asg-purchase-options.md)\. Launching instances with such a combination is not supported:  
 If you specify a Spot Instance request in the launch template
 In EC2\-Classic
-A launch template also enables you to take advantage of newer features of Amazon EC2 such as the current generation of EBS volume types \(gp3 and io2\), EBS volume tagging, T2 Unlimited instances, and Dedicated Hosts\. 
+A launch template also enables you to take advantage of newer features of Amazon EC2 such as the current generation of EBS volume types \(gp3 and io2\), EBS volume tagging, T2 Unlimited instances, elastic inference, and Dedicated Hosts\. 
 Support for Dedicated Hosts \(host tenancy\) is only available if you specify a host resource group\. You cannot target a specific host ID or use host placement affinity\.
 A launch template lets you configure a network type \(VPC or EC2\-Classic\), subnet, and Availability Zone\. However, these settings are ignored in favor of what is specified in the Auto Scaling group\. 
 
@@ -138,7 +138,7 @@ The following steps discuss the most useful settings to pay attention to\. For m
 
 1. For **Purchasing option**, you can choose **Request Spot Instances** to request Spot Instances at the Spot price, capped at the On\-Demand price, and choose **Customize** to change the default Spot Instance settings\. For an Auto Scaling group, you must specify a one\-time request with no end date \(the default\)\. For more information, see [Requesting Spot Instances for fault\-tolerant and flexible applications](asg-launch-spot-instances.md)\. 
 **Note**  
-If you leave this setting disabled, you can request Spot Instances later in your Auto Scaling group\. This also gives you the option of specifying multiple instance types\. That way, if Amazon EC2 needs to reclaim your Spot Instances, we can launch replacement instances from another Spot pool\. For more information, see [Auto Scaling groups with multiple instance types and purchase options](asg-purchase-options.md)\.
+If you leave this setting disabled, you can request Spot Instances later in your Auto Scaling group\. This also gives you the option of specifying multiple instance types\. That way, if the Amazon EC2 Spot service needs to reclaim your Spot Instances, we can launch replacement instances from another Spot pool\. For more information, see [Auto Scaling groups with multiple instance types and purchase options](asg-purchase-options.md)\.
 
 1. For **IAM instance profile**, you can specify an AWS Identity and Access Management \(IAM\) instance profile to associate with the instances\. When you choose an instance profile, you associate the corresponding IAM role with the EC2 instances\. For more information, see [IAM role for applications that run on Amazon EC2 instances](us-iam-role.md)\.
 

@@ -1,20 +1,17 @@
 # Automating Amazon EC2 Auto Scaling with EventBridge<a name="cloud-watch-events"></a>
 
-Amazon EventBridge, formerly called CloudWatch Events, lets you automate AWS services and respond to system events such as application availability issues or resource changes\. Events from AWS services are delivered to EventBridge in near real time\. Based on the rules that you create, EventBridge invokes one or more target actions when an event matches the values that you specify in a rule\. The actions that can be automatically triggered include the following: 
+Amazon EventBridge, formerly called CloudWatch Events, lets you automate AWS services and respond to system events such as application availability issues or resource changes\. Events from AWS services are delivered to EventBridge in near real time\. Based on the rules that you create, EventBridge invokes one or more custom actions when an event matches the values that you specify in a rule\. The actions that can be automatically triggered include the following: 
 + Invoking an AWS Lambda function
 + Invoking Amazon EC2 Run Command
 + Relaying the event to Amazon Kinesis Data Streams
 + Activating an AWS Step Functions state machine
 + Notifying an Amazon SNS topic or an Amazon SQS queue 
 
-As an example of a situation in which EventBridge can be useful, you might invoke a Lambda function whenever your Auto Scaling group scales\. First, create your Lambda function, then create an EventBridge rule that triggers on events emitted by Amazon EC2 Auto Scaling, as described in the following sections\. For an example of automation that you can create when a lifecycle action occurs, see [Amazon EC2 Auto Scaling lifecycle hooks](lifecycle-hooks.md)\.
+You can also create a rule that triggers on an Amazon EC2 Auto Scaling API call via CloudTrail\. For more information, see [Creating an EventBridge rule that triggers on an AWS API call using AWS CloudTrail](https://docs.aws.amazon.com/eventbridge/latest/userguide/create-eventbridge-cloudtrail-rule.html) in the *Amazon EventBridge User Guide*\. You can also create an EventBridge rule to monitor for Spot Instance interruption notices\. For more information, see [Spot Instance interruption notices](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/spot-interruptions.html#spot-instance-termination-notices) in the *Amazon EC2 User Guide for Linux Instances*\.
 
-You can also create a rule that triggers on an Amazon EC2 Auto Scaling API call via CloudTrail\. For more information, see [Creating an EventBridge rule that triggers on an AWS API call using AWS CloudTrail](https://docs.aws.amazon.com/eventbridge/latest/userguide/create-eventbridge-cloudtrail-rule.html) in the *Amazon EventBridge User Guide*\. 
+For more information, see [Getting started with Amazon EventBridge](https://docs.aws.amazon.com/eventbridge/latest/userguide/eventbridge-getting-set-up.html) in the *Amazon EventBridge User Guide*\.
 
-For more information, see the [Amazon EventBridge User Guide](https://docs.aws.amazon.com/eventbridge/latest/userguide/)\.
-
-**Note**  
-When Amazon EC2 is going to interrupt your Spot Instance, it emits an event two minutes prior to the actual interruption\. You can also create an EventBridge rule to capture these events\. For more information, see [Spot instance interruption notices](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/spot-interruptions.html#spot-instance-termination-notices) in the *Amazon EC2 User Guide for Linux Instances*\.
+For an example of automation that you can create when a lifecycle action occurs, see [Amazon EC2 Auto Scaling lifecycle hooks](lifecycle-hooks.md)\. 
 
 **Contents**
 + [Auto Scaling events](#cloudwatch-event-types)
@@ -29,7 +26,7 @@ When Amazon EC2 is going to interrupt your Spot Instance, it emits an event two 
 
 ## Auto Scaling events<a name="cloudwatch-event-types"></a>
 
-You can configure EventBridge to send events to the configured target when the following events occur: 
+The following are example events from Amazon EC2 Auto Scaling\. Events are emitted on a best effort basis\. 
 
 ### EC2 instance\-launch lifecycle action<a name="launch-lifecycle-action"></a>
 

@@ -1,6 +1,6 @@
 # Launch template support<a name="ec2-auto-scaling-launch-template-permissions"></a>
 
-Amazon EC2 Auto Scaling supports using Amazon EC2 launch templates with your Auto Scaling groups\. We recommend that you allow users to create Auto Scaling groups from launch templates, because doing so allows them to use the latest features of EC2\. In addition, users must specify a launch template to use a [mixed instances policy](https://docs.aws.amazon.com/autoscaling/ec2/APIReference/API_MixedInstancesPolicy.html)\.
+Amazon EC2 Auto Scaling supports using Amazon EC2 launch templates with your Auto Scaling groups\. We recommend that you allow users to create Auto Scaling groups from launch templates, because doing so allows them to use the latest features of Amazon EC2 Auto Scaling and Amazon EC2\. In addition, users must specify a launch template to use a [mixed instances policy](https://docs.aws.amazon.com/autoscaling/ec2/APIReference/API_MixedInstancesPolicy.html)\.
 
 You can use the `AmazonEC2FullAccess` policy to give users complete access to work with Amazon EC2 Auto Scaling resources, launch templates, and other EC2 resources in their AWS account\. Or, you can create your own custom IAM policies to give users fine\-grained permissions to work with specific API actions\. 
 

@@ -9,6 +9,7 @@ Each Auto Scaling group can have multiple lifecycle hooks\. However, there is a 
 **Topics**
 + [How lifecycle hooks work](#lifecycle-hooks-overview)
 + [Considerations](#lifecycle-hook-considerations)
++ [Lifecycle hook availability](#lifecycle-hooks-availability)
 + [Prepare for notifications](#preparing-for-notification)
 + [Add lifecycle hooks](#adding-lifecycle-hooks)
 + [Complete a lifecycle hook custom action](#completing-lifecycle-hooks)
@@ -60,6 +61,18 @@ If you add a lifecycle hook, the health check grace period does not start until 
 ### Spot Instances<a name="lifecycle-hook-spot"></a>
 
 You can use lifecycle hooks with Spot Instances\. However, a lifecycle hook does not prevent an instance from terminating in the event that capacity is no longer available\. In addition, when a Spot Instance terminates, you must still complete the lifecycle action \(using the complete\-lifecycle\-action command or the `CompleteLifecycleAction` operation\)\.
+
+## Lifecycle hook availability<a name="lifecycle-hooks-availability"></a>
+
+The following table lists the lifecycle hooks available for various scenarios\.
+
+
+| Event | Following a scale\-out or scale\-in event¹ | [Maximum Instance Lifetime](https://docs.aws.amazon.com/autoscaling/ec2/userguide/asg-max-instance-lifetime.html): Replacement instances | [Instance Refresh](https://docs.aws.amazon.com/autoscaling/ec2/userguide/asg-instance-refresh.html): Replacement instances | [Capacity Rebalancing](https://docs.aws.amazon.com/autoscaling/ec2/userguide/capacity-rebalance.html): Replacement instances | 
+| --- | --- | --- | --- | --- | 
+| Instance launching | ✓ | ✓ | ✓ | ✓ | 
+| Instance terminating | ✓ | ✓ | ✓ | ✓ | 
+
+¹ Applies to instances launched or terminated when the group is created or deleted, when the group scales automatically, or when you manually adjust your group's desired capacity\. Does not apply when you attach or detach instances or move instances in and out of standby mode\.
 
 ## Prepare for notifications<a name="preparing-for-notification"></a>
 

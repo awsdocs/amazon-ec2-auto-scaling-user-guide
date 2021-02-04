@@ -1,14 +1,15 @@
 # Auto Scaling groups with multiple instance types and purchase options<a name="asg-purchase-options"></a>
 
-You can launch and automatically scale a fleet of On\-Demand Instances and Spot Instances within a single Auto Scaling group\. In addition to receiving discounts for using Spot Instances, you can use Reserved Instances or a Savings Plan to receive discounted rates of the regular On\-Demand Instance pricing\. All of these factors combined help you to optimize your cost savings for Amazon EC2 instances, while making sure that you obtain the desired scale and performance for your application\.
+You can launch and automatically scale a fleet of On\-Demand Instances and Spot Instances within a single Auto Scaling group\. In addition to receiving discounts for using Spot Instances, you can use Reserved Instances or a Savings Plan to receive discounted rates of the regular On\-Demand Instance pricing\. All of these factors combined help you to optimize your cost savings for EC2 instances, while making sure that you obtain the desired scale and performance for your application\.
 
 You first specify the common configuration parameters in a launch template, and choose it when you create an Auto Scaling group\. When you configure the Auto Scaling group, you can:
 + Choose one or more instance types for the group \(optionally overriding the instance type that is specified by the launch template\)\.
++ Define multiple launch templates to allow instances with different CPU architectures \(for example, Arm and x86\) to launch in the same Auto Scaling group\.
 + Assign each instance type an individual weight\. Doing so might be useful, for example, if the instance types offer different vCPU, memory, storage, or network bandwidth capabilities\.
++ Prioritize instance types that can benefit from Savings Plan or Reserved Instance discount pricing\.
 + Specify how much On\-Demand and Spot capacity to launch, and specify an optional On\-Demand base portion\.
-+ Prioritize instance types that can benefit from Reserved Instance or Savings Plan discount pricing\.
 + Define how Amazon EC2 Auto Scaling should distribute your Spot capacity across instance types\.
-+ Enable Capacity Rebalancing\. When you turn on Capacity Rebalancing, Amazon EC2 Auto Scaling attempts to launch a Spot Instance whenever Amazon EC2 notifies that a Spot Instance is at an elevated risk of interruption\. After launching a new instance, it then terminates an old instance\. For more information, see [Amazon EC2 Auto Scaling Capacity Rebalancing](capacity-rebalance.md)\.
++ Enable Capacity Rebalancing\. When you turn on Capacity Rebalancing, Amazon EC2 Auto Scaling attempts to launch a Spot Instance whenever the Amazon EC2 Spot service notifies that a Spot Instance is at an elevated risk of interruption\. After launching a new instance, it then terminates an old instance\. For more information, see [Amazon EC2 Auto Scaling Capacity Rebalancing](capacity-rebalance.md)\.
 
 You enhance availability by deploying your application across multiple instance types running in multiple Availability Zones\. You can use just one instance type, but it is a best practice to use a few instance types to allow Amazon EC2 Auto Scaling to launch another instance type in the event that there is insufficient instance capacity in your chosen Availability Zones\. With Spot Instances, if there is insufficient instance capacity, Amazon EC2 Auto Scaling keeps trying in other Spot Instance pools \(determined by your choice of instance types and allocation strategy\) rather than launching On\-Demand Instances, so that you can leverage the cost savings of Spot Instances\.
 
@@ -23,9 +24,9 @@ You enhance availability by deploying your application across multiple instance 
 
 ## Allocation strategies<a name="asg-allocation-strategies"></a>
 
-The following allocation strategies determine how the Auto Scaling group fulfills On\-Demand and Spot capacity from the possible instance types\. 
+The following allocation strategies determine how the Auto Scaling group fulfills your On\-Demand and Spot capacities from the possible instance types\. 
 
-In each case, Amazon EC2 Auto Scaling first tries to ensure that your instances are evenly balanced across the Availability Zones that you specified\. Then, it launches instance types according to the allocation strategy that is specified\. 
+Amazon EC2 Auto Scaling first tries to ensure that your instances are evenly balanced across the Availability Zones that you specified\. Then, it launches instance types according to the allocation strategy that is specified\. 
 
 ### On\-Demand Instances<a name="asg-od-strategy"></a>
 
@@ -33,7 +34,7 @@ The allocation strategy for On\-Demand Instances is `prioritized`\. Amazon EC2 A
 
 Consider the following when managing the priority order of your On\-Demand Instances:
 
-You can pay for usage upfront to get significant discounts for On\-Demand Instances by using either Reserved Instances or Savings Plans\. For more information about Reserved Instances or Savings Plans, see the [Amazon EC2 pricing](https://aws.amazon.com/ec2/pricing/) page\. 
+You can pay for usage upfront to get significant discounts for On\-Demand Instances by using either Savings Plans or Reserved Instances\. For more information about Savings Plans or Reserved Instances, see the [Amazon EC2 pricing](https://aws.amazon.com/ec2/pricing/) page\. 
 + With Reserved Instances, your discounted rate of the regular On\-Demand Instance pricing applies if Amazon EC2 Auto Scaling launches matching instance types\. That means that if you have unused Reserved Instances for `c4.large`, you can set the instance type priority to give the highest priority for your Reserved Instances to a `c4.large` instance type\. When a `c4.large` instance launches, you receive the Reserved Instance pricing\. 
 + With Savings Plans, your discounted rate of the regular On\-Demand Instance pricing applies when using either Amazon EC2 Instance Savings Plans or Compute Savings Plans\. Because of the flexible nature of Savings Plans, you have greater flexibility in prioritizing your instance types\. As long as you use instance types that are covered by your Savings Plan, you can set them in any order of priority and even occasionally change their order entirely, and continue to receive the discounted rate provided by your Savings Plan\. To learn more about Savings Plans, see the [Savings Plans User Guide](https://docs.aws.amazon.com/savingsplans/latest/userguide/)\.
 
@@ -160,7 +161,7 @@ Follow these steps to create a fleet of Spot Instances and On\-Demand Instances 
 
 1. On the **Configure advanced options** page, configure the following options, and then choose **Next**:
 
-   1. \(Optional\) To register your Amazon EC2 instances with an Elastic Load Balancing \(`ELB`\) load balancer, choose **Enable load balancing**\. To attach an Application Load Balancer or Network Load Balancer, choose an existing target group or create a new one\. To attach a Classic Load Balancer, choose an existing load balancer or create a new one\. 
+   1. \(Optional\) To register your EC2 instances with an Elastic Load Balancing \(`ELB`\) load balancer, choose an existing load balancer or create a new one\. For more information, see [Elastic Load Balancing and Amazon EC2 Auto Scaling](autoscaling-load-balancer.md)\. To create a new load balancer, follow the procedure in [Create and attach a new Application Load Balancer or Network Load Balancer \(console\)](attach-load-balancer-asg.md#as-create-load-balancer-console)\.
 
    1. \(Optional\) To enable your `ELB` health checks, for **Health checks**, choose **ELB** under **Health check type**\. 
 

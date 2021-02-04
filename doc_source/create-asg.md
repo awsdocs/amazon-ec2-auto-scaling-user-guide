@@ -40,7 +40,7 @@ Create a launch configuration\. For more information, see [Creating a launch con
 
 1. \(Optional\) On the **Configure advanced options** page, configure the following options, and then choose **Next**:
 
-   1. To register your Amazon EC2 instances with a load balancer, choose an existing load balancer or create a new one\. For more information, see [Elastic Load Balancing and Amazon EC2 Auto Scaling](autoscaling-load-balancer.md)\.
+   1. To register your Amazon EC2 instances with a load balancer, choose an existing load balancer or create a new one\. For more information, see [Elastic Load Balancing and Amazon EC2 Auto Scaling](autoscaling-load-balancer.md)\. To create a new load balancer, follow the procedure in [Create and attach a new Application Load Balancer or Network Load Balancer \(console\)](attach-load-balancer-asg.md#as-create-load-balancer-console)\.
 
    1. To enable your Elastic Load Balancing \(`ELB`\) health checks, for **Health checks**, choose **ELB** under **Health check type**\. These health checks are optional when you enable load balancing\. 
 

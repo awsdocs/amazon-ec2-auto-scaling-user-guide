@@ -17,10 +17,11 @@ When you create a scheduled action, keep the following in mind:
 + The order of execution for scheduled actions is guaranteed within the same group, but not for scheduled actions across groups\.
 + A scheduled action must have a unique time value\. If you attempt to schedule an activity at a time when another scaling activity is already scheduled, the call is rejected with an error message noting the conflict\.
 + You can create a maximum of 125 scheduled actions per Auto Scaling group\.
-+ A scheduled action does not persist in your account once it has reached its end time\.
 + You can temporarily disable scheduled scaling without deleting your scheduled actions\. For more information, see [Suspending and resuming scaling processes](as-suspend-resume-processes.md)\.
-+ Cooldown periods are not supported\. 
-+ You can also schedule scaling actions for resources beyond Amazon EC2\. For more information, see [Scheduled scaling](https://docs.aws.amazon.com/autoscaling/application/userguide/application-auto-scaling-scheduled-scaling.html) in the *Application Auto Scaling User Guide*\.
++ If you specify a recurring schedule, you can specify a date and time for the start time, the end time, or both\. 
+  + If you specify a start time, Amazon EC2 Auto Scaling performs the action at this time, and then performs the action based on the specified recurrence\. 
+  + If you specify an end time, the action stops repeating after this time\. 
++ A scheduled action does not persist in your account once it has reached its end time\.
 
 ## Create and manage scheduled actions \(console\)<a name="create-sch-actions"></a>
 
@@ -43,7 +44,7 @@ You can create scheduled actions that scale one time only or that scale on a rec
    + Specify the size of the group using at least one of the following values: **Min**, **Max**, or **Desired capacity**\.
    + Choose an option for **Recurrence**\. If you choose **Once**, the action is performed at the specified time\. If you choose **Cron**, enter a cron expression that specifies when to perform the action, in UTC\. If you choose an option that begins with **Every**, the cron expression is created for you\.
    + If you chose **Once** for **Recurrence**, specify the date and time for the action to run in **Start time**\.
-   + For recurrent actions, you can specify values for both **Start time** and **End time**\. If you specify a start time, the earliest time that the action will be performed is at this time\. If you specify an end time, the action stops repeating after this time\. 
+   + \(Optional\) For recurrent actions, you can specify values for **Start time** and **End time**\.
 
 1. Choose **Create**\.
 

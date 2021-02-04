@@ -1,7 +1,7 @@
 # Amazon EC2 Auto Scaling User Guide
 
 -----
-*****Copyright &copy; 2020 Amazon Web Services, Inc. and/or its affiliates. All rights reserved.*****
+*****Copyright &copy; 2021 Amazon Web Services, Inc. and/or its affiliates. All rights reserved.*****
 
 -----
 Amazon's trademarks and trade dress may not be used in 
@@ -100,6 +100,5 @@ Amazon's trademarks and trade dress may not be used in
    + [Troubleshooting Amazon EC2 Auto Scaling: EC2 Instance launch failures](ts-as-instancelaunchfailure.md)
    + [Troubleshooting Amazon EC2 Auto Scaling: AMI issues](ts-as-ami.md)
    + [Troubleshooting Amazon EC2 Auto Scaling: Load balancer issues](ts-as-loadbalancer.md)
-   + [Troubleshooting Auto Scaling: Capacity limits](ts-as-capacity.md)
 + [Amazon EC2 Auto Scaling resources](as-resources.md)
 + [Document history](DocumentHistory.md)
