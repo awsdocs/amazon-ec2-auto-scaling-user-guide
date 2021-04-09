@@ -2,7 +2,7 @@
 
 This page provides information about issues caused by the load balancer associated with your Auto Scaling group, potential causes, and the steps you can take to resolve the issues\.
 
-To retrieve an error message, see [Retrieving an error message](CHAP_Troubleshooting.md#RetrievingErrors)\.
+To retrieve an error message, see [Retrieving an error message from scaling activities](CHAP_Troubleshooting.md#RetrievingErrors)\.
 
 When your EC2 instances fail to launch due to issues with the load balancer associated with your Auto Scaling group, you might get one or more of the following error messages\.
 

@@ -76,7 +76,7 @@ After certain actions occur, your Auto Scaling group can become unbalanced betwe
 
 When rebalancing, Amazon EC2 Auto Scaling launches new instances before terminating the old ones, so that rebalancing does not compromise the performance or availability of your application\.
 
-Because Amazon EC2 Auto Scaling attempts to launch new instances before terminating the old ones, being at or near the specified maximum capacity could impede or completely halt rebalancing activities\. To avoid this problem, the system can temporarily exceed the specified maximum capacity of a group by a 10 percent margin \(or by a 1\-instance margin, whichever is greater\) during a rebalancing activity\. The margin is extended only if the group is at or near maximum capacity and needs rebalancing, either because of user\-requested rezoning or to compensate for zone availability issues\. The extension lasts only as long as needed to rebalance the group, typically a few minutes\.
+Because Amazon EC2 Auto Scaling attempts to launch new instances before terminating the old ones, being at or near the specified maximum capacity could impede or completely halt rebalancing activities\. To avoid this problem, the system can temporarily exceed the specified maximum capacity of a group by a 10 percent margin \(or by a 1\-instance margin, whichever is greater\) during a rebalancing activity\. The margin is extended only if the group is at or near maximum capacity and needs rebalancing, either because of user\-requested rezoning or to compensate for zone availability issues\. The extension lasts only as long as needed to rebalance the group \(typically a few minutes\)\.
 
 **Capacity Rebalancing**
 

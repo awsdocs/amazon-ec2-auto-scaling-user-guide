@@ -3,67 +3,75 @@
 Amazon EC2 Auto Scaling provides specific and descriptive errors to help you troubleshoot issues\. You can find the error messages in the description of the scaling activities\.
 
 **Topics**
-+ [General troubleshooting issues](#troubleshooting-general)
-+ [Retrieving an error message](#RetrievingErrors)
-+ [Troubleshooting Amazon EC2 Auto Scaling: EC2 Instance launch failures](ts-as-instancelaunchfailure.md)
++ [Retrieving an error message from scaling activities](#RetrievingErrors)
++ [Troubleshooting Amazon EC2 Auto Scaling: EC2 instance launch failures](ts-as-instancelaunchfailure.md)
 + [Troubleshooting Amazon EC2 Auto Scaling: AMI issues](ts-as-ami.md)
 + [Troubleshooting Amazon EC2 Auto Scaling: Load balancer issues](ts-as-loadbalancer.md)
++ [Troubleshooting Amazon EC2 Auto Scaling: Launch templates](ts-as-launch-template.md)
++ [Troubleshooting Amazon EC2 Auto Scaling: Health checks](ts-as-healthchecks.md)
 
-## General troubleshooting issues<a name="troubleshooting-general"></a>
+## Retrieving an error message from scaling activities<a name="RetrievingErrors"></a>
 
-**Topics**
-+ [Troubleshooting launch template error: "You are not authorized to perform this operation"](#ts-launch-template-unauthorized-error)
-+ [Troubleshooting instance termination](#ts-failed-status-checks)
+To retrieve an error message from the description of scaling activities, use the [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/describe-scaling-activities.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/describe-scaling-activities.html) command\. You have a record of scaling activities that dates back 6 weeks\. Scaling activities are ordered by start time, with the latest scaling activities listed first\. 
 
-### Troubleshooting launch template error: "You are not authorized to perform this operation"<a name="ts-launch-template-unauthorized-error"></a>
-
-The following sections can help you troubleshoot the "You are not authorized to perform this operation" error when creating or updating Auto Scaling groups\.
-
-#### Permissions required for a launch template are missing<a name="launch-template-permissions"></a>
-
-If you are attempting to use a launch template, and the IAM credentials you are using do not have sufficient permissions, you receive an error that you're not authorized to use the launch template\. For information about the permissions necessary to work with launch templates, see [Launch template support](ec2-auto-scaling-launch-template-permissions.md)\.
-
-#### Permissions required to pass an IAM role are missing<a name="ts-instance-profile-permissions"></a>
-
-If you are attempting to use a launch template that specifies an instance profile, you must have permission to pass the IAM role that is associated with the instance profile\. For more information, see [IAM role for applications that run on Amazon EC2 instances](us-iam-role.md)\. For further troubleshooting topics related to instance profiles, see [Troubleshooting Amazon EC2 and IAM](https://docs.aws.amazon.com/IAM/latest/UserGuide/troubleshoot_iam-ec2.html) in the *IAM User Guide*\.
-
-### Troubleshooting instance termination<a name="ts-failed-status-checks"></a>
-
-Amazon EC2 performs status checks on running EC2 instances to identify hardware and software issues\. If one or more checks fail, the instance returns a status of `impaired` to Amazon EC2 Auto Scaling, which then automatically replaces it as part of its health checks\. To determine why Amazon EC2 Auto Scaling terminated an instance, see [Why did Amazon EC2 Auto Scaling terminate an instance?](http://aws.amazon.com/premiumsupport/knowledge-center/auto-scaling-instance-how-terminated/) in the AWS Knowledge Center\.
-
-Note that instances launched in an Auto Scaling group require sufficient warm\-up time \(grace period\) to prevent early termination due to a health check replacement\. To update the health check grace period for your Auto Scaling group to an appropriate time period for your application, use the [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/update-auto-scaling-group.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/update-auto-scaling-group.html) command\. Make sure that the health check grace period is longer than the instance startup time\. Otherwise, healthy instances can be terminated before they finish starting up\. 
-
-See also:
-+ For more information, see [Health checks for Auto Scaling instances](healthcheck.md)\.
-+ For a list of issues that prevent Amazon EC2 Auto Scaling from terminating an unhealthy instance, see [Why didn’t Amazon EC2 Auto Scaling terminate an unhealthy instance?](http://aws.amazon.com/premiumsupport/knowledge-center/auto-scaling-terminate-instance/) in the AWS Knowledge Center\.
-+ For information about troubleshooting failed status checks, see [Troubleshooting instances with failed status checks](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/TroubleshootingInstances.html) in the *Amazon EC2 User Guide for Linux Instances*\. For help with Windows instances, see [Troubleshooting Windows Instances](https://docs.aws.amazon.com/AWSEC2/latest/WindowsGuide/troubleshooting-windows-instances.html) in the *Amazon EC2 User Guide for Windows Instances*\. 
-
-## Retrieving an error message<a name="RetrievingErrors"></a>
-
-To retrieve an error message from the description of scaling activities, use the [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/describe-scaling-activities.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/describe-scaling-activities.html) command as follows:
+To see the scaling activities for a specific Auto Scaling group, use the following command\. 
 
 ```
 aws autoscaling describe-scaling-activities --auto-scaling-group-name my-asg
 ```
 
-The following is an example response, where `StatusCode` contains the current status of the activity and `StatusMessage` contains the error message:
+The following is an example response, where `StatusCode` contains the current status of the activity and `StatusMessage` contains the error message\.
 
 ```
 {
     "Activities": [
         {
-            "Description": "Launching a new EC2 instance: i-4ba0837f",
+            "ActivityId": "3b05dbf6-037c-b92f-133f-38275269dc0f",
             "AutoScalingGroupName": "my-asg",
-            "ActivityId": "f9f2d65b-f1f2-43e7-b46d-d86756459699",
-            "Details": "{"Availability Zone":"us-west-2c"}",
-            "StartTime": "2013-08-19T20:53:29.930Z",
+            "Description": "Launching a new EC2 instance: i-003a5b3ffe1e9358e.  Status Reason: Instance failed to complete user's Lifecycle Action: Lifecycle Action with token e85eb647-4fe0-4909-b341-a6c42d8aba1f was abandoned: Lifecycle Action Completed with ABANDON Result",
+            "Cause": "At 2021-01-11T00:35:52Z a user request created an AutoScalingGroup changing the desired capacity from 0 to 1.  At 2021-01-11T00:35:53Z an instance was started in response to a difference between desired and actual capacity, increasing the capacity from 0 to 1.",
+            "StartTime": "2021-01-11T00:35:55.542Z",
+            "EndTime": "2021-01-11T01:06:31Z",
+            "StatusCode": "Cancelled",
+            "StatusMessage": "Instance failed to complete user's Lifecycle Action: Lifecycle Action with token e85eb647-4fe0-4909-b341-a6c42d8aba1f was abandoned: Lifecycle Action Completed with ABANDON Result",
             "Progress": 100,
-            "EndTime": "2013-08-19T20:54:02Z",
-            "Cause": "At 2013-08-19T20:53:25Z a user request created an AutoScalingGroup...",
+            "Details": "{\"Subnet ID\":\"subnet-5ea0c127\",\"Availability Zone\":\"us-west-2b\"...}",
+            "AutoScalingGroupARN": "arn:aws:autoscaling:us-west-2:123456789012:autoScalingGroup:283179a2-f3ce-423d-93f6-66bb518232f7:autoScalingGroupName/my-asg"
+        },
+     ...
+    ]
+}
+```
+
+For a description of the fields in the output, see [Activity](https://docs.aws.amazon.com/autoscaling/ec2/APIReference/API_Activity.html) in the *Amazon EC2 Auto Scaling API Reference*\.
+
+To view scaling activities for a deleted Auto Scaling group, add the `--include-deleted-groups` option to the [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/describe-scaling-activities.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/describe-scaling-activities.html) command as follows\. 
+
+```
+aws autoscaling describe-scaling-activities --auto-scaling-group-name my-asg --include-deleted-groups
+```
+
+The following is an example response, with a scaling activity for a deleted group\. 
+
+```
+{
+    "Activities": [
+        {
+            "ActivityId": "e1f5de0e-f93e-1417-34ac-092a76fba220",
+            "AutoScalingGroupName": "my-asg",
+            "Description": "Launching a new EC2 instance.  Status Reason: Your Spot request price of 0.001 is lower than the minimum required Spot request fulfillment price of 0.0031. Launching EC2 instance failed.",
+            "Cause": "At 2021-01-13T20:47:24Z a user request update of AutoScalingGroup constraints to min: 1, max: 5, desired: 3 changing the desired capacity from 0 to 3.  At 2021-01-13T20:47:27Z an instance was started in response to a difference between desired and actual capacity, increasing the capacity from 0 to 3.",
+            "StartTime": "2021-01-13T20:47:30.094Z",
+            "EndTime": "2021-01-13T20:47:30Z",
             "StatusCode": "Failed",
-            "StatusMessage": "The image id 'ami-4edb0327' does not exist. Launching EC2 instance failed."
-        }
-   ]
+            "StatusMessage": "Your Spot request price of 0.001 is lower than the minimum required Spot request fulfillment price of 0.0031. Launching EC2 instance failed.",
+            "Progress": 100,
+            "Details": "{\"Subnet ID\":\"subnet-5ea0c127\",\"Availability Zone\":\"us-west-2b\"...}",
+            "AutoScalingGroupState": "Deleted",
+            "AutoScalingGroupARN": "arn:aws:autoscaling:us-west-2:123456789012:autoScalingGroup:283179a2-f3ce-423d-93f6-66bb518232f7:autoScalingGroupName/my-asg"
+        },
+     ...
+    ]
 }
 ```
 

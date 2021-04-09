@@ -2,7 +2,7 @@
 
 A scaling cooldown helps you prevent your Auto Scaling group from launching or terminating additional instances before the effects of previous activities are visible\.
 
-When you use simple scaling, after the Auto Scaling group scales using a simple scaling policy, it waits for a cooldown period to complete before any further scaling activities due to simple scaling policies can start\. An adequate cooldown period helps to prevent the initiation of an additional scaling activity based on stale metrics\. By default, all simple scaling policies use the default cooldown period associated with your Auto Scaling group, but you can configure a different cooldown period for certain policies, as described in the following sections\. For more information about simple scaling, see [Step and simple scaling policies](as-scaling-simple-step.md)\. 
+When you use simple scaling, after the Auto Scaling group scales using a simple scaling policy, it waits for a cooldown period to complete before any further scaling activities initiated by simple scaling policies can start\. An adequate cooldown period helps to prevent the initiation of an additional scaling activity based on stale metrics\. By default, all simple scaling policies use the default cooldown period associated with your Auto Scaling group, but you can configure a different cooldown period for certain policies, as described in the following sections\. For more information about simple scaling, see [Step and simple scaling policies](as-scaling-simple-step.md)\. 
 
 **Important**  
 In most cases, a target tracking scaling policy or a step scaling policy is more optimal for scaling performance than waiting for a fixed period of time to pass after there is a scaling activity\. For a scaling policy that changes the size of your Auto Scaling group proportionally as the value of the scaling metric decreases or increases, we recommend [target tracking](as-scaling-target-tracking.md) over either simple scaling or step scaling\.
@@ -24,7 +24,7 @@ A default cooldown period automatically applies to any scaling activities for si
 
 ![\[A flowchart showing how a default cooldown affects scaling actions.\]](http://docs.aws.amazon.com/autoscaling/ec2/userguide/images/cooldowns-default-diagram.png)
 
-When you use the AWS Management Console to update an Auto Scaling group, or when you use the AWS CLI or an AWS SDK to create or update an Auto Scaling group, you can set the optional default cooldown parameter\. If a value for the default cooldown period is not provided, its default value is 300 seconds\. 
+When you use the AWS Management Console to update an Auto Scaling group, or when you use the AWS CLI or an SDK to create or update an Auto Scaling group, you can set the optional default cooldown parameter\. If a value for the default cooldown period is not provided, its default value is 300 seconds\. 
 
 **To modify a default cooldown period \(console\)**  
 Create the Auto Scaling group in the usual way\. After creating the Auto Scaling group, edit the group to specify the default cooldown period\. 

@@ -18,12 +18,13 @@ In addition to suspensions that you initiate, Amazon EC2 Auto Scaling can also s
 For Amazon EC2 Auto Scaling, there are two primary process types: `Launch` and `Terminate`\. The `Launch` process adds a new Amazon EC2 instance to an Auto Scaling group, increasing its capacity\. The `Terminate` process removes an Amazon EC2 instance from the group, decreasing its capacity\. 
 
 The other process types for Amazon EC2 Auto Scaling relate to specific scaling features: 
-+ `AddToLoadBalancer`—Adds instances to the attached load balancer or target group when they are launched\.
-+ `AlarmNotification`—Accepts notifications from CloudWatch alarms that are associated with the group's scaling policies\.
++ `AddToLoadBalancer`—Adds instances to the attached load balancer or target group when they are launched\. For more information, see [Elastic Load Balancing and Amazon EC2 Auto Scaling](autoscaling-load-balancer.md)\.
++ `AlarmNotification`—Accepts notifications from CloudWatch alarms that are associated with the group's scaling policies\. For more information, see [Dynamic scaling for Amazon EC2 Auto Scaling](as-scale-based-on-demand.md)\.
 + `AZRebalance`—Balances the number of EC2 instances in the group evenly across all of the specified Availability Zones when the group becomes unbalanced, for example, a previously unavailable Availability Zone returns to a healthy state\. For more information, see [Rebalancing activities](auto-scaling-benefits.md#AutoScalingBehavior.InstanceUsage)\.
 + `HealthCheck`—Checks the health of the instances and marks an instance as unhealthy if Amazon EC2 or Elastic Load Balancing tells Amazon EC2 Auto Scaling that the instance is unhealthy\. This process can override the health status of an instance that you set manually\. For more information, see [Health checks for Auto Scaling instances](healthcheck.md)\.
-+ `ReplaceUnhealthy`—Terminates instances that are marked as unhealthy and then creates new instances to replace them\.
-+ `ScheduledActions`—Performs the scheduled scaling actions that you create or that are created by the predictive scaling feature of AWS Auto Scaling\. 
++ `InstanceRefresh`—Terminates and replaces instances using the instance refresh feature\. For more information, see [Replacing Auto Scaling instances based on an instance refresh](asg-instance-refresh.md)\.
++ `ReplaceUnhealthy`—Terminates instances that are marked as unhealthy and then creates new instances to replace them\. For more information, see [Health checks for Auto Scaling instances](healthcheck.md)\.
++ `ScheduledActions`—Performs the scheduled scaling actions that you create or that are created by the predictive scaling feature of AWS Auto Scaling\. For more information, see [Scheduled scaling for Amazon EC2 Auto Scaling](schedule_time.md)\. 
 
 ## Choosing to suspend<a name="choosing-suspend-resume"></a>
 
@@ -38,11 +39,13 @@ If you suspend either the `Launch` or `Terminate` process types, it can prevent 
 + Your Auto Scaling group does not scale in for alarms or scheduled actions that occur while the process is suspended\. In addition, the following processes are disrupted:
   + `AZRebalance` is still active but does not function properly\. It can launch new instances without terminating the old ones\. This could cause your Auto Scaling group to grow up to 10 percent larger than its maximum size, because this is allowed temporarily during rebalancing activities\. Your Auto Scaling group could remain above its maximum size until you resume the `Terminate` process\. When `Terminate` resumes, `AZRebalance` gradually rebalances the Auto Scaling group if the group is no longer balanced between Availability Zones or if different Availability Zones are specified\.
   + `ReplaceUnhealthy` is inactive but not `HealthCheck`\. When `Terminate` resumes, the `ReplaceUnhealthy` process immediately starts running\. If any instances were marked as unhealthy while `Terminate` was suspended, they are immediately replaced\.
+  + `InstanceRefresh` is paused until you resume `Terminate`\.
 
 `Launch`
 + Your Auto Scaling group does not scale out for alarms or scheduled actions that occur while the process is suspended\. `AZRebalance` stops rebalancing the group\. `ReplaceUnhealthy` continues to terminate unhealthy instances, but does not launch replacements\. When you resume `Launch`, rebalancing activities and health check replacements are handled in the following way: 
   + `AZRebalance` gradually rebalances the Auto Scaling group if the group is no longer balanced between Availability Zones or if different Availability Zones are specified\.
   + `ReplaceUnhealthy` immediately replaces any instances that it terminated during the time that `Launch` was suspended\.
++ `InstanceRefresh` is paused until you resume `Launch`\.
 
 `AddToLoadBalancer`
 + Amazon EC2 Auto Scaling launches the instances but does not add them to the load balancer or target group\. When you resume the `AddToLoadBalancer` process, it resumes adding instances to the load balancer or target group when they are launched\. However, it does not add the instances that were launched while this process was suspended\. You must register those instances manually\.
@@ -68,12 +71,14 @@ When you suspend the `Launch` and `Terminate` process types together, the follow
 + Your Auto Scaling group cannot initiate scaling activities or maintain its desired capacity\. 
 + If the group becomes unbalanced between Availability Zones, Amazon EC2 Auto Scaling does not attempt to redistribute instances evenly between the Availability Zones that are specified for your Auto Scaling group\.
 + Your Auto Scaling group cannot replace instances that are marked unhealthy\. 
++ The instance refresh feature cannot replace any instances\. 
 
 When you resume the `Launch` and `Terminate` process types, Amazon EC2 Auto Scaling replaces instances that were marked unhealthy while the processes were suspended and might attempt to rebalance the group\. Scaling activities also resume\. 
 
 ### Additional considerations<a name="other-considerations"></a>
 
 There are some outside operations that might be affected while `Launch` and `Terminate` are suspended\.
++ **Maximum instance lifetime**—When `Launch` or `Terminate` are suspended, the maximum instance lifetime feature cannot replace any instances\. 
 + **Spot Instance Interruptions**—If `Terminate` is suspended and your Auto Scaling group has Spot Instances, they can still terminate in the event that Spot capacity is no longer available\. While `Launch` is suspended, Amazon EC2 Auto Scaling cannot launch replacement instances from another Spot Instance pool or from the same Spot Instance pool when it is available again\.
 + **Attaching and Detaching Instances **—When `Launch` and `Terminate` are suspended, you can detach instances that are attached to your Auto Scaling group, but you can't attach new instances to the group\. To attach instances, you must first resume `Launch`\. 
 **Note**  
@@ -86,9 +91,7 @@ You can suspend and resume individual processes or all processes\.
 
 **To suspend and resume processes**
 
-1. Open the Amazon EC2 console at [https://console\.aws\.amazon\.com/ec2/](https://console.aws.amazon.com/ec2/)\.
-
-1. On the navigation pane, under **AUTO SCALING**, choose **Auto Scaling Groups**\.
+1. Open the Amazon EC2 Auto Scaling console at [https://console\.aws\.amazon\.com/ec2autoscaling/](https://console.aws.amazon.com/ec2autoscaling/)\.
 
 1. Select the check box next to the Auto Scaling group\. 
 

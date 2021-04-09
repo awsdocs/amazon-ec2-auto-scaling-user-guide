@@ -98,7 +98,7 @@ When specifying a network interface, keep in mind the following considerations a
 + You must configure the security group as part of the network interface, and not in the **Security groups** section of the template\. You cannot specify security groups in both places\.
 + You cannot assign specific private IP addresses to your Auto Scaling instances\. When an instance launches, a private address is allocated from the CIDR range of the subnet in which the instance is launched\. For more information on specifying CIDR ranges for your VPC or subnet, see the [Amazon VPC User Guide](https://docs.aws.amazon.com/vpc/latest/userguide/)\.
 + You can launch only one instance if you specify an existing network interface ID\. For this to work, you must use the AWS CLI or an SDK to create the Auto Scaling group\. When you create the group, you must specify the Availability Zone, but not the subnet ID\. Also, you can specify an existing network interface only if it has a device index of 0\. 
-+ You cannot auto\-assign a public IP address if you specify more than one network interface\. You also cannot specify duplicate device indexes across network interfaces\. 
++ You cannot auto\-assign a public IP address if you specify more than one network interface\. You also cannot specify duplicate device indexes across network interfaces\. Note that both the primary and secondary network interfaces will reside in the same subnet\.
 
 **To change the default network interface**
 
@@ -158,7 +158,7 @@ If you leave this setting disabled, you can request Spot Instances later in your
 
    1. For **Tenancy host resource group**, you can specify a host resource group for a BYOL AMI to use on Dedicated Hosts\. You do not have to have already allocated Dedicated Hosts in your account before you use this feature\. Your instances will automatically launch onto Dedicated Hosts regardless\. Note that an AMI based on a license configuration association can be mapped to only one host resource group at a time\. For more information, see [Host resource groups](https://docs.aws.amazon.com/license-manager/latest/userguide/host-resource-groups.html) in the *AWS License Manager User Guide*\. 
 
-1. For **License configurations**, specify the license configuration to use\. You can launch instances against the specified license configuration to track your license usage\. For more information, see [Create a license configuration](https://docs.aws.amazon.com/license-manager/latest/userguide/create-license-configuration.html) in the *AWS License Manager User Guide*\.
+1. For **License configurations**, specify the license configuration to use\. You can launch instances against the specified license configuration to track your license usage\. For more information, see [Create a license configuration](https://docs.aws.amazon.com/license-manager/latest/userguide/create-license-configuration.html) in the *License Manager User Guide*\.
 
 1. To configure instance metadata options for all of the instances that are associated with this version of the launch template, do the following:
 
@@ -184,9 +184,13 @@ If you leave this setting disabled, you can request Spot Instances later in your
 
 1. On the navigation pane, under **INSTANCES**, choose **Instances**\.
 
-1. Select the instance and choose **Actions**, **Create template from instance**\.
+1. Select the instance and choose **Actions**, **Image and templates**, **Create template from instance**\.
 
-1. Provide a name and description\. Adjust any other launch parameters as required, and choose **Create launch template**\. 
+1. Provide a name and description\. 
+
+1. Under **Auto Scaling guidance**, select the check box\. 
+
+1. Adjust any settings as required, and choose **Create launch template**\. 
 
 1. To create an Auto Scaling group, choose **Create Auto Scaling group** from the confirmation page\.
 

@@ -14,9 +14,7 @@ When you replace a launch configuration with a launch template, your `ec2:RunIns
 
 **To replace the launch configuration for an Auto Scaling group \(console\)**
 
-1. Open the Amazon EC2 console at [https://console\.aws\.amazon\.com/ec2/](https://console.aws.amazon.com/ec2/)\.
-
-1. On the navigation pane, under **AUTO SCALING**, choose **Auto Scaling Groups**\.
+1. Open the Amazon EC2 Auto Scaling console at [https://console\.aws\.amazon\.com/ec2autoscaling/](https://console.aws.amazon.com/ec2autoscaling/)\.
 
 1. Select the check box next to your Auto Scaling group\. 
 
@@ -37,3 +35,5 @@ When you replace a launch configuration with a launch template, your `ec2:RunIns
 You can use one of the following commands:
 + [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/update-auto-scaling-group.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/update-auto-scaling-group.html) \(AWS CLI\)
 + [https://docs.aws.amazon.com/powershell/latest/reference/items/Update-ASAutoScalingGroup.html](https://docs.aws.amazon.com/powershell/latest/reference/items/Update-ASAutoScalingGroup.html) \(AWS Tools for Windows PowerShell\)
+
+For examples of using a CLI command to update an Auto Scaling group to use a launch template, see [Updating an Auto Scaling group to use a launch template](examples-launch-templates-aws-cli.md#update-asg-launch-template-cli)\.

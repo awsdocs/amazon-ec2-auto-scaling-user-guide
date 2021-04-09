@@ -133,9 +133,7 @@ Use the following procedure to continue where you left off after creating your l
 
 1. If you have not yet navigated to the **Auto Scaling groups** page, do the following:
 
-   1. Open the Amazon EC2 console at [https://console\.aws\.amazon\.com/ec2/](https://console.aws.amazon.com/ec2/)\.
-
-   1. On the navigation pane, under **AUTO SCALING**, choose **Auto Scaling Groups**\.
+   1. Open the Amazon EC2 Auto Scaling console at [https://console\.aws\.amazon\.com/ec2autoscaling/](https://console.aws.amazon.com/ec2autoscaling/)\.
 
 1. Choose **Create an Auto Scaling group**\.
 

@@ -2,32 +2,32 @@
 
 *Metrics* are the fundamental concept in CloudWatch\. A metric represents a time\-ordered set of data points that are published to CloudWatch\. Think of a metric as a variable to monitor, and the data points as representing the values of that variable over time\. You can use these metrics to verify that your system is performing as expected\. 
 
-Amazon EC2 Auto Scaling publishes data points to CloudWatch about your Auto Scaling groups\. The metrics are available at 1\-minute granularity at no additional charge, but you must enable them\. By doing this, you get continuous visibility into the operations of your Auto Scaling groups so that you can quickly respond to changes in your workloads\. The following sections guide you through enabling them\.
+Amazon EC2 Auto Scaling publishes data points to CloudWatch about your Auto Scaling groups\. The metrics are available at 1\-minute granularity at no additional charge, but you must enable them\. By doing this, you get continuous visibility into the operations of your Auto Scaling groups so that you can quickly respond to changes in your workloads\. You can enable and disable these metrics using the AWS Management Console, AWS CLI, or an SDK\. 
 
-Amazon EC2 publishes data points to CloudWatch that describe your Auto Scaling instances\. The interval for Amazon EC2 instance monitoring is configurable\. You can choose between 1\-minute and 5\-minute granularity\. 
+Amazon EC2 publishes data points to CloudWatch that describe your Auto Scaling instances\. The interval for Amazon EC2 instance monitoring is configurable\. You can choose between 1\-minute and 5\-minute granularity\. For more information, see [Configuring monitoring for Auto Scaling instances](enable-as-instance-metrics.md)\.
 
 **Contents**
-+ [Enabling Auto Scaling group metrics](#as-enable-group-metrics)
++ [Enable Auto Scaling group metrics \(console\)](#as-enable-group-metrics)
++ [Enable Auto Scaling group metrics \(AWS CLI\)](#as-enable-group-metrics-cli)
 + [Available metrics and dimensions](#available-cloudwatch-metrics)
   + [Auto Scaling group metrics](#as-group-metrics)
   + [Dimensions for Auto Scaling group metrics](#as-group-metric-dimensions)
 + [Viewing graphed metrics for your Auto Scaling groups and instances](#as-view-group-metrics)
 + [Working with Amazon CloudWatch](#cloudwatch-working)
-  + [Viewing CloudWatch metrics](#cloudwatch-view-metrics)
-  + [Creating Amazon CloudWatch alarms](#cloudwatch-create-alarm)
+  + [View CloudWatch metrics](#cloudwatch-view-metrics)
+  + [Create Amazon CloudWatch alarms](#cloudwatch-create-alarm)
 + [Configuring monitoring for Auto Scaling instances](enable-as-instance-metrics.md)
+  + [Enable detailed monitoring \(console\)](enable-as-instance-metrics.md#enable-detailed-monitoring-console)
+  + [Enable detailed monitoring \(AWS CLI\)](enable-as-instance-metrics.md#enable-detailed-monitoring-cli)
+  + [Switching between basic and detailed monitoring](enable-as-instance-metrics.md#change-monitoring)
 
-## Enabling Auto Scaling group metrics<a name="as-enable-group-metrics"></a>
+## Enable Auto Scaling group metrics \(console\)<a name="as-enable-group-metrics"></a>
 
 When you enable Auto Scaling group metrics, your Auto Scaling group sends sampled data to CloudWatch every minute\. There is no charge for enabling these metrics\.
 
-You can enable and disable Auto Scaling group metrics using the AWS Management Console, AWS CLI, or AWS SDKs\. 
+**To enable group metrics**
 
-**To enable group metrics \(console\)**
-
-1. Open the Amazon EC2 console at [https://console\.aws\.amazon\.com/ec2/](https://console.aws.amazon.com/ec2/)\.
-
-1. On the navigation pane, under **AUTO SCALING**, choose **Auto Scaling Groups**\.
+1. Open the Amazon EC2 Auto Scaling console at [https://console\.aws\.amazon\.com/ec2autoscaling/](https://console.aws.amazon.com/ec2autoscaling/)\.
 
 1. Select the check box next to your Auto Scaling group\.
 
@@ -35,17 +35,17 @@ You can enable and disable Auto Scaling group metrics using the AWS Management C
 
 1. On the **Monitoring** tab, select the **Auto Scaling group metrics collection**, **Enable** check box located at the top of the page under **Auto Scaling**\. 
 
-**To disable group metrics \(console\)**
+**To disable group metrics**
 
-1. Open the Amazon EC2 console at [https://console\.aws\.amazon\.com/ec2/](https://console.aws.amazon.com/ec2/)\.
-
-1. On the navigation pane, under **AUTO SCALING**, choose **Auto Scaling Groups**\.
+1. Open the Amazon EC2 Auto Scaling console at [https://console\.aws\.amazon\.com/ec2autoscaling/](https://console.aws.amazon.com/ec2autoscaling/)\.
 
 1. Select your Auto Scaling group\.
 
 1. On the **Monitoring** tab, clear the **Auto Scaling group metrics collection**, **Enable** check box\. 
 
-**To enable group metrics \(AWS CLI\)**  
+## Enable Auto Scaling group metrics \(AWS CLI\)<a name="as-enable-group-metrics-cli"></a>
+
+**To enable group metrics**  
 Enable one or more group metrics using the [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/enable-metrics-collection.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/enable-metrics-collection.html) command\. For example, the following command enables the GroupDesiredCapacity metric\.
 
 ```
@@ -60,7 +60,7 @@ aws autoscaling enable-metrics-collection --auto-scaling-group-name my-asg \
 --granularity "1Minute"
 ```
 
-**To disable group metrics \(AWS CLI\)**  
+**To disable group metrics**  
 Use the [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/disable-metrics-collection.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/disable-metrics-collection.html) command\. For example, the following command disables all Auto Scaling group metrics\.
 
 ```
@@ -138,10 +138,10 @@ For more information about the Amazon EC2 metrics and the data they provide to t
 ## Working with Amazon CloudWatch<a name="cloudwatch-working"></a>
 
 **Contents**
-+ [Viewing CloudWatch metrics](#cloudwatch-view-metrics)
-+ [Creating Amazon CloudWatch alarms](#cloudwatch-create-alarm)
++ [View CloudWatch metrics](#cloudwatch-view-metrics)
++ [Create Amazon CloudWatch alarms](#cloudwatch-create-alarm)
 
-### Viewing CloudWatch metrics<a name="cloudwatch-view-metrics"></a>
+### View CloudWatch metrics<a name="cloudwatch-view-metrics"></a>
 
 You can view your Auto Scaling group metrics using the CloudWatch console and the command line tools\. 
 
@@ -167,7 +167,7 @@ To view a single metric for all your Auto Scaling groups, specify the name of th
 aws cloudwatch list-metrics --namespace "AWS/AutoScaling" --metric-name GroupDesiredCapacity
 ```
 
-### Creating Amazon CloudWatch alarms<a name="cloudwatch-create-alarm"></a>
+### Create Amazon CloudWatch alarms<a name="cloudwatch-create-alarm"></a>
 
 One purpose for monitoring metrics is to verify that your application is performing as expected\. In Amazon CloudWatch, you can create an alarm that sends a notification when the value of a certain metric is beyond what you consider an acceptable threshold\. 
 

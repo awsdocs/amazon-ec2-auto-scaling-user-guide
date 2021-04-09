@@ -34,6 +34,17 @@ As a best practice, we strongly recommend that you create the role so that it ha
 
 The `iam:PassRole` permission is needed on the IAM user who creates or updates an Auto Scaling group using a launch template that specifies an instance profile, or who creates a launch configuration that specifies an instance profile\. For an example policy, see [Control which IAM roles can be passed \(using PassRole\)](security_iam_id-based-policy-examples.md#policy-example-pass-IAM-role)\.
 
+## Create a launch template<a name="us-iam-role-create-lt"></a>
+
+When you create the launch template using the AWS Management Console, in the **Advanced details** section, select the role from **IAM instance profile**\. For more information, see [Configuring advanced settings for your launch template](create-launch-template.md#advanced-settings-for-your-launch-template)\.
+
+When you create the launch template using the [https://docs.aws.amazon.com/cli/latest/reference/ec2/create-launch-template.html](https://docs.aws.amazon.com/cli/latest/reference/ec2/create-launch-template.html) command from the AWS CLI, specify the name of the instance profile as shown in the following example\.
+
+```
+aws ec2 create-launch-template --launch-template-name my-lt-with-instance-profile --version-description version1 \
+--launch-template-data '{"ImageId":"ami-01e24be29428c15b2","InstanceType":"t2.micro","IamInstanceProfile":{"Name":"my-instance-profile"}}'
+```
+
 ## Create a launch configuration<a name="us-iam-role-create-launch"></a>
 
 When you create the launch configuration using the AWS Management Console, in the **Additional configuration** section, select the role from **IAM instance profile**\. For more information, see [Creating a launch configuration](create-launch-config.md)\.
@@ -44,15 +55,4 @@ When you create the launch configuration using the [https://docs.aws.amazon.com/
 aws autoscaling create-launch-configuration --launch-configuration-name my-lc-with-instance-profile \
 --image-id ami-01e24be29428c15b2 --instance-type t2.micro \
 --iam-instance-profile my-instance-profile
-```
-
-## Create a launch template<a name="us-iam-role-create-lt"></a>
-
-When you create the launch template using the AWS Management Console, in the **Advanced details** section, select the role from **IAM instance profile**\. For more information, see [Configuring advanced settings for your launch template](create-launch-template.md#advanced-settings-for-your-launch-template)\.
-
-When you create the launch template using the [https://docs.aws.amazon.com/cli/latest/reference/ec2/create-launch-template.html](https://docs.aws.amazon.com/cli/latest/reference/ec2/create-launch-template.html) command from the AWS CLI, specify the name of the instance profile as shown in the following example\.
-
-```
-aws ec2 create-launch-template --launch-template-name my-lt-with-instance-profile --version-description version1 \
---launch-template-data '{"ImageId":"ami-01e24be29428c15b2","InstanceType":"t2.micro","IamInstanceProfile":{"Name":"my-instance-profile"}}'
 ```

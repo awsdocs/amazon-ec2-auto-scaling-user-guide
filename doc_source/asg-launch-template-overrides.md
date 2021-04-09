@@ -5,7 +5,7 @@ The `Overrides` property allows you to define a new launch template for individu
 Say that you configure an Auto Scaling group for compute\-intensive applications and want to include a mix of C5, C5a, and C6g instance types\. However, C6g instances feature an AWS Graviton processor based on 64\-bit Arm architecture, while the C5 and C5a instances run on 64\-bit Intel x86 processors\. The AMI for C5 instances works on C5a instances and vice\-versa, but not on C6g instances\. The `Overrides` property allows you to include a different launch template for C6g instances, while still using the same launch template for C5 and C5a instances\.
 
 **Note**  
-Currently, this feature is available only if you use the AWS CLI or an AWS SDK, and is not available from the console\.
+Currently, this feature is available only if you use the AWS CLI or an SDK, and is not available from the console\.
 
 ## Adding or changing a launch template for an instance type \(AWS CLI\)<a name="launch-template-overrides-cli"></a>
 

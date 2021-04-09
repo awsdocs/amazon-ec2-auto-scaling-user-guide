@@ -12,11 +12,9 @@ Create a launch configuration\. For more information, see [Creating a launch con
 
 **To create an Auto Scaling group using a launch configuration \(console\)**
 
-1. Open the Amazon EC2 console at [https://console\.aws\.amazon\.com/ec2/](https://console.aws.amazon.com/ec2/)\.
+1. Open the Amazon EC2 Auto Scaling console at [https://console\.aws\.amazon\.com/ec2autoscaling/](https://console.aws.amazon.com/ec2autoscaling/)\.
 
 1. On the navigation bar at the top of the screen, choose the same AWS Region that you used when you created the launch template\.
-
-1. On the navigation pane, under **AUTO SCALING**, choose **Auto Scaling Groups**\.
 
 1. Choose **Create an Auto Scaling group**\.
 
@@ -40,7 +38,7 @@ Create a launch configuration\. For more information, see [Creating a launch con
 
 1. \(Optional\) On the **Configure advanced options** page, configure the following options, and then choose **Next**:
 
-   1. To register your Amazon EC2 instances with a load balancer, choose an existing load balancer or create a new one\. For more information, see [Elastic Load Balancing and Amazon EC2 Auto Scaling](autoscaling-load-balancer.md)\. To create a new load balancer, follow the procedure in [Create and attach a new Application Load Balancer or Network Load Balancer \(console\)](attach-load-balancer-asg.md#as-create-load-balancer-console)\.
+   1. To register your Amazon EC2 instances with a load balancer, choose an existing load balancer or create a new one\. For more information, see [Elastic Load Balancing and Amazon EC2 Auto Scaling](autoscaling-load-balancer.md)\. To create a new load balancer, follow the procedure in [Create and attach a new Application Load Balancer or Network Load Balancer](attach-load-balancer-asg.md#as-create-load-balancer-console)\.
 
    1. To enable your Elastic Load Balancing \(`ELB`\) health checks, for **Health checks**, choose **ELB** under **Health check type**\. These health checks are optional when you enable load balancing\. 
 

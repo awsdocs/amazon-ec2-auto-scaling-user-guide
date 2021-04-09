@@ -1,8 +1,8 @@
-# Troubleshooting Amazon EC2 Auto Scaling: EC2 Instance launch failures<a name="ts-as-instancelaunchfailure"></a>
+# Troubleshooting Amazon EC2 Auto Scaling: EC2 instance launch failures<a name="ts-as-instancelaunchfailure"></a>
 
 This page provides information about your EC2 instances that fail to launch, potential causes, and the steps you can take to resolve the issues\.
 
-To retrieve an error message, see [Retrieving an error message](CHAP_Troubleshooting.md#RetrievingErrors)\.
+To retrieve an error message, see [Retrieving an error message from scaling activities](CHAP_Troubleshooting.md#RetrievingErrors)\.
 
 When your EC2 instances fail to launch, you might get one or more of the following error messages:
 
@@ -111,14 +111,36 @@ When your EC2 instances fail to launch, you might get one or more of the followi
   1. Update your Auto Scaling group with a new placement group, launch template, or launch configuration using the [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/update-auto-scaling-group.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/update-auto-scaling-group.html) command\.
 
 ## Client\.InternalError: Client error on launch\.<a name="ts-as-instancelaunchfailure-12"></a>
-+ **Cause**: This error can be caused when an Auto Scaling group attempts to launch an instance that has an encrypted EBS volume, but the service\-linked role does not have access to the customer managed CMK used to encrypt it\. For more information, see [Required CMK key policy for use with encrypted volumes](key-policy-requirements-EBS-encryption.md)\.
-+ **Solution**: Additional setup is required to allow the Auto Scaling group to launch instances\. The following table summarizes the steps for resolving the error\. For more information, see [https://forums\.aws\.amazon\.com/thread\.jspa?threadID=277523](https://forums.aws.amazon.com/thread.jspa?threadID=277523)\.
++ **Problem**: Amazon EC2 Auto Scaling tries to launch an instance that has an encrypted EBS volume, but the service\-linked role does not have access to the customer managed CMK used to encrypt it\. For more information, see [Required CMK key policy for use with encrypted volumes](key-policy-requirements-EBS-encryption.md)\.
++ **Cause 1**: You need a key policy that gives permission to use the CMK to the proper service\-linked role\.
++ **Solution 1**: Allow the service\-linked role to use the CMK as follows:
 
+  1. Determine which service\-linked role to use for this Auto Scaling group\.
 
-| Scenario | Next steps | 
-| --- | --- | 
-|  **Scenario 1:**  CMK and Auto Scaling group are in the same AWS account  |  Allow the service\-linked role to use the CMK as follows: [\[See the AWS documentation website for more details\]](http://docs.aws.amazon.com/autoscaling/ec2/userguide/ts-as-instancelaunchfailure.html)  | 
-|  **Scenario 2:** CMK and Auto Scaling group are in different AWS accounts  |  There are two possible solutions: Solution 1: Use a CMK in the same AWS account as the Auto Scaling group [\[See the AWS documentation website for more details\]](http://docs.aws.amazon.com/autoscaling/ec2/userguide/ts-as-instancelaunchfailure.html) Solution 2: Continue to use the CMK in a different AWS account from the Auto Scaling group [\[See the AWS documentation website for more details\]](http://docs.aws.amazon.com/autoscaling/ec2/userguide/ts-as-instancelaunchfailure.html)  | 
+  1. Update the key policy on the CMK and allow the service\-linked role to use the CMK\.
+
+  1. Update the Auto Scaling group to use the service\-linked role\.
+
+  For an example of a key policy that lets the service\-linked role use the CMK, see [Example 1: Key policy sections that allow access to the CMK](key-policy-requirements-EBS-encryption.md#policy-example-cmk-access)\.
++ **Cause 2**: If the CMK and Auto Scaling group are in *different* AWS accounts, you need to configure cross\-account access to the CMK in order to give permission to use the CMK to the proper service\-linked role\. 
++ **Solution 2**: Allow the service\-linked role in the external account to use the CMK in the local account as follows:
+
+  1. Update the key policy on the CMK to allow the Auto Scaling group account access to the CMK\.
+
+  1. Define an IAM user or role in the Auto Scaling group account that can create a grant\.
+
+  1. Determine which service\-linked role to use for this Auto Scaling group\.
+
+  1. Create a grant to the CMK with the proper service\-linked role as the grantee principal\.
+
+  1. Update the Auto Scaling group to use the service\-linked role\.
+
+  For more information, see [Example 2: Key policy sections that allow cross\-account access to the CMK](key-policy-requirements-EBS-encryption.md#policy-example-cmk-cross-account-access)\.
++ **Solution 3**: Use a CMK in the same AWS account as the Auto Scaling group\.
+
+  1. Copy and re\-encrypt the snapshot with another CMK that belongs to the same account as the Auto Scaling group\.
+
+  1. Allow the service\-linked role to use the new CMK\. See the steps for Solution 1\.
 
 ## We currently do not have sufficient <instance type> capacity in the Availability Zone you requested\.\.\. Launching EC2 instance failed\.<a name="ts-as-capacity-1"></a>
 + **Error message**: We currently do not have sufficient <instance type> capacity in the Availability Zone you requested \(<requested Availability Zone>\)\. Our system will be working on provisioning additional capacity\. You can currently get <instance type> capacity by not specifying an Availability Zone in your request or choosing <list of Availability Zones that currently supports the instance type>\. Launching EC2 instance failed\.

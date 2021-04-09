@@ -15,11 +15,9 @@ When you delete an Auto Scaling group, its desired, minimum, and maximum values 
 
 **To delete your Auto Scaling group \(console\)**
 
-1. Open the Amazon EC2 console at [https://console\.aws\.amazon\.com/ec2/](https://console.aws.amazon.com/ec2/)\.
+1. Open the Amazon EC2 Auto Scaling console at [https://console\.aws\.amazon\.com/ec2autoscaling/](https://console.aws.amazon.com/ec2autoscaling/)\.
 
-1. On the navigation pane, under **AUTO SCALING**, choose **Auto Scaling Groups**\.
-
-1. On the **Auto Scaling Groups** page, select the check box next to your Auto Scaling group and choose **Delete**\. 
+1. Select the check box next to your Auto Scaling group and choose **Delete**\. 
 
 1. When prompted for confirmation, choose **Delete**\.
 
@@ -48,7 +46,7 @@ You can skip this step to keep the launch configuration for future use\.
 
 1. On the navigation pane, under **AUTO SCALING**, choose **Launch Configurations**\.
 
-1. On the **Launch Configurations** page, choose your launch configuration and choose **Actions**, **Delete launch configuration**\.
+1. On the **Launch configurations** page, choose your launch configuration and choose **Actions**, **Delete launch configuration**\.
 
 1. When prompted for confirmation, choose **Yes, Delete**\.
 

@@ -39,7 +39,7 @@ The following predefined metrics are available:
 + `ASGAverageNetworkOut`—Average number of bytes sent out on all network interfaces by the Auto Scaling group\. 
 + `ALBRequestCountPerTarget`—Number of requests completed per target in an Application Load Balancer target group\. 
 
-You can choose other available Amazon CloudWatch metrics or your own metrics in CloudWatch by specifying a customized metric\. You must use the AWS CLI or an AWS SDK to create a target tracking policy with a customized metric\.
+You can choose other available Amazon CloudWatch metrics or your own metrics in CloudWatch by specifying a customized metric\. You must use the AWS CLI or an SDK to create a target tracking policy with a customized metric\.
 
 Keep the following in mind when choosing a metric:
 + Not all metrics work for target tracking\. This can be important when you are specifying a customized metric\. The metric must be a valid utilization metric and describe how busy an instance is\. The metric value must increase or decrease proportionally to the number of instances in the Auto Scaling group\. That's so the metric data can be used to proportionally scale out or in the number of instances\. For example, the CPU utilization of an Auto Scaling group works \(that is, the Amazon EC2 metric `CPUUtilization` with the metric dimension `AutoScalingGroupName`\), if the load on the Auto Scaling group is distributed across the instances\. 
@@ -47,7 +47,7 @@ Keep the following in mind when choosing a metric:
   + The number of requests received by the load balancer fronting the Auto Scaling group \(that is, the Elastic Load Balancing metric `RequestCount`\)\. The number of requests received by the load balancer doesn't change based on the utilization of the Auto Scaling group\.
   + Load balancer request latency \(that is, the Elastic Load Balancing metric `Latency`\)\. Request latency can increase based on increasing utilization, but doesn't necessarily change proportionally\.
   + The CloudWatch Amazon SQS queue metric `ApproximateNumberOfMessagesVisible`\. The number of messages in a queue might not change proportionally to the size of the Auto Scaling group that processes messages from the queue\. However, a customized metric that measures the number of messages in the queue per EC2 instance in the Auto Scaling group can work\. For more information, see [Scaling based on Amazon SQS](as-using-sqs-queue.md)\.
-+ A target tracking scaling policy does not scale in your Auto Scaling group when the specified metric has insufficient data, unless you use the `ALBRequestCountPerTarget` metric\. This works because the `ALBRequestCountPerTarget` metric emits zeros for periods with no associated data, and the target tracking policy requires metric data to interpret a low utilization trend\. To have your Auto Scaling group scale in to 0 instances when no requests are routed to the target group, the group's minimum capacity must be set to 0\. 
++ A target tracking scaling policy does not scale in your Auto Scaling group when the specified metric has no data, unless you use the `ALBRequestCountPerTarget` metric\. This works because the `ALBRequestCountPerTarget` metric emits zeros for periods with no associated data, and the target tracking policy requires metric data to interpret a low utilization trend\. To have your Auto Scaling group scale in to 0 instances when no requests are routed to the target group, the group's minimum capacity must be set to 0\. 
 + To use the `ALBRequestCountPerTarget` metric, you must specify the `ResourceLabel` parameter to identify the target group that is associated with the metric\. 
 
 ### Monitoring Amazon EC2 metrics<a name="target-tracking-monitoring"></a>
@@ -68,21 +68,49 @@ A scale\-in activity can't start while a scale\-out activity is in progress\.
 
 ## Create a target tracking scaling policy \(console\)<a name="policy_creating"></a>
 
-**To create a target tracking scaling policy**
+You can choose to configure a target tracking scaling policy on an Auto Scaling group as you create it or after the Auto Scaling group is created\.
 
-1. Open the Amazon EC2 console at [https://console\.aws\.amazon\.com/ec2/](https://console.aws.amazon.com/ec2/)\.
+**To create an Auto Scaling group with a target tracking scaling policy**
 
-1. On the navigation pane, under **AUTO SCALING**, choose **Auto Scaling Groups**\.
+1. Open the Amazon EC2 Auto Scaling console at [https://console\.aws\.amazon\.com/ec2autoscaling/](https://console.aws.amazon.com/ec2autoscaling/)\.
+
+1. Choose **Create Auto Scaling group**\.
+
+1.  In Steps 1, 2, and 3, choose the options as desired and proceed to **Step 4: Configure group size and scaling policies**\.
+
+1. Under **Group size**, specify the range that you want to scale between by updating the minimum capacity and maximum capacity\. These two settings allow your Auto Scaling group to scale dynamically\. Amazon EC2 Auto Scaling scales your group in the range of values specified by the minimum capacity and maximum capacity\.
+
+1. <a name="policy-creating-scalingpolicies-console"></a>Under **Scaling policies**, choose **Target tracking scaling policy**\.
+
+1. To define a policy, do the following:
+
+   1. Specify a name for the policy\.
+
+   1. For **Metric type**, choose a metric\. 
+
+      If you chose **Application Load Balancer request count per target**, choose a target group in **Target group**\.
+
+   1. Specify a **Target value** for the metric\.
+
+   1. \(Optional\) Specify an instance warm\-up value for **Instances need**\. This allows you to control the time until a newly launched instance can contribute to the CloudWatch metrics\.
+
+   1. \(Optional\) Select **Disable scale in to create only a scale\-out policy**\. This allows you to create a separate scale\-in policy of a different type if wanted\.
+
+1. Proceed to create the Auto Scaling group\. Your scaling policy will be created after the Auto Scaling group has been created\. 
+
+**To create a target tracking scaling policy for an existing Auto Scaling group**
+
+1. Open the Amazon EC2 Auto Scaling console at [https://console\.aws\.amazon\.com/ec2autoscaling/](https://console.aws.amazon.com/ec2autoscaling/)\.
 
 1. Select the check box next to your Auto Scaling group\.
 
    A split pane opens up in the bottom part of the **Auto Scaling groups** page, showing information about the group that's selected\. 
 
-1. Verify that the minimum and maximum size limits are appropriately set\. For example, if your group is already at its maximum size, specify a new maximum in order to scale out\. Amazon EC2 Auto Scaling does not scale your group below the minimum capacity or above the maximum capacity\. To update your group, on the **Details** tab, change the current settings for minimum and maximum capacity\. 
+1. Verify that the minimum capacity and maximum capacity are appropriately set\. For example, if your group is already at its maximum size, specify a new maximum in order to scale out\. Amazon EC2 Auto Scaling does not scale your group below the minimum capacity or above the maximum capacity\. To update your group, on the **Details** tab, change the current settings for minimum and maximum capacity\. 
 
 1. On the **Automatic scaling** tab, in **Scaling policies**, choose **Add policy**\.
 
-1. <a name="policy-creating-scalingpolicies-console"></a>To define a policy, do the following:
+1. To define a policy, do the following:
 
    1. For **Policy type**, leave the default of **Target tracking scaling**\. 
 
@@ -90,7 +118,7 @@ A scale\-in activity can't start while a scale\-out activity is in progress\.
 
    1. For **Metric type**, choose a metric\. You can choose only one metric type\. To use more than one metric, create multiple policies\.
 
-   1. For **Target group**, choose the target group that you specified in the Auto Scaling group's load balancer settings\. You need to complete this step only if you chose the metric type that is based on the request count per target of your Application Load Balancer\.
+      If you chose **Application Load Balancer request count per target**, choose a target group in **Target group**\.
 
    1. Specify a **Target value** for the metric\.
 

@@ -1,6 +1,6 @@
 # Examples for creating and managing launch templates with the AWS Command Line Interface \(AWS CLI\)<a name="examples-launch-templates-aws-cli"></a>
 
-You can create and manage launch templates through the AWS Management Console, AWS CLI, or AWS SDKs\. This section shows you examples of creating and managing launch templates from the AWS CLI\.
+You can create and manage launch templates through the AWS Management Console, AWS CLI, or SDKs\. This section shows you examples of creating and managing launch templates for Amazon EC2 Auto Scaling from the AWS CLI\.
 
 **Topics**
 + [Creating a simple launch template](#example-simple-launch-template)
@@ -11,6 +11,7 @@ You can create and manage launch templates through the AWS Management Console, A
 + [Creating multiple EFA\-enabled network interfaces](#example-multiple-efa-enabled-network-interfaces)
 + [Specifying a block device mapping](#example-block-device-mapping)
 + [Managing your launch templates](#launch-templates-additional-cli-commands)
++ [Updating an Auto Scaling group to use a launch template](#update-asg-launch-template-cli)
 
 ## Creating a simple launch template<a name="example-simple-launch-template"></a>
 
@@ -222,4 +223,29 @@ If you no longer require a launch template, you can delete it using the followin
 
 ```
 aws ec2 delete-launch-template --launch-template-id lt-068f72b729example
+```
+
+## Updating an Auto Scaling group to use a launch template<a name="update-asg-launch-template-cli"></a>
+
+You can use the [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/update-auto-scaling-group.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/update-auto-scaling-group.html) command to add a launch template to an existing Auto Scaling group\.
+
+**Note**  
+If you switch your Auto Scaling group from using a launch configuration, be sure that your permissions are up\-to\-date\. In order to use a launch template, you need specific permissions\. For more information, see [Launch template support](ec2-auto-scaling-launch-template-permissions.md)\.
+
+### Updating an Auto Scaling group to use the latest version of a launch template<a name="example-update-asg-launch-template-latest-version"></a>
+
+The following [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/update-auto-scaling-group.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/update-auto-scaling-group.html) command updates the specified Auto Scaling group to use the latest version of the specified launch template\.
+
+```
+aws autoscaling update-auto-scaling-group --auto-scaling-group-name my-asg \
+  --launch-template LaunchTemplateId=lt-068f72b729example,Version='$Latest'
+```
+
+### Updating an Auto Scaling group to use a specific version of a launch template<a name="example-update-asg-launch-template-specific-version"></a>
+
+The following [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/update-auto-scaling-group.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/update-auto-scaling-group.html) command updates the specified Auto Scaling group to use a specific version of the specified launch template\.
+
+```
+aws autoscaling update-auto-scaling-group --auto-scaling-group-name my-asg \
+  --launch-template LaunchTemplateName=my-template-for-auto-scaling,Version='2'
 ```

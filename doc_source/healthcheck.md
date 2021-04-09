@@ -36,7 +36,7 @@ If you have custom health checks, you can send the information from your health 
 
 When an instance launches, Amazon EC2 Auto Scaling uses the value of the `HealthCheckGracePeriod` for the Auto Scaling group to determine how long to wait before checking the health status of the instance\. Amazon EC2 and Elastic Load Balancing health checks can complete before the health check grace period expires\. However, Amazon EC2 Auto Scaling does not act on them until the health check grace period expires\. 
 
-By default, the health check grace period is `300` seconds when you create an Auto Scaling group from the AWS Management Console\. Its default value is `0` seconds when you create an Auto Scaling group using the AWS CLI or an AWS SDK\. 
+By default, the health check grace period is `300` seconds when you create an Auto Scaling group from the AWS Management Console\. Its default value is `0` seconds when you create an Auto Scaling group using the AWS CLI or an SDK\. 
 
 To provide ample warm\-up time for your instances, ensure that the health check grace period covers the expected startup time for your application, from when an instance comes into service to when it can receive traffic\. If you add a lifecycle hook, the grace period does not start until the lifecycle hook actions are completed and the instance enters the `InService` state\.
 
@@ -53,7 +53,7 @@ When your instance is terminated, any associated Elastic IP addresses are disass
 
 ## Using custom health checks<a name="as-configure-healthcheck"></a>
 
-If you have your own health check system, you can send the instance's health information directly from your system to Amazon EC2 Auto Scaling using the AWS CLI or an AWS SDK\. The following examples show how to use the AWS CLI to configure the health state of an instance and then verify the instance's health state\.
+If you have your own health check system, you can send the instance's health information directly from your system to Amazon EC2 Auto Scaling using the AWS CLI or an SDK\. The following examples show how to use the AWS CLI to configure the health state of an instance and then verify the instance's health state\.
 
 Use the following [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/set-instance-health.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/set-instance-health.html) command to set the health state of the specified instance to `Unhealthy`\.
 

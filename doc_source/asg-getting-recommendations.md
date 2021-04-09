@@ -5,7 +5,7 @@ AWS provides Amazon EC2 instance recommendations to help you improve performance
 To make recommendations, Compute Optimizer analyzes your existing instance specifications and recent metric history\. The compiled data is then used to recommend which Amazon EC2 instance types are best optimized to handle the existing performance workload\. Recommendations are returned along with per\-hour instance pricing\. 
 
 **Note**  
-To get recommendations from Compute Optimizer, you must first opt in to Compute Optimizer\. For more information, see [Getting started with AWS AWS Compute Optimizer](https://docs.aws.amazon.com/compute-optimizer/latest/ug/getting-started.html) in the *AWS Compute Optimizer User Guide*\. 
+To get recommendations from Compute Optimizer, you must first opt in to Compute Optimizer\. For more information, see [Getting started with AWS Compute Optimizer](https://docs.aws.amazon.com/compute-optimizer/latest/ug/getting-started.html) in the *AWS Compute Optimizer User Guide*\. 
 
 **Topics**
 + [Limitations](#compute-optimizer-limitations)

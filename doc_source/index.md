@@ -1,7 +1,7 @@
 # Amazon EC2 Auto Scaling User Guide
 
 -----
-*****Copyright &copy; 2021 Amazon Web Services, Inc. and/or its affiliates. All rights reserved.*****
+*****Copyright &copy;  Amazon Web Services, Inc. and/or its affiliates. All rights reserved.*****
 
 -----
 Amazon's trademarks and trade dress may not be used in 
@@ -50,6 +50,7 @@ Amazon's trademarks and trade dress may not be used in
    + [Getting recommendations for an instance type from AWS Compute Optimizer](asg-getting-recommendations.md)
    + [Replacing Auto Scaling instances based on maximum instance lifetime](asg-max-instance-lifetime.md)
    + [Replacing Auto Scaling instances based on an instance refresh](asg-instance-refresh.md)
+      + [Adding checkpoints to an instance refresh](asg-adding-checkpoints-instance-refresh.md)
    + [Merging your Auto Scaling groups into a single multi-zone group](merge-auto-scaling-groups.md)
    + [Deleting your Auto Scaling infrastructure](as-process-shutdown.md)
 + [Scaling the size of your Auto Scaling group](scaling_plan.md)
@@ -68,10 +69,19 @@ Amazon's trademarks and trade dress may not be used in
       + [Example scaling policies for the AWS Command Line Interface (AWS CLI)](examples-scaling-policies.md)
    + [Scaling cooldowns for Amazon EC2 Auto Scaling](Cooldown.md)
    + [Scheduled scaling for Amazon EC2 Auto Scaling](schedule_time.md)
+   + [Amazon EC2 Auto Scaling lifecycle hooks](lifecycle-hooks.md)
+      + [Configuring a notification target for a lifecycle hook](configuring-lifecycle-hook-notifications.md)
+      + [Adding lifecycle hooks](adding-lifecycle-hooks.md)
+      + [Completing a lifecycle action](completing-lifecycle-hooks.md)
+      + [Tutorial: Configure a lifecycle hook that invokes a Lambda function](tutorial-lifecycle-hook-lambda.md)
+   + [Warm pools for Amazon EC2 Auto Scaling](ec2-auto-scaling-warm-pools.md)
+      + [Warm pool instance lifecycle](warm-pool-instance-lifecycle.md)
+      + [Event types and event patterns that you use when you add or update lifecycle hooks](warm-pools-eventbridge-events.md)
+      + [Creating EventBridge rules for warm pool events](warm-pool-events-eventbridge-rules.md)
+      + [Viewing health check status and the reason for health check failures](warm-pools-health-checks-monitor-view-status.md)
+      + [Deleting a warm pool](delete-warm-pool.md)
    + [Controlling which Auto Scaling instances terminate during scale in](as-instance-termination.md)
       + [Common termination policy scenarios for Amazon EC2 Auto Scaling](common-scenarios-termination.md)
-   + [Amazon EC2 Auto Scaling lifecycle hooks](lifecycle-hooks.md)
-      + [Configuring notifications for Amazon EC2 Auto Scaling lifecycle hooks](configuring-lifecycle-hook-notifications.md)
    + [Temporarily removing instances from your Auto Scaling group](as-enter-exit-standby.md)
    + [Suspending and resuming scaling processes](as-suspend-resume-processes.md)
 + [Monitoring your Auto Scaling instances and groups](as-monitoring-features.md)
@@ -82,7 +92,7 @@ Amazon's trademarks and trade dress may not be used in
       + [Configuring monitoring for Auto Scaling instances](enable-as-instance-metrics.md)
    + [Logging Amazon EC2 Auto Scaling API calls with AWS CloudTrail](logging-using-cloudtrail.md)
    + [Getting Amazon SNS notifications when your Auto Scaling group scales](ASGettingNotifications.md)
-   + [Automating Amazon EC2 Auto Scaling with EventBridge](cloud-watch-events.md)
+   + [Using Amazon EC2 Auto Scaling with EventBridge](cloud-watch-events.md)
 + [Security in Amazon EC2 Auto Scaling](security.md)
    + [Amazon EC2 Auto Scaling and data protection](ec2-auto-scaling-data-protection.md)
    + [Identity and Access Management for Amazon EC2 Auto Scaling](security-iam.md)
@@ -97,8 +107,10 @@ Amazon's trademarks and trade dress may not be used in
    + [Infrastructure security in Amazon EC2 Auto Scaling](infrastructure-security.md)
    + [Amazon EC2 Auto Scaling and interface VPC endpoints](ec2-auto-scaling-vpc-endpoints.md)
 + [Troubleshooting Amazon EC2 Auto Scaling](CHAP_Troubleshooting.md)
-   + [Troubleshooting Amazon EC2 Auto Scaling: EC2 Instance launch failures](ts-as-instancelaunchfailure.md)
+   + [Troubleshooting Amazon EC2 Auto Scaling: EC2 instance launch failures](ts-as-instancelaunchfailure.md)
    + [Troubleshooting Amazon EC2 Auto Scaling: AMI issues](ts-as-ami.md)
    + [Troubleshooting Amazon EC2 Auto Scaling: Load balancer issues](ts-as-loadbalancer.md)
+   + [Troubleshooting Amazon EC2 Auto Scaling: Launch templates](ts-as-launch-template.md)
+   + [Troubleshooting Amazon EC2 Auto Scaling: Health checks](ts-as-healthchecks.md)
 + [Amazon EC2 Auto Scaling resources](as-resources.md)
 + [Document history](DocumentHistory.md)

@@ -76,7 +76,7 @@ When creating and updating Auto Scaling groups, some actions require that certai
 **Topics**
 + [Control which tag keys and tag values can be used](#policy-example-tags)
 + [Control access to Auto Scaling resources based on tags](#policy-example-control-access-with-tags)
-+ [Control the capacity limits of Auto Scaling groups](#policy-example-min-max-size)
++ [Control the minimum and maximum capacity of Auto Scaling groups](#policy-example-min-max-size)
 + [Control which IAM roles can be passed \(using PassRole\)](#policy-example-pass-IAM-role)
 + [Allow users to change the capacity of Auto Scaling groups](#policy-example-capacity)
 + [Allow users to create and use launch configurations](#policy-example-launch-configuration)
@@ -206,7 +206,7 @@ The following policy allows users to use the `autoscaling:DeletePolicy` action t
 }
 ```
 
-### Control the capacity limits of Auto Scaling groups<a name="policy-example-min-max-size"></a>
+### Control the minimum and maximum capacity of Auto Scaling groups<a name="policy-example-min-max-size"></a>
 
 Amazon EC2 Auto Scaling allows you to restrict the size of the Auto Scaling groups that can be created\. The following policy gives users permissions to create and update all Auto Scaling groups with the tag `allowed=true`, as long as they don't specify a minimum size less than 1 or a maximum size greater than 10\. 
 
@@ -245,7 +245,8 @@ If you want a user to be able to create Amazon EC2 Auto Scaling resources that s
             "Condition": {
                 "StringEquals": {
                     "iam:PassedToService": [
-                        "ec2.amazonaws.com"
+                        "ec2.amazonaws.com",
+                        "ec2.amazonaws.com.cn"
                     ]
                 }
             }

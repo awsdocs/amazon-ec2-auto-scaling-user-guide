@@ -12,7 +12,6 @@ To enable communication between the internet and the instances in your subnets, 
 + [Default VPC](#as-defaultVPC)
 + [IP addressing in a VPC](#as-vpc-ipaddress)
 + [Instance placement tenancy](#as-vpc-tenancy)
-+ [Linking EC2\-Classic instances to a VPC](#as-ClassicLink)
 + [More resources for learning about VPCs](#auto-scaling-resources-about-vpcs)
 
 ## Default VPC<a name="as-defaultVPC"></a>
@@ -34,39 +33,6 @@ When you enable public IP addresses for your instances and launch them into a su
 ## Instance placement tenancy<a name="as-vpc-tenancy"></a>
 
 By default, all instances in the VPC run as shared tenancy instances\. Amazon EC2 Auto Scaling also supports Dedicated Instances and Dedicated Hosts\. However, support for Dedicate Hosts is only available for Auto Scaling groups that use a launch template\. For more information, see [Configuring instance tenancy with Amazon EC2 Auto Scaling](auto-scaling-dedicated-instances.md)\.
-
-## Linking EC2\-Classic instances to a VPC<a name="as-ClassicLink"></a>
-
-If you are launching the instances in your Auto Scaling group in EC2\-Classic, you can link them to a VPC using *ClassicLink*\. ClassicLink enables you to associate one or more security groups for the VPC with the EC2\-Classic instances in your Auto Scaling group\. It enables communication between these linked EC2\-Classic instances and instances in the VPC using private IP addresses\. For more information, see [ClassicLink](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/vpc-classiclink.html) in the *Amazon EC2 User Guide for Linux Instances*\.
-
-If you have running EC2\-Classic instances in your Auto Scaling group, you can link them to a VPC with ClassicLink enabled\. For more information, see [Linking an instance to a VPC](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/vpc-classiclink.html#classiclink-link-instance) in the *Amazon EC2 User Guide for Linux Instances*\. Alternatively, you can update the Auto Scaling group to use a launch configuration that automatically links the EC2\-Classic instances to a VPC at launch\. Then, terminate the running instances and let the Auto Scaling group launch new instances that are linked to the VPC\.
-
-### Link to a VPC \(AWS CLI\)<a name="as-ClassicLink-cli"></a>
-
-Use the following procedure to create a launch configuration that links EC2\-Classic instances to the specified VPC and update an existing Auto Scaling group to use the launch configuration\.
-
-**To link EC2\-Classic instances in an Auto Scaling group to a VPC**
-
-1. Verify that the VPC has ClassicLink enabled\. For more information, see [Viewing your ClassicLink\-enabled VPCs](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/vpc-classiclink.html#classiclink-describe-vpcs-instances) in the *Amazon EC2 User Guide for Linux Instances*\.
-
-1. Create a security group for the VPC that you are going to link EC2\-Classic instances to\. Add rules to control communication between the linked EC2\-Classic instances and instances in the VPC\.
-
-1. Create a launch configuration using the [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/create-launch-configuration.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/create-launch-configuration.html) command as follows\. Specify a value for *vpd\_id* as the ID of the VPC with ClassicLink enabled from step 1 and for *group\_id* as the security group from step 2\.
-
-   ```
-   aws autoscaling create-launch-configuration --launch-configuration-name classiclink-config \
-     --image-id ami_id --instance-type instance_type \
-     --classic-link-vpc-id vpc_id --classic-link-vpc-security-groups group_id
-   ```
-
-1. Update your existing Auto Scaling group, for example *my\-asg*, with the launch configuration that you created in the previous step\. Any new EC2\-Classic instances launched in this Auto Scaling group are linked EC2\-Classic instances\. Use the [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/update-auto-scaling-group.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/update-auto-scaling-group.html) command as follows\.
-
-   ```
-   aws autoscaling update-auto-scaling-group --auto-scaling-group-name my-asg \
-     --launch-configuration-name classiclink-config
-   ```
-
-   Alternatively, you can use this launch configuration with a new Auto Scaling group that you create using [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/create-auto-scaling-group.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/create-auto-scaling-group.html)\.
 
 ## More resources for learning about VPCs<a name="auto-scaling-resources-about-vpcs"></a>
 

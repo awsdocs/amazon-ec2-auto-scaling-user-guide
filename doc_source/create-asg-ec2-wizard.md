@@ -10,7 +10,7 @@ You can create a launch template and an Auto Scaling group in a single procedure
 
 1. Choose an AMI, then choose an instance type on the next page, and then choose **Next: Configure Instance Details**\.
 
-1. In **Number of instances**, enter the number of instances that you want to launch, and then choose **Launch into Auto Scaling Group**\. You do not need to add any other configuration details on the page\. 
+1. In **Step 3: Configure Instance Details**, choose **Launch into Auto Scaling Group** next to **Number of instances**\.
 
 1. On the confirmation page, choose **Continue**\.
 

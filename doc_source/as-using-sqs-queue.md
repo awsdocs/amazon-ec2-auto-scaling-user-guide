@@ -30,8 +30,8 @@ The following diagram illustrates the architecture of this configuration\.
 ## Limitations and prerequisites<a name="scale-sqs-queue-limitations"></a>
 
 To use this configuration, you need to be aware of the following limitations:
-+ You must use the AWS CLI or AWS SDKs to publish your custom metric to CloudWatch\. You can then monitor your metric with the AWS Management Console\. 
-+ After publishing your custom metric, you must use the AWS CLI or AWS SDKs to create a target tracking scaling policy with a customized metric specification\. 
++ You must use the AWS CLI or an SDK to publish your custom metric to CloudWatch\. You can then monitor your metric with the AWS Management Console\. 
++ After publishing your custom metric, you must use the AWS CLI or an SDK to create a target tracking scaling policy with a customized metric specification\. 
 
 The following sections direct you to use the AWS CLI for the tasks you need to perform\. For example, to get metric data that reflects the present use of the queue, you use the SQS [https://docs.aws.amazon.com/cli/latest/reference/sqs/get-queue-attributes.html](https://docs.aws.amazon.com/cli/latest/reference/sqs/get-queue-attributes.html) command\. Make sure that you have the CLI [installed](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-install.html) and [configured](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-configure.html)\. 
 
