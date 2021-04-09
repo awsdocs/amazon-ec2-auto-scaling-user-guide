@@ -40,11 +40,14 @@ You can pay for usage upfront to get significant discounts for On\-Demand Instan
 
 ### Spot Instances<a name="asg-spot-strategy"></a>
 
-Amazon EC2 Auto Scaling provides two types of allocation strategies that can be used for Spot Instances: 
+Amazon EC2 Auto Scaling provides two types of allocation strategies that can be used for Spot Instances:
 
 `capacity-optimized`  
-Amazon EC2 Auto Scaling allocates your instances from the Spot Instance pool with optimal capacity for the number of instances that are launching\. Deploying in this way helps you make the most efficient use of spare EC2 capacity\.   
+Amazon EC2 Auto Scaling allocates your instances from the Spot Instance pool with optimal capacity for the number of instances that are launching\. Deploying in this way helps you make the most efficient use of spare EC2 capacity\.
+
 With Spot Instances, the pricing changes slowly over time based on long\-term trends in supply and demand, but capacity fluctuates in real time\. The `capacity-optimized` strategy automatically launches Spot Instances into the most available pools by looking at real\-time capacity data and predicting which are the most available\. This works well for workloads such as big data and analytics, image and media rendering, and machine learning\. It also works well for high performance computing that may have a higher cost of interruption associated with restarting work and checkpointing\. By offering the possibility of fewer interruptions, the `capacity-optimized` strategy can lower the overall cost of your workload\.
+
+Alternatively, you can use the `capacity-optimized-prioritized` allocation strategy and then set the order of instance types in the list of launch template overrides from highest to lowest priority (first to last in the list). Amazon EC2 Auto Scaling honors the instance type priorities on a best-effort basis but optimizes for capacity first. This is a good option for workloads where the possibility of disruption must be minimized, but also the preference for certain instance types matters\.
 
 `lowest-price`  
 Amazon EC2 Auto Scaling allocates your instances from the number \(N\) of Spot Instance pools that you specify and from the pools with the lowest price per unit at the time of fulfillment\.   
