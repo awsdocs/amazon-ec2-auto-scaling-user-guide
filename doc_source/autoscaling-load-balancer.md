@@ -1,24 +1,26 @@
 # Elastic Load Balancing and Amazon EC2 Auto Scaling<a name="autoscaling-load-balancer"></a>
 
-Elastic Load Balancing is used to automatically distribute your incoming application traffic across all the EC2 instances that you are running\. You can use Elastic Load Balancing to manage incoming requests by optimally routing traffic so that no one instance is overwhelmed\. 
+Elastic Load Balancing automatically distributes your incoming application traffic across all the EC2 instances that you are running\. Elastic Load Balancing helps to manage incoming requests by optimally routing traffic so that no one instance is overwhelmed\. 
 
-To use Elastic Load Balancing with your Auto Scaling group, you [attach the load balancer to your Auto Scaling group](attach-load-balancer-asg.md) to register the group with the load balancer\. Your load balancer acts as a single point of contact for all incoming web traffic to your Auto Scaling group\.
+To use Elastic Load Balancing with your Auto Scaling group, [attach the load balancer to your Auto Scaling group](attach-load-balancer-asg.md)\. This registers the group with the load balancer, which acts as a single point of contact for all incoming web traffic to your Auto Scaling group\.
 
 When you use Elastic Load Balancing with your Auto Scaling group, it's not necessary to register individual EC2 instances with the load balancer\. Instances that are launched by your Auto Scaling group are automatically registered with the load balancer\. Likewise, instances that are terminated by your Auto Scaling group are automatically deregistered from the load balancer\.
 
-After attaching a load balancer to your Auto Scaling group, you can configure your Auto Scaling group to use Elastic Load Balancing metrics such as the Application Load Balancer request count per target \(or other metrics\) to scale the number of instances in the group as the demand on your instances changes\.
+After attaching a load balancer to your Auto Scaling group, you can configure your Auto Scaling group to use Elastic Load Balancing metrics \(such as the Application Load Balancer request count per target\) to scale the number of instances in the group as demand fluctuates\.
 
-You can also optionally enable Amazon EC2 Auto Scaling to replace instances in your Auto Scaling group based on health checks provided by Elastic Load Balancing\. Otherwise, you can create a CloudWatch alarm that notifies you if the healthy host count of the target group is lower than allowed\. 
+Optionally, you can add Elastic Load Balancing health checks to your Auto Scaling group so that Amazon EC2 Auto Scaling can identify and replace unhealthy instances based on these additional health checks\. Otherwise, you can create a CloudWatch alarm that notifies you if the healthy host count of the target group is lower than allowed\. 
 
-**Limits**
-+ The load balancer and its target group must be in the same Region where you create your Auto Scaling group\.
+**Limitations**
++ The load balancer and its target group must be in the same Region as your Auto Scaling group\.
 + The target group must specify a target type of `instance`\. You can't specify a target type of `ip` when using an Auto Scaling group\.
 
 **Topics**
 + [Elastic Load Balancing types](#integrations-aws-elastic-load-balancing-types)
++ [Prerequisites](getting-started-elastic-load-balancing.md)
 + [Attaching a load balancer](attach-load-balancer-asg.md)
 + [Adding ELB health checks](as-add-elb-healthcheck.md)
-+ [Adding an Availability Zone](as-add-availability-zone.md)
++ [Adding Availability Zones](as-add-availability-zone.md)
++ [AWS CLI examples for working with Elastic Load Balancing](examples-elastic-load-balancing-aws-cli.md)
 
 ## Elastic Load Balancing types<a name="integrations-aws-elastic-load-balancing-types"></a>
 
@@ -33,7 +35,7 @@ Network Load Balancer
 Routes and load balances at the transport layer \(TCP/UDP Layer\-4\), based on address information extracted from the TCP packet header, not from packet content\. Network Load Balancers can handle traffic bursts, retain the source IP of the client, and use a fixed IP for the life of the load balancer\. 
 
 Gateway Load Balancer  
-Distributes traffic to a fleet of appliance instances, providing scale, availability, and simplicity for third\-party virtual appliances, such as firewalls, intrusion detection and prevention systems, and other appliances\. Gateway Load Balancers work with virtual appliances that support the GENEVE protocol\. Additional technical integration is required, so make sure that you consult the user guide before choosing a Gateway Load Balancer\. 
+Distributes traffic to a fleet of appliance instances\. Provides scale, availability, and simplicity for third\-party virtual appliances, such as firewalls, intrusion detection and prevention systems, and other appliances\. Gateway Load Balancers work with virtual appliances that support the GENEVE protocol\. Additional technical integration is required, so make sure to consult the user guide before choosing a Gateway Load Balancer\. 
 
 Classic Load Balancer  
 Routes and load balances either at the transport layer \(TCP/SSL\), or at the application layer \(HTTP/HTTPS\)\. A Classic Load Balancer supports either EC2\-Classic or a VPC\.

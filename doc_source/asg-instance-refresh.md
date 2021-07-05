@@ -141,6 +141,7 @@ Example output\.
 ```
 
 ## Limitations<a name="instance-refresh-limitations"></a>
++ **Instances terminated before launch**: When there is only one instance in the Auto Scaling group, starting an instance refresh can result in an outage because Amazon EC2 Auto Scaling terminates an instance and then launches a new instance\.
 + **Total duration**: The maximum amount of time that an instance refresh can continue to actively replace instances is 14 days\. 
 + **Instances not replaced**: If an instance is on standby or protected from scale in, it cannot be replaced\. If Amazon EC2 Auto Scaling encounters an instance that it cannot replace, it will continue to replace other instances\. 
 + **One\-hour timeout**: When an instance refresh is unable to continue making replacements because there are instances on standby or protected from scale in, it keeps retrying for an hour and provides a status message to help you resolve the issue\. If the problem persists after an hour, the operation fails\. 

@@ -1,6 +1,6 @@
 # IAM role for applications that run on Amazon EC2 instances<a name="us-iam-role"></a>
 
-Applications that run on Amazon EC2 instances need credentials to access other AWS services\. To provide these credentials in a secure way, use an IAM role\. The role supplies temporary permissions that the application can use when it accesses other AWS resources\. The role's permissions determine what the application is allowed to do\.
+Applications that run on Amazon EC2 instances need credentials to access other Amazon Web Services\. To provide these credentials in a secure way, use an IAM role\. The role supplies temporary permissions that the application can use when it accesses other AWS resources\. The role's permissions determine what the application is allowed to do\.
 
 Applications running on the instances can access temporary credentials for the role through the instance profile metadata\. For more information, see [Using an IAM role to grant permissions to applications running on Amazon EC2 instances](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_use_switch-role-ec2.html) in the *IAM User Guide*\.
 
@@ -11,12 +11,17 @@ When you use the IAM console to create a role for Amazon EC2, the console guides
 
 For more information, see [IAM roles for Amazon EC2](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/iam-roles-for-amazon-ec2.html) in the *Amazon EC2 User Guide for Linux Instances*\. 
 
+**Contents**
++ [Prerequisites](#us-iam-role-prereq)
++ [Create a launch template](#us-iam-role-create-lt)
++ [Create a launch configuration](#us-iam-role-create-launch)
+
 ## Prerequisites<a name="us-iam-role-prereq"></a>
 
 Create the IAM role that your application running on Amazon EC2 can assume\. Choose the appropriate permissions so that the application that is subsequently given the role can make the specific API calls that it needs\. 
 
 **Important**  
-As a best practice, we strongly recommend that you create the role so that it has the minimum permissions to other AWS services that your application requires\. <a name="create-iam-role-console"></a>
+As a best practice, we strongly recommend that you create the role so that it has the minimum permissions to other Amazon Web Services that your application requires\. <a name="create-iam-role-console"></a>
 
 **To create an IAM role \(console\)**
 

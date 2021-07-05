@@ -41,7 +41,7 @@ When you change the size of your Auto Scaling group, Amazon EC2 Auto Scaling man
 The following example assumes that you've created an Auto Scaling group with a minimum size of 1 and a maximum size of 5\. Therefore, the group currently has one running instance\.
 
 **To change the size of your Auto Scaling group**  
-Use the [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/set-desired-capacity.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/set-desired-capacity.html) command to change the size of your Auto Scaling group, as shown in the following example\.
+Use the [set\-desired\-capacity](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/set-desired-capacity.html) command to change the size of your Auto Scaling group, as shown in the following example\.
 
 ```
 aws autoscaling set-desired-capacity --auto-scaling-group-name my-asg \
@@ -56,7 +56,7 @@ aws autoscaling set-desired-capacity --auto-scaling-group-name my-asg \
 ```
 
 **To verify the size of your Auto Scaling group**  
-Use the [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/describe-auto-scaling-groups.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/describe-auto-scaling-groups.html) command to confirm that the size of your Auto Scaling group has changed, as in the following example\.
+Use the [describe\-auto\-scaling\-groups](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/describe-auto-scaling-groups.html) command to confirm that the size of your Auto Scaling group has changed, as in the following example\.
 
 ```
 aws autoscaling describe-auto-scaling-groups --auto-scaling-group-name my-asg

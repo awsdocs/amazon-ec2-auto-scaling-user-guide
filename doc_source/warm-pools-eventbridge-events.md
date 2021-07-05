@@ -137,10 +137,10 @@ Use the following sample event pattern to capture all events that are associated
   "detail": {
       "Origin": [
           "EC2"
-       ],
-       "Destination": [
+      ],
+      "Destination": [
           "WarmPool"
-       ]
+      ]
    }
 }
 ```
@@ -158,10 +158,10 @@ Use the following sample event pattern to capture all events that are associated
   "detail": {
       "Origin": [
           "WarmPool"
-       ],
-       "Destination": [
+      ],
+      "Destination": [
           "AutoScalingGroup"
-       ]
+      ]
    }
 }
 ```
@@ -179,10 +179,10 @@ Use the following sample event pattern to capture all events that are associated
   "detail": {
       "Origin": [
           "EC2"
-       ],
-       "Destination": [
+      ],
+      "Destination": [
           "AutoScalingGroup"
-       ]
+      ]
    }
 }
 ```

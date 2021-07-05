@@ -22,7 +22,7 @@ An Auto Scaling group is associated with one launch configuration at a time, and
 
 1. On the navigation pane, under **AUTO SCALING**, choose **Launch Configurations**\. 
 
-1.  In the navigation bar, select your AWS Region\. 
+1. In the navigation bar, select your AWS Region\. 
 
 1. Choose **Create launch configuration**, and enter a name for your launch configuration\. 
 
@@ -78,7 +78,7 @@ You can use one of the following commands:
 
 Amazon EC2 Auto Scaling supports configuring the Instance Metadata Service \(IMDS\) in launch configurations\. This gives you the option of using launch configurations to configure the Amazon EC2 instances in your Auto Scaling groups to require Instance Metadata Service Version 2 \(IMDSv2\), which is a session\-oriented method for requesting instance metadata\. For details about IMDSv2's advantages, see this article on the AWS Blog about [enhancements to add defense in depth to the EC2 instance metadata service](http://aws.amazon.com/blogs/security/defense-in-depth-open-firewalls-reverse-proxies-ssrf-vulnerabilities-ec2-instance-metadata-service/)\. 
 
-You can configure IMDS to support both IMDSv2 and IMDSv1 \(the default\), or to require the use of IMDSv2\. If you are using the AWS CLI or an AWS SDK to configure IMDS, you must use the latest version of the AWS CLI or the SDK to require the use of IMDSv2\.
+You can configure IMDS to support both IMDSv2 and IMDSv1 \(the default\), or to require the use of IMDSv2\. If you are using the AWS CLI or one of the SDKs to configure IMDS, you must use the latest version of the AWS CLI or the SDK to require the use of IMDSv2\.
 
 You can configure your launch configuration for the following: 
 + Require the use of IMDSv2 when requesting instance metadata

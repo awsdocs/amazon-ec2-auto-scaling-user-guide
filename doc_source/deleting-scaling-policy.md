@@ -25,7 +25,7 @@ After you no longer need a scaling policy, you can delete it\. Depending on the 
    1. When prompted for confirmation, choose **Delete**\.
 
 **To get the scaling policies for an Auto Scaling group \(AWS CLI\)**  
-Before you delete a scaling policy, use the following [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/describe-policies.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/describe-policies.html) command to see what scaling policies were created for the Auto Scaling group\. You can use the output when deleting the policy and the CloudWatch alarms\.
+Before you delete a scaling policy, use the following [describe\-policies](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/describe-policies.html) command to see what scaling policies were created for the Auto Scaling group\. You can use the output when deleting the policy and the CloudWatch alarms\.
 
 ```
 aws autoscaling describe-policies --auto-scaling-group-name my-asg
@@ -71,7 +71,7 @@ The following is example output\.
 ```
 
 **To delete your scaling policy \(AWS CLI\)**  
-Use the following [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/delete-policy.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/delete-policy.html) command\. 
+Use the following [delete\-policy](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/delete-policy.html) command\. 
 
 ```
 aws autoscaling delete-policy --auto-scaling-group-name my-asg \
@@ -79,7 +79,7 @@ aws autoscaling delete-policy --auto-scaling-group-name my-asg \
 ```
 
 **To delete your CloudWatch alarm \(AWS CLI\)**  
-For step and simple scaling policies, use the [https://docs.aws.amazon.com/cli/latest/reference/cloudwatch/delete-alarms.html](https://docs.aws.amazon.com/cli/latest/reference/cloudwatch/delete-alarms.html) command to delete the CloudWatch alarm that was associated with the policy\. You can skip this step to keep the alarm for future use\. You can delete one or more alarms at a time\. For example, use the following command to delete the `Step-Scaling-AlarmHigh-AddCapacity` and `Step-Scaling-AlarmLow-RemoveCapacity` alarms\.
+For step and simple scaling policies, use the [delete\-alarms](https://docs.aws.amazon.com/cli/latest/reference/cloudwatch/delete-alarms.html) command to delete the CloudWatch alarm that was associated with the policy\. You can skip this step to keep the alarm for future use\. You can delete one or more alarms at a time\. For example, use the following command to delete the `Step-Scaling-AlarmHigh-AddCapacity` and `Step-Scaling-AlarmLow-RemoveCapacity` alarms\.
 
 ```
 aws cloudwatch delete-alarms --alarm-name Step-Scaling-AlarmHigh-AddCapacity Step-Scaling-AlarmLow-RemoveCapacity

@@ -12,6 +12,7 @@ A popular use of lifecycle hooks is to control when instances are registered wit
 + [How lifecycle hooks work](#lifecycle-hooks-overview)
 + [Considerations and limitations](#lifecycle-hook-considerations)
 + [Receiving lifecycle hook notifications](#preparing-for-notification)
++ [GitHub repository](#github-repository-lifecycle-hook-templates)
 + [Lifecycle hook availability](#lifecycle-hooks-availability)
 + [Configuring a notification target for a lifecycle hook](configuring-lifecycle-hook-notifications.md)
 + [Adding lifecycle hooks](adding-lifecycle-hooks.md)
@@ -33,7 +34,7 @@ After you add lifecycle hooks to your Auto Scaling group, they work as follows:
 
 1. The instance enters the `InService` state and the health check grace period starts\. If the Auto Scaling group is associated with an Elastic Load Balancing load balancer, the instance is registered with the load balancer, and the load balancer starts checking its health\. After the health check grace period ends, Amazon EC2 Auto Scaling begins checking the health state of the instance\.
 
-1. The Auto Scaling group responds to a scale\-in event and begins terminating an instance\. If the Auto Scaling group is being used with Elastic Load Balancing, the terminating instance is first deregistered from the load balancer\. After it's deregistered, the instance stops accepting new connections and waits for existing connections to drain before continuing\.
+1. The Auto Scaling group responds to a scale\-in event and begins terminating an instance\. If the Auto Scaling group is being used with Elastic Load Balancing, the terminating instance is first deregistered from the load balancer\. If connection draining is enabled for the load balancer, the instance stops accepting new connections and waits for existing connections to drain before completing the deregistration process\.
 
 1. The lifecycle hook puts the instance into a wait state \(`Terminating:Wait`\) and then performs a custom action\.
 
@@ -54,7 +55,7 @@ When using lifecycle hooks, keep in mind the following key considerations and li
 + When scaling out, Amazon EC2 Auto Scaling doesn't count a new instance towards the aggregated CloudWatch metrics of the Auto Scaling group until after the launch lifecycle hook finishes \(and the scaling policy's warm\-up time completes\)\. On scale in, the terminating instance continues to count as part of the group's aggregated metrics until after the termination lifecycle hook finishes\.
 + When an Auto Scaling group launches or terminates an instance due to simple scaling policies, a cooldown period takes effect\. The cooldown period helps ensure that the Auto Scaling group does not launch or terminate more instances than needed before the effects of previous simple scaling activities are visible\. When a lifecycle action occurs, and an instance enters the wait state, scaling activities due to simple scaling policies are paused\. When the lifecycle actions finish, the cooldown period starts\. If you set a long interval for the cooldown period, it will take more time for scaling to resume\. For more information, see [Scaling cooldowns for Amazon EC2 Auto Scaling](Cooldown.md)\.
 + There is a quota that specifies the maximum number of lifecycle hooks that you can create per Auto Scaling group\. For more information, see [Amazon EC2 Auto Scaling service quotas](as-account-limits.md)\. 
-+ For examples of the use of lifecycle hooks, see the following blog posts: [Building a Backup System for Scaled Instances using AWS Lambda and Amazon EC2 Run Command](http://aws.amazon.com/blogs/compute/building-a-backup-system-for-scaled-instances-using-aws-lambda-and-amazon-ec2-run-command) and [Run code before terminating an EC2 Auto Scaling instance](http://aws.amazon.com/blogs/infrastructure-and-automation/run-code-before-terminating-an-ec2-auto-scaling-instance)\.
++ For examples of the use of lifecycle hooks, see the following blog posts: [Building a Backup System for Scaled Instances using Lambda and Amazon EC2 Run Command](http://aws.amazon.com/blogs/compute/building-a-backup-system-for-scaled-instances-using-aws-lambda-and-amazon-ec2-run-command) and [Run code before terminating an EC2 Auto Scaling instance](http://aws.amazon.com/blogs/infrastructure-and-automation/run-code-before-terminating-an-ec2-auto-scaling-instance)\.
 
 ### Keeping instances in a wait state<a name="lifecycle-hook-wait-state"></a>
 
@@ -74,7 +75,11 @@ You can configure various EventBridge rules to invoke a Lambda function or send 
 Alternatively, if you have a user data or cloud\-init script that configures your instances after they launch, you do not need to configure a notification\. The script can control the lifecycle action using the ID of the instance on which it runs\. If you are not doing so already, update your script to retrieve the instance ID of the instance from the instance metadata\. For more information, see [Retrieving instance metadata](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/instancedata-data-retrieval.html) in the *Amazon EC2 User Guide for Linux Instances*\. You can have the script signal the lifecycle hook when the configuration script is complete, to allow the instance to proceed to the next state\.
 
 **Note**  
-The Amazon EC2 Auto Scaling console does not provide the option to define an Amazon SNS or Amazon SQS notification target for the lifecycle hook\. These lifecycle hooks must be added using either the AWS CLI or an AWS SDK\. For more information, see [Configuring notifications](configuring-lifecycle-hook-notifications.md)\. 
+The Amazon EC2 Auto Scaling console does not provide the option to define an Amazon SNS or Amazon SQS notification target for the lifecycle hook\. These lifecycle hooks must be added using either the AWS CLI or one of the SDKs\. For more information, see [Configuring notifications](configuring-lifecycle-hook-notifications.md)\. 
+
+## GitHub repository<a name="github-repository-lifecycle-hook-templates"></a>
+
+You can visit our [GitHub repository](https://github.com/aws-samples/amazon-ec2-auto-scaling-group-examples) to download templates and scripts for lifecycle hooks\.
 
 ## Lifecycle hook availability<a name="lifecycle-hooks-availability"></a>
 

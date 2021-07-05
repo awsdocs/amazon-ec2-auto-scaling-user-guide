@@ -11,7 +11,6 @@ When your EC2 instances fail to launch due to issues with the load balancer asso
 + [There is no ACTIVE Load Balancer named <load balancer name>\. Updating load balancer configuration failed\.](#ts-as-loadbalancer-2)
 + [EC2 instance <instance ID> is not in VPC\. Updating load balancer configuration failed\.](#ts-as-loadbalancer-3)
 + [EC2 instance <instance ID> is in VPC\. Updating load balancer configuration failed\.](#ts-as-loadbalancer-5)
-+ [The security token included in the request is invalid\. Validating load balancer configuration failed\.](#ts-as-loadbalancer-4)
 
 ## Cannot find Load Balancer <your launch environment>\. Validating load balancer configuration failed\.<a name="ts-as-loadbalancer-1"></a>
 + **Cause 1**: The load balancer has been deleted\.
@@ -36,7 +35,3 @@ When your EC2 instances fail to launch due to issues with the load balancer asso
 ## EC2 instance <instance ID> is in VPC\. Updating load balancer configuration failed\.<a name="ts-as-loadbalancer-5"></a>
 + **Cause**: The load balancer is in EC2\-Classic but the Auto Scaling group is in a VPC\.
 + **Solution**: Ensure that the load balancer and the Auto Scaling group are in the same network \(EC2\-Classic or a VPC\)\.
-
-## The security token included in the request is invalid\. Validating load balancer configuration failed\.<a name="ts-as-loadbalancer-4"></a>
-+ **Cause**: Your AWS account might have expired\.
-+ **Solution**: Check whether your AWS account is valid\. Go to https://aws\.amazon\.com/ and choose **Sign Up Now** to open a new account\.

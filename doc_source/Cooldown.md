@@ -31,8 +31,8 @@ Create the Auto Scaling group in the usual way\. After creating the Auto Scaling
 
 **To modify a default cooldown period \(AWS CLI\)**  
 Use one of the following commands:
-+ [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/create-auto-scaling-group.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/create-auto-scaling-group.html)
-+ [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/update-auto-scaling-group.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/update-auto-scaling-group.html)
++ [create\-auto\-scaling\-group](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/create-auto-scaling-group.html)
++ [update\-auto\-scaling\-group](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/update-auto-scaling-group.html)
 
 ## Scaling\-specific cooldown period<a name="cooldowns-scaling-specific"></a>
 

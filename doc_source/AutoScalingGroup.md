@@ -23,11 +23,11 @@ If you're new to Auto Scaling groups, start by creating a launch template or a l
 **Topics**
 + [Auto Scaling groups with multiple instance types and purchase options](asg-purchase-options.md)
 + [Creating an Auto Scaling group using a launch template](create-asg-launch-template.md)
-+ [Creating an Auto Scaling group using the Amazon EC2 launch wizard](create-asg-ec2-wizard.md)
 + [Creating an Auto Scaling group using a launch configuration](create-asg.md)
 + [Creating an Auto Scaling group using an EC2 instance](create-asg-from-instance.md)
 + [Tagging Auto Scaling groups and instances](autoscaling-tagging.md)
 + [Elastic Load Balancing and Amazon EC2 Auto Scaling](autoscaling-load-balancer.md)
++ [Launching Auto Scaling instances in a VPC](asg-in-vpc.md)
 + [Getting recommendations for an instance type from AWS Compute Optimizer](asg-getting-recommendations.md)
 + [Replacing Auto Scaling instances based on maximum instance lifetime](asg-max-instance-lifetime.md)
 + [Replacing Auto Scaling instances based on an instance refresh](asg-instance-refresh.md)

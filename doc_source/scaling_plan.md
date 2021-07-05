@@ -13,13 +13,13 @@ Amazon EC2 Auto Scaling provides a number of ways to adjust scaling to best meet
 + [Maintaining a fixed number of instances](as-maintain-instance-levels.md)
 + [Manual scaling](as-manual-scaling.md)
 + [Dynamic scaling](as-scale-based-on-demand.md)
-+ [Scaling cooldowns](Cooldown.md)
++ [Predictive scaling](ec2-auto-scaling-predictive-scaling.md)
 + [Scheduled scaling](schedule_time.md)
 + [Lifecycle hooks](lifecycle-hooks.md)
 + [Warm pools](ec2-auto-scaling-warm-pools.md)
 + [Auto Scaling instance termination](as-instance-termination.md)
 + [Temporarily removing instances](as-enter-exit-standby.md)
-+ [Suspending scaling](as-suspend-resume-processes.md)
++ [Suspending processes](as-suspend-resume-processes.md)
 
 ## Scaling options<a name="scaling_typesof"></a>
 
@@ -35,7 +35,7 @@ Manual scaling is the most basic way to scale your resources, where you specify 
 Scaling by schedule means that scaling actions are performed automatically as a function of time and date\. This is useful when you know exactly when to increase or decrease the number of instances in your group, simply because the need arises on a predictable schedule\. For more information, see [Scheduled scaling for Amazon EC2 Auto Scaling](schedule_time.md)\.
 
 **Scale based on demand**  
-A more advanced way to scale your resources, using scaling policies, lets you define parameters that control the scaling process\. For example, let's say that you have a web application that currently runs on two instances and you want the CPU utilization of the Auto Scaling group to stay at around 50 percent when the load on the application changes\. This method is useful for scaling in response to changing conditions, when you don't know when those conditions will change\. You can set up Amazon EC2 Auto Scaling to respond for you\. For more information, see [Dynamic scaling for Amazon EC2 Auto Scaling](as-scale-based-on-demand.md)\.
+A more advanced way to scale your resources, using dynamic scaling, lets you define a scaling policy that dynamically resizes your Auto Scaling group to meet changes in demand\. For example, let's say that you have a web application that currently runs on two instances and you want the CPU utilization of the Auto Scaling group to stay at around 50 percent when the load on the application changes\. This method is useful for scaling in response to changing conditions, when you don't know when those conditions will change\. You can set up Amazon EC2 Auto Scaling to respond for you\. For more information, see [Dynamic scaling for Amazon EC2 Auto Scaling](as-scale-based-on-demand.md)\.
 
 **Use predictive scaling**  
-You can also use Amazon EC2 Auto Scaling in combination with AWS Auto Scaling to scale resources across multiple services\. AWS Auto Scaling can help you maintain optimal availability and performance by combining predictive scaling and dynamic scaling \(proactive and reactive approaches, respectively\) to scale your Amazon EC2 capacity faster\. For more information, see the [AWS Auto Scaling User Guide](https://docs.aws.amazon.com/autoscaling/plans/userguide/)\.
+You can also combine predictive scaling and dynamic scaling \(proactive and reactive approaches, respectively\) to scale your Amazon EC2 capacity faster\. For more information, see [Predictive scaling for Amazon EC2 Auto Scaling](ec2-auto-scaling-predictive-scaling.md)\.

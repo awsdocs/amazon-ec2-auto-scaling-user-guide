@@ -115,4 +115,3 @@ The following tables list the types of error messages and provide links to the t
 | Cannot find load balancer | [Cannot find Load Balancer <your launch environment>\. Validating load balancer configuration failed\.](ts-as-loadbalancer.md#ts-as-loadbalancer-1) | 
 | Instances in VPC | [EC2 instance <instance ID> is not in VPC\. Updating load balancer configuration failed\.](ts-as-loadbalancer.md#ts-as-loadbalancer-3) | 
 | No active load balancer | [There is no ACTIVE Load Balancer named <load balancer name>\. Updating load balancer configuration failed\.](ts-as-loadbalancer.md#ts-as-loadbalancer-2) | 
-| Security token | [The security token included in the request is invalid\. Validating load balancer configuration failed\.](ts-as-loadbalancer.md#ts-as-loadbalancer-4) | 

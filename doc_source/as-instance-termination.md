@@ -48,7 +48,7 @@ Within the selected Availability Zone, the default termination policy behavior i
 
 1. After applying all of the above criteria, if there are multiple unprotected instances to terminate, determine which instances are closest to the next billing hour\. If there are multiple unprotected instances closest to the next billing hour, terminate one of these instances at random\.
 
-   Note that terminating the instance closest to the next billing hour helps you maximize the use of your instances that have an hourly charge\. Alternatively, if your Auto Scaling group uses Amazon Linux or Ubuntu, your EC2 usage is billed in one\-second increments\. For more information, see [Amazon EC2 pricing](https://aws.amazon.com/ec2/pricing/)\.
+   Note that terminating the instance closest to the next billing hour helps you maximize the use of your instances that have an hourly charge\. Alternatively, if your Auto Scaling group uses Amazon Linux, Windows, or Ubuntu, your EC2 usage is billed in one\-second increments\. For more information, see [Amazon EC2 pricing](https://aws.amazon.com/ec2/pricing/)\.
 
 ## Customizing the termination policy<a name="custom-termination-policy"></a>
 
@@ -61,7 +61,7 @@ Amazon EC2 Auto Scaling supports the following termination policies:
 + `AllocationStrategy`\. Terminate instances in the Auto Scaling group to align the remaining instances to the allocation strategy for the type of instance that is terminating \(either a Spot Instance or an On\-Demand Instance\)\. This policy is useful when your preferred instance types have changed\. If the Spot allocation strategy is `lowest-price`, you can gradually rebalance the distribution of Spot Instances across your N lowest priced Spot pools\. If the Spot allocation strategy is `capacity-optimized`, you can gradually rebalance the distribution of Spot Instances across Spot pools where there is more available Spot capacity\. You can also gradually replace On\-Demand Instances of a lower priority type with On\-Demand Instances of a higher priority type\.
 + `OldestLaunchTemplate`\. Terminate instances that have the oldest launch template\. With this policy, instances that use the noncurrent launch template are terminated first, followed by instances that use the oldest version of the current launch template\. This policy is useful when you're updating a group and phasing out the instances from a previous configuration\.
 + `OldestLaunchConfiguration`\. Terminate instances that have the oldest launch configuration\. This policy is useful when you're updating a group and phasing out the instances from a previous configuration\.
-+ `ClosestToNextInstanceHour`\. Terminate instances that are closest to the next billing hour\. This policy helps you maximize the use of your instances that have an hourly charge\.
++ `ClosestToNextInstanceHour`\. Terminate instances that are closest to the next billing hour\. This policy helps you maximize the use of your instances that have an hourly charge\. \(Only instances that use Amazon Linux, Windows, or Ubuntu are billed in one\-second increments\)\.
 + `NewestInstance`\. Terminate the newest instance in the group\. This policy is useful when you're testing a new launch configuration but don't want to keep it in production\.
 + `OldestInstance`\. Terminate the oldest instance in the group\. This option is useful when you're upgrading the instances in the Auto Scaling group to a new EC2 instance type\. You can gradually replace instances of the old type with instances of the new type\.
 **Note**  
@@ -83,8 +83,8 @@ Amazon EC2 Auto Scaling always balances instances across Availability Zones firs
 
 **To customize a termination policy \(AWS CLI\)**  
 Use one of the following commands:
-+ [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/create-auto-scaling-group.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/create-auto-scaling-group.html)
-+ [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/update-auto-scaling-group.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/update-auto-scaling-group.html)
++ [create\-auto\-scaling\-group](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/create-auto-scaling-group.html)
++ [update\-auto\-scaling\-group](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/update-auto-scaling-group.html)
 
 You can use these policies individually, or combine them into a list of policies\. For example, use the following command to update an Auto Scaling group to use the `OldestLaunchConfiguration` policy first and then use the `ClosestToNextInstanceHour` policy\.
 
@@ -104,7 +104,7 @@ If all instances in an Auto Scaling group are protected from termination during 
 
 Instance scale\-in protection does not protect Auto Scaling instances from the following:
 + Manual termination through the Amazon EC2 console, the `terminate-instances` command, or the `TerminateInstances` action\. To protect Auto Scaling instances from manual termination, enable Amazon EC2 termination protection\. For more information, see [Enabling termination protection](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/terminating-instances.html#Using_ChangingDisableAPITermination) in the *Amazon EC2 User Guide for Linux Instances*\.
-+ Health check replacement if the instance fails health checks\. For more information, see [Health checks for Auto Scaling instances](healthcheck.md)\. To prevent Amazon EC2 Auto Scaling from terminating unhealthy instances, suspend the `ReplaceUnhealthy` process\. For more information, see [Suspending and resuming scaling processes](as-suspend-resume-processes.md)\.
++ Health check replacement if the instance fails health checks\. For more information, see [Health checks for Auto Scaling instances](healthcheck.md)\. To prevent Amazon EC2 Auto Scaling from terminating unhealthy instances, suspend the `ReplaceUnhealthy` process\. For more information, see [Suspending and resuming a process for an Auto Scaling group](as-suspend-resume-processes.md)\.
 + Spot Instance interruptions\. A Spot Instance is terminated when capacity is no longer available or the Spot price exceeds your maximum price\. 
 
 **Topics**
@@ -120,7 +120,7 @@ You can enable instance scale\-in protection when you create an Auto Scaling gro
 When you create the Auto Scaling group, on the **Configure group size and scaling policies** page, under **Instance scale\-in protection**, select the **Enable instance scale\-in protection** option\.
 
 **To enable instance scale\-in protection \(AWS CLI\)**  
-Use the following [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/create-auto-scaling-group.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/create-auto-scaling-group.html) command to enable instance scale\-in protection\.
+Use the following [create\-auto\-scaling\-group](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/create-auto-scaling-group.html) command to enable instance scale\-in protection\.
 
 ```
 aws autoscaling create-auto-scaling-group --auto-scaling-group-name my-asg --new-instances-protected-from-scale-in ...
@@ -145,7 +145,7 @@ You can enable or disable the instance scale\-in protection setting for an Auto 
 1. Choose **Update**\.
 
 **To change the instance scale\-in protection setting for a group \(AWS CLI\)**  
-Use the following [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/update-auto-scaling-group.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/update-auto-scaling-group.html) command to enable instance scale\-in protection for the specified Auto Scaling group\.
+Use the following [update\-auto\-scaling\-group](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/update-auto-scaling-group.html) command to enable instance scale\-in protection for the specified Auto Scaling group\.
 
 ```
 aws autoscaling update-auto-scaling-group --auto-scaling-group-name my-asg --new-instances-protected-from-scale-in
@@ -176,7 +176,7 @@ By default, an instance gets its instance scale\-in protection setting from its 
 1. To disable instance scale\-in protection, choose **Actions**, **Remove scale\-in protection**\. When prompted, choose **Remove scale\-in protection**\.
 
 **To change the instance scale\-in protection setting for an instance \(AWS CLI\)**  
-Use the following [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/set-instance-protection.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/set-instance-protection.html) command to enable instance scale\-in protection for the specified instance\.
+Use the following [set\-instance\-protection](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/set-instance-protection.html) command to enable instance scale\-in protection for the specified instance\.
 
 ```
 aws autoscaling set-instance-protection --instance-ids i-5f2e8a0d --auto-scaling-group-name my-asg --protected-from-scale-in

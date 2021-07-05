@@ -2,21 +2,15 @@
 
 Before you can create an Auto Scaling group using a launch template, you must create a launch template that includes the parameters required to launch an EC2 instance, such as the ID of the Amazon Machine Image \(AMI\) and an instance type\.
 
+A launch template provides full functionality for Amazon EC2 Auto Scaling and also newer features of Amazon EC2 such as the current generation of EBS provisioned IOPS volumes \(io2\), EBS volume tagging, T2 Unlimited instances, elastic inference, and Dedicated Hosts\.
+
 The following procedure works for creating a new launch template\. After you create your launch template, you can create the Auto Scaling group by following the instructions in [Creating an Auto Scaling group using a launch template](create-asg-launch-template.md)\.
 
 **Topics**
 + [Creating your launch template \(console\)](#create-launch-template-for-auto-scaling)
 + [Creating a launch template from an existing instance \(console\)](#create-launch-template-from-instance)
 + [Creating a launch template \(AWS CLI\)](#create-launch-template-aws-cli)
-
-**Note**  
-Keep in mind the following information when creating a launch template for use with an Auto Scaling group:  
-A launch template lets you configure additional settings in your Auto Scaling group to launch multiple instance types and combine On\-Demand and Spot purchase options, as described in [Auto Scaling groups with multiple instance types and purchase options](asg-purchase-options.md)\. Launching instances with such a combination is not supported:  
-If you specify a Spot Instance request in the launch template
-In EC2\-Classic
-A launch template also enables you to take advantage of newer features of Amazon EC2 such as the current generation of EBS volume types \(gp3 and io2\), EBS volume tagging, T2 Unlimited instances, elastic inference, and Dedicated Hosts\. 
-Support for Dedicated Hosts \(host tenancy\) is only available if you specify a host resource group\. You cannot target a specific host ID or use host placement affinity\.
-A launch template lets you configure a network type \(VPC or EC2\-Classic\), subnet, and Availability Zone\. However, these settings are ignored in favor of what is specified in the Auto Scaling group\. 
++ [Limitations](#create-launch-template-limitations)
 
 ## Creating your launch template \(console\)<a name="create-launch-template-for-auto-scaling"></a>
 
@@ -201,3 +195,11 @@ If you leave this setting disabled, you can request Spot Instances later in your
 You can use one of the following commands:
 + [https://docs.aws.amazon.com/cli/latest/reference/ec2/create-launch-template.html](https://docs.aws.amazon.com/cli/latest/reference/ec2/create-launch-template.html) \(AWS CLI\)
 + [https://docs.aws.amazon.com/powershell/latest/reference/items/New-EC2LaunchTemplate.html](https://docs.aws.amazon.com/powershell/latest/reference/items/New-EC2LaunchTemplate.html) \(AWS Tools for Windows PowerShell\)
+
+## Limitations<a name="create-launch-template-limitations"></a>
++ A launch template lets you configure a network type \(VPC or EC2\-Classic\), subnet, and Availability Zone\. However, these settings are ignored in favor of what is specified in the Auto Scaling group\. 
++ Because the subnet settings in your launch template are ignored in favor of what is specified in the Auto Scaling group, all of the network interfaces that are created for a given instance will be connected to the same subnet as the instance\. For other limitations on user\-defined network interfaces, see [Changing the default network interface](#change-network-interface)\.
++ A launch template lets you configure additional settings in your Auto Scaling group to launch multiple instance types and combine On\-Demand and Spot purchase options, as described in [Auto Scaling groups with multiple instance types and purchase options](asg-purchase-options.md)\. Launching instances with such a combination is not supported:
+  + If you specify a Spot Instance request in the launch template
+  + In EC2\-Classic
++ Support for Dedicated Hosts \(host tenancy\) is only available if you specify a host resource group\. You cannot target a specific host ID or use host placement affinity\.

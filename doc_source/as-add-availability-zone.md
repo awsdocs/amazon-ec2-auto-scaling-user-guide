@@ -1,25 +1,19 @@
-# Expanding your scaled and load\-balanced application to an additional Availability Zone<a name="as-add-availability-zone"></a>
+# Adding and removing Availability Zones<a name="as-add-availability-zone"></a>
 
-You can take advantage of the safety and reliability of geographic redundancy by spanning your Auto Scaling group across multiple Availability Zones within a Region and then attaching a load balancer to distribute incoming traffic across those Zones\. Incoming traffic is distributed equally across all Availability Zones enabled for your load balancer\.
+To take advantage of the safety and reliability of geographic redundancy, span your Auto Scaling group across multiple Availability Zones within a Region and attach a load balancer to distribute incoming traffic across those Availability Zones\. 
 
-When one Availability Zone becomes unhealthy or unavailable, Amazon EC2 Auto Scaling launches new instances in an unaffected Zone\. When the unhealthy Availability Zone returns to a healthy state, Amazon EC2 Auto Scaling automatically redistributes the application instances evenly across all of the Zones for your Auto Scaling group\. Amazon EC2 Auto Scaling does this by attempting to launch new instances in the Availability Zone with the fewest instances\. If the attempt fails, however, Amazon EC2 Auto Scaling attempts to launch in other Availability Zones until it succeeds\.
+When one Availability Zone becomes unhealthy or unavailable, Amazon EC2 Auto Scaling launches new instances in an unaffected Availability Zone\. When the unhealthy Availability Zone returns to a healthy state, Amazon EC2 Auto Scaling automatically redistributes the application instances evenly across all the Availability Zones for your Auto Scaling group\. Amazon EC2 Auto Scaling does this by attempting to launch new instances in the Availability Zone with the fewest instances\. If the attempt fails, however, Amazon EC2 Auto Scaling attempts to launch in other Availability Zones until it succeeds\.
 
-You can expand the availability of your scaled and load\-balanced application by adding an Availability Zone to your Auto Scaling group and then enabling that Zone for your load balancer\. After you've enabled the new Availability Zone, the load balancer begins to route traffic equally among all the enabled Zones\. 
+Elastic Load Balancing creates a load balancer node for each Availability Zone you enable for the load balancer\. If you enable cross\-zone load balancing for your load balancer, each load balancer node distributes traffic evenly across the registered instances in all enabled Availability Zones\. If cross\-zone load balancing is disabled, each load balancer node distributes requests evenly across the registered instances in its Availability Zone only\. 
 
-**Limits**
-+ An Auto Scaling group can contain Amazon EC2 instances from multiple Availability Zones within the same Region\. However, an Auto Scaling group can't contain instances from multiple Regions\.
-+ To change which Availability Zones are enabled for your load balancer, you need to be aware of the following limitations: 
-  + When you enable an Availability Zone for your load balancer, you specify one subnet from that Availability Zone\. Note that you can select at most one subnet per Availability Zone\. 
-  + For internet\-facing load balancers, the subnets that you specify for the load balancer must have at least 8 available IP addresses\. 
-  + For Application Load Balancers, you must enable at least two Availability Zones\.
-  + For Network Load Balancers, you cannot disable the enabled Availability Zones, but you can enable additional ones\.
-  + For Gateway Load Balancers, you cannot change the Availability Zones or subnets that were added when the load balancer was created\.
+You must specify at least one Availability Zone when you are creating your Auto Scaling group\. Later, you can expand the availability of your application by adding an Availability Zone to your Auto Scaling group and enabling that Availability Zone for your load balancer \(if the load balancer supports it\)\.
 
 **Topics**
-+ [Add an Availability Zone \(console\)](#as-add-az-console)
-+ [Add an Availability Zone \(AWS CLI\)](#as-add-az-aws-cli)
++ [Add an Availability Zone](#as-add-az-console)
++ [Remove an Availability Zone](#as-remove-az-console)
++ [Limitations](#availability-zone-limitations)
 
-## Add an Availability Zone \(console\)<a name="as-add-az-console"></a>
+## Add an Availability Zone<a name="as-add-az-console"></a>
 
 Use the following procedure to expand your Auto Scaling group and load balancer to a subnet in an additional Availability Zone\.
 
@@ -33,11 +27,11 @@ Use the following procedure to expand your Auto Scaling group and load balancer 
 
 1. On the **Details** tab, choose **Network**, **Edit**\.
 
-1. In **Subnets**, choose the subnet corresponding to the Availability Zone\.
+1. In **Subnets**, choose the subnet corresponding to the Availability Zone that you want to add to the Auto Scaling group\.
 
 1. Choose **Update**\.
 
-1. To update the Availability Zones for your load balancer so that it shares the same Zones as your Auto Scaling group, complete the following steps:
+1. To update the Availability Zones for your load balancer so that it shares the same Availability Zones as your Auto Scaling group, complete the following steps:
 
    1. On the navigation pane, under **LOAD BALANCING**, choose **Load Balancers**\.
 
@@ -48,12 +42,12 @@ Use the following procedure to expand your Auto Scaling group and load balancer 
 
         1. On the **Description** tab, for **Availability Zones**, choose **Edit subnets**\. 
 
-        1. On the **Edit subnets** page, for **Availability Zones**, select the check box for the Availability Zone to add, and then select one of the subnets for that Availability Zone\.
+        1. On the **Edit subnets** page, for **Availability Zones**, select the check box for the Availability Zone to add\. If there is only one subnet for that zone, it is selected\. If there is more than one subnet for that zone, select one of the subnets\. 
       + For Classic Load Balancers in a VPC:
 
         1. On the **Instances** tab, choose **Edit Availability Zones**\. 
 
-        1. On the **Add and Remove Subnets** page, for **Available subnets**, choose the add icon \(\+\) for the subnet to add\. The subnet is moved under **Selected subnets**\.
+        1. On the **Add and Remove Subnets** page, for **Available subnets**, select the subnet using its add \(\+\) icon\. The subnet is moved under **Selected subnets**\.
       + For Classic Load Balancers in EC2\-Classic:
 
         1. On the **Instances** tab, choose **Edit Availability Zones**\. 
@@ -62,72 +56,54 @@ Use the following procedure to expand your Auto Scaling group and load balancer 
 
    1. Choose **Save**\.
 
-## Add an Availability Zone \(AWS CLI\)<a name="as-add-az-aws-cli"></a>
+## Remove an Availability Zone<a name="as-remove-az-console"></a>
 
-The commands that you use depend on whether your load balancer is an Application Load Balancer or Network Load Balancer, a Classic Load Balancer in a VPC, a Classic Load Balancer in EC2\-Classic\.
+To remove an Availability Zone from your Auto Scaling group and load balancer, use the following procedure\.
 
-**For an Auto Scaling group with an Application Load Balancer or Network Load Balancer**
+**To remove an Availability Zone**
 
-1. Add a subnet to the Auto Scaling group using the following [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/update-auto-scaling-group.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/update-auto-scaling-group.html) command\.
+1. Open the Amazon EC2 Auto Scaling console at [https://console\.aws\.amazon\.com/ec2autoscaling/](https://console.aws.amazon.com/ec2autoscaling/)\.
 
-   ```
-   aws autoscaling update-auto-scaling-group --auto-scaling-group-name my-asg \
-     --vpc-zone-identifier subnet-41767929 subnet-cb663da2 subnet-8360a9e7
-   ```
+1. Select the check box next to an existing group\.
 
-1. Verify that the instances in the new subnet are ready to accept traffic from the load balancer using the following [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/describe-auto-scaling-groups.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/describe-auto-scaling-groups.html) command\.
+   A split pane opens up in the bottom part of the **Auto Scaling groups** page, showing information about the group that's selected\. 
 
-   ```
-   aws autoscaling describe-auto-scaling-groups --auto-scaling-group-name my-asg
-   ```
+1. On the **Details** tab, choose **Network**, **Edit**\.
 
-1. Enable the new subnet for your Application Load Balancer or Network Load Balancer using the following [https://docs.aws.amazon.com/cli/latest/reference/elbv2/set-subnets.html](https://docs.aws.amazon.com/cli/latest/reference/elbv2/set-subnets.html) command\.
+1. In **Subnets**, choose the delete \(X\) icon for the subnet corresponding to the Availability Zone that you want to remove from the Auto Scaling group\. If there is more than one subnet for that zone, choose the delete \(X\) icon for each one\. 
 
-   ```
-   aws elbv2 set-subnets --load-balancer-arn my-lb-arn \
-     --subnets subnet-41767929 subnet-cb663da2 subnet-8360a9e7
-   ```
+1. Choose **Update**\.
 
-**For an Auto Scaling group with a Classic Load Balancer in a VPC**
+1. To update the Availability Zones for your load balancer so that it shares the same Availability Zones as your Auto Scaling group, complete the following steps:
 
-1. Add a subnet to the Auto Scaling group using the following [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/update-auto-scaling-group.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/update-auto-scaling-group.html) command\.
+   1. On the navigation pane, under **LOAD BALANCING**, choose **Load Balancers**\.
 
-   ```
-   aws autoscaling update-auto-scaling-group --auto-scaling-group-name my-asg \
-     --vpc-zone-identifier subnet-41767929 subnet-cb663da2
-   ```
+   1. Choose your load balancer\.
 
-1. Verify that the instances in the new subnet are ready to accept traffic from the load balancer using the following [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/describe-auto-scaling-groups.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/describe-auto-scaling-groups.html) command\.
+   1. Do one of the following:
+      + For Application Load Balancers and Network Load Balancers:
 
-   ```
-   aws autoscaling describe-auto-scaling-groups --auto-scaling-group-name my-asg
-   ```
+        1. On the **Description** tab, for **Availability Zones**, choose **Edit subnets**\. 
 
-1. Enable the new subnet for your Classic Load Balancer using the following [https://docs.aws.amazon.com/cli/latest/reference/elb/attach-load-balancer-to-subnets.html](https://docs.aws.amazon.com/cli/latest/reference/elb/attach-load-balancer-to-subnets.html) command\.
+        1. On the **Edit subnets** page, for **Availability Zones**, clear the check box to remove the subnet for that Availability Zone\.
+      + For Classic Load Balancers in a VPC:
 
-   ```
-   aws elb attach-load-balancer-to-subnets --load-balancer-name my-lb \
-     --subnets subnet-41767929
-   ```
+        1. On the **Instances** tab, choose **Edit Availability Zones**\. 
 
-**For an Auto Scaling group with a Classic Load Balancer in EC2\-Classic**
+        1. On the **Add and Remove Subnets** page, for **Available subnets**, remove the subnet using its delete \(\-\) icon\. The subnet is moved under **Available subnets**\.
+      + For Classic Load Balancers in EC2\-Classic:
 
-1. Add an Availability Zone to the Auto Scaling group using the following [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/update-auto-scaling-group.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/update-auto-scaling-group.html) command\.
+        1. On the **Instances** tab, choose **Edit Availability Zones**\. 
 
-   ```
-   aws autoscaling update-auto-scaling-group --auto-scaling-group-name my-asg \
-     --availability-zones us-west-2a us-west-2b us-west-2c
-   ```
+        1. On the **Add and Remove Availability Zones** page, clear the Availability Zone\.
 
-1. Verify that the instances in the new Availability Zone are ready to accept traffic from the load balancer using the following [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/describe-auto-scaling-groups.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/describe-auto-scaling-groups.html) command\.
+   1. Choose **Save**\.
 
-   ```
-   aws autoscaling describe-auto-scaling-groups --auto-scaling-group-name my-asg
-   ```
+## Limitations<a name="availability-zone-limitations"></a>
 
-1. Enable the new Availability Zone for your Classic Load Balancer using the following [https://docs.aws.amazon.com/cli/latest/reference/elb/enable-availability-zones-for-load-balancer.html](https://docs.aws.amazon.com/cli/latest/reference/elb/enable-availability-zones-for-load-balancer.html) command\.
-
-   ```
-   aws elb enable-availability-zones-for-load-balancer --load-balancer-name my-lb \
-     --availability-zones us-west-2c
-   ```
+To update which Availability Zones are enabled for your load balancer, you need to be aware of the following limitations: 
++ When you enable an Availability Zone for your load balancer, you specify one subnet from that Availability Zone\. Note that you can enable at most one subnet per Availability Zone for your load balancer\. 
++ For internet\-facing load balancers, the subnets that you specify for the load balancer must have at least eight available IP addresses\. 
++ For Application Load Balancers, you must enable at least two Availability Zones\.
++ For Network Load Balancers, you cannot disable the enabled Availability Zones, but you can enable additional ones\.
++ For Gateway Load Balancers, you cannot change the Availability Zones or subnets that were added when the load balancer was created\.

@@ -2,23 +2,23 @@
 
 Amazon EC2 Auto Scaling supports using Amazon EC2 launch templates with your Auto Scaling groups\. We recommend that you allow users to create Auto Scaling groups from launch templates, because doing so allows them to use the latest features of Amazon EC2 Auto Scaling and Amazon EC2\. In addition, users must specify a launch template to use a [mixed instances policy](https://docs.aws.amazon.com/autoscaling/ec2/APIReference/API_MixedInstancesPolicy.html)\.
 
-You can use the `AmazonEC2FullAccess` policy to give users complete access to work with Amazon EC2 Auto Scaling resources, launch templates, and other EC2 resources in their AWS account\. Or, you can create your own custom IAM policies to give users fine\-grained permissions to work with specific API actions\. 
+You can use the `AmazonEC2FullAccess` policy to give users complete access to work with Amazon EC2 Auto Scaling resources, launch templates, and other EC2 resources in their account\. Or, you can create your own custom IAM policies to give users fine\-grained permissions to work with specific API actions\. 
 
 Use the following example policies to give users permissions to work with launch templates, unless another policy already grants them permission to do so\. You don't need to give these permissions to users who are only creating Auto Scaling groups from launch configurations \(an older feature of Amazon EC2 Auto Scaling\)\. 
 
 For more information about IAM policies for Amazon EC2, see [IAM policies](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/iam-policies-for-amazon-ec2.html) in the *Amazon EC2 User Guide for Linux Instances*\.
 
-**Topics**
-+ [Example: Control access using resource\-level permissions](#policy-example-launch-template)
-+ [Example: Allow users to create and manage launch templates and launch template versions](#policy-example-create-launch-template)
-+ [Example: Require the use of instance metadata service version 2 \(IMDSv2\)](#instance-metadata-requireIMDSv2)
+**Contents**
++ [Example 1: Control access using resource\-level permissions](#policy-example-launch-template)
++ [Example 2: Allow users to create and manage launch templates and launch template versions](#policy-example-create-launch-template)
++ [Example 3: Require the use of instance metadata service version 2 \(IMDSv2\)](#instance-metadata-requireIMDSv2)
 + [Additional required permissions](#policy-example-console-user)
 
 An IAM user or role that creates or updates an Auto Scaling group using a launch template must have permission to use the `ec2:RunInstances` action\. Users without this permission receive an error that they are not authorized to use the launch template\. 
 
 Keep in mind that user permissions for `ec2:RunInstances` are only checked when an Auto Scaling group is created or updated using a launch template\. For an Auto Scaling group that is configured to use the `Latest` or `Default` launch template, the permissions are not checked when a new version of the launch template is created\. For permissions to be checked, users must configure the Auto Scaling group to use a specific version of the launch template\.
 
-## Example: Control access using resource\-level permissions<a name="policy-example-launch-template"></a>
+## Example 1: Control access using resource\-level permissions<a name="policy-example-launch-template"></a>
 
 In granting user permissions, Amazon EC2 allows you to specify resource\-level permissions for resources that are created as part of a call to the `ec2:RunInstances` action, to control which resources users can work with\. This is a recommended practice\. 
 
@@ -115,7 +115,7 @@ Alternatively, you can require that users specify either the `Latest` or `Defaul
             }
 ```
 
-## Example: Allow users to create and manage launch templates and launch template versions<a name="policy-example-create-launch-template"></a>
+## Example 2: Allow users to create and manage launch templates and launch template versions<a name="policy-example-create-launch-template"></a>
 
 You can create a policy that grants users permissions to create, modify, describe, and delete launch templates and launch template versions\. Before you add these permissions to a user, review the [Controlling the use of launch templates](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-launch-templates.html#launch-template-permissions) section of the *Amazon EC2 User Guide for Linux Instances*\. For additional example policies, see [Example: Working with launch templates](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ExamplePolicies_EC2.html#iam-example-launch-templates) in the *Amazon EC2 User Guide for Linux Instances*\.
 
@@ -137,7 +137,7 @@ The following policy gives users permissions to create launch templates\.
 }
 ```
 
-## Example: Require the use of instance metadata service version 2 \(IMDSv2\)<a name="instance-metadata-requireIMDSv2"></a>
+## Example 3: Require the use of instance metadata service version 2 \(IMDSv2\)<a name="instance-metadata-requireIMDSv2"></a>
 
 **Important**  
 If you need to require the use of IMDSv2 on all new instances, your Auto Scaling groups must use launch templates\. 

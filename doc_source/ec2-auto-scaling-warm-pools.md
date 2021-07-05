@@ -15,18 +15,18 @@ As instances leave the warm pool, they count toward the desired capacity of the 
 
 Lifecycle hooks control when new instances transition to and from the warm pool\. These hooks help you make sure that your instances are fully configured for your application before they are added to the warm pool at the end of the lifecycle hook\. On the next scale\-out event, the instances are then ready to be added to the Auto Scaling group as soon as possible\. Lifecycle hooks can also help you to ensure that instances are ready to serve traffic as they are leaving the warm pool \(for example, by populating their cache\)\. For more information, see [Warm pool instance lifecycle](warm-pool-instance-lifecycle.md)\.
 
-You can use the AWS Management Console, the AWS CLI, or an AWS SDK to add a warm pool to an Auto Scaling group\. 
+You can use the AWS Management Console, the AWS CLI, or one of the SDKs to add a warm pool to an Auto Scaling group\. 
 
 **Topics**
 + [Before you begin](#warm-pool-prerequisites)
 + [Add a warm pool \(console\)](#add-warm-pool-console)
 + [Add a warm pool \(AWS CLI\)](#add-warm-pool-aws-cli)
++ [Delete a warm pool](#delete-warm-pool)
 + [Limitations](#warm-pools-limitations)
 + [Warm pool instance lifecycle](warm-pool-instance-lifecycle.md)
 + [Event types and event patterns that you use when you add or update lifecycle hooks](warm-pools-eventbridge-events.md)
 + [Creating EventBridge rules for warm pool events](warm-pool-events-eventbridge-rules.md)
 + [Viewing health check status and the reason for health check failures](warm-pools-health-checks-monitor-view-status.md)
-+ [Deleting a warm pool](delete-warm-pool.md)
 
 ## Before you begin<a name="warm-pool-prerequisites"></a>
 
@@ -58,7 +58,7 @@ The following procedure demonstrates the steps for adding a warm pool to an Auto
 
    1. \(Optional\) For **Max prepared capacity**, choose **Define a set number of instances** if you want to control how much capacity is available in the warm pool\.
 
-      If you choose **Define a set number of instances**, you must enter the maximum instance count\. This value represents the maximum number of instances that are allowed to be in the warm pool and the Auto Scaling group at the same time\.
+      If you choose **Define a set number of instances**, you must enter the maximum instance count\. This value represents the maximum number of instances that are allowed to be in the warm pool and the Auto Scaling group at the same time\. If you enter a value that is less than the group's desired capacity, and you chose not to specify a value for **Minimum warm pool size**, the capacity of the warm pool will be 0\.
 **Note**  
 Keeping the default **Equal to the Auto Scaling group's maximum capacity** option helps you maintain a warm pool that is sized to match the difference between the Auto Scaling group's maximum capacity and its desired capacity\. To make it easier to manage your warm pool, we recommend that you use the default so that you do not need to remember to adjust your warm pool settings in order to control the size of the warm pool\.
 
@@ -98,7 +98,7 @@ aws autoscaling put-warm-pool --auto-scaling-group-name my-asg /
 The following warm pool configuration specifies a minimum of 4 instances in the warm pool, so that this number of instances is always ready to handle traffic spikes\. 
 
 ```
-aws aws autoscaling put-warm-pool --auto-scaling-group-name my-asg /
+aws autoscaling put-warm-pool --auto-scaling-group-name my-asg /
   --pool-state Stopped --min-size 4
 ```
 
@@ -106,13 +106,20 @@ aws aws autoscaling put-warm-pool --auto-scaling-group-name my-asg /
 
 Generally, because you have a good understanding of how much above your desired capacity to set your maximum capacity, there is no need to define an additional maximum size\. Amazon EC2 Auto Scaling simply creates a warm pool that dynamically resizes based on where your maximum capacity is set\. 
 
-However, in cases where you want to have control over the group's maximum size and not have it impact the size of the warm pool, you can use the `--max-group-prepared-capacity` option\. You might need to use this option when working with very large Auto Scaling groups to manage the cost benefits of having a warm pool\. For example, an Auto Scaling group with 1000 instances, a maximum capacity of 1500 \(to provide extra capacity for emergency traffic spikes\), and a warm pool of 100 instances might achieve your objectives better than a warm pool of 500 instances\.
+However, in cases where you want to have control over the group's maximum capacity and not have it impact the size of the warm pool, you can use the `--max-group-prepared-capacity` option\. You might need to use this option when working with very large Auto Scaling groups to manage the cost benefits of having a warm pool\. For example, an Auto Scaling group with 1000 instances, a maximum capacity of 1500 \(to provide extra capacity for emergency traffic spikes\), and a warm pool of 100 instances might achieve your objectives better than a warm pool of 500 instances\.
 
-The following warm pool configuration is for a warm pool that defines its size separately from the maximum group size\. Suppose the Auto Scaling group has a desired capacity of 800\. The size of the warm pool will be 100 when you run this command and the pool is initializing\. 
+The following warm pool configuration is for a warm pool that defines its size separately from the maximum group size\. Suppose the Auto Scaling group has a desired capacity of 800\. The size of the warm pool will be 100 when you run this command and the pool is initializing\.
 
 ```
 aws autoscaling put-warm-pool --auto-scaling-group-name my-asg /
   --pool-state Stopped --max-group-prepared-capacity 900
+```
+
+To maintain a minimum number of instances in the warm pool, include the `--min-size` option with the command, as follows\. 
+
+```
+aws autoscaling put-warm-pool --auto-scaling-group-name my-asg /
+  --pool-state Stopped --max-group-prepared-capacity 900 --min-size 25
 ```
 
 ### Example 5: Defining an absolute warm pool size<a name="warm-pool-configuration-ex5"></a>
@@ -124,9 +131,37 @@ aws autoscaling put-warm-pool --auto-scaling-group-name my-asg /
   --pool-state Stopped --min-size 10 --max-group-prepared-capacity 10
 ```
 
+## Delete a warm pool<a name="delete-warm-pool"></a>
+
+When you no longer need the warm pool, use the following procedure to delete it\.
+
+**To delete your warm pool \(console\)**
+
+1. Open the Amazon EC2 Auto Scaling console at [https://console\.aws\.amazon\.com/ec2autoscaling/](https://console.aws.amazon.com/ec2autoscaling/)\.
+
+1. Select the check box next to an existing group\.
+
+   A split pane opens up in the bottom part of the **Auto Scaling groups** page, showing information about the group that's selected\. 
+
+1. Choose **Actions**, **Delete**\.
+
+1. When prompted for confirmation, choose **Delete**\. 
+
+**To delete your warm pool \(AWS CLI\)**  
+Use the following [delete\-warm\-pool](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/delete-warm-pool.html) command to delete the warm pool\. 
+
+```
+aws autoscaling delete-warm-pool --auto-scaling-group-name my-asg
+```
+
+If there are instances in the warm pool, or if scaling activities are in progress, use the [delete\-warm\-pool](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/delete-warm-pool.html) command with the `--force-delete` option\. This option will also terminate the Amazon EC2 instances and any outstanding lifecycle actions\.
+
+```
+aws autoscaling delete-warm-pool --auto-scaling-group-name my-asg --force-delete
+```
+
 ## Limitations<a name="warm-pools-limitations"></a>
 + You cannot add a warm pool to Auto Scaling groups that have a mixed instances policy or that launch Spot Instances\.
 + You can put an instance in a `Stopped` state only if it has an Amazon EBS volume as its root device\. Instances that use instance stores for the root device cannot be stopped\.
-+ If your warm pool is depleted when there is a scale out event, instances will launch directly into the Auto Scaling group \(a *cold start*\)\. You could also experience cold starts if an Availability Zone is out of capacity\.
-+ If you set **Max prepared capacity**, and the desired capacity of the Auto Scaling group is higher than the **Max prepared capacity**, the capacity of the warm pool is 0\. 
-+ Warm pools currently can't be used with ECS, EKS, and self\-managed Kubernetes\.
++ If your warm pool is depleted when there is a scale\-out event, instances will launch directly into the Auto Scaling group \(a *cold start*\)\. You could also experience cold starts if an Availability Zone is out of capacity\.
++ If you try using warm pools with Amazon Elastic Container Service \(Amazon ECS\) or Elastic Kubernetes Service \(Amazon EKS\) managed node groups, there is a chance that these services will schedule jobs on an instance before it reaches the warm pool\.

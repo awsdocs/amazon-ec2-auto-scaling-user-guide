@@ -33,7 +33,7 @@ To use this configuration, you need to be aware of the following limitations:
 + You must use the AWS CLI or an SDK to publish your custom metric to CloudWatch\. You can then monitor your metric with the AWS Management Console\. 
 + After publishing your custom metric, you must use the AWS CLI or an SDK to create a target tracking scaling policy with a customized metric specification\. 
 
-The following sections direct you to use the AWS CLI for the tasks you need to perform\. For example, to get metric data that reflects the present use of the queue, you use the SQS [https://docs.aws.amazon.com/cli/latest/reference/sqs/get-queue-attributes.html](https://docs.aws.amazon.com/cli/latest/reference/sqs/get-queue-attributes.html) command\. Make sure that you have the CLI [installed](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-install.html) and [configured](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-configure.html)\. 
+The following sections direct you to use the AWS CLI for the tasks you need to perform\. For example, to get metric data that reflects the present use of the queue, you use the SQS [get\-queue\-attributes](https://docs.aws.amazon.com/cli/latest/reference/sqs/get-queue-attributes.html) command\. Make sure that you have the CLI [installed](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-install.html) and [configured](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-configure.html)\. 
 
 Before you begin, you must have an Amazon SQS queue to use\. The following sections assume that you already have a queue \(standard or FIFO\), an Auto Scaling group, and EC2 instances running the application that uses the queue\. For more information about Amazon SQS, see the [Amazon Simple Queue Service Developer Guide](https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/)\.
 
@@ -46,20 +46,20 @@ Before you begin, you must have an Amazon SQS queue to use\. The following secti
 
 ### Step 1: Create a CloudWatch custom metric<a name="create-sqs-cw-alarms-cli"></a>
 
-A custom metric is defined using a metric name and namespace of your choosing\. Namespaces for custom metrics cannot start with "AWS/"\. For more information about publishing custom metrics, see the [Publish custom metrics](https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/publishingMetrics.html) topic in the *Amazon CloudWatch User Guide*\.
+A custom metric is defined using a metric name and namespace of your choosing\. Namespaces for custom metrics cannot start with `AWS/`\. For more information about publishing custom metrics, see the [Publish custom metrics](https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/publishingMetrics.html) topic in the *Amazon CloudWatch User Guide*\.
 
 Follow this procedure to create the custom metric by first reading information from your AWS account\. Then, calculate the backlog per instance metric, as recommended in an earlier section\. Lastly, publish this number to CloudWatch at a 1\-minute granularity\. Whenever possible, we strongly recommend that you scale on metrics with a 1\-minute granularity to ensure a faster response to changes in system load\. 
 
 **To create a CloudWatch custom metric**
 
-1. Use the SQS [https://docs.aws.amazon.com/cli/latest/reference/sqs/get-queue-attributes.html](https://docs.aws.amazon.com/cli/latest/reference/sqs/get-queue-attributes.html) command to get the number of messages waiting in the queue \(`ApproximateNumberOfMessages`\)\. 
+1. Use the SQS [get\-queue\-attributes](https://docs.aws.amazon.com/cli/latest/reference/sqs/get-queue-attributes.html) command to get the number of messages waiting in the queue \(`ApproximateNumberOfMessages`\)\. 
 
    ```
    aws sqs get-queue-attributes --queue-url https://sqs.region.amazonaws.com/123456789/MyQueue \
      --attribute-names ApproximateNumberOfMessages
    ```
 
-1. Use the [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/describe-auto-scaling-groups.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/describe-auto-scaling-groups.html) command to get the running capacity of the group, which is the number of instances in the `InService` lifecycle state\. This command returns the instances of an Auto Scaling group along with their lifecycle state\. 
+1. Use the [describe\-auto\-scaling\-groups](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/describe-auto-scaling-groups.html) command to get the running capacity of the group, which is the number of instances in the `InService` lifecycle state\. This command returns the instances of an Auto Scaling group along with their lifecycle state\. 
 
    ```
    aws autoscaling describe-auto-scaling-groups --auto-scaling-group-names my-asg
@@ -69,7 +69,7 @@ Follow this procedure to create the custom metric by first reading information f
 
 1. Publish the results at a 1\-minute granularity as a CloudWatch custom metric\. 
 
-   Here is an example CLI [https://docs.aws.amazon.com/cli/latest/reference/cloudwatch/put-metric-data.html](https://docs.aws.amazon.com/cli/latest/reference/cloudwatch/put-metric-data.html) command\.
+   Here is an example CLI [put\-metric\-data](https://docs.aws.amazon.com/cli/latest/reference/cloudwatch/put-metric-data.html) command\.
 
    ```
    aws cloudwatch put-metric-data --metric-name MyBacklogPerInstance --namespace MyNamespace \
@@ -107,7 +107,7 @@ After publishing your custom metric, create a target tracking scaling policy wit
    }
    ```
 
-1. Use the [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/put-scaling-policy.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/put-scaling-policy.html) command, along with the `config.json` file that you created in the previous step, to create your scaling policy\.
+1. Use the [put\-scaling\-policy](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/put-scaling-policy.html) command, along with the `config.json` file that you created in the previous step, to create your scaling policy\.
 
    ```
    aws autoscaling put-scaling-policy --policy-name sqs100-target-tracking-scaling-policy \
@@ -127,7 +127,7 @@ After your setup is complete, verify that your scaling policy is working\. You c
 
    It can take a few minutes for your changes to trigger the CloudWatch alarm\. 
 
-1. Use the [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/describe-auto-scaling-groups.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/describe-auto-scaling-groups.html) command to verify that the group has launched an instance\.
+1. Use the [describe\-auto\-scaling\-groups](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/describe-auto-scaling-groups.html) command to verify that the group has launched an instance\.
 
    ```
    aws autoscaling describe-auto-scaling-groups --auto-scaling-group-name my-asg
@@ -139,7 +139,7 @@ After your setup is complete, verify that your scaling policy is working\. You c
 
    It can take a few minutes for your changes to trigger the CloudWatch alarm\. 
 
-1. Use the [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/describe-auto-scaling-groups.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/describe-auto-scaling-groups.html) command to verify that the group has terminated an instance\.
+1. Use the [describe\-auto\-scaling\-groups](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/describe-auto-scaling-groups.html) command to verify that the group has terminated an instance\.
 
    ```
    aws autoscaling describe-auto-scaling-groups --auto-scaling-group-name my-asg

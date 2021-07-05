@@ -7,11 +7,11 @@ The instance to attach must meet the following criteria:
 + The AMI used to launch the instance must still exist\.
 + The instance is not a member of another Auto Scaling group\.
 + The instance is launched into one of the Availability Zones defined in your Auto Scaling group\.
-+ If the Auto Scaling group has an attached load balancer, the instance and the load balancer must both be in EC2\-Classic or the same VPC\. If the Auto Scaling group has an attached target group, the instance and the load balancer must both be in the same VPC\.
++ If the Auto Scaling group has an attached load balancer target group, the instance and the load balancer must both be in the same VPC\. If the Auto Scaling group has an attached Classic Load Balancer, the instance and the load balancer must both be in EC2\-Classic or the same VPC\.
 
 When you attach instances, the desired capacity of the group increases by the number of instances being attached\. If the number of instances being attached plus the desired capacity exceeds the maximum size of the group, the request fails\.
 
-If you attach an instance to an Auto Scaling group that has an attached load balancer, the instance is registered with the load balancer\. If you attach an instance to an Auto Scaling group that has an attached target group, the instance is registered with the target group\.
+If you attach an instance to an Auto Scaling group that has an attached load balancer target group or Classic Load Balancer, the instance is registered with the load balancer\.
 
 The examples use an Auto Scaling group with the following configuration:
 + Auto Scaling group name = my\-asg
@@ -56,7 +56,7 @@ You can attach an existing instance to an existing Auto Scaling group, or to a n
 
 **To attach an instance to an Auto Scaling group**
 
-1. Describe a specific Auto Scaling group using the following [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/describe-auto-scaling-groups.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/describe-auto-scaling-groups.html) command\.
+1. Describe a specific Auto Scaling group using the following [describe\-auto\-scaling\-groups](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/describe-auto-scaling-groups.html) command\.
 
    ```
    aws autoscaling describe-auto-scaling-groups --auto-scaling-group-names my-asg
@@ -127,13 +127,13 @@ You can attach an existing instance to an existing Auto Scaling group, or to a n
    }
    ```
 
-1. Attach an instance to the Auto Scaling group using the following [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/attach-instances.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/attach-instances.html) command\.
+1. Attach an instance to the Auto Scaling group using the following [attach\-instances](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/attach-instances.html) command\.
 
    ```
    aws autoscaling attach-instances --instance-ids i-0787762faf1c28619 --auto-scaling-group-name my-asg
    ```
 
-1. To verify that the instance is attached, use the following [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/describe-auto-scaling-groups.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/describe-auto-scaling-groups.html) command\.
+1. To verify that the instance is attached, use the following [describe\-auto\-scaling\-groups](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/describe-auto-scaling-groups.html) command\.
 
    ```
    aws autoscaling describe-auto-scaling-groups --auto-scaling-group-names my-asg

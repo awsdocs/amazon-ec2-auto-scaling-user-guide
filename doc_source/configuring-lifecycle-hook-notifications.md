@@ -1,6 +1,6 @@
 # Configuring a notification target for a lifecycle hook<a name="configuring-lifecycle-hook-notifications"></a>
 
-You can add lifecycle hooks to an Auto Scaling group to perform custom actions whenever an instance enters a wait state\. You can configure notification targets to perform these actions using a variety of AWS services depending on your preferred development approach\.
+You can add lifecycle hooks to an Auto Scaling group to perform custom actions whenever an instance enters a wait state\. You can configure notification targets to perform these actions using a variety of Amazon Web Services depending on your preferred development approach\.
 
 The first approach uses Amazon EventBridge to invoke a Lambda function that performs the action you want\. The second approach involves creating an Amazon Simple Notification Service \(Amazon SNS\) topic to which notifications are published\. Clients can subscribe to the SNS topic and receive published messages using a supported protocol\. The last approach involves using Amazon Simple Queue Service \(Amazon SQS\), a messaging system that requires worker nodes to poll a queue\. 
 
@@ -17,7 +17,7 @@ Remember, if you have user data scripts or cloud\-init directives that configure
 + [Notification message example for Amazon SNS and Amazon SQS](#notification-message-example)
 
 **Important**  
-AWS resources for notifications must always be created in the same AWS Region where you create your lifecycle hook\. For example, if you configure notifications using Amazon SNS, the Amazon SNS topic must reside in the same Region as your lifecycle hook\. 
+The EventBridge rule, Lambda function, Amazon SNS topic, and Amazon SQS queue that you use with lifecycle hooks must always be in the same Region where you created your Auto Scaling group\.
 
 
 
@@ -147,7 +147,7 @@ FIFO queues are not compatible with lifecycle hooks\.
 
 While the instance is in a wait state, a message is published to the Amazon SNS or Amazon SQS notification target\. The message includes the following information:
 + `LifecycleActionToken` — The lifecycle action token\.
-+ `AccountId` — The AWS account ID\.
++ `AccountId` — The Amazon Web Services account ID\.
 + `AutoScalingGroupName` — The name of the Auto Scaling group\.
 + `LifecycleHookName` — The name of the lifecycle hook\.
 + `EC2InstanceId` — The ID of the EC2 instance\.

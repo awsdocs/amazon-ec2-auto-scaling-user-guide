@@ -20,7 +20,7 @@ Create the Auto Scaling group in the usual way\. After creating the Auto Scaling
 **To configure maximum instance lifetime \(AWS CLI\)**  
 When specifying the maximum instance lifetime using the AWS CLI, you can apply this limit to an existing Auto Scaling group\. You can also apply this limit to a new Auto Scaling group as you create it\. 
 
-For new Auto Scaling groups, use the [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/create-auto-scaling-group.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/create-auto-scaling-group.html) command\.
+For new Auto Scaling groups, use the [create\-auto\-scaling\-group](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/create-auto-scaling-group.html) command\.
 
 ```
 aws autoscaling create-auto-scaling-group --cli-input-json file://~/config.json
@@ -43,14 +43,14 @@ The following is an example `config.json` file that shows a maximum instance lif
 }
 ```
 
-For existing Auto Scaling groups, use the [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/update-auto-scaling-group.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/update-auto-scaling-group.html) command\.
+For existing Auto Scaling groups, use the [update\-auto\-scaling\-group](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/update-auto-scaling-group.html) command\.
 
 ```
 aws autoscaling update-auto-scaling-group --auto-scaling-group-name my-existing-asg --max-instance-lifetime 2592000
 ```
 
 **To verify the maximum instance lifetime for an Auto Scaling group**  
-Use the [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/describe-auto-scaling-groups.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/describe-auto-scaling-groups.html) command\.
+Use the [describe\-auto\-scaling\-groups](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/describe-auto-scaling-groups.html) command\.
 
 ```
 aws autoscaling describe-auto-scaling-groups --auto-scaling-group-name my-asg

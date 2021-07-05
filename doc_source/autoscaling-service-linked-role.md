@@ -1,10 +1,19 @@
 # Service\-linked roles for Amazon EC2 Auto Scaling<a name="autoscaling-service-linked-role"></a>
 
-Amazon EC2 Auto Scaling uses service\-linked roles for the permissions that it requires to call other AWS services on your behalf\. A service\-linked role is a unique type of IAM role that is linked directly to an AWS service\. 
+Amazon EC2 Auto Scaling uses service\-linked roles for the permissions that it requires to call other Amazon Web Services on your behalf\. A service\-linked role is a unique type of IAM role that is linked directly to an AWS service\. 
 
-Service\-linked roles provide a secure way to delegate permissions to AWS services because only the linked service can assume a service\-linked role\. For more information, see [Using service\-linked roles](https://docs.aws.amazon.com/IAM/latest/UserGuide/using-service-linked-roles.html) in the *IAM User Guide*\. Service\-linked roles also enable all API calls to be visible through AWS CloudTrail\. This helps with monitoring and auditing requirements because you can track all actions that Amazon EC2 Auto Scaling performs on your behalf\. For more information, see [Logging Amazon EC2 Auto Scaling API calls with AWS CloudTrail](logging-using-cloudtrail.md)\.
+Service\-linked roles provide a secure way to delegate permissions to Amazon Web Services because only the linked service can assume a service\-linked role\. For more information, see [Using service\-linked roles](https://docs.aws.amazon.com/IAM/latest/UserGuide/using-service-linked-roles.html) in the *IAM User Guide*\. Service\-linked roles also enable all API calls to be visible through AWS CloudTrail\. This helps with monitoring and auditing requirements because you can track all actions that Amazon EC2 Auto Scaling performs on your behalf\. For more information, see [Logging Amazon EC2 Auto Scaling API calls with AWS CloudTrail](logging-using-cloudtrail.md)\.
 
 The following sections describe how to create and manage Amazon EC2 Auto Scaling service\-linked roles\. Start by configuring permissions to allow an IAM entity \(such as a user, group, or role\) to create, edit, or delete a service\-linked role\. For more information, see [Using service\-linked roles](https://docs.aws.amazon.com/IAM/latest/UserGuide/using-service-linked-roles.html) in the *IAM User Guide*\.
+
+**Contents**
++ [Overview](#autoscaling-service-linked-role-overview)
++ [Permissions granted by the service\-linked role](#service-linked-role-permissions)
++ [Create a service\-linked role \(automatic\)](#create-service-linked-role)
++ [Create a service\-linked role \(manual\)](#create-service-linked-role-manual)
++ [Edit the service\-linked role](#edit-service-linked-role)
++ [Delete the service\-linked role](#delete-service-linked-role)
++ [Supported regions for Amazon EC2 Auto Scaling service\-linked roles](#slr-regions)
 
 ## Overview<a name="autoscaling-service-linked-role-overview"></a>
 
@@ -28,25 +37,109 @@ If you create customer managed CMKs that not all users should have access to, fo
 
 ## Permissions granted by the service\-linked role<a name="service-linked-role-permissions"></a>
 
-Amazon EC2 Auto Scaling uses the **AWSServiceRoleForAutoScaling** service\-linked role or your custom suffix service\-linked role to make the following actions on the specified resources on your behalf: 
-+ `ec2:AttachClassicLinkVpc`
-+ `ec2:CancelSpotInstanceRequests`
-+ `ec2:CreateFleet`
-+ `ec2:CreateTags`
-+ `ec2:DeleteTags`
-+ `ec2:Describe*`
-+ `ec2:DetachClassicLinkVpc`
-+ `ec2:ModifyInstanceAttribute`
-+ `ec2:RequestSpotInstances`
-+ `ec2:RunInstances`
-+ `ec2:TerminateInstances`
-+ `elasticloadbalancing:Register*`
-+ `elasticloadbalancing:Deregister*`
-+ `elasticloadbalancing:Describe*`
-+ `cloudwatch:DeleteAlarms`
-+ `cloudwatch:DescribeAlarms`
-+ `cloudwatch:PutMetricAlarm`
-+ `sns:Publish`
+Amazon EC2 Auto Scaling uses the **AWSServiceRoleForAutoScaling** service\-linked role or your custom suffix service\-linked role to call AWS APIs on your behalf: 
+
+The role permissions policy allows Amazon EC2 Auto Scaling to complete the following actions on resources\. 
+
+```
+{
+  "Version":"2012-10-17",
+  "Statement":[
+    {
+      "Sid":"EC2InstanceManagement",
+      "Effect":"Allow",
+      "Action":[
+        "ec2:AttachClassicLinkVpc",
+        "ec2:CancelSpotInstanceRequests",
+        "ec2:CreateFleet",
+        "ec2:CreateTags",
+        "ec2:DeleteTags",
+        "ec2:Describe*",
+        "ec2:DetachClassicLinkVpc",
+        "ec2:ModifyInstanceAttribute",
+        "ec2:RequestSpotInstances",
+        "ec2:RunInstances",
+        "ec2:StartInstances",
+        "ec2:StopInstances",
+        "ec2:TerminateInstances"
+      ],
+      "Resource":"*"
+    },
+    {
+      "Sid":"EC2InstanceProfileManagement",
+      "Effect":"Allow",
+      "Action":[
+        "iam:PassRole"
+      ],
+      "Resource":"*",
+      "Condition":{
+        "StringLike":{
+          "iam:PassedToService":"ec2.amazonaws.com*"
+        }
+      }
+    },
+    {
+      "Sid":"EC2SpotManagement",
+      "Effect":"Allow",
+      "Action":[
+        "iam:CreateServiceLinkedRole"
+      ],
+      "Resource":"*",
+      "Condition":{
+        "StringEquals":{
+          "iam:AWSServiceName":"spot.amazonaws.com"
+        }
+      }
+    },
+    {
+      "Sid":"ELBManagement",
+      "Effect":"Allow",
+      "Action":[
+        "elasticloadbalancing:Register*",
+        "elasticloadbalancing:Deregister*",
+        "elasticloadbalancing:Describe*"
+      ],
+      "Resource":"*"
+    },
+    {
+      "Sid":"CWManagement",
+      "Effect":"Allow",
+      "Action":[
+        "cloudwatch:DeleteAlarms",
+        "cloudwatch:DescribeAlarms",
+        "cloudwatch:GetMetricData",
+        "cloudwatch:PutMetricAlarm"
+      ],
+      "Resource":"*"
+    },
+    {
+      "Sid":"SNSManagement",
+      "Effect":"Allow",
+      "Action":[
+        "sns:Publish"
+      ],
+      "Resource":"*"
+    },
+    {
+      "Sid":"EventBridgeRuleManagement",
+      "Effect":"Allow",
+      "Action":[
+        "events:PutRule",
+        "events:PutTargets",
+        "events:RemoveTargets",
+        "events:DeleteRule",
+        "events:DescribeRule"
+      ],
+      "Resource":"*",
+      "Condition":{
+        "StringEquals":{
+          "events:ManagedBy":"autoscaling.amazonaws.com"
+        }
+      }
+    }
+  ]
+}
+```
 
 The role trusts the `autoscaling.amazonaws.com` service to assume it\. 
 
@@ -57,7 +150,7 @@ Amazon EC2 Auto Scaling creates the **AWSServiceRoleForAutoScaling** service\-li
 **Important**  
 You must have IAM permissions to create the service\-linked role\. Otherwise, the automatic creation fails\. For more information, see [Service\-linked role permissions](https://docs.aws.amazon.com/IAM/latest/UserGuide/using-service-linked-roles.html#service-linked-role-permissions) in the *IAM User Guide* and [Required permissions to create a service\-linked role](security_iam_id-based-policy-examples.md#ec2-auto-scaling-slr-permissions) in this guide\.
 
-Amazon EC2 Auto Scaling began supporting service\-linked roles in March 2018\. If you created an Auto Scaling group before then, Amazon EC2 Auto Scaling created the **AWSServiceRoleForAutoScaling** role in your AWS account\. For more information, see [A new role appeared in my AWS account](https://docs.aws.amazon.com/IAM/latest/UserGuide/troubleshoot_roles.html#troubleshoot_roles_new-role-appeared) in the *IAM User Guide*\.
+Amazon EC2 Auto Scaling began supporting service\-linked roles in March 2018\. If you created an Auto Scaling group before then, Amazon EC2 Auto Scaling created the **AWSServiceRoleForAutoScaling** role in your account\. For more information, see [A new role appeared in my AWS account](https://docs.aws.amazon.com/IAM/latest/UserGuide/troubleshoot_roles.html#troubleshoot_roles_new-role-appeared) in the *IAM User Guide*\.
 
 ## Create a service\-linked role \(manual\)<a name="create-service-linked-role-manual"></a>
 
@@ -126,7 +219,7 @@ You cannot edit the service\-linked roles that are created for Amazon EC2 Auto S
 
 If you are not using an Auto Scaling group, we recommend that you delete its service\-linked role\. Deleting the role prevents you from having an entity that is not used or actively monitored and maintained\. 
 
-You can delete a service\-linked role only after first deleting the related AWS resources\. This protects you from inadvertently revoking Amazon EC2 Auto Scaling permissions to your resources\. If a service\-linked role is used with multiple Auto Scaling groups, you must delete all Auto Scaling groups that use the service\-linked role before you can delete it\. For more information, see [Deleting your Auto Scaling infrastructure](as-process-shutdown.md)\.
+You can delete a service\-linked role only after first deleting the related dependent resources\. This protects you from inadvertently revoking Amazon EC2 Auto Scaling permissions to your resources\. If a service\-linked role is used with multiple Auto Scaling groups, you must delete all Auto Scaling groups that use the service\-linked role before you can delete it\. For more information, see [Deleting your Auto Scaling infrastructure](as-process-shutdown.md)\.
 
 You can use IAM to delete a service\-linked role\. For more information, see [Deleting a service\-linked role](https://docs.aws.amazon.com/IAM/latest/UserGuide/using-service-linked-roles.html#delete-service-linked-role) in the *IAM User Guide*\.
 

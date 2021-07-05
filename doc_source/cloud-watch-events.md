@@ -340,7 +340,7 @@ Create a rule that matches selected events and routes them to your Lambda functi
 **Tip**  
 You can also create a rule that uses a custom event pattern to detect and act upon only a subset of Amazon EC2 Auto Scaling events\. This subset can be based on specific fields that Amazon EC2 Auto Scaling includes in its events\. For more information, see [Event patterns](https://docs.aws.amazon.com/eventbridge/latest/userguide/filtering-examples-structure.html) in the *Amazon EventBridge User Guide*\. For an example event pattern, see [Step 3: Create an EventBridge rule](tutorial-lifecycle-hook-lambda.md#lambda-create-rule) in the tutorial for lifecycle hooks\.
 
-   1. For **Service provider**, choose **AWS**\.
+   1. For **Service provider**, choose **Amazon Web Services**\.
 
    1. For **Service Name**, choose **Auto Scaling**\.
 
@@ -425,7 +425,7 @@ Create a rule that matches selected events and routes them to your Amazon SNS to
 
    1. For **Event matching pattern**, choose **Pre\-defined by service**\.
 
-   1. For **Service provider**, choose **AWS**\.
+   1. For **Service provider**, choose **Amazon Web Services**\.
 
    1. For **Service Name**, choose **Auto Scaling**\.
 

@@ -17,7 +17,7 @@ After you create a scaling policy, Amazon EC2 Auto Scaling starts evaluating the
    The **Health status** column shows the result of the EC2 instance health check on your instance\.
 
 **To view the scaling activities for an Auto Scaling group \(AWS CLI\)**  
-Use the following [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/describe-scaling-activities.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/describe-scaling-activities.html) command\. 
+Use the following [describe\-scaling\-activities](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/describe-scaling-activities.html) command\. 
 
 ```
 aws autoscaling describe-scaling-activities --auto-scaling-group-name my-asg

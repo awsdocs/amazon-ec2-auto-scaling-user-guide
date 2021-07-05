@@ -36,11 +36,11 @@ By adding Amazon EC2 Auto Scaling to this application, you have a third option a
 
 In a common web app scenario, you run multiple copies of your app simultaneously to cover the volume of your customer traffic\. These multiple copies of your application are hosted on identical EC2 instances \(cloud servers\), each handling customer requests\.
 
-![\[An illustration of a basic Auto Scaling group.\]](http://docs.aws.amazon.com/autoscaling/ec2/userguide/images/as-sample-web-architecture-diagram.png)
+![\[A basic three tier architecture.\]](http://docs.aws.amazon.com/autoscaling/ec2/userguide/images/sample-3-tier-architecture-diagram.png)
 
 Amazon EC2 Auto Scaling manages the launch and termination of these EC2 instances on your behalf\. You define a set of criteria \(such as an Amazon CloudWatch alarm\) that determines when the Auto Scaling group launches or terminates EC2 instances\. Adding Auto Scaling groups to your network architecture helps make your application more highly available and fault tolerant\.
 
-![\[An illustration of a basic Auto Scaling group.\]](http://docs.aws.amazon.com/autoscaling/ec2/userguide/images/as-sample-web-architecture-diagram-with-asgs.png)
+![\[A basic three tier architecture with an Auto Scaling group.\]](http://docs.aws.amazon.com/autoscaling/ec2/userguide/images/sample-3-tier-architecture-auto-scaling-diagram.png)
 
 You can create as many Auto Scaling groups as you need\. For example, you can create an Auto Scaling group for each tier\.
 
@@ -48,7 +48,7 @@ To distribute traffic between the instances in your Auto Scaling groups, you can
 
 ## Example: Distributing instances across Availability Zones<a name="arch-AutoScalingMultiAZ"></a>
 
-AWS resources, such as EC2 instances, are housed in highly available data centers\. To provide additional scalability and reliability, these data centers are in different physical locations\. *Regions* are large and widely dispersed geographic locations\. Each Region contains multiple distinct locations, called *Availability Zones*, which are engineered to be isolated from failures in other Availability Zones\. They provide inexpensive, low\-latency network connectivity to other Availability Zones in the same Region\. For more information, see the [Regions and endpoints](https://docs.aws.amazon.com/general/latest/gr/as.html) table in the *Amazon Web Services General Reference*\.
+AWS resources, such as EC2 instances, are housed in highly available data centers\. To provide additional scalability and reliability, these data centers are in different physical locations\. *Regions* are large and widely dispersed geographic locations\. Each Region contains multiple distinct locations, called *Availability Zones*, which are engineered to be isolated from failures in other Availability Zones\. They provide inexpensive, low\-latency network connectivity to other Availability Zones in the same Region\.
 
 Amazon EC2 Auto Scaling enables you to take advantage of the safety and reliability of geographic redundancy by spanning Auto Scaling groups across multiple Availability Zones within a Region\. When one Availability Zone becomes unhealthy or unavailable, Auto Scaling launches new instances in an unaffected Availability Zone\. When the unhealthy Availability Zone returns to a healthy state, Auto Scaling automatically redistributes the application instances evenly across all of the designated Availability Zones\.
 
@@ -60,7 +60,7 @@ For Auto Scaling groups in a VPC, the EC2 instances are launched in subnets\. Yo
 
 Amazon EC2 Auto Scaling attempts to distribute instances evenly between the Availability Zones that are enabled for your Auto Scaling group\. Amazon EC2 Auto Scaling does this by attempting to launch new instances in the Availability Zone with the fewest instances\. If the attempt fails, however, Amazon EC2 Auto Scaling attempts to launch the instances in another Availability Zone until it succeeds\. For Auto Scaling groups in a VPC, if there are multiple subnets in an Availability Zone, Amazon EC2 Auto Scaling selects a subnet from the Availability Zone at random\.
 
-![\[A typical Auto Scaling group spanning two Availability Zones.\]](http://docs.aws.amazon.com/autoscaling/ec2/userguide/images/as-sample-web-architecture-diagram-with-asgs-and-azs.png)
+![\[A typical Auto Scaling group spanning two Availability Zones.\]](http://docs.aws.amazon.com/autoscaling/ec2/userguide/images/sample-3-tier-architecture-with-azs-diagram.png)
 
 ### Rebalancing activities<a name="AutoScalingBehavior.InstanceUsage"></a>
 

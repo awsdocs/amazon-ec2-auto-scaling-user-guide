@@ -18,7 +18,7 @@ The sections that follow describe the most common health check errors and causes
 
 ## An instance was taken out of service in response to an EC2 instance status check failure<a name="ts-failed-status-checks"></a>
 
-**Problem**: Instances in the Auto Scaling group fail the Amazon EC2 status checks\. 
+**Problem**: Auto Scaling instances fail the Amazon EC2 status checks\. 
 
 **Cause 1**: If there are issues that cause Amazon EC2 to consider the instances in your Auto Scaling group impaired, Amazon EC2 Auto Scaling automatically replaces the impaired instances as part of its health check\. Status checks are built into Amazon EC2, so they cannot be disabled or deleted\. When an instance status check fails, you typically must address the problem yourself by making instance configuration changes until your application is no longer exhibiting any problems\.
 
@@ -36,17 +36,17 @@ The sections that follow describe the most common health check errors and causes
 
 ## An instance was taken out of service in response to an EC2 scheduled reboot<a name="ts-scheduled-maintenance"></a>
 
-**Problem**: Instances are replaced immediately when a scheduled event indicates a problem with the instance\.
+**Problem**: Auto Scaling instances are replaced immediately when a scheduled event indicates a problem with the instance\.
 
 **Cause**: Amazon EC2 Auto Scaling replaces instances with a future scheduled maintenance or retirement event before the scheduled time\.
 
-**Solution**: These events do not occur frequently\. If you do not want instances to be replaced due to a scheduled event, you can suspend the health check process for an Auto Scaling group\. For more information, see [Suspending and resuming scaling processes](as-suspend-resume-processes.md)\. 
+**Solution**: These events do not occur frequently\. If you do not want instances to be replaced due to a scheduled event, you can suspend the health check process for an Auto Scaling group\. For more information, see [Suspending and resuming a process for an Auto Scaling group](as-suspend-resume-processes.md)\. 
 
 Alternatively, if you need something to happen on the instance that is terminating, or on the instance that is starting up, you can use lifecycle hooks\. These hooks allow you to perform a custom action as Amazon EC2 Auto Scaling launches or terminates instances\. For more information, see [Amazon EC2 Auto Scaling lifecycle hooks](lifecycle-hooks.md)\. 
 
 ## An instance was taken out of service in response to an EC2 health check that indicated it had been terminated or stopped<a name="ts-terminated-or-stopped"></a>
 
-**Problem**: Instances in the Auto Scaling group that have been stopped, rebooted, or terminated are replaced\. 
+**Problem**: Auto Scaling instances that have been stopped, rebooted, or terminated are replaced\. 
 
 **Cause 1**: A user manually stopped, rebooted, or terminated the instance\.
 
@@ -63,7 +63,7 @@ Note that when you terminate instances manually, termination lifecycle hooks and
 
 ## An instance was taken out of service in response to an ELB system health check failure<a name="ts-failed-elb-health-checks"></a>
 
-**Problem**: Instances in your Auto Scaling group might pass the EC2 status checks\. But they might fail the Elastic Load Balancing health checks for the target groups or Classic Load Balancers with which the Auto Scaling group is registered\. 
+**Problem**: Auto Scaling instances might pass the EC2 status checks\. But they might fail the Elastic Load Balancing health checks for the target groups or Classic Load Balancers with which the Auto Scaling group is registered\. 
 
 **Cause**: If your Auto Scaling group relies on health checks provided by Elastic Load Balancing, Amazon EC2 Auto Scaling determines the health status of your instances by checking the results of both the EC2 status checks and the Elastic Load Balancing health checks\. The load balancer performs health checks by sending a request to each instance and waiting for the correct response, or by establishing a connection with the instance\. An instance might fail the Elastic Load Balancing health check because an application running on the instance has issues that cause the load balancer to consider the instance out of service\. For more information, see [Adding Elastic Load Balancing health checks to an Auto Scaling group](as-add-elb-healthcheck.md)\. 
 

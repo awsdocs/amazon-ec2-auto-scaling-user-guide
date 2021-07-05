@@ -13,7 +13,7 @@ Use the following procedure to merge `my-group-a` and `my-group-c` into a single
 
 **To merge separate single\-zone groups into a single multi\-zone group**
 
-1. Use the following [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/update-auto-scaling-group.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/update-auto-scaling-group.html) command to add the `us-west-2c` Availability Zone to the supported Availability Zones for `my-group-a`\. Increase the maximum size of this group to allow for the instances from both single\-zone groups\.
+1. Use the following [update\-auto\-scaling\-group](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/update-auto-scaling-group.html) command to add the `us-west-2c` Availability Zone to the supported Availability Zones for `my-group-a`\. Increase the maximum size of this group to allow for the instances from both single\-zone groups\.
 
    ```
    aws autoscaling update-auto-scaling-group --auto-scaling-group-name my-group-a \
@@ -21,27 +21,27 @@ Use the following procedure to merge `my-group-a` and `my-group-c` into a single
      –-max-size 10 –-min-size 4
    ```
 
-1. Use the following [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/set-desired-capacity.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/set-desired-capacity.html) command to increase the size of `my-group-a`\.
+1. Use the following [set\-desired\-capacity](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/set-desired-capacity.html) command to increase the size of `my-group-a`\.
 
    ```
    aws autoscaling set-desired-capacity --auto-scaling-group-name my-group-a \
      --desired-capacity 6
    ```
 
-1. \(Optional\) Use the following [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/describe-auto-scaling-groups.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/describe-auto-scaling-groups.html) command to verify that `my-group-a` is at its new size\.
+1. \(Optional\) Use the following [describe\-auto\-scaling\-groups](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/describe-auto-scaling-groups.html) command to verify that `my-group-a` is at its new size\.
 
    ```
    aws autoscaling describe-auto-scaling-groups --auto-scaling-group-name my-group-a
    ```
 
-1. Use the following [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/update-auto-scaling-group.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/update-auto-scaling-group.html) command to remove the instances from `my-group-c`\.
+1. Use the following [update\-auto\-scaling\-group](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/update-auto-scaling-group.html) command to remove the instances from `my-group-c`\.
 
    ```
    aws autoscaling update-auto-scaling-group --auto-scaling-group-name my-group-c \
      --min-size 0 --max-size 0
    ```
 
-1. \(Optional\) Use the following [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/describe-auto-scaling-groups.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/describe-auto-scaling-groups.html) command to verify that no instances remain in `my-group-c`\.
+1. \(Optional\) Use the following [describe\-auto\-scaling\-groups](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/describe-auto-scaling-groups.html) command to verify that no instances remain in `my-group-c`\.
 
    ```
    aws autoscaling describe-auto-scaling-groups --auto-scaling-group-name my-group-c
@@ -80,7 +80,7 @@ Use the following procedure to merge `my-group-a` and `my-group-c` into a single
    }
    ```
 
-1. Use the [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/delete-auto-scaling-group.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/delete-auto-scaling-group.html) command to delete `my-group-c`\.
+1. Use the [delete\-auto\-scaling\-group](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/delete-auto-scaling-group.html) command to delete `my-group-c`\.
 
    ```
    aws autoscaling delete-auto-scaling-group --auto-scaling-group-name my-group-c

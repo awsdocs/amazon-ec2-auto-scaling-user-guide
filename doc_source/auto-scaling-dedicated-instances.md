@@ -1,4 +1,4 @@
-# Configuring instance tenancy with Amazon EC2 Auto Scaling<a name="auto-scaling-dedicated-instances"></a>
+# Configuring instance tenancy with a launch configuration<a name="auto-scaling-dedicated-instances"></a>
 
 Tenancy defines how EC2 instances are distributed across physical hardware and affects pricing\. There are three tenancy options available: 
 + Shared \(`default`\) — Multiple AWS accounts may share the same physical hardware\. 

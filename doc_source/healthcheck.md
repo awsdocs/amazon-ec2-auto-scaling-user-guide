@@ -45,7 +45,7 @@ To provide ample warm\-up time for your instances, ensure that the health check 
 After an instance has been marked unhealthy because of a health check, it is almost immediately scheduled for replacement\. It never automatically recovers its health\. You can intervene manually by calling the [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/set-instance-health.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/set-instance-health.html) command or the [https://docs.aws.amazon.com/autoscaling/ec2/APIReference/API_SetInstanceHealth.html](https://docs.aws.amazon.com/autoscaling/ec2/APIReference/API_SetInstanceHealth.html) operation to set the instance's health status back to healthy\. If the instance is already terminating, you get an error\. 
 
 **Note**  
-Because the interval between marking an instance unhealthy and its actual termination is so small, attempting to set an instance's health status back to healthy with the [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/set-instance-health.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/set-instance-health.html) command or the [https://docs.aws.amazon.com/autoscaling/ec2/APIReference/API_SetInstanceHealth.html](https://docs.aws.amazon.com/autoscaling/ec2/APIReference/API_SetInstanceHealth.html) operation is probably useful only for a suspended group\. For more information, see [Suspending and resuming scaling processes](as-suspend-resume-processes.md)\.
+Because the interval between marking an instance unhealthy and its actual termination is so small, attempting to set an instance's health status back to healthy with the [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/set-instance-health.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/set-instance-health.html) command or the [https://docs.aws.amazon.com/autoscaling/ec2/APIReference/API_SetInstanceHealth.html](https://docs.aws.amazon.com/autoscaling/ec2/APIReference/API_SetInstanceHealth.html) operation is probably useful only for a suspended group\. For more information, see [Suspending and resuming a process for an Auto Scaling group](as-suspend-resume-processes.md)\.
 
 Amazon EC2 Auto Scaling creates a new scaling activity for terminating the unhealthy instance and then terminates it\. Later, another scaling activity launches a new instance to replace the terminated instance\.
 
@@ -93,3 +93,7 @@ The following is an example response that shows that the health status of the in
     ]
 }
 ```
+
+## See also<a name="health-check-see-also"></a>
+
+For more information about health checks, see [Troubleshooting Amazon EC2 Auto Scaling: Health checks](ts-as-healthchecks.md)\. If your health checks fail, check this topic for troubleshooting steps\. This topic will help you figure out what has gone wrong in your Auto Scaling group and give you suggestions on how to fix it\.

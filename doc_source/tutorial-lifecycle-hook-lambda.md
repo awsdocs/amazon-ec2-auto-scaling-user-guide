@@ -295,7 +295,7 @@ If you are done working with the example function, delete it\. You can also dele
 
 1. Open the [Policies page](https://console.aws.amazon.com/iam/home?#/policies) of the IAM console\.
 
-1. Select the function's role \(`LogAutoScalingEvent-policy`\)\.
+1. Select the policy that you created \(`LogAutoScalingEvent-policy`\)\.
 
 1. Choose **Delete policy**\.
 

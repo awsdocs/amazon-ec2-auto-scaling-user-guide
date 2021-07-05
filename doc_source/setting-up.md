@@ -3,17 +3,17 @@
 Before you start using Amazon EC2 Auto Scaling, complete the following tasks\.
 
 **Topics**
-+ [Sign up for AWS](#sign-up-for-aws)
++ [Sign up for an AWS account](#sign-up-for-aws)
 + [Prepare to use Amazon EC2](#set-up-ec2)
 + [Install the AWS CLI](#set-up-cli)
 
-## Sign up for AWS<a name="sign-up-for-aws"></a>
+## Sign up for an AWS account<a name="sign-up-for-aws"></a>
 
-When you create an AWS account, we automatically sign up your account for all AWS services\. You pay only for the services that you use\. You can use Amazon EC2 Auto Scaling at no additional charge beyond what you are paying for your EC2 instances\.
+When you sign up for an account with Amazon Web Services, your account is automatically signed up for all Amazon Web Services\. You pay only for the services that you use\. You can use Amazon EC2 Auto Scaling at no additional charge beyond what you are paying for your EC2 instances\.
 
-If you don't have an AWS account, sign up for AWS as follows\.
+If you don't have an AWS account, sign up for an account as follows\.
 
-**To sign up for an AWS account**
+**To sign up for an account**
 
 1. Open [https://portal\.aws\.amazon\.com/billing/signup](https://portal.aws.amazon.com/billing/signup)\.
 

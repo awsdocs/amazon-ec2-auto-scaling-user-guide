@@ -19,7 +19,7 @@ Note that disabled scaling policies still count toward your quotas on the number
 When you are ready to re\-enable the scaling policy, repeat these steps and then choose **Actions**, **Enable**\. After you re\-enable a scaling policy, your Auto Scaling group may immediately initiate a scaling action if there are any alarms currently in ALARM state\.
 
 **To disable a scaling policy \(AWS CLI\)**  
-Use the [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/put-scaling-policy.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/put-scaling-policy.html) command with the `--no-enabled` option as follows\. Specify all options in the command as you would specify them when creating the policy\.
+Use the [put\-scaling\-policy](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/put-scaling-policy.html) command with the `--no-enabled` option as follows\. Specify all options in the command as you would specify them when creating the policy\.
 
 ```
 aws autoscaling put-scaling-policy --auto-scaling-group-name my-asg \
@@ -30,7 +30,7 @@ aws autoscaling put-scaling-policy --auto-scaling-group-name my-asg \
 ```
 
 **To re\-enable a scaling policy \(AWS CLI\)**  
-Use the [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/put-scaling-policy.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/put-scaling-policy.html) command with the `--enabled` option as follows\. Specify all options in the command as you would specify them when creating the policy\.
+Use the [put\-scaling\-policy](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/put-scaling-policy.html) command with the `--enabled` option as follows\. Specify all options in the command as you would specify them when creating the policy\.
 
 ```
 aws autoscaling put-scaling-policy --auto-scaling-group-name my-asg \
@@ -41,7 +41,7 @@ aws autoscaling put-scaling-policy --auto-scaling-group-name my-asg \
 ```
 
 **To describe a scaling policy \(AWS CLI\)**  
-Use the [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/describe-policies.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/describe-policies.html) command to verify the enabled status of a scaling policy\.
+Use the [describe\-policies](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/describe-policies.html) command to verify the enabled status of a scaling policy\.
 
 ```
 aws autoscaling describe-policies --auto-scaling-group-name my-asg \

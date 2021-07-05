@@ -1,16 +1,23 @@
 # How Amazon EC2 Auto Scaling works with IAM<a name="control-access-using-iam"></a>
 
-Before you use IAM to manage access to Amazon EC2 Auto Scaling, you should understand what IAM features are available to use with Amazon EC2 Auto Scaling\. To get a high\-level view of how Amazon EC2 Auto Scaling and other AWS services work with IAM, see [AWS services that work with IAM](https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_aws-services-that-work-with-iam.html) in the *IAM User Guide*\.
+Before you use IAM to manage access to Amazon EC2 Auto Scaling, you should understand what IAM features are available to use with Amazon EC2 Auto Scaling\. To get a high\-level view of how Amazon EC2 Auto Scaling and other Amazon Web Services work with IAM, see [Amazon Web Services that work with IAM](https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_aws-services-that-work-with-iam.html) in the *IAM User Guide*\.
 
 **Note**  
 Specific IAM permissions and an Amazon EC2 Auto Scaling service\-linked role are required so that users can configure Auto Scaling groups\. 
 
-**Topics**
+**Contents**
 + [Amazon EC2 Auto Scaling identity\-based policies](#security_iam_service-with-iam-id-based-policies)
+  + [Actions](#security_iam_service-with-iam-id-based-policies-actions)
+  + [Resources](#policy-auto-scaling-resources)
+  + [Condition keys](#policy-auto-scaling-condition-keys)
 + [Amazon EC2 Auto Scaling resource\-based policies](#security_iam_service-with-iam-resource-based-policies)
 + [Access Control Lists \(ACLs\)](#security_iam_service-with-iam-acls)
 + [Authorization based on Amazon EC2 Auto Scaling tags](#security_iam_service-with-iam-tags)
 + [Amazon EC2 Auto Scaling IAM roles](#security_iam_service-with-iam-roles)
+  + [Using temporary credentials with Amazon EC2 Auto Scaling](#security_iam_service-with-iam-roles-tempcreds)
+  + [Service\-linked roles](#security_iam_service-with-iam-roles-service-linked)
+  + [Service roles](#security_iam_service-with-iam-roles-service)
+  + [Choosing an IAM role in Amazon EC2 Auto Scaling](#security_iam_service-with-iam-roles-choose)
 + [Learn more about IAM permission policies](#auto-scaling-resources-about-iam)
 
 ## Amazon EC2 Auto Scaling identity\-based policies<a name="security_iam_service-with-iam-id-based-policies"></a>
@@ -141,7 +148,7 @@ To learn with which actions and resources you can use a condition key, see [Acti
 
 ## Amazon EC2 Auto Scaling resource\-based policies<a name="security_iam_service-with-iam-resource-based-policies"></a>
 
-Other AWS services, such as Amazon Simple Storage Service, support resource\-based permissions policies\. For example, you can attach a permissions policy to an S3 bucket to manage access permissions to that bucket\.
+Other Amazon Web Services, such as Amazon Simple Storage Service, support resource\-based permissions policies\. For example, you can attach a permissions policy to an S3 bucket to manage access permissions to that bucket\.
 
 Amazon EC2 Auto Scaling does not support resource\-based policies\.
 
@@ -174,7 +181,7 @@ Amazon EC2 Auto Scaling supports using temporary credentials\.
 
 ### Service\-linked roles<a name="security_iam_service-with-iam-roles-service-linked"></a>
 
-Service\-linked roles allow AWS services to access resources in other services to complete an action on your behalf\. Service\-linked roles appear in your IAM account and are owned by the service\. An IAM administrator can view but not edit the permissions for service\-linked roles\.
+Service\-linked roles allow Amazon Web Services to access resources in other services to complete an action on your behalf\. Service\-linked roles appear in your IAM account and are owned by the service\. An IAM administrator can view but not edit the permissions for service\-linked roles\.
 
 Amazon EC2 Auto Scaling supports service\-linked roles\. For details about creating or managing Amazon EC2 Auto Scaling service\-linked roles, see [Service\-linked roles for Amazon EC2 Auto Scaling](autoscaling-service-linked-role.md)\.
 

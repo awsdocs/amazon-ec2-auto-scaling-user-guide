@@ -14,7 +14,7 @@ Create a launch configuration\. For more information, see [Creating a launch con
 
 1. Open the Amazon EC2 Auto Scaling console at [https://console\.aws\.amazon\.com/ec2autoscaling/](https://console.aws.amazon.com/ec2autoscaling/)\.
 
-1. On the navigation bar at the top of the screen, choose the same AWS Region that you used when you created the launch template\.
+1. On the navigation bar at the top of the screen, choose the same Region that you used when you created the launch template\.
 
 1. Choose **Create an Auto Scaling group**\.
 
@@ -38,7 +38,7 @@ Create a launch configuration\. For more information, see [Creating a launch con
 
 1. \(Optional\) On the **Configure advanced options** page, configure the following options, and then choose **Next**:
 
-   1. To register your Amazon EC2 instances with a load balancer, choose an existing load balancer or create a new one\. For more information, see [Elastic Load Balancing and Amazon EC2 Auto Scaling](autoscaling-load-balancer.md)\. To create a new load balancer, follow the procedure in [Create and attach a new Application Load Balancer or Network Load Balancer](attach-load-balancer-asg.md#as-create-load-balancer-console)\.
+   1. To register your Amazon EC2 instances with a load balancer, choose an existing load balancer or create a new one\. For more information, see [Elastic Load Balancing and Amazon EC2 Auto Scaling](autoscaling-load-balancer.md)\. To create a new load balancer, follow the procedure in [Configure an Application Load Balancer or Network Load Balancer using the Amazon EC2 Auto Scaling console](attach-load-balancer-asg.md#as-create-load-balancer-console)\.
 
    1. To enable your Elastic Load Balancing \(`ELB`\) health checks, for **Health checks**, choose **ELB** under **Health check type**\. These health checks are optional when you enable load balancing\. 
 
@@ -61,5 +61,5 @@ Create a launch configuration\. For more information, see [Creating a launch con
 **To create an Auto Scaling group using the command line**
 
 You can use one of the following commands:
-+ [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/create-auto-scaling-group.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/create-auto-scaling-group.html) \(AWS CLI\)
-+ [https://docs.aws.amazon.com/powershell/latest/reference/items/New-ASAutoScalingGroup.html](https://docs.aws.amazon.com/powershell/latest/reference/items/New-ASAutoScalingGroup.html) \(AWS Tools for Windows PowerShell\)
++ [create\-auto\-scaling\-group](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/create-auto-scaling-group.html) \(AWS CLI\)
++ [New\-ASAutoScalingGroup](https://docs.aws.amazon.com/powershell/latest/reference/items/New-ASAutoScalingGroup.html) \(AWS Tools for Windows PowerShell\)

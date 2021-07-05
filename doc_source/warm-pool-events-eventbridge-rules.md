@@ -63,7 +63,7 @@ If you haven't already, create the Lambda function that you want the rule to use
      "detail-type": [ "EC2 Instance-launch Lifecycle Action" ],
      "detail": {
          "Origin": [ "EC2" ],
-          "Destination": [ "WarmPool" ]
+         "Destination": [ "WarmPool" ]
       }
    }
    ```

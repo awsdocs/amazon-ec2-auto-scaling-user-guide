@@ -1,6 +1,6 @@
 # Amazon EC2 Auto Scaling service quotas<a name="as-account-limits"></a>
 
-Your AWS account has the following default quotas, formerly referred to as limits, for Amazon EC2 Auto Scaling\. 
+Your Amazon Web Services account has the following default quotas, formerly referred to as limits, for Amazon EC2 Auto Scaling\. 
 
 **Default quotas**
 + Launch configurations per Region: 200
@@ -25,4 +25,4 @@ To view the current quotas for your account, open the Amazon EC2 console at [htt
 + You can use [https://docs.aws.amazon.com/autoscaling/ec2/APIReference/API_AttachLoadBalancerTargetGroups.html](https://docs.aws.amazon.com/autoscaling/ec2/APIReference/API_AttachLoadBalancerTargetGroups.html) and [https://docs.aws.amazon.com/autoscaling/ec2/APIReference/API_DetachLoadBalancerTargetGroups.html](https://docs.aws.amazon.com/autoscaling/ec2/APIReference/API_DetachLoadBalancerTargetGroups.html) with at most 10 target groups at a time\.
 + You can use [https://docs.aws.amazon.com/autoscaling/ec2/APIReference/API_SetInstanceProtection.html](https://docs.aws.amazon.com/autoscaling/ec2/APIReference/API_SetInstanceProtection.html) with at most 50 instances at a time\.
 
-For information about the service quotas for other services, see [Service endpoints and quotas](https://docs.aws.amazon.com/general/latest/gr/aws-service-information.html) in the *Amazon Web Services General Reference*\.
+For information about the service quotas for other Amazon Web Services, see [Service endpoints and quotas](https://docs.aws.amazon.com/general/latest/gr/aws-service-information.html) in the *Amazon Web Services General Reference*\.

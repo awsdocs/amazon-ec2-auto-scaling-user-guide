@@ -4,7 +4,7 @@ When you use Amazon EC2 Auto Scaling, you must use certain building blocks to ge
 
 Before you create an Auto Scaling group for use with your application, review your application thoroughly as it runs in the AWS Cloud\. Consider the following: 
 + How many Availability Zones the Auto Scaling group should span\.
-+ What existing resources can be used, such as security groups or Amazon Machine Images \(AMIs\)\.
++ What existing resources can be used, such as security groups or Amazon machine images \(AMIs\)\.
 + Whether you want to scale to increase or decrease capacity, or if you just want to ensure that a specific number of servers are always running\. Keep in mind that Amazon EC2 Auto Scaling can do both simultaneously\.
 + What metrics have the most relevance to your application's performance\.
 + How long it takes to launch and configure a server\.

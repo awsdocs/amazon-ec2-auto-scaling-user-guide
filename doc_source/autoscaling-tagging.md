@@ -70,7 +70,7 @@ When you use the Amazon EC2 console to create an Auto Scaling group, you can spe
 The following examples show how to use the AWS CLI to add tags when you create Auto Scaling groups, and to add or modify tags for existing Auto Scaling groups\. 
 
 **To tag an Auto Scaling group on creation**
-+ Use the [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/create-auto-scaling-group.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/create-auto-scaling-group.html) command to create a new Auto Scaling group and add a tag, for example, `env=prod`, to the Auto Scaling group\. The tag is also added to any instances launched in the Auto Scaling group\.
++ Use the [create\-auto\-scaling\-group](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/create-auto-scaling-group.html) command to create a new Auto Scaling group and add a tag, for example, `env=prod`, to the Auto Scaling group\. The tag is also added to any instances launched in the Auto Scaling group\.
 
   ```
   aws autoscaling create-auto-scaling-group --auto-scaling-group-name my-asg \
@@ -80,7 +80,7 @@ The following examples show how to use the AWS CLI to add tags when you create A
   ```
 
 **To create or modify tags for an existing Auto Scaling group**
-+ Use the [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/create-or-update-tags.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/create-or-update-tags.html) command to create or modify a tag\. For example, the following command adds the `Name=my-asg` and `cost-center=cc123` tags\. The tags are also added to any instances launched in the Auto Scaling group after this change\. If a tag with either key already exists, the existing tag is replaced\. The Amazon EC2 console associates the display name for each instance with the name that is specified for the `Name` key \(case\-sensitive\)\.
++ Use the [create\-or\-update\-tags](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/create-or-update-tags.html) command to create or modify a tag\. For example, the following command adds the `Name=my-asg` and `cost-center=cc123` tags\. The tags are also added to any instances launched in the Auto Scaling group after this change\. If a tag with either key already exists, the existing tag is replaced\. The Amazon EC2 console associates the display name for each instance with the name that is specified for the `Name` key \(case\-sensitive\)\.
 
   ```
   aws autoscaling create-or-update-tags \
@@ -89,7 +89,7 @@ The following examples show how to use the AWS CLI to add tags when you create A
   ```
 
 **To list all tags for an Auto Scaling group**
-+ Use the following [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/describe-tags.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/describe-tags.html) command to list the tags for the specified Auto Scaling group\.
++ Use the following [describe\-tags](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/describe-tags.html) command to list the tags for the specified Auto Scaling group\.
 
   ```
   aws autoscaling describe-tags --filters Name=auto-scaling-group,Values=my-asg
@@ -110,7 +110,7 @@ The following examples show how to use the AWS CLI to add tags when you create A
       ]
   }
   ```
-+ Alternatively, use the following [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/describe-auto-scaling-groups.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/describe-auto-scaling-groups.html) command to verify that the tag is added to the Auto Scaling group\.
++ Alternatively, use the following [describe\-auto\-scaling\-groups](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/describe-auto-scaling-groups.html) command to verify that the tag is added to the Auto Scaling group\.
 
   ```
   aws autoscaling describe-auto-scaling-groups --auto-scaling-group-name my-asg
@@ -170,7 +170,7 @@ You can delete a tag associated with your Auto Scaling group at any time\.
 
 ### Delete tags \(AWS CLI\)<a name="delete-tag-aws-cli"></a>
 
-Use the [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/delete-tags.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/delete-tags.html) command to delete a tag\. For example, the following command deletes a tag with a key of `env`\.
+Use the [delete\-tags](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/delete-tags.html) command to delete a tag\. For example, the following command deletes a tag with a key of `env`\.
 
 ```
 aws autoscaling delete-tags --tags "ResourceId=my-asg,ResourceType=auto-scaling-group,Key=env"

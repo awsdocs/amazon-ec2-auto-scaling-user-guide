@@ -16,7 +16,7 @@ The following are limitations when using the following procedure to create an Au
 + The Auto Scaling group includes the block device mapping from the AMI that was used to launch the instance\. It does not include any block devices that were attached after instance launch\.
 + If the identified instance is registered with one or more load balancers, the information about the load balancer is not copied to the load balancer or target group attribute of the new Auto Scaling group\.
 
-Before you begin, find the ID of the EC2 instance using the Amazon EC2 console or the [https://docs.aws.amazon.com/cli/latest/reference/ec2/describe-instances.html](https://docs.aws.amazon.com/cli/latest/reference/ec2/describe-instances.html) command \(AWS CLI\)\. The EC2 instance must meet the following criteria:
+Before you begin, find the ID of the EC2 instance using the Amazon EC2 console or the [describe\-instances](https://docs.aws.amazon.com/cli/latest/reference/ec2/describe-instances.html) command \(AWS CLI\)\. The EC2 instance must meet the following criteria:
 + The instance is in the subnet and Availability Zone in which you want to create the Auto Scaling group\.
 + The instance is not a member of another Auto Scaling group\.
 + The instance is in the `running` state\.
@@ -27,7 +27,7 @@ Before you begin, find the ID of the EC2 instance using the Amazon EC2 console o
 The following examples show how to use the AWS CLI to create an Auto Scaling group from an EC2 instance\.
 
 **To create an Auto Scaling group from an EC2 instance**
-+ Use the following [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/create-auto-scaling-group.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/create-auto-scaling-group.html) command to create an Auto Scaling group, `my-asg-from-instance`, from the EC2 instance `i-0e69cc3f05f825f4f`\.
++ Use the following [create\-auto\-scaling\-group](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/create-auto-scaling-group.html) command to create an Auto Scaling group, `my-asg-from-instance`, from the EC2 instance `i-0e69cc3f05f825f4f`\.
 
   ```
   aws autoscaling create-auto-scaling-group --auto-scaling-group-name my-asg-from-instance \
@@ -35,7 +35,7 @@ The following examples show how to use the AWS CLI to create an Auto Scaling gro
   ```
 
 **To verify that your Auto Scaling group has launched instances**
-+ Use the following [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/describe-auto-scaling-groups.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/describe-auto-scaling-groups.html) command to verify that the Auto Scaling group was created successfully\.
++ Use the following [describe\-auto\-scaling\-groups](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/describe-auto-scaling-groups.html) command to verify that the Auto Scaling group was created successfully\.
 
   ```
   aws autoscaling describe-auto-scaling-groups --auto-scaling-group-name my-asg-from-instance
@@ -97,7 +97,7 @@ The following examples show how to use the AWS CLI to create an Auto Scaling gro
   ```
 
 **To view the launch configuration**
-+ Use the following [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/describe-launch-configurations.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/describe-launch-configurations.html) command to view the details of the launch configuration\.
++ Use the following [describe\-launch\-configurations](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/describe-launch-configurations.html) command to view the details of the launch configuration\.
 
   ```
   aws autoscaling describe-launch-configurations --launch-configuration-names my-asg-from-instance
@@ -134,7 +134,7 @@ The following examples show how to use the AWS CLI to create an Auto Scaling gro
   ```
 
 **To terminate the instance**
-+ If you no longer need the instance, you can terminate it\. The following [https://docs.aws.amazon.com/cli/latest/reference/ec2/terminate-instances.html](https://docs.aws.amazon.com/cli/latest/reference/ec2/terminate-instances.html) command terminates the instance `i-0e69cc3f05f825f4f`\. 
++ If you no longer need the instance, you can terminate it\. The following [terminate\-instances](https://docs.aws.amazon.com/cli/latest/reference/ec2/terminate-instances.html) command terminates the instance `i-0e69cc3f05f825f4f`\. 
 
   ```
   aws ec2 terminate-instances --instance-ids i-0e69cc3f05f825f4f

@@ -34,7 +34,7 @@ Amazon EC2 Auto Scaling supports sending Amazon SNS notifications when the follo
 
 The message includes the following information:
 + `Event` — The event\.
-+ `AccountId` — The AWS account ID\.
++ `AccountId` — The Amazon Web Services account ID\.
 + `AutoScalingGroupName` — The name of the Auto Scaling group\.
 + `AutoScalingGroupARN` — The ARN of the Auto Scaling group\.
 + `EC2InstanceId` — The ID of the EC2 instance\.

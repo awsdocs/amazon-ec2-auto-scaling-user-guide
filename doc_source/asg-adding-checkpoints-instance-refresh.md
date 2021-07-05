@@ -2,7 +2,7 @@
 
 When using an instance refresh, you have the option to replace the entire Auto Scaling group in one continuous operation\. However, you might prefer to replace the group in phases, so that you can perform verifications on your instances as you go\. To do a phased replacement, you add checkpoints, which are points in time where the instance refresh pauses\. Using checkpoints gives you greater control over how you choose to update your Auto Scaling group, and it helps you to ensure that your application will function in a reliable, predictable manner\.
 
-To enable checkpoints for an instance refresh, add the following refresh preferences to your configuration file:
+To enable checkpoints for an instance refresh, add the following refresh preferences to the configuration file that defines the instance refresh parameters when you use the AWS CLI:
 + `CheckpointPercentages`: Specifies threshold values for the percentage of instances to be replaced\. These threshold values provide the checkpoints\. When the percentage of instances that are replaced and warmed up reaches one of the specified thresholds, the operation waits for a specified period of time\. You specify the number of seconds to wait in `CheckpointDelay`\. When the specified period of time has passed, the instance refresh continues until it reaches the next checkpoint \(if applicable\)\.
 + `CheckpointDelay`: The amount of time, in seconds, to wait after a checkpoint is reached before continuing\. Choose a time period that allows you enough time to perform your validations\.
 
