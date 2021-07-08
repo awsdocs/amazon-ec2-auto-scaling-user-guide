@@ -1,8 +1,8 @@
 # Attach EC2 instances to your Auto Scaling group<a name="attach-instance-asg"></a>
 
-Amazon EC2 Auto Scaling provides you with an option to enable automatic scaling for one or more EC2 instances by attaching them to your existing Auto Scaling group\. After the instances are attached, they become a part of the Auto Scaling group\.
+Amazon EC2 Auto Scaling provides you with the option of attaching one or more EC2 instances to your existing Auto Scaling group. After an instance is attached, it is considered part of the Auto Scaling group.
 
-The instance to attach must meet the following criteria:
+For an instance to be attached, it must meet the following criteria:
 + The instance is in the `running` state\.
 + The AMI used to launch the instance must still exist\.
 + The instance is not a member of another Auto Scaling group\.
