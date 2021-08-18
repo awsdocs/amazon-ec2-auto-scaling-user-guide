@@ -100,7 +100,7 @@ Create a Lambda function to serve as the target for events\. The sample Lambda f
            AutoScalingGroupName: eventDetail['AutoScalingGroupName'], /* required */
            LifecycleActionResult: 'CONTINUE', /* required */
            LifecycleHookName: eventDetail['LifecycleHookName'], /* required */
-           InstanceId: eventDetail['InstanceId'],
+           InstanceId: eventDetail['EC2InstanceId'],
            LifecycleActionToken: eventDetail['LifecycleActionToken']
        };
        var response; 
