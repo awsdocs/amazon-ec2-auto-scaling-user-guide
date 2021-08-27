@@ -1,6 +1,6 @@
 # Detach EC2 instances from your Auto Scaling group<a name="detach-instance-asg"></a>
 
-You can remove \(detach\) an instance from an Auto Scaling group\. After the instances are detached, you can manage them independently from the rest of the Auto Scaling group\. By detaching an instance, you can:
+You can remove \(detach\) an instance from an Auto Scaling group\. After an instance is detached, you can manage it independently from the rest of the Auto Scaling group\. By detaching an instance, you can:
 + Move an instance out of one Auto Scaling group and attach it to a different group\. For more information, see [Attach EC2 instances to your Auto Scaling group](attach-instance-asg.md)\.
 + Test an Auto Scaling group by creating it using existing instances running your application\. You can then detach these instances from the Auto Scaling group when your tests are complete\.
 
