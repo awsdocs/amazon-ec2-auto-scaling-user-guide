@@ -1,16 +1,16 @@
 # Replacing a launch configuration with a launch template<a name="replace-launch-config"></a>
 
-When you edit an Auto Scaling group that has an existing launch configuration, you have the option of replacing the launch configuration with a launch template\. This lets you use launch templates with any Auto Scaling groups that you currently use\. In doing so, you can take advantage of the versioning and other features of launch templates\. 
+When you edit an Auto Scaling group that has an existing launch configuration, you have the option of replacing the launch configuration with a launch template\. This lets you use launch templates with any Auto Scaling groups that you currently use\. In doing so, you can take advantage of versioning and other features of launch templates\. 
 
-After you replace the launch configuration for an Auto Scaling group, any new instances are launched using the new launch template, but existing instances are not affected\. To update the existing instances, terminate them so that they are replaced by your Auto Scaling group, or allow automatic scaling to gradually replace older instances with newer instances based on your [termination policies](as-instance-termination.md)\. 
+After you replace the launch configuration for an Auto Scaling group, any new instances are launched using the new launch template\. Existing instances are not affected\. To update the existing instances, terminate them so that they are replaced by your Auto Scaling group, or allow automatic scaling to gradually replace earlier instances with newer instances based on your [termination policies](as-instance-termination.md)\. 
 
 **Note**  
-With the maximum instance lifetime and instance refresh features, you can also replace all instances in the Auto Scaling group to launch new instances that use the launch template\. For more information, see [Replacing Auto Scaling instances based on maximum instance lifetime](asg-max-instance-lifetime.md) and [Replacing Auto Scaling instances based on an instance refresh](asg-instance-refresh.md)\.
+With the instance refresh feature, you can replace the instances in the Auto Scaling group to launch new instances that use the launch template immediately\. For more information, see [Replacing Auto Scaling instances based on an instance refresh](asg-instance-refresh.md)\.
 
 **Prerequisites**  
-Before you can replace a launch configuration in an Auto Scaling group, you must first create your launch template\. The easiest way to create a launch template is to copy it from the launch configuration\. For more information, see [Copying a launch configuration to a launch template](copy-launch-config.md)\.
+Before you can replace a launch configuration in an Auto Scaling group, you must first create your launch template\. A basic way to create a launch template is to copy it from the launch configuration\. For more information, see [Copy launch configurations to launch templates](copy-launch-config.md)\.
 
-When you replace a launch configuration with a launch template, your `ec2:RunInstances` permissions are checked\. If you are attempting to use a launch template and you do not have sufficient permissions, you receive an error that you're not authorized to use the launch template\. For information about the required IAM permissions, see [Launch template support](ec2-auto-scaling-launch-template-permissions.md)\.
+If you switch your Auto Scaling group from using a launch configuration, be sure that your permissions are up to date\. In order to use a launch template, you need specific [permissions](https://docs.aws.amazon.com/autoscaling/ec2/userguide/LaunchTemplates.html#launch-templates-permissions)\.
 
 **To replace the launch configuration for an Auto Scaling group \(console\)**
 
@@ -33,7 +33,7 @@ When you replace a launch configuration with a launch template, your `ec2:RunIns
 **To replace a launch configuration using the command line**
 
 You can use one of the following commands:
-+ [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/update-auto-scaling-group.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/update-auto-scaling-group.html) \(AWS CLI\)
-+ [https://docs.aws.amazon.com/powershell/latest/reference/items/Update-ASAutoScalingGroup.html](https://docs.aws.amazon.com/powershell/latest/reference/items/Update-ASAutoScalingGroup.html) \(AWS Tools for Windows PowerShell\)
++ [update\-auto\-scaling\-group](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/update-auto-scaling-group.html) \(AWS CLI\)
++ [Update\-ASAutoScalingGroup](https://docs.aws.amazon.com/powershell/latest/reference/items/Update-ASAutoScalingGroup.html) \(AWS Tools for Windows PowerShell\)
 
 For examples of using a CLI command to update an Auto Scaling group to use a launch template, see [Updating an Auto Scaling group to use a launch template](examples-launch-templates-aws-cli.md#update-asg-launch-template-cli)\.

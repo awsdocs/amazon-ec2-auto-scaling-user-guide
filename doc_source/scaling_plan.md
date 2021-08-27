@@ -17,7 +17,7 @@ Amazon EC2 Auto Scaling provides a number of ways to adjust scaling to best meet
 + [Scheduled scaling](schedule_time.md)
 + [Lifecycle hooks](lifecycle-hooks.md)
 + [Warm pools](ec2-auto-scaling-warm-pools.md)
-+ [Auto Scaling instance termination](as-instance-termination.md)
++ [Controlling instance termination](as-instance-termination.md)
 + [Temporarily removing instances](as-enter-exit-standby.md)
 + [Suspending processes](as-suspend-resume-processes.md)
 

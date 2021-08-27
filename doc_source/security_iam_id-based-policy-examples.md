@@ -380,9 +380,9 @@ The following shows an example of a permissions policy that allows a user to cre
 
 If your users require the ability to pass custom suffix service\-linked roles to an Auto Scaling group, you must attach a policy to the users or roles, based on the access that they need\. We recommend that you restrict this policy to only the service\-linked roles that your users must access\. For more information about custom suffix service\-linked roles, see [Service\-linked roles for Amazon EC2 Auto Scaling](autoscaling-service-linked-role.md)\.
 
-The following example is helpful for facilitating the security of your customer managed CMKs if you give different service\-linked roles access to different keys\. Depending on your needs, you might have a CMK for the development team, another for the QA team, and another for the finance team\. First, create a service\-linked role that has access to the required CMK, for example, a service\-linked role named **`AWSServiceRoleForAutoScaling_devteamkeyaccess`**\. Then, to grant permissions to pass that service\-linked role to an Auto Scaling group, attach the policy to your IAM users as shown\. 
+The following example is helpful for facilitating the security of your customer managed CMKs if you give different service\-linked roles access to different keys\. Depending on your needs, you might have a CMK for the development team, another for the QA team, and another for the finance team\. First, create a service\-linked role that has access to the required CMK, for example, a service\-linked role named `AWSServiceRoleForAutoScaling_devteamkeyaccess`\. Then, to grant permissions to pass that service\-linked role to an Auto Scaling group, attach the policy to your IAM users as shown\. 
 
-The policy in this example gives users permissions to pass the **`AWSServiceRoleForAutoScaling_devteamkeyaccess`** role to create any Auto Scaling group whose name begins with `devteam-`\. If they try to specify a different service\-linked role, they receive an error\. If they choose not to specify a service\-linked role, the default **AWSServiceRoleForAutoScaling** role is used instead\.
+The policy in this example gives users permissions to pass the `AWSServiceRoleForAutoScaling_devteamkeyaccess` role to create any Auto Scaling group whose name begins with `devteam-`\. If they try to specify a different service\-linked role, they receive an error\. If they choose not to specify a service\-linked role, the default `AWSServiceRoleForAutoScaling` role is used instead\.
 
 ```
 {
@@ -413,18 +413,10 @@ The policy in this example gives users permissions to pass the **`AWSServiceRole
 
 When calling the following actions from the Amazon EC2 Auto Scaling API, users must have permissions from Amazon EC2 and IAM to perform certain actions\. You specify the following actions in the `Action` element of an IAM policy statement\. 
 
-**Create an Auto Scaling group using a launch configuration**
+**Create an Auto Scaling group**
 + `autoscaling:CreateAutoScalingGroup`
 + `iam:CreateServiceLinkedRole` \(Needed if you are using the default service\-linked role and that role does not yet exist\) 
-
-**Create an Auto Scaling group using a launch template**
-+ `autoscaling:CreateAutoScalingGroup`
-+ `ec2:RunInstances` 
-+ `iam:CreateServiceLinkedRole` \(Needed if you are using the default service\-linked role and that role does not yet exist\) 
-
-**Update an Auto Scaling group that uses a launch template**
-+ `autoscaling:UpdateAutoScalingGroup`
-+ `ec2:RunInstances` 
++ `iam:PassRole` \(Needed if you are using a nondefault service\-linked role, or you are specifying an IAM role for the `NotificationTargetARN` parameter for a lifecycle hook\)
 
 **Create a launch configuration**
 + `autoscaling:CreateLaunchConfiguration`
@@ -435,3 +427,8 @@ When calling the following actions from the Amazon EC2 Auto Scaling API, users m
 + `ec2:DescribeSecurityGroups`
 + `ec2:DescribeSpotInstanceRequests`
 + `ec2:DescribeVpcClassicLink`
++ `iam:PassRole` \(Needed if you are specifying an IAM role for the `IamInstanceProfile` parameter\) 
+
+**Create a lifecycle hook**
++ `autoscaling:PutLifecycleHook`
++ `iam:PassRole` \(Only needed if you are specifying an IAM role for the `NotificationTargetARN` parameter\) 

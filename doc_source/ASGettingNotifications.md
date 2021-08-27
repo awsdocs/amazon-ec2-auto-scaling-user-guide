@@ -112,7 +112,7 @@ You can configure your Auto Scaling group to send notifications to Amazon SNS wh
    1. Choose **Create**\.
 
 **To configure Amazon SNS notifications for your Auto Scaling group \(AWS CLI\)**  
-Use the following [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/put-notification-configuration.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/put-notification-configuration.html) command\.
+Use the following [put\-notification\-configuration](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/put-notification-configuration.html) command\.
 
 ```
 aws autoscaling put-notification-configuration --auto-scaling-group-name my-asg --topic-arn arn --notification-types "autoscaling:EC2_INSTANCE_LAUNCH" "autoscaling:EC2_INSTANCE_TERMINATE"

@@ -63,6 +63,8 @@ For more information about the allocation strategies for Spot Instances, see [In
 
 You have full control over the proportion of instances in the Auto Scaling group that are launched as On\-Demand Instances\. To ensure that you always have instance capacity, you can designate a percentage of the group to launch as On\-Demand Instances and, optionally, a base number of On\-Demand Instances to start with\. If you choose to specify a base capacity of On\-Demand Instances, the Auto Scaling group ensures that this base capacity of On\-Demand Instances is launched first when the group scales out\. Anything beyond the base capacity uses the On\-Demand percentage to determine how many On\-Demand Instances and Spot Instances to launch\. You can specify any number from 0 to 100 for the On\-Demand percentage\. 
 
+Amazon EC2 Auto Scaling converts the percentage to the equivalent number of instances\. If the result creates a fractional number, Amazon EC2 Auto Scaling rounds up to the next integer in favor of On\-Demand Instances\.
+
 The behavior of the Auto Scaling group as it increases in size is as follows:
 
 
@@ -176,7 +178,7 @@ Follow these steps to create a fleet of Spot Instances and On\-Demand Instances 
 
    1. \(Optional\) To automatically scale the size of the Auto Scaling group, choose **Target tracking scaling policy** and follow the directions\. For more information, see [Target Tracking Scaling Policies](as-scaling-target-tracking.md#policy-creating-scalingpolicies-console)\.
 
-   1. \(Optional\) Under **Instance scale\-in protection**, choose whether to enable instance scale\-in protection\. For more information, see [Instance scale\-in protection](as-instance-termination.md#instance-protection)\.
+   1. \(Optional\) Under **Instance scale\-in protection**, choose whether to enable instance scale\-in protection\. For more information, see [Using instance scale\-in protection](ec2-auto-scaling-instance-protection.md)\.
 
 1. \(Optional\) To receive notifications, for **Add notification**, configure the notification, and then choose **Next**\. For more information, see [Getting Amazon SNS notifications when your Auto Scaling group scales](ASGettingNotifications.md)\.
 
@@ -198,7 +200,7 @@ These examples show how to use a configuration file formatted in JSON or YAML\. 
 
 ### Example 1: Launch Spot Instances using the `capacity-optimized` allocation strategy<a name="capacity-optimized-aws-cli"></a>
 
-The following [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/create-auto-scaling-group.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/create-auto-scaling-group.html) command creates an Auto Scaling group that specifies the following:
+The following [create\-auto\-scaling\-group](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/create-auto-scaling-group.html) command creates an Auto Scaling group that specifies the following:
 + The percentage of the group to launch as On\-Demand Instances \(`0`\) and a base number of On\-Demand Instances to start with \(`1`\)
 + The instance types to launch in priority order \(`c5.large`, `c5a.large`, `m5.large`, `m5a.large`, `c4.large`, `m4.large`, `c3.large`, `m3.large`\) 
 + The subnets in which to launch the instances \(`subnet-5ea0c127`, `subnet-6194ea3b`, `subnet-c934b782`\), each corresponding to a different Availability Zone
@@ -265,7 +267,7 @@ The following is an example `config.json` file\.
 
 #### YAML<a name="capacity-optimized-aws-cli-yaml"></a>
 
-Alternatively, you can use the following [https://awscli.amazonaws.com/v2/documentation/api/latest/reference/autoscaling/create-auto-scaling-group.html](https://awscli.amazonaws.com/v2/documentation/api/latest/reference/autoscaling/create-auto-scaling-group.html) command to create the Auto Scaling group, referencing a YAML file as the sole parameter for your Auto Scaling group instead of a JSON file\.
+Alternatively, you can use the following [create\-auto\-scaling\-group](https://awscli.amazonaws.com/v2/documentation/api/latest/reference/autoscaling/create-auto-scaling-group.html) command to create the Auto Scaling group, referencing a YAML file as the sole parameter for your Auto Scaling group instead of a JSON file\.
 
 ```
 aws autoscaling create-auto-scaling-group --cli-input-yaml file://~/config.yaml
@@ -302,7 +304,7 @@ VPCZoneIdentifier: subnet-5ea0c127,subnet-6194ea3b,subnet-c934b782
 
 ### Example 2: Launch Spot Instances using the `capacity-optimized-prioritized` allocation strategy<a name="capacity-optimized-prioritized-aws-cli"></a>
 
-The following [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/create-auto-scaling-group.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/create-auto-scaling-group.html) command creates an Auto Scaling group that specifies the following:
+The following [create\-auto\-scaling\-group](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/create-auto-scaling-group.html) command creates an Auto Scaling group that specifies the following:
 + The percentage of the group to launch as On\-Demand Instances \(`0`\) and a base number of On\-Demand Instances to start with \(`1`\)
 + The instance types to launch in priority order \(`c5.large`, `c5a.large`, `m5.large`, `m5a.large`, `c4.large`, `m4.large`, `c3.large`, `m3.large`\) 
 + The subnets in which to launch the instances \(`subnet-5ea0c127`, `subnet-6194ea3b`, `subnet-c934b782`\), each corresponding to a different Availability Zone
@@ -369,7 +371,7 @@ The following is an example `config.json` file\.
 
 #### YAML<a name="capacity-optimized-prioritized-aws-cli-yaml"></a>
 
-Alternatively, you can use the following [https://awscli.amazonaws.com/v2/documentation/api/latest/reference/autoscaling/create-auto-scaling-group.html](https://awscli.amazonaws.com/v2/documentation/api/latest/reference/autoscaling/create-auto-scaling-group.html) command to create the Auto Scaling group, referencing a YAML file as the sole parameter for your Auto Scaling group instead of a JSON file\. 
+Alternatively, you can use the following [create\-auto\-scaling\-group](https://awscli.amazonaws.com/v2/documentation/api/latest/reference/autoscaling/create-auto-scaling-group.html) command to create the Auto Scaling group, referencing a YAML file as the sole parameter for your Auto Scaling group instead of a JSON file\. 
 
 ```
 aws autoscaling create-auto-scaling-group --cli-input-yaml file://~/config.yaml
@@ -406,7 +408,7 @@ VPCZoneIdentifier: subnet-5ea0c127,subnet-6194ea3b,subnet-c934b782
 
 ### Example 3: Launch Spot Instances using the `lowest-price` allocation strategy diversified over two pools<a name="lowest-price-aws-cli"></a>
 
-The following [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/create-auto-scaling-group.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/create-auto-scaling-group.html) command creates an Auto Scaling group that specifies the following:
+The following [create\-auto\-scaling\-group](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/create-auto-scaling-group.html) command creates an Auto Scaling group that specifies the following:
 + The percentage of the group to launch as On\-Demand Instances \(`50`\) without also specifying a base number of On\-Demand Instances to start with
 + The instance types to launch in priority order \(`c5.large`, `c5a.large`, `m5.large`, `m5a.large`, `c4.large`, `m4.large`, `c3.large`, `m3.large`\) 
 + The subnets in which to launch the instances \(`subnet-5ea0c127`, `subnet-6194ea3b`, `subnet-c934b782`\), each corresponding to a different Availability Zone
@@ -473,7 +475,7 @@ The following is an example `config.json` file\.
 
 #### YAML<a name="lowest-price-aws-cli-yaml"></a>
 
-Alternatively, you can use the following [https://awscli.amazonaws.com/v2/documentation/api/latest/reference/autoscaling/create-auto-scaling-group.html](https://awscli.amazonaws.com/v2/documentation/api/latest/reference/autoscaling/create-auto-scaling-group.html) command to create the Auto Scaling group, referencing a YAML file as the sole parameter for your Auto Scaling group instead of a JSON file\. 
+Alternatively, you can use the following [create\-auto\-scaling\-group](https://awscli.amazonaws.com/v2/documentation/api/latest/reference/autoscaling/create-auto-scaling-group.html) command to create the Auto Scaling group, referencing a YAML file as the sole parameter for your Auto Scaling group instead of a JSON file\. 
 
 ```
 aws autoscaling create-auto-scaling-group --cli-input-yaml file://~/config.yaml
@@ -513,4 +515,4 @@ For additional examples, see [Specifying a different launch template for an inst
 
 ## Verifying whether your Auto Scaling group is configured correctly and that the group has launched instances \(AWS CLI\)<a name="verify-launch-aws-cli"></a>
 
-To check whether your Auto Scaling group is configured correctly and that it has launched instances, use the [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/describe-auto-scaling-groups.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/describe-auto-scaling-groups.html) command\. Verify that the mixed instances policy and the list of subnets exist and are configured correctly\. If the instances have launched, you will see a list of the instances and their statuses\. To view the scaling activities that result from instances launching, use the [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/describe-scaling-activities.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/describe-scaling-activities.html) command\. You can monitor scaling activities that are in progress and that are recently completed\.
+To check whether your Auto Scaling group is configured correctly and that it has launched instances, use the [describe\-auto\-scaling\-groups](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/describe-auto-scaling-groups.html) command\. Verify that the mixed instances policy and the list of subnets exist and are configured correctly\. If the instances have launched, you will see a list of the instances and their statuses\. To view the scaling activities that result from instances launching, use the [describe\-scaling\-activities](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/describe-scaling-activities.html) command\. You can monitor scaling activities that are in progress and that are recently completed\.

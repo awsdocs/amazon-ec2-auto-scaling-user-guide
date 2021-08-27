@@ -1,6 +1,6 @@
 # Required CMK key policy for use with encrypted volumes<a name="key-policy-requirements-EBS-encryption"></a>
 
-Amazon EC2 Auto Scaling supports [service\-linked roles](autoscaling-service-linked-role.md), a new type of IAM role that gives you a more secure and transparent way to delegate permissions to Amazon Web Services\. Amazon EC2 Auto Scaling service\-linked roles are predefined by Amazon EC2 Auto Scaling and include all the permissions that the service requires to call other Amazon Web Services on your behalf\. The predefined permissions also include access to your AWS managed customer master keys \(CMKs\)\. However, they do not include access to your customer managed CMKs, allowing you to maintain full control over these keys\.
+Amazon EC2 Auto Scaling supports [service\-linked roles](autoscaling-service-linked-role.md), a new type of IAM role that gives you a more secure and transparent way to delegate permissions to Amazon Web Services\. Amazon EC2 Auto Scaling service\-linked roles are predefined by Amazon EC2 Auto Scaling and include permissions that the service requires to call other Amazon Web Services on your behalf\. The predefined permissions also include access to your AWS managed customer master keys \(CMKs\)\. However, they do not include access to your customer managed CMKs, allowing you to maintain full control over these keys\.
 
 This topic describes how to set up the key policy that you need to launch Auto Scaling instances when you specify a customer managed CMK for Amazon EBS encryption\. 
 
@@ -47,7 +47,7 @@ For more information, see the following resources:
 
 ## Example 1: Key policy sections that allow access to the CMK<a name="policy-example-cmk-access"></a>
 
-Add the following two policy statements to the key policy of the customer managed CMK, replacing the example ARN with the ARN of the appropriate service\-linked role that is allowed access to the CMK\. In this example, the policy sections give the service\-linked role named **AWSServiceRoleForAutoScaling** permissions to use the customer managed CMK\. 
+Add the following two policy statements to the key policy of the customer managed CMK, replacing the example ARN with the ARN of the appropriate service\-linked role that is allowed access to the CMK\. In this example, the policy sections give the service\-linked role named `AWSServiceRoleForAutoScaling` permissions to use the customer managed CMK\. 
 
 ```
 {
@@ -132,7 +132,7 @@ First, add the following two policy statements to the CMK's key policy, replacin
 }
 ```
 
-Then, from the external account, create a grant that delegates the relevant permissions to the appropriate service\-linked role\. The `Grantee Principal` element of the grant is the ARN of the appropriate service\-linked role\. The `key-id` is the ARN of the CMK\. The following is an example [create\-a\-grant](https://docs.aws.amazon.com/cli/latest/reference/kms/create-grant.html) CLI command that gives the service\-linked role named **AWSServiceRoleForAutoScaling** in account `111122223333` permissions to use the CMK in account `444455556666`\.
+Then, from the external account, create a grant that delegates the relevant permissions to the appropriate service\-linked role\. The `Grantee Principal` element of the grant is the ARN of the appropriate service\-linked role\. The `key-id` is the ARN of the CMK\. The following is an example [create\-a\-grant](https://docs.aws.amazon.com/cli/latest/reference/kms/create-grant.html) CLI command that gives the service\-linked role named `AWSServiceRoleForAutoScaling` in account `111122223333` permissions to use the CMK in account `444455556666`\.
 
 ```
 aws kms create-grant \

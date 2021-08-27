@@ -7,13 +7,13 @@ You can create an Auto Scaling group using an existing EC2 instance in one of th
 + Use the console to create an Auto Scaling group from a running EC2 instance\. When you do this, Amazon EC2 Auto Scaling creates a launch configuration for you and associates it with the Auto Scaling group\. This method works well if you want to add the instance to the new Auto Scaling group where it can be managed by Amazon EC2 Auto Scaling\. For more information, see [Attach EC2 instances to your Auto Scaling group](attach-instance-asg.md)\. 
 + Specify the ID of an existing EC2 instance in the API call that creates the Auto Scaling group\. This method is the subject of the following procedure\.
 
-When you specify an ID of an existing instance, Amazon EC2 Auto Scaling creates a launch configuration for you and associates it with the Auto Scaling group\. This launch configuration has the same name as the Auto Scaling group, and it derives its attributes from the specified instance, including the AMI ID, instance type, key pair, and security group\. The block devices come from the AMI that was used to launch the instance, not the instance\. 
+When you specify an ID of an existing instance, Amazon EC2 Auto Scaling creates a launch configuration for you and associates it with the Auto Scaling group\. This launch configuration has the same name as the Auto Scaling group, and it derives its attributes from the specified instance, including the AMI ID, instance type, key pair, and security group\. The block devices come from the AMI that was used to launch the instance\. 
 
 ## Limitations and prerequisites<a name="create-asg-from-instance-limitations"></a>
 
 The following are limitations when using the following procedure to create an Auto Scaling group from an EC2 instance:
 + If the identified instance has tags, the tags are not copied to the `Tags` attribute of the new Auto Scaling group\.
-+ The Auto Scaling group includes the block device mapping from the AMI that was used to launch the instance\. It does not include any block devices that were attached after instance launch\.
++ The Auto Scaling group includes the block devices from the AMI that was used to launch the instance\. It does not include any block devices that were attached after instance launch\.
 + If the identified instance is registered with one or more load balancers, the information about the load balancer is not copied to the load balancer or target group attribute of the new Auto Scaling group\.
 
 Before you begin, find the ID of the EC2 instance using the Amazon EC2 console or the [describe\-instances](https://docs.aws.amazon.com/cli/latest/reference/ec2/describe-instances.html) command \(AWS CLI\)\. The EC2 instance must meet the following criteria:

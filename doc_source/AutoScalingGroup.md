@@ -29,7 +29,6 @@ If you're new to Auto Scaling groups, start by creating a launch template or a l
 + [Elastic Load Balancing and Amazon EC2 Auto Scaling](autoscaling-load-balancer.md)
 + [Launching Auto Scaling instances in a VPC](asg-in-vpc.md)
 + [Getting recommendations for an instance type from AWS Compute Optimizer](asg-getting-recommendations.md)
-+ [Replacing Auto Scaling instances based on maximum instance lifetime](asg-max-instance-lifetime.md)
-+ [Replacing Auto Scaling instances based on an instance refresh](asg-instance-refresh.md)
++ [Replacing Auto Scaling instances](ec2-auto-scaling-group-replacing-instances.md)
 + [Merging your Auto Scaling groups into a single multi\-zone group](merge-auto-scaling-groups.md)
 + [Deleting your Auto Scaling infrastructure](as-process-shutdown.md)

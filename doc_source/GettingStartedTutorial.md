@@ -4,7 +4,7 @@ When you use Amazon EC2 Auto Scaling, you must use certain building blocks to ge
 
 Before you create an Auto Scaling group for use with your application, review your application thoroughly as it runs in the AWS Cloud\. Consider the following: 
 + How many Availability Zones the Auto Scaling group should span\.
-+ What existing resources can be used, such as security groups or Amazon machine images \(AMIs\)\.
++ What existing resources can be used, such as security groups or Amazon Machine Images \(AMIs\)\.
 + Whether you want to scale to increase or decrease capacity, or if you just want to ensure that a specific number of servers are always running\. Keep in mind that Amazon EC2 Auto Scaling can do both simultaneously\.
 + What metrics have the most relevance to your application's performance\.
 + How long it takes to launch and configure a server\.
@@ -40,7 +40,7 @@ Note that all of the following procedures are for the new console\.
 
 ## Step 1: Create a launch template<a name="gs-create-lt"></a>
 
-In this step, you sign in to the Amazon EC2 console with your AWS account credentials and create a launch template that specifies the type of EC2 instance that Amazon EC2 Auto Scaling creates for you\. Include information such as the ID of the Amazon machine image \(AMI\) to use, the instance type, the key pair, and security groups\.
+In this step, you sign in to the Amazon EC2 console with your AWS account credentials and create a launch template that specifies the type of EC2 instance that Amazon EC2 Auto Scaling creates for you\. Include information such as the ID of the Amazon Machine Image \(AMI\) to use, the instance type, the key pair, and security groups\.
 
 **Note**  
 Alternatively, you can use a launch configuration to create an Auto Scaling group instead of using a launch template\. For the launch configuration instructions, see [Create a launch configuration](#id-gs-create-lc)\.
@@ -77,7 +77,7 @@ If your account is less than 12 months old, you can use a `t2.micro` instance fo
 
 If you are not currently using launch templates and prefer not to create one now, you can create a launch configuration instead\.
 
-A launch configuration is similar to a launch template, in that it specifies the type of EC2 instance that Amazon EC2 Auto Scaling creates for you\. You create the launch configuration by including information such as the ID of the Amazon machine image \(AMI\) to use, the instance type, the key pair, and security groups\. 
+A launch configuration is similar to a launch template, in that it specifies the type of EC2 instance that Amazon EC2 Auto Scaling creates for you\. You create the launch configuration by including information such as the ID of the Amazon Machine Image \(AMI\) to use, the instance type, the key pair, and security groups\. 
 
 **To create a launch configuration**
 

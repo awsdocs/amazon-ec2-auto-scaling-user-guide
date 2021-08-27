@@ -12,7 +12,7 @@ Depending on the maximum duration specified and the size of the Auto Scaling gro
 
 To manage the rate of replacement, you can do the following:
 + Set the maximum instance lifetime limit to a longer period of time to space out the replacements\. This is helpful for groups that have a large number of instances to replace\.
-+ Add extra time between certain replacements by using instance protection to temporarily prevent individual instances in your Auto Scaling group from being replaced\. When you're ready to replace these instances, remove instance protection from each individual instance\. For more information, see [Instance scale\-in protection](as-instance-termination.md#instance-protection)\.
++ Add extra time between certain replacements by using instance protection to temporarily prevent individual instances in your Auto Scaling group from being replaced\. When you're ready to replace these instances, remove instance protection from each individual instance\. For more information, see [Using instance scale\-in protection](ec2-auto-scaling-instance-protection.md)\.
 
 **To configure maximum instance lifetime \(console\)**  
 Create the Auto Scaling group in the usual way\. After creating the Auto Scaling group, edit the group to specify the maximum instance lifetime\. 

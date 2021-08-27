@@ -31,13 +31,13 @@ You can use the console to create a launch configuration and an Auto Scaling gro
 
 ### Create a launch configuration from an EC2 instance \(AWS CLI\)<a name="create-lc-with-defaultconfig-aws-cli"></a>
 
-Use the following [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/create-launch-configuration.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/create-launch-configuration.html) command to create a launch configuration from an instance using the same attributes as the instance\. Any block devices added after launch are ignored\.
+Use the following [create\-launch\-configuration](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/create-launch-configuration.html) command to create a launch configuration from an instance using the same attributes as the instance\. Any block devices added after launch are ignored\.
 
 ```
 aws autoscaling create-launch-configuration --launch-configuration-name my-lc-from-instance --instance-id i-a8e09d9c
 ```
 
-You can use the following [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/describe-launch-configurations.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/describe-launch-configurations.html) command to describe the launch configuration and verify that its attributes match those of the instance\.
+You can use the following [describe\-launch\-configurations](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/describe-launch-configurations.html) command to describe the launch configuration and verify that its attributes match those of the instance\.
 
 ```
 aws autoscaling describe-launch-configurations --launch-configuration-names my-lc-from-instance
@@ -81,14 +81,14 @@ The AMI used to launch the specified instance must still exist\.
 
 ### Create a launch configuration and override the block devices<a name="create-lc-with-bdm-aws-cli"></a>
 
-Use the following [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/create-launch-configuration.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/create-launch-configuration.html) command to create a launch configuration using an EC2 instance but with a custom block device mapping\.
+Use the following [create\-launch\-configuration](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/create-launch-configuration.html) command to create a launch configuration using an EC2 instance but with a custom block device mapping\.
 
 ```
 aws autoscaling create-launch-configuration --launch-configuration-name my-lc-from-instance-bdm --instance-id i-a8e09d9c \
   --block-device-mappings "[{\"DeviceName\":\"/dev/sda1\",\"Ebs\":{\"SnapshotId\":\"snap-3decf207\"}},{\"DeviceName\":\"/dev/sdf\",\"Ebs\":{\"SnapshotId\":\"snap-eed6ac86\"}}]"
 ```
 
-Use the following [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/describe-launch-configurations.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/describe-launch-configurations.html) command to describe the launch configuration and verify that it uses your custom block device mapping\.
+Use the following [describe\-launch\-configurations](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/describe-launch-configurations.html) command to describe the launch configuration and verify that it uses your custom block device mapping\.
 
 ```
 aws autoscaling describe-launch-configurations --launch-configuration-names my-lc-from-instance-bdm
@@ -145,14 +145,14 @@ The AMI used to launch the specified instance must still exist\.
 
 ### Create a launch configuration and override the instance type<a name="create-lc-with-instance-type-aws-cli"></a>
 
-Use the following [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/create-launch-configuration.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/create-launch-configuration.html) command to create a launch configuration using an EC2 instance but with a different instance type \(for example `t2.medium`\) than the instance \(for example `t2.micro`\)\.
+Use the following [create\-launch\-configuration](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/create-launch-configuration.html) command to create a launch configuration using an EC2 instance but with a different instance type \(for example `t2.medium`\) than the instance \(for example `t2.micro`\)\.
 
 ```
 aws autoscaling create-launch-configuration --launch-configuration-name my-lc-from-instance-changetype \
   --instance-id i-a8e09d9c --instance-type t2.medium
 ```
 
-Use the following [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/describe-launch-configurations.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/describe-launch-configurations.html) command to describe the launch configuration and verify that the instance type was overridden\.
+Use the following [describe\-launch\-configurations](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/describe-launch-configurations.html) command to describe the launch configuration and verify that the instance type was overridden\.
 
 ```
 aws autoscaling describe-launch-configurations --launch-configuration-names my-lc-from-instance-changetype

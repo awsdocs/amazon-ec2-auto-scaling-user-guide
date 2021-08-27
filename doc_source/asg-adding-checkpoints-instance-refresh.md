@@ -8,7 +8,7 @@ To enable checkpoints for an instance refresh, add the following refresh prefere
 
 The percentage of the Auto Scaling group that needs to be successfully replaced is indicated by the last value shown in the `CheckpointPercentages` array\. The operation doesn't transition to `Successful` until this percentage of the group is replaced successfully, and each instance is warmed up and ready to start serving traffic again\. 
 
-Amazon EC2 Auto Scaling emits events for each checkpoint\. If you add an EventBridge rule to send the events to a target such as Amazon SNS, you can be notified when you can run the required validations\. For more information, see [Creating EventBridge rules for instance refresh events](cloud-watch-events.md#monitor-events-eventbridge-sns)\.
+Amazon EC2 Auto Scaling emits events for each checkpoint\. If you add an EventBridge rule to send the events to a target such as Amazon SNS, you can be notified when you can run the required validations\. For more information, see [Creating EventBridge rules for instance refresh events](monitor-events-eventbridge-sns.md)\.
 
 ## Setting instance refresh checkpoint preferences \(console\)<a name="setting-checkpoint-preferences-console"></a>
 
@@ -26,7 +26,7 @@ You can configure checkpoints in the preferences for an instance refresh\.
 
 1. In the **Start instance refresh** dialog box, specify the applicable values for **Minimum healthy percentage** and **Instance warmup**\. 
 
-1. Select the **Enable instance refresh with checkpoints** check box\.
+1. <a name="enabling-checkpoints-console"></a>Select the **Enable instance refresh with checkpoints** check box\.
 
    This displays a box where you can define the percentage threshold for the first checkpoint\. 
 

@@ -23,8 +23,6 @@ The following table describes the key components of Amazon EC2 Auto Scaling\.
 
 ## Getting started<a name="what-is-auto-scaling-next-steps"></a>
 
-If you're new to Amazon EC2 Auto Scaling, we recommend that you review [Amazon EC2 Auto Scaling instance lifecycle](AutoScalingGroupLifecycle.md) before you begin\.
-
 To begin, complete the [Getting started with Amazon EC2 Auto Scaling](GettingStartedTutorial.md) tutorial to create an Auto Scaling group and see how it responds when an instance in that group terminates\. If you already have running EC2 instances, you can create an Auto Scaling group using an existing EC2 instance, and remove the instance from the group at any time\.
 
 ## Accessing Amazon EC2 Auto Scaling<a name="access-as"></a>
@@ -49,10 +47,6 @@ For information about your credentials for accessing AWS, see [AWS security cred
 
 There are no additional fees with Amazon EC2 Auto Scaling, so it's easy to try it out and see how it can benefit your AWS architecture\. You only pay for the AWS resources \(for example, EC2 instances, EBS volumes, and CloudWatch alarms\) that you use\.
 
-## PCI DSS compliance<a name="pci-dss-compliance"></a>
-
-Amazon EC2 Auto Scaling supports the processing, storage, and transmission of credit card data by a merchant or service provider, and has been validated as being compliant with Payment Card Industry \(PCI\) Data Security Standard \(DSS\)\. For more information about PCI DSS, including how to request a copy of the AWS PCI Compliance Package, see [PCI DSS Level 1](https://aws.amazon.com/compliance/pci-dss-level-1-faqs/)\. 
-
 ## Related services<a name="related-services"></a>
 
 To automatically distribute incoming application traffic across multiple instances in your Auto Scaling group, use Elastic Load Balancing\. For more information, see the [Elastic Load Balancing User Guide](https://docs.aws.amazon.com/elasticloadbalancing/latest/userguide/)\.
@@ -60,5 +54,3 @@ To automatically distribute incoming application traffic across multiple instanc
 To monitor basic statistics for your instances and Amazon EBS volumes, use Amazon CloudWatch\. For more information, see the [Amazon CloudWatch User Guide](https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/)\.
 
 To configure auto scaling for scalable resources for other Amazon Web Services beyond Amazon EC2, see the [Application Auto Scaling User Guide](https://docs.aws.amazon.com/autoscaling/application/userguide/)\.
-
-To monitor the calls made to the Amazon EC2 Auto Scaling API for your account, use AWS CloudTrail\. The data logged includes calls made by the AWS Management Console, command line tools, and other services\. For more information, see the [AWS CloudTrail User Guide](https://docs.aws.amazon.com/awscloudtrail/latest/userguide/)\.

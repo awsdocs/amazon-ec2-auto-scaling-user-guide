@@ -37,7 +37,7 @@ The following scale\-in events direct the Auto Scaling group to detach EC2 insta
 
 It is important that you create a corresponding scale\-in event for each scale\-out event that you create\. This helps ensure that the resources assigned to your application match the demand for those resources as closely as possible\.
 
-When a scale\-in event occurs, the Auto Scaling group detaches one or more instances\. The Auto Scaling group uses its termination policy to determine which instances to terminate\. Instances that are in the process of detaching from the Auto Scaling group and shutting down enter the `Terminating` state, and can't be put back into service\. If you add a lifecycle hook to your Auto Scaling group, you can perform a custom action here\. Finally, the instances are completely terminated and enter the `Terminated` state\.
+When a scale\-in event occurs, the Auto Scaling group terminates one or more instances\. The Auto Scaling group uses its termination policy to determine which instances to terminate\. Instances that are in the process of terminating from the Auto Scaling group and shutting down enter the `Terminating` state, and can't be put back into service\. If you add a lifecycle hook to your Auto Scaling group, you can perform a custom action here\. Finally, the instances are completely terminated and enter the `Terminated` state\.
 
 ## Attach an instance<a name="as-lifecycle-attach"></a>
 

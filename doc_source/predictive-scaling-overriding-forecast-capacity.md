@@ -117,7 +117,9 @@ Next, create two scheduled actions for a specific time period when your applicat
 
    1. For **Recurrence**, choose **Once**\.
 
-   1. Define a **Start time**, in UTC\. 
+   1. For **Time zone**, choose a time zone\. If no time zone is chosen, `ETC/UTC` is used by default\.
+
+   1. Define a **Specific start time**\. 
 
 1. Choose **Create**\.
 

@@ -31,16 +31,16 @@ With the maximum instance lifetime and instance refresh features, you can also r
 
 **To change the launch configuration for an Auto Scaling group \(AWS CLI\)**
 
-1. Describe the current launch configuration using the [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/describe-launch-configurations.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/describe-launch-configurations.html) command\.
+1. Describe the current launch configuration using the [describe\-launch\-configurations](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/describe-launch-configurations.html) command\.
 
-1. Create a new launch configuration using the [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/create-launch-configuration.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/create-launch-configuration.html) command\.
+1. Create a new launch configuration using the [create\-launch\-configuration](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/create-launch-configuration.html) command\.
 
-1. Update the launch configuration for the Auto Scaling group using the [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/update-auto-scaling-group.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/update-auto-scaling-group.html) command with the `--launch-configuration-names` parameter\.
+1. Update the launch configuration for the Auto Scaling group using the [update\-auto\-scaling\-group](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/update-auto-scaling-group.html) command with the `--launch-configuration-names` parameter\.
 
 **To change the launch configuration for an Auto Scaling group \(Tools for Windows PowerShell\)**
 
-1. Describe the current launch configuration using the [https://docs.aws.amazon.com/powershell/latest/reference/items/Get-ASLaunchConfiguration.html](https://docs.aws.amazon.com/powershell/latest/reference/items/Get-ASLaunchConfiguration.html) command\.
+1. Describe the current launch configuration using the [Get\-ASLaunchConfiguration](https://docs.aws.amazon.com/powershell/latest/reference/items/Get-ASLaunchConfiguration.html) command\.
 
-1. Create a new launch configuration using the [https://docs.aws.amazon.com/powershell/latest/reference/items/New-ASLaunchConfiguration.html](https://docs.aws.amazon.com/powershell/latest/reference/items/New-ASLaunchConfiguration.html) command\.
+1. Create a new launch configuration using the [New\-ASLaunchConfiguration](https://docs.aws.amazon.com/powershell/latest/reference/items/New-ASLaunchConfiguration.html) command\.
 
-1. Update the launch configuration for the Auto Scaling group using the [https://docs.aws.amazon.com/powershell/latest/reference/items/Update-ASAutoScalingGroup.html](https://docs.aws.amazon.com/powershell/latest/reference/items/Update-ASAutoScalingGroup.html) command with the `-LaunchConfigurationName` parameter\.
+1. Update the launch configuration for the Auto Scaling group using the [Update\-ASAutoScalingGroup](https://docs.aws.amazon.com/powershell/latest/reference/items/Update-ASAutoScalingGroup.html) command with the `-LaunchConfigurationName` parameter\.

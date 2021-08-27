@@ -77,7 +77,7 @@ Before creating Auto Scaling groups using instance weighting, we recommend that 
 The following examples show how to use the AWS CLI to add weights when you create Auto Scaling groups, and to add or modify weights for existing Auto Scaling groups\. You can configure a variety of parameters in a JSON file, and then reference the JSON file as the sole parameter for your Auto Scaling group\. 
 
 **To add weights to an Auto Scaling group on creation**
-+ Use the [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/create-auto-scaling-group.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/create-auto-scaling-group.html) command to create a new Auto Scaling group\. For example, the following command creates a new Auto Scaling group and adds instance weighting by specifying the following:
++ Use the [create\-auto\-scaling\-group](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/create-auto-scaling-group.html) command to create a new Auto Scaling group\. For example, the following command creates a new Auto Scaling group and adds instance weighting by specifying the following:
   + The percentage of the group to launch as On\-Demand Instances \(`0`\) 
   + The allocation strategy for Spot Instances in each Availability Zone \(`capacity-optimized`\)
   + The instance types to launch in priority order \(`m4.16xlarge`, `m5.24xlarge`\)
@@ -125,7 +125,7 @@ The following examples show how to use the AWS CLI to add weights when you creat
   ```
 
 **To add or modify weights for an existing Auto Scaling group**
-+ Use the [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/update-auto-scaling-group.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/update-auto-scaling-group.html) command to add or modify weights\. For example, the following command adds weights to instance types in an existing Auto Scaling group by specifying the following:
++ Use the [update\-auto\-scaling\-group](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/update-auto-scaling-group.html) command to add or modify weights\. For example, the following command adds weights to instance types in an existing Auto Scaling group by specifying the following:
   + The instance types to launch in priority order \(`c5.18xlarge`, `c5.24xlarge`, `c5.2xlarge`, `c5.4xlarge`\)
   + The instance weights that correspond to the relative size difference \(vCPUs\) between instance types \(`18`, `24`, `2`, `4`\)
   + The new, increased desired capacity, which is larger than the largest weight
@@ -168,7 +168,7 @@ The following examples show how to use the AWS CLI to add weights when you creat
   ```
 
 **To verify the weights for an Auto Scaling group**
-+ Use the following [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/describe-auto-scaling-groups.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/describe-auto-scaling-groups.html) command to verify the weights\.
++ Use the following [describe\-auto\-scaling\-groups](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/describe-auto-scaling-groups.html) command to verify the weights\.
 
   ```
   aws autoscaling describe-auto-scaling-groups --auto-scaling-group-name my-asg

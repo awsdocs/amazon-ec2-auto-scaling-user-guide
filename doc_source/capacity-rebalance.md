@@ -70,10 +70,10 @@ Under the **Instances distribution** section, you can select whether or not to e
 
 The following examples show how to use the AWS CLI to enable and disable Capacity Rebalancing\. 
 
-Use the [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/create-auto-scaling-group.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/create-auto-scaling-group.html) or [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/update-auto-scaling-group.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/update-auto-scaling-group.html) command with the following parameter: 
+Use the [create\-auto\-scaling\-group](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/create-auto-scaling-group.html) or [update\-auto\-scaling\-group](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/update-auto-scaling-group.html) command with the following parameter: 
 + `--capacity-rebalance` / `--no-capacity-rebalance` — Boolean value that indicates whether Capacity Rebalancing is enabled\.
 
-Before you call the [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/create-auto-scaling-group.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/create-auto-scaling-group.html) command, you need the name of a launch template that is configured for use with an Auto Scaling group\. For more information, see [Creating a launch template for an Auto Scaling group](create-launch-template.md)\. 
+Before you call the [create\-auto\-scaling\-group](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/create-auto-scaling-group.html) command, you need the name of a launch template that is configured for use with an Auto Scaling group\. For more information, see [Creating a launch template for an Auto Scaling group](create-launch-template.md)\. 
 
 **Note**  
 The following procedures show how to use a configuration file formatted in JSON or YAML\. If you use AWS CLI version 1, you must specify a JSON\-formatted configuration file\. If you use AWS CLI version 2, you can specify a configuration file formatted in either YAML or JSON\.
@@ -81,7 +81,7 @@ The following procedures show how to use a configuration file formatted in JSON 
 #### JSON<a name="enable-capacity-rebalance-aws-cli-json"></a>
 
 **To create and configure a new Auto Scaling group**
-+ Use the following [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/create-auto-scaling-group.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/create-auto-scaling-group.html) command to create a new Auto Scaling group and enable Capacity Rebalancing, referencing a JSON file as the sole parameter for your Auto Scaling group\.
++ Use the following [create\-auto\-scaling\-group](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/create-auto-scaling-group.html) command to create a new Auto Scaling group and enable Capacity Rebalancing, referencing a JSON file as the sole parameter for your Auto Scaling group\.
 
   ```
   aws autoscaling create-auto-scaling-group --cli-input-json file://~/config.json
@@ -153,7 +153,7 @@ The following procedures show how to use a configuration file formatted in JSON 
 #### YAML<a name="enable-capacity-rebalance-aws-cli-yaml"></a>
 
 **To create and configure a new Auto Scaling group**
-+ Use the following [https://awscli.amazonaws.com/v2/documentation/api/latest/reference/autoscaling/create-auto-scaling-group.html](https://awscli.amazonaws.com/v2/documentation/api/latest/reference/autoscaling/create-auto-scaling-group.html) command to create a new Auto Scaling group and enable Capacity Rebalancing, referencing a YAML file as the sole parameter for your Auto Scaling group\.
++ Use the following [create\-auto\-scaling\-group](https://awscli.amazonaws.com/v2/documentation/api/latest/reference/autoscaling/create-auto-scaling-group.html) command to create a new Auto Scaling group and enable Capacity Rebalancing, referencing a YAML file as the sole parameter for your Auto Scaling group\.
 
   ```
   aws autoscaling create-auto-scaling-group --cli-input-yaml file://~/config.yaml
@@ -198,7 +198,7 @@ The following procedures show how to use a configuration file formatted in JSON 
   ```
 
 **To enable Capacity Rebalancing for an existing Auto Scaling group**
-+ Use the following [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/update-auto-scaling-group.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/update-auto-scaling-group.html) command to enable Capacity Rebalancing\.
++ Use the following [update\-auto\-scaling\-group](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/update-auto-scaling-group.html) command to enable Capacity Rebalancing\.
 
   ```
   aws autoscaling update-auto-scaling-group --auto-scaling-group-name my-asg \
@@ -206,7 +206,7 @@ The following procedures show how to use a configuration file formatted in JSON 
   ```
 
 **To verify that Capacity Rebalancing is enabled for an Auto Scaling group**
-+ Use the following [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/describe-auto-scaling-groups.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/describe-auto-scaling-groups.html) command to verify that Capacity Rebalancing is enabled and to view the details\. 
++ Use the following [describe\-auto\-scaling\-groups](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/describe-auto-scaling-groups.html) command to verify that Capacity Rebalancing is enabled and to view the details\. 
 
   ```
   aws autoscaling describe-auto-scaling-groups --auto-scaling-group-name my-asg
@@ -228,7 +228,7 @@ The following procedures show how to use a configuration file formatted in JSON 
   ```
 
 **To disable Capacity Rebalancing**  
-Use the [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/update-auto-scaling-group.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/update-auto-scaling-group.html) command with the `--no-capacity-rebalance` option to disable Capacity Rebalancing\.
+Use the [update\-auto\-scaling\-group](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/update-auto-scaling-group.html) command with the `--no-capacity-rebalance` option to disable Capacity Rebalancing\.
 
 ```
 aws autoscaling update-auto-scaling-group --auto-scaling-group-name my-asg \

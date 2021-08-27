@@ -11,7 +11,7 @@ For more information about EventBridge, see [Getting started with Amazon EventBr
 **Topics**
 + [Auto Scaling events](#cloudwatch-event-types)
 + [Using AWS Lambda to handle events](#handle-events-using-lambda)
-+ [Creating EventBridge rules for instance refresh events](#monitor-events-eventbridge-sns)
++ [See also](#eventbridge-see-also)
 
 ## Auto Scaling events<a name="cloudwatch-event-types"></a>
 
@@ -29,6 +29,10 @@ For an example of the event for a Spot Instance interruption, see [Spot Instance
 + [EC2 Instance Terminate Successful](#terminate-successful)
 + [EC2 Instance Terminate Unsuccessful](#terminate-unsuccessful)
 + [EC2 Auto Scaling Instance Refresh Checkpoint Reached](#instance-refresh-checkpoint-reached)
++ [EC2 Auto Scaling Instance Refresh Started](#instance-refresh-started)
++ [EC2 Auto Scaling Instance Refresh Succeeded](#instance-refresh-succeeded)
++ [EC2 Auto Scaling Instance Refresh Failed](#instance-refresh-failed)
++ [EC2 Auto Scaling Instance Refresh Cancelled](#instance-refresh-cancelled)
 
 ### EC2 Instance\-launch Lifecycle Action<a name="launch-lifecycle-action"></a>
 
@@ -272,13 +276,115 @@ The following is example data for this event\.
 }
 ```
 
+### EC2 Auto Scaling Instance Refresh Started<a name="instance-refresh-started"></a>
+
+Amazon EC2 Auto Scaling emits events when the status of an instance refresh changes to `InProgress`\. 
+
+**Event Data**  
+The following is example data for this event\.
+
+```
+{
+  "version": "0",
+  "id": "12345678-1234-1234-1234-123456789012",
+  "detail-type": "EC2 Auto Scaling Instance Refresh Started",
+  "source": "aws.autoscaling",
+  "account": "123456789012",
+  "time": "yyyy-mm-ddThh:mm:ssZ",
+  "region": "us-west-2",
+  "resources": [
+    "auto-scaling-group-arn"
+  ],
+  "detail": {
+      "InstanceRefreshId": "c613620e-07e2-4ed2-a9e2-ef8258911ade",
+      "AutoScalingGroupName": "my-auto-scaling-group"
+  }
+}
+```
+
+### EC2 Auto Scaling Instance Refresh Succeeded<a name="instance-refresh-succeeded"></a>
+
+Amazon EC2 Auto Scaling emits events when the status of an instance refresh changes to `Succeeded`\. 
+
+**Event Data**  
+The following is example data for this event\.
+
+```
+{
+  "version": "0",
+  "id": "12345678-1234-1234-1234-123456789012",
+  "detail-type": "EC2 Auto Scaling Instance Refresh Succeeded",
+  "source": "aws.autoscaling",
+  "account": "123456789012",
+  "time": "yyyy-mm-ddThh:mm:ssZ",
+  "region": "us-west-2",
+  "resources": [
+    "auto-scaling-group-arn"
+  ],
+  "detail": {
+      "InstanceRefreshId": "c613620e-07e2-4ed2-a9e2-ef8258911ade",
+      "AutoScalingGroupName": "my-auto-scaling-group"
+  }
+}
+```
+
+### EC2 Auto Scaling Instance Refresh Failed<a name="instance-refresh-failed"></a>
+
+Amazon EC2 Auto Scaling emits events when the status of an instance refresh changes to `Failed`\. 
+
+**Event Data**  
+The following is example data for this event\.
+
+```
+{
+  "version": "0",
+  "id": "12345678-1234-1234-1234-123456789012",
+  "detail-type": "EC2 Auto Scaling Instance Refresh Failed",
+  "source": "aws.autoscaling",
+  "account": "123456789012",
+  "time": "yyyy-mm-ddThh:mm:ssZ",
+  "region": "us-west-2",
+  "resources": [
+    "auto-scaling-group-arn"
+  ],
+  "detail": {
+      "InstanceRefreshId": "c613620e-07e2-4ed2-a9e2-ef8258911ade",
+      "AutoScalingGroupName": "my-auto-scaling-group"
+  }
+}
+```
+
+### EC2 Auto Scaling Instance Refresh Cancelled<a name="instance-refresh-cancelled"></a>
+
+Amazon EC2 Auto Scaling emits events when the status of an instance refresh changes to `Cancelled`\. 
+
+**Event Data**  
+The following is example data for this event\.
+
+```
+{
+  "version": "0",
+  "id": "12345678-1234-1234-1234-123456789012",
+  "detail-type": "EC2 Auto Scaling Instance Refresh Cancelled",
+  "source": "aws.autoscaling",
+  "account": "123456789012",
+  "time": "yyyy-mm-ddThh:mm:ssZ",
+  "region": "us-west-2",
+  "resources": [
+    "auto-scaling-group-arn"
+  ],
+  "detail": {
+      "InstanceRefreshId": "c613620e-07e2-4ed2-a9e2-ef8258911ade",
+      "AutoScalingGroupName": "my-auto-scaling-group"
+  }
+}
+```
+
 ## Using AWS Lambda to handle events<a name="handle-events-using-lambda"></a>
 
 AWS Lambda is a compute service that you can use to run code without provisioning or managing servers\. You package your code and upload it to AWS Lambda as a *Lambda function*\. AWS Lambda then runs the function when the function is invoked\. A function can be invoked manually by you, automatically in response to events, or in response to requests from applications or services\. 
 
 To help you get started with Lambda, follow the procedure below\. This section shows you how to create a Lambda function and an EventBridge rule causing all instance launch and terminate events to be logged in Amazon CloudWatch Logs\. 
-
-For a step\-by\-step tutorial that shows you how to create a Lambda function to perform lifecycle actions, see [Tutorial: Configure a lifecycle hook that invokes a Lambda function](tutorial-lifecycle-hook-lambda.md)\. This tutorial covers how to get started with lifecycle hooks\. With lifecycle hooks, you can use Lambda to perform tasks on instances before they are put into service or before they are terminated\.
 
 ### Create a Lambda function<a name="create-lambda-function"></a>
 
@@ -377,68 +483,8 @@ To test your rule, change the size of your Auto Scaling group\. If you used the 
 1. Select a log stream to view the event data\. The data is displayed, similar to the following:  
 ![\[Viewing event data for Amazon EC2 Auto Scaling in CloudWatch Logs.\]](http://docs.aws.amazon.com/autoscaling/ec2/userguide/images/auto_scaling_event_data.png)
 
-## Creating EventBridge rules for instance refresh events<a name="monitor-events-eventbridge-sns"></a>
+## See also<a name="eventbridge-see-also"></a>
 
-This section shows you how to create a rule that notifies you whenever a checkpoint is reached during an instance refresh\. The procedure for setting up email notifications through Amazon SNS is included\. To use Amazon SNS to send email notifications, you must first create a *topic* and then subscribe your email addresses to the topic\.
+For more information about using EventBridge and Amazon EC2 Auto Scaling, see [Creating EventBridge rules for instance refresh events](monitor-events-eventbridge-sns.md) and [Creating EventBridge rules for warm pool events](warm-pool-events-eventbridge-rules.md)\.
 
-### Create an Amazon SNS topic<a name="eventbridge-sns-create-topic"></a>
-
- An SNS topic is a logical access point, a communication channel that your Auto Scaling group uses to send the notifications\. You create a topic by specifying a name for your topic\.
-
-When you create a topic name, the name must meet the following requirements:
-+ Between 1 and 256 characters long
-+ Contain uppercase and lowercase ASCII letters, numbers, underscores, or hyphens 
-
-For more information, see [Creating an Amazon SNS topic](https://docs.aws.amazon.com/sns/latest/dg/sns-create-topic.html) in the *Amazon Simple Notification Service Developer Guide*\.
-
-### Subscribe to the Amazon SNS topic<a name="eventbridge-sns-subscribe-topic"></a>
-
-To receive the notifications that your Auto Scaling group sends to the topic, you must subscribe an endpoint to the topic\. In this procedure, for **Endpoint**, specify the email address where you want to receive the notifications from Amazon EC2 Auto Scaling\.
-
-For more information, see [Subscribing to an Amazon SNS topic](https://docs.aws.amazon.com/sns/latest/dg/sns-create-subscribe-endpoint-to-topic.html) in the *Amazon Simple Notification Service Developer Guide*\.
-
-### Confirm your Amazon SNS subscription<a name="eventbridge-sns-confirm-subscription"></a>
-
-Amazon SNS sends a confirmation email to the email address you specified in the previous step\.
-
-Make sure that you open the email from AWS Notifications and choose the link to confirm the subscription before you continue with the next step\.
-
-You will receive an acknowledgment message from AWS\. Amazon SNS is now configured to receive notifications and send the notification as an email to the email address that you specified\.
-
-### Route events to your Amazon SNS topic<a name="eventbridge-sns-create-rule"></a>
-
-Create a rule that matches selected events and routes them to your Amazon SNS topic to notify subscribed email addresses\.
-
-**To create a rule that routes events to your Amazon SNS topic**
-
-1. Open the Amazon EventBridge console at [https://console\.aws\.amazon\.com/events/](https://console.aws.amazon.com/events/)\.
-
-1. In the navigation pane, under **Events**, choose **Rules**\.
-
-1. In the **Rules** section, choose **Create rule**\.
-
-1. Enter a name and description for the rule\.
-
-1. For **Define pattern**, do the following:
-
-   1. Choose **Event Pattern**\.
-
-   1. For **Event matching pattern**, choose **Pre\-defined by service**\.
-
-   1. For **Service provider**, choose **Amazon Web Services**\.
-
-   1. For **Service Name**, choose **Auto Scaling**\.
-
-   1. For **Event type**, choose **Instance Refresh**\.
-
-   1. By default, the rule matches any Auto Scaling group in the Region\. To make the rule match a specific Auto Scaling group, choose **Specific group name\(s\)** and select one or more Auto Scaling groups\.
-
-1. For **Select event bus**, choose **AWS default event bus**\. When an AWS service in your account emits an event, it always goes to your account's default event bus\. 
-
-1. For **Target**, choose **SNS topic**\.
-
-1. For **Topic**, select the Amazon SNS topic that you created\.
-
-1. For **Configure input**, choose the input for the email notification\. 
-
-1. Choose **Create**\.
+For a step\-by\-step tutorial that shows you how to create a Lambda function to perform lifecycle actions, see [Tutorial: Configure a lifecycle hook that invokes a Lambda function](tutorial-lifecycle-hook-lambda.md)\. This tutorial covers how to get started with lifecycle hooks\. With lifecycle hooks, you can use Lambda to perform tasks on instances before they are put into service or before they are terminated\.

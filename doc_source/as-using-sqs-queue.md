@@ -32,6 +32,7 @@ The following diagram illustrates the architecture of this configuration\.
 To use this configuration, you need to be aware of the following limitations:
 + You must use the AWS CLI or an SDK to publish your custom metric to CloudWatch\. You can then monitor your metric with the AWS Management Console\. 
 + After publishing your custom metric, you must use the AWS CLI or an SDK to create a target tracking scaling policy with a customized metric specification\. 
++ Messages that have not been processed at the time an instance is terminated are returned to the SQS queue where they can be processed by another instance that is still running\. For applications where long running tasks are performed, you can optionally use instance scale\-in protection to have control over whether your Auto Scaling group terminates one of the idle instances and not the one that is in the middle of processing\.
 
 The following sections direct you to use the AWS CLI for the tasks you need to perform\. For example, to get metric data that reflects the present use of the queue, you use the SQS [get\-queue\-attributes](https://docs.aws.amazon.com/cli/latest/reference/sqs/get-queue-attributes.html) command\. Make sure that you have the CLI [installed](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-install.html) and [configured](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-configure.html)\. 
 

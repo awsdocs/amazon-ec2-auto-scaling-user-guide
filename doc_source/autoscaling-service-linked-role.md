@@ -18,8 +18,8 @@ The following sections describe how to create and manage Amazon EC2 Auto Scaling
 ## Overview<a name="autoscaling-service-linked-role-overview"></a>
 
 There are two types of Amazon EC2 Auto Scaling service\-linked roles:
-+ The default service\-linked role for your account, named **AWSServiceRoleForAutoScaling**\. This role is automatically assigned to your Auto Scaling groups unless you specify a different service\-linked role\. 
-+ A service\-linked role with a custom suffix that you specify when you create the role, for example, **AWSServiceRoleForAutoScaling\_*mysuffix***\.
++ The default service\-linked role for your account, named `AWSServiceRoleForAutoScaling`\. This role is automatically assigned to your Auto Scaling groups unless you specify a different service\-linked role\. 
++ A service\-linked role with a custom suffix that you specify when you create the role, for example, `AWSServiceRoleForAutoScaling_mysuffix`\.
 
 The permissions of a custom suffix service\-linked role are identical to those of the default service\-linked role\. In both cases, you cannot edit the roles, and you also cannot delete them if they are still in use by an Auto Scaling group\. The only difference is the role name suffix\. 
 
@@ -37,7 +37,7 @@ If you create customer managed CMKs that not all users should have access to, fo
 
 ## Permissions granted by the service\-linked role<a name="service-linked-role-permissions"></a>
 
-Amazon EC2 Auto Scaling uses the **AWSServiceRoleForAutoScaling** service\-linked role or your custom suffix service\-linked role to call AWS APIs on your behalf: 
+Amazon EC2 Auto Scaling uses the `AWSServiceRoleForAutoScaling` service\-linked role or your custom suffix service\-linked role to call AWS APIs on your behalf: 
 
 The role permissions policy allows Amazon EC2 Auto Scaling to complete the following actions on resources\. 
 
@@ -145,12 +145,12 @@ The role trusts the `autoscaling.amazonaws.com` service to assume it\.
 
 ## Create a service\-linked role \(automatic\)<a name="create-service-linked-role"></a>
 
-Amazon EC2 Auto Scaling creates the **AWSServiceRoleForAutoScaling** service\-linked role for you the first time that you create an Auto Scaling group, unless you manually create a custom suffix service\-linked role and specify it when creating the group\.
+Amazon EC2 Auto Scaling creates the `AWSServiceRoleForAutoScaling` service\-linked role for you the first time that you create an Auto Scaling group, unless you manually create a custom suffix service\-linked role and specify it when creating the group\.
 
 **Important**  
 You must have IAM permissions to create the service\-linked role\. Otherwise, the automatic creation fails\. For more information, see [Service\-linked role permissions](https://docs.aws.amazon.com/IAM/latest/UserGuide/using-service-linked-roles.html#service-linked-role-permissions) in the *IAM User Guide* and [Required permissions to create a service\-linked role](security_iam_id-based-policy-examples.md#ec2-auto-scaling-slr-permissions) in this guide\.
 
-Amazon EC2 Auto Scaling began supporting service\-linked roles in March 2018\. If you created an Auto Scaling group before then, Amazon EC2 Auto Scaling created the **AWSServiceRoleForAutoScaling** role in your account\. For more information, see [A new role appeared in my AWS account](https://docs.aws.amazon.com/IAM/latest/UserGuide/troubleshoot_roles.html#troubleshoot_roles_new-role-appeared) in the *IAM User Guide*\.
+Amazon EC2 Auto Scaling began supporting service\-linked roles in March 2018\. If you created an Auto Scaling group before then, Amazon EC2 Auto Scaling created the `AWSServiceRoleForAutoScaling` role in your account\. For more information, see [A new role appeared in my AWS account](https://docs.aws.amazon.com/IAM/latest/UserGuide/troubleshoot_roles.html#troubleshoot_roles_new-role-appeared) in the *IAM User Guide*\.
 
 ## Create a service\-linked role \(manual\)<a name="create-service-linked-role-manual"></a>
 
@@ -166,14 +166,14 @@ Amazon EC2 Auto Scaling began supporting service\-linked roles in March 2018\. I
 
 1. Choose **Next: Permissions**, **Next: Tags**, and then **Next: Review**\. Note: You cannot attach tags to service\-linked roles during creation\. 
 
-1. On the **Review** page, leave **Role name** blank to create a service\-linked role with the name **AWSServiceRoleForAutoScaling**, or enter a suffix to create a service\-linked role with the name **AWSServiceRoleForAutoScaling**\_*suffix*\.
+1. On the **Review** page, leave **Role name** blank to create a service\-linked role with the name `AWSServiceRoleForAutoScaling`, or enter a suffix to create a service\-linked role with the name `AWSServiceRoleForAutoScaling_suffix`\.
 
 1. \(Optional\) For **Role description**, edit the description for the service\-linked role\. 
 
 1. Choose **Create role**\. 
 
 **To create a service\-linked role \(AWS CLI\)**  
-Use the following [https://docs.aws.amazon.com/cli/latest/reference/iam/create-service-linked-role.html](https://docs.aws.amazon.com/cli/latest/reference/iam/create-service-linked-role.html) CLI command to create a service\-linked role for Amazon EC2 Auto Scaling with the name **AWSServiceRoleForAutoScaling\_*suffix***\. 
+Use the following [create\-service\-linked\-role](https://docs.aws.amazon.com/cli/latest/reference/iam/create-service-linked-role.html) CLI command to create a service\-linked role for Amazon EC2 Auto Scaling with the name `AWSServiceRoleForAutoScaling_suffix`\. 
 
 ```
 aws iam create-service-linked-role --aws-service-name autoscaling.amazonaws.com --custom-suffix suffix
@@ -223,7 +223,7 @@ You can delete a service\-linked role only after first deleting the related depe
 
 You can use IAM to delete a service\-linked role\. For more information, see [Deleting a service\-linked role](https://docs.aws.amazon.com/IAM/latest/UserGuide/using-service-linked-roles.html#delete-service-linked-role) in the *IAM User Guide*\.
 
-If you delete the **AWSServiceRoleForAutoScaling** service\-linked role, Amazon EC2 Auto Scaling creates the role again when you create an Auto Scaling group and do not specify a different service\-linked role\.
+If you delete the `AWSServiceRoleForAutoScaling` service\-linked role, Amazon EC2 Auto Scaling creates the role again when you create an Auto Scaling group and do not specify a different service\-linked role\.
 
 ## Supported regions for Amazon EC2 Auto Scaling service\-linked roles<a name="slr-regions"></a>
 

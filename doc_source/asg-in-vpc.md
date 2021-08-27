@@ -80,3 +80,4 @@ Use the following topics to learn more about VPCs and subnets\.
   + [Amazon VPC User Guide](https://docs.aws.amazon.com/vpc/latest/userguide/)
   + [VPC peering](https://docs.aws.amazon.com/vpc/latest/userguide/vpc-peering.html)
   + [Elastic network interfaces](https://docs.aws.amazon.com/vpc/latest/userguide/VPC_ElasticNetworkInterfaces.html)
+  + [Migrate from EC2\-Classic to a VPC](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/vpc-migrate.html)
