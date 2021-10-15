@@ -31,11 +31,11 @@ The default termination policy applies multiple termination criteria before sele
 
 ## Default termination policy and mixed instances groups<a name="default-termination-policy-mixed-instances-groups"></a>
 
-When an Auto Scaling group with a [mixed instances policy](asg-purchase-options.md) scales in, Amazon EC2 Auto Scaling still uses termination policies to prioritize which instances to terminate, but first it identifies which of the two types \(Spot or On\-Demand\) should be terminated\. It then applies the termination policies in each Availability Zone individually\. It also identifies which instances \(within the identified purchase option\) in which Availability Zones to terminate that will result in the Availability Zones being most balanced\. The same logic applies to Auto Scaling groups that use a mixed instances configuration with weights defined for the instance types\. 
+When an Auto Scaling group with a [mixed instances policy](ec2-auto-scaling-mixed-instances-groups.md) scales in, Amazon EC2 Auto Scaling still uses termination policies to prioritize which instances to terminate, but first it identifies which of the two types \(Spot or On\-Demand\) should be terminated\. It then applies the termination policies in each Availability Zone individually\. It also identifies which instances \(within the identified purchase option\) in which Availability Zones to terminate that will result in the Availability Zones being most balanced\. The same logic applies to Auto Scaling groups that use a mixed instances configuration with weights defined for the instance types\. 
 
-The default termination policy changes slightly due to differences in how [mixed instances policies](asg-purchase-options.md) are implemented\. The following new behavior of the default termination policy applies:
+The default termination policy changes slightly due to differences in how [mixed instances policies](ec2-auto-scaling-mixed-instances-groups.md) are implemented\. The following new behavior of the default termination policy applies:
 
-1. Determine which instances are eligible for termination in order to align the remaining instances to the [allocation strategy](asg-purchase-options.md#asg-allocation-strategies) for the On\-Demand or Spot Instance that is terminating\.
+1. Determine which instances are eligible for termination in order to align the remaining instances to the [allocation strategy](ec2-auto-scaling-mixed-instances-groups.md#allocation-strategies) for the On\-Demand or Spot Instance that is terminating\.
 
    For example, after your instances launch, you might change the priority order of your preferred instance types\. When a scale\-in event occurs, Amazon EC2 Auto Scaling tries to gradually shift the On\-Demand Instances away from instance types that are lower priority\.
 
@@ -78,9 +78,13 @@ After your Auto Scaling group has been created, you can update the termination p
 
 1. On the **Details** tab, choose **Advanced configurations**, **Edit**\.
 
-1. For **Termination policies**, choose one or more termination policies\. If you choose multiple policies, list them in the order in which they should apply\. If you use the **Default** policy, make it the last one in the list\.
+1. For **Termination policies**, choose one or more termination policies\. If you choose multiple policies, put them in the order that you want them evaluated in\.
+
+   You can optionally choose **Custom termination policy** and then choose a Lambda function that meets your needs\. If you have created versions and aliases for your Lambda function, you can choose a version or alias from the **Version/Alias** drop\-down\. To use the unpublished version of your Lambda function, keep **Version/Alias** set to its default\. For more information, see [Creating a custom termination policy with Lambda](lambda-custom-termination-policy.md)\.
 **Note**  
-Currently, the [custom termination policies with Lambda](https://docs.aws.amazon.com/autoscaling/ec2/userguide/lambda-custom-termination-policy.html) feature is available only if you use the AWS CLI or an SDK to update the Auto Scaling group, and is not available to update from the console\. 
+When using multiple policies, their order must be set correctly:  
+If you use the **Default** policy, it must be the last policy in the list\.
+If you use a **Custom termination policy**, it must be the first policy in the list\.
 
 1. Choose **Update**\.
 

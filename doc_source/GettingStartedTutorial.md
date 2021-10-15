@@ -11,6 +11,9 @@ Before you create an Auto Scaling group for use with your application, review yo
 
 The better you understand your application, the more effective you can make your Auto Scaling architecture\.
 
+**Note**  
+For an introduction video, see [AWS re:Invent 2018: Capacity Management Made Easy with Amazon EC2 Auto Scaling](https://www.youtube.com/watch?v=PideBMIcwBQ) on *YouTube*\.
+
 **Topics**
 + [Walkthrough summary](#gs-walkthrough-summary)
 + [Preparing for the walkthrough](#gs-preparing-for-walkthrough)

@@ -1,4 +1,4 @@
-# Configuring instance weighting for Amazon EC2 Auto Scaling<a name="asg-instance-weighting"></a>
+# Configuring instance weighting for Amazon EC2 Auto Scaling<a name="ec2-auto-scaling-mixed-instances-groups-instance-weighting"></a>
 
 When you configure an Auto Scaling group to launch multiple instance types, you have the option of defining the number of capacity units that each instance contributes to the desired capacity of the group, using *instance weighting*\. This allows you to specify the relative weight of each instance type in a way that directly maps to the performance of your application\. You can weight your instances to suit your specific application needs, for example, by the cores \(vCPUs\) or by memory \(GiBs\)\. 
 
@@ -72,7 +72,7 @@ Note the following when adding or modifying weights for existing groups:
 
 You can add weights to an existing Auto Scaling group, or to a new Auto Scaling group as you create it\. You can also update an existing Auto Scaling group to define new configuration options \(Spot/On\-Demand usage, Spot allocation strategy, instance types\)\. If you change how many Spot or On\-Demand Instances you want, Amazon EC2 Auto Scaling gradually replaces existing instances to match the new purchase options\. 
 
-Before creating Auto Scaling groups using instance weighting, we recommend that you become familiar with launching groups with multiple instance types\. For more information and additional examples, see [Auto Scaling groups with multiple instance types and purchase options](asg-purchase-options.md)\.
+Before creating Auto Scaling groups using instance weighting, we recommend that you become familiar with launching groups with multiple instance types\. For more information and additional examples, see [Auto Scaling groups with multiple instance types and purchase options](ec2-auto-scaling-mixed-instances-groups.md)\.
 
 The following examples show how to use the AWS CLI to add weights when you create Auto Scaling groups, and to add or modify weights for existing Auto Scaling groups\. You can configure a variety of parameters in a JSON file, and then reference the JSON file as the sole parameter for your Auto Scaling group\. 
 

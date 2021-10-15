@@ -1,4 +1,4 @@
-# Specifying a different launch template for an instance type<a name="asg-launch-template-overrides"></a>
+# Specifying a different launch template for an instance type<a name="ec2-auto-scaling-mixed-instances-groups-launch-template-overrides"></a>
 
 The `Overrides` structure allows you to define a new launch template for individual instance types for a new or existing Auto Scaling group\. For example, if the architecture of an instance type requires a different AMI from the rest of the group, you must specify a launch template with a compatible AMI\. 
 

@@ -1,14 +1,12 @@
-# Setting capacity limits for your Auto Scaling group<a name="asg-capacity-limits"></a>
+# Setting capacity limits on your Auto Scaling group<a name="asg-capacity-limits"></a>
 
-You configure the size of your Auto Scaling group by setting the minimum, maximum, and desired capacity\. The desired capacity must be greater than or equal to the minimum size of the group and less than or equal to the maximum size of the group\.
+Capacity limits place restrictions on the size of your Auto Scaling group\. You set limits separately for the minimum and maximum size\. The group's desired capacity is resizeable between the minimum and maximum size limits\. The desired capacity must be greater than or equal to the minimum size of the group and less than or equal to the maximum size of the group\.
 
 An Auto Scaling group will start by launching as many instances as are specified for desired capacity\. If there are no scaling policies or scheduled actions attached to the Auto Scaling group, Amazon EC2 Auto Scaling maintains the desired amount of instances, performing periodic health checks on the instances in the group\. Unhealthy instances will be terminated and replaced with new ones\.
 
-An Auto Scaling group is elastic as long as it has different values for minimum and maximum capacity\. All requests to change the Auto Scaling group's desired capacity \(either by manual scaling or auto scaling\) must fall within these limits\.
+If you choose to turn on auto scaling, the maximum limit lets Amazon EC2 Auto Scaling scale out the number of instances as needed to handle an increase in demand\. The minimum limit helps ensure that you always have a certain number of instances running at all times\. 
 
-If you choose to automatically scale your group, the **maximum** limit lets Amazon EC2 Auto Scaling scale out the number of instances as needed to handle an increase in demand\. The **minimum** limit helps ensure that you always have a certain number of instances running at all times\. 
-
-These limits also apply when you manually scale your Auto Scaling group, such as when you want to turn off auto scaling and have the group run at a fixed size, either temporarily or permanently\.
+The minimum and maximum size limits also apply when you manually scale your Auto Scaling group, such as when you want to turn off auto scaling and have the group run at a fixed size, either temporarily or permanently\. In this case, you can manage the size of the Auto Scaling group by updating its desired capacity as needed\.
 
 **To manage these settings in the console**
 

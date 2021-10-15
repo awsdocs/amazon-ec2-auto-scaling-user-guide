@@ -13,8 +13,8 @@ To retrieve an error message, see [Retrieving an error message from scaling acti
 **Note**  
 You can be notified when Amazon EC2 Auto Scaling terminates the instances in your Auto Scaling group, including when the cause of instance termination is not the result of a scaling activity\. For more information, see [Getting Amazon SNS notifications when your Auto Scaling group scales](ASGettingNotifications.md)\.   
 The sections that follow describe the most common health check errors and causes that you'll encounter\. If you have a different issue, see the following AWS Knowledge Center articles for additional troubleshooting help:  
-[Why did Amazon EC2 Auto Scaling terminate an instance?](http://aws.amazon.com/premiumsupport/knowledge-center/auto-scaling-instance-how-terminated/)
-[Why didn’t Amazon EC2 Auto Scaling terminate an unhealthy instance?](http://aws.amazon.com/premiumsupport/knowledge-center/auto-scaling-terminate-instance/)
+ [Why did Amazon EC2 Auto Scaling terminate an instance?](http://aws.amazon.com/premiumsupport/knowledge-center/auto-scaling-instance-how-terminated/) 
+ [Why didn’t Amazon EC2 Auto Scaling terminate an unhealthy instance?](http://aws.amazon.com/premiumsupport/knowledge-center/auto-scaling-terminate-instance/) 
 
 ## An instance was taken out of service in response to an EC2 instance status check failure<a name="ts-failed-status-checks"></a>
 
@@ -58,8 +58,8 @@ Note that when you terminate instances manually, termination lifecycle hooks and
 
 **Solution 2**: There is no guarantee that a Spot Instance exists to fulfill the request at any given point in time\. However, you can try the following:
 + Use a higher Spot maximum price \(possibly the On\-Demand price\)\. By setting your maximum price higher, it gives the Amazon EC2 Spot service a better chance of launching and maintaining your required amount of capacity\.
-+ Increase the number of different capacity pools that you can launch instances from by running multiple instance types in multiple Availability Zones\. For more information, see [Auto Scaling groups with multiple instance types and purchase options](asg-purchase-options.md)\.
-+ If you use multiple instance types, consider enabling the Capacity Rebalancing feature\. This is useful if you want the Amazon EC2 Spot service to attempt to launch a new Spot Instance before a running instance is terminated\. For more information, see [Amazon EC2 Auto Scaling Capacity Rebalancing](capacity-rebalance.md)\.
++ Increase the number of different capacity pools that you can launch instances from by running multiple instance types in multiple Availability Zones\. For more information, see [Auto Scaling groups with multiple instance types and purchase options](ec2-auto-scaling-mixed-instances-groups.md)\.
++ If you use multiple instance types, consider enabling the Capacity Rebalancing feature\. This is useful if you want the Amazon EC2 Spot service to attempt to launch a new Spot Instance before a running instance is terminated\. For more information, see [Amazon EC2 Auto Scaling Capacity Rebalancing](ec2-auto-scaling-capacity-rebalancing.md)\.
 
 ## An instance was taken out of service in response to an ELB system health check failure<a name="ts-failed-elb-health-checks"></a>
 

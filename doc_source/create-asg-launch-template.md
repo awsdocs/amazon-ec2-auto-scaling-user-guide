@@ -4,7 +4,7 @@ To configure Amazon EC2 instances that are launched by your Auto Scaling group, 
 
 With launch templates, you can configure the Auto Scaling group to dynamically choose either the default version or the latest version of the launch template when a scale\-out event occurs\. For example, you configure your Auto Scaling group to choose the current default version of a launch template\. To change the configuration of the EC2 instances to be launched by the group, create or designate a new default version of the launch template\. Alternatively, you can choose the specific version of the launch template that the group uses to launch EC2 instances\. You can change these selections anytime by updating the group\. 
 
-Each launch template includes the information that Amazon EC2 needs to launch instances, such as an AMI and instance type\. You can create an Auto Scaling group that adheres to the launch template\. Or, you can override the instance type in the launch template and combine On\-Demand and Spot Instances\. For more information, see [Auto Scaling groups with multiple instance types and purchase options](asg-purchase-options.md)\. 
+Each launch template includes the information that Amazon EC2 needs to launch instances, such as an AMI and instance type\. You can create an Auto Scaling group that adheres to the launch template\. Or, you can override the instance type in the launch template and combine On\-Demand and Spot Instances\. For more information, see [Auto Scaling groups with multiple instance types and purchase options](ec2-auto-scaling-mixed-instances-groups.md)\. 
 
 The Auto Scaling group specifies the desired capacity and additional information that Amazon EC2 needs to launch instances, such as the Availability Zones and VPC subnets\. You can set capacity to a fixed number of instances, or you can take advantage of automatic scaling to adjust capacity based on actual demand\. 
 
@@ -50,7 +50,7 @@ The Auto Scaling group specifies the desired capacity and additional information
 
 1. \(Optional\) On the **Configure group size and scaling policies** page, configure the following options, and then choose **Next**:
 
-   1. For **Desired capacity**, enter the initial number of instances to launch\. When you change this number to a value outside of the minimum or maximum capacity limits, you must update the values of **Minimum capacity** or **Maximum capacity**\. For more information, see [Setting capacity limits for your Auto Scaling group](asg-capacity-limits.md)\.
+   1. For **Desired capacity**, enter the initial number of instances to launch\. When you change this number to a value outside of the minimum or maximum capacity limits, you must update the values of **Minimum capacity** or **Maximum capacity**\. For more information, see [Setting capacity limits on your Auto Scaling group](asg-capacity-limits.md)\.
 
    1. To automatically scale the size of the Auto Scaling group, choose **Target tracking scaling policy** and follow the directions\. For more information, see [Target Tracking Scaling Policies](as-scaling-target-tracking.md#policy-creating-scalingpolicies-console)\.
 

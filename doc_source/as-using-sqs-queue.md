@@ -14,7 +14,7 @@ The solution is to use a *backlog per instance* metric with the target value bei
 + **Backlog per instance**: To calculate your backlog per instance, start with the `ApproximateNumberOfMessages` queue attribute to determine the length of the SQS queue \(number of messages available for retrieval from the queue\)\. Divide that number by the fleet's running capacity, which for an Auto Scaling group is the number of instances in the `InService` state, to get the backlog per instance\.
 + **Acceptable backlog per instance**: To calculate your target value, first determine what your application can accept in terms of latency\. Then, take the acceptable latency value and divide it by the average time that an EC2 instance takes to process a message\. 
 
-To illustrate with an example, let's say that the current `ApproximateNumberOfMessages` is 1500 and the fleet's running capacity is 10\. If the average processing time is 0\.1 seconds for each message and the longest acceptable latency is 10 seconds, then the acceptable backlog per instance is 10 / 0\.1, which equals 100\. This means that 100 is the target value for your target tracking policy\. If the backlog per instance is currently at 150 \(1500 / 10\), your fleet scales out, and it scale out by five instances to maintain proportion to the target value\.
+To illustrate with an example, let's say that the current `ApproximateNumberOfMessages` is 1500 and the fleet's running capacity is 10\. If the average processing time is 0\.1 seconds for each message and the longest acceptable latency is 10 seconds, then the acceptable backlog per instance is 10 / 0\.1, which equals 100\. This means that 100 is the target value for your target tracking policy\. If the backlog per instance is currently at 150 \(1500 / 10\), your fleet scales out, and it scales out by five instances to maintain proportion to the target value\.
 
 The following procedures demonstrate how to publish the custom metric and create the target tracking scaling policy that configures your Auto Scaling group to scale based on these calculations\.
 
@@ -32,7 +32,6 @@ The following diagram illustrates the architecture of this configuration\.
 To use this configuration, you need to be aware of the following limitations:
 + You must use the AWS CLI or an SDK to publish your custom metric to CloudWatch\. You can then monitor your metric with the AWS Management Console\. 
 + After publishing your custom metric, you must use the AWS CLI or an SDK to create a target tracking scaling policy with a customized metric specification\. 
-+ Messages that have not been processed at the time an instance is terminated are returned to the SQS queue where they can be processed by another instance that is still running\. For applications where long running tasks are performed, you can optionally use instance scale\-in protection to have control over whether your Auto Scaling group terminates one of the idle instances and not the one that is in the middle of processing\.
 
 The following sections direct you to use the AWS CLI for the tasks you need to perform\. For example, to get metric data that reflects the present use of the queue, you use the SQS [get\-queue\-attributes](https://docs.aws.amazon.com/cli/latest/reference/sqs/get-queue-attributes.html) command\. Make sure that you have the CLI [installed](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-install.html) and [configured](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-configure.html)\. 
 
@@ -145,3 +144,22 @@ After your setup is complete, verify that your scaling policy is working\. You c
    ```
    aws autoscaling describe-auto-scaling-groups --auto-scaling-group-name my-asg
    ```
+
+## Amazon SQS and instance scale\-in protection<a name="scale-sqs-queue-scale-in-protection"></a>
+
+Messages that have not been processed at the time an instance is terminated are returned to the SQS queue where they can be processed by another instance that is still running\. For applications where long running tasks are performed, you can optionally use instance scale\-in protection to have control over which queue workers are terminated when your Auto Scaling group scales in\.
+
+The following pseudocode shows one way to protect long\-running, queue\-driven worker processes from scale\-in termination\.
+
+```
+while (true)
+{
+  SetInstanceProtection(False);
+  Work = GetNextWorkUnit();
+  SetInstanceProtection(True);
+  ProcessWorkUnit(Work);
+  SetInstanceProtection(False);
+}
+```
+
+For more information, see [Using instance scale\-in protection](ec2-auto-scaling-instance-protection.md)\.

@@ -23,15 +23,15 @@ There are two types of Amazon EC2 Auto Scaling service\-linked roles:
 
 The permissions of a custom suffix service\-linked role are identical to those of the default service\-linked role\. In both cases, you cannot edit the roles, and you also cannot delete them if they are still in use by an Auto Scaling group\. The only difference is the role name suffix\. 
 
-You can specify either role when you edit your AWS Key Management Service key policies to allow instances that are launched by Amazon EC2 Auto Scaling to be encrypted with your customer managed CMK\. However, if you plan to give granular access to a specific customer managed CMK, you should use a custom suffix service\-linked role\. Using a custom suffix service\-linked role provides you with:
-+ More control over the CMK
+You can specify either role when you edit your AWS Key Management Service key policies to allow instances that are launched by Amazon EC2 Auto Scaling to be encrypted with your customer managed key\. However, if you plan to give granular access to a specific customer managed key, you should use a custom suffix service\-linked role\. Using a custom suffix service\-linked role provides you with:
++ More control over the customer managed key
 + The ability to track which Auto Scaling group made an API call in your CloudTrail logs
 
-If you create customer managed CMKs that not all users should have access to, follow these steps to allow the use of a custom suffix service\-linked role: 
+If you create customer managed keys that not all users should have access to, follow these steps to allow the use of a custom suffix service\-linked role: 
 
 1. Create a service\-linked role with a custom suffix\. For more information, see [Create a service\-linked role \(manual\)](#create-service-linked-role-manual)\.
 
-1. Give the service\-linked role access to a customer managed CMK\. For more information about the key policy that allows the CMK to be used by a service\-linked role, see [Required CMK key policy for use with encrypted volumes](key-policy-requirements-EBS-encryption.md)\. 
+1. Give the service\-linked role access to a customer managed key\. For more information about the key policy that allows the key to be used by a service\-linked role, see [Required AWS KMS key policy for use with encrypted volumes](key-policy-requirements-EBS-encryption.md)\. 
 
 1. Give IAM users or roles access to the service\-linked role that you created\. For more information about creating the IAM policy, see [Control which service\-linked role can be passed \(using PassRole\)](security_iam_id-based-policy-examples.md#policy-example-pass-role)\. If users try to specify a service\-linked role without permission to pass that role to the service, they receive an error\.
 
@@ -179,7 +179,7 @@ Use the following [create\-service\-linked\-role](https://docs.aws.amazon.com/cl
 aws iam create-service-linked-role --aws-service-name autoscaling.amazonaws.com --custom-suffix suffix
 ```
 
-The output of this command includes the ARN of the service\-linked role, which you can use to give the service\-linked role access to your CMK\. 
+The output of this command includes the ARN of the service\-linked role, which you can use to give the service\-linked role access to your customer managed key\. 
 
 ```
 {

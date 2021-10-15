@@ -14,11 +14,11 @@ We strongly recommend that you never put confidential or sensitive information, 
 
 ## Using AWS KMS keys to encrypt Amazon EBS volumes<a name="encryption"></a>
 
-You can configure your Auto Scaling group to encrypt Amazon EBS volume data stored in the cloud with AWS KMS keys\. Amazon EC2 Auto Scaling supports AWS managed and customer managed CMKs to encrypt your data\. Note that the `KmsKeyId` option to specify a customer managed CMK is not available when you use a launch configuration\. To specify your customer managed CMK, use a launch template instead\. For more information, see [Creating a launch template for an Auto Scaling group](create-launch-template.md)\. 
+You can configure your Auto Scaling group to encrypt Amazon EBS volume data stored in the cloud with AWS KMS keys\. Amazon EC2 Auto Scaling supports AWS managed and customer managed keys to encrypt your data\. Note that the `KmsKeyId` option to specify a customer managed key is not available when you use a launch configuration\. To specify your customer managed key, use a launch template instead\. For more information, see [Creating a launch template for an Auto Scaling group](create-launch-template.md)\. 
 
-You can also configure a customer managed CMK in your EBS\-backed AMI before setting up a launch template or launch configuration, or use encryption by default to enforce the encryption of the new EBS volumes and snapshot copies that you create\. 
+You can also configure a customer managed key in your EBS\-backed AMI before setting up the launch template or launch configuration, or use encryption by default to enforce the encryption of the new EBS volumes and snapshot copies that you create\. 
 
-For information about how to set up the key policy that you need to launch Auto Scaling instances when you use a customer managed CMK for encryption, see [Required CMK key policy for use with encrypted volumes](key-policy-requirements-EBS-encryption.md)\. For information about how to create, store, and manage your AWS KMS encryption keys, see [What is AWS Key Management Service?](https://docs.aws.amazon.com/kms/latest/developerguide/overview.html)
+For information about how to set up the key policy that you need to launch Auto Scaling instances when you use a customer managed key for encryption, see [Required AWS KMS key policy for use with encrypted volumes](key-policy-requirements-EBS-encryption.md)\. For information about how to create, store, and manage your AWS KMS encryption keys, see [What is AWS Key Management Service?](https://docs.aws.amazon.com/kms/latest/developerguide/overview.html)
 
 **Related topics**
 + [Data protection in Amazon EC2](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/data-protection.html) in the *Amazon EC2 User Guide for Linux Instances*

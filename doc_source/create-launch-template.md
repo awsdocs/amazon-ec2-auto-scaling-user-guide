@@ -75,7 +75,7 @@ Follow these steps to configure your launch template for the following:
 
       \* If [encryption by default](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EBSEncryption.html#encryption-by-default) is enabled, all newly created volumes \(whether or not the **Encrypted** parameter is set to **Yes**\) are encrypted using the default KMS key\. Setting both the **Encrypted** and **Key** parameters allows you to specify a non\-default KMS key\. 
 
-   1. **Key**: If you chose **Yes** in the previous step, optionally enter the KMS key you want to use when encrypting the volumes\. Enter any KMS key that you previously created using the AWS Key Management Service\. You can paste the full ARN of any key that you have access to\. For more information, see the [AWS Key Management Service Developer Guide](https://docs.aws.amazon.com/kms/latest/developerguide/) and the [Required CMK key policy for use with encrypted volumes](key-policy-requirements-EBS-encryption.md) topic in this guide\. Note: Amazon EBS does not support asymmetric CMKs\. 
+   1. **Key**: If you chose **Yes** in the previous step, optionally enter the KMS key you want to use when encrypting the volumes\. Enter any KMS key that you previously created using the AWS Key Management Service\. You can paste the full ARN of any key that you have access to\. For information about setting up key policies for your customer managed keys, see the [AWS Key Management Service Developer Guide](https://docs.aws.amazon.com/kms/latest/developerguide/) and the [Required AWS KMS key policy for use with encrypted volumes](key-policy-requirements-EBS-encryption.md)\. 
 **Note**  
 Providing a KMS key without also setting the **Encrypted** parameter results in an error\. 
 
@@ -135,9 +135,9 @@ The following steps discuss the most useful settings to pay attention to\. For m
 
 1. For **Advanced details**, expand the section to view the fields\.
 
-1. For **Purchasing option**, you can choose **Request Spot Instances** to request Spot Instances at the Spot price, capped at the On\-Demand price, and choose **Customize** to change the default Spot Instance settings\. For an Auto Scaling group, you must specify a one\-time request with no end date \(the default\)\. For more information, see [Requesting Spot Instances for fault\-tolerant and flexible applications](asg-launch-spot-instances.md)\. 
+1. For **Purchasing option**, you can choose **Request Spot Instances** to request Spot Instances at the Spot price, capped at the On\-Demand price, and choose **Customize** to change the default Spot Instance settings\. For an Auto Scaling group, you must specify a one\-time request with no end date \(the default\)\. For more information, see [Requesting Spot Instances for fault\-tolerant and flexible applications](launch-configuration-requesting-spot-instances.md)\. 
 **Note**  
-If you leave **Purchasing option** unspecified, you can request Spot Instances later in your Auto Scaling group\. This also gives you the option of specifying multiple instance types\. That way, if the Amazon EC2 Spot service needs to reclaim your Spot Instances, we can launch replacement instances from another Spot pool\. For more information, see [Auto Scaling groups with multiple instance types and purchase options](asg-purchase-options.md)\.
+If you leave **Purchasing option** unspecified, you can request Spot Instances later in your Auto Scaling group\. This also gives you the option of specifying multiple instance types\. That way, if the Amazon EC2 Spot service needs to reclaim your Spot Instances, we can launch replacement instances from another Spot pool\. For more information, see [Auto Scaling groups with multiple instance types and purchase options](ec2-auto-scaling-mixed-instances-groups.md)\.
 
 1. For **IAM instance profile**, you can specify an AWS Identity and Access Management \(IAM\) instance profile to associate with the instances\. When you choose an instance profile, you associate the corresponding IAM role with the EC2 instances\. For more information, see [IAM role for applications that run on Amazon EC2 instances](us-iam-role.md)\.
 
@@ -204,7 +204,7 @@ You can use one of the following commands:
 ## Limitations<a name="create-launch-template-limitations"></a>
 + A launch template lets you configure a network type \(VPC or EC2\-Classic\), subnet, and Availability Zone\. However, these settings are ignored in favor of what is specified in the Auto Scaling group\. 
 + Because the subnet settings in your launch template are ignored in favor of what is specified in the Auto Scaling group, all of the network interfaces that are created for a given instance will be connected to the same subnet as the instance\. For other limitations on user\-defined network interfaces, see [Changing the default network interface](#change-network-interface)\.
-+ A launch template lets you configure additional settings in your Auto Scaling group to launch multiple instance types and combine On\-Demand and Spot purchase options, as described in [Auto Scaling groups with multiple instance types and purchase options](asg-purchase-options.md)\. Launching instances with such a combination is not supported:
++ A launch template lets you configure additional settings in your Auto Scaling group to launch multiple instance types and combine On\-Demand and Spot purchase options, as described in [Auto Scaling groups with multiple instance types and purchase options](ec2-auto-scaling-mixed-instances-groups.md)\. Launching instances with such a combination is not supported:
   + If you specify a Spot Instance request in the launch template
   + In EC2\-Classic
 + Support for Dedicated Hosts \(host tenancy\) is only available if you specify a host resource group\. You cannot target a specific host ID or use host placement affinity\.

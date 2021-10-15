@@ -8,6 +8,8 @@ As an example of using lifecycle hooks with Auto Scaling instances:
 
 A popular use of lifecycle hooks is to control when instances are registered with Elastic Load Balancing\. By adding a launch lifecycle hook to your Auto Scaling group, you can ensure that the applications on the instances are ready to accept traffic before they are registered to the load balancer at the end of the lifecycle hook\. 
 
+For an introduction video, see [AWS re:Invent 2018: Capacity Management Made Easy with Amazon EC2 Auto Scaling](https://youtu.be/PideBMIcwBQ?t=469) on *YouTube*\.
+
 **Topics**
 + [How lifecycle hooks work](#lifecycle-hooks-overview)
 + [Considerations and limitations](#lifecycle-hook-considerations)

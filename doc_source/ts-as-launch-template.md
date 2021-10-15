@@ -12,7 +12,7 @@ Use the following information to help you diagnose and fix common issues that yo
 
 **Solution 2**: Verify that your IAM user or role is using the `AmazonEC2FullAccess` policy\. This AWS managed policy grants full access to all Amazon EC2 resources and related services, including Amazon EC2 Auto Scaling, CloudWatch, and Elastic Load Balancing\. 
 
-**Cause 2**: If you are attempting to use a launch template that specifies an instance profile, you must have permission to pass the IAM role that is associated with the instance profile\. 
+**Cause 2**: If you are attempting to use a launch template that specifies an instance profile, you must have IAM permission to pass the IAM role that is associated with the instance profile\. 
 
 **Solution 3**: Verify that the IAM user or role that you are using to make the request has the correct permissions to pass the specified role to the Amazon EC2 Auto Scaling service\. For more information, see [IAM role for applications that run on Amazon EC2 instances](us-iam-role.md)\. 
 

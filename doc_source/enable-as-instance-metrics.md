@@ -33,7 +33,7 @@ For launch configurations, use the [https://docs.aws.amazon.com/cli/latest/refer
 To change the type of monitoring enabled on new EC2 instances, update the launch template or update the Auto Scaling group to use a new launch template or launch configuration\. Existing instances continue to use the previously enabled monitoring type\. To update all instances, terminate them so that they are replaced by your Auto Scaling group or update instances individually using [https://docs.aws.amazon.com/cli/latest/reference/ec2/monitor-instances.html](https://docs.aws.amazon.com/cli/latest/reference/ec2/monitor-instances.html) and [https://docs.aws.amazon.com/cli/latest/reference/ec2/unmonitor-instances.html](https://docs.aws.amazon.com/cli/latest/reference/ec2/unmonitor-instances.html)\.
 
 **Note**  
-With the maximum instance lifetime and instance refresh features, you can also replace all instances in the Auto Scaling group to launch new instances that use the new settings\. For more information, see [Replacing Auto Scaling instances based on maximum instance lifetime](asg-max-instance-lifetime.md) and [Replacing Auto Scaling instances based on an instance refresh](asg-instance-refresh.md)\.
+With the instance refresh and maximum instance lifetime features, you can also replace all instances in the Auto Scaling group to launch new instances that use the new settings\. For more information, see [Replacing Auto Scaling instances](ec2-auto-scaling-group-replacing-instances.md)\.
 
 When you switch between basic and detailed monitoring:
 

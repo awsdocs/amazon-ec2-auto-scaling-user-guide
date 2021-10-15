@@ -80,4 +80,4 @@ Because Amazon EC2 Auto Scaling attempts to launch new instances before terminat
 
 **Capacity Rebalancing**
 
-You can enable Capacity Rebalancing for your Auto Scaling groups when using Spot Instances\. When you turn on Capacity Rebalancing, Amazon EC2 Auto Scaling attempts to launch a Spot Instance whenever Amazon EC2 notifies that a Spot Instance is at an elevated risk of interruption\. After launching a new instance, it then terminates an old instance\. For more information, see [Amazon EC2 Auto Scaling Capacity Rebalancing](capacity-rebalance.md)\.
+You can enable Capacity Rebalancing for your Auto Scaling groups when using Spot Instances\. When you turn on Capacity Rebalancing, Amazon EC2 Auto Scaling attempts to launch a Spot Instance whenever Amazon EC2 notifies that a Spot Instance is at an elevated risk of interruption\. After launching a new instance, it then terminates an old instance\. For more information, see [Amazon EC2 Auto Scaling Capacity Rebalancing](ec2-auto-scaling-capacity-rebalancing.md)\.

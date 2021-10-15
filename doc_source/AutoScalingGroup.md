@@ -21,7 +21,7 @@ When instances are launched, if you specified multiple Availability Zones, the d
 If you're new to Auto Scaling groups, start by creating a launch template or a launch configuration and then use it to create an Auto Scaling group in which all instances have the same instance attributes\. You can set the following instance attributes by specifying them as part of the launch template or launch configuration: AMI, block devices, key pair, instance type, security groups, user data, EC2 instance monitoring, instance profile, kernel, ramdisk, the tenancy of the instance, whether the instance has a public IP address, and whether the instance is EBS\-optimized\. The [Getting started with Amazon EC2 Auto Scaling](GettingStartedTutorial.md) tutorial provides a quick introduction to the various building blocks that are used in Amazon EC2 Auto Scaling\.
 
 **Topics**
-+ [Auto Scaling groups with multiple instance types and purchase options](asg-purchase-options.md)
++ [Auto Scaling groups with multiple instance types and purchase options](ec2-auto-scaling-mixed-instances-groups.md)
 + [Creating an Auto Scaling group using a launch template](create-asg-launch-template.md)
 + [Creating an Auto Scaling group using a launch configuration](create-asg.md)
 + [Creating an Auto Scaling group using an EC2 instance](create-asg-from-instance.md)

@@ -26,4 +26,4 @@ We recommend that you read the Amazon EC2 topics first\. See [Identity and acces
 + [Amazon EC2 Auto Scaling identity\-based policy examples](security_iam_id-based-policy-examples.md)
 + [Launch template support](ec2-auto-scaling-launch-template-permissions.md)
 + [IAM role for applications that run on Amazon EC2 instances](us-iam-role.md)
-+ [Required CMK key policy for use with encrypted volumes](key-policy-requirements-EBS-encryption.md)
++ [Required AWS KMS key policy for use with encrypted volumes](key-policy-requirements-EBS-encryption.md)

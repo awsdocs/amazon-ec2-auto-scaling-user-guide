@@ -21,6 +21,7 @@ You can use the AWS Management Console, the AWS CLI, or one of the SDKs to add a
 + [Before you begin](#warm-pool-prerequisites)
 + [Add a warm pool \(console\)](#add-warm-pool-console)
 + [Add a warm pool \(AWS CLI\)](#add-warm-pool-aws-cli)
++ [Updating instances in a warm pool](#update-warm-pool)
 + [Delete a warm pool](#delete-warm-pool)
 + [Limitations](#warm-pools-limitations)
 + [Warm pool instance lifecycle](warm-pool-instance-lifecycle.md)
@@ -130,6 +131,12 @@ If you set the values for the `--max-group-prepared-capacity` and `--min-size` o
 aws autoscaling put-warm-pool --auto-scaling-group-name my-asg /
   --pool-state Stopped --min-size 10 --max-group-prepared-capacity 10
 ```
+
+## Updating instances in a warm pool<a name="update-warm-pool"></a>
+
+To change the launch template or launch configuration for a warm pool, update the Auto Scaling group to use the new launch template or launch configuration\. After you change the launch template or launch configuration for an Auto Scaling group, any new instances are launched using the new configuration options, but existing instances are not affected\.
+
+To force replacement warm pool instances to launch that use the new configuration options, you can terminate existing instances in the warm pool\. Amazon EC2 Auto Scaling immediately starts launching new instances to replace the instances that you terminated\. Alternatively, you can start an instance refresh to do a rolling update of your group\. An instance refresh first replaces `InService` instances\. Then it replaces instances in the warm pool\. For more information, see [Replacing Auto Scaling instances based on an instance refresh](asg-instance-refresh.md)\.
 
 ## Delete a warm pool<a name="delete-warm-pool"></a>
 

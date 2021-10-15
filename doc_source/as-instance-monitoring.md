@@ -85,7 +85,7 @@ The `AWS/AutoScaling` namespace includes the following metrics\.
 | GroupTerminatingInstances |  The number of instances that are in the process of terminating\. This metric does not include instances that are in service or pending\.  **Reporting criteria**: Reported if metrics collection is enabled\.  | 
 | GroupTotalInstances |  The total number of instances in the Auto Scaling group\. This metric identifies the number of instances that are in service, pending, and terminating\. **Reporting criteria**: Reported if metrics collection is enabled\.  | 
 
-The `AWS/AutoScaling` namespace includes the following metrics for Auto Scaling groups that use the [instance weighting](asg-instance-weighting.md) feature\. If instance weighting is not applied, then the following metrics are populated, but are equal to the metrics that are defined in the preceding table\.
+The `AWS/AutoScaling` namespace includes the following metrics for Auto Scaling groups that use the [instance weighting](ec2-auto-scaling-mixed-instances-groups-instance-weighting.md) feature\. If instance weighting is not applied, then the following metrics are populated, but are equal to the metrics that are defined in the preceding table\.
 
 
 | Metric | Description | 

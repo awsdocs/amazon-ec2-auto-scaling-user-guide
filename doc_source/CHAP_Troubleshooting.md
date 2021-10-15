@@ -12,7 +12,7 @@ Amazon EC2 Auto Scaling provides specific and descriptive errors to help you tro
 
 ## Retrieving an error message from scaling activities<a name="RetrievingErrors"></a>
 
-To retrieve an error message from the description of scaling activities, use the [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/describe-scaling-activities.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/describe-scaling-activities.html) command\. You have a record of scaling activities that dates back 6 weeks\. Scaling activities are ordered by start time, with the latest scaling activities listed first\. 
+To retrieve an error message from the description of scaling activities, use the [describe\-scaling\-activities](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/describe-scaling-activities.html) command\. You have a record of scaling activities that dates back 6 weeks\. Scaling activities are ordered by start time, with the latest scaling activities listed first\. 
 
 To see the scaling activities for a specific Auto Scaling group, use the following command\. 
 
@@ -45,7 +45,7 @@ The following is an example response, where `StatusCode` contains the current st
 
 For a description of the fields in the output, see [Activity](https://docs.aws.amazon.com/autoscaling/ec2/APIReference/API_Activity.html) in the *Amazon EC2 Auto Scaling API Reference*\.
 
-To view scaling activities for a deleted Auto Scaling group, add the `--include-deleted-groups` option to the [https://docs.aws.amazon.com/cli/latest/reference/autoscaling/describe-scaling-activities.html](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/describe-scaling-activities.html) command as follows\. 
+To view scaling activities for a deleted Auto Scaling group, add the `--include-deleted-groups` option to the [describe\-scaling\-activities](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/describe-scaling-activities.html) command as follows\. 
 
 ```
 aws autoscaling describe-scaling-activities --auto-scaling-group-name my-asg --include-deleted-groups
@@ -82,36 +82,36 @@ The following tables list the types of error messages and provide links to the t
 
 | Issue | Error message | 
 | --- | --- | 
-| Availability Zone | [The requested Availability Zone is no longer supported\. Please retry your request\.\.\.](ts-as-instancelaunchfailure.md#ts-as-instancelaunchfailure-5) | 
-| Block device mapping | [Invalid device name upload\. Launching EC2 instance failed\.](ts-as-instancelaunchfailure.md#ts-as-instancelaunchfailure-8) | 
-| Block device mapping | [Value \(<name associated with the instance storage device>\) for parameter virtualName is invalid\.\.\.](ts-as-instancelaunchfailure.md#ts-as-instancelaunchfailure-9) | 
-| Block device mapping | [EBS block device mappings not supported for instance\-store AMIs\.](ts-as-instancelaunchfailure.md#ts-as-instancelaunchfailure-10) | 
-| Instance configuration | [The requested configuration is currently not supported\.](ts-as-instancelaunchfailure.md#ts-as-instancelaunchfailure-3) | 
-| Instance type and Availability Zone | [Your requested instance type \(<instance type>\) is not supported in your requested Availability Zone \(<instance Availability Zone>\)\.\.\.](ts-as-instancelaunchfailure.md#ts-as-instancelaunchfailure-6) | 
-| Insufficient instance capacity in Availability Zone | [We currently do not have sufficient <instance type> capacity in the Availability Zone you requested\.\.\. Launching EC2 instance failed\.](ts-as-instancelaunchfailure.md#ts-as-capacity-1) | 
-| Insufficient instance capacity for a Spot request | [There is no Spot capacity available that matches your request\. Launching EC2 instance failed\.](ts-as-instancelaunchfailure.md#ts-as-capacity-2) | 
-| Key pair | [The key pair <key pair associated with your EC2 instance> does not exist\. Launching EC2 instance failed\.](ts-as-instancelaunchfailure.md#ts-as-instancelaunchfailure-2) | 
-| Placement group | [Placement groups may not be used with instances of type 'm1\.large'\. Launching EC2 instance failed\.](ts-as-instancelaunchfailure.md#ts-as-instancelaunchfailure-11) | 
-| Quota limits | [<number of instances> instance\(s\) are already running\. Launching EC2 instance failed\. ](ts-as-instancelaunchfailure.md#ts-as-capacity-3) | 
-| Security group | [The security group <name of the security group> does not exist\. Launching EC2 instance failed\.](ts-as-instancelaunchfailure.md#ts-as-instancelaunchfailure-1) | 
-| Service\-linked role | [Client\.InternalError: Client error on launch\.](ts-as-instancelaunchfailure.md#ts-as-instancelaunchfailure-12) | 
-| Spot price too low | [Your Spot request price of 0\.015 is lower than the minimum required Spot request fulfillment price of 0\.0735\.\.\.](ts-as-instancelaunchfailure.md#ts-as-instancelaunchfailure-7) | 
+| Availability Zone |  [The requested Availability Zone is no longer supported\. Please retry your request\.\.\.](ts-as-instancelaunchfailure.md#ts-as-instancelaunchfailure-5)  | 
+| Block device mapping |  [Invalid device name upload\. Launching EC2 instance failed\.](ts-as-instancelaunchfailure.md#ts-as-instancelaunchfailure-8)  | 
+| Block device mapping |  [Value \(<name associated with the instance storage device>\) for parameter virtualName is invalid\.\.\.](ts-as-instancelaunchfailure.md#ts-as-instancelaunchfailure-9)  | 
+| Block device mapping |  [EBS block device mappings not supported for instance\-store AMIs\.](ts-as-instancelaunchfailure.md#ts-as-instancelaunchfailure-10)  | 
+| Instance configuration |  [The requested configuration is currently not supported\.](ts-as-instancelaunchfailure.md#ts-as-instancelaunchfailure-3)  | 
+| Instance type and Availability Zone |  [Your requested instance type \(<instance type>\) is not supported in your requested Availability Zone \(<instance Availability Zone>\)\.\.\.](ts-as-instancelaunchfailure.md#ts-as-instancelaunchfailure-6)  | 
+| Insufficient instance capacity in Availability Zone |  [We currently do not have sufficient <instance type> capacity in the Availability Zone you requested\.\.\. Launching EC2 instance failed\.](ts-as-instancelaunchfailure.md#ts-as-capacity-1)  | 
+| Insufficient instance capacity for a Spot request |  [There is no Spot capacity available that matches your request\. Launching EC2 instance failed\.](ts-as-instancelaunchfailure.md#ts-as-capacity-2)  | 
+| Key pair |  [The key pair <key pair associated with your EC2 instance> does not exist\. Launching EC2 instance failed\.](ts-as-instancelaunchfailure.md#ts-as-instancelaunchfailure-2)  | 
+| Placement group |  [Placement groups may not be used with instances of type 'm1\.large'\. Launching EC2 instance failed\.](ts-as-instancelaunchfailure.md#ts-as-instancelaunchfailure-11)  | 
+| Quota limits |  [<number of instances> instance\(s\) are already running\. Launching EC2 instance failed\. ](ts-as-instancelaunchfailure.md#ts-as-capacity-3)  | 
+| Security group |  [The security group <name of the security group> does not exist\. Launching EC2 instance failed\.](ts-as-instancelaunchfailure.md#ts-as-instancelaunchfailure-1)  | 
+| Service\-linked role |  [Client\.InternalError: Client error on launch\.](ts-as-instancelaunchfailure.md#ts-as-instancelaunchfailure-12)  | 
+| Spot price too low |  [Your Spot request price of 0\.015 is lower than the minimum required Spot request fulfillment price of 0\.0735\.\.\.](ts-as-instancelaunchfailure.md#ts-as-instancelaunchfailure-7)  | 
 
 
 **AMI issues**  
 
 | Issue | Error message | 
 | --- | --- | 
-| AMI ID | [The AMI ID <ID of your AMI> does not exist\. Launching EC2 instance failed\.](ts-as-ami.md#ts-as-ami-1) | 
-| AMI ID | [AMI <AMI ID> is pending, and cannot be run\. Launching EC2 instance failed\.](ts-as-ami.md#ts-as-ami-2) | 
-| AMI ID | [Value \(<ami ID>\) for parameter virtualName is invalid\.](ts-as-ami.md#ts-as-ami-4) | 
-| Architecture mismatch | [The requested instance type's architecture \(i386\) does not match the architecture in the manifest for ami\-6622f00f \(x86\_64\)\. Launching EC2 instance failed\.](ts-as-ami.md#ts-as-ami-5) | 
+| AMI ID |  [The AMI ID <ID of your AMI> does not exist\. Launching EC2 instance failed\.](ts-as-ami.md#ts-as-ami-1)  | 
+| AMI ID |  [AMI <AMI ID> is pending, and cannot be run\. Launching EC2 instance failed\.](ts-as-ami.md#ts-as-ami-2)  | 
+| AMI ID |  [Value \(<ami ID>\) for parameter virtualName is invalid\.](ts-as-ami.md#ts-as-ami-4)  | 
+| Architecture mismatch |  [The requested instance type's architecture \(i386\) does not match the architecture in the manifest for ami\-6622f00f \(x86\_64\)\. Launching EC2 instance failed\.](ts-as-ami.md#ts-as-ami-5)  | 
 
 
 **Load balancer issues**  
 
 | Issue | Error message | 
 | --- | --- | 
-| Cannot find load balancer | [Cannot find Load Balancer <your launch environment>\. Validating load balancer configuration failed\.](ts-as-loadbalancer.md#ts-as-loadbalancer-1) | 
-| Instances in VPC | [EC2 instance <instance ID> is not in VPC\. Updating load balancer configuration failed\.](ts-as-loadbalancer.md#ts-as-loadbalancer-3) | 
-| No active load balancer | [There is no ACTIVE Load Balancer named <load balancer name>\. Updating load balancer configuration failed\.](ts-as-loadbalancer.md#ts-as-loadbalancer-2) | 
+| Cannot find load balancer |  [Cannot find Load Balancer <your launch environment>\. Validating load balancer configuration failed\.](ts-as-loadbalancer.md#ts-as-loadbalancer-1)  | 
+| Instances in VPC |  [EC2 instance <instance ID> is not in VPC\. Updating load balancer configuration failed\.](ts-as-loadbalancer.md#ts-as-loadbalancer-3)  | 
+| No active load balancer |  [There is no ACTIVE Load Balancer named <load balancer name>\. Updating load balancer configuration failed\.](ts-as-loadbalancer.md#ts-as-loadbalancer-2)  | 

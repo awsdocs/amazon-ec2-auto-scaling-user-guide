@@ -167,7 +167,7 @@ To use tags with IAM policies, you provide tag information in the [condition ele
 
 To see examples of identity\-based policies based on tags, see [Amazon EC2 Auto Scaling identity\-based policy examples](security_iam_id-based-policy-examples.md)\. 
 
-To view an example policy that controls who can delete scaling policies based on the tags on the Auto Scaling group, see [Control which scaling policies can be deleted](security_iam_id-based-policy-examples.md#policy-example-delete-policy)\.
+For more information, see [Tagging Auto Scaling groups and instances](autoscaling-tagging.md)\.
 
 ## Amazon EC2 Auto Scaling IAM roles<a name="security_iam_service-with-iam-roles"></a>
 
