@@ -132,7 +132,7 @@ First, add the following two policy statements to the CMK's key policy, replacin
 }
 ```
 
-Then, from the external account, create a grant that delegates the relevant permissions to the appropriate service\-linked role\. The `Grantee Principal` element of the grant is the ARN of the appropriate service\-linked role\. The `key-id` is the ARN of the CMK\. The following is an example [create\-a\-grant](https://docs.aws.amazon.com/cli/latest/reference/kms/create-grant.html) CLI command that gives the service\-linked role named `AWSServiceRoleForAutoScaling` in account `111122223333` permissions to use the CMK in account `444455556666`\.
+Then, from the external account, create a grant that delegates the relevant permissions to the appropriate service\-linked role\. The `Grantee Principal` element of the grant is the ARN of the appropriate service\-linked role\. The `key-id` is the ARN of the CMK\. The following is an example [create\-grant](https://docs.aws.amazon.com/cli/latest/reference/kms/create-grant.html) CLI command that gives the service\-linked role named `AWSServiceRoleForAutoScaling` in account `111122223333` permissions to use the CMK in account `444455556666`\.
 
 ```
 aws kms create-grant \
