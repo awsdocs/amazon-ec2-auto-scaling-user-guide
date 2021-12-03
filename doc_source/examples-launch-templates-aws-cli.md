@@ -92,8 +92,6 @@ aws ec2 create-launch-template --launch-template-name my-template-for-auto-scali
 **Note**  
 If instance tags are specified both in the launch template and in the Auto Scaling group configuration, all the tags are merged\. If there is a collision on the tag's key, then the value in the Auto Scaling group configuration takes precedence\. 
 
-
-
 ## Specifying an IAM role to pass to instances<a name="example-iam-profile"></a>
 
 The following example specifies the name of the instance profile associated with the IAM role to pass to instances at launch\. For more information, see [IAM role for applications that run on Amazon EC2 instances](us-iam-role.md)\.

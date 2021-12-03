@@ -23,7 +23,11 @@ The following table describes the key components of Amazon EC2 Auto Scaling\.
 
 ## Getting started<a name="what-is-auto-scaling-next-steps"></a>
 
-To begin, complete the [Getting started with Amazon EC2 Auto Scaling](GettingStartedTutorial.md) tutorial to create an Auto Scaling group and see how it responds when an instance in that group terminates\. If you already have running EC2 instances, you can create an Auto Scaling group using an existing EC2 instance, and remove the instance from the group at any time\.
+To begin, complete the [Getting started with Amazon EC2 Auto Scaling](GettingStartedTutorial.md) tutorial to create an Auto Scaling group and see how it responds when an instance in that group terminates\.
+
+## Pricing for Amazon EC2 Auto Scaling<a name="as-pricing"></a>
+
+There are no additional fees with Amazon EC2 Auto Scaling, so it's easy to try it out and see how it can benefit your AWS architecture\. You only pay for the AWS resources \(for example, EC2 instances, EBS volumes, and CloudWatch alarms\) that you use\.
 
 ## Accessing Amazon EC2 Auto Scaling<a name="access-as"></a>
 
@@ -42,10 +46,6 @@ Provides commands for a broad set of AWS products, and is supported on Windows, 
 Provides commands for a broad set of AWS products for those who script in the PowerShell environment\. To get started, see the [AWS Tools for Windows PowerShell User Guide](https://docs.aws.amazon.com/powershell/latest/userguide/)\. For more information, see the [AWS Tools for PowerShell Cmdlet Reference](https://docs.aws.amazon.com/powershell/latest/reference/Index.html)\.
 
 For information about your credentials for accessing AWS, see [AWS security credentials](https://docs.aws.amazon.com/general/latest/gr/aws-security-credentials.html) in the *Amazon Web Services General Reference*\. For information about regions and endpoints for calls to Amazon EC2 Auto Scaling, see the [Regions and endpoints](https://docs.aws.amazon.com/general/latest/gr/as.html) table in the *AWS General Reference*\. 
-
-## Pricing for Amazon EC2 Auto Scaling<a name="as-pricing"></a>
-
-There are no additional fees with Amazon EC2 Auto Scaling, so it's easy to try it out and see how it can benefit your AWS architecture\. You only pay for the AWS resources \(for example, EC2 instances, EBS volumes, and CloudWatch alarms\) that you use\.
 
 ## Related services<a name="related-services"></a>
 

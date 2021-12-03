@@ -120,7 +120,7 @@ A scale\-in activity can't start while a scale\-out activity is in progress\.
 
 ## Create a CloudWatch alarm \(console\)<a name="policy-creating-alarm-console"></a>
 
-You can use the following procedure to create the CloudWatch alarms that Amazon EC2 Auto Scaling uses to determine when to scale your Auto Scaling group\. Each CloudWatch alarm watches a single metric and sends messages to Amazon EC2 Auto Scaling when the metric breaches the alarm threshold\. 
+You can use the following procedure to create two CloudWatch alarms, one for scaling out \(alarm high\) and the other for scaling in \(alarm low\)\. When the specified threshold of an alarm is reached, for example, because the traffic has increased, the alarm goes into the ALARM state\. This state change sends a notification to the scaling policy associated with the alarm\. The policy then instructs Amazon EC2 Auto Scaling how to respond to the notification, such as by adding or removing a specified number of instances\.
 
 **To create a CloudWatch alarm that monitors CPU utilization**
 
@@ -141,6 +141,8 @@ A shorter period creates a more sensitive alarm\.
 1. Under **Conditions**, do the following:
    + For **Threshold type**, choose **Static**\.
    + For **Whenever `CPUUtilization` is**, specify whether you want the value of the metric to be greater than, greater than or equal to, less than, or less than or equal to the threshold to trigger the alarm\. Then, under **than**, enter the threshold value that you want to trigger the alarm\.
+**Important**  
+For an alarm to use with a scale\-out policy \(alarm high\), make sure you do not choose less than or less than or equal to the threshold\. For an alarm to use with a scale\-in policy \(alarm low\), make sure you do not choose greater than or greater than or equal to the threshold\.
 
 1. Under **Additional configuration**, do the following:
    + For **Datapoints to alarm**, enter the number of data points \(evaluation periods\) during which the metric value must meet the threshold conditions to trigger the alarm\. For example, two consecutive periods of 5 minutes would take 10 minutes to trigger the alarm\. 
@@ -176,7 +178,7 @@ While you are configuring your scaling policies, you can create the alarms at th
 
 1. Verify that the minimum and maximum size limits are appropriately set\. For example, if your group is already at its maximum size, you need to specify a new maximum in order to scale out\. Amazon EC2 Auto Scaling does not scale your group below the minimum capacity or above the maximum capacity\. To update your group, on the **Details** tab, change the current settings for minimum and maximum capacity\. 
 
-1. On the **Automatic scaling** tab, in **Scaling policies**, choose **Create dynamic scaling policy**\.
+1. On the **Automatic scaling** tab, in **Dynamic scaling policies**, choose **Create dynamic scaling policy**\.
 
 1. To define a policy for scale out \(increase capacity\), do the following:
 
@@ -188,7 +190,7 @@ While you are configuring your scaling policies, you can create the alarms at th
 
    1. Specify the change in the current group size that this policy will make when executed using **Take the action**\. You can add a specific number of instances or a percentage of the existing group size, or set the group to an exact size\. 
 
-      For example, choose `Add`, enter `30` in the next field, and then choose `percent of group`\. By default, the lower bound for this step adjustment is the alarm threshold and the upper bound is positive infinity\. 
+      For example, choose `Add`, enter `30` in the next field, and then choose `percent of group`\. By default, the lower bound for this step adjustment is the alarm threshold and the upper bound is positive \(\+\) infinity\. 
 
    1. To add another step, choose **Add step** and then define the amount by which to scale and the lower and upper bounds of the step relative to the alarm threshold\. 
 
@@ -212,7 +214,7 @@ While you are configuring your scaling policies, you can create the alarms at th
 
    1. Specify the change in the current group size that this policy will make when executed using **Take the action**\. You can remove a specific number of instances or a percentage of the existing group size, or set the group to an exact size\. 
 
-      For example, choose `Remove`, enter `2` in the next field, and then choose `capacity units`\. By default, the upper bound for this step adjustment is the alarm threshold and the lower bound is negative infinity\. 
+      For example, choose `Remove`, enter `2` in the next field, and then choose `capacity units`\. By default, the upper bound for this step adjustment is the alarm threshold and the lower bound is negative \(\-\) infinity\. 
 
    1. To add another step, choose **Add step** and then define the amount by which to scale and the lower and upper bounds of the step relative to the alarm threshold\. 
 

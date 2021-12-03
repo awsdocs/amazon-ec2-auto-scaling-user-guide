@@ -14,7 +14,9 @@ Note that disabled scaling policies still count toward your quotas on the number
 
    A split pane opens up in the bottom part of the **Auto Scaling groups** page, showing information about the group that's selected\. 
 
-1. On the **Automatic scaling** tab, in **Scaling policies**, select a scaling policy, and then choose **Actions**, **Disable**\.
+1. On the **Automatic scaling** tab, under **Dynamic scaling policies**, select the check box in the top right corner of the desired scaling policy\.
+
+1. Scroll to the top of the **Dynamic scaling policies** section, and choose **Actions**, **Disable**\.
 
 When you are ready to re\-enable the scaling policy, repeat these steps and then choose **Actions**, **Enable**\. After you re\-enable a scaling policy, your Auto Scaling group may immediately initiate a scaling action if there are any alarms currently in ALARM state\.
 

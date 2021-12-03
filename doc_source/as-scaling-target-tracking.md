@@ -108,7 +108,7 @@ You can choose to configure a target tracking scaling policy on an Auto Scaling 
 
 1. Verify that the minimum capacity and maximum capacity are appropriately set\. For example, if your group is already at its maximum size, specify a new maximum in order to scale out\. Amazon EC2 Auto Scaling does not scale your group below the minimum capacity or above the maximum capacity\. To update your group, on the **Details** tab, change the current settings for minimum and maximum capacity\. 
 
-1. On the **Automatic scaling** tab, in **Scaling policies**, choose **Create dynamic scaling policy**\.
+1. On the **Automatic scaling** tab, in **Dynamic scaling policies**, choose **Create dynamic scaling policy**\.
 
 1. To define a policy, do the following:
 

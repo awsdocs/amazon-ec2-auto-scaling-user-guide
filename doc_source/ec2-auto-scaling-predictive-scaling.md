@@ -21,6 +21,7 @@ Use the AWS Management Console, the AWS CLI, or one of the SDKs to add a predict
 + [Limitations](#predictive-scaling-limitations)
 + [Exploring your data and forecast](predictive-scaling-graphs.md)
 + [Overriding forecast values using scheduled actions](predictive-scaling-overriding-forecast-capacity.md)
++ [Advanced predictive scaling policy configurations using custom metrics](predictive-scaling-customized-metric-specification.md)
 
 ## How predictive scaling works<a name="as-how-predictive-scaling-works"></a>
 
@@ -28,7 +29,7 @@ Predictive scaling uses machine learning to predict capacity requirements based 
 
 To use predictive scaling, you first create a scaling policy with a pair of metrics and a target utilization\. Forecast creation starts immediately after you create your policy if there is at least 24 hours of historical data\. Predictive scaling finds patterns in CloudWatch metric data from the previous 14 days to create an hourly forecast for the next 48 hours\. Forecast data is updated daily based on the most recent CloudWatch metric data\. 
 
-You can configure predictive scaling in *forecast only* mode so that you can evaluate the forecast before you allow predictive scaling to actively scale capacity\. You can then view the forecast and recent metric data from CloudWatch in graph form from the Amazon EC2 Auto Scaling console\. You can also access forecast data by using the AWS CLI or one of the SDKs\. 
+You can configure predictive scaling in *forecast only* mode so that you can evaluate the forecast before predictive scaling starts actively scaling capacity\. You can then view the forecast and recent metric data from CloudWatch in graph form from the Amazon EC2 Auto Scaling console\. You can also access forecast data by using the AWS CLI or one of the SDKs\. 
 
 When you are ready to start scaling with predictive scaling, switch the policy from *forecast only* mode to *forecast and scale* mode\. After you switch to *forecast and scale* mode, your Auto Scaling group starts scaling based on the forecast\. 
 
@@ -41,7 +42,7 @@ Using the forecast, Amazon EC2 Auto Scaling scales the number of instances at th
 + Confirm whether predictive scaling is suitable for your workload\. A workload is a good fit for predictive scaling if it exhibits recurring load patterns that are specific to the day of the week or the time of day\. To check this, configure predictive scaling policies in *forecast only* mode\. 
 + Evaluate the forecast and its accuracy before allowing predictive scaling to actively scale your application\. Predictive scaling needs at least 24 hours of historical data to start forecasting\. However, forecasts are more effective if historical data spans the full two weeks\. If you update your application by creating a new Auto Scaling group and deleting the old one, then your new Auto Scaling group needs 24 hours of historical load data before predictive scaling can start generating forecasts again\. In this case, you might have to wait a few days for a more accurate forecast\. 
 + Create multiple predictive scaling policies in *forecast only* mode to test the potential effects of different metrics\. You can create multiple predictive scaling policies for each Auto Scaling group, but only one of the policies can be used for active scaling\. 
-+ If you choose a custom metric pair, you need to define your metrics\. You can't use custom metrics, but you can use a different combination of load metric and scaling metric\. To avoid issues, make sure that the load metric you choose represents the full load on your application\.
++ If you choose a custom metric pair, you need to define a different combination of load metric and scaling metric\. To avoid issues, make sure that the load metric you choose represents the full load on your application\.
 + Use predictive scaling with dynamic scaling\. Dynamic scaling is used to automatically scale capacity in response to real\-time changes in resource utilization\. Using it with predictive scaling helps you follow the demand curve for your application closely, scaling in during periods of low traffic and scaling out when traffic is higher than expected\. When multiple scaling policies are active, each policy determines the desired capacity independently, and the desired capacity is set to the maximum of those\. For example, if 10 instances are required to stay at the target utilization in a target tracking scaling policy, and 8 instances are required to stay at the target utilization in a predictive scaling policy, then the group's desired capacity is set to 10\.
 
 ## Create a predictive scaling policy \(console\)<a name="predictive-scaling-policy-console"></a>
@@ -118,7 +119,7 @@ If successful, this command returns the policy's Amazon Resource Name \(ARN\)\.
 
 ```
 {
-  "PolicyARN": "arn:aws:autoscaling:region:account-id:scalingPolicy:2f4f5048-d8a8-4d14-b13a-d1905620f345:autoScalingGroupName/mygroup:policyName/cpu40-predictive-scaling-policy",
+  "PolicyARN": "arn:aws:autoscaling:region:account-id:scalingPolicy:2f4f5048-d8a8-4d14-b13a-d1905620f345:autoScalingGroupName/my-asg:policyName/cpu40-predictive-scaling-policy",
   "Alarms": []
 }
 ```
@@ -154,7 +155,7 @@ If successful, this command returns the policy's Amazon Resource Name \(ARN\)\.
 
 ```
 {
-  "PolicyARN": "arn:aws:autoscaling:region:account-id:scalingPolicy:19556d63-7914-4997-8c81-d27ca5241386:autoScalingGroupName/mygroup:policyName/alb1000-predictive-scaling-policy",
+  "PolicyARN": "arn:aws:autoscaling:region:account-id:scalingPolicy:19556d63-7914-4997-8c81-d27ca5241386:autoScalingGroupName/my-asg:policyName/alb1000-predictive-scaling-policy",
   "Alarms": []
 }
 ```
@@ -194,7 +195,7 @@ If successful, this command returns the policy's Amazon Resource Name \(ARN\)\.
 
 ```
 {
-  "PolicyARN": "arn:aws:autoscaling:region:account-id:scalingPolicy:d02ef525-8651-4314-bf14-888331ebd04f:autoScalingGroupName/mygroup:policyName/cpu70-predictive-scaling-policy",
+  "PolicyARN": "arn:aws:autoscaling:region:account-id:scalingPolicy:d02ef525-8651-4314-bf14-888331ebd04f:autoScalingGroupName/my-asg:policyName/cpu70-predictive-scaling-policy",
   "Alarms": []
 }
 ```
@@ -204,5 +205,3 @@ If successful, this command returns the policy's Amazon Resource Name \(ARN\)\.
 Predictive scaling requires 24 hours of metric history before it can generate forecasts\.
 
 You currently cannot use predictive scaling with Auto Scaling groups that have a mixed instances policy\.
-
-You currently cannot specify your custom metrics in a predictive scaling policy\.

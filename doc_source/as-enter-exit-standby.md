@@ -8,6 +8,7 @@ For example, you can change the Amazon Machine Image \(AMI\) for an Auto Scaling
 
 Detaching instances from an Auto Scaling group is similar to putting instances on standby\. Detaching instances might be useful if you want to manage the instances like standalone EC2 instances and possibly terminate them\. For more information, see [Detach EC2 instances from your Auto Scaling group](detach-instance-asg.md)\.
 
+**Important**  
 When you put instances on standby, your Auto Scaling group can become unbalanced between Availability Zones\. Amazon EC2 Auto Scaling compensates by rebalancing the Availability Zones unless you suspend the `AZRebalance` process\. For more information, see [Suspending and resuming a process for an Auto Scaling group](as-suspend-resume-processes.md)\.
 
 **Topics**

@@ -24,19 +24,17 @@ The Auto Scaling group specifies the desired capacity and additional information
 
    1. For **Auto Scaling group name**, enter a name for your Auto Scaling group\.
 
-   1. For **Launch Template**, choose an existing launch template\.
+   1. For **Launch template**, choose an existing launch template\.
 
    1. For **Launch template version**, choose whether the Auto Scaling group uses the default, the latest, or a specific version of the launch template when scaling out\. 
 
    1. Verify that your launch template supports all of the options that you are planning to use, and then choose **Next**\.
 
-1. On the **Configure settings** page, for **Purchase options and instance types**, choose **Adhere to the launch template** to use the EC2 instance type and purchase option that are specified in the launch template\. 
+1. On the **Choose instance launch options** page, under **Network**, specify a VPC and one or more subnets\.
 
-1. Under **Network**, for **VPC**, choose the VPC for the security groups that you specified in your launch template\.
+1. For **Availability Zones and subnets**, choose one or more subnets in the specified VPC\. Use subnets in multiple Availability Zones for high availability\. For more information about high availability with Amazon EC2 Auto Scaling, see [Distributing instances across Availability Zones](auto-scaling-benefits.md#arch-AutoScalingMultiAZ)\.
 
-1. For **Subnet**, choose one or more subnets in the specified VPC\. Use subnets in multiple Availability Zones for high availability\. For more information about high availability with Amazon EC2 Auto Scaling, see [Distributing Instances Across Availability Zones](auto-scaling-benefits.md#arch-AutoScalingMultiAZ)\.
-
-1. Choose **Next**\. 
+1. Choose **Next** to continue to the next step\. 
 
    Or, you can accept the rest of the defaults, and choose **Skip to review**\. 
 

@@ -1,6 +1,9 @@
 # Troubleshooting Amazon EC2 Auto Scaling: Launch templates<a name="ts-as-launch-template"></a>
 
-Use the following information to help you diagnose and fix common issues that you might encounter when using a launch template with your Auto Scaling group\.
+Use the following information to help you diagnose and fix common permission issues that you might encounter when using a launch template with your Auto Scaling group\.
+
+**Note**  
+For other errors that you might receive during Auto Scaling group creation that are associated with your launch template, see [Troubleshooting Amazon EC2 Auto Scaling: EC2 instance launch failures](ts-as-instancelaunchfailure.md)\.
 
 ## You are not authorized to perform this operation<a name="ts-launch-template-unauthorized-error"></a>
 

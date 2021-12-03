@@ -83,7 +83,7 @@ The following tables list the types of error messages and provide links to the t
 | Issue | Error message | 
 | --- | --- | 
 | Availability Zone |  [The requested Availability Zone is no longer supported\. Please retry your request\.\.\.](ts-as-instancelaunchfailure.md#ts-as-instancelaunchfailure-5)  | 
-| Block device mapping |  [Invalid device name upload\. Launching EC2 instance failed\.](ts-as-instancelaunchfailure.md#ts-as-instancelaunchfailure-8)  | 
+| Block device mapping |  [Invalid device name <device name> / Invalid device name upload\. Launching EC2 instance failed\.](ts-as-instancelaunchfailure.md#ts-as-instancelaunchfailure-8)  | 
 | Block device mapping |  [Value \(<name associated with the instance storage device>\) for parameter virtualName is invalid\.\.\.](ts-as-instancelaunchfailure.md#ts-as-instancelaunchfailure-9)  | 
 | Block device mapping |  [EBS block device mappings not supported for instance\-store AMIs\.](ts-as-instancelaunchfailure.md#ts-as-instancelaunchfailure-10)  | 
 | Instance configuration |  [The requested configuration is currently not supported\.](ts-as-instancelaunchfailure.md#ts-as-instancelaunchfailure-3)  | 

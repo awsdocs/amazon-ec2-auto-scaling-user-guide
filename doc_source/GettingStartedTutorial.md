@@ -126,13 +126,13 @@ Use the following procedure to continue where you left off after creating either
 
 1. Choose **Next**\. 
 
-   The **Configure settings** page appears, allowing you to configure network settings and giving you options for launching On\-Demand and Spot Instances across multiple instance types \(if you chose a launch template\)\.
+   The **Choose instance launch options** page appears, giving you options for launching On\-Demand and Spot Instances \(if you chose a launch template\) and allowing you to choose the VPC network settings you want the Auto Scaling group to use\.
 
-1. \[Launch template only\] Keep **Purchase options and instance types** set to **Adhere to the launch template**\. 
+1. In the **Network** section, keep **VPC** set to the default VPC for your chosen AWS Region, or select your own VPC\. The default VPC is automatically configured to provide internet connectivity to your instance\. This VPC includes a public subnet in each Availability Zone in the Region\. 
 
-1. Keep **Network** set to the default VPC for your chosen AWS Region, or select your own VPC\. The default VPC is automatically configured to provide internet connectivity to your instance\. This VPC includes a public subnet in each Availability Zone in the Region\. 
+1. For **Availability Zones and subnets**, choose a subnet from each Availability Zone that you want to include\. Use subnets in multiple Availability Zones for high availability\. 
 
-1. For **Subnet**, choose a subnet from each Availability Zone that you want to include\. Use subnets in multiple Availability Zones for high availability\. 
+1. \[Launch template only\] In the **Instance type requirements** section, use the default setting \(do not override the launch template\) to simplify this step\. For this tutorial, you will launch only one On\-Demand Instance using the instance type specified in your launch template\.
 
 1. Keep the rest of the defaults for this tutorial and choose **Skip to review**\. 
 **Note**  
@@ -187,6 +187,7 @@ Use these steps to learn more about how Amazon EC2 Auto Scaling works, specifica
 ## Step 5: Next steps<a name="gs-tutorial-next-steps"></a>
 
 Go to the next step if you would like to delete the basic infrastructure for automatic scaling that you just created\. Otherwise, you can use this infrastructure as your base and try one or more of the following:
++ Learn how to connect to your Linux instance\. For more information, see [Connect to your Linux instance](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/AccessingInstances.html) in the *Amazon EC2 User Guide for Linux Instances*\. 
 + Manually scale your Auto Scaling group\. For more information, see [Manual scaling](as-manual-scaling.md)\.
 + Learn how to automatically scale where there are changes in resource utilization\. If the load increases, your Auto Scaling group can scale out \(add instances\) to handle the demand\. For more information, see [Target tracking scaling policies](as-scaling-target-tracking.md)\.
 + Configure an SNS notification to notify you whenever your Auto Scaling group launches or terminates instances\. For more information, see [Monitoring with Amazon SNS notifications](ASGettingNotifications.md)\.

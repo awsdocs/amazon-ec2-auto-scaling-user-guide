@@ -2,7 +2,7 @@
 
 Amazon EC2 can enable detailed monitoring when it is launching EC2 instances in your Auto Scaling group\. You configure monitoring for Auto Scaling instances using a launch template or launch configuration\. 
 
-Monitoring is enabled whenever an instance is launched, either basic monitoring \(5\-minute granularity\) or detailed monitoring \(1\-minute granularity\)\. For detailed monitoring, additional charges apply\. For more information, see [Amazon CloudWatch pricing](https://aws.amazon.com/cloudwatch/pricing/) and [Monitoring your instances using CloudWatch](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-cloudwatch.html) in the *Amazon EC2 User Guide for Linux Instances*\.
+Monitoring is enabled whenever an instance is launched, either basic monitoring \(five\-minute granularity\) or detailed monitoring \(one\-minute granularity\)\. For detailed monitoring, additional charges apply\. For more information, see [Amazon CloudWatch pricing](https://aws.amazon.com/cloudwatch/pricing/) and [Monitoring your instances using CloudWatch](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-cloudwatch.html) in the *Amazon EC2 User Guide for Linux Instances*\.
 
 ## Enable detailed monitoring \(console\)<a name="enable-detailed-monitoring-console"></a>
 

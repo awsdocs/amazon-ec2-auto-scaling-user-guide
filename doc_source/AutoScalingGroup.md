@@ -22,6 +22,7 @@ If you're new to Auto Scaling groups, start by creating a launch template or a l
 
 **Topics**
 + [Auto Scaling groups with multiple instance types and purchase options](ec2-auto-scaling-mixed-instances-groups.md)
++ [Creating an Auto Scaling group using attribute\-based instance type selection](create-asg-instance-type-requirements.md)
 + [Creating an Auto Scaling group using a launch template](create-asg-launch-template.md)
 + [Creating an Auto Scaling group using a launch configuration](create-asg.md)
 + [Creating an Auto Scaling group using an EC2 instance](create-asg-from-instance.md)

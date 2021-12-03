@@ -26,7 +26,7 @@ The sections that follow describe the most common health check errors and causes
 
 1. Manually create an Amazon EC2 instance that is not part of the Auto Scaling group and investigate the problem\. For general help with investigating impaired instances, see [Troubleshoot instances with failed status checks](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/TroubleshootingInstances.html) in the *Amazon EC2 User Guide for Linux Instances* and [Troubleshooting Windows Instances](https://docs.aws.amazon.com/AWSEC2/latest/WindowsGuide/troubleshooting-windows-instances.html) in the *Amazon EC2 User Guide for Windows Instances*\. 
 
-1. After you confirm that everything works, deploy a new, error\-free instance configuration to the Auto Scaling group\.
+1. After you confirm that your instance launched successfully and is healthy, deploy a new, error\-free instance configuration to the Auto Scaling group\.
 
 1. Delete the instance that you created to avoid ongoing charges to your AWS account\. 
 

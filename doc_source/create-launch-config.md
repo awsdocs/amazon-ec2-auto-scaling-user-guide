@@ -42,7 +42,7 @@ An Auto Scaling group is associated with one launch configuration at a time, and
 
    1. \(Optional\) For **Purchasing option**, you can choose **Request Spot Instances** to request Spot Instances at the Spot price, capped at the On\-Demand price\. Optionally, you can specify a maximum price per instance hour for your Spot Instances\. 
 **Note**  
-Spot Instances are a cost\-effective choice compared to On\-Demand Instances, if you can be flexible about when your applications run and if your applications can be interrupted\. For more information, see [](launch-configuration-requesting-spot-instances.md)\. 
+Spot Instances are a cost\-effective choice compared to On\-Demand Instances, if you can be flexible about when your applications run and if your applications can be interrupted\. For more information, see [Requesting Spot Instances for fault\-tolerant and flexible applications](launch-configuration-requesting-spot-instances.md)\. 
 
    1. \(Optional\) For **IAM instance profile**, choose a role to associate with the instances\. For more information, see [IAM role for applications that run on Amazon EC2 instances](us-iam-role.md)\.
 

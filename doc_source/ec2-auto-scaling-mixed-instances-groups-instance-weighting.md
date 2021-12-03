@@ -56,7 +56,6 @@ This section discusses the key considerations in implementing instance weighting
 + Be cautious about choosing very large ranges for your weights\. For example, we don't recommend specifying a weight of 1 for an instance type when the next larger instance type has a weight of 200\. The difference between the smallest and largest weights should also not be extreme\. If any of the instance types have too large of a weight difference, this can have a negative effect on ongoing cost\-performance optimization\. 
 + The size of the Auto Scaling group is measured in capacity units, and not in instances\. For example, if your weights are based on vCPUs, you must specify the desired, minimum, and maximum number of cores you want\.
 + Set your weights and desired capacity so that the desired capacity is at least two to three times larger than your largest weight\. 
-+ If you choose to set your own maximum price for Spot, you must specify a price *per instance hour* that is high enough for your most expensive instance type\. Amazon EC2 Auto Scaling provisions Spot Instances if the current Spot price in an Availability Zone is below your maximum price and capacity is available\. If the request for Spot Instances cannot be fulfilled in one Spot Instance pool, it keeps trying in other Spot pools to leverage the cost savings of Spot Instances\. 
 
 With instance weighting, the following new behaviors are introduced:
 + Current capacity will either be at the desired capacity or above it\. Because Amazon EC2 Auto Scaling wants to provision instances until the desired capacity is totally fulfilled, an overage can happen\. For example, suppose that you specify two instance types, `c5.2xlarge` and `c5.12xlarge`, and you assign instance weights of 2 for `c5.2xlarge` and 12 for `c5.12xlarge`\. If there are 5 units remaining to fulfill the desired capacity, and Amazon EC2 Auto Scaling provisions a `c5.12xlarge`, the desired capacity is exceeded by 7 units\. 
@@ -254,3 +253,15 @@ The following examples show how to use the AWS CLI to add weights when you creat
       ]
   }
   ```
+
+## Additional information<a name="instance-weighting-additional-information"></a>
+
+### Instance weighting and allocation strategies<a name="lowest-price-allocation-strategy"></a>
+
+The [allocation strategies](ec2-auto-scaling-mixed-instances-groups.md#allocation-strategies) determine which instance pools your instances come from\. When you use the instance weighting feature, the allocation strategies perform exactly like they do for other Auto Scaling groups\. However, there is one key difference in how instance pools are chosen when you use the `lowest-price` strategy\. When you choose `lowest-price` for your allocation strategy, your instances come from the instance pools with the lowest price per unit in each Availability Zone\. 
+
+For example, consider you have an Auto Scaling group that has several instance types with varying amounts of vCPUs\. You use `lowest-price` for your Spot and On\-Demand allocation strategies\. If you choose to assign weights based on the vCPU count of each instance type, Amazon EC2 Auto Scaling launches whichever instance types have the lowest price per your assigned weight values \(for example, per vCPU\) at the time of fulfilment\. If it's a Spot Instance, then this means the lowest Spot price per vCPU\. If it's an On\-Demand Instance, then this means the lowest On\-Demand price per vCPU\.
+
+### Instance weighting and Spot max price<a name="spot-max-price"></a>
+
+When you create your Auto Scaling group using the AWS CLI or an SDK, you can specify the `SpotMaxPrice` parameter\. This parameter determines the maximum price you would be willing to pay for a Spot instance hour, and by default, is set at the On\-Demand price\. When you use the instance weighting feature, remember that the maximum Spot price reflects the maximum unit price \(for example, price per vCPU\) instead of the maximum price for a whole instance\. 

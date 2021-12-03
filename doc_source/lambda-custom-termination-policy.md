@@ -144,7 +144,7 @@ Start by creating the Lambda function, so that you can specify its Amazon Resour
 
    1. Choose **Save**\. 
 
-1. After you have followed these instructions, continue on to specify the ARN of your function in the termination policies for your Auto Scaling group as a next step\. For more information, see [Using different termination policies \(AWS CLI\)](ec2-auto-scaling-termination-policies.md#custom-termination-policy-cli)\. 
+1. After you have followed these instructions, continue on to specify the ARN of your function in the termination policies for your Auto Scaling group as a next step\. For more information, see [Using different termination policies \(console\)](ec2-auto-scaling-termination-policies.md#custom-termination-policy-console)\. 
 
 ## Limitations<a name="lambda-custom-termination-policy-limitations"></a>
 + You can only specify one Lambda function in the termination policies for an Auto Scaling group\. If there are multiple termination policies specified, the Lambda function must be specified first\.

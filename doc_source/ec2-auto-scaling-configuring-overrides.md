@@ -7,6 +7,9 @@ The `Overrides` structure allows you to define a set of parameters that Amazon E
 + `LaunchTemplateSpecification` — \(Optional\) A launch template for an individual instance type\. This property is currently limited to the AWS CLI or an SDK, and is not available from the console\. 
 + `WeightedCapacity` — \(Optional\) The number of units that a provisioned instance of this type provides toward fulfilling the desired capacity of the Auto Scaling group\. If you specify a weight value for one instance type, you must specify a weight value for all of them\.
 
+**Note**  
+As an alternative to specifying a list of instance types, you can specify a set of instance attributes to use as criteria for selecting the instance types your Auto Scaling group uses\. This is known as *attribute\-based instance type selection*\. For more information, see [Using attribute\-based instance type selection](create-asg-instance-type-requirements.md)\.
+
 **Topics**
 + [Specifying a different launch template for an instance type](ec2-auto-scaling-mixed-instances-groups-launch-template-overrides.md)
 + [Configuring instance weighting for Amazon EC2 Auto Scaling](ec2-auto-scaling-mixed-instances-groups-instance-weighting.md)

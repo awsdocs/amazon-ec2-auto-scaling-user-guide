@@ -4,7 +4,7 @@ Before you can create an Auto Scaling group using a launch template, you must cr
 
 A launch template provides full functionality for Amazon EC2 Auto Scaling and also newer features of Amazon EC2 such as the current generation of EBS Provisioned IOPS volumes \(io2\), EBS volume tagging, T2 Unlimited instances, Elastic Inference, and Dedicated Hosts\.
 
-The following procedure works for creating a new launch template\. After you create your launch template, you can create the Auto Scaling group by following the instructions in [Creating an Auto Scaling group using a launch template](create-asg-launch-template.md)\.
+The following procedure works for creating a new launch template\. After you create your launch template, you can create the Auto Scaling group by following the instructions in [Creating an Auto Scaling group using a launch template](create-asg-launch-template.md), [Auto Scaling groups with multiple instance types and purchase options](ec2-auto-scaling-mixed-instances-groups.md), or [Creating an Auto Scaling group using attribute\-based instance type selection](create-asg-instance-type-requirements.md)\.
 
 **Topics**
 + [Creating your launch template \(console\)](#create-launch-template-for-auto-scaling)
@@ -41,7 +41,15 @@ Follow these steps to configure your launch template for the following:
 
    1. **Amazon machine image \(AMI\)**: Choose the ID of the AMI from which to launch the instances\. You can search through all available AMIs, or from the **Quick Start** list, select from one of the commonly used AMIs in the list\. If you don't see the AMI that you need, you can [find a suitable AMI](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/finding-an-ami.html), make note of its ID, and specify it as a custom value\.
 
-   1. **Instance type**: Choose the [instance type](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/instance-types.html)\.
+   1. For **Instance type**, you can either select an instance type, or you can specify instance attributes and let Amazon EC2 Auto Scaling identify the instance types with those attributes\. For more information, see [Creating an Auto Scaling group using attribute\-based instance type selection](create-asg-instance-type-requirements.md)\.
+      + **Instance type**: Ensure that the instance type is compatible with the AMI that you've specified\. For more information, see [Instance types](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/instance-types.html)\.
+      + **Advanced**: To specify instance attributes and let Amazon EC2 identify the instance types with those attributes, choose **Advanced**, and then choose **Specify instance type attributes**\. 
+        + **Number of vCPUs**: Enter the minimum and maximum number of vCPUs for your compute requirements\. To indicate no limits, enter a minimum of 0, and leave the maximum blank\. 
+        + **Amount of memory \(MiB\)**: Enter the minimum and maximum amount of memory, in MiB, for your compute requirements\. To indicate no limits, enter a minimum of 0, and leave the maximum blank\. 
+        + Expand **Optional instance type attributes** and choose **Add attribute** to express your compute requirements in more detail\. For information about each attribute, see [InstanceRequirementsRequest](https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_InstanceRequirementsRequest.html) in the *Amazon EC2 API Reference*\. 
+        + **Resulting instance types**: You can view the instance types that match the specified compute requirements, such as vCPUs, memory, and storage\.
+
+          \(Optional\) To exclude instance types, choose **Add attribute**, and from the **Attribute** list, choose **Excluded instance types**\. From the **Attribute value** list, select the instance types to exclude\.
 
    1. \(Optional\) **Key pair \(login\)**: Specify a [key pair](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-key-pairs.html)\.
 
@@ -75,7 +83,7 @@ Follow these steps to configure your launch template for the following:
 
       \* If [encryption by default](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EBSEncryption.html#encryption-by-default) is enabled, all newly created volumes \(whether or not the **Encrypted** parameter is set to **Yes**\) are encrypted using the default KMS key\. Setting both the **Encrypted** and **Key** parameters allows you to specify a non\-default KMS key\. 
 
-   1. **Key**: If you chose **Yes** in the previous step, optionally enter the KMS key you want to use when encrypting the volumes\. Enter any KMS key that you previously created using the AWS Key Management Service\. You can paste the full ARN of any key that you have access to\. For information about setting up key policies for your customer managed keys, see the [AWS Key Management Service Developer Guide](https://docs.aws.amazon.com/kms/latest/developerguide/) and the [Required AWS KMS key policy for use with encrypted volumes](key-policy-requirements-EBS-encryption.md)\. 
+   1. **Key**: If you chose **Yes** in the previous step, optionally enter the KMS key you want to use when encrypting the volumes\. Enter a KMS key that you previously created using the AWS Key Management Service\. You can paste the full ARN of any key that you have access to\. For information about setting up key policies for your customer managed keys, see the [AWS Key Management Service Developer Guide](https://docs.aws.amazon.com/kms/latest/developerguide/) and the [Required AWS KMS key policy for use with encrypted volumes](key-policy-requirements-EBS-encryption.md)\. 
 **Note**  
 Providing a KMS key without also setting the **Encrypted** parameter results in an error\. 
 

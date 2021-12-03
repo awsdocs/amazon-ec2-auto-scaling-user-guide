@@ -2,9 +2,9 @@
 
 *Metrics* are the fundamental concept in CloudWatch\. A metric represents a time\-ordered set of data points that are published to CloudWatch\. Think of a metric as a variable to monitor, and the data points as representing the values of that variable over time\. You can use these metrics to verify that your system is performing as expected\. 
 
-Amazon EC2 Auto Scaling publishes data points to CloudWatch about your Auto Scaling groups\. The metrics are available at 1\-minute granularity at no additional charge, but you must enable them\. By doing this, you get continuous visibility into the operations of your Auto Scaling groups so that you can quickly respond to changes in your workloads\. You can enable and disable these metrics using the AWS Management Console, AWS CLI, or an SDK\. 
+Amazon EC2 Auto Scaling publishes data points to CloudWatch about your Auto Scaling groups\. The metrics are available at one\-minute granularity at no additional charge, but you must enable them\. By doing this, you get continuous visibility into the operations of your Auto Scaling groups so that you can quickly respond to changes in your workloads\. You can enable and disable these metrics using the AWS Management Console, AWS CLI, or an SDK\. 
 
-Amazon EC2 publishes data points to CloudWatch that describe your Auto Scaling instances\. The interval for Amazon EC2 instance monitoring is configurable\. You can choose between 1\-minute and 5\-minute granularity\. For more information, see [Configuring monitoring for Auto Scaling instances](enable-as-instance-metrics.md)\.
+Amazon EC2 publishes data points to CloudWatch that describe your Auto Scaling instances\. The interval for Amazon EC2 instance monitoring is configurable\. You can choose between one\-minute and five\-minute granularity\. For more information, see [Configuring monitoring for Auto Scaling instances](enable-as-instance-metrics.md)\.
 
 **Contents**
 + [Enable Auto Scaling group metrics \(console\)](#as-enable-group-metrics)
@@ -68,6 +68,11 @@ aws autoscaling disable-metrics-collection --auto-scaling-group-name my-asg
 ```
 
 ## Available metrics and dimensions<a name="available-cloudwatch-metrics"></a>
+
+The Auto Scaling group metrics and dimensions that Amazon EC2 Auto Scaling sends to CloudWatch are listed below\.
+
+**Note**  
+CloudWatch group metrics are delivered on a best\-effort basis\. Data is not backfilled to fill gaps in group metric history in rare cases where CloudWatch is experiencing a service disruption\.
 
 ### Auto Scaling group metrics<a name="as-group-metrics"></a>
 

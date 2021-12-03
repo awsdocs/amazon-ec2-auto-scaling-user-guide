@@ -13,7 +13,7 @@ When your EC2 instances fail to launch, you might get one or more of the followi
 + [The requested Availability Zone is no longer supported\. Please retry your request\.\.\.](#ts-as-instancelaunchfailure-5)
 + [Your requested instance type \(<instance type>\) is not supported in your requested Availability Zone \(<instance Availability Zone>\)\.\.\.](#ts-as-instancelaunchfailure-6)
 + [Your Spot request price of 0\.015 is lower than the minimum required Spot request fulfillment price of 0\.0735\.\.\.](#ts-as-instancelaunchfailure-7)
-+ [Invalid device name upload\. Launching EC2 instance failed\.](#ts-as-instancelaunchfailure-8)
++ [Invalid device name <device name> / Invalid device name upload\. Launching EC2 instance failed\.](#ts-as-instancelaunchfailure-8)
 + [Value \(<name associated with the instance storage device>\) for parameter virtualName is invalid\.\.\.](#ts-as-instancelaunchfailure-9)
 + [EBS block device mappings not supported for instance\-store AMIs\.](#ts-as-instancelaunchfailure-10)
 + [Placement groups may not be used with instances of type 'm1\.large'\. Launching EC2 instance failed\.](#ts-as-instancelaunchfailure-11)
@@ -71,11 +71,15 @@ When your EC2 instances fail to launch, you might get one or more of the followi
 + **Cause**: The Spot maximum price in your request is lower than the Spot price for the instance type that you selected\. 
 + **Solution**: Submit a new request with a higher Spot maximum price \(possibly the On\-Demand price\)\. Previously, the Spot price you paid was based on bidding\. Today, you pay the current Spot price\. By setting your maximum price higher, it gives the Amazon EC2 Spot service a better chance of launching and maintaining your required amount of capacity\.
 
-## Invalid device name upload\. Launching EC2 instance failed\.<a name="ts-as-instancelaunchfailure-8"></a>
-+ **Cause**: The block device mappings in your launch template or launch configuration might contain block device names that are not available or currently not supported\. 
+## Invalid device name <device name> / Invalid device name upload\. Launching EC2 instance failed\.<a name="ts-as-instancelaunchfailure-8"></a>
++ **Cause 1**: The block device mappings in your launch template or launch configuration might contain block device names that are not available or currently not supported\. 
 + **Solution**: 
 
-  1. Use the [describe\-volumes](https://docs.aws.amazon.com/cli/latest/reference/ec2/describe-volumes.html) command to see how the volumes are exposed to the instance\.
+  1. Verify which device names are available for your specific instance configuration\. For more details on device naming, see [Device names on Linux instances](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/device_naming.html) in the *Amazon EC2 User Guide for Linux Instances*\.
+
+  1. Manually create an Amazon EC2 instance that is not part of the Auto Scaling group and investigate the problem\. If the block device naming configuration conflicts with the names in the Amazon Machine Image \(AMI\), the instance will fail during launch\. For more information, see [Block device mappings](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/block-device-mapping-concepts.html) in the *Amazon EC2 User Guide for Linux Instances*\. 
+
+  1. After you confirm that your instance launched successfully, use the [describe\-volumes](https://docs.aws.amazon.com/cli/latest/reference/ec2/describe-volumes.html) command to see how the volumes are exposed to the instance\.
 
   1. Create a new launch template or launch configuration using the device name listed in the volume description\.
 
