@@ -1,20 +1,20 @@
 # Creating an Auto Scaling group using a launch configuration<a name="create-asg"></a>
 
-When you create an Auto Scaling group, you must specify the necessary information to configure the Amazon EC2 instances, the subnets for the instances, and the initial number of instances\.
+When you create an Auto Scaling group, you must specify the necessary information to configure the Amazon EC2 instances, the Availability Zones and VPC subnets for the instances, the desired capacity, and the minimum and maximum capacity limits\.
 
 **Important**  
-To configure the Amazon EC2 instances, you can specify a launch template, a launch configuration, or an EC2 instance\. We recommend that you use a launch template to make sure that you can use the latest features of Amazon EC2\. For more information, see [Launch templates](LaunchTemplates.md)\.
+To configure the Amazon EC2 instances, you can specify a launch template or a launch configuration\. We recommend that you use a launch template to make sure that you can use the latest features of Amazon EC2\. For more information, see [Creating an Auto Scaling group using a launch template](create-asg-launch-template.md)\.
 
 The following procedure demonstrates how to create an Auto Scaling group using a launch configuration\. You cannot modify a launch configuration after it is created, but you can replace the launch configuration for an Auto Scaling group\. For more information, see [Changing the launch configuration for an Auto Scaling group](change-launch-config.md)\. 
 
 **Prerequisites**  
-Create a launch configuration\. For more information, see [Creating a launch configuration](create-launch-config.md)\.
+You must have created a launch configuration\. For more information, see [Creating a launch configuration](create-launch-config.md)\.
 
 **To create an Auto Scaling group using a launch configuration \(console\)**
 
 1. Open the Amazon EC2 Auto Scaling console at [https://console\.aws\.amazon\.com/ec2autoscaling/](https://console.aws.amazon.com/ec2autoscaling/)\.
 
-1. On the navigation bar at the top of the screen, choose the same Region that you used when you created the launch template\.
+1. On the navigation bar at the top of the screen, choose the same AWS Region that you used when you created the launch configuration\.
 
 1. Choose **Create an Auto Scaling group**\.
 
@@ -28,9 +28,9 @@ Create a launch configuration\. For more information, see [Creating a launch con
 
    1. Verify that your launch configuration supports all of the options that you are planning to use, and then choose **Next**\.
 
-1. On the **Configure instance launch options** page, under **Network**, for **VPC**, choose the VPC for the security groups that you specified in your launch configuration\. Launching instances using a combination of instance types and purchase options is not supported in EC2\-Classic\. 
+1. On the **Configure instance launch options** page, under **Network**, for **VPC**, choose a VPC\. The Auto Scaling group must be created in the same VPC as the security group you specified in your launch configuration\.
 
-1. For **Availability Zones and subnets**, choose one or more subnets in the specified VPC\. Use subnets in multiple Availability Zones for high availability\. For more information about high availability with Amazon EC2 Auto Scaling, see [Distributing instances across Availability Zones](auto-scaling-benefits.md#arch-AutoScalingMultiAZ)\.
+1. For **Availability Zones and subnets**, choose one or more subnets in the specified VPC\. Use subnets in multiple Availability Zones for high availability\. For more information, see [Considerations when choosing VPC subnets](asg-in-vpc.md#as-vpc-considerations)\.
 
 1. Choose **Next**\. 
 
@@ -42,7 +42,9 @@ Create a launch configuration\. For more information, see [Creating a launch con
 
    1. To enable your Elastic Load Balancing \(`ELB`\) health checks, for **Health checks**, choose **ELB** under **Health check type**\. These health checks are optional when you enable load balancing\. 
 
-   1. Under **Health check grace period**, enter the amount of time until Amazon EC2 Auto Scaling checks the health of instances after they are put into service\. The intention of this setting is to prevent Amazon EC2 Auto Scaling from marking instances as unhealthy and terminating them before they have time to come up\. The default is 300 seconds\.
+   1. Under **Health check grace period**, enter the amount of time until Amazon EC2 Auto Scaling checks the health of new instances\. The intention of this setting is to prevent Amazon EC2 Auto Scaling from marking instances as unhealthy and terminating them before they have time to come up\. The default is 300 seconds\. For more information, see [Health check grace period](healthcheck.md#health-check-grace-period)\.
+
+   1. Under **Additional settings**, **Monitoring**, choose whether to enable CloudWatch group metrics collection\. These metrics provide measurements that can be indicators of a potential issue, such as number of terminating instances or number of pending instances\. For more information, see [Monitoring CloudWatch metrics for your Auto Scaling groups and instances](as-instance-monitoring.md)\.
 
 1. \(Optional\) On the **Configure group size and scaling policies** page, configure the following options, and then choose **Next**:
 

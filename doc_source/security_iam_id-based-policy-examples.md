@@ -416,7 +416,9 @@ When calling the following actions from the Amazon EC2 Auto Scaling API, users m
 **Create an Auto Scaling group**
 + `autoscaling:CreateAutoScalingGroup`
 + `iam:CreateServiceLinkedRole` \(Needed if you are using the default service\-linked role and that role does not yet exist\) 
-+ `iam:PassRole` \(Needed if you are using a nondefault service\-linked role, or you are specifying an IAM role for the `NotificationTargetARN` parameter for a lifecycle hook\)
++ `iam:PassRole` \(Needed if you are using a nondefault service\-linked role, you are specifying an IAM role for the `RoleARN` parameter for a lifecycle hook, or you are using a launch template that specifies the IAM role that can be used by the instances in the Auto Scaling group\)
++ `ec2:RunInstance` \(Needed if you are using a launch template\)
++ `ec2:CreateTags` \(Needed if you are using a launch template that specifies the tags to apply to your instances and EBS volumes\)
 
 **Create a launch configuration**
 + `autoscaling:CreateLaunchConfiguration`
@@ -431,4 +433,4 @@ When calling the following actions from the Amazon EC2 Auto Scaling API, users m
 
 **Create a lifecycle hook**
 + `autoscaling:PutLifecycleHook`
-+ `iam:PassRole` \(Only needed if you are specifying an IAM role for the `NotificationTargetARN` parameter\) 
++ `iam:PassRole` \(Only needed if you are specifying an IAM role for the `RoleARN` parameter\) 

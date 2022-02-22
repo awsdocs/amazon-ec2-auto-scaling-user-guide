@@ -90,7 +90,7 @@ aws ec2 create-launch-template --launch-template-name my-template-for-auto-scali
 ```
 
 **Note**  
-If instance tags are specified both in the launch template and in the Auto Scaling group configuration, all the tags are merged\. If there is a collision on the tag's key, then the value in the Auto Scaling group configuration takes precedence\. 
+If you specify instance tags in your launch template and then you choose to propagate your Auto Scaling group's tags to its instances, all the tags are merged\. If the same tag key is specified for a tag in your launch template and a tag in your Auto Scaling group, then the tag value from the group takes precedence\. 
 
 ## Specifying an IAM role to pass to instances<a name="example-iam-profile"></a>
 

@@ -1,15 +1,18 @@
 # Amazon EC2 Auto Scaling and interface VPC endpoints<a name="ec2-auto-scaling-vpc-endpoints"></a>
 
-You can establish a private connection between your virtual private cloud \(VPC\) and the Amazon EC2 Auto Scaling API by creating an interface VPC endpoint\. You can use this connection to call the Amazon EC2 Auto Scaling API from your VPC without sending traffic over the internet\. The endpoint provides reliable, scalable connectivity to the Amazon EC2 Auto Scaling API\. It does this without requiring an internet gateway, NAT instance, or VPN connection\. 
+You can improve the security posture of your VPC by configuring Amazon EC2 Auto Scaling to use an interface VPC endpoint\. Interface endpoints are powered by AWS PrivateLink, a technology that enables you to privately access Amazon EC2 Auto Scaling APIs by restricting all network traffic between your VPC and Amazon EC2 Auto Scaling to the Amazon network\. With interface endpoints, you also don't need an internet gateway, a NAT device, or a virtual private gateway\.
 
-Interface VPC endpoints are powered by AWS PrivateLink, a feature that enables private communication between AWS services using private IP addresses\. For more information, see [AWS PrivateLink](https://aws.amazon.com/privatelink)\.
+You are not required to configure AWS PrivateLink, but it's recommended\. For more information about AWS PrivateLink and VPC endpoints, see [Interface VPC Endpoints \(AWS PrivateLink\)](https://docs.aws.amazon.com/vpc/latest/userguide/vpce-interface.html)\.
 
-**Note**  
-You must explicitly enable each API that you want to access through an interface VPC endpoint\. For example, you might need to also configure an interface VPC endpoint for `ec2.region.amazonaws.com` to use when calling the Amazon EC2 API operations\. For more information, see [Interface VPC endpoints \(AWS PrivateLink\)](https://docs.aws.amazon.com/vpc/latest/userguide/vpce-interface.html) in the *Amazon VPC User Guide*\.
+**Topics**
++ [Create an interface VPC endpoint](#create-vpce-as)
++ [Create a VPC endpoint policy](#create-vpce-policy-as)
 
 ## Create an interface VPC endpoint<a name="create-vpce-as"></a>
 
-You can create a VPC endpoint for the Amazon EC2 Auto Scaling service using either the Amazon VPC console or the AWS Command Line Interface \(AWS CLI\)\. Create an endpoint for Amazon EC2 Auto Scaling using the following service name:
+You can create a VPC endpoint for the Amazon EC2 Auto Scaling service using either the Amazon VPC console or the AWS Command Line Interface \(AWS CLI\)\. 
+
+Create an endpoint for Amazon EC2 Auto Scaling using the following service name:
 + **com\.amazonaws\.*region*\.autoscaling** — Creates an endpoint for the Amazon EC2 Auto Scaling API operations\.
 + **cn\.com\.amazonaws\.*region*\.autoscaling** — Creates an endpoint for the Amazon EC2 Auto Scaling API operations in the AWS China \(Beijing\) Region and AWS China \(Ningxia\) Region\.
 

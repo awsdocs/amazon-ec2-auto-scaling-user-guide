@@ -34,10 +34,10 @@ Before you create a target tracking scaling policy for your Auto Scaling group, 
 In a target tracking scaling policy, you can use predefined or customized metrics\. 
 
 The following predefined metrics are available: 
-+ `ASGAverageCPUUtilization`—Average CPU utilization of the Auto Scaling group\. 
-+ `ASGAverageNetworkIn`—Average number of bytes received on all network interfaces by the Auto Scaling group\. 
-+ `ASGAverageNetworkOut`—Average number of bytes sent out on all network interfaces by the Auto Scaling group\. 
-+ `ALBRequestCountPerTarget`—Number of requests completed per target in an Application Load Balancer target group\. 
++ `ASGAverageCPUUtilization`—Average CPU utilization of the Auto Scaling group\.
++ `ASGAverageNetworkIn`—Average number of bytes received on all network interfaces by the Auto Scaling group\.
++ `ASGAverageNetworkOut`—Average number of bytes sent out on all network interfaces by the Auto Scaling group\.
++ `ALBRequestCountPerTarget`—Average Application Load Balancer request count per target for your Auto Scaling group\.
 
 You can choose other available Amazon CloudWatch metrics or your own metrics in CloudWatch by specifying a customized metric\. You must use the AWS CLI or an SDK to create a target tracking policy with a customized metric\.
 

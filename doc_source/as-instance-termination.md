@@ -2,7 +2,7 @@
 
 Amazon EC2 Auto Scaling uses termination policies to determine which instances it terminates first during scale\-in events\. Termination policies define the termination criteria that is used by Amazon EC2 Auto Scaling when choosing which instances to terminate\.
 
-Amazon EC2 Auto Scaling uses a default termination policy, but you can optionally choose or create your own termination policies with your own termination criteria\. This lets you ensure that your instances are terminated based on your specific application needs\.
+Your Auto Scaling groups use a default termination policy, but you can optionally choose or create your own termination policies with your own termination criteria\. This lets you ensure that your instances are terminated based on your specific application needs\.
 
 Amazon EC2 Auto Scaling also provides instance scale\-in protection\. When you enable this feature, it prevents instances from being terminated during scale\-in events\. You can enable instance scale\-in protection when you create an Auto Scaling group, and you can change the setting on running instances\. If you enable instance scale\-in protection on an existing Auto Scaling group, all new instances launched after that will have instance scale\-in protection enabled\.
 

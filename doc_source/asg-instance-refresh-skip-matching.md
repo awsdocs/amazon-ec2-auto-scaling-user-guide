@@ -1,4 +1,4 @@
-# Making updates to your Auto Scaling group using skip matching<a name="asg-instance-refresh-skip-matching"></a>
+# Instance refresh examples that enable skip matching with the AWS Command Line Interface \(AWS CLI\)<a name="asg-instance-refresh-skip-matching"></a>
 
 By default, Amazon EC2 Auto Scaling can replace any instance in an Auto Scaling group during an instance refresh\. By enabling skip matching, you can avoid replacing instances that already have your desired configuration\. 
 
@@ -8,8 +8,7 @@ Skip matching makes it more efficient to:
 + Roll back changes after one or more instances are replaced as part of a failed or cancelled instance refresh\.
 
 **Note**  
-Currently, the desired configuration and skip matching features are available only if you use the AWS CLI or an SDK\. These features are not available from the console\.  
-The skip matching feature cannot be used to update an Auto Scaling group that uses a launch configuration unless a launch template or mixed instances policy is specified for the desired configuration\.
+The skip matching feature cannot be used to update an Auto Scaling group that uses a launch configuration unless a launch template is specified for the desired configuration\.
 
 The following AWS CLI examples demonstrate a few scenarios for the use of skip matching\. 
 

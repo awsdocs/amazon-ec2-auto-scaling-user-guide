@@ -16,7 +16,7 @@ The following scale\-out events direct the Auto Scaling group to launch EC2 inst
 + You create a scaling policy to automatically increase the size of the group based on a specified increase in demand\. For more information, see [Dynamic scaling for Amazon EC2 Auto Scaling](as-scale-based-on-demand.md)\.
 + You set up scaling by schedule to increase the size of the group at a specific time\. For more information, see [Scheduled scaling for Amazon EC2 Auto Scaling](schedule_time.md)\.
 
-When a scale\-out event occurs, the Auto Scaling group launches the required number of EC2 instances, using its assigned launch configuration\. These instances start in the `Pending` state\. If you add a lifecycle hook to your Auto Scaling group, you can perform a custom action here\. For more information, see [Lifecycle hooks](#as-lifecycle-hooks)\.
+When a scale\-out event occurs, the Auto Scaling group launches the required number of EC2 instances, using its assigned launch template\. These instances start in the `Pending` state\. If you add a lifecycle hook to your Auto Scaling group, you can perform a custom action here\. For more information, see [Lifecycle hooks](#as-lifecycle-hooks)\.
 
 When each instance is fully configured and passes the Amazon EC2 health checks, it is attached to the Auto Scaling group and it enters the `InService` state\. The instance is counted against the desired capacity of the Auto Scaling group\.
 

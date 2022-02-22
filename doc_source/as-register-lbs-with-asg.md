@@ -151,13 +151,13 @@ Use the following procedure to continue where you left off after creating or sel
 
 1. Choose **Next**\. 
 
-   On the **Choose instance launch options** page, you can choose the VPC network settings you want the Auto Scaling group to use and choose the distribution of On\-Demand Instances and Spot Instances \(if you chose a launch template\)\.
+   The **Choose instance launch options** page appears, allowing you to choose the VPC network settings you want the Auto Scaling group to use and giving you options for launching On\-Demand and Spot Instances \(if you chose a launch template\)\. 
 
 1. In the **Network** section, for **VPC**, choose the VPC that you used for your load balancer\. If you chose the default VPC, it is automatically configured to provide internet connectivity to your instances\. This VPC includes a public subnet in each Availability Zone in the Region\. 
 
-1. For **Availability Zones and subnets**, choose one or more subnets from each Availability Zone that you want to include, based on which Availability Zones the load balancer is in\.
+1. For **Availability Zones and subnets**, choose one or more subnets from each Availability Zone that you want to include, based on which Availability Zones the load balancer is in\. For more information, see [Considerations when choosing VPC subnets](asg-in-vpc.md#as-vpc-considerations)\.
 
-1. \[Launch template only\] In the **Instance type requirements** section, use the default setting \(do not override the launch template\) to simplify this step\. For this tutorial, you will launch only On\-Demand Instances using the instance type specified in your launch template\.
+1. \[Launch template only\] In the **Instance type requirements** section, use the default setting to simplify this step\. \(Do not override the launch template\.\) For this tutorial, you will launch only On\-Demand Instances using the instance type specified in your launch template\.
 
 1. Choose **Next** to go to the **Configure advanced options** page\. 
 

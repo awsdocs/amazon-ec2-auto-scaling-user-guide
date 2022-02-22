@@ -60,7 +60,7 @@ aws autoscaling put-lifecycle-hook --lifecycle-hook-name my-hook --auto-scaling-
   --lifecycle-transition autoscaling:EC2_INSTANCE_TERMINATING
 ```
 
-To receive notifications using Amazon SNS or Amazon SQS, you must specify a notification target and an IAM role\. For more information, see [Configuring a notification target for a lifecycle hook](configuring-lifecycle-hook-notifications.md)\. 
+To receive notifications using Amazon SNS or Amazon SQS, you must specify a notification target and an IAM role\. For more information, see [Configuring a notification target for lifecycle notifications](configuring-lifecycle-hook-notifications.md)\. 
 
 For example, add the following options to specify an SNS topic as the notification target\.
 

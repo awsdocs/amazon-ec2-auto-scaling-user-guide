@@ -1,57 +1,49 @@
-# Warm pool instance lifecycle<a name="warm-pool-instance-lifecycle"></a>
+# Using lifecycle hooks with a warm pool<a name="warm-pool-instance-lifecycle"></a>
 
-Instances in the warm pool maintain their own independent lifecycle to help you create the appropriate lifecycle actions for each transition\. This lifecycle is designed to facilitate the use of Event Notifications to invoke actions in a target service \(for example, a Lambda function\)\. 
+Instances in a warm pool maintain their own independent lifecycle to help you create the appropriate custom action for each transition\. This lifecycle is designed to help you to invoke actions in a target service \(for example, a Lambda function\) while an instance is still initializing and before it is put in service\. 
 
-Note that the APIs that you use to create and manage lifecycle hooks have not changed \(only the instance lifecycle has changed\)\.
+**Note**  
+The API operations that you use to add and manage lifecycle hooks and complete lifecycle actions are not changed\. Only the instance lifecycle is changed\. 
 
-An Amazon EC2 instance transitions through different states from the moment it launches through to its termination\. You can create lifecycle hooks to act on these event states, when an instance has transitioned from one state to another one\.
+For more information about adding a lifecycle hook, see [Adding lifecycle hooks](adding-lifecycle-hooks.md)\. For more information about completing a lifecycle action, see [Completing a lifecycle action](completing-lifecycle-hooks.md)\.
 
-The following diagram shows the transition between each state:
+For instances entering the warm pool, you might need a lifecycle hook for one of the following reasons:
++ You want to launch EC2 instances from an AMI that takes a long time to finish initializing\.
++ You want to run user data scripts to bootstrap the EC2 instances\.
+
+For instances leaving the warm pool, you might need a lifecycle hook for one of the following reasons:
++ You can use some extra time to prepare EC2 instances for use\. For example, you might have services that must start when you restart an instance before your application can work correctly\.
++ You want to pre\-populate cache data so that a new server doesn't launch with an empty cache\.
++ You want to register new instances as managed instances with your configuration management service\.
+
+## Lifecycle states<a name="lifecycle-states"></a>
+
+An Auto Scaling instance can transition through many states as part of its lifecycle\.
+
+The following diagram shows the transition between Auto Scaling states when you use a warm pool:
 
 ![\[Image NOT FOUND\]](http://docs.aws.amazon.com/autoscaling/ec2/userguide/images/warm-pools-lifecycle-diagram.png)![\[Image NOT FOUND\]](http://docs.aws.amazon.com/autoscaling/ec2/userguide/)![\[Image NOT FOUND\]](http://docs.aws.amazon.com/autoscaling/ec2/userguide/)
 
-¹ If you opted to put warmed instances into a `Running` state, instances in the warmed pool transition from `Warmed:Pending` to `Warmed:Running` instead\.
-
-As shown in the preceding diagram:
-+ A lifecycle hook runs immediately after an instance is launched into the warm pool, when it transitions to the `Warmed:Pending:Wait` state\. 
-+ Another lifecycle hook runs immediately before an instance enters the `InService` state, when it transitions to the `Pending:Wait` state\.
-+ A final lifecycle hook runs immediately before the instance is terminated, when it transitions to the `Terminating:Wait` state\.
+¹ This state varies based on the warm pool's pool state setting\. If the pool state is set to `Running`, then this state is `Warmed:Running` instead\.
 
 When you add lifecycle hooks, consider the following:
-+ When you add a launch lifecycle hook, Amazon EC2 Auto Scaling pauses an instance that transitions to the `Warmed:Pending:Wait` state and the `Pending:Wait` state\.
-+ If the demand on your application depletes the warm pool, Amazon EC2 Auto Scaling can launch instances directly into the Auto Scaling group if the group has not yet reached its maximum capacity\. In this case, your launch lifecycle hook pauses the instance only at the `Pending:Wait` state\.
++ When you create a warm pool, Amazon EC2 Auto Scaling launches and then puts one or more instances into a wait state \(`Warmed:Pending:Wait`\) before the instances transition into the `Stopped` or `Running` state\.
++ When your Auto Scaling group scales out, Amazon EC2 Auto Scaling puts one or more warm pool instances into a wait state \(`Pending:Wait`\) before the instances transition into the `InService` state\.
++ If the demand on your application depletes the warm pool, Amazon EC2 Auto Scaling can launch instances directly into the Auto Scaling group as long as the group isn't at its maximum capacity yet\. If the instances launch directly into the group, they are only put in the `Pending:Wait` state before they transition into the `InService` state\.
 
-These are some of the reasons that you might create lifecycle actions for instances leaving the warm pool:
-+ You can use this time to prepare EC2 instances for use, for example, if you have services that must start for your application to work correctly\.
-+ You want to pre\-populate cache data to ensure that a new server doesn't launch with a completely empty cache\.
-+ You want to register new instances as managed instances with your configuration management service\.
+When instances reach a wait state, Amazon EC2 Auto Scaling sends a notification that includes the origin and the destination\. 
 
 ## Supported notification targets<a name="warm-pools-supported-notification-targets"></a>
 
-Amazon EC2 Auto Scaling can send lifecycle event notification messages to the following notification targets\.
-+ Lambda functions \(via EventBridge\)
+Amazon EC2 Auto Scaling provides support for defining any of the following as notification targets for lifecycle notifications:
++ EventBridge rules
 + Amazon SNS topics 
-+ Amazon SQS queues 
++ Amazon SQS queues
 
-The following information can help you configure these notification targets when creating lifecycle hooks based on the following procedures:
-+ [Route notifications to Lambda using EventBridge](configuring-lifecycle-hook-notifications.md#cloudwatch-events-notification)
-+ [Receive notifications using Amazon SNS](configuring-lifecycle-hook-notifications.md#sns-notifications)
-+ [Receive notifications using Amazon SQS](configuring-lifecycle-hook-notifications.md#sqs-notifications)
+The following sections contain links to documentation that describes how to configure notification targets:
 
-**EventBridge rules**: With Amazon EventBridge, you can create rules that trigger programmatic actions in response to warm pool events\. For example, you can create two EventBridge rules, one for when an instance is entering a warm pool, and one for when an instance is leaving the warm pool\. 
+**EventBridge rules**: To run code when Amazon EC2 Auto Scaling puts an instance into a wait state, you can create an EventBridge rule and specify a Lambda function as its target\. To invoke different Lambda functions based on different lifecycle notifications, you can create multiple rules and associate each rule with a specific event pattern and Lambda function\. For more information, see [Creating EventBridge rules for warm pool events](warm-pool-events-eventbridge-rules.md)\.
 
-The EventBridge rules can trigger a Lambda function to perform programmatic actions on instances, depending on your use case and application\. The Lambda function is invoked with an incoming event emitted by the Auto Scaling group\. Lambda knows which Lambda function to invoke based on the event pattern in the EventBridge rule\. 
+**Amazon SNS topics**: To receive a notification when an instance is put into a wait state, you create an Amazon SNS topic and then set up Amazon SNS message filtering to deliver lifecycle notifications differently based on a message attribute\. For more information, see [Receive notifications using Amazon SNS](configuring-lifecycle-hook-notifications.md#sns-notifications)\.
 
-For more information, see [Creating EventBridge rules for warm pool events](warm-pool-events-eventbridge-rules.md)\.
-
-**Amazon SNS notification targets**: You can add lifecycle hooks to receive Amazon SNS notifications when a lifecycle action occurs\. These notifications are sent to recipients who are subscribed to the Amazon SNS topic that you specify\. 
-
-Before you add a lifecycle hook that notifies an Amazon SNS topic, you must have already set up the topic and an IAM service role that gives Amazon EC2 Auto Scaling permission to publish to Amazon SNS\. 
-
-To receive separate notifications about instances leaving and entering the warm pool, you must also have set up Amazon SNS filtering\.
-
-**Amazon SQS notification targets**: You can add lifecycle hooks to an Auto Scaling group and use Amazon SQS to set up a notification target to receive notifications when a lifecycle action occurs\. These notifications are sent to the Amazon SQS queue that you specify\. 
-
-Before you add a lifecycle hook that notifies an Amazon SQS queue, you must have already set up the queue and an IAM service role that gives Amazon EC2 Auto Scaling permission to send notification messages to Amazon SQS\. 
-
-If you want the queue consumer to process separate notifications about instances leaving but not entering the warm pool \(or vice versa\), you must also have set up the queue consumer to parse the message and then act on the message if a specific attribute matches the desired value\.
+**Amazon SQS queues**: To set up a delivery point for lifecycle notifications where a relevant consumer can pick them up and process them, you can create an Amazon SQS queue and a queue consumer that processes messages from the SQS queue\. If you want the queue consumer to process separate notifications based on a message attribute, you must also set up the queue consumer to parse the message and then act on the message when a specific attribute matches the desired value\. For more information, see [Receive notifications using Amazon SQS](configuring-lifecycle-hook-notifications.md#sqs-notifications)\.

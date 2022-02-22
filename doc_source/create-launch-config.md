@@ -1,7 +1,7 @@
 # Creating a launch configuration<a name="create-launch-config"></a>
 
 **Important**  
-We strongly recommend that you create Auto Scaling groups from launch templates to ensure that you're getting the latest features from Amazon EC2\. For more information, see [Creating a launch template for an Auto Scaling group](create-launch-template.md)\. We provide information about launch configurations for customers who have not yet migrated from launch configurations to launch templates\. 
+We strongly recommend that you do not use launch configurations\. They do not provide full functionality for Amazon EC2 Auto Scaling or Amazon EC2\. We provide information about launch configurations for customers who have not yet migrated from launch configurations to launch templates\. For more information, see [Amazon EC2 Auto Scaling will no longer add support for new EC2 features to Launch Configurations](http://aws.amazon.com/blogs/compute/amazon-ec2-auto-scaling-will-no-longer-add-support-for-new-ec2-features-to-launch-configurations/) on the AWS Compute Blog\.
 
 When you create a launch configuration, you must specify information about the EC2 instances to launch\. Include the Amazon Machine Image \(AMI\), instance type, key pair, security groups, and block device mapping\. Alternatively, you can create a launch configuration using attributes from a running EC2 instance\. For more information, see [Creating a launch configuration using an EC2 instance](create-lc-with-instanceID.md)\.
 
@@ -42,7 +42,7 @@ An Auto Scaling group is associated with one launch configuration at a time, and
 
    1. \(Optional\) For **Purchasing option**, you can choose **Request Spot Instances** to request Spot Instances at the Spot price, capped at the On\-Demand price\. Optionally, you can specify a maximum price per instance hour for your Spot Instances\. 
 **Note**  
-Spot Instances are a cost\-effective choice compared to On\-Demand Instances, if you can be flexible about when your applications run and if your applications can be interrupted\. For more information, see [Requesting Spot Instances for fault\-tolerant and flexible applications](launch-configuration-requesting-spot-instances.md)\. 
+Spot Instances are a cost\-effective choice compared to On\-Demand Instances, if you can be flexible about when your applications run and if your applications can be interrupted\. For more information, see [Requesting Spot Instances for fault\-tolerant and flexible applications](launch-template-spot-instances.md)\. 
 
    1. \(Optional\) For **IAM instance profile**, choose a role to associate with the instances\. For more information, see [IAM role for applications that run on Amazon EC2 instances](us-iam-role.md)\.
 

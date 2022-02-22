@@ -28,8 +28,7 @@ You can enable or disable Capacity Rebalancing at any time\.
 
 The following considerations apply for this configuration:
 + We recommend that you configure your Auto Scaling group to use multiple instance types\. This provides the flexibility to launch instances in various Spot Instance pools within each Availability Zone, as documented in [Auto Scaling groups with multiple instance types and purchase options](ec2-auto-scaling-mixed-instances-groups.md)\. 
-+ We strongly recommend that you only use the Capacity Rebalancing feature with either the `capacity-optimized` or the `capacity-optimized-prioritized` allocation strategy\. These allocation strategies will maintain your Spot capacity in the optimal Spot pools for both scale\-out events and Capacity Rebalancing launches\.
-+ Your replacement Spot Instances may be at an elevated risk of interruption if you use the `lowest-price` allocation strategy\. This is because we will always launch instances in the lowest\-priced pool that has available capacity at that moment, even if your replacement Spot Instances are likely to be interrupted soon after being launched\. To avoid an elevated risk of interruption, we strongly recommend against using the `lowest-price` allocation strategy, and instead recommend the `capacity-optimized` or `capacity-optimized-prioritized` allocation strategy\. These strategies ensure that replacement Spot Instances are launched in the most optimal Spot capacity pools, and are therefore less likely to be interrupted in the near future\.
++ Your replacement Spot Instances may be at an elevated risk of interruption if you use the `lowest-price` allocation strategy\. This is because we will always launch instances in the lowest priced pool that has available capacity at that moment, even if your replacement Spot Instances are likely to be interrupted soon after being launched\. To avoid an elevated risk of interruption, we strongly recommend against using the `lowest-price` allocation strategy, and instead recommend the `capacity-optimized` or `capacity-optimized-prioritized` allocation strategy\. These strategies ensure that replacement Spot Instances are launched in the most optimal Spot capacity pools, and are therefore less likely to be interrupted in the near future\.
 + Whenever possible, you should create your Auto Scaling group in all Availability Zones within the Region\. This is to enable Amazon EC2 Auto Scaling to look at the free capacity in each Availability Zone\. If a launch fails in one Availability Zone, Amazon EC2 Auto Scaling keeps trying to launch Spot Instances across the specified Availability Zones until it succeeds\. 
 + Using Capacity Rebalancing, Amazon EC2 Auto Scaling behaves in the following way: 
 
@@ -37,7 +36,8 @@ The following considerations apply for this configuration:
   + If the new instances fail to launch or they launch but the health check fails, Amazon EC2 Auto Scaling keeps trying to relaunch them\. While it is trying to launch new instances, your old ones will eventually be interrupted and forcibly terminated\. 
   + If a scaling activity is in progress and your Auto Scaling group is below its new desired capacity, Amazon EC2 Auto Scaling scales out first before terminating the old instances\.
 + You can configure a termination lifecycle hook for your Auto Scaling group when enabling Capacity Rebalancing to attempt a graceful shut down of your application inside the instances that receive the rebalance notification, before Amazon EC2 Auto Scaling terminates the instances\. If you don't configure a lifecycle hook, Amazon EC2 Auto Scaling starts terminating the old instances as soon as the new instances pass their health check\.
-+ When using Capacity Rebalancing, your application should be tolerant of some interruption to prevent disruptions to your application\. When an instance begins termination, Amazon EC2 Auto Scaling waits for the instance to terminate\. If the Auto Scaling group is behind an Elastic Load Balancing load balancer, Amazon EC2 Auto Scaling waits for the instance to deregister from the load balancer before calling the termination lifecycle hook \(if configured\)\. If the time to drain connections and run lifecycle hooks takes too long, the instance may be interrupted while Amazon EC2 Auto Scaling is waiting for the instance to terminate\.
++ Your application should be able to handle the possibility of a Spot Instance being interrupted early\. For example, when an instance begins termination, Amazon EC2 Auto Scaling waits for the instance to terminate\. If the Auto Scaling group is behind an Elastic Load Balancing load balancer, Amazon EC2 Auto Scaling waits for the instance to deregister from the load balancer before calling the termination lifecycle hook \(if configured\)\. If the time to drain connections and complete lifecycle actions takes too long, the instance may be interrupted while Amazon EC2 Auto Scaling is waiting for the instance to terminate\.
++ It is also not always possible for Amazon EC2 to send the rebalance recommendation signal before the two\-minute Spot Instance interruption notice\. In some cases, the rebalance recommendation signal can arrive along with the two\-minute interruption notice\.
 + In cases where an instance receives a final two\-minute interruption notice, Amazon EC2 Auto Scaling calls the termination lifecycle hook and attempts to launch a replacement immediately\.
 
 ### Enabling Capacity Rebalancing \(console\)<a name="enable-capacity-rebalancing-console"></a>
@@ -59,9 +59,9 @@ Under the **Instances distribution** section, you can select whether or not to e
 
    A split pane opens in the bottom part of the **Auto Scaling groups** page, showing information about the group that's selected\. 
 
-1. On the **Details** tab, choose **Purchase options and instance types**, **Edit**\.
+1. On the **Details** tab, choose **Instance purchase options**, **Edit**\.
 
-1. Under the **Instances distribution** section, do the following:
+1. Under the **Allocation strategies** section, do the following:
    + To enable Capacity Rebalancing, select the **Capacity rebalance** check box\.
    + To disable Capacity Rebalancing, clear the **Capacity rebalance** check box\.
 

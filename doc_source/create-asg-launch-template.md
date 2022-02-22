@@ -1,22 +1,23 @@
 # Creating an Auto Scaling group using a launch template<a name="create-asg-launch-template"></a>
 
-To configure Amazon EC2 instances that are launched by your Auto Scaling group, you can specify a launch template, a launch configuration, or an EC2 instance\. The following procedure demonstrates how to create an Auto Scaling group using a launch template\. 
+When you create an Auto Scaling group, you must specify the necessary information to configure the Amazon EC2 instances, the Availability Zones and VPC subnets for the instances, the desired capacity, and the minimum and maximum capacity limits\. 
 
-With launch templates, you can configure the Auto Scaling group to dynamically choose either the default version or the latest version of the launch template when a scale\-out event occurs\. For example, you configure your Auto Scaling group to choose the current default version of a launch template\. To change the configuration of the EC2 instances to be launched by the group, create or designate a new default version of the launch template\. Alternatively, you can choose the specific version of the launch template that the group uses to launch EC2 instances\. You can change these selections anytime by updating the group\. 
+To configure Amazon EC2 instances that are launched by your Auto Scaling group, you can specify a launch template or a launch configuration\. The following procedure demonstrates how to create an Auto Scaling group using a launch template\. 
 
-Each launch template includes the information that Amazon EC2 needs to launch instances, such as an AMI and instance type\. You can create an Auto Scaling group that adheres to the launch template\. Or, you can override the instance type in the launch template and combine On\-Demand and Spot Instances\. For more information, see [Auto Scaling groups with multiple instance types and purchase options](ec2-auto-scaling-mixed-instances-groups.md)\. 
+To update the configuration of the EC2 instances after the group is created, you can create a new version of the launch template\. After you change the launch template for an Auto Scaling group, any new instances are launched using the new configuration options, but existing instances are not affected\. To update the existing instances, terminate them so that they are replaced by your Auto Scaling group, or allow auto scaling to gradually replace older instances with newer instances based on your [termination policies](as-instance-termination.md)\.
 
-The Auto Scaling group specifies the desired capacity and additional information that Amazon EC2 needs to launch instances, such as the Availability Zones and VPC subnets\. You can set capacity to a fixed number of instances, or you can take advantage of automatic scaling to adjust capacity based on actual demand\. 
+**Note**  
+You can also replace all instances in the Auto Scaling group to launch new instances that use the new launch template\. For more information, see [Replacing Auto Scaling instances](ec2-auto-scaling-group-replacing-instances.md)\.
 
 **Prerequisites**
-+ You must have created a launch template that includes the parameters required to launch an EC2 instance\. For information about these parameters and the limitations that apply when creating a launch template for use with an Auto Scaling group, see [Creating a launch template for an Auto Scaling group](create-launch-template.md)\.
-+ You must have IAM permissions to create an Auto Scaling group using a launch template and also to create EC2 resources for the instances\. For more information, see [Launch template support](ec2-auto-scaling-launch-template-permissions.md)\.
++ You must have created a launch template\. For more information, see [Creating a launch template for an Auto Scaling group](create-launch-template.md)\.
++ You must have IAM permissions to create an Auto Scaling group using a launch template\. Your `ec2:RunInstances` permissions are checked when use a launch template\. Your `iam:PassRole` permissions are also checked if the launch template specifies an IAM role\. For more information, see [Launch template support](ec2-auto-scaling-launch-template-permissions.md)\.
 
 **To create an Auto Scaling group using a launch template \(console\)**
 
 1. Open the Amazon EC2 Auto Scaling console at [https://console\.aws\.amazon\.com/ec2autoscaling/](https://console.aws.amazon.com/ec2autoscaling/)\.
 
-1. On the navigation bar at the top of the screen, choose the same Region that you used when you created the launch template\.
+1. On the navigation bar at the top of the screen, choose the same AWS Region that you used when you created the launch template\.
 
 1. Choose **Create an Auto Scaling group**\.
 
@@ -30,9 +31,13 @@ The Auto Scaling group specifies the desired capacity and additional information
 
    1. Verify that your launch template supports all of the options that you are planning to use, and then choose **Next**\.
 
-1. On the **Choose instance launch options** page, under **Network**, specify a VPC and one or more subnets\.
+1. On the **Choose instance launch options** page, under **Network**, for **VPC**, choose a VPC\. The Auto Scaling group must be created in the same VPC as the security group you specified in your launch template\.
 
-1. For **Availability Zones and subnets**, choose one or more subnets in the specified VPC\. Use subnets in multiple Availability Zones for high availability\. For more information about high availability with Amazon EC2 Auto Scaling, see [Distributing instances across Availability Zones](auto-scaling-benefits.md#arch-AutoScalingMultiAZ)\.
+1. For **Availability Zones and subnets**, choose one or more subnets in the specified VPC\. Use subnets in multiple Availability Zones for high availability\. For more information, see [Considerations when choosing VPC subnets](asg-in-vpc.md#as-vpc-considerations)\.
+
+1. If you created a launch template with an instance type specified, then you can continue to the next step to create an Auto Scaling group that uses the instance type in the launch template\. 
+
+   Alternatively, you can choose the **Override launch template** option if no instance type is specified in your launch template or if you want to use multiple instance types for auto scaling\. For more information, see [Auto Scaling groups with multiple instance types and purchase options](ec2-auto-scaling-mixed-instances-groups.md)\.
 
 1. Choose **Next** to continue to the next step\. 
 
@@ -44,7 +49,9 @@ The Auto Scaling group specifies the desired capacity and additional information
 
    1. To enable your Elastic Load Balancing \(`ELB`\) health checks, for **Health checks**, choose **ELB** under **Health check type**\. These health checks are optional when you enable load balancing\. 
 
-   1. Under **Health check grace period**, enter the amount of time until Amazon EC2 Auto Scaling checks the health of instances after they are put into service\. The intention of this setting is to prevent Amazon EC2 Auto Scaling from marking instances as unhealthy and terminating them before they have time to come up\. The default is 300 seconds\.
+   1. Under **Health check grace period**, enter the amount of time until Amazon EC2 Auto Scaling checks the health of new instances\. The intention of this setting is to prevent Amazon EC2 Auto Scaling from marking instances as unhealthy and terminating them before they have time to come up\. The default is 300 seconds\. For more information, see [Health check grace period](healthcheck.md#health-check-grace-period)\.
+
+   1. Under **Additional settings**, **Monitoring**, choose whether to enable CloudWatch group metrics collection\. These metrics provide measurements that can be indicators of a potential issue, such as number of terminating instances or number of pending instances\. For more information, see [Monitoring CloudWatch metrics for your Auto Scaling groups and instances](as-instance-monitoring.md)\.
 
 1. \(Optional\) On the **Configure group size and scaling policies** page, configure the following options, and then choose **Next**:
 

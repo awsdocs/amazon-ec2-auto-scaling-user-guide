@@ -12,7 +12,6 @@ Amazon EC2 publishes data points to CloudWatch that describe your Auto Scaling i
 + [Available metrics and dimensions](#available-cloudwatch-metrics)
   + [Auto Scaling group metrics](#as-group-metrics)
   + [Dimensions for Auto Scaling group metrics](#as-group-metric-dimensions)
-+ [Viewing graphed metrics for your Auto Scaling groups and instances](#as-view-group-metrics)
 + [Working with Amazon CloudWatch](#cloudwatch-working)
   + [View CloudWatch metrics](#cloudwatch-view-metrics)
   + [Create Amazon CloudWatch alarms](#cloudwatch-create-alarm)
@@ -20,6 +19,8 @@ Amazon EC2 publishes data points to CloudWatch that describe your Auto Scaling i
   + [Enable detailed monitoring \(console\)](enable-as-instance-metrics.md#enable-detailed-monitoring-console)
   + [Enable detailed monitoring \(AWS CLI\)](enable-as-instance-metrics.md#enable-detailed-monitoring-cli)
   + [Switching between basic and detailed monitoring](enable-as-instance-metrics.md#change-monitoring)
++ [Viewing monitoring graphs in the Amazon EC2 Auto Scaling console](viewing-monitoring-graphs.md)
+  + [Graph metrics for your Auto Scaling groups](viewing-monitoring-graphs.md#graph-metrics)
 
 ## Enable Auto Scaling group metrics \(console\)<a name="as-enable-group-metrics"></a>
 
@@ -69,7 +70,7 @@ aws autoscaling disable-metrics-collection --auto-scaling-group-name my-asg
 
 ## Available metrics and dimensions<a name="available-cloudwatch-metrics"></a>
 
-The Auto Scaling group metrics and dimensions that Amazon EC2 Auto Scaling sends to CloudWatch are listed below\.
+When enabled, the Auto Scaling group metrics and dimensions that Amazon EC2 Auto Scaling sends to CloudWatch are listed below\.
 
 **Note**  
 CloudWatch group metrics are delivered on a best\-effort basis\. Data is not backfilled to fill gaps in group metric history in rare cases where CloudWatch is experiencing a service disruption\.
@@ -81,64 +82,43 @@ The `AWS/AutoScaling` namespace includes the following metrics\.
 
 | Metric | Description | 
 | --- | --- | 
-| GroupMinSize |  The minimum size of the Auto Scaling group\. **Reporting criteria**: Reported if metrics collection is enabled\.  | 
-| GroupMaxSize |  The maximum size of the Auto Scaling group\. **Reporting criteria**: Reported if metrics collection is enabled\.  | 
-| GroupDesiredCapacity |  The number of instances that the Auto Scaling group attempts to maintain\. **Reporting criteria**: Reported if metrics collection is enabled\.  | 
-| GroupInServiceInstances |  The number of instances that are running as part of the Auto Scaling group\. This metric does not include instances that are pending or terminating\. **Reporting criteria**: Reported if metrics collection is enabled\.  | 
-| GroupPendingInstances |  The number of instances that are pending\. A pending instance is not yet in service\. This metric does not include instances that are in service or terminating\. **Reporting criteria**: Reported if metrics collection is enabled\.  | 
-| GroupStandbyInstances |  The number of instances that are in a `Standby` state\. Instances in this state are still running but are not actively in service\. **Reporting criteria**: Reported if metrics collection is enabled\.  | 
-| GroupTerminatingInstances |  The number of instances that are in the process of terminating\. This metric does not include instances that are in service or pending\.  **Reporting criteria**: Reported if metrics collection is enabled\.  | 
-| GroupTotalInstances |  The total number of instances in the Auto Scaling group\. This metric identifies the number of instances that are in service, pending, and terminating\. **Reporting criteria**: Reported if metrics collection is enabled\.  | 
+|  GroupMinSize  |  The minimum size of the Auto Scaling group\. **Reporting criteria**: Reported if metrics collection is enabled\.  | 
+|  GroupMaxSize  |  The maximum size of the Auto Scaling group\. **Reporting criteria**: Reported if metrics collection is enabled\.  | 
+|  GroupDesiredCapacity  |  The number of instances that the Auto Scaling group attempts to maintain\. **Reporting criteria**: Reported if metrics collection is enabled\.  | 
+|  GroupInServiceInstances  |  The number of instances that are running as part of the Auto Scaling group\. This metric does not include instances that are pending or terminating\. **Reporting criteria**: Reported if metrics collection is enabled\.  | 
+|  GroupPendingInstances  |  The number of instances that are pending\. A pending instance is not yet in service\. This metric does not include instances that are in service or terminating\. **Reporting criteria**: Reported if metrics collection is enabled\.  | 
+|  GroupStandbyInstances  |  The number of instances that are in a `Standby` state\. Instances in this state are still running but are not actively in service\. **Reporting criteria**: Reported if metrics collection is enabled\.  | 
+|  GroupTerminatingInstances  |  The number of instances that are in the process of terminating\. This metric does not include instances that are in service or pending\.  **Reporting criteria**: Reported if metrics collection is enabled\.  | 
+|  GroupTotalInstances  |  The total number of instances in the Auto Scaling group\. This metric identifies the number of instances that are in service, pending, and terminating\. **Reporting criteria**: Reported if metrics collection is enabled\.  | 
 
 The `AWS/AutoScaling` namespace includes the following metrics for Auto Scaling groups that use the [instance weighting](ec2-auto-scaling-mixed-instances-groups-instance-weighting.md) feature\. If instance weighting is not applied, then the following metrics are populated, but are equal to the metrics that are defined in the preceding table\.
 
 
 | Metric | Description | 
 | --- | --- | 
-| GroupInServiceCapacity | The number of capacity units that are running as part of the Auto Scaling group\. **Reporting criteria**: Reported if metrics collection is enabled\. | 
-| GroupPendingCapacity |  The number of capacity units that are pending\.  **Reporting criteria**: Reported if metrics collection is enabled\.  | 
-| GroupStandbyCapacity |  The number of capacity units that are in a `Standby` state\. **Reporting criteria**: Reported if metrics collection is enabled\.  | 
-| GroupTerminatingCapacity |  The number of capacity units that are in the process of terminating\.  **Reporting criteria**: Reported if metrics collection is enabled\.  | 
-| GroupTotalCapacity |  The total number of capacity units in the Auto Scaling group\. **Reporting criteria**: Reported if metrics collection is enabled\.  | 
+|  GroupInServiceCapacity  |  The number of capacity units that are running as part of the Auto Scaling group\.  **Reporting criteria**: Reported if metrics collection is enabled\.  | 
+|  GroupPendingCapacity  |  The number of capacity units that are pending\.  **Reporting criteria**: Reported if metrics collection is enabled\.  | 
+|  GroupStandbyCapacity  |  The number of capacity units that are in a `Standby` state\. **Reporting criteria**: Reported if metrics collection is enabled\.  | 
+|  GroupTerminatingCapacity  |  The number of capacity units that are in the process of terminating\.  **Reporting criteria**: Reported if metrics collection is enabled\.  | 
+|  GroupTotalCapacity  |  The total number of capacity units in the Auto Scaling group\. **Reporting criteria**: Reported if metrics collection is enabled\.  | 
+
+The `AWS/AutoScaling` namespace includes the following metrics for Auto Scaling groups that use the [warm pools](ec2-auto-scaling-warm-pools.md) feature\.
+
+
+| Metric | Description | 
+| --- | --- | 
+|  WarmPoolMinSize  |  The minimum size of the warm pool\.  **Reporting criteria**: Reported if metrics collection is enabled\.  | 
+|  WarmPoolDesiredCapacity  |  The amount of capacity that Amazon EC2 Auto Scaling attempts to maintain in the warm pool\.  This is equivalent to the maximum size of the Auto Scaling group minus its desired capacity, or, if set, as the maximum prepared capacity of the Auto Scaling group minus its desired capacity\. However, when the minimum size of the warm pool is equal to or greater than the difference between the maximum size \(or, if set, the maximum prepared capacity\) and the desired capacity of the Auto Scaling group, then the warm pool desired capacity will be equivalent to the `WarmPoolMinSize`\. **Reporting criteria**: Reported if metrics collection is enabled\.  | 
+|  WarmPoolPendingCapacity  |  The amount of capacity in the warm pool that is pending\. This metric does not include instances that are running, stopped, or terminating\. **Reporting criteria**: Reported if metrics collection is enabled\.  | 
+|  WarmPoolTerminatingCapacity  |  The amount of capacity in the warm pool that is in the process of terminating\. This metric does not include instances that are running, stopped, or pending\.  **Reporting criteria**: Reported if metrics collection is enabled\.  | 
+|  WarmPoolWarmedCapacity  |  The amount of capacity available to enter the Auto Scaling group during scale out\. This metric does not include instances that are pending or terminating\.  **Reporting criteria**: Reported if metrics collection is enabled\.  | 
+|  WarmPoolTotalCapacity  |  The total capacity of the warm pool, including instances that are running, stopped, pending, or terminating\.  **Reporting criteria**: Reported if metrics collection is enabled\.  | 
+|  GroupAndWarmPoolDesiredCapacity  |  The desired capacity of the Auto Scaling group and the warm pool combined\. **Reporting criteria**: Reported if metrics collection is enabled\.  | 
+|  GroupAndWarmPoolTotalCapacity  |  The total capacity of the Auto Scaling group and the warm pool combined\. This includes instances that are running, stopped, pending, terminating, or in service\.  **Reporting criteria**: Reported if metrics collection is enabled\.  | 
 
 ### Dimensions for Auto Scaling group metrics<a name="as-group-metric-dimensions"></a>
 
 To filter the metrics for your Auto Scaling group by group name, use the `AutoScalingGroupName` dimension\.
-
-## Viewing graphed metrics for your Auto Scaling groups and instances<a name="as-view-group-metrics"></a>
-
-After you create an Auto Scaling group, you can open the group and view a series of monitoring graphs on the **Monitoring** tab\. Each graph is based on one of the available CloudWatch metrics for your Auto Scaling groups and instances\. The monitoring graphs show data points for Auto Scaling group metrics if the metrics are enabled\. 
-
-The following graphed metrics are available for groups:
-+ **Minimum Group Size** — `GroupMinSize`
-+ **Maximum Group Size** — `GroupMaxSize`
-+ **Desired Capacity** — `GroupDesiredCapacity`
-+ **In Service Instances** — `GroupInServiceInstances`
-+ **Pending Instances** — `GroupPendingInstances`
-+ **Standby Instances** — `GroupStandbyInstances`
-+ **Terminating Instances** — `GroupTerminatingInstances`
-+ **Total Instances** — `GroupTotalInstances`
-
-The following graphed metrics are available for groups where instances have weights that define how many units each instance contributes to the desired capacity of the group:
-+ **In Service Capacity Units** — `GroupInServiceCapacity`
-+ **Pending Capacity Units** — `GroupPendingCapacity`
-+ **Standby Capacity Units** — `GroupStandbyCapacity`
-+ **Terminating Capacity Units** — `GroupTerminatingCapacity`
-+ **Total Capacity Units** — `GroupTotalCapacity`
-
-The following metrics are available for instances:
-+ **CPU Utilization** — `CPUUtilization`
-+ **Disk Reads** — `DiskReadBytes`
-+ **Disk Read Operations** — `DiskReadOps`
-+ **Disk Writes** — `DiskWriteBytes`
-+ **Disk Write Operations** — `DiskWriteOps`
-+ **Network In** — `NetworkIn`
-+ **Network Out** — `NetworkOut`
-+ **Status Check Failed \(Any\)** — `StatusCheckFailed`
-+ **Status Check Failed \(Instance\)** — `StatusCheckFailed_Instance`
-+ **Status Check Failed \(System\)** — `StatusCheckFailed_System`
-
-For more information about the Amazon EC2 metrics and the data they provide to the graphs, see [List the available CloudWatch metrics for your instances](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/viewing_metrics_with_cloudwatch.html) in the *Amazon EC2 User Guide for Linux Instances*\. 
 
 ## Working with Amazon CloudWatch<a name="cloudwatch-working"></a>
 

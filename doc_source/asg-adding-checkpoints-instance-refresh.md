@@ -1,18 +1,37 @@
 # Adding checkpoints to an instance refresh<a name="asg-adding-checkpoints-instance-refresh"></a>
 
-When using an instance refresh, you have the option to replace the entire Auto Scaling group in one continuous operation\. However, you might prefer to replace the group in phases, so that you can perform verifications on your instances as you go\. To do a phased replacement, you add checkpoints, which are points in time where the instance refresh pauses\. Using checkpoints gives you greater control over how you choose to update your Auto Scaling group, and it helps you to ensure that your application will function in a reliable, predictable manner\.
+When using an instance refresh, you have the option to replace instances in phases, so that you can perform verifications on your instances as you go\. To do a phased replacement, you add checkpoints, which are points in time where the instance refresh pauses\. Using checkpoints gives you greater control over how you choose to update your Auto Scaling group\. It helps you to confirm that your application will function in a reliable, predictable manner\.
 
-To enable checkpoints for an instance refresh, add the following refresh preferences to the configuration file that defines the instance refresh parameters when you use the AWS CLI:
-+ `CheckpointPercentages`: Specifies threshold values for the percentage of instances to be replaced\. These threshold values provide the checkpoints\. When the percentage of instances that are replaced and warmed up reaches one of the specified thresholds, the operation waits for a specified period of time\. You specify the number of seconds to wait in `CheckpointDelay`\. When the specified period of time has passed, the instance refresh continues until it reaches the next checkpoint \(if applicable\)\.
-+ `CheckpointDelay`: The amount of time, in seconds, to wait after a checkpoint is reached before continuing\. Choose a time period that allows you enough time to perform your validations\.
+Amazon EC2 Auto Scaling emits events for each checkpoint\. If you add an EventBridge rule to send the events to a target such as Amazon SNS, you can be notified when you can run the required verifications\. For more information, see [Creating EventBridge rules for instance refresh events](monitor-events-eventbridge-sns.md)\.
 
-The percentage of the Auto Scaling group that needs to be successfully replaced is indicated by the last value shown in the `CheckpointPercentages` array\. The operation doesn't transition to `Successful` until this percentage of the group is replaced successfully, and each instance is warmed up and ready to start serving traffic again\. 
+**Topics**
++ [Considerations](#instance-refresh-checkpoints-considerations)
++ [Enable checkpoints \(console\)](#enable-checkpoints-console)
++ [Enable checkpoints \(AWS CLI\)](#enable-checkpoints-cli)
 
-Amazon EC2 Auto Scaling emits events for each checkpoint\. If you add an EventBridge rule to send the events to a target such as Amazon SNS, you can be notified when you can run the required validations\. For more information, see [Creating EventBridge rules for instance refresh events](monitor-events-eventbridge-sns.md)\.
+## Considerations<a name="instance-refresh-checkpoints-considerations"></a>
 
-## Setting instance refresh checkpoint preferences \(console\)<a name="setting-checkpoint-preferences-console"></a>
+Keep the following considerations in mind when using checkpoints:
++ A checkpoint is reached when the number of instances replaced reaches the percentage threshold that is defined for the checkpoint\. The percentage of instances replaced can be equal to or higher than the percentage threshold, but not lower\. 
++ After a checkpoint is reached, the overall percentage complete doesn't display the latest status until after the instances finish warming up\. 
 
-You can configure checkpoints in the preferences for an instance refresh\.
+  For example, assume that your Auto Scaling group has 10 instances\. Your checkpoint percentages are `[20,50]` with a checkpoint delay of 15 minutes and a minimum healthy percentage of 80 percent\. Your group makes the following replacements:
+  + 0:00: Two old instances are replaced with new ones\. 
+  + 0:10: Two new instances finish warming up\. 
+  + 0:25: Two old instances are replaced with new ones\. \(To maintain the minimum healthy percentage, only two instances are replaced\.\)
+  + 0:35: Two new instances finish warming up\. 
+  + 0:35: One old instance is replaced with a new one\.
+  + 0:45: One new instance finishes warming up\.
+
+  At 0:35, the operation stops launching new instances\. The percentage complete doesn't accurately reflect the number of completed replacements yet \(50 percent\), because the new instance isn't done warming up\. After the new instance completes its warm\-up period at 0:45, the percentage complete shows 50 percent\.
++ Because checkpoints are based on percentages, the number of instances to replace changes with the size of the group\. When a scale\-out activity occurs and the size of the group increases, an in\-progress operation could reach a checkpoint again\. If that happens, Amazon EC2 Auto Scaling sends another notification and repeats the wait time between checkpoints before continuing\.
++ It's possible to skip a checkpoint under certain circumstances\. For example, suppose that your Auto Scaling group has two instances and your checkpoint percentages are `[10,40,100]`\. After the first instance is replaced, Amazon EC2 Auto Scaling calculates that 50 percent of the group was replaced\. Because 50 percent is higher than the first two checkpoints, it skips the first checkpoint \(`10`\) and sends a notification for the second checkpoint \(`40`\)\.
++ Canceling the operation stops any further replacements from being made\. If you cancel the operation or it fails before reaching the last checkpoint, any instances that were already replaced are not rolled back to their previous configuration\.
++ For a partial refresh, when you rerun the operation, Amazon EC2 Auto Scaling doesn't restart from the point of the last checkpoint, nor does it stop when only the old instances are replaced\. However, it targets old instances for replacement first, before targeting new instances\. 
+
+## Enable checkpoints \(console\)<a name="enable-checkpoints-console"></a>
+
+You can enable checkpoints before starting an instance refresh to replace instances using an incremental or phased approach\. This provides additional time for verification\.
 
 **To start an instance refresh that uses checkpoints**
 
@@ -20,34 +39,40 @@ You can configure checkpoints in the preferences for an instance refresh\.
 
 1. Select the check box next to your Auto Scaling group\.
 
-   A split pane opens up in the bottom part of the **Auto Scaling groups** page\. 
+   A split pane opens up at the bottom of the **Auto Scaling groups** page\. 
 
-1. On the **Instance refresh** tab, in **Instance refreshes**, choose **Start instance refresh**\.
+1. On the **Instance refresh** tab, in **Active instance refresh**, choose **Start instance refresh**\.
 
-1. In the **Start instance refresh** dialog box, specify the applicable values for **Minimum healthy percentage** and **Instance warmup**\. 
+1. On the **Start instance refresh** page, enter the values for **Minimum healthy percentage** and **Instance warmup**\. 
 
-1. <a name="enabling-checkpoints-console"></a>Select the **Enable instance refresh with checkpoints** check box\.
+1. Select the **Enable checkpoints** check box\.
 
    This displays a box where you can define the percentage threshold for the first checkpoint\. 
 
-1. To set a percentage for the first checkpoint, enter a number from 1 to 100 in the number field in **Proceed until \_\_\_\_ % of the group is refreshed**\. 
+1. For **Proceed until \_\_\_\_ % of the group is refreshed**, enter a number \(1–100\)\. This sets the percentage for the first checkpoint\. 
 
 1. To add another checkpoint, choose **Add checkpoint** and then define the percentage for the next checkpoint\.
 
 1. To specify how long Amazon EC2 Auto Scaling waits after a checkpoint is reached, update the fields in **Wait for `1` `hour` between checkpoints**\. The time unit can be hours, minutes, or seconds\.
 
-1. Choose **Start**\. 
+1. If you are finished with your instance refresh selections, choose **Start**\. 
 
-## Setting instance refresh checkpoint preferences \(AWS CLI\)<a name="setting-checkpoint-preferences-cli"></a>
+## Enable checkpoints \(AWS CLI\)<a name="enable-checkpoints-cli"></a>
+
+To start an instance refresh with checkpoints enabled using the AWS CLI, you need a configuration file that defines the following parameters:
++ `CheckpointPercentages`: Specifies threshold values for the percentage of instances to be replaced\. These threshold values provide the checkpoints\. When the percentage of instances that are replaced and warmed up reaches one of the specified thresholds, the operation waits for a specified period of time\. You specify the number of seconds to wait in `CheckpointDelay`\. When the specified period of time has passed, the instance refresh continues until it reaches the next checkpoint \(if applicable\)\.
++ `CheckpointDelay`: Specifies the amount of time, in seconds, to wait after a checkpoint is reached before continuing\. Choose a time period that provides enough time to perform your verifications\.
+
+The last value shown in the `CheckpointPercentages` array describes the percentage of the Auto Scaling group that needs to be successfully replaced\. The operation transitions to `Successful` after this percentage is successfully replaced and each instance is warmed up and ready to serve traffic again\. 
 
 **To create multiple checkpoints**  
-To create multiple checkpoints, use the following example [start\-instance\-refresh](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/start-instance-refresh.html) command\. This example configures an instance refresh that refreshes 1 percent of the Auto Scaling group initially, waits 10 minutes, then refreshes the next 19 percent, waits 10 minutes, and then refreshes the rest of the group before succeeding the operation\.
+To create multiple checkpoints, use the following example [start\-instance\-refresh](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/start-instance-refresh.html) command\. This example configures an instance refresh that initially refreshes one percent of the Auto Scaling group\. After waiting 10 minutes, it then refreshes the next 19 percent and waits another 10 minutes\. Finally, it refreshes the rest of the group before concluding the operation\.
 
 ```
 aws autoscaling start-instance-refresh --cli-input-json file://config.json
 ```
 
-Contents of `config.json`\.
+Contents of `config.json`:
 
 ```
 {
@@ -62,13 +87,13 @@ Contents of `config.json`\.
 ```
 
 **To create a single checkpoint**  
-To create a single checkpoint, use the following example [start\-instance\-refresh](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/start-instance-refresh.html) command\. This example configures an instance refresh that refreshes 20 percent of the Auto Scaling group initially, waits 10 minutes, and then refreshes the rest of the group before concluding the operation\.
+To create a single checkpoint, use the following example [start\-instance\-refresh](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/start-instance-refresh.html) command\. This example configures an instance refresh that initially refreshes 20 percent of the Auto Scaling group\. After waiting 10 minutes, it then refreshes the rest of the group before concluding the operation\.
 
 ```
 aws autoscaling start-instance-refresh --cli-input-json file://config.json
 ```
 
-Contents of `config.json`\.
+Contents of `config.json`:
 
 ```
 {
@@ -82,14 +107,14 @@ Contents of `config.json`\.
 }
 ```
 
-**To only partially refresh the Auto Scaling group**  
-To replace a portion of your Auto Scaling group and then stop completely, use the following example [start\-instance\-refresh](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/start-instance-refresh.html) command\. This example configures an instance refresh that refreshes 1 percent of the Auto Scaling group initially, waits 10 minutes, and then refreshes the next 19 percent before concluding the operation\.
+**To partially refresh the Auto Scaling group**  
+To replace only a portion of your Auto Scaling group and then stop completely, use the following example [start\-instance\-refresh](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/start-instance-refresh.html) command\. This example configures an instance refresh that initially refreshes one percent of the Auto Scaling group\. After waiting 10 minutes, it then refreshes the next 19 percent before concluding the operation\.
 
 ```
 aws autoscaling start-instance-refresh --cli-input-json file://config.json
 ```
 
-Contents of `config.json`\.
+Contents of `config.json`:
 
 ```
 {
@@ -102,23 +127,3 @@ Contents of `config.json`\.
     }
 }
 ```
-
-## Key points about checkpoints<a name="instance-refresh-checkpoints-considerations"></a>
-
-The following are key points to note about using checkpoints:
-+ A checkpoint is reached when the number of instances replaced reaches the percentage threshold that is defined for the checkpoint\. The percentage of instances replaced could be at or above, but not below, the percentage threshold\. 
-+ After a checkpoint is reached, the overall percentage complete does not immediately display the latest status until the instances finish warming up\. 
-
-  For example, assume your Auto Scaling group has 10 instances and makes the following replacements\. Your checkpoint percentages are `[20,50]` with a checkpoint delay of 15 minutes and a minimum healthy percentage of 80%\.
-  + 0:00: 2 old instances are replaced\. 
-  + 0:10: 2 new instances finish warming up\. 
-  + 0:25: 2 old instances are replaced\. Only two instances are replaced to maintain the minimum healthy percentage\.
-  + 0:35: 2 new instances finish warming up\. 
-  + 0:35: 1 old instance is replaced\.
-  + 0:45: 1 new instance finishes warming up\.
-
-  At 0:35, the operation will stop launching new instances even though the percentage complete won't yet accurately reflect the number of replacements complete at 50% until 10 minutes later when the new instance completes its warm\-up period\.
-+ Because checkpoints are based on percentages, the number of instances to replace to reach a checkpoint changes with the size of the group\. This means that when a scale\-out activity occurs and the size of the group increases, an in\-progress operation could reach a checkpoint again\. If that happens, Amazon EC2 Auto Scaling sends another notification and repeats the wait time between checkpoints before continuing\.
-+ It's possible to skip a checkpoint under certain circumstances\. For example, suppose your Auto Scaling group has 2 instances and your checkpoint percentages are `[10,40,100]`\. After the first instance is replaced, Amazon EC2 Auto Scaling calculates that 50% of the group has been replaced\. Because 50% is higher than the first two checkpoints, it skips the first checkpoint \(`10`\) and sends a notification for the second checkpoint \(`40`\)\.
-+ Cancelling the operation stops any further replacements from being made\. If you cancel the operation or it fails before reaching the last checkpoint, any instances that were already replaced are not rolled back to their previous configuration\. 
-+ In the case of a partial refresh, when you rerun the operation, Amazon EC2 Auto Scaling doesn't restart from the point of the last checkpoint and stop when only the old instances are replaced\. However, it will target old instances for replacement first before targeting new instances\. 

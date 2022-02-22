@@ -126,13 +126,13 @@ Use the following procedure to continue where you left off after creating either
 
 1. Choose **Next**\. 
 
-   The **Choose instance launch options** page appears, giving you options for launching On\-Demand and Spot Instances \(if you chose a launch template\) and allowing you to choose the VPC network settings you want the Auto Scaling group to use\.
+   The **Choose instance launch options** page appears, allowing you to choose the VPC network settings you want the Auto Scaling group to use and giving you options for launching On\-Demand and Spot Instances \(if you chose a launch template\)\. 
 
 1. In the **Network** section, keep **VPC** set to the default VPC for your chosen AWS Region, or select your own VPC\. The default VPC is automatically configured to provide internet connectivity to your instance\. This VPC includes a public subnet in each Availability Zone in the Region\. 
 
-1. For **Availability Zones and subnets**, choose a subnet from each Availability Zone that you want to include\. Use subnets in multiple Availability Zones for high availability\. 
+1. For **Availability Zones and subnets**, choose a subnet from each Availability Zone that you want to include\. Use subnets in multiple Availability Zones for high availability\. For more information, see [Considerations when choosing VPC subnets](asg-in-vpc.md#as-vpc-considerations)\.
 
-1. \[Launch template only\] In the **Instance type requirements** section, use the default setting \(do not override the launch template\) to simplify this step\. For this tutorial, you will launch only one On\-Demand Instance using the instance type specified in your launch template\.
+1. \[Launch template only\] In the **Instance type requirements** section, use the default setting to simplify this step\. \(Do not override the launch template\.\) For this tutorial, you will launch only one On\-Demand Instance using the instance type specified in your launch template\.
 
 1. Keep the rest of the defaults for this tutorial and choose **Skip to review**\. 
 **Note**  

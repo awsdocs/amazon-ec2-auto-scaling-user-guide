@@ -2,7 +2,7 @@
 
 The following procedures explain how to create an EventBridge rule for warm pool events\. This sample rule detects events that use the event pattern for instances entering the warm pool, and then sends those events to an AWS Lambda function for processing\. A Lambda target is the subject of this procedure, but rules can invoke many types of targets\. For information about supported targets, see [Amazon EventBridge targets](https://docs.aws.amazon.com/eventbridge/latest/userguide/eventbridge-targets.html) in the *Amazon EventBridge User Guide*\.
 
-Before you create the rule, create the AWS Lambda function that you want the rule to use as a target\. When you create the rule, you'll need to specify this function as the target for the rule\. For information about creating Lambda functions, see [Getting started with Lambda](https://docs.aws.amazon.com/lambda/latest/dg/getting-started.html) in the *AWS Lambda Developer Guide*\. For an introductory tutorial\-style guide for creating lifecycle hooks, see [Tutorial: Configure a lifecycle hook that invokes a Lambda function](tutorial-lifecycle-hook-lambda.md)\.
+Before you create the rule, create the AWS Lambda function that you want the rule to use as a target\. When you create the rule, you'll need to specify this function as the target for the rule\. For an introductory tutorial that shows you how to create a Lambda function, see [Tutorial: Configure a lifecycle hook that invokes a Lambda function](tutorial-lifecycle-hook-lambda.md)\.
 
 ## Create an EventBridge rule \(console\)<a name="warm-pool-events-eventbridge-rules-console"></a>
 

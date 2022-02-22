@@ -12,7 +12,7 @@ This section includes information to help you do the following:
 
 **Topics**
 + [Replacing instances based on an instance refresh](asg-instance-refresh.md)
-+ [Making updates using skip matching](asg-instance-refresh-skip-matching.md)
++ [AWS CLI examples that enable skip matching](asg-instance-refresh-skip-matching.md)
 + [Adding checkpoints to an instance refresh](asg-adding-checkpoints-instance-refresh.md)
 + [Creating EventBridge rules for instance refresh events](monitor-events-eventbridge-sns.md)
 + [Replacing instances based on maximum instance lifetime](asg-max-instance-lifetime.md)

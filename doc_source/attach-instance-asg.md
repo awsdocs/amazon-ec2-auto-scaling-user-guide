@@ -3,7 +3,7 @@
 Amazon EC2 Auto Scaling provides you with the option of attaching one or more EC2 instances to your existing Auto Scaling group\. After an instance is attached, it is considered part of the Auto Scaling group\.
 
 For an instance to be attached, it must meet the following criteria:
-+ The instance is in the `running` state\.
++ The instance is in the `running` state with Amazon EC2\.
 + The AMI used to launch the instance must still exist\.
 + The instance is not a member of another Auto Scaling group\.
 + The instance is launched into one of the Availability Zones defined in your Auto Scaling group\.

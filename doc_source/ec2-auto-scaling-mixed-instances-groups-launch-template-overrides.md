@@ -7,6 +7,9 @@ Say that you configure an Auto Scaling group for compute\-intensive applications
 **Note**  
 Currently, this feature is available only if you use the AWS CLI or an SDK, and is not available from the console\.
 
+**Topics**
++ [Adding or changing a launch template for an instance type \(AWS CLI\)](#launch-template-overrides-cli)
+
 ## Adding or changing a launch template for an instance type \(AWS CLI\)<a name="launch-template-overrides-cli"></a>
 
 The following procedure shows you how to use the AWS CLI to configure an Auto Scaling group so that one or more of the instance types uses a launch template that is different from the rest of the group\. 

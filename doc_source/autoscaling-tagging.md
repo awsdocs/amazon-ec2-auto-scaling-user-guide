@@ -372,7 +372,7 @@ aws autoscaling describe-auto-scaling-groups \
 ```
 
 **Example: Describe Auto Scaling groups with tags that match multiple tag keys and values**  
-You can also combine filters to create custom AND and OR conditions to do more complex filtering\.
+You can also combine filters to create custom AND and OR logic to do more complex filtering\.
 
 The following command shows how to filter results to show only Auto Scaling groups with a specific set of tags\. One tag key is `environment` AND the tag value is \(`production` OR `development`\) AND the other tag key is `costcenter` AND the tag value is `cc123`\.
 

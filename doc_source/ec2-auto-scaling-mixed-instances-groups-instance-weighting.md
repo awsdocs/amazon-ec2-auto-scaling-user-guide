@@ -19,6 +19,12 @@ By default, all instance types are treated as the same weight\. In other words, 
 
 With instance weighting, however, you assign a number value that specifies how many capacity units to associate with each instance type\. For example, if the instances are of different sizes, a `c5.2xlarge` instance could have the weight of 2, and a `c5.4xlarge` \(which is two times bigger\) could have the weight of 4, and so on\. Then, when Amazon EC2 Auto Scaling launches instances, their weights count toward your desired capacity\. 
 
+**Topics**
++ [Price per unit hour](#weights-price-per-unit-hour)
++ [Considerations](#weights-considerations)
++ [Add or modify weights for your Auto Scaling group](#add-weights)
++ [Additional information](#instance-weighting-additional-information)
+
 ## Price per unit hour<a name="weights-price-per-unit-hour"></a>
 
 The following table compares the hourly price for Spot Instances in different Availability Zones in US East \(N\. Virginia, Ohio\) with the price for On\-Demand Instances in the same Region\. The prices shown are example pricing and not current pricing\. These are your costs *per instance hour*\. 

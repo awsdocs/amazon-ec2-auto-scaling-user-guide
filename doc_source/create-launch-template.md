@@ -4,7 +4,10 @@ Before you can create an Auto Scaling group using a launch template, you must cr
 
 A launch template provides full functionality for Amazon EC2 Auto Scaling and also newer features of Amazon EC2 such as the current generation of EBS Provisioned IOPS volumes \(io2\), EBS volume tagging, T2 Unlimited instances, Elastic Inference, and Dedicated Hosts\.
 
-The following procedure works for creating a new launch template\. After you create your launch template, you can create the Auto Scaling group by following the instructions in [Creating an Auto Scaling group using a launch template](create-asg-launch-template.md), [Auto Scaling groups with multiple instance types and purchase options](ec2-auto-scaling-mixed-instances-groups.md), or [Creating an Auto Scaling group using attribute\-based instance type selection](create-asg-instance-type-requirements.md)\.
+The following procedure works for creating a new launch template\. After you create your launch template, you can create the Auto Scaling group by following the instructions in these topics: 
++ [Creating an Auto Scaling group using a launch template](create-asg-launch-template.md)
++ [Auto Scaling groups with multiple instance types and purchase options](ec2-auto-scaling-mixed-instances-groups.md)
++ [Creating an Auto Scaling group using attribute\-based instance type selection](create-asg-instance-type-requirements.md)
 
 **Topics**
 + [Creating your launch template \(console\)](#create-launch-template-for-auto-scaling)
@@ -57,7 +60,7 @@ Follow these steps to configure your launch template for the following:
 
    1. **Networking platform**: Choose whether to launch instances into a VPC or EC2\-Classic, if applicable\. However, the network type and Availability Zone settings of the launch template are ignored for Amazon EC2 Auto Scaling in favor of the settings of the Auto Scaling group\. 
 
-   1. **Security groups**: Choose one or more [security groups](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-network-security.html), or leave blank to configure one or more security groups as part of the network interface\. Each security group must be configured for the VPC that your Auto Scaling group will launch instances into\. If you're using EC2\-Classic, you must use security groups created specifically for EC2\-Classic\. 
+   1. **Security groups**: Choose one or more [security groups](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-network-security.html), or leave blank and configure one or more security groups as part of the network interface\. Each security group must be configured for the VPC that your Auto Scaling group will launch instances into\. If you're using EC2\-Classic, you must use security groups created specifically for EC2\-Classic\. 
 
       If you don't specify any security groups in your launch template, Amazon EC2 uses the [default security group](https://docs.aws.amazon.com/vpc/latest/userguide/VPC_SecurityGroups.html#DefaultSecurityGroup)\. By default, this security group doesn't allow inbound traffic from external networks\.
 
@@ -87,7 +90,7 @@ Follow these steps to configure your launch template for the following:
 **Note**  
 Providing a KMS key without also setting the **Encrypted** parameter results in an error\. 
 
-1. For **Instance tags**, specify tags by providing key and value combinations\. You can tag the instances, the volumes, or both\.
+1. For **Instance tags**, specify tags by providing key and value combinations\. You can tag the instances, the volumes, or both\. If you specify instance tags in your launch template and then you choose to propagate your Auto Scaling group's tags to its instances, all the tags are merged\. If the same tag key is specified for a tag in your launch template and a tag in your Auto Scaling group, then the tag value from the group takes precedence\. 
 
 1. To change the default network interface, see [Changing the default network interface](#change-network-interface)\. Skip this step if you want to keep the default network interface \(the primary network interface\)\.
 
@@ -143,9 +146,12 @@ The following steps discuss the most useful settings to pay attention to\. For m
 
 1. For **Advanced details**, expand the section to view the fields\.
 
-1. For **Purchasing option**, you can choose **Request Spot Instances** to request Spot Instances at the Spot price, capped at the On\-Demand price, and choose **Customize** to change the default Spot Instance settings\. For an Auto Scaling group, you must specify a one\-time request with no end date \(the default\)\. For more information, see [Requesting Spot Instances for fault\-tolerant and flexible applications](launch-configuration-requesting-spot-instances.md)\. 
+1. For **Purchasing option**, you can choose **Request Spot Instances** to request Spot Instances at the Spot price, capped at the On\-Demand price, and choose **Customize** to change the default Spot Instance settings\. For an Auto Scaling group, you must specify a one\-time request with no end date \(the default\)\. For more information, see [Requesting Spot Instances for fault\-tolerant and flexible applications](launch-template-spot-instances.md)\. 
 **Note**  
-If you leave **Purchasing option** unspecified, you can request Spot Instances later in your Auto Scaling group\. This also gives you the option of specifying multiple instance types\. That way, if the Amazon EC2 Spot service needs to reclaim your Spot Instances, we can launch replacement instances from another Spot pool\. For more information, see [Auto Scaling groups with multiple instance types and purchase options](ec2-auto-scaling-mixed-instances-groups.md)\.
+Amazon EC2 Auto Scaling lets you override the instance type in your launch template to create an Auto Scaling group that uses multiple instance types and launches Spot and On\-Demand Instances\. To do so, you must leave **Purchasing option** unspecified in your launch template\.  
+If you try to create a mixed instances group using a launch template with **Purchasing option** specified, you get the following error\.  
+Incompatible launch template: You cannot use a launch template that is set to request Spot Instances \(InstanceMarketOptions\) when you configure an Auto Scaling group with a mixed instances policy\. Add a different launch template to the group and try again\.  
+For information about creating mixed instances groups, see [Auto Scaling groups with multiple instance types and purchase options](ec2-auto-scaling-mixed-instances-groups.md)\.
 
 1. For **IAM instance profile**, you can specify an AWS Identity and Access Management \(IAM\) instance profile to associate with the instances\. When you choose an instance profile, you associate the corresponding IAM role with the EC2 instances\. For more information, see [IAM role for applications that run on Amazon EC2 instances](us-iam-role.md)\.
 
@@ -177,7 +183,9 @@ If you leave **Purchasing option** unspecified, you can request Spot Instances l
 
    For more information, see [Configuring the instance metadata service](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/configuring-instance-metadata-service.html) in the *Amazon EC2 User Guide for Linux Instances*\.
 
-1. For **User data**, you can specify user data to configure an instance during launch, or to run a configuration script after the instance starts\.
+1. For **User data**, you can add shell scripts and cloud\-init directives to customize an instance at launch\. For more information, see [Run commands on your Linux instance at launch](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/user-data.html) in the *Amazon EC2 User Guide for Linux Instances*\.
+**Note**  
+Running scripts at launch adds to the amount of time it takes for an instance to be ready for use\. However, you can allow extra time for the scripts to complete before the instance enters the `InService` state by adding a lifecycle hook to the Auto Scaling group\. For more information, see [Amazon EC2 Auto Scaling lifecycle hooks](lifecycle-hooks.md)\.
 
 1. Choose **Create launch template**\.
 

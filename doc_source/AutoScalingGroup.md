@@ -1,5 +1,10 @@
 # Auto Scaling groups<a name="AutoScalingGroup"></a>
 
+
+|  | 
+| --- |
+| We are retiring EC2\-Classic on August 15, 2022\. To avoid interruptions to your workloads, we recommend that you migrate from EC2\-Classic to a VPC prior to August 15, 2022\. For more information, see the blog post [EC2\-Classic Networking is Retiring \- Here's How to Prepare](http://aws.amazon.com/blogs/aws/ec2-classic-is-retiring-heres-how-to-prepare/)\. | 
+
 An *Auto Scaling group* contains a collection of Amazon EC2 instances that are treated as a logical grouping for the purposes of automatic scaling and management\. An Auto Scaling group also enables you to use Amazon EC2 Auto Scaling features such as health check replacements and scaling policies\. Both maintaining the number of instances in an Auto Scaling group and automatic scaling are the core functionality of the Amazon EC2 Auto Scaling service\.
 
 The size of an Auto Scaling group depends on the number of instances that you set as the desired capacity\. You can adjust its size to meet demand, either manually or by using automatic scaling\. 
@@ -25,11 +30,11 @@ If you're new to Auto Scaling groups, start by creating a launch template or a l
 + [Creating an Auto Scaling group using attribute\-based instance type selection](create-asg-instance-type-requirements.md)
 + [Creating an Auto Scaling group using a launch template](create-asg-launch-template.md)
 + [Creating an Auto Scaling group using a launch configuration](create-asg.md)
-+ [Creating an Auto Scaling group using an EC2 instance](create-asg-from-instance.md)
++ [Creating an Auto Scaling group using parameters from an existing instance](create-asg-from-instance.md)
++ [Creating an Auto Scaling group using the Amazon EC2 launch wizard](create-asg-ec2-wizard.md)
 + [Tagging Auto Scaling groups and instances](autoscaling-tagging.md)
 + [Elastic Load Balancing and Amazon EC2 Auto Scaling](autoscaling-load-balancer.md)
 + [Launching Auto Scaling instances in a VPC](asg-in-vpc.md)
 + [Getting recommendations for an instance type from AWS Compute Optimizer](asg-getting-recommendations.md)
 + [Replacing Auto Scaling instances](ec2-auto-scaling-group-replacing-instances.md)
-+ [Merging your Auto Scaling groups into a single multi\-zone group](merge-auto-scaling-groups.md)
 + [Deleting your Auto Scaling infrastructure](as-process-shutdown.md)

@@ -1,8 +1,8 @@
-# Configuring a notification target for a lifecycle hook<a name="configuring-lifecycle-hook-notifications"></a>
+# Configuring a notification target for lifecycle notifications<a name="configuring-lifecycle-hook-notifications"></a>
 
-You can add lifecycle hooks to an Auto Scaling group to perform custom actions whenever an instance enters a wait state\. You can configure notification targets to perform these actions using a variety of Amazon Web Services depending on your preferred development approach\.
+You can add lifecycle hooks to an Auto Scaling group to perform custom actions when an instance enters a wait state\. You can choose a target service to perform these actions depending on your preferred development approach\.
 
-The first approach uses Amazon EventBridge to invoke a Lambda function that performs the action you want\. The second approach involves creating an Amazon Simple Notification Service \(Amazon SNS\) topic to which notifications are published\. Clients can subscribe to the SNS topic and receive published messages using a supported protocol\. The last approach involves using Amazon Simple Queue Service \(Amazon SQS\), a messaging system that requires worker nodes to poll a queue\. 
+The first approach uses Amazon EventBridge to invoke a Lambda function that performs the action you want\. The second approach involves creating an Amazon Simple Notification Service \(Amazon SNS\) topic to which notifications are published\. Clients can subscribe to the SNS topic and receive published messages using a supported protocol\. The last approach involves using Amazon Simple Queue Service \(Amazon SQS\), a messaging system used by distributed applications to exchange messages through a polling model\.
 
 As a best practice, we recommend that you use EventBridge\. The notifications sent to Amazon SNS and Amazon SQS contain the same information as the notifications that Amazon EC2 Auto Scaling sends to EventBridge\. Before EventBridge, the standard practice was to send a notification to SNS or SQS and integrate another service with SNS or SQS to perform programmatic actions\. Today, EventBridge gives you more options for which services you can target and makes it easier to handle events using serverless architecture\. 
 
@@ -19,11 +19,11 @@ Remember, if you have user data scripts or cloud\-init directives that configure
 **Important**  
 The EventBridge rule, Lambda function, Amazon SNS topic, and Amazon SQS queue that you use with lifecycle hooks must always be in the same Region where you created your Auto Scaling group\.
 
-
-
 ## Route notifications to Lambda using EventBridge<a name="cloudwatch-events-notification"></a>
 
-You can invoke a Lambda function when a lifecycle action occurs using EventBridge\. For information about the EventBridge events that are emitted when a lifecycle action occurs, see [Auto Scaling events](cloud-watch-events.md#cloudwatch-event-types)\. For an introductory tutorial\-style guide that shows you how to create a simple Lambda function that listens for launch events and writes them out to a CloudWatch Logs log, see [Tutorial: Configure a lifecycle hook that invokes a Lambda function](tutorial-lifecycle-hook-lambda.md)\. 
+You can invoke a Lambda function when a lifecycle action occurs using EventBridge\. For information about the EventBridge events that are emitted when a lifecycle action occurs, see [Auto Scaling events](cloud-watch-events.md#cloudwatch-event-types)\. 
+
+Before you begin, confirm that you have created a Lambda function\. For an introductory tutorial that shows you how to create a simple Lambda function that listens for launch events and writes them out to a CloudWatch Logs log, see [Tutorial: Configure a lifecycle hook that invokes a Lambda function](tutorial-lifecycle-hook-lambda.md)\. 
 
 **To use a Lambda function as the target of an EventBridge rule**
 
@@ -110,7 +110,7 @@ You can use Amazon SNS to set up a notification target \(an SNS topic\) to recei
 
 ## Receive notifications using Amazon SQS<a name="sqs-notifications"></a>
 
-You can use Amazon SQS to set up a notification target to receive messages when a lifecycle action occurs\. Worker nodes must then poll an SQS queue to act on these notifications\.
+You can use Amazon SQS to set up a notification target to receive messages when a lifecycle action occurs\. A queue consumer must then poll an SQS queue to act on these notifications\.
 
 **Important**  
 FIFO queues are not compatible with lifecycle hooks\.

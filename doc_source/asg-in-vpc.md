@@ -1,5 +1,10 @@
 # Launching Auto Scaling instances in a VPC<a name="asg-in-vpc"></a>
 
+
+|  | 
+| --- |
+| We are retiring EC2\-Classic on August 15, 2022\. To avoid interruptions to your workloads, we recommend that you migrate from EC2\-Classic to a VPC prior to August 15, 2022\. For more information, see the blog post [EC2\-Classic Networking is Retiring \- Here's How to Prepare](http://aws.amazon.com/blogs/aws/ec2-classic-is-retiring-heres-how-to-prepare/)\. | 
+
 Amazon Virtual Private Cloud \(Amazon VPC\) enables you to define a virtual networking environment in a private, isolated section of the AWS Cloud\. You have complete control over your virtual networking environment\.
 
 Within a virtual private cloud \(VPC\), you can launch AWS resources such as Auto Scaling groups\. An Auto Scaling group in a VPC works essentially the same way as it does on Amazon EC2 and supports the same set of features\.
@@ -76,6 +81,8 @@ Use the following topics to learn more about VPCs and subnets\.
   + [NAT gateways](https://docs.aws.amazon.com/vpc/latest/userguide/vpc-nat-gateway.html)
 + Public subnets in a VPC
   + [VPC with a single public subnet](https://docs.aws.amazon.com/vpc/latest/userguide/VPC_Scenario1.html)
++ Subnets for your Application Load Balancer
+  + [Subnets for your load balancer](https://docs.aws.amazon.com/elasticloadbalancing/latest/application/application-load-balancers.html#subnets-load-balancer)
 + General VPC information
   + [Amazon VPC User Guide](https://docs.aws.amazon.com/vpc/latest/userguide/)
   + [VPC peering](https://docs.aws.amazon.com/vpc/latest/userguide/vpc-peering.html)

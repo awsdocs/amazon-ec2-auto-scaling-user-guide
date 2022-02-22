@@ -1,8 +1,8 @@
 # Working with Amazon EC2 Auto Scaling termination policies<a name="ec2-auto-scaling-termination-policies"></a>
 
-This topic provides detailed information about the default termination policy and the options available to you to choose different termination policies to meet your application needs\. By choosing different termination policies, you can control which instances you prefer to terminate first when a scale\-in event occurs\. For example, you can choose a different termination policy so that Amazon EC2 Auto Scaling prioritizes terminating the oldest instances first\. 
+This topic provides detailed information about the default termination policy and the options available to you to choose different termination policies for individual Auto Scaling groups\. By choosing different termination policies, you can control which instances you prefer to terminate first when a scale\-in event occurs\. For example, you can choose a different termination policy so that Amazon EC2 Auto Scaling prioritizes terminating the oldest instances first\. 
 
-When Amazon EC2 Auto Scaling terminates instances, it attempts to maintain balance across the Availability Zones that are used by your group\. Maintaining balance across Availability Zones takes precedence over termination policies\. If one Availability Zone has more instances than the other Availability Zones that are used by the group, Amazon EC2 Auto Scaling applies the termination policies to the instances from the imbalanced Availability Zone\. If the Availability Zones used by the group are balanced, Amazon EC2 Auto Scaling applies the termination policies across all of the Availability Zones for the group\.
+When Amazon EC2 Auto Scaling terminates instances, it attempts to maintain balance across the Availability Zones that are used by your Auto Scaling group\. Maintaining balance across Availability Zones takes precedence over termination policies\. If one Availability Zone has more instances than the other Availability Zones that are used by the group, Amazon EC2 Auto Scaling applies the termination policies to the instances from the imbalanced Availability Zone\. If the Availability Zones used by the group are balanced, Amazon EC2 Auto Scaling applies the termination policies across all of the Availability Zones for the group\.
 
 **Contents**
 + [Default termination policy](#default-termination-policy)
@@ -15,7 +15,7 @@ When Amazon EC2 Auto Scaling terminates instances, it attempts to maintain balan
 
 The default termination policy applies multiple termination criteria before selecting an instance to terminate\. When Amazon EC2 Auto Scaling terminates instances, it first determines which Availability Zones have the most instances, and it finds at least one instance that is not protected from scale in\. Within the selected Availability Zone, the following default termination policy behavior applies:
 
-1. Determine whether any of the instances eligible for termination use the oldest launch template or configuration:
+1. Determine whether any of the instances eligible for termination use the oldest launch template or launch configuration:
 
    1. \[For Auto Scaling groups that use a launch template\]
 
@@ -39,15 +39,7 @@ The default termination policy changes slightly due to differences in how [mixed
 
    For example, after your instances launch, you might change the priority order of your preferred instance types\. When a scale\-in event occurs, Amazon EC2 Auto Scaling tries to gradually shift the On\-Demand Instances away from instance types that are lower priority\.
 
-1. Determine whether any of the instances eligible for termination use the oldest launch template or configuration:
-
-   1. \[For Auto Scaling groups that use a launch template\]
-
-      Determine whether any of the instances use the oldest launch template, unless there are instances that use a launch configuration\. Amazon EC2 Auto Scaling terminates instances that use a launch configuration before it terminates instances that use a launch template\.
-
-   1. \[For Auto Scaling groups that use a launch configuration\]
-
-      Determine whether any of the instances use the oldest launch configuration\. 
+1. Determine whether any of the instances use the oldest launch template, unless there are instances that use a launch configuration\. Amazon EC2 Auto Scaling terminates instances that use a launch configuration before it terminates instances that use a launch template\.
 
 1. After applying the preceding criteria, if there are multiple unprotected instances to terminate, determine which instances are closest to the next billing hour\. If there are multiple unprotected instances closest to the next billing hour, terminate one of these instances at random\.
 

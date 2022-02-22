@@ -1,6 +1,6 @@
 # Creating an Auto Scaling group using attribute\-based instance type selection<a name="create-asg-instance-type-requirements"></a>
 
-When you create an Auto Scaling group, you must specify the necessary information to configure the Amazon EC2 instances, the Availability Zones and VPC subnets for the instances, the desired capacity, and the minimum and maximum size limits\.
+When you create an Auto Scaling group, you must specify the necessary information to configure the Amazon EC2 instances, the Availability Zones and VPC subnets for the instances, the desired capacity, and the minimum and maximum capacity limits\.
 
 As an alternative to manually choosing instance types when creating a [mixed instances group](ec2-auto-scaling-mixed-instances-groups.md), you can specify a set of instance attributes that describe your compute requirements\. As Amazon EC2 Auto Scaling launches instances, any instance types used by the Auto Scaling group must match your required instance attributes\. This is known as *attribute\-based instance type selection*\.
 
@@ -43,21 +43,28 @@ If you don't specify a threshold, the following are used by default:
 
 To update these values when creating your Auto Scaling group in the Amazon EC2 Auto Scaling console, on the **Choose instance launch options** page, choose the desired price protection attribute from the **Additional instance attributes** drop\-down list, and then type or choose a value for the attribute in the text box\. You can also update these values at any time by editing the Auto Scaling group from the console or passing the relevant parameters using the AWS CLI or an SDK\.
 
+**Note**  
+If you set **Desired capacity type** to **vCPUs** or **Memory GiB**, the price protection threshold is applied based on the per vCPU or per memory price instead of the per instance price\. 
+
 ## Prerequisites<a name="use-attribute-based-instance-type-selection-prerequisites"></a>
 
-Complete the following requirements before using attribute\-based instance type selection:
-+ Create a launch template that includes the parameters required to launch an EC2 instance, such as the Amazon Machine Image \(AMI\) and security groups\. For more information, see [Creating a launch template for an Auto Scaling group](create-launch-template.md)\.
-+ Ensure that you have IAM permissions to create an Auto Scaling group using a launch template\. For more information, see [Launch template support](ec2-auto-scaling-launch-template-permissions.md)\.
+Create a launch template that includes the parameters required to launch an EC2 instance, such as the Amazon Machine Image \(AMI\) and security groups\. For more information, see [Creating a launch template for an Auto Scaling group](create-launch-template.md)\.
+
+Verify that you have the permissions required to use a launch template\. Your `ec2:RunInstances` permissions are checked when use a launch template\. Your `iam:PassRole` permissions are also checked if the launch template specifies an IAM role\. For more information, see [Launch template support](ec2-auto-scaling-launch-template-permissions.md)\.
 
 ## Use attribute\-based instance type selection<a name="use-attribute-based-instance-type-selection"></a>
 
 Complete the following steps to create an Auto Scaling group that uses attribute\-based instance type selection\.
 
+Before you begin, confirm that you have created a launch template, as described in [Prerequisites](#use-attribute-based-instance-type-selection-prerequisites)\.
+
+Verify that the launch template doesn't already request Spot Instances\. 
+
 **To create an Auto Scaling group using attribute\-based instance type selection \(console\)**
 
 1. Open the Amazon EC2 Auto Scaling console at [https://console\.aws\.amazon\.com/ec2autoscaling/](https://console.aws.amazon.com/ec2autoscaling/)\.
 
-1. On the navigation bar at the top of the screen, choose the same Region that you used when you created the launch template\.
+1. On the navigation bar at the top of the screen, choose the same AWS Region that you used when you created the launch template\.
 
 1. Choose **Create an Auto Scaling group**\.
 
@@ -70,12 +77,10 @@ Complete the following steps to create an Auto Scaling group that uses attribute
    1. For **Launch template version**, choose whether the Auto Scaling group uses the default, the latest, or a specific version of the launch template when scaling out\. 
 
    1. Verify that your launch template supports all of the options that you are planning to use, and then choose **Next**\.
-**Note**  
-To successfully complete this procedure, make sure that your launch template doesn't already request Spot Instances\.
 
-1. On the **Choose instance launch options** page, under **Network**, for **VPC**, choose the VPC for the security groups that you specified in your launch template\.
+1. On the **Choose instance launch options** page, under **Network**, for **VPC**, choose a VPC\. The Auto Scaling group must be created in the same VPC as the security group you specified in your launch template\.
 
-1. For **Availability Zones and subnets**, choose one or more subnets in the specified VPC\. Use subnets in multiple Availability Zones for high availability\. For more information about high availability with Amazon EC2 Auto Scaling, see [Distributing instances across Availability Zones](auto-scaling-benefits.md#arch-AutoScalingMultiAZ)\.
+1. For **Availability Zones and subnets**, choose one or more subnets in the specified VPC\. Use subnets in multiple Availability Zones for high availability\. For more information, see [Considerations when choosing VPC subnets](asg-in-vpc.md#as-vpc-considerations)\.
 
 1. For **Instance type requirements**, choose **Override launch template**\.
 **Note**  
@@ -93,7 +98,7 @@ If you are already using attribute\-based instance type selection in your launch
 
 1. Under **Instance purchase options**, make updates to the purchase options as needed to lower the cost of your application by using Spot Instances\.
 
-   1. For **Instances distribution**, specify the percentages of On\-Demand Instances to Spot Instances to launch for the Auto Scaling group\.
+   1. For **Instances distribution**, specify the percentages of On\-Demand Instances to Spot Instances to launch for the Auto Scaling group\. If your application is stateless, fault tolerant and can handle an instance being interrupted, you can specify a higher percentage of Spot Instances\.
 
    1. Depending on whether you chose to launch Spot Instances, you can select the check box next to **Include On\-Demand base capacity** and then specify the minimum amount of the Auto Scaling group's initial capacity that must be fulfilled by On\-Demand Instances\. Anything beyond the base capacity uses the **Instances distribution** settings to determine how many On\-Demand Instances and Spot Instances to launch\. 
 
@@ -130,7 +135,7 @@ To create an Auto Scaling group with attribute\-based instance type selection us
 The following instance attributes are specified:
 + `VCpuCount` – The instance types must have a minimum of four vCPUs and a maximum of eight vCPUs\. 
 + `MemoryMiB` – The instance types must have a minimum of 16384 MiB of memory\. 
-+ `CPUManufacturer` – The instance types must have an Intel manufactured CPU\. 
++ `CpuManufacturers` – The instance types must have an Intel manufactured CPU\. 
 
 #### JSON<a name="attribute-based-instance-type-selection-aws-cli-json"></a>
 
@@ -154,7 +159,7 @@ The following is an example `config.json` file\.
                 "InstanceRequirements": {
                     "VCpuCount": {"Min": 4, "Max": 8},
                     "MemoryMiB": {"Min": 16384},
-                    "CPUManufacturer": ["intel"]
+                    "CpuManufacturers": ["intel"]
                 }
             }]
         },
@@ -198,7 +203,7 @@ MixedInstancesPolicy:
            Max: 4
          MemoryMiB:
            Min: 2048
-         CPUManufacturer:
+         CpuManufacturers:
          - intel
   InstancesDistribution:
     OnDemandPercentageAboveBaseCapacity: 50
