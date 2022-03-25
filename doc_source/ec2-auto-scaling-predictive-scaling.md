@@ -201,7 +201,7 @@ If successful, this command returns the policy's Amazon Resource Name \(ARN\)\.
 ```
 
 ## Limitations<a name="predictive-scaling-limitations"></a>
-
-Predictive scaling requires 24 hours of metric history before it can generate forecasts\.
-
-You currently cannot use predictive scaling with Auto Scaling groups that have a mixed instances policy\.
++ Predictive scaling requires 24 hours of metric history before it can generate forecasts\.
++ A core assumption of predictive scaling is that the Auto Scaling group is homogenous and all instances are of equal capacity\. If this isn’t true for your group, forecasted capacity can be inaccurate\. Therefore, use caution when creating predictive scaling policies for [mixed instances groups](ec2-auto-scaling-mixed-instances-groups.md), because instances of different types can be provisioned that are of unequal capacity\. Following are some examples where the forecasted capacity will be inaccurate:
+  + Your predictive scaling policy is based on CPU utilization, but the number of vCPUs on each Auto Scaling instance varies between instance types\.
+  + Your predictive scaling policy is based on network in or network out, but the network bandwidth throughput for each Auto Scaling instance varies between instance types\. For example, the M5 and M5n instance types are similar, but the M5n instance type delivers significantly higher network throughput\.

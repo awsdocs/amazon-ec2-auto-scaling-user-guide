@@ -9,9 +9,10 @@ Creating a warm pool when it's not required can lead to unnecessary costs\. If y
 + [Core concepts](#warm-pool-core-concepts)
 + [Prerequisites](#warm-pool-prerequisites)
 + [Create a warm pool](#create-a-warm-pool-console)
-+ [Updating instances in a warm pool](#update-warm-pool)
++ [Update a warm pool](#update-warm-pool)
 + [Delete a warm pool](#delete-warm-pool)
 + [Limitations](#warm-pools-limitations)
++ [Hibernation not supported in all AWS Regions](#warm-pools-regions)
 + [Using lifecycle hooks](warm-pool-instance-lifecycle.md)
 + [Event types and event patterns](warm-pools-eventbridge-events.md)
 + [Creating EventBridge rules](warm-pool-events-eventbridge-rules.md)
@@ -30,16 +31,24 @@ By default, the size of the warm pool is calculated as the difference between th
 If you set a value for maximum prepared capacity, the size of the warm pool is calculated as the difference between the maximum prepared capacity and the desired capacity\. For example, if the desired capacity of your Auto Scaling group is 6, if the maximum capacity is 10, and if the maximum prepared capacity is 8, the size of your warm pool will be 2 when you first set up the warm pool and the pool is initializing\. 
 
 **Warm pool instance state**  
-You can keep instances in the warm pool in one of two states: `Stopped` or `Running`\. Keeping instances in a `Stopped` state is an effective way to minimize costs\. With stopped instances, you pay only for the volumes that you use and the Elastic IP addresses attached to the instances\. But you don't pay for the stopped instances themselves\. You pay for the instances only when they are running\. 
+You can keep instances in the warm pool in one of three states: `Stopped`, `Running`, or `Hibernated`\. Keeping instances in a `Stopped` state is an effective way to minimize costs\. With stopped instances, you pay only for the volumes that you use and the Elastic IP addresses attached to the instances\. But you don't pay for the stopped instances themselves\. You pay for the instances only when they are running\.   
+Alternatively, you can keep instances in a `Hibernated` state to stop instances without deleting their memory contents \(RAM\)\. When an instance is hibernated, this signals the operating system to save the contents of your RAM to your Amazon EBS root volume\. When the instance is started again, the root volume is restored to its previous state and the RAM contents are reloaded\. While the instances are in hibernation, you pay only for the EBS volumes, including storage for the RAM contents, and the Elastic IP addresses attached to the instances\.  
+Currently, the `Hibernated` option is available only if you use the AWS CLI or an SDK\. This option is not available from the console\.
 
 **Lifecycle hooks**  
 [Lifecycle hooks](lifecycle-hooks.md) let you put instances into a wait state so that you can perform custom actions on the instances\. Custom actions are performed as the instances launch or before they terminate\.  
-In a warm pool configuration, lifecycle hooks can also delay instances from being stopped and from being put in service during a scale\-out event until they have finished initializing\. If you add a warm pool to your Auto Scaling group without a lifecycle hook, instances that take a long time to finish initializing could be stopped and then put in service during a scale\-out event before they are ready\.
+In a warm pool configuration, lifecycle hooks can also delay instances from being stopped or hibernated and from being put in service during a scale\-out event until they have finished initializing\. If you add a warm pool to your Auto Scaling group without a lifecycle hook, instances that take a long time to finish initializing could be stopped or hibernated and then put in service during a scale\-out event before they are ready\.
+
+**Instance reuse policy**  
+By default, Amazon EC2 Auto Scaling terminates your instances when your Auto Scaling group scales in\. Then, it launches new instances into the warm pool to replace the instances that were terminated\.   
+If you want to return instances to the warm pool instead, you can specify an instance reuse policy\. This lets you reuse instances that are already configured to serve application traffic\. To make sure that your warm pool is not over\-provisioned, Amazon EC2 Auto Scaling can terminate instances in the warm pool to reduce its size when it is larger than necessary based on its settings\. When terminating instances in the warm pool, it uses the [default termination policy](ec2-auto-scaling-termination-policies.md#default-termination-policy) to choose which instances to terminate first\.   
+If you want to hibernate instances on scale in and there are existing instances in the Auto Scaling group, they must meet the requirements for instance hibernation\. If they don't, when instances return to the warm pool, they will fallback to being stopped instead of being hibernated\.
+Currently, you can only specify an instance reuse policy by using the AWS CLI or an SDK\. This feature is not available from the console\.
 
 ## Prerequisites<a name="warm-pool-prerequisites"></a>
 
 Decide how you will use lifecycle hooks to prepare the instances for use\. There are two ways to perform custom actions on your instances\.
-+ For simple scenarios where you want to run commands on your instances at launch, you can include a user data script when you create a launch template or launch configuration for your Auto Scaling group\. User data scripts are just normal shell scripts or cloud\-init directives that are run by [cloud\-init](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/amazon-linux-ami-basics.html#amazon-linux-cloud-init) when your instances start\. The script can also control when your instances transition to the next state by using the ID of the instance on which it runs\. If you are not doing so already, update your script to retrieve the instance ID of the instance from the instance metadata\. For more information, see [Retrieving instance metadata](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/instancedata-data-retrieval.html) in the *Amazon EC2 User Guide for Linux Instances*\.
++ For simple scenarios where you want to run commands on your instances at launch, you can include a user data script when you create a launch template or launch configuration for your Auto Scaling group\. User data scripts are just normal shell scripts or cloud\-init directives that are run by [cloud\-init](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/amazon-linux-ami-basics.html#amazon-linux-cloud-init) when your instances start\. The script can also control when your instances transition to the next state by using the ID of the instance on which it runs\. If you are not doing so already, update your script to retrieve the instance ID of the instance from the instance metadata\. For more information, see [Retrieve instance metadata](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/instancedata-data-retrieval.html) in the *Amazon EC2 User Guide for Linux Instances*\.
 **Tip**  
 To run user data scripts when an instance restarts, the user data must be in the MIME multi\-part format and specify the following in the `#cloud-config` section of the user data:  
 
@@ -52,8 +61,8 @@ To run user data scripts when an instance restarts, the user data must be in the
 
 For more information, see the lifecycle hook examples in our [GitHub repository](https://github.com/aws-samples/amazon-ec2-auto-scaling-group-examples)\. 
 
-**Additional considerations**  
-Consider reducing the instance warm\-up time in your scaling policies\. As instances leave the warm pool, they don't count towards the aggregated CloudWatch instance metrics of the Auto Scaling group until after the lifecycle hook finishes and the warm\-up time completes\. Therefore, warm\-up times that are set too high might cause your scaling policies to scale out more aggressively than desired\. For more information, see [Target tracking scaling policies](as-scaling-target-tracking.md) and [Step and simple scaling policies](as-scaling-simple-step.md)\.
+**Prepare instances for hibernation**  
+To prepare Auto Scaling instances to use the `Hibernated` pool state, create a new launch template or launch configuration that is set up correctly to support instance hibernation, as described in the [Hibernation prerequisites](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/hibernating-prerequisites.html) topic in the *Amazon EC2 User Guide for Linux Instances*\. Then, associate the new launch template or launch configuration with the Auto Scaling group and start an instance refresh to replace the instances associated with a previous launch template or launch configuration\. For more information, see [Replacing Auto Scaling instances based on an instance refresh](asg-instance-refresh.md)\.
 
 ## Create a warm pool<a name="create-a-warm-pool-console"></a>
 
@@ -87,7 +96,7 @@ Keeping the default **Equal to the Auto Scaling group's maximum capacity** optio
 
 1. Choose **Create**\. 
 
-## Updating instances in a warm pool<a name="update-warm-pool"></a>
+## Update a warm pool<a name="update-warm-pool"></a>
 
 To change the launch template or launch configuration for a warm pool, associate a new launch template or launch configuration with the Auto Scaling group\. Any new instances are launched using the new AMI and other updates that are specified in the launch template or launch configuration, but existing instances are not affected\.
 
@@ -111,6 +120,11 @@ When you no longer need the warm pool, use the following procedure to delete it\
 
 ## Limitations<a name="warm-pools-limitations"></a>
 + You cannot add a warm pool to Auto Scaling groups that have a mixed instances policy or that launch Spot Instances\.
-+ You can put an instance in a `Stopped` state only if it has an Amazon EBS volume as its root device\. Instances that use instance stores for the root device cannot be stopped\.
++ Amazon EC2 Auto Scaling can put an instance in a `Stopped` or `Hibernated` state only if it has an Amazon EBS volume as its root device\. Instances that use instance stores for the root device cannot be stopped or hibernated\.
++ Amazon EC2 Auto Scaling can put an instance in a `Hibernated` state only if meets all of the requirements listed in the [Hibernation prerequisites](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/hibernating-prerequisites.html) topic in the *Amazon EC2 User Guide for Linux Instances*\. 
 + If your warm pool is depleted when there is a scale\-out event, instances will launch directly into the Auto Scaling group \(a *cold start*\)\. You could also experience cold starts if an Availability Zone is out of capacity\.
-+ If you try using warm pools with Amazon Elastic Container Service \(Amazon ECS\) or Elastic Kubernetes Service \(Amazon EKS\) managed node groups, there is a chance that these services will schedule jobs on an instance before it reaches the warm pool\.
++ If you try using warm pools with an Amazon Elastic Kubernetes Service \(Amazon EKS\) managed node group, instances that are still initializing might register with your Amazon EKS cluster\. As a result, the cluster might schedule jobs on an instance as it is preparing to be stopped or hibernated\. To use a warm pool with an Amazon ECS cluster, your launch template or launch configuration must be set up correctly\. For more information see [Using a warm pool for your Auto Scaling group](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/creating-warm-pool.html) in the *Amazon Elastic Container Service Developer Guide*\.
+
+## Hibernation not supported in all AWS Regions<a name="warm-pools-regions"></a>
+
+Hibernation support for warm pools is available in all commercial AWS Regions where Amazon EC2 Auto Scaling is available, excluding the Africa \(Cape Town\), Asia Pacific \(Jakarta\), Asia Pacific \(Osaka\), China \(Beijing\), China \(Ningxia\), Europe \(Milan\), and AWS GovCloud \(US\-East and US\-West\) Regions\.

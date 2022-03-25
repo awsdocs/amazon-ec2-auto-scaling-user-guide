@@ -36,7 +36,7 @@ The EC2 status checks do not require any special configuration and are always en
 **Elastic Load Balancing \(`ELB`\) health checks**  
 Instances for groups that do not use `ELB` health checks are considered healthy if they are in the `running` state\. Instances for groups that use `ELB` health checks are considered healthy if they are in the `running` state and they are reported as healthy by the load balancer\.
 
-If you attached a load balancer or target group to your Auto Scaling group, you can configure the group to mark an instance as unhealthy when Elastic Load Balancing reports it as `unhealthy`\.\. If connection draining is enabled for your load balancer, Amazon EC2 Auto Scaling waits for in\-flight requests to complete or the maximum timeout to expire, whichever comes first, before terminating instances due to a scaling event or health check replacement\. 
+If you attached a load balancer or target group to your Auto Scaling group, you can configure the group to mark an instance as unhealthy when Elastic Load Balancing reports it as `unhealthy`\. If connection draining is enabled for your load balancer, Amazon EC2 Auto Scaling waits for in\-flight requests to complete or the maximum timeout to expire, whichever comes first, before terminating instances due to a scaling event or health check replacement\. 
 
 For information about enabling these health checks, see [Adding ELB health checks](as-add-elb-healthcheck.md)\.
 

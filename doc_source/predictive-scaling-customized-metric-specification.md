@@ -146,78 +146,78 @@ aws autoscaling put-scaling-policy --policy-name my-sqs-custom-metrics-policy \
   --auto-scaling-group-name my-asg --policy-type PredictiveScaling \
   --predictive-scaling-configuration file://config.json
 {
-    "MetricSpecifications": [
-        {
-            "TargetValue": 100,
-            "CustomizedScalingMetricSpecification": {
-                "MetricDataQueries": [
-                    {
-                        "Label": "Get the queue size (the number of messages waiting to be processed)",
-                        "Id": "queue_size",
-                        "MetricStat": {
-                            "Metric": {
-                                "MetricName": "ApproximateNumberOfMessagesVisible",
-                                "Namespace": "AWS/SQS",
-                                "Dimensions": [
-                                    {
-                                        "Name": "QueueName",
-                                        "Value": "my-queue"
-                                    }
-                                ]
-                            },
-                            "Stat": "Sum"
-                        },
-                        "ReturnData": false
-                    },
-                    {
-                        "Label": "Get the group size (the number of running instances)",
-                        "Id": "running_capacity",
-                        "MetricStat": {
-                            "Metric": {
-                                "MetricName": "GroupInServiceInstances",
-                                "Namespace": "AWS/AutoScaling",
-                                "Dimensions": [
-                                    {
-                                        "Name": "AutoScalingGroupName",
-                                        "Value": "my-asg"
-                                    }
-                                ]
-                            },
-                            "Stat": "Sum"
-                        },
-                        "ReturnData": false
-                    },
-                    {
-                        "Label": "Calculate the backlog per instance",
-                        "Id": "scaling_metric",
-                        "Expression": "queue_size / running_capacity",
-                        "ReturnData": true
-                    }
+  "MetricSpecifications": [
+    {
+      "TargetValue": 100,
+      "CustomizedScalingMetricSpecification": {
+        "MetricDataQueries": [
+          {
+            "Label": "Get the queue size (the number of messages waiting to be processed)",
+            "Id": "queue_size",
+            "MetricStat": {
+              "Metric": {
+                "MetricName": "ApproximateNumberOfMessagesVisible",
+                "Namespace": "AWS/SQS",
+                "Dimensions": [
+                  {
+                    "Name": "QueueName",
+                    "Value": "my-queue"
+                  }
                 ]
+              },
+              "Stat": "Sum"
             },
-            "CustomizedLoadMetricSpecification": {
-                "MetricDataQueries": [
-                    {
-                        "Id": "load_metric",
-                        "MetricStat": {
-                            "Metric": {
-                                "MetricName": "ApproximateNumberOfMessagesVisible",
-                                "Namespace": "AWS/SQS",
-                                "Dimensions": [
-                                    {
-                                        "Name": "QueueName",
-                                        "Value": "my-queue"
-                                    }
-                                ]
-                            },
-                            "Stat": "Sum"
-                        },
-                        "ReturnData": true
-                    }
+            "ReturnData": false
+          },
+          {
+            "Label": "Get the group size (the number of running instances)",
+            "Id": "running_capacity",
+            "MetricStat": {
+              "Metric": {
+                "MetricName": "GroupInServiceInstances",
+                "Namespace": "AWS/AutoScaling",
+                "Dimensions": [
+                  {
+                    "Name": "AutoScalingGroupName",
+                    "Value": "my-asg"
+                  }
                 ]
-            }
-        }
-    ]
+              },
+              "Stat": "Sum"
+            },
+            "ReturnData": false
+          },
+          {
+            "Label": "Calculate the backlog per instance",
+            "Id": "scaling_metric",
+            "Expression": "queue_size / running_capacity",
+            "ReturnData": true
+          }
+        ]
+      },
+      "CustomizedLoadMetricSpecification": {
+        "MetricDataQueries": [
+          {
+            "Id": "load_metric",
+            "MetricStat": {
+              "Metric": {
+                "MetricName": "ApproximateNumberOfMessagesVisible",
+                "Namespace": "AWS/SQS",
+                "Dimensions": [
+                  {
+                    "Name": "QueueName",
+                    "Value": "my-queue"
+                  }
+                ],
+              },
+              "Stat": "Sum"
+            },
+            "ReturnData": true
+          }
+        ]
+      }
+    }
+  ]
 }
 ```
 

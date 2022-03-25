@@ -7,10 +7,12 @@ The following examples show you how to create and manage warm pools using the AW
 **Topics**
 + [Example 1: Keeping instances in the `Stopped` state](#warm-pool-configuration-ex1)
 + [Example 2: Keeping instances in the `Running` state](#warm-pool-configuration-ex2)
-+ [Example 3: Specifying the minimum number of instances in the warm pool](#warm-pool-configuration-ex3)
-+ [Example 4: Defining a warm pool size separate from the maximum group size](#warm-pool-configuration-ex4)
-+ [Example 5: Defining an absolute warm pool size](#warm-pool-configuration-ex5)
-+ [Example 6: Delete a warm pool](#delete-warm-pool-cli)
++ [Example 3: Keeping instances in the `Hibernated` state](#warm-pool-configuration-ex3)
++ [Example 4: Returning instances to the warm pool when scaling in](#warm-pool-configuration-ex4)
++ [Example 5: Specifying the minimum number of instances in the warm pool](#warm-pool-configuration-ex5)
++ [Example 6: Defining a warm pool size separate from the maximum group size](#warm-pool-configuration-ex6)
++ [Example 7: Defining an absolute warm pool size](#warm-pool-configuration-ex7)
++ [Example 8: Delete a warm pool](#delete-warm-pool-cli)
 
 ## Example 1: Keeping instances in the `Stopped` state<a name="warm-pool-configuration-ex1"></a>
 
@@ -30,7 +32,25 @@ aws autoscaling put-warm-pool --auto-scaling-group-name my-asg /
   --pool-state Running
 ```
 
-## Example 3: Specifying the minimum number of instances in the warm pool<a name="warm-pool-configuration-ex3"></a>
+## Example 3: Keeping instances in the `Hibernated` state<a name="warm-pool-configuration-ex3"></a>
+
+The following [put\-warm\-pool](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/put-warm-pool.html) example creates a warm pool that keeps instances in a `Hibernated` state instead of a `Stopped` state\. This lets you stop instances without deleting their memory contents \(RAM\)\.
+
+```
+aws autoscaling put-warm-pool --auto-scaling-group-name my-asg /
+  --pool-state Hibernated
+```
+
+## Example 4: Returning instances to the warm pool when scaling in<a name="warm-pool-configuration-ex4"></a>
+
+The following [put\-warm\-pool](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/put-warm-pool.html) example creates a warm pool that keeps instances in a `Stopped` state and includes the `--instance-reuse-policy` option\. The instance reuse policy value `'{"ReuseOnScaleIn": true}'` tells Amazon EC2 Auto Scaling to return instances to the warm pool when your Auto Scaling group scales in\.
+
+```
+aws autoscaling put-warm-pool --auto-scaling-group-name my-asg /
+  --pool-state Stopped --instance-reuse-policy '{"ReuseOnScaleIn": true}'
+```
+
+## Example 5: Specifying the minimum number of instances in the warm pool<a name="warm-pool-configuration-ex5"></a>
 
 The following [put\-warm\-pool](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/put-warm-pool.html) example creates a warm pool that maintains a minimum of 4 instances, so that there are at least 4 instances available to handle traffic spikes\. 
 
@@ -39,7 +59,7 @@ aws autoscaling put-warm-pool --auto-scaling-group-name my-asg /
   --pool-state Stopped --min-size 4
 ```
 
-## Example 4: Defining a warm pool size separate from the maximum group size<a name="warm-pool-configuration-ex4"></a>
+## Example 6: Defining a warm pool size separate from the maximum group size<a name="warm-pool-configuration-ex6"></a>
 
 Generally, you understand how much maximum capacity you need to set above your desired capacity\. There's usually no need to define an additional maximum size, because Amazon EC2 Auto Scaling creates a warm pool that dynamically resizes based on your maximum capacity setting\. 
 
@@ -59,7 +79,7 @@ aws autoscaling put-warm-pool --auto-scaling-group-name my-asg /
   --pool-state Stopped --max-group-prepared-capacity 900 --min-size 25
 ```
 
-## Example 5: Defining an absolute warm pool size<a name="warm-pool-configuration-ex5"></a>
+## Example 7: Defining an absolute warm pool size<a name="warm-pool-configuration-ex7"></a>
 
 If you set the same values for the `--max-group-prepared-capacity` and `--min-size` options, the warm pool has an absolute size\. The following [put\-warm\-pool](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/put-warm-pool.html) example creates a warm pool that maintains a constant warm pool size of 10 instances\.
 
@@ -68,7 +88,7 @@ aws autoscaling put-warm-pool --auto-scaling-group-name my-asg /
   --pool-state Stopped --min-size 10 --max-group-prepared-capacity 10
 ```
 
-## Example 6: Delete a warm pool<a name="delete-warm-pool-cli"></a>
+## Example 8: Delete a warm pool<a name="delete-warm-pool-cli"></a>
 
 Use the following [delete\-warm\-pool](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/delete-warm-pool.html) command to delete a warm pool\. 
 

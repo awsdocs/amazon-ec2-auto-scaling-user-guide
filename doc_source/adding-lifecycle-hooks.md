@@ -1,14 +1,10 @@
 # Adding lifecycle hooks<a name="adding-lifecycle-hooks"></a>
 
-After your notification target is set up and ready to use, add the lifecycle hook so that the Event Notification can be used to perform your custom action when the corresponding lifecycle event occurs\. 
+To put your Auto Scaling instances into a wait state and perform custom actions on them, you can add lifecycle hooks to your Auto Scaling group\. Custom actions are performed as the instances launch or before they terminate\. Instances remain in a wait state until you either complete the lifecycle action, or the timeout period ends\.
 
-There are two types of lifecycle hooks that can be implemented: launch lifecycle hooks and termination lifecycle hooks\. Use a launch lifecycle hook to prepare instances for use or to delay instances from registering behind the load balancer before their configuration has been applied completely\. Use a termination lifecycle hook to prepare running instances to be shut down\. 
+After you create an Auto Scaling group from the AWS Management Console, you can add one or more lifecycle hooks to it, up to a total of 50 lifecycle hooks\. You can also use the AWS CLI, AWS CloudFormation, or an SDK to add lifecycle hooks to an Auto Scaling group as you are creating it\.
 
-Pay attention to the following settings when creating your lifecycle hook: 
-+ **Heartbeat timeout**: This setting specifies how much time must pass before the hook times out\. The range is from `30` to `7200` seconds\. The default value is one hour \(`3600` seconds\)\. During the timeout period, you can, for example, install applications or download logs or other data\.
-+ **Default result**: This setting defines the action to take when the lifecycle hook timeout elapses or when an unexpected failure occurs\. You can choose to either *abandon* \(default\) or *continue*\.
-  + If the instance is launching, continue indicates that your actions were successful, and that the Auto Scaling group can put the instance into service\. Otherwise, abandon indicates that your custom actions were unsuccessful, and that Amazon EC2 Auto Scaling can terminate the instance\. 
-  + If the instance is terminating, both abandon and continue allow the instance to terminate\. However, abandon stops any remaining actions, such as other lifecycle hooks, and continue allows any other lifecycle hooks to complete\.
+By default, when you add a lifecycle hook in the console, Amazon EC2 Auto Scaling sends lifecycle event notifications to Amazon EventBridge\. Using EventBridge or a user data script is a recommended best practice\. To create a lifecycle hook that sends notifications directly to Amazon SNS or Amazon SQS, you can use the [put\-lifecycle\-hook](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/put-lifecycle-hook.html) command, as shown in the examples in this topic\.
 
 **Topics**
 + [Add lifecycle hooks \(console\)](#adding-lifecycle-hooks-console)
@@ -16,7 +12,9 @@ Pay attention to the following settings when creating your lifecycle hook:
 
 ## Add lifecycle hooks \(console\)<a name="adding-lifecycle-hooks-console"></a>
 
-Follow these steps to add a lifecycle hook to an existing Auto Scaling group\. You can specify whether the hook is used when the instances launch or terminate, and how long to wait for the lifecycle hook to be completed before abandoning or continuing\.
+Follow these steps to add a lifecycle hook to your Auto Scaling group\. To create lifecycle hooks for scaling out \(instances launching\) and scaling in \(instances terminating\), you must create two separate hooks\. 
+
+Before you begin, confirm that you have set up a custom action, as described in [Prepare to add a lifecycle hook to your Auto Scaling group](prepare-for-lifecycle-notifications.md)\.
 
 **To add a lifecycle hook**
 
@@ -34,9 +32,13 @@ Follow these steps to add a lifecycle hook to an existing Auto Scaling group\. Y
 
    1. For **Lifecycle transition**, choose **Instance launch** or **Instance terminate**\. 
 
-   1. Specify a timeout value for **Heartbeat timeout**, which allows you to control the amount of time for the instances to remain in a wait state\.
+   1. For **Heartbeat timeout**, specify the amount of time for instances to remain in a wait state when scaling out or scaling in before the hook times out\. The range is from `30` to `7200` seconds\. 
+**Note**  
+By default, the timeout is `3600` seconds \(one hour\)\. Setting a long timeout period provides more time for the custom action to complete\. If you finish before the timeout period ends, you can send the [complete\-lifecycle\-action](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/complete-lifecycle-action.html) command to allow the instance to proceed to the next state\. 
 
-   1. For **Default result**, specify the action that the Auto Scaling group takes when the lifecycle hook timeout elapses or if an unexpected failure occurs\.
+   1. For **Default result**, specify the action to take when the lifecycle hook timeout elapses or when an unexpected failure occurs\. You can choose to either *abandon* \(default\) or *continue*\.
+      + If the instance is launching, continue indicates that your actions were successful, and that Amazon EC2 Auto Scaling can put the instance into service\. Otherwise, abandon indicates that your custom actions were unsuccessful, and that Amazon EC2 Auto Scaling can terminate the instance\. 
+      + If the instance is terminating, both abandon and continue allow the instance to terminate\. However, abandon stops any remaining actions, such as other lifecycle hooks, and continue allows any other lifecycle hooks to complete\.
 
    1. \(Optional\) For **Notification metadata**, specify additional information that you want to include when Amazon EC2 Auto Scaling sends a message to the notification target\. 
 
@@ -49,23 +51,29 @@ Create and update lifecycle hooks using the [put\-lifecycle\-hook](https://docs.
 To perform an action on scale out, use the following command\.
 
 ```
-aws autoscaling put-lifecycle-hook --lifecycle-hook-name my-hook --auto-scaling-group-name my-asg \
+aws autoscaling put-lifecycle-hook --lifecycle-hook-name my-launch-hook  \
+  --auto-scaling-group-name my-asg \
   --lifecycle-transition autoscaling:EC2_INSTANCE_LAUNCHING
 ```
 
 To perform an action on scale in, use the following command instead\.
 
 ```
-aws autoscaling put-lifecycle-hook --lifecycle-hook-name my-hook --auto-scaling-group-name my-asg \
+aws autoscaling put-lifecycle-hook --lifecycle-hook-name my-termination-hook  \
+  --auto-scaling-group-name my-asg \
   --lifecycle-transition autoscaling:EC2_INSTANCE_TERMINATING
 ```
 
-To receive notifications using Amazon SNS or Amazon SQS, you must specify a notification target and an IAM role\. For more information, see [Configuring a notification target for lifecycle notifications](configuring-lifecycle-hook-notifications.md)\. 
+To receive notifications using Amazon SNS or Amazon SQS, add the `--notification-target-arn` and `--role-arn` options\.
 
-For example, add the following options to specify an SNS topic as the notification target\.
+The following example creates a lifecycle hook that specifies an SNS topic named `my-sns-topic` as the notification target\.
 
 ```
---notification-target-arn arn:aws:sns:region:123456789012:my-sns-topic --role-arn arn:aws:iam::123456789012:role/my-notification-role
+aws autoscaling put-lifecycle-hook --lifecycle-hook-name my-termination-hook  \
+  --auto-scaling-group-name my-asg \
+  --lifecycle-transition autoscaling:EC2_INSTANCE_TERMINATING \
+  --notification-target-arn arn:aws:sns:region:123456789012:my-sns-topic \
+  --role-arn arn:aws:iam::123456789012:role/my-notification-role
 ```
 
 The topic receives a test notification with the following key\-value pair\.
@@ -73,3 +81,14 @@ The topic receives a test notification with the following key\-value pair\.
 ```
 "Event": "autoscaling:TEST_NOTIFICATION"
 ```
+
+By default, the [put\-lifecycle\-hook](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/put-lifecycle-hook.html) command creates a lifecycle hook with a heartbeat timeout of `3600` seconds \(one hour\)\. 
+
+To change the heartbeat timeout for an existing lifecycle hook, add the `--heartbeat-timeout` option, as shown in the following example\.
+
+```
+aws autoscaling put-lifecycle-hook --lifecycle-hook-name my-termination-hook \
+  --auto-scaling-group-name my-asg --heartbeat-timeout 120
+```
+
+If an instance is already in a wait state, you can prevent the lifecycle hook from timing out by recording a heartbeat, using the [record\-lifecycle\-action\-heartbeat](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/record-lifecycle-action-heartbeat.html) CLI command\. This extends the timeout period by the timeout value specified when you created the lifecycle hook\. If you finish before the timeout period ends, you can send the [complete\-lifecycle\-action](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/complete-lifecycle-action.html) CLI command to allow the instance to proceed to the next state\. For more information and examples, see [Completing a lifecycle action](completing-lifecycle-hooks.md)\.

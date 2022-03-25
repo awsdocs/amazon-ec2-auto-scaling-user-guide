@@ -49,7 +49,7 @@ This sample policy gives users permissions to create, modify, and delete Auto Sc
   + [Allow users to create and use launch templates](#policy-example-launch-template)
 + [Required permissions to create a service\-linked role](#ec2-auto-scaling-slr-permissions)
   + [Control which service\-linked role can be passed \(using PassRole\)](#policy-example-pass-role)
-+ [Required permissions for the API](#ec2-auto-scaling-api-permissions)
++ [Required API permissions for Amazon EC2 Auto Scaling](#ec2-auto-scaling-api-permissions)
 
 ## Policy best practices<a name="security_iam_service-with-iam-policy-best-practices"></a>
 
@@ -409,7 +409,7 @@ The policy in this example gives users permissions to pass the `AWSServiceRoleFo
 }
 ```
 
-## Required permissions for the API<a name="ec2-auto-scaling-api-permissions"></a>
+## Required API permissions for Amazon EC2 Auto Scaling<a name="ec2-auto-scaling-api-permissions"></a>
 
 When calling the following actions from the Amazon EC2 Auto Scaling API, users must have permissions from Amazon EC2 and IAM to perform certain actions\. You specify the following actions in the `Action` element of an IAM policy statement\. 
 

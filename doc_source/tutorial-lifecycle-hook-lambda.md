@@ -8,7 +8,7 @@ The Lambda function also performs a callback to let the lifecycle of the instanc
 
 **Topics**
 + [Prerequisites](#lambda-hello-world-tutorial-prerequisites)
-+ [Step 1: Create an IAM role with permissions to complete lifecycle hooks](#lambda-create-iam-role)
++ [Step 1: Create an IAM role with permissions to complete lifecycle actions](#lambda-create-iam-role)
 + [Step 2: Create a Lambda function](#lambda-create-hello-world-function)
 + [Step 3: Create an EventBridge rule](#lambda-create-rule)
 + [Step 4: Add a lifecycle hook](#lambda-add-lifecycle-hook)
@@ -22,7 +22,7 @@ Before you begin this tutorial, create an Auto Scaling group, if you don't have 
 
 Note that all of the following procedures are for the new console\.
 
-## Step 1: Create an IAM role with permissions to complete lifecycle hooks<a name="lambda-create-iam-role"></a>
+## Step 1: Create an IAM role with permissions to complete lifecycle actions<a name="lambda-create-iam-role"></a>
 
 Before you create a Lambda function, you must first create an execution role and a permissions policy to allow Lambda to complete lifecycle hooks\.
 
@@ -155,6 +155,8 @@ Create an EventBridge rule to run your Lambda function\.
 1. To save the event pattern, choose **Save**\. 
 
 1. For **Select event bus**, choose **AWS default event bus**\. 
+**Important**  
+You must choose the default event bus to receive events from AWS services\.
 
 1. For **Target**, choose **Lambda function**\.
 

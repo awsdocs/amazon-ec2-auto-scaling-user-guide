@@ -4,6 +4,7 @@ Amazon EC2 Auto Scaling provides specific and descriptive errors to help you tro
 
 **Topics**
 + [Retrieving an error message from scaling activities](#RetrievingErrors)
++ [Additional troubleshooting resources](#additional-troubleshooting-resources)
 + [Troubleshooting Amazon EC2 Auto Scaling: EC2 instance launch failures](ts-as-instancelaunchfailure.md)
 + [Troubleshooting Amazon EC2 Auto Scaling: AMI issues](ts-as-ami.md)
 + [Troubleshooting Amazon EC2 Auto Scaling: Load balancer issues](ts-as-loadbalancer.md)
@@ -115,3 +116,28 @@ The following tables list the types of error messages and provide links to the t
 | Cannot find load balancer |  [Cannot find Load Balancer <your launch environment>\. Validating load balancer configuration failed\.](ts-as-loadbalancer.md#ts-as-loadbalancer-1)  | 
 | Instances in VPC |  [EC2 instance <instance ID> is not in VPC\. Updating load balancer configuration failed\.](ts-as-loadbalancer.md#ts-as-loadbalancer-3)  | 
 | No active load balancer |  [There is no ACTIVE Load Balancer named <load balancer name>\. Updating load balancer configuration failed\.](ts-as-loadbalancer.md#ts-as-loadbalancer-2)  | 
+
+## Additional troubleshooting resources<a name="additional-troubleshooting-resources"></a>
+
+The following pages provide additional information for troubleshooting issues with Amazon EC2 Auto Scaling\.
++  [Amazon EC2 Auto Scaling service quotas](as-account-limits.md) 
++  [Verifying a scaling activity for an Auto Scaling group](as-verify-scaling-activity.md) 
++  [Viewing monitoring graphs in the Amazon EC2 Auto Scaling console](viewing-monitoring-graphs.md) 
++  [Health checks for Auto Scaling instances](healthcheck.md) 
++  [Considerations and limitations](lifecycle-hooks.md#lifecycle-hook-considerations) \(lifecycle hooks\)
++  [Completing a lifecycle action](completing-lifecycle-hooks.md) \(lifecycle hooks\)
++  [Launching Auto Scaling instances in a VPC](asg-in-vpc.md) 
++  [Temporarily removing instances from your Auto Scaling group](as-enter-exit-standby.md) 
++  [Disabling a scaling policy for an Auto Scaling group](as-enable-disable-scaling-policy.md) 
++  [Suspending and resuming a process for an Auto Scaling group](as-suspend-resume-processes.md) 
++  [Controlling which Auto Scaling instances terminate during scale in](as-instance-termination.md) 
++  [Deleting your Auto Scaling infrastructure](as-process-shutdown.md) 
+
+The following AWS resources can also be of help:
++  [Amazon EC2 Auto Scaling topics in the AWS Knowledge Center](https://aws.amazon.com/premiumsupport/knowledge-center/#AWS_Auto_Scaling) 
++  [Amazon EC2 Auto Scaling questions on AWS re:Post](https://repost.aws/tags/TA5Ef3s6KtTiqT0mCRhR79ig/amazon-ec-2-auto-scaling)
++ [Amazon EC2 Auto Scaling Discussion Forums](https://forums.aws.amazon.com/forum.jspa?forumID=291)
++  [Amazon EC2 Auto Scaling posts in the AWS Compute Blog](http://aws.amazon.com/blogs/compute/category/compute/auto-scaling/) 
++  [Troubleshooting CloudFormation in the *AWS CloudFormation User Guide*](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/troubleshooting.html) 
+
+Troubleshooting often requires iterative query and discovery by an expert or from a community of helpers\. If you continue to experience issues after trying the suggestions on this page, contact AWS Support \(in the AWS Management Console, click **Support**, **Support Center**\) or ask a question on [AWS re:Post](https://repost.aws/) using the **Amazon EC2 Auto Scaling** tag\.
