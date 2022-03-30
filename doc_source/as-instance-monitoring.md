@@ -116,7 +116,7 @@ The `AWS/AutoScaling` namespace includes the following metrics for Auto Scaling 
 |  GroupAndWarmPoolDesiredCapacity  |  The desired capacity of the Auto Scaling group and the warm pool combined\. **Reporting criteria**: Reported if metrics collection is enabled\.  | 
 |  GroupAndWarmPoolTotalCapacity  |  The total capacity of the Auto Scaling group and the warm pool combined\. This includes instances that are running, stopped, pending, terminating, or in service\.  **Reporting criteria**: Reported if metrics collection is enabled\.  | 
 
-### Dimensions for Auto Scaling group metrics<a name="as-group-metric-dimensions"></a>
+### Auto Scaling group dimensions<a name="as-group-metric-dimensions"></a>
 
 | Dimension | Description | 
 | --- | --- | 
