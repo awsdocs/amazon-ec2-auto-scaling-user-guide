@@ -118,7 +118,10 @@ The `AWS/AutoScaling` namespace includes the following metrics for Auto Scaling 
 
 ### Dimensions for Auto Scaling group metrics<a name="as-group-metric-dimensions"></a>
 
-To filter the metrics for your Auto Scaling group by group name, use the `AutoScalingGroupName` dimension\.
+| Dimension | Description | 
+| --- | --- | 
+| AutoScalingGroupName | Filter metric for a specific Auto Scaling group by name\. |
+
 
 ## Working with Amazon CloudWatch<a name="cloudwatch-working"></a>
 
