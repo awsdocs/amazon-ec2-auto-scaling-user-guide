@@ -14,10 +14,10 @@ Specific IAM permissions and an Amazon EC2 Auto Scaling service\-linked role are
 + [Access Control Lists \(ACLs\)](#security_iam_service-with-iam-acls)
 + [Authorization based on Amazon EC2 Auto Scaling tags](#security_iam_service-with-iam-tags)
 + [Amazon EC2 Auto Scaling IAM roles](#security_iam_service-with-iam-roles)
-  + [Using temporary credentials with Amazon EC2 Auto Scaling](#security_iam_service-with-iam-roles-tempcreds)
+  + [Use temporary credentials with Amazon EC2 Auto Scaling](#security_iam_service-with-iam-roles-tempcreds)
   + [Service\-linked roles](#security_iam_service-with-iam-roles-service-linked)
   + [Service roles](#security_iam_service-with-iam-roles-service)
-  + [Choosing an IAM role in Amazon EC2 Auto Scaling](#security_iam_service-with-iam-roles-choose)
+  + [Choose an IAM role in Amazon EC2 Auto Scaling](#security_iam_service-with-iam-roles-choose)
 + [Learn more about IAM permission policies](#auto-scaling-resources-about-iam)
 
 ## Amazon EC2 Auto Scaling identity\-based policies<a name="security_iam_service-with-iam-id-based-policies"></a>
@@ -110,6 +110,7 @@ The following Amazon EC2 Auto Scaling actions do not support resource\-level per
 + `DescribeScheduledActions`
 + `DescribeTags`
 + `DescribeTerminationPolicyTypes`
++ `DescribeWarmPool`
 
 To learn with which actions you can specify the ARN of each resource, see [Actions, resources, and condition keys for Amazon EC2 Auto Scaling](https://docs.aws.amazon.com/IAM/latest/UserGuide/list_amazonec2autoscaling.html) in the *IAM User Guide*\.
 
@@ -167,13 +168,13 @@ To use tags with IAM policies, you provide tag information in the [condition ele
 
 To see examples of identity\-based policies based on tags, see [Amazon EC2 Auto Scaling identity\-based policy examples](security_iam_id-based-policy-examples.md)\. 
 
-For more information, see [Tagging Auto Scaling groups and instances](autoscaling-tagging.md)\.
+For more information, see [Tag Auto Scaling groups and instances](ec2-auto-scaling-tagging.md)\.
 
 ## Amazon EC2 Auto Scaling IAM roles<a name="security_iam_service-with-iam-roles"></a>
 
 An [IAM role](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles.html) is an entity within your AWS account that has specific permissions\.
 
-### Using temporary credentials with Amazon EC2 Auto Scaling<a name="security_iam_service-with-iam-roles-tempcreds"></a>
+### Use temporary credentials with Amazon EC2 Auto Scaling<a name="security_iam_service-with-iam-roles-tempcreds"></a>
 
 You can use temporary credentials to sign in with federation, assume an IAM role, or to assume a cross\-account role\. You obtain temporary security credentials by calling AWS STS API operations such as [AssumeRole](https://docs.aws.amazon.com/STS/latest/APIReference/API_AssumeRole.html) or [GetFederationToken](https://docs.aws.amazon.com/STS/latest/APIReference/API_GetFederationToken.html)\. 
 
@@ -191,7 +192,7 @@ This feature allows a service to assume a [service role](https://docs.aws.amazon
 
 Amazon EC2 Auto Scaling supports service roles for lifecycle hook notifications\. For more information, see [Amazon EC2 Auto Scaling lifecycle hooks](lifecycle-hooks.md)\.
 
-### Choosing an IAM role in Amazon EC2 Auto Scaling<a name="security_iam_service-with-iam-roles-choose"></a>
+### Choose an IAM role in Amazon EC2 Auto Scaling<a name="security_iam_service-with-iam-roles-choose"></a>
 
 If you have previously created an IAM role that your applications running on Amazon EC2 can assume, you can choose this role when you create a launch template or launch configuration\. Amazon EC2 Auto Scaling provides you with a list of roles to choose from\. When creating these roles, it's important to associate least privilege IAM policies that restrict access to the specific API calls that the application requires\. For more information, see [IAM role for applications that run on Amazon EC2 instances](us-iam-role.md)\. 
 

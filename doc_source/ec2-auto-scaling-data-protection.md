@@ -12,9 +12,9 @@ For data protection purposes, we recommend that you protect AWS account credenti
 
 We strongly recommend that you never put confidential or sensitive information, such as your customers' email addresses, into tags or free\-form fields such as a **Name** field\. This includes when you work with Amazon EC2 Auto Scaling or other AWS services using the console, API, AWS CLI, or AWS SDKs\. Any data that you enter into tags or free\-form fields used for names may be used for billing or diagnostic logs\. If you provide a URL to an external server, we strongly recommend that you do not include credentials information in the URL to validate your request to that server\.
 
-## Using AWS KMS keys to encrypt Amazon EBS volumes<a name="encryption"></a>
+## Use AWS KMS keys to encrypt Amazon EBS volumes<a name="encryption"></a>
 
-You can configure your Auto Scaling group to encrypt Amazon EBS volume data stored in the cloud with AWS KMS keys\. Amazon EC2 Auto Scaling supports AWS managed and customer managed keys to encrypt your data\. Note that the `KmsKeyId` option to specify a customer managed key is not available when you use a launch configuration\. To specify your customer managed key, use a launch template instead\. For more information, see [Creating a launch template for an Auto Scaling group](create-launch-template.md)\. 
+You can configure your Auto Scaling group to encrypt Amazon EBS volume data stored in the cloud with AWS KMS keys\. Amazon EC2 Auto Scaling supports AWS managed and customer managed keys to encrypt your data\. Note that the `KmsKeyId` option to specify a customer managed key is not available when you use a launch configuration\. To specify your customer managed key, use a launch template instead\. For more information, see [Create a launch template for an Auto Scaling group](create-launch-template.md)\. 
 
 You can also configure a customer managed key in your EBS\-backed AMI before setting up the launch template or launch configuration, or use encryption by default to enforce the encryption of the new EBS volumes and snapshot copies that you create\. 
 

@@ -1,8 +1,8 @@
-# Creating EventBridge rules for instance refresh events<a name="monitor-events-eventbridge-sns"></a>
+# Create EventBridge rules for instance refresh events<a name="monitor-events-eventbridge-sns"></a>
 
 This section shows you how to create an Amazon EventBridge rule that notifies you whenever a checkpoint is reached during an instance refresh\. The procedure for setting up email notifications through Amazon SNS is included\. To use Amazon SNS to send email notifications, you must first create a *topic* and then subscribe your email addresses to the topic\.
 
-For more information about working with EventBridge, see [Using Amazon EC2 Auto Scaling with EventBridge](cloud-watch-events.md)\.
+For more information about working with EventBridge, see [Use EventBridge to handle Auto Scaling events](automating-ec2-auto-scaling-with-eventbridge.md)\.
 
 ## Create an Amazon SNS topic<a name="eventbridge-sns-create-topic"></a>
 

@@ -4,9 +4,15 @@ This section shows you how to scale your Auto Scaling group in response to chang
 
 There are some scenarios where you might think about scaling in response to activity in an Amazon SQS queue\. For example, suppose that you have a web app that lets users upload images and use them online\. In this scenario, each image requires resizing and encoding before it can be published\. The app runs on EC2 instances in an Auto Scaling group, and it's configured to handle your typical upload rates\. Unhealthy instances are terminated and replaced to maintain current instance levels at all times\. The app places the raw bitmap data of the images in an SQS queue for processing\. It processes the images and then publishes the processed images where they can be viewed by users\. The architecture for this scenario works well if the number of image uploads doesn't vary over time\. But if the number of uploads changes over time, you might consider using dynamic scaling to scale the capacity of your Auto Scaling group\.
 
-## Using target tracking with the right metric<a name="scale-sqs-queue-custom-metric"></a>
+**Topics**
++ [Use target tracking with the right metric](#scale-sqs-queue-custom-metric)
++ [Limitations and prerequisites](#scale-sqs-queue-limitations)
++ [Configure scaling based on Amazon SQS](#scale-sqs-queue-cli)
++ [Amazon SQS and instance scale\-in protection](#scale-sqs-queue-scale-in-protection)
 
-If you use a target tracking scaling policy based on a custom Amazon SQS queue metric, dynamic scaling can adjust to the demand curve of your application more effectively\. For more information about choosing metrics for target tracking, see [Choosing metrics](as-scaling-target-tracking.md#available-metrics)\.
+## Use target tracking with the right metric<a name="scale-sqs-queue-custom-metric"></a>
+
+If you use a target tracking scaling policy based on a custom Amazon SQS queue metric, dynamic scaling can adjust to the demand curve of your application more effectively\. For more information about choosing metrics for target tracking, see [Choose metrics](as-scaling-target-tracking.md#available-metrics)\.
 
 The issue with using a CloudWatch Amazon SQS metric like `ApproximateNumberOfMessagesVisible` for target tracking is that the number of messages in the queue might not change proportionally to the size of the Auto Scaling group that processes messages from the queue\. That's because the number of messages in your SQS queue does not solely define the number of instances needed\. The number of instances in your Auto Scaling group can be driven by multiple factors, including how long it takes to process a message and the acceptable amount of latency \(queue delay\)\. 
 
@@ -162,4 +168,4 @@ while (true)
 }
 ```
 
-For more information, see [Using instance scale\-in protection](ec2-auto-scaling-instance-protection.md)\.
+For more information, see [Use instance scale\-in protection](ec2-auto-scaling-instance-protection.md)\.

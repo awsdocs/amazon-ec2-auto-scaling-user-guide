@@ -128,7 +128,7 @@ The following example specifies that users can't call the `ec2:RunInstances` act
 ```
 
 **Tip**  
-To force replacement Auto Scaling instances to launch that use a new launch template or a new version of a launch template with the instance metadata options configured, you can terminate existing instances in the group\. Amazon EC2 Auto Scaling immediately starts launching new instances to replace the instances that you terminated\. Alternatively, you can start an instance refresh to do a rolling update of your group\. For more information, see [Replacing Auto Scaling instances based on an instance refresh](asg-instance-refresh.md)\. 
+To force replacement Auto Scaling instances to launch that use a new launch template or a new version of a launch template with the instance metadata options configured, you can terminate existing instances in the group\. Amazon EC2 Auto Scaling immediately starts launching new instances to replace the instances that you terminated\. Alternatively, you can start an instance refresh to do a rolling update of your group\. For more information, see [Replace Auto Scaling instances based on an instance refresh](asg-instance-refresh.md)\. 
 
 ## Restrict access to Amazon EC2 resources<a name="policy-example-launch-template-ex4"></a>
 

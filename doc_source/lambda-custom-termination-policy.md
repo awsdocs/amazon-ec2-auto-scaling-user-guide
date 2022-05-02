@@ -1,6 +1,6 @@
-# Creating a custom termination policy with Lambda<a name="lambda-custom-termination-policy"></a>
+# Create a custom termination policy with Lambda<a name="lambda-custom-termination-policy"></a>
 
-Amazon EC2 Auto Scaling uses termination policies to prioritize which instances to terminate first when decreasing the size of your Auto Scaling group \(referred to as *scaling in*\)\. Your Auto Scaling group uses a default termination policy, but you can optionally choose or create your own termination policies\. For more information about choosing a predefined termination policy, see [Working with Amazon EC2 Auto Scaling termination policies](ec2-auto-scaling-termination-policies.md)\.
+Amazon EC2 Auto Scaling uses termination policies to prioritize which instances to terminate first when decreasing the size of your Auto Scaling group \(referred to as *scaling in*\)\. Your Auto Scaling group uses a default termination policy, but you can optionally choose or create your own termination policies\. For more information about choosing a predefined termination policy, see [Work with Amazon EC2 Auto Scaling termination policies](ec2-auto-scaling-termination-policies.md)\.
 
 In this topic, you learn how to create a custom termination policy using an AWS Lambda function that Amazon EC2 Auto Scaling invokes in response to certain events\. The Lambda function that you create processes the information in the input data sent by Amazon EC2 Auto Scaling and returns a list of instances that are ready to terminate\.
 
@@ -144,7 +144,7 @@ Start by creating the Lambda function, so that you can specify its Amazon Resour
 
    1. Choose **Save**\. 
 
-1. After you have followed these instructions, continue on to specify the ARN of your function in the termination policies for your Auto Scaling group as a next step\. For more information, see [Using different termination policies \(console\)](ec2-auto-scaling-termination-policies.md#custom-termination-policy-console)\. 
+1. After you have followed these instructions, continue on to specify the ARN of your function in the termination policies for your Auto Scaling group as a next step\. For more information, see [Use different termination policies \(console\)](ec2-auto-scaling-termination-policies.md#custom-termination-policy-console)\. 
 
 ## Limitations<a name="lambda-custom-termination-policy-limitations"></a>
 + You can only specify one Lambda function in the termination policies for an Auto Scaling group\. If there are multiple termination policies specified, the Lambda function must be specified first\.

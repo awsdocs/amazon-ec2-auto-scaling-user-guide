@@ -9,10 +9,10 @@ Amazon EC2 Auto Scaling does not need additional authorization to use the defaul
 
 **Contents**
 + [Overview](#overview)
-+ [Configuring key policies](#configuring-key-policies)
++ [Configure key policies](#configuring-key-policies)
 + [Example 1: Key policy sections that allow access to the customer managed key](#policy-example-cmk-access)
 + [Example 2: Key policy sections that allow cross\-account access to the customer managed key](#policy-example-cmk-cross-account-access)
-+ [Editing key policies in the AWS KMS console](#eding-key-policies-console)
++ [Edit key policies in the AWS KMS console](#eding-key-policies-console)
 
 ## Overview<a name="overview"></a>
 
@@ -24,7 +24,7 @@ The following AWS KMS keys can be used for Amazon EBS encryption when Amazon EC2
 
 You configure customer managed keys when creating encrypted snapshots or a launch template that specifies encrypted volumes, or enabling encryption by default\.
 
-## Configuring key policies<a name="configuring-key-policies"></a>
+## Configure key policies<a name="configuring-key-policies"></a>
 
 Your KMS keys must have a key policy that allows Amazon EC2 Auto Scaling to launch instances with Amazon EBS volumes encrypted with a customer managed key\. 
 
@@ -158,9 +158,9 @@ For this command to succeed, the user making the request must have permissions f
 }
 ```
 
-After you grant these permissions, everything should work as expected\. For more information, see [this forum post](https://forums.aws.amazon.com/thread.jspa?threadID=277523)\. 
+After you grant these permissions, everything should work as expected\.
 
-## Editing key policies in the AWS KMS console<a name="eding-key-policies-console"></a>
+## Edit key policies in the AWS KMS console<a name="eding-key-policies-console"></a>
 
 The examples in the previous sections show only how to add statements to a key policy, which is just one way of changing a key policy\. The easiest way to change a key policy is to use the AWS KMS console's default view for key policies and make an IAM entity \(user or role\) one of the *key users* for the appropriate key policy\. For more information, see [Using the AWS Management Console default view](https://docs.aws.amazon.com/kms/latest/developerguide/key-policy-modifying.html#key-policy-modifying-how-to-console-default-view) in the *AWS Key Management Service Developer Guide*\. 
 

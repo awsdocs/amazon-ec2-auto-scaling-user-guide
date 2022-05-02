@@ -1,7 +1,7 @@
-# Maintaining a fixed number of instances in your Auto Scaling group<a name="as-maintain-instance-levels"></a>
+# Maintain a fixed number of instances in your Auto Scaling group<a name="as-maintain-instance-levels"></a>
 
 Amazon EC2 Auto Scaling lets you set up an Auto Scaling group to maintain a fixed size\. You can then choose whether to adjust the desired capacity of the group or manually add or remove Amazon EC2 instances from the group to handle traffic changes to your application\. 
 
 If a fixed number of instances is needed, this can be achieved by setting the same value for minimum, maximum, and desired capacity\. After you have created your Auto Scaling group, the group starts by launching enough instances to meet its desired capacity\. If there are no other scaling conditions attached to the Auto Scaling group, the group maintains this number of running instances at all times\. 
 
-Your Auto Scaling group continues to maintain a fixed number of instances even if an instance becomes unhealthy\. Amazon EC2 Auto Scaling monitors the health of each Auto Scaling instance\. When it finds that an instance has become unhealthy, it terminates that instance and launches a new one\. Instances can fail a health check because of a variety of reasons\. For more information, see [Health checks for Auto Scaling instances](healthcheck.md)\. 
+Your Auto Scaling group continues to maintain a fixed number of instances even if an instance becomes unhealthy\. Amazon EC2 Auto Scaling monitors the health of each Auto Scaling instance\. When it finds that an instance has become unhealthy, it terminates that instance and launches a new one\. Instances can fail a health check because of a variety of reasons\. For more information, see [Health checks for Auto Scaling instances](ec2-auto-scaling-health-checks.md)\. 

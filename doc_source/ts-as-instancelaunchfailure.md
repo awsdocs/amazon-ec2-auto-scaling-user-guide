@@ -1,8 +1,8 @@
-# Troubleshooting Amazon EC2 Auto Scaling: EC2 instance launch failures<a name="ts-as-instancelaunchfailure"></a>
+# Troubleshoot Amazon EC2 Auto Scaling: EC2 instance launch failures<a name="ts-as-instancelaunchfailure"></a>
 
 This page provides information about your EC2 instances that fail to launch, potential causes, and the steps you can take to resolve the issues\.
 
-To retrieve an error message, see [Retrieving an error message from scaling activities](CHAP_Troubleshooting.md#RetrievingErrors)\.
+To retrieve an error message, see [Retrieve an error message from scaling activities](CHAP_Troubleshooting.md#RetrievingErrors)\.
 
 When your EC2 instances fail to launch, you might get one or more of the following error messages:
 

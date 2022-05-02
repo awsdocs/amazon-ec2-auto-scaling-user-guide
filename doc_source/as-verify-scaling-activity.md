@@ -1,8 +1,11 @@
-# Verifying a scaling activity for an Auto Scaling group<a name="as-verify-scaling-activity"></a>
+# Verify a scaling activity for an Auto Scaling group<a name="as-verify-scaling-activity"></a>
 
 In the Amazon EC2 Auto Scaling section of the Amazon EC2 console, the **Activity history** for an Auto Scaling group lets you view the current status of a scaling activity that is currently in progress\. When the scaling activity is finished, you can see whether it succeeds or not\. This is particularly useful when you are creating Auto Scaling groups or you are adding scaling conditions to existing groups\.
 
-When you add a target tracking, step, or simple scaling policy to your Auto Scaling group, Amazon EC2 Auto Scaling immediately starts evaluating the policy against the metric\. The metric alarm goes to ALARM state when the metric breaches the threshold for a specified number of evaluation periods\. This means that a scaling policy could result in a scaling activity soon after it's created\. After Amazon EC2 Auto Scaling adjusts the desired capacity in response to a scaling policy, you can verify the scaling activity in your account\. If you want to receive email notification from Amazon EC2 Auto Scaling informing you about a scaling activity, follow the instructions in [Getting Amazon SNS notifications when your Auto Scaling group scales](ASGettingNotifications.md)\.
+When you add a target tracking, step, or simple scaling policy to your Auto Scaling group, Amazon EC2 Auto Scaling immediately starts evaluating the policy against the metric\. The metric alarm goes to ALARM state when the metric breaches the threshold for a specified number of evaluation periods\. This means that a scaling policy could result in a scaling activity soon after it's created\. After Amazon EC2 Auto Scaling adjusts the desired capacity in response to a scaling policy, you can verify the scaling activity in your account\. If you want to receive email notification from Amazon EC2 Auto Scaling informing you about a scaling activity, follow the instructions in [Get Amazon SNS notifications when your Auto Scaling group scales](ec2-auto-scaling-sns-notifications.md)\.
+
+**Tip**  
+In the following procedure, you look at the **Activity history** and **Instances** sections for the Auto Scaling group\. In both, the named columns should already be displayed\. To display hidden columns or change the number of rows shown, choose the gear icon on the top right corner of each section to open the preferences modal, update the settings as needed, and choose **Confirm**\.
 
 **To view the scaling activities for an Auto Scaling group \(console\)**
 
@@ -10,15 +13,13 @@ When you add a target tracking, step, or simple scaling policy to your Auto Scal
 
 1. Select the check box next to the Auto Scaling group\. 
 
-   A split pane opens up in the bottom part of the **Auto Scaling groups** page, showing information about the group that's selected\. 
+   A split pane opens up in the bottom of the **Auto Scaling groups** page\.
 
 1. On the **Activity** tab, under **Activity history**, the **Status** column shows whether your Auto Scaling group has successfully launched or terminated instances, or whether the scaling activity is still in progress\.
 
-   If you have a lot of scaling activities, you can choose the **>** icon at the top edge of the activity history to see the next page of scaling activities\. You can also choose the gear icon and increase the amount of results shown per page\.
+1. \(Optional\) If you have a lot of scaling activities, you can choose the **>** icon at the top edge of the activity history to see the next page of scaling activities\.
 
-1. On the **Instance management** tab, under **Instances**, the **Lifecycle** column contains the state of your instances\. After the instance starts and any lifecycle hooks have finished, its lifecycle state changes to `InService`\.
-
-   The **Health status** column shows the result of the EC2 instance health check on your instance\.
+1. On the **Instance management** tab, under **Instances**, the **Lifecycle** column contains the state of your instances\. After the instance starts and any lifecycle hooks have finished, its lifecycle state changes to `InService`\. The **Health status** column shows the result of the EC2 instance health check on your instance\.
 
 **To view the scaling activities for an Auto Scaling group \(AWS CLI\)**  
 Use the following [describe\-scaling\-activities](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/describe-scaling-activities.html) command\. 
@@ -51,4 +52,4 @@ Scaling activities are ordered by start time\. Activities still in progress are 
 }
 ```
 
-For information about the types of errors that you may encounter and how to handle them, see [Troubleshooting Amazon EC2 Auto Scaling](CHAP_Troubleshooting.md)\.
+For information about the types of errors that you may encounter and how to handle them, see [Troubleshoot Amazon EC2 Auto Scaling](CHAP_Troubleshooting.md)\.

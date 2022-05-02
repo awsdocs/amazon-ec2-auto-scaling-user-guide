@@ -1,4 +1,4 @@
-# Replacing Auto Scaling instances<a name="ec2-auto-scaling-group-replacing-instances"></a>
+# Replace Auto Scaling instances<a name="ec2-auto-scaling-group-replacing-instances"></a>
 
 Amazon EC2 Auto Scaling offers capabilities that let you replace instances after you update or modify your Auto Scaling group\. Amazon EC2 Auto Scaling also helps you streamline updates by giving you the option of including them in the same operation that replaces the instances\.
 
@@ -11,8 +11,9 @@ This section includes information to help you do the following:
 + Limit the lifetime of instances to ensure consistent software versions and instance configurations across the Auto Scaling group\.
 
 **Topics**
-+ [Replacing instances based on an instance refresh](asg-instance-refresh.md)
++ [Replace instances based on an instance refresh](asg-instance-refresh.md)
++ [Check instance refresh status](check-status-instance-refresh.md)
 + [AWS CLI examples that enable skip matching](asg-instance-refresh-skip-matching.md)
-+ [Adding checkpoints to an instance refresh](asg-adding-checkpoints-instance-refresh.md)
-+ [Creating EventBridge rules for instance refresh events](monitor-events-eventbridge-sns.md)
-+ [Replacing instances based on maximum instance lifetime](asg-max-instance-lifetime.md)
++ [Add checkpoints to an instance refresh](asg-adding-checkpoints-instance-refresh.md)
++ [Create EventBridge rules for instance refresh events](monitor-events-eventbridge-sns.md)
++ [Replace instances based on maximum instance lifetime](asg-max-instance-lifetime.md)

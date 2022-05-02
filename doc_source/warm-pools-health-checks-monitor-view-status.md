@@ -1,10 +1,10 @@
-# Viewing health check status and the reason for health check failures<a name="warm-pools-health-checks-monitor-view-status"></a>
+# View health check status and the reason for health check failures<a name="warm-pools-health-checks-monitor-view-status"></a>
 
 Health checks allow Amazon EC2 Auto Scaling to determine when an instance is unhealthy and should be terminated\. For warm pool instances kept in a `Stopped` state, it employs the knowledge that Amazon EBS has of a `Stopped` instance's availability to identify unhealthy instances\. It does this by calling the `DescribeVolumeStatus` API to determine the status of the EBS volume that's attached to the instance\. For warm pool instances kept in a `Running` state, it relies on EC2 status checks to determine instance health\. While there is no health check grace period for warm pool instances, Amazon EC2 Auto Scaling doesn't start checking instance health until the lifecycle hook finishes\. 
 
-When an instance is found to be unhealthy, Amazon EC2 Auto Scaling automatically deletes the unhealthy instance and creates a new one to replace it\. Instances are usually terminated within a few minutes after failing their health check\. For more information, see [Replacing unhealthy instances](healthcheck.md#replace-unhealthy-instance)\.
+When an instance is found to be unhealthy, Amazon EC2 Auto Scaling automatically deletes the unhealthy instance and creates a new one to replace it\. Instances are usually terminated within a few minutes after failing their health check\. For more information, see [Replace unhealthy instances](ec2-auto-scaling-health-checks.md#replace-unhealthy-instance)\.
 
-Custom health checks are also supported\. This can be helpful if you have your own health check system that can detect an instance's health and send this information to Amazon EC2 Auto Scaling\. For more information, see [Using custom health checks](healthcheck.md#as-configure-healthcheck)\.
+Custom health checks are also supported\. This can be helpful if you have your own health check system that can detect an instance's health and send this information to Amazon EC2 Auto Scaling\. For more information, see [Custom health detection tasks](ec2-auto-scaling-health-checks.md#as-configure-healthcheck)\.
 
 On the Amazon EC2 Auto Scaling console, you can view the status \(healthy or unhealthy\) of your warm pool instances\. You can also view their health status using the AWS CLI or one of the SDKs\. 
 
@@ -14,7 +14,7 @@ On the Amazon EC2 Auto Scaling console, you can view the status \(healthy or unh
 
 1. Select the check box next to the Auto Scaling group\. 
 
-   A split pane opens up in the bottom part of the **Auto Scaling groups** page, showing information about the group that's selected\. 
+   A split pane opens up in the bottom of the **Auto Scaling groups** page\. 
 
 1. On the **Instance management** tab, under **Warm pool instances**, the **Lifecycle** column contains the state of your instances\.
 
@@ -28,7 +28,7 @@ New instances start healthy\. Until the lifecycle hook is finished, an instance'
 
 1. Select the check box next to the Auto Scaling group\. 
 
-   A split pane opens up in the bottom part of the **Auto Scaling groups** page, showing information about the group that's selected\. 
+   A split pane opens up in the bottom of the **Auto Scaling groups** page\. 
 
 1. On the **Activity** tab, under **Activity history**, the **Status** column shows whether your Auto Scaling group has successfully launched or terminated instances\.
 

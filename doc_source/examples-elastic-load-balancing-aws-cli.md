@@ -3,16 +3,16 @@
 Use the AWS CLI to attach and detach load balancers, add Elastic Load Balancing health checks, and update Availability Zones\.
 
 **Topics**
-+ [Attaching a load balancer target group](#example-attach-load-balancer-target-group)
-+ [Describing load balancer target groups](#example-describe-load-balancer-target-groups)
-+ [Detaching a load balancer target group](#example-detach-load-balancer-target-group)
-+ [Attaching a Classic Load Balancer](#example-attach-classic-load-balancer)
-+ [Describing Classic Load Balancers](#example-describe-load-balancers)
-+ [Detaching a Classic Load Balancer](#example-detach-classic-load-balancer)
-+ [Adding Elastic Load Balancing health checks](#example-add-elb-healthcheck)
-+ [Updating Availability Zones](#example-specify-availability-zones)
++ [Attach a load balancer target group](#example-attach-load-balancer-target-group)
++ [Describe load balancer target groups](#example-describe-load-balancer-target-groups)
++ [Detach a load balancer target group](#example-detach-load-balancer-target-group)
++ [Attach a Classic Load Balancer](#example-attach-classic-load-balancer)
++ [Describe Classic Load Balancers](#example-describe-load-balancers)
++ [Detach a Classic Load Balancer](#example-detach-classic-load-balancer)
++ [Add Elastic Load Balancing health checks](#example-add-elb-healthcheck)
++ [Update Availability Zones](#example-specify-availability-zones)
 
-## Attaching a load balancer target group<a name="example-attach-load-balancer-target-group"></a>
+## Attach a load balancer target group<a name="example-attach-load-balancer-target-group"></a>
 
 The following [create\-auto\-scaling\-group](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/create-auto-scaling-group.html) command creates an Auto Scaling group with an attached target group\. Specify the Amazon Resource Name \(ARN\) of a target group for an Application Load Balancer, Network Load Balancer, or Gateway Load Balancer\.
 
@@ -31,7 +31,7 @@ aws autoscaling attach-load-balancer-target-groups --auto-scaling-group-name my-
   --target-group-arns "arn:aws:elasticloadbalancing:region:123456789012:targetgroup/my-targets/1234567890123456"
 ```
 
-## Describing load balancer target groups<a name="example-describe-load-balancer-target-groups"></a>
+## Describe load balancer target groups<a name="example-describe-load-balancer-target-groups"></a>
 
 To view the target groups associated with an Auto Scaling group, use the [describe\-load\-balancer\-target\-groups](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/describe-load-balancer-target-groups.html) command\. The following example lists the target groups for *my\-asg*\. 
 
@@ -39,9 +39,9 @@ To view the target groups associated with an Auto Scaling group, use the [descri
 aws autoscaling describe-load-balancer-target-groups --auto-scaling-group-name my-asg
 ```
 
-For an explanation of the `State` field in the output, see the [Understand load balancer status](attach-load-balancer-asg.md#load-balancer-status) section in a previous topic\.
+For an explanation of the `State` field in the output, see the [Understand the attachment status of your load balancer](load-balancer-status.md) section in a previous topic\.
 
-## Detaching a load balancer target group<a name="example-detach-load-balancer-target-group"></a>
+## Detach a load balancer target group<a name="example-detach-load-balancer-target-group"></a>
 
 The following [detach\-load\-balancer\-target\-groups](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/detach-load-balancer-target-groups.html) command detaches a target group from your Auto Scaling group when you no longer need it\. 
 
@@ -50,7 +50,7 @@ aws autoscaling detach-load-balancer-target-groups --auto-scaling-group-name my-
   --target-group-arns "arn:aws:elasticloadbalancing:region:123456789012:targetgroup/my-targets/1234567890123456"
 ```
 
-## Attaching a Classic Load Balancer<a name="example-attach-classic-load-balancer"></a>
+## Attach a Classic Load Balancer<a name="example-attach-classic-load-balancer"></a>
 
 The following [create\-auto\-scaling\-group](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/create-auto-scaling-group.html) command creates an Auto Scaling group with an attached Classic Load Balancer\.
 
@@ -69,7 +69,7 @@ aws autoscaling attach-load-balancers --auto-scaling-group-name my-asg \
   --load-balancer-names my-lb
 ```
 
-## Describing Classic Load Balancers<a name="example-describe-load-balancers"></a>
+## Describe Classic Load Balancers<a name="example-describe-load-balancers"></a>
 
 To view the Classic Load Balancers associated with an Auto Scaling group, use the [describe\-load\-balancers](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/describe-load-balancers.html) command\. The following example lists the Classic Load Balancers for *my\-asg*\. 
 
@@ -77,9 +77,9 @@ To view the Classic Load Balancers associated with an Auto Scaling group, use th
 aws autoscaling describe-load-balancers --auto-scaling-group-name my-asg
 ```
 
-For an explanation of the `State` field in the output, see [Understand load balancer status](attach-load-balancer-asg.md#load-balancer-status)\.
+For an explanation of the `State` field in the output, see [Understand the attachment status of your load balancer](load-balancer-status.md)\.
 
-## Detaching a Classic Load Balancer<a name="example-detach-classic-load-balancer"></a>
+## Detach a Classic Load Balancer<a name="example-detach-classic-load-balancer"></a>
 
 The following [detach\-load\-balancers](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/detach-load-balancers.html) command detaches a Classic Load Balancer from your Auto Scaling group when you no longer need it\.
 
@@ -88,7 +88,7 @@ aws autoscaling detach-load-balancers --auto-scaling-group-name my-asg \
   --load-balancer-names my-lb
 ```
 
-## Adding Elastic Load Balancing health checks<a name="example-add-elb-healthcheck"></a>
+## Add Elastic Load Balancing health checks<a name="example-add-elb-healthcheck"></a>
 
 To add Elastic Load Balancing health checks to an Auto Scaling group, run the following [update\-auto\-scaling\-group](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/update-auto-scaling-group.html) command and specify `ELB` as the value for the `--health-check-type` option\.
 
@@ -97,7 +97,7 @@ aws autoscaling update-auto-scaling-group --auto-scaling-group-name my-lb-asg \
   --health-check-type ELB
 ```
 
-To update the health check grace period, use the `--health-check-grace-period` option\. New instances often need time for a brief warm\-up before they can pass a health check\. If the grace period doesn't provide enough warm\-up time, the instances might not appear ready to serve traffic\. Amazon EC2 Auto Scaling might consider those instances unhealthy and replace them\. For more information, see [Health check grace period](healthcheck.md#health-check-grace-period)\.
+To update the health check grace period, use the `--health-check-grace-period` option\. New instances often need time for a brief warm\-up before they can pass a health check\. If the grace period doesn't provide enough warm\-up time, the instances might not appear ready to serve traffic\. Amazon EC2 Auto Scaling might consider those instances unhealthy and replace them\. For more information, see [Health check grace period](ec2-auto-scaling-health-checks.md#health-check-grace-period)\.
 
 The following [update\-auto\-scaling\-group](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/update-auto-scaling-group.html) command adds Elastic Load Balancing health checks and specifies a grace period of 300 seconds\.
 
@@ -106,7 +106,7 @@ aws autoscaling update-auto-scaling-group --auto-scaling-group-name my-lb-asg \
   --health-check-type ELB --health-check-grace-period 300
 ```
 
-## Updating Availability Zones<a name="example-specify-availability-zones"></a>
+## Update Availability Zones<a name="example-specify-availability-zones"></a>
 
 The commands that you use depend on whether your load balancer is an Application Load Balancer or Network Load Balancer, a Classic Load Balancer in a VPC, or a Classic Load Balancer in EC2\-Classic\. You can update the subnets and Availability Zones for your load balancer only if your load balancer supports it\. For more information, see [Limitations](as-add-availability-zone.md#availability-zone-limitations)\.
 

@@ -1,4 +1,4 @@
-# Getting Amazon SNS notifications when your Auto Scaling group scales<a name="ASGettingNotifications"></a>
+# Get Amazon SNS notifications when your Auto Scaling group scales<a name="ec2-auto-scaling-sns-notifications"></a>
 
 You can be notified when Amazon EC2 Auto Scaling is launching or terminating the EC2 instances in your Auto Scaling group\. You manage notifications using Amazon Simple Notification Service \(Amazon SNS\)\. 
 
@@ -8,11 +8,11 @@ For example, if you configure your Auto Scaling group to use the `autoscaling: E
 
 Notifications are useful for designing event\-driven applications\. If you use notifications to check that a resource enters a desired state, you can eliminate polling, and you won't encounter the `RequestLimitExceeded` error that sometimes results from polling\. 
 
-AWS provides various tools that you can use to send notifications\. Alternatively, you can use EventBridge and Amazon SNS to send notifications when your Auto Scaling groups launch or terminate instances\. In EventBridge, the rule describes which events you're notified about\. In Amazon SNS, the topic describes what kind of notification you receive\. Using this option, you can decide if certain events should trigger a Lambda function instead\. For more information, see [Using Amazon EC2 Auto Scaling with EventBridge](cloud-watch-events.md)\. 
+AWS provides various tools that you can use to send notifications\. Alternatively, you can use EventBridge and Amazon SNS to send notifications when your Auto Scaling groups launch or terminate instances\. In EventBridge, the rule describes which events you're notified about\. In Amazon SNS, the topic describes what kind of notification you receive\. Using this option, you can decide if certain events should trigger a Lambda function instead\. For more information, see [Use EventBridge to handle Auto Scaling events](automating-ec2-auto-scaling-with-eventbridge.md)\. 
 
 **Contents**
 + [SNS notifications](#auto-scaling-sns-notifications)
-+ [Configuring Amazon SNS notifications for Amazon EC2 Auto Scaling](#as-configure-sns)
++ [Configure Amazon SNS notifications for Amazon EC2 Auto Scaling](#as-configure-sns)
   + [Create an Amazon SNS topic](#as-sns-create-topic)
   + [Subscribe to the Amazon SNS topic](#as-sns-subscribe-topic)
   + [Confirm your Amazon SNS subscription](#as-sns-confirm-subscription)
@@ -61,7 +61,7 @@ EC2InstanceId: i-0598c7d356eba48d7
 Details: {"Subnet ID":"subnet-id","Availability Zone":"zone"}
 ```
 
-## Configuring Amazon SNS notifications for Amazon EC2 Auto Scaling<a name="as-configure-sns"></a>
+## Configure Amazon SNS notifications for Amazon EC2 Auto Scaling<a name="as-configure-sns"></a>
 
 To use Amazon SNS to send email notifications, you must first create a *topic* and then subscribe your email addresses to the topic\.
 

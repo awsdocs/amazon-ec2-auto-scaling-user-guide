@@ -1,4 +1,4 @@
-# Configuring instance tenancy with a launch configuration<a name="auto-scaling-dedicated-instances"></a>
+# Configure instance tenancy with a launch configuration<a name="auto-scaling-dedicated-instances"></a>
 
 Tenancy defines how EC2 instances are distributed across physical hardware and affects pricing\. There are three tenancy options available: 
 + Shared \(`default`\) — Multiple AWS accounts may share the same physical hardware\. 
@@ -10,7 +10,7 @@ This topic describes how to launch Dedicated Instances in your Auto Scaling grou
 You can configure tenancy for EC2 instances using a launch configuration or launch template\. However, the `host` tenancy value cannot be used with a launch configuration\. Use the `default` or `dedicated` tenancy values only\.
 
 **Important**  
-To use a tenancy value of `host`, you must use a launch template\. For more information, see [Creating a launch template for an Auto Scaling group](create-launch-template.md)\. Before launching Dedicated Hosts, we recommend that you become familiar with launching and managing Dedicated Hosts using [AWS License Manager](http://aws.amazon.com/ec2/dedicated-hosts/)\. For more information, see the [License Manager User Guide](https://docs.aws.amazon.com/license-manager/latest/userguide/)\.
+To use a tenancy value of `host`, you must use a launch template\. For more information, see [Create a launch template for an Auto Scaling group](create-launch-template.md)\. Before launching Dedicated Hosts, we recommend that you become familiar with launching and managing Dedicated Hosts using [AWS License Manager](http://aws.amazon.com/ec2/dedicated-hosts/)\. For more information, see the [License Manager User Guide](https://docs.aws.amazon.com/license-manager/latest/userguide/)\.
 
 Dedicated Instances are physically isolated at the host hardware level from instances that aren't dedicated and from instances that belong to other AWS accounts\. When you create a VPC, by default its tenancy attribute is set to `default`\. In such a VPC, you can launch instances with a tenancy value of `dedicated` so that they run as single\-tenancy instances\. Otherwise, they run as shared\-tenancy instances by default\. If you set the tenancy attribute of a VPC to `dedicated`, all instances launched in the VPC run as single\-tenancy instances\. 
 

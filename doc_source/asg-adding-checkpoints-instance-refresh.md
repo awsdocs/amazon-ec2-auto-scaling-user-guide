@@ -1,8 +1,8 @@
-# Adding checkpoints to an instance refresh<a name="asg-adding-checkpoints-instance-refresh"></a>
+# Add checkpoints to an instance refresh<a name="asg-adding-checkpoints-instance-refresh"></a>
 
 When using an instance refresh, you have the option to replace instances in phases, so that you can perform verifications on your instances as you go\. To do a phased replacement, you add checkpoints, which are points in time where the instance refresh pauses\. Using checkpoints gives you greater control over how you choose to update your Auto Scaling group\. It helps you to confirm that your application will function in a reliable, predictable manner\.
 
-Amazon EC2 Auto Scaling emits events for each checkpoint\. If you add an EventBridge rule to send the events to a target such as Amazon SNS, you can be notified when you can run the required verifications\. For more information, see [Creating EventBridge rules for instance refresh events](monitor-events-eventbridge-sns.md)\.
+Amazon EC2 Auto Scaling emits events for each checkpoint\. If you add an EventBridge rule to send the events to a target such as Amazon SNS, you can be notified when you can run the required verifications\. For more information, see [Create EventBridge rules for instance refresh events](monitor-events-eventbridge-sns.md)\.
 
 **Topics**
 + [Considerations](#instance-refresh-checkpoints-considerations)
@@ -78,7 +78,7 @@ Contents of `config.json`:
 {
     "AutoScalingGroupName": "my-asg",
     "Preferences": {
-      "InstanceWarmup": 400,
+      "InstanceWarmup": 60,
       "MinHealthyPercentage": 80,
       "CheckpointPercentages": [1,20,100],
       "CheckpointDelay": 600
@@ -99,7 +99,7 @@ Contents of `config.json`:
 {
     "AutoScalingGroupName": "my-asg",
     "Preferences": {
-      "InstanceWarmup": 400,
+      "InstanceWarmup": 60,
       "MinHealthyPercentage": 80,
       "CheckpointPercentages": [20,100],
       "CheckpointDelay": 600
@@ -120,7 +120,7 @@ Contents of `config.json`:
 {
     "AutoScalingGroupName": "my-asg",
     "Preferences": {
-      "InstanceWarmup": 400,
+      "InstanceWarmup": 60,
       "MinHealthyPercentage": 80,
       "CheckpointPercentages": [1,20],
       "CheckpointDelay": 600

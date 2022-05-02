@@ -1,25 +1,27 @@
-# Using Amazon EC2 Auto Scaling with EventBridge<a name="cloud-watch-events"></a>
+# Use EventBridge to handle Auto Scaling events<a name="automating-ec2-auto-scaling-with-eventbridge"></a>
 
 Amazon EventBridge, formerly called CloudWatch Events, helps you set up event\-driven rules that monitor resources and initiate target actions that use other AWS services\.
 
-Events from Amazon EC2 Auto Scaling are delivered to EventBridge in near real time\. You can establish EventBridge rules that trigger programmatic actions and notifications in response to a variety of these events\. For example, while instances are in the process of launching or terminating, you can trigger an AWS Lambda function to perform a preconfigured task\. Or, you can trigger notifications to an Amazon SNS topic to monitor the progress of an instance refresh and to perform validations at specific checkpoints\.
+Events from Amazon EC2 Auto Scaling are delivered to EventBridge in near\-real time\. You can establish EventBridge rules that trigger programmatic actions and notifications in response to a variety of these events\. For example, while instances are in the process of launching or terminating, you can invoke an AWS Lambda function to perform a preconfigured task\.
 
-In addition to invoking Lambda functions and notifying Amazon SNS topics, EventBridge supports other types of targets and actions, such as relaying events to Amazon Kinesis streams, activating AWS Step Functions state machines, and invoking the AWS Systems Manager run command\. For information about supported targets, see [Amazon EventBridge targets](https://docs.aws.amazon.com/eventbridge/latest/userguide/eventbridge-targets.html) in the *Amazon EventBridge User Guide*\.
+In addition to invoking Lambda functions, EventBridge supports other types of targets and actions, such as relaying events to Amazon Kinesis streams, activating AWS Step Functions state machines, and invoking the AWS Systems Manager run command\. For information about supported targets, see [Amazon EventBridge targets](https://docs.aws.amazon.com/eventbridge/latest/userguide/eventbridge-targets.html) in the *Amazon EventBridge User Guide*\.
 
-For more information about EventBridge, see [Getting started with Amazon EventBridge](https://docs.aws.amazon.com/eventbridge/latest/userguide/eventbridge-getting-set-up.html) in the *Amazon EventBridge User Guide*\. Note that you can also create rules that trigger on Amazon EC2 Auto Scaling API calls\. For more information, see [Creating an EventBridge rule that triggers on an AWS API call using AWS CloudTrail](https://docs.aws.amazon.com/eventbridge/latest/userguide/create-eventbridge-cloudtrail-rule.html) in the *Amazon EventBridge User Guide*\. 
+For more information about EventBridge, see [Getting started with Amazon EventBridge](https://docs.aws.amazon.com/eventbridge/latest/userguide/eventbridge-getting-set-up.html) in the *Amazon EventBridge User Guide*\.
+
+**Note**  
+You can also find additional documentation for using EventBridge in the *Amazon EC2 Auto Scaling User Guide*\.  
+For a step\-by\-step tutorial that shows you how to use lifecycle hooks to put instances in a wait state before invoking a Lambda function that processes EventBridge events, see [Tutorial: Configure a lifecycle hook that invokes a Lambda function](tutorial-lifecycle-hook-lambda.md)\.
+To create EventBridge rules that detect events associated with a warm pool, see [Create EventBridge rules for warm pool events](warm-pool-events-eventbridge-rules.md)\.
+To create an Amazon SNS topic and EventBridge rule that notifies you whenever a checkpoint is reached during an instance refresh, see [Create EventBridge rules for instance refresh events](monitor-events-eventbridge-sns.md)\.
 
 **Topics**
-+ [Auto Scaling events](#cloudwatch-event-types)
-+ [Using AWS Lambda to handle events](#handle-events-using-lambda)
-+ [See also](#eventbridge-see-also)
++ [Auto Scaling group events](#auto-scaling-group-event-types)
++ [Warm pool events](#warm-pool-events)
++ [Use Auto Scaling events to invoke an AWS Lambda function](#handle-events-using-lambda)
 
-## Auto Scaling events<a name="cloudwatch-event-types"></a>
+## Auto Scaling group events<a name="auto-scaling-group-event-types"></a>
 
-The following are example events from Amazon EC2 Auto Scaling\. Events are emitted on a best effort basis\. 
-
-For examples of the events delivered from Amazon EC2 Auto Scaling to EventBridge when you use a warm pool, see [Warm pool events](warm-pools-eventbridge-events.md#warm-pool-event-types)\. 
-
-For an example of the event for a Spot Instance interruption, see [Spot Instance interruption notices](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/spot-interruptions.html#spot-instance-termination-notices) in the *Amazon EC2 User Guide for Linux Instances*\. 
+The following are example events from Amazon EC2 Auto Scaling\. Events are emitted on a best\-effort basis\. 
 
 **Topics**
 + [EC2 Instance\-launch Lifecycle Action](#launch-lifecycle-action)
@@ -380,11 +382,15 @@ The following is example data for this event\.
 }
 ```
 
-## Using AWS Lambda to handle events<a name="handle-events-using-lambda"></a>
+## Warm pool events<a name="warm-pool-events"></a>
+
+For examples of the events that are delivered to EventBridge when you add a warm pool to your Auto Scaling group, see [Warm pool events](warm-pools-eventbridge-events.md#warm-pool-event-types)\.
+
+## Use Auto Scaling events to invoke an AWS Lambda function<a name="handle-events-using-lambda"></a>
 
 AWS Lambda is a compute service that you can use to run code without provisioning or managing servers\. You package your code and upload it to AWS Lambda as a *Lambda function*\. AWS Lambda then runs the function when the function is invoked\. A function can be invoked manually by you, automatically in response to events, or in response to requests from applications or services\. 
 
-To help you get started with Lambda, follow the procedure below\. This section shows you how to create a Lambda function and an EventBridge rule causing all instance launch and terminate events to be logged in Amazon CloudWatch Logs\. 
+To get started with Lambda, use the following procedure\. This section shows you how to create a Lambda function and an EventBridge rule causing all instance launch and terminate events to be logged in Amazon CloudWatch Logs\. 
 
 ### Create a Lambda function<a name="create-lambda-function"></a>
 
@@ -404,7 +410,7 @@ Use the following procedure to create a Lambda function using the **hello\-world
 
    1. Enter a name and description for the Lambda function\.
 
-   1. Edit the code for the Lambda function\. For example, the following code simply logs the event\.
+   1. Edit the code for the Lambda function\. For example, the following code logs the event\.
 
       ```
       console.log('Loading function');
@@ -483,8 +489,6 @@ To test your rule, change the size of your Auto Scaling group\. If you used the 
 1. Select a log stream to view the event data\. The data is displayed, similar to the following:  
 ![\[Viewing event data for Amazon EC2 Auto Scaling in CloudWatch Logs.\]](http://docs.aws.amazon.com/autoscaling/ec2/userguide/images/auto_scaling_event_data.png)
 
-## See also<a name="eventbridge-see-also"></a>
+### See also<a name="eventbridge-see-also"></a>
 
-For more information about using EventBridge and Amazon EC2 Auto Scaling, see [Creating EventBridge rules for instance refresh events](monitor-events-eventbridge-sns.md) and [Creating EventBridge rules for warm pool events](warm-pool-events-eventbridge-rules.md)\.
-
-For a step\-by\-step tutorial that shows you how to create a Lambda function to perform lifecycle actions, see [Tutorial: Configure a lifecycle hook that invokes a Lambda function](tutorial-lifecycle-hook-lambda.md)\. This tutorial covers how to get started with lifecycle hooks\. With lifecycle hooks, you can use Lambda to perform tasks on instances before they are put into service or before they are terminated\.
+For a step\-by\-step tutorial that shows you how to create an EventBridge rule that invokes a Lambda function on Amazon EC2 or Amazon EC2 Auto Scaling API calls, see [Tutorial: Log AWS API calls using EventBridge](https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-log-api-call.html) in the *Amazon EventBridge User Guide*\.

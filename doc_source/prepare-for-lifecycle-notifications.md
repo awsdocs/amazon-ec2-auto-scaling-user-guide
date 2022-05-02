@@ -2,8 +2,8 @@
 
 Before you add a lifecycle hook to your Auto Scaling group, be sure that your user data script or notification target is set up correctly\.
 + To use a user data script to perform custom actions on your instances as they are launching, you do not need to configure a notification target\. However, you must have already created the launch template or launch configuration that specifies your user data script and associated it with your Auto Scaling group\. For more information about user data scripts, see [Run commands on your Linux instance at launch](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/user-data.html) in the *Amazon EC2 User Guide for Linux Instances*\. 
-+ To signal Amazon EC2 Auto Scaling when the lifecycle action is complete, you must add the [CompleteLifecycleAction](https://docs.aws.amazon.com/autoscaling/ec2/APIReference/API_CompleteLifecycleAction.html) API call to the script, and you must manually create an IAM role with a policy that allows Auto Scaling instances to call this API\. Your launch template or launch configuration must specify this role using an IAM instance profile that gets attached to your Amazon EC2 instances at launch\. For more information, see [Completing a lifecycle action](completing-lifecycle-hooks.md) and [IAM role for applications that run on Amazon EC2 instances](us-iam-role.md)\.
-+ To use a service such as a Lambda to perform a custom action, you must have already created an EventBridge rule and specified a Lambda function as its target\. For more information, see [Configure a notification target for lifecycle notifications](#lifecycle-hook-notification-target)\.
++ To signal Amazon EC2 Auto Scaling when the lifecycle action is complete, you must add the [CompleteLifecycleAction](https://docs.aws.amazon.com/autoscaling/ec2/APIReference/API_CompleteLifecycleAction.html) API call to the script, and you must manually create an IAM role with a policy that allows Auto Scaling instances to call this API\. Your launch template or launch configuration must specify this role using an IAM instance profile that gets attached to your Amazon EC2 instances at launch\. For more information, see [Complete a lifecycle action](completing-lifecycle-hooks.md) and [IAM role for applications that run on Amazon EC2 instances](us-iam-role.md)\.
++ To use a service such as Lambda to perform a custom action, you must have already created an EventBridge rule and specified a Lambda function as its target\. For more information, see [Configure a notification target for lifecycle notifications](#lifecycle-hook-notification-target)\.
 + To allow Lambda to signal Amazon EC2 Auto Scaling when the lifecycle action is complete, you must add the [CompleteLifecycleAction](https://docs.aws.amazon.com/autoscaling/ec2/APIReference/API_CompleteLifecycleAction.html) API call to the function code\. You must also have attached an IAM policy to the function's execution role that gives Lambda permission to complete lifecycle actions\. For more information, see [Tutorial: Configure a lifecycle hook that invokes a Lambda function](tutorial-lifecycle-hook-lambda.md)\.
 + To use a service such as a Amazon SNS or Amazon SQS to perform a custom action, you must have already created the SNS topic or SQS queue and have ready its Amazon Resource Name \(ARN\)\. You must also have already created the IAM role that gives Amazon EC2 Auto Scaling access to your SNS topic or SQS target and have ready its ARN\. For more information, see [Configure a notification target for lifecycle notifications](#lifecycle-hook-notification-target)\. 
 **Note**  
@@ -32,9 +32,12 @@ The EventBridge rule, Lambda function, Amazon SNS topic, and Amazon SQS queue th
 
 ### Route notifications to Lambda using EventBridge<a name="cloudwatch-events-notification"></a>
 
-You can configure an EventBridge rule to invoke a Lambda function when an instance enters a wait state\. Amazon EC2 Auto Scaling emits a lifecycle event notification to EventBridge about the instance that is launching or terminating and a token that you can use to control the lifecycle action\. For examples of these events, see [Auto Scaling events](cloud-watch-events.md#cloudwatch-event-types)\.
+You can configure an EventBridge rule to invoke a Lambda function when an instance enters a wait state\. Amazon EC2 Auto Scaling emits a lifecycle event notification to EventBridge about the instance that is launching or terminating and a token that you can use to control the lifecycle action\. For examples of these events, see [Auto Scaling group events](automating-ec2-auto-scaling-with-eventbridge.md#auto-scaling-group-event-types)\.
 
 Before you create your EventBridge rule, you must create a Lambda function\. For an introductory tutorial that shows you how to create a simple Lambda function that listens for launch events and writes them out to a CloudWatch Logs log, see [Tutorial: Configure a lifecycle hook that invokes a Lambda function](tutorial-lifecycle-hook-lambda.md)\.
+
+**Note**  
+When you use the AWS Management Console to create an event rule, the console automatically adds the IAM permissions necessary to grant EventBridge permission to call your Lambda function\. If you are creating an event rule using the AWS CLI, you need to grant this permission explicitly\. For the steps for creating an event rule using the console, see [Tutorial: Configure a lifecycle hook that invokes a Lambda function](tutorial-lifecycle-hook-lambda.md)\.
 
 **To create an EventBridge rule that invokes a Lambda function**
 
@@ -43,8 +46,6 @@ Before you create your EventBridge rule, you must create a Lambda function\. For
    For more information, see [Getting started with Lambda](https://docs.aws.amazon.com/lambda/latest/dg/getting-started.html) in the *AWS Lambda Developer Guide*\.
 
 1. Create an EventBridge rule that matches the lifecycle action using the following [put\-rule](https://docs.aws.amazon.com/cli/latest/reference/events/put-rule.html) command\.
-**Note**  
-When you use the AWS Management Console to create an event rule, the console automatically adds the IAM permissions necessary to grant EventBridge permission to call your Lambda function\. If you are creating an event rule using the AWS CLI, you need to grant this permission explicitly\. For the steps for creating an event rule using the console, see [Tutorial: Configure a lifecycle hook that invokes a Lambda function](tutorial-lifecycle-hook-lambda.md)\.
 
    ```
    aws events put-rule --name my-rule --event-pattern file://pattern.json --state ENABLED
@@ -81,7 +82,7 @@ When you use the AWS Management Console to create an event rule, the console aut
      --action 'lambda:InvokeFunction' --principal events.amazonaws.com --source-arn arn:aws:events:region:123456789012:rule/my-rule
    ```
 
-1. After you have followed these instructions, continue on to [Adding lifecycle hooks](adding-lifecycle-hooks.md) as a next step\.
+1. After you have followed these instructions, continue on to [Add lifecycle hooks](adding-lifecycle-hooks.md) as a next step\.
 
 ### Receive notifications using Amazon SNS<a name="sns-notifications"></a>
 
@@ -103,19 +104,19 @@ You can use Amazon SNS to set up a notification target \(an SNS topic\) to recei
 
    1. Open the IAM console at [https://console\.aws\.amazon\.com/iam/](https://console.aws.amazon.com/iam/)\.
 
-   1. On the navigation pane, choose **Roles**, **Create role**\.
+   1. In the navigation pane on the left, choose **Roles**\.
 
-   1. Under **Select type of trusted entity**, choose **AWS service**\. 
+   1. Choose **Create role**\.
 
-   1. Under **Choose the service that will use this role**, choose **EC2 Auto Scaling** from the list\. 
+   1. For **Select trusted entity**, choose **AWS service**\.
 
-   1. Under **Select your use case**, choose **EC2 Auto Scaling Notification Access**, and then choose **Next:Permissions**\. 
+   1. For your use case, under **Use cases for other AWS services**, choose **EC2 Auto Scaling** and then **EC2 Auto Scaling Notification Access**\.
 
-   1. Choose **Next:Tags**\. Optionally, you can add metadata to the role by attaching tags as key\-value pairs\. Then choose **Next:Review**\. 
+   1. Choose **Next** twice to go to the **Name, review, and create** page\.
 
-   1. On the **Review** page, enter a name for the role \(for example, my\-notification\-role\), and choose **Create role**\. 
+   1. For **Role name**, enter a name for the role \(for example, **my\-notification\-role**\) and choose **Create role**\.
 
-   1. On the **Roles** page, choose the role that you just created to open the **Summary** page\. Make a note of the **Role ARN**\. For example, `arn:aws:iam::123456789012:role/my-notification-role`\. You need it to create the lifecycle hook\.
+   1. On the **Roles** page, choose the role that you just created to open the **Summary** page\. Make a note of the role **ARN**\. For example, `arn:aws:iam::123456789012:role/my-notification-role`\. You need it to create the lifecycle hook\.
 
 1. After you have followed these instructions, continue on to [Add lifecycle hooks \(AWS CLI\)](adding-lifecycle-hooks.md#adding-lifecycle-hooks-aws-cli) as a next step\.
 
@@ -138,19 +139,19 @@ FIFO queues are not compatible with lifecycle hooks\.
 
    1. Open the IAM console at [https://console\.aws\.amazon\.com/iam/](https://console.aws.amazon.com/iam/)\.
 
-   1. On the navigation pane, choose **Roles**, **Create role**\.
+   1. In the navigation pane on the left, choose **Roles**\.
 
-   1. Under **Select type of trusted entity**, choose **AWS service**\. 
+   1. Choose **Create role**\.
 
-   1. Under **Choose the service that will use this role**, choose **EC2 Auto Scaling** from the list\. 
+   1. For **Select trusted entity**, choose **AWS service**\.
 
-   1. Under **Select your use case**, choose **EC2 Auto Scaling Notification Access**, and then choose **Next:Permissions**\. 
+   1. For your use case, under **Use cases for other AWS services**, choose **EC2 Auto Scaling** and then **EC2 Auto Scaling Notification Access**\.
 
-   1. Choose **Next:Tags**\. Optionally, you can add metadata to the role by attaching tags as key\-value pairs\. Then choose **Next:Review**\. 
+   1. Choose **Next** twice to go to the **Name, review, and create** page\.
 
-   1. On the **Review** page, enter a name for the role \(for example, my\-notification\-role\), and choose **Create role**\. 
+   1. For **Role name**, enter a name for the role \(for example, **my\-notification\-role**\) and choose **Create role**\.
 
-   1. On the **Roles** page, choose the role you that just created to open the **Summary** page\. Make a note of the **Role ARN**\. For example, `arn:aws:iam::123456789012:role/my-notification-role`\. You need it to create the lifecycle hook\.
+   1. On the **Roles** page, choose the role that you just created to open the **Summary** page\. Make a note of the role **ARN**\. For example, `arn:aws:iam::123456789012:role/my-notification-role`\. You need it to create the lifecycle hook\.
 
 1. After you have followed these instructions, continue on to [Add lifecycle hooks \(AWS CLI\)](adding-lifecycle-hooks.md#adding-lifecycle-hooks-aws-cli) as a next step\.
 
@@ -195,4 +196,4 @@ AutoScalingGroupARN: arn:aws:autoscaling:us-west-2:123456789012:autoScalingGroup
 ```
 
 **Note**  
-For examples of the events delivered from Amazon EC2 Auto Scaling to EventBridge, see [Auto Scaling events](cloud-watch-events.md#cloudwatch-event-types)\.
+For examples of the events delivered from Amazon EC2 Auto Scaling to EventBridge, see [Auto Scaling group events](automating-ec2-auto-scaling-with-eventbridge.md#auto-scaling-group-event-types)\.

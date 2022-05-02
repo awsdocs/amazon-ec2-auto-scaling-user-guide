@@ -1,4 +1,4 @@
-# Deleting your Auto Scaling infrastructure<a name="as-process-shutdown"></a>
+# Delete your Auto Scaling infrastructure<a name="as-process-shutdown"></a>
 
 To completely delete your scaling infrastructure, complete the following tasks\.
 
@@ -44,7 +44,7 @@ You can skip this step to keep the launch configuration for future use\.
 
 1. Open the Amazon EC2 console at [https://console\.aws\.amazon\.com/ec2/](https://console.aws.amazon.com/ec2/)\.
 
-1. On the navigation pane, under **AUTO SCALING**, choose **Launch Configurations**\.
+1. On the navigation pane, under **Auto Scaling**, choose **Launch Configurations**\.
 
 1. On the **Launch configurations** page, choose your launch configuration and choose **Actions**, **Delete launch configuration**\.
 
@@ -67,7 +67,7 @@ You can skip this step to keep the launch template for future use\.
 
 1. Open the Amazon EC2 console at [https://console\.aws\.amazon\.com/ec2/](https://console.aws.amazon.com/ec2/)\.
 
-1. On the navigation pane, under **INSTANCES**, choose **Launch Templates**\.
+1. On the navigation pane, under **Instances**, choose **Launch Templates**\.
 
 1. Select your launch template and then do one of the following: 
    + Choose **Actions**, **Delete template**\. When prompted for confirmation, choose **Delete launch template**\.

@@ -1,7 +1,7 @@
-# Creating an Auto Scaling group using parameters from an existing instance<a name="create-asg-from-instance"></a>
+# Create an Auto Scaling group using parameters from an existing instance<a name="create-asg-from-instance"></a>
 
 **Important**  
-This topic only applies to creating an Auto Scaling group using the AWS CLI\. If this is your first time creating an Auto Scaling group, we recommend you use the console to create a launch template from an existing EC2 instance\. Then use the launch template to create a new Auto Scaling group\. For this procedure, see [Creating an Auto Scaling group using the Amazon EC2 launch wizard](create-asg-ec2-wizard.md)\.
+This topic only applies to creating an Auto Scaling group using the AWS CLI\. If this is your first time creating an Auto Scaling group, we recommend you use the console to create a launch template from an existing EC2 instance\. Then use the launch template to create a new Auto Scaling group\. For this procedure, see [Create an Auto Scaling group using the Amazon EC2 launch wizard](create-asg-ec2-wizard.md)\.
 
 The following procedure shows how to create an Auto Scaling group by specifying the ID of an existing instance to use as a base for launching other instances\. Multiple parameters are required to create an EC2 instance, such as the Amazon Machine Image \(AMI\) ID, instance type, key pair, and security group\. All of this information is also used by Amazon EC2 Auto Scaling to launch instances on your behalf when there is a need to scale\. This information is stored in either a launch template or a launch configuration\. 
 
@@ -24,7 +24,7 @@ The following configuration details are copied from the identified instance into
 The following configuration details are not copied from your identified instance:
 + Storage: The block devices \(EBS volumes and instance store volumes\) are not copied from the identified instance\. Instead, the block device mapping created as part of creating the AMI determines which devices are used\.
 + Number of network interfaces: The network interfaces are not copied from your identified instance\. Instead, Amazon EC2 Auto Scaling uses its default settings to create one network interface, which is the primary network interface \(eth0\)\.
-+ Instance metadata options: The metadata accessible, metadata version, and token response hop limit settings are not copied from the identified instance\. Instead, Amazon EC2 Auto Scaling uses its default settings\. For more information, see [Configuring the instance metadata options](create-launch-config.md#launch-configurations-imds)\.
++ Instance metadata options: The metadata accessible, metadata version, and token response hop limit settings are not copied from the identified instance\. Instead, Amazon EC2 Auto Scaling uses its default settings\. For more information, see [Configure the instance metadata options](create-launch-config.md#launch-configurations-imds)\.
 + Load balancers: If the identified instance is registered with one or more load balancers, the information about the load balancer is not copied to the load balancer or target group attribute of the new Auto Scaling group\.
 + Tags: If the identified instance has tags, the tags are not copied to the `Tags` attribute of the new Auto Scaling group\.
 

@@ -1,4 +1,4 @@
-# Amazon EC2 Auto Scaling instance lifecycle<a name="AutoScalingGroupLifecycle"></a>
+# Amazon EC2 Auto Scaling instance lifecycle<a name="ec2-auto-scaling-lifecycle"></a>
 
 The EC2 instances in an Auto Scaling group have a path, or lifecycle, that differs from that of other EC2 instances\. The lifecycle starts when the Auto Scaling group launches an instance and puts it into service\. The lifecycle ends when you terminate the instance, or the Auto Scaling group takes the instance out of service and terminates it\.
 
@@ -14,7 +14,7 @@ The following illustration shows the transitions between instance states in the 
 The following scale\-out events direct the Auto Scaling group to launch EC2 instances and attach them to the group:
 + You manually increase the size of the group\. For more information, see [Manual scaling for Amazon EC2 Auto Scaling](as-manual-scaling.md)\.
 + You create a scaling policy to automatically increase the size of the group based on a specified increase in demand\. For more information, see [Dynamic scaling for Amazon EC2 Auto Scaling](as-scale-based-on-demand.md)\.
-+ You set up scaling by schedule to increase the size of the group at a specific time\. For more information, see [Scheduled scaling for Amazon EC2 Auto Scaling](schedule_time.md)\.
++ You set up scaling by schedule to increase the size of the group at a specific time\. For more information, see [Scheduled scaling for Amazon EC2 Auto Scaling](ec2-auto-scaling-scheduled-scaling.md)\.
 
 When a scale\-out event occurs, the Auto Scaling group launches the required number of EC2 instances, using its assigned launch template\. These instances start in the `Pending` state\. If you add a lifecycle hook to your Auto Scaling group, you can perform a custom action here\. For more information, see [Lifecycle hooks](#as-lifecycle-hooks)\.
 
@@ -23,17 +23,17 @@ When each instance is fully configured and passes the Amazon EC2 health checks, 
 ## Instances in service<a name="as-lifecycle-inservice"></a>
 
 Instances remain in the `InService` state until one of the following occurs:
-+ A scale\-in event occurs, and Amazon EC2 Auto Scaling chooses to terminate this instance in order to reduce the size of the Auto Scaling group\. For more information, see [Controlling which Auto Scaling instances terminate during scale in](as-instance-termination.md)\.
++ A scale\-in event occurs, and Amazon EC2 Auto Scaling chooses to terminate this instance in order to reduce the size of the Auto Scaling group\. For more information, see [Control which Auto Scaling instances terminate during scale in](as-instance-termination.md)\.
 + You put the instance into a `Standby` state\. For more information, see [Enter and exit standby](#as-lifecycle-standby)\.
 + You detach the instance from the Auto Scaling group\. For more information, see [Detach an instance](#as-lifecycle-detach)\.
-+ The instance fails a required number of health checks, so it is removed from the Auto Scaling group, terminated, and replaced\. For more information, see [Health checks for Auto Scaling instances](healthcheck.md)\.
++ The instance fails a required number of health checks, so it is removed from the Auto Scaling group, terminated, and replaced\. For more information, see [Health checks for Auto Scaling instances](ec2-auto-scaling-health-checks.md)\.
 
 ## Scale in<a name="as-lifecycle-scale-in"></a>
 
 The following scale\-in events direct the Auto Scaling group to detach EC2 instances from the group and terminate them:
 + You manually decrease the size of the group\. For more information, see [Manual scaling for Amazon EC2 Auto Scaling](as-manual-scaling.md)\.
 + You create a scaling policy to automatically decrease the size of the group based on a specified decrease in demand\. For more information, see [Dynamic scaling for Amazon EC2 Auto Scaling](as-scale-based-on-demand.md)\.
-+ You set up scaling by schedule to decrease the size of the group at a specific time\. For more information, see [Scheduled scaling for Amazon EC2 Auto Scaling](schedule_time.md)\.
++ You set up scaling by schedule to decrease the size of the group at a specific time\. For more information, see [Scheduled scaling for Amazon EC2 Auto Scaling](ec2-auto-scaling-scheduled-scaling.md)\.
 
 It is important that you create a corresponding scale\-in event for each scale\-out event that you create\. This helps ensure that the resources assigned to your application match the demand for those resources as closely as possible\.
 
@@ -67,4 +67,4 @@ You can put any instance that is in an `InService` state into a `Standby` state\
 
 Instances in a `Standby` state continue to be managed by the Auto Scaling group\. However, they are not an active part of your application until you put them back into service\.
 
-For more information, see [Temporarily removing instances from your Auto Scaling group](as-enter-exit-standby.md)\.
+For more information, see [Temporarily remove instances from your Auto Scaling group](as-enter-exit-standby.md)\.

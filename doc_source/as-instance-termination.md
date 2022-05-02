@@ -1,4 +1,4 @@
-# Controlling which Auto Scaling instances terminate during scale in<a name="as-instance-termination"></a>
+# Control which Auto Scaling instances terminate during scale in<a name="as-instance-termination"></a>
 
 Amazon EC2 Auto Scaling uses termination policies to determine which instances it terminates first during scale\-in events\. Termination policies define the termination criteria that is used by Amazon EC2 Auto Scaling when choosing which instances to terminate\.
 
@@ -11,9 +11,9 @@ Instance scale\-in protection does not guarantee that instances won't be termina
 
 **Topics**
 + [Scenarios for termination policy use](#common-scenarios-termination)
-+ [Working with Amazon EC2 Auto Scaling termination policies](ec2-auto-scaling-termination-policies.md)
-+ [Creating a custom termination policy with Lambda](lambda-custom-termination-policy.md)
-+ [Using instance scale\-in protection](ec2-auto-scaling-instance-protection.md)
++ [Work with Amazon EC2 Auto Scaling termination policies](ec2-auto-scaling-termination-policies.md)
++ [Create a custom termination policy with Lambda](lambda-custom-termination-policy.md)
++ [Use instance scale\-in protection](ec2-auto-scaling-instance-protection.md)
 
 ## Scenarios for termination policy use<a name="common-scenarios-termination"></a>
 

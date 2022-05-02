@@ -6,13 +6,13 @@ Adding Amazon EC2 Auto Scaling to your application architecture is one way to ma
 + Better cost management\. Amazon EC2 Auto Scaling can dynamically increase and decrease capacity as needed\. Because you pay for the EC2 instances you use, you save money by launching instances when they are needed and terminating them when they aren't\.
 
 **Contents**
-+ [Example: Covering variable demand](#autoscaling-benefits-example)
++ [Example: Cover variable demand](#autoscaling-benefits-example)
 + [Example: Web app architecture](#autoscaling-design-example)
-+ [Example: Distributing instances across Availability Zones](#arch-AutoScalingMultiAZ)
++ [Example: Distribute instances across Availability Zones](#arch-AutoScalingMultiAZ)
   + [Instance distribution](#AutoScalingBehavior.Rebalancing)
   + [Rebalancing activities](#AutoScalingBehavior.InstanceUsage)
 
-## Example: Covering variable demand<a name="autoscaling-benefits-example"></a>
+## Example: Cover variable demand<a name="autoscaling-benefits-example"></a>
 
 To demonstrate some of the benefits of Amazon EC2 Auto Scaling, consider a basic web application running on AWS\. This application allows employees to search for conference rooms that they might want to use for meetings\. During the beginning and end of the week, usage of this application is minimal\. During the middle of the week, more employees are scheduling meetings, so the demand on the application increases significantly\.
 
@@ -46,11 +46,11 @@ You can create as many Auto Scaling groups as you need\. For example, you can cr
 
 To distribute traffic between the instances in your Auto Scaling groups, you can introduce a load balancer into your architecture\. For more information, see [Elastic Load Balancing](autoscaling-load-balancer.md)\.
 
-## Example: Distributing instances across Availability Zones<a name="arch-AutoScalingMultiAZ"></a>
+## Example: Distribute instances across Availability Zones<a name="arch-AutoScalingMultiAZ"></a>
 
 AWS resources, such as EC2 instances, are housed in highly available data centers\. To provide additional scalability and reliability, these data centers are in different physical locations\. *Regions* are large and widely dispersed geographic locations\. Each Region contains multiple distinct locations, called *Availability Zones*, which are engineered to be isolated from failures in other Availability Zones\. They provide inexpensive, low\-latency network connectivity to other Availability Zones in the same Region\.
 
-Amazon EC2 Auto Scaling enables you to take advantage of the safety and reliability of geographic redundancy by spanning Auto Scaling groups across multiple Availability Zones within a Region\. When one Availability Zone becomes unhealthy or unavailable, Auto Scaling launches new instances in an unaffected Availability Zone\. When the unhealthy Availability Zone returns to a healthy state, Auto Scaling automatically redistributes the application instances evenly across all of the designated Availability Zones\.
+Amazon EC2 Auto Scaling enables you to take advantage of the safety and reliability of geographic redundancy by spanning Auto Scaling groups across multiple Availability Zones within a Region\. When one Availability Zone becomes unhealthy or unavailable, Amazon EC2 Auto Scaling launches new instances in an unaffected Availability Zone\. When the unhealthy Availability Zone returns to a healthy state, Amazon EC2 Auto Scaling automatically redistributes the application instances evenly across all of the designated Availability Zones\.
 
 An Auto Scaling group can contain EC2 instances in one or more Availability Zones within the same Region\. However, Auto Scaling groups cannot span multiple Regions\.
 
@@ -80,4 +80,4 @@ Because Amazon EC2 Auto Scaling attempts to launch new instances before terminat
 
 **Capacity Rebalancing**
 
-You can enable Capacity Rebalancing for your Auto Scaling groups when using Spot Instances\. When you turn on Capacity Rebalancing, Amazon EC2 Auto Scaling attempts to launch a Spot Instance whenever Amazon EC2 notifies that a Spot Instance is at an elevated risk of interruption\. After launching a new instance, it then terminates an old instance\. For more information, see [Amazon EC2 Auto Scaling Capacity Rebalancing](ec2-auto-scaling-capacity-rebalancing.md)\.
+You can enable Capacity Rebalancing for your Auto Scaling groups when using Spot Instances\. When you turn on Capacity Rebalancing, Amazon EC2 Auto Scaling attempts to launch a Spot Instance whenever Amazon EC2 notifies that a Spot Instance is at an elevated risk of interruption\. After launching a new instance, it then terminates an old instance\. For more information, see [Use Capacity Rebalancing to handle Amazon EC2 Spot Interruptions](ec2-auto-scaling-capacity-rebalancing.md)\.

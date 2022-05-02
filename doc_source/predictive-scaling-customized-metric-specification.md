@@ -10,7 +10,7 @@ On the graphs screen in the Amazon EC2 Auto Scaling console, you can view **Load
 + [Best practices](#custom-metrics-best-practices)
 + [Prerequisites](#custom-metrics-prerequisites)
 + [Example predictive scaling policy with a custom scaling metric and a custom load metric](#custom-metrics-ex1)
-+ [Using metric math expressions](#using-math-expression-examples)
++ [Use metric math expressions](#using-math-expression-examples)
 + [Considerations and troubleshooting](#custom-metrics-troubleshooting)
 + [Limitations](#custom-metrics-limitations)
 
@@ -109,16 +109,16 @@ If successful, this command returns the policy's Amazon Resource Name \(ARN\)\.
 }
 ```
 
-## Using metric math expressions<a name="using-math-expression-examples"></a>
+## Use metric math expressions<a name="using-math-expression-examples"></a>
 
 The following AWS CLI examples might be relevant to your scenario when creating a predictive scaling policy that uses metric math expressions\. You can use these example predictive scaling policy configurations as a starting point, then customize them for your needs\.
 
 **Topics**
-+ [Understanding metric math](#custom-metrics-metric-math)
++ [Understand metric math](#custom-metrics-metric-math)
 + [Example predictive scaling policy that combines metrics using metric math](#custom-metrics-ex2)
 + [Example predictive scaling policy to use in a blue/green deployment scenario](#custom-metrics-ex3)
 
-### Understanding metric math<a name="custom-metrics-metric-math"></a>
+### Understand metric math<a name="custom-metrics-metric-math"></a>
 
 If all you want to do is aggregate existing metric data, CloudWatch metric math saves you the effort and cost of publishing another metric to CloudWatch\. You can use any metric that AWS provides, and you can also use metrics that you define as part of your applications\. For example, you might want to calculate the Amazon SQS queue backlog per instance\. You can do this by taking the approximate number of messages available for retrieval from the queue and dividing that number by the Auto Scaling group's running capacity\.
 
@@ -306,7 +306,7 @@ If an issue occurs while using custom metrics, we recommend that you do the foll
 + If an error message is provided, read the message and resolve the issue it reports, if possible\. 
 + If an issue occurs when you are trying to use a search expression in a blue/green deployment scenario, first make sure that you understand how to create a search expression that looks for a partial match instead of an exact match\. Also, check that your query finds only the Auto Scaling groups that are running the specific application\. For more information about the search expression syntax, see [CloudWatch search expression syntax](https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/search-expression-syntax.html) in the *Amazon CloudWatch User Guide*\. 
 + If you did not validate an expression in advance, the [put\-scaling\-policy](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/put-scaling-policy.html) command validates it when you create your scaling policy\. However, there is a possibility that this command might fail to identify the exact cause of the detected errors\. To fix the issues, troubleshoot the errors that you receive in a response from a request to the [get\-metric\-data](https://docs.aws.amazon.com/cli/latest/reference/cloudwatch/get-metric-data.html) command\. You can also troubleshoot the expression from the CloudWatch console\.
-+ When you view your **Load** and **Capacity** graphs in the console, the **Capacity** graph might not show any data\. To ensure that the graphs have complete data, make sure that you consistently enable group metrics for your Auto Scaling groups\. For more information, see [Enable Auto Scaling group metrics \(console\)](as-instance-monitoring.md#as-enable-group-metrics)\.
++ When you view your **Load** and **Capacity** graphs in the console, the **Capacity** graph might not show any data\. To ensure that the graphs have complete data, make sure that you consistently enable group metrics for your Auto Scaling groups\. For more information, see [Enable Auto Scaling group metrics \(console\)](ec2-auto-scaling-cloudwatch-monitoring.md#as-enable-group-metrics)\.
 + The capacity metric specification is only useful for blue/green deployments when you have applications that run in different Auto Scaling groups over their lifetime\. This custom metric lets you provide the total capacity of multiple Auto Scaling groups\. Predictive scaling uses this to show historical data in the **Capacity** graphs in the console\.
 + You must specify `false` for `ReturnData` if `MetricDataQueries` specifies the SEARCH\(\) function on its own without a math function like SUM\(\)\. This is because search expressions might return multiple time series, and a metric specification based on an expression can return only one time series\.
 + All metrics involved in a search expression should be of the same resolution\.

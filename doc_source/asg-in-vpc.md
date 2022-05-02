@@ -1,4 +1,4 @@
-# Launching Auto Scaling instances in a VPC<a name="asg-in-vpc"></a>
+# Launch Auto Scaling instances in a VPC<a name="asg-in-vpc"></a>
 
 
 |  | 
@@ -34,12 +34,6 @@ For information about default VPCs and checking whether your account comes with 
 
 You can choose to create additional VPCs by going to the Amazon VPC page in the AWS Management Console and selecting **Launch VPC Wizard**\. 
 
-You're presented with the following four options for network architectures:
-+ Amazon VPC with a single public subnet only
-+ Amazon VPC with public and private subnets
-+ Amazon VPC with public and private subnets and hardware VPN access
-+ Amazon VPC with a private subnet only and hardware VPN access
-
 For more information, see the *[Amazon VPC User Guide](https://docs.aws.amazon.com/vpc/latest/userguide/)*\.
 
 ## Considerations when choosing VPC subnets<a name="as-vpc-considerations"></a>
@@ -55,11 +49,13 @@ Note the following considerations when choosing VPC subnets:
 
 When you launch your Auto Scaling instances in a VPC, your instances are automatically assigned a private IP address from the CIDR range of the subnet in which the instance is launched\. This enables your instances to communicate with other instances in the VPC\.
 
-You can configure a launch template or launch configuration to assign public IP addresses to your instances\. Assigning public IP addresses to your instances enables them to communicate with the internet or other Amazon Web Services\.
+You can configure a launch template or launch configuration to assign public IPv4 addresses to your instances\. Assigning public IP addresses to your instances enables them to communicate with the internet or other AWS services\.
 
-When you enable public IP addresses for your instances and launch them into a subnet that is configured to automatically assign IPv6 addresses, they receive both IPv4 and IPv6 addresses\. Otherwise, they receive only IPv4 addresses\. For more information, see [IPv6 addresses](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-instance-addressing.html#ipv6-addressing) in the *Amazon EC2 User Guide for Linux Instances*\.
+When you launch instances into a subnet that is configured to automatically assign IPv6 addresses, they receive both IPv4 and IPv6 addresses\. Otherwise, they receive only IPv4 addresses\. For more information, see [IPv6 addresses](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-instance-addressing.html#ipv6-addressing) in the *Amazon EC2 User Guide for Linux Instances*\.
 
 For information on specifying CIDR ranges for your VPC or subnet, see the [Amazon VPC User Guide](https://docs.aws.amazon.com/vpc/latest/userguide/)\.
+
+Amazon EC2 Auto Scaling can automatically assign additional private IP addresses on instance launch when you use a launch template that specifies additional network interfaces\. Each network interface is assigned a single private IP address from the CIDR range of the subnet in which the instance is launched\. In this case, the system can no longer auto\-assign a public IPv4 address to the primary network interface\. You will not be able to connect to your instances over a public IPv4 address unless you associate available Elastic IP addresses to the Auto Scaling instances\.
 
 ## Network interfaces in a VPC<a name="as-vpc-network-interfaces"></a>
 
@@ -71,7 +67,7 @@ If you create or attach two or more network interfaces from the same subnet to a
 
 ## Instance placement tenancy<a name="as-vpc-tenancy"></a>
 
-By default, all instances in the VPC run as shared tenancy instances\. Amazon EC2 Auto Scaling also supports Dedicated Instances and Dedicated Hosts\. However, support for Dedicated Hosts is only available for Auto Scaling groups that use a launch template\. For more information, see [Configuring instance tenancy with a launch configuration](auto-scaling-dedicated-instances.md)\.
+By default, all instances in the VPC run as shared tenancy instances\. Amazon EC2 Auto Scaling also supports Dedicated Instances and Dedicated Hosts\. However, support for Dedicated Hosts is only available for Auto Scaling groups that use a launch template\. For more information, see [Configure instance tenancy with a launch configuration](auto-scaling-dedicated-instances.md)\.
 
 ## More resources for learning about VPCs<a name="auto-scaling-resources-about-vpcs"></a>
 

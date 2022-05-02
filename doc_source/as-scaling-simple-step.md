@@ -26,7 +26,7 @@ The main difference between the policy types is the step adjustments that you ge
 
 In most cases, step scaling policies are a better choice than simple scaling policies, even if you have only a single scaling adjustment\.
 
-The main issue with simple scaling is that after a scaling activity is started, the policy must wait for the scaling activity or health check replacement to complete and the [cooldown period](Cooldown.md) to expire before responding to additional alarms\. Cooldown periods help to prevent the initiation of additional scaling activities before the effects of previous activities are visible\.
+The main issue with simple scaling is that after a scaling activity is started, the policy must wait for the scaling activity or health check replacement to complete and the [cooldown period](ec2-auto-scaling-scaling-cooldowns.md) to end before responding to additional alarms\. Cooldown periods help to prevent the initiation of additional scaling activities before the effects of previous activities are visible\.
 
 In contrast, with step scaling the policy can continue to respond to additional alarms, even while a scaling activity or health check replacement is in progress\. Therefore, all alarms that are breached are evaluated by Amazon EC2 Auto Scaling as it receives the alarm messages\. 
 
@@ -108,15 +108,16 @@ If you are using instance weighting, keep in mind that the current capacity of y
 
 ## Instance warm\-up<a name="as-step-scaling-warmup"></a>
 
+**Important**  
+We recommend using the `DefaultInstanceWarmup` setting, which unifies all the warm\-up and cooldown settings for your Auto Scaling group\. For more information, see [Available warm\-up and cooldown settings](consolidated-view-of-warm-up-and-cooldown-settings.md)\.
+
 If you are creating a step policy, you can specify the number of seconds that it takes for a newly launched instance to warm up\. Until its specified warm\-up time has expired, an instance is not counted toward the aggregated metrics of the Auto Scaling group\.
 
-Using the example in the Step Adjustments section, suppose that the metric gets to 60, and then it gets to 62 while the new instance is still warming up\. The current capacity is still 10 instances, so 1 instance is added \(10 percent of 10 instances\)\. However, the desired capacity of the group is already 11 instances, so the scaling policy does not increase the desired capacity further\. If the metric gets to 70 while the new instance is still warming up, we should add 3 instances \(30 percent of 10 instances\)\. However, the desired capacity of the group is already 11, so we add only 2 instances, for a new desired capacity of 13 instances\.
+While instances are in the warm\-up period, your scaling policies only scale out if the metric value from instances that are not warming up is greater than the policy's alarm high threshold\.
 
-While scaling out, we do not consider instances that are warming up as part of the current capacity of the group\. Therefore, multiple alarm breaches that fall in the range of the same step adjustment result in a single scaling activity\. This ensures that we don't add more instances than you need\.
+If the group scales out again, the instances that are still warming up are counted as part of the desired capacity for the next scale\-out activity\. Therefore, multiple alarm breaches that fall in the range of the same step adjustment result in a single scaling activity\. The intention is to continuously \(but not excessively\) scale out\.
 
-While scaling in, we consider instances that are terminating as part of the current capacity of the group\. Therefore, we don't remove more instances from the Auto Scaling group than necessary\.
-
-A scale\-in activity can't start while a scale\-out activity is in progress\.
+While the scale\-out activity is in progress, all scale\-in activities initiated by scaling policies are blocked until the instances finish warming up\.
 
 ## Create a CloudWatch alarm \(console\)<a name="policy-creating-alarm-console"></a>
 
@@ -174,7 +175,7 @@ While you are configuring your scaling policies, you can create the alarms at th
 
 1. Select the check box next to your Auto Scaling group\. 
 
-   A split pane opens up in the bottom part of the **Auto Scaling groups** page, showing information about the group that's selected\. 
+   A split pane opens up in the bottom of the **Auto Scaling groups** page\. 
 
 1. Verify that the minimum and maximum size limits are appropriately set\. For example, if your group is already at its maximum size, you need to specify a new maximum in order to scale out\. Amazon EC2 Auto Scaling does not scale your group below the minimum capacity or above the maximum capacity\. To update your group, on the **Details** tab, change the current settings for minimum and maximum capacity\. 
 

@@ -1,11 +1,11 @@
-# Using lifecycle hooks with a warm pool<a name="warm-pool-instance-lifecycle"></a>
+# Use lifecycle hooks with a warm pool<a name="warm-pool-instance-lifecycle"></a>
 
 Instances in a warm pool maintain their own independent lifecycle to help you create the appropriate custom action for each transition\. This lifecycle is designed to help you to invoke actions in a target service \(for example, a Lambda function\) while an instance is still initializing and before it is put in service\. 
 
 **Note**  
 The API operations that you use to add and manage lifecycle hooks and complete lifecycle actions are not changed\. Only the instance lifecycle is changed\. 
 
-For more information about adding a lifecycle hook, see [Adding lifecycle hooks](adding-lifecycle-hooks.md)\. For more information about completing a lifecycle action, see [Completing a lifecycle action](completing-lifecycle-hooks.md)\.
+For more information about adding a lifecycle hook, see [Add lifecycle hooks](adding-lifecycle-hooks.md)\. For more information about completing a lifecycle action, see [Complete a lifecycle action](completing-lifecycle-hooks.md)\.
 
 For instances entering the warm pool, you might need a lifecycle hook for one of the following reasons:
 + You want to launch EC2 instances from an AMI that takes a long time to finish initializing\.
@@ -30,6 +30,7 @@ When you add lifecycle hooks, consider the following:
 + When you create a warm pool, Amazon EC2 Auto Scaling launches and then puts one or more instances into a wait state \(`Warmed:Pending:Wait`\) before the instances transition into the `Warmed:Stopped`, `Warmed:Running`, or `Warmed:Hibernated` state\.
 + When your Auto Scaling group scales out, Amazon EC2 Auto Scaling puts one or more warm pool instances into a wait state \(`Pending:Wait`\) before the instances transition into the `InService` state\.
 + If the demand on your application depletes the warm pool, Amazon EC2 Auto Scaling can launch instances directly into the Auto Scaling group as long as the group isn't at its maximum capacity yet\. If the instances launch directly into the group, they are only put in the `Pending:Wait` state before they transition into the `InService` state\.
++ If you create a termination lifecycle hook, and you specify an instance reuse policy to return instances to the warm pool on scale in instead of terminating them, then instances that are returning to the warm pool are put in the `Warmed:Pending:Wait` state before they transition into the `Warmed:Stopped`, `Warmed:Running`, or `Warmed:Hibernated` state\.
 
 When instances reach a wait state, Amazon EC2 Auto Scaling sends a notification that includes the origin and the destination\. 
 
@@ -42,7 +43,7 @@ Amazon EC2 Auto Scaling provides support for defining any of the following as no
 
 The following sections contain links to documentation that describes how to configure notification targets:
 
-**EventBridge rules**: To run code when Amazon EC2 Auto Scaling puts an instance into a wait state, you can create an EventBridge rule and specify a Lambda function as its target\. To invoke different Lambda functions based on different lifecycle notifications, you can create multiple rules and associate each rule with a specific event pattern and Lambda function\. For more information, see [Creating EventBridge rules for warm pool events](warm-pool-events-eventbridge-rules.md)\.
+**EventBridge rules**: To run code when Amazon EC2 Auto Scaling puts an instance into a wait state, you can create an EventBridge rule and specify a Lambda function as its target\. To invoke different Lambda functions based on different lifecycle notifications, you can create multiple rules and associate each rule with a specific event pattern and Lambda function\. For more information, see [Create EventBridge rules for warm pool events](warm-pool-events-eventbridge-rules.md)\.
 
 **Amazon SNS topics**: To receive a notification when an instance is put into a wait state, you create an Amazon SNS topic and then set up Amazon SNS message filtering to deliver lifecycle notifications differently based on a message attribute\. For more information, see [Receive notifications using Amazon SNS](prepare-for-lifecycle-notifications.md#sns-notifications)\.
 

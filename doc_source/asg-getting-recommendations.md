@@ -1,4 +1,4 @@
-# Getting recommendations for an instance type from AWS Compute Optimizer<a name="asg-getting-recommendations"></a>
+# Use AWS Compute Optimizer to get recommendations for the instance type for an Auto Scaling group<a name="asg-getting-recommendations"></a>
 
 AWS provides Amazon EC2 instance recommendations to help you improve performance, save money, or both, by using features powered by AWS Compute Optimizer\. You can use these recommendations to decide whether to move to a new instance type\. 
 
@@ -10,7 +10,7 @@ To get recommendations from Compute Optimizer, you must first opt in to Compute 
 **Topics**
 + [Limitations](#compute-optimizer-limitations)
 + [Findings](#findings-classifications)
-+ [Viewing recommendations](#viewing-recommendations)
++ [View recommendations](#viewing-recommendations)
 + [Considerations for evaluating the recommendations](#considerations)
 
 ## Limitations<a name="compute-optimizer-limitations"></a>
@@ -26,7 +26,7 @@ Compute Optimizer classifies its findings for Auto Scaling groups as follows:
 + **Optimized** – An Auto Scaling group is considered optimized when Compute Optimizer determines that the group is correctly provisioned to run your workload, based on the chosen instance type\. For optimized resources, Compute Optimizer might sometimes recommend a new generation instance type\. 
 + **None** – There are no recommendations for this Auto Scaling group\. This might occur if you've been opted in to Compute Optimizer for less than 12 hours, or when the Auto Scaling group has been running for less than 30 hours, or when the Auto Scaling group or instance type is not supported by Compute Optimizer\. For more information, see the [Limitations](#compute-optimizer-limitations) section\.
 
-## Viewing recommendations<a name="viewing-recommendations"></a>
+## View recommendations<a name="viewing-recommendations"></a>
 
 After you opt in to Compute Optimizer, you can view the findings and recommendations that it generates for your Auto Scaling groups\. If you recently opted in, recommendations might not be available for up to 12 hours\.
 
@@ -49,7 +49,7 @@ Determine whether you want to use one of the recommendations\. Decide whether to
 To change the instance type in your Auto Scaling group, update the launch template or update the Auto Scaling group to use a new launch configuration\. Existing instances continue to use the previous configuration\. To update the existing instances, terminate them so that they are replaced by your Auto Scaling group, or allow automatic scaling to gradually replace older instances with newer instances based on your [termination policies](as-instance-termination.md)\. 
 
 **Note**  
-With the maximum instance lifetime and instance refresh features, you can also replace existing instances in your Auto Scaling group to launch new instances that use the new launch template or launch configuration\. For more information, see [Replacing Auto Scaling instances based on maximum instance lifetime](asg-max-instance-lifetime.md) and [Replacing Auto Scaling instances based on an instance refresh](asg-instance-refresh.md)\.
+With the maximum instance lifetime and instance refresh features, you can also replace existing instances in your Auto Scaling group to launch new instances that use the new launch template or launch configuration\. For more information, see [Replace Auto Scaling instances based on maximum instance lifetime](asg-max-instance-lifetime.md) and [Replace Auto Scaling instances based on an instance refresh](asg-instance-refresh.md)\.
 
 ## Considerations for evaluating the recommendations<a name="considerations"></a>
 

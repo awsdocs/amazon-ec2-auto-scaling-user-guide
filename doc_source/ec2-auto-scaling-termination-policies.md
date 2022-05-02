@@ -1,4 +1,4 @@
-# Working with Amazon EC2 Auto Scaling termination policies<a name="ec2-auto-scaling-termination-policies"></a>
+# Work with Amazon EC2 Auto Scaling termination policies<a name="ec2-auto-scaling-termination-policies"></a>
 
 This topic provides detailed information about the default termination policy and the options available to you to choose different termination policies for individual Auto Scaling groups\. By choosing different termination policies, you can control which instances you prefer to terminate first when a scale\-in event occurs\. For example, you can choose a different termination policy so that Amazon EC2 Auto Scaling prioritizes terminating the oldest instances first\. 
 
@@ -7,9 +7,9 @@ When Amazon EC2 Auto Scaling terminates instances, it attempts to maintain balan
 **Contents**
 + [Default termination policy](#default-termination-policy)
 + [Default termination policy and mixed instances groups](#default-termination-policy-mixed-instances-groups)
-+ [Using different termination policies](#custom-termination-policy)
-  + [Using different termination policies \(console\)](#custom-termination-policy-console)
-  + [Using different termination policies \(AWS CLI\)](#custom-termination-policy-cli)
++ [Use different termination policies](#custom-termination-policy)
+  + [Use different termination policies \(console\)](#custom-termination-policy-console)
+  + [Use different termination policies \(AWS CLI\)](#custom-termination-policy-cli)
 
 ## Default termination policy<a name="default-termination-policy"></a>
 
@@ -43,7 +43,7 @@ The default termination policy changes slightly due to differences in how [mixed
 
 1. After applying the preceding criteria, if there are multiple unprotected instances to terminate, determine which instances are closest to the next billing hour\. If there are multiple unprotected instances closest to the next billing hour, terminate one of these instances at random\.
 
-## Using different termination policies<a name="custom-termination-policy"></a>
+## Use different termination policies<a name="custom-termination-policy"></a>
 
 To specify the termination criteria to apply before Amazon EC2 Auto Scaling chooses an instance for termination, you can choose from any of the following predefined termination policies: 
 + `Default`\. Terminate instances according to the default termination policy\. This policy is useful when you want your Spot allocation strategy evaluated before any other policy, so that every time your Spot instances are terminated or replaced, you continue to make use of Spot Instances in the optimal pools\. It is also useful, for example, when you want to move off launch configurations and start using launch templates\.
@@ -56,7 +56,7 @@ To specify the termination criteria to apply before Amazon EC2 Auto Scaling choo
 **Note**  
 Amazon EC2 Auto Scaling always balances instances across Availability Zones first, regardless of which termination policy is used\. As a result, you might encounter situations in which some newer instances are terminated before older instances\. For example, when there is a more recently added Availability Zone, or when one Availability Zone has more instances than the other Availability Zones that are used by the group\. 
 
-### Using different termination policies \(console\)<a name="custom-termination-policy-console"></a>
+### Use different termination policies \(console\)<a name="custom-termination-policy-console"></a>
 
 After your Auto Scaling group has been created, you can update the termination policies for your group\. The default termination policy is used automatically\. You have the option of replacing the default policy with a different termination policy \(such as `OldestLaunchTemplate`\) or multiple termination policies listed in the order in which they should apply\. 
 
@@ -66,13 +66,13 @@ After your Auto Scaling group has been created, you can update the termination p
 
 1. Select the check box next to the Auto Scaling group\.
 
-   A split pane opens up in the bottom part of the **Auto Scaling groups** page, showing information about the group that's selected\. 
+   A split pane opens up in the bottom of the **Auto Scaling groups** page\.
 
 1. On the **Details** tab, choose **Advanced configurations**, **Edit**\.
 
 1. For **Termination policies**, choose one or more termination policies\. If you choose multiple policies, put them in the order that you want them evaluated in\.
 
-   You can optionally choose **Custom termination policy** and then choose a Lambda function that meets your needs\. If you have created versions and aliases for your Lambda function, you can choose a version or alias from the **Version/Alias** drop\-down\. To use the unpublished version of your Lambda function, keep **Version/Alias** set to its default\. For more information, see [Creating a custom termination policy with Lambda](lambda-custom-termination-policy.md)\.
+   You can optionally choose **Custom termination policy** and then choose a Lambda function that meets your needs\. If you have created versions and aliases for your Lambda function, you can choose a version or alias from the **Version/Alias** drop\-down\. To use the unpublished version of your Lambda function, keep **Version/Alias** set to its default\. For more information, see [Create a custom termination policy with Lambda](lambda-custom-termination-policy.md)\.
 **Note**  
 When using multiple policies, their order must be set correctly:  
 If you use the **Default** policy, it must be the last policy in the list\.
@@ -80,7 +80,7 @@ If you use a **Custom termination policy**, it must be the first policy in the l
 
 1. Choose **Update**\.
 
-### Using different termination policies \(AWS CLI\)<a name="custom-termination-policy-cli"></a>
+### Use different termination policies \(AWS CLI\)<a name="custom-termination-policy-cli"></a>
 
 The default termination policy is used automatically unless a different policy is specified\.
 
@@ -97,4 +97,4 @@ aws autoscaling update-auto-scaling-group --auto-scaling-group-name my-asg --ter
 
 If you use the `Default` termination policy, make it the last one in the list of termination policies\. For example, `--termination-policies "OldestLaunchConfiguration" "Default"`\.
 
-To use a custom termination policy, you must first create your termination policy using AWS Lambda\. To specify the Lambda function to use as your termination policy, make it the first one in the list of termination policies\. For example, `--termination-policies "arn:aws:lambda:us-west-2:123456789012:function:HelloFunction:prod" "OldestLaunchConfiguration"`\. For more information, see [Creating a custom termination policy with Lambda](lambda-custom-termination-policy.md)\.
+To use a custom termination policy, you must first create your termination policy using AWS Lambda\. To specify the Lambda function to use as your termination policy, make it the first one in the list of termination policies\. For example, `--termination-policies "arn:aws:lambda:us-west-2:123456789012:function:HelloFunction:prod" "OldestLaunchConfiguration"`\. For more information, see [Create a custom termination policy with Lambda](lambda-custom-termination-policy.md)\.

@@ -12,11 +12,11 @@ You can configure your Auto Scaling group to scale dynamically to meet this need
 + [Multiple dynamic scaling policies](#multiple-scaling-policy-resolution)
 + [Target tracking scaling policies for Amazon EC2 Auto Scaling](as-scaling-target-tracking.md)
 + [Step and simple scaling policies for Amazon EC2 Auto Scaling](as-scaling-simple-step.md)
-+ [Scaling cooldowns for Amazon EC2 Auto Scaling](Cooldown.md)
++ [Set default values for instance warmup or scaling cooldown](set-default-values-for-instance-warmup-or-scaling-cooldown.md)
 + [Scaling based on Amazon SQS](as-using-sqs-queue.md)
-+ [Verifying a scaling activity for an Auto Scaling group](as-verify-scaling-activity.md)
-+ [Disabling a scaling policy for an Auto Scaling group](as-enable-disable-scaling-policy.md)
-+ [Deleting a scaling policy](deleting-scaling-policy.md)
++ [Verify a scaling activity for an Auto Scaling group](as-verify-scaling-activity.md)
++ [Disable a scaling policy for an Auto Scaling group](as-enable-disable-scaling-policy.md)
++ [Delete a scaling policy](deleting-scaling-policy.md)
 + [Example scaling policies for the AWS Command Line Interface \(AWS CLI\)](examples-scaling-policies.md)
 
 ## How dynamic scaling policies work<a name="as-how-scaling-policies-work"></a>

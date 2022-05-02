@@ -1,4 +1,4 @@
-# Deleting a scaling policy<a name="deleting-scaling-policy"></a>
+# Delete a scaling policy<a name="deleting-scaling-policy"></a>
 
 After you no longer need a scaling policy, you can delete it\. Depending on the type of scaling policy, you might also need to delete the CloudWatch alarms\. Deleting a target tracking scaling policy also deletes any associated CloudWatch alarms\. Deleting a step scaling policy or a simple scaling policy deletes the underlying alarm action, but it does not delete the CloudWatch alarm, even if it no longer has an associated action\. 
 
@@ -8,7 +8,7 @@ After you no longer need a scaling policy, you can delete it\. Depending on the 
 
 1. Select the check box next to the Auto Scaling group\.
 
-   A split pane opens up in the bottom part of the **Auto Scaling groups** page, showing information about the group that's selected\.
+   A split pane opens up in the bottom of the **Auto Scaling groups** page\.
 
 1. On the **Automatic scaling** tab, under **Dynamic scaling policies**, select the check box in the top right corner of the desired scaling policy\.
 

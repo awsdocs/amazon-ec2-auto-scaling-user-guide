@@ -1,4 +1,4 @@
-# Disabling a scaling policy for an Auto Scaling group<a name="as-enable-disable-scaling-policy"></a>
+# Disable a scaling policy for an Auto Scaling group<a name="as-enable-disable-scaling-policy"></a>
 
 This topic describes how to temporarily disable a scaling policy so it won't initiate changes to the number of instances the Auto Scaling group contains\. When you disable a scaling policy, the configuration details are preserved, so you can quickly re\-enable the policy\. This is easier than temporarily deleting a policy when you don't need it, and recreating it later\. 
 
@@ -12,7 +12,7 @@ Note that disabled scaling policies still count toward your quotas on the number
 
 1. Select the check box next to the Auto Scaling group\.
 
-   A split pane opens up in the bottom part of the **Auto Scaling groups** page, showing information about the group that's selected\. 
+   A split pane opens up in the bottom of the **Auto Scaling groups** page\. 
 
 1. On the **Automatic scaling** tab, under **Dynamic scaling policies**, select the check box in the top right corner of the desired scaling policy\.
 

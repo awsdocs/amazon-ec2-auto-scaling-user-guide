@@ -1,4 +1,4 @@
-# Setting up Amazon EC2 Auto Scaling<a name="setting-up"></a>
+# Set up Amazon EC2 Auto Scaling<a name="setting-up"></a>
 
 Before you start using Amazon EC2 Auto Scaling, complete the following tasks\.
 

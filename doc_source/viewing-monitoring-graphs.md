@@ -1,10 +1,10 @@
-# Viewing monitoring graphs in the Amazon EC2 Auto Scaling console<a name="viewing-monitoring-graphs"></a>
+# View monitoring graphs in the Amazon EC2 Auto Scaling console<a name="viewing-monitoring-graphs"></a>
 
 In the Amazon EC2 Auto Scaling section of the Amazon EC2 console, you can monitor minute\-by\-minute progress of individual Auto Scaling groups using CloudWatch metrics\. 
 
 You can monitor the following types of metrics: 
-+ **Auto Scaling metrics** – Auto Scaling metrics are turned on only when you enable them\. For more information, see [Enable Auto Scaling group metrics \(console\)](as-instance-monitoring.md#as-enable-group-metrics)\. When Auto Scaling metrics are enabled, the monitoring graphs show data published at one\-minute granularity for Auto Scaling metrics\.
-+ **EC2 metrics** – If detailed monitoring is enabled, the monitoring graphs show data published at one\-minute granularity for EC2 metrics\. For more information, see [Configuring monitoring for Auto Scaling instances](enable-as-instance-metrics.md)\. 
++ **Auto Scaling metrics** – Auto Scaling metrics are turned on only when you enable them\. For more information, see [Enable Auto Scaling group metrics \(console\)](ec2-auto-scaling-cloudwatch-monitoring.md#as-enable-group-metrics)\. When Auto Scaling metrics are enabled, the monitoring graphs show data published at one\-minute granularity for Auto Scaling metrics\.
++ **EC2 metrics** – If detailed monitoring is enabled, the monitoring graphs show data published at one\-minute granularity for EC2 metrics\. For more information, see [Configure monitoring for Auto Scaling instances](enable-as-instance-metrics.md)\. 
 
 **To view monitoring graphs using the Amazon EC2 Auto Scaling console**
 
@@ -55,10 +55,6 @@ In the **EC2** section, you can find the following graph metrics based on key pe
 + **Status Check Failed \(Instance\)** \(based on `StatusCheckFailed_Instance`\)
 + **Status Check Failed \(System\)** \(based on `StatusCheckFailed_System`\)
 
-**Note**  
-For more information about the data source for the EC2 graph metrics, see [List the available CloudWatch metrics for your instances](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/viewing_metrics_with_cloudwatch.html) in the *Amazon EC2 User Guide for Linux Instances*\.   
-To view graph metrics for individual instances, see [Graph metrics for your instances](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/graphs-in-the-aws-management-console.html) in the *Amazon EC2 User Guide for Linux Instances*\. 
-
 You can use the next set of **Auto Scaling** graph metrics to measure specific features of specific groups\.
 
 The following metric data is available for groups where instances have weights that define how many units each instance contributes to the desired capacity of the group:
@@ -77,3 +73,9 @@ The following metric data is available if the group uses the [warm pool](ec2-aut
 + **Warm Pool Total Capacity Units Launched** \(based on `WarmPoolTotalCapacity`\)
 + **Group and Warm Pool Desired Capacity** \(based on `GroupAndWarmPoolDesiredCapacity`\)
 + **Group and Warm Pool Total Capacity Units Launched** \(based on `GroupAndWarmPoolTotalCapacity`\)
+
+### See also<a name="graph-metrics-see-also"></a>
+
+For information about the data source for the **EC2** graph metrics, see [List the available CloudWatch metrics for your instances](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/viewing_metrics_with_cloudwatch.html) in the *Amazon EC2 User Guide for Linux Instances*\. 
+
+To monitor per\-instance metrics, see [Graph metrics for your instances](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/graphs-in-the-aws-management-console.html) in the *Amazon EC2 User Guide for Linux Instances*\. 

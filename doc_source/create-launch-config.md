@@ -1,26 +1,26 @@
-# Creating a launch configuration<a name="create-launch-config"></a>
+# Create a launch configuration<a name="create-launch-config"></a>
 
 **Important**  
 We strongly recommend that you do not use launch configurations\. They do not provide full functionality for Amazon EC2 Auto Scaling or Amazon EC2\. We provide information about launch configurations for customers who have not yet migrated from launch configurations to launch templates\. For more information, see [Amazon EC2 Auto Scaling will no longer add support for new EC2 features to Launch Configurations](http://aws.amazon.com/blogs/compute/amazon-ec2-auto-scaling-will-no-longer-add-support-for-new-ec2-features-to-launch-configurations/) on the AWS Compute Blog\.
 
-When you create a launch configuration, you must specify information about the EC2 instances to launch\. Include the Amazon Machine Image \(AMI\), instance type, key pair, security groups, and block device mapping\. Alternatively, you can create a launch configuration using attributes from a running EC2 instance\. For more information, see [Creating a launch configuration using an EC2 instance](create-lc-with-instanceID.md)\.
+When you create a launch configuration, you must specify information about the EC2 instances to launch\. Include the Amazon Machine Image \(AMI\), instance type, key pair, security groups, and block device mapping\. Alternatively, you can create a launch configuration using attributes from a running EC2 instance\. For more information, see [Create a launch configuration using an EC2 instance](create-lc-with-instanceID.md)\.
 
-After you create a launch configuration, you can create an Auto Scaling group\. For more information, see [Creating an Auto Scaling group using a launch configuration](create-asg.md)\.
+After you create a launch configuration, you can create an Auto Scaling group\. For more information, see [Create an Auto Scaling group using a launch configuration](create-asg-launch-configuration.md)\.
 
-An Auto Scaling group is associated with one launch configuration at a time, and you can't modify a launch configuration after you've created it\. Therefore, if you want to change the launch configuration for an existing Auto Scaling group, you must update it with the new launch configuration\. For more information, see [Changing the launch configuration for an Auto Scaling group](change-launch-config.md)\.
+An Auto Scaling group is associated with one launch configuration at a time, and you can't modify a launch configuration after you've created it\. Therefore, if you want to change the launch configuration for an existing Auto Scaling group, you must update it with the new launch configuration\. For more information, see [Change the launch configuration for an Auto Scaling group](change-launch-config.md)\.
 
 **Topics**
-+ [Creating your launch configuration \(console\)](#create-launch-configuration)
-+ [Creating a launch configuration \(AWS CLI\)](#create-launch-configuration-aws-cli)
-+ [Configuring the instance metadata options](#launch-configurations-imds)
++ [Create a launch configuration \(console\)](#create-launch-configuration)
++ [Create a launch configuration \(AWS CLI\)](#create-launch-configuration-aws-cli)
++ [Configure the instance metadata options](#launch-configurations-imds)
 
-## Creating your launch configuration \(console\)<a name="create-launch-configuration"></a>
+## Create a launch configuration \(console\)<a name="create-launch-configuration"></a>
 
 **To create a launch configuration \(console\)**
 
 1. Open the Amazon EC2 console at [https://console\.aws\.amazon\.com/ec2/](https://console.aws.amazon.com/ec2/)\.
 
-1. On the navigation pane, under **AUTO SCALING**, choose **Launch Configurations**\. 
+1. On the navigation pane, under **Auto Scaling**, choose **Launch Configurations**\. 
 
 1. In the navigation bar, select your AWS Region\. 
 
@@ -42,11 +42,11 @@ An Auto Scaling group is associated with one launch configuration at a time, and
 
    1. \(Optional\) For **Purchasing option**, you can choose **Request Spot Instances** to request Spot Instances at the Spot price, capped at the On\-Demand price\. Optionally, you can specify a maximum price per instance hour for your Spot Instances\. 
 **Note**  
-Spot Instances are a cost\-effective choice compared to On\-Demand Instances, if you can be flexible about when your applications run and if your applications can be interrupted\. For more information, see [Requesting Spot Instances for fault\-tolerant and flexible applications](launch-template-spot-instances.md)\. 
+Spot Instances are a cost\-effective choice compared to On\-Demand Instances, if you can be flexible about when your applications run and if your applications can be interrupted\. For more information, see [Request Spot Instances for fault\-tolerant and flexible applications](launch-template-spot-instances.md)\. 
 
    1. \(Optional\) For **IAM instance profile**, choose a role to associate with the instances\. For more information, see [IAM role for applications that run on Amazon EC2 instances](us-iam-role.md)\.
 
-   1. \(Optional\) For **Monitoring**, choose whether to enable the instances to publish metric data at 1\-minute intervals to Amazon CloudWatch by enabling detailed monitoring\. Additional charges apply\. For more information, see [Configuring monitoring for Auto Scaling instances](enable-as-instance-metrics.md)\.
+   1. \(Optional\) For **Monitoring**, choose whether to enable the instances to publish metric data at 1\-minute intervals to Amazon CloudWatch by enabling detailed monitoring\. Additional charges apply\. For more information, see [Configure monitoring for Auto Scaling instances](enable-as-instance-metrics.md)\.
 
    1. \(Optional\) For **Advanced details**, **User data**, you can specify user data to configure an instance during launch, or to run a configuration script after the instance starts\. 
 
@@ -66,7 +66,7 @@ If you need to connect to your instances, do not choose **Proceed without a key 
 
 1. Select the acknowledgment check box, and then choose **Create launch configuration**\.
 
-## Creating a launch configuration \(AWS CLI\)<a name="create-launch-configuration-aws-cli"></a>
+## Create a launch configuration \(AWS CLI\)<a name="create-launch-configuration-aws-cli"></a>
 
 **To create a launch configuration using the command line**
 
@@ -74,7 +74,7 @@ You can use one of the following commands:
 + [create\-launch\-configuration](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/create-launch-configuration.html) \(AWS CLI\)
 + [New\-ASLaunchConfiguration](https://docs.aws.amazon.com/powershell/latest/reference/items/New-ASLaunchConfiguration.html) \(AWS Tools for Windows PowerShell\)
 
-## Configuring the instance metadata options<a name="launch-configurations-imds"></a>
+## Configure the instance metadata options<a name="launch-configurations-imds"></a>
 
 Amazon EC2 Auto Scaling supports configuring the Instance Metadata Service \(IMDS\) in launch configurations\. This gives you the option of using launch configurations to configure the Amazon EC2 instances in your Auto Scaling groups to require Instance Metadata Service Version 2 \(IMDSv2\), which is a session\-oriented method for requesting instance metadata\. For details about IMDSv2's advantages, see this article on the AWS Blog about [enhancements to add defense in depth to the EC2 instance metadata service](http://aws.amazon.com/blogs/security/defense-in-depth-open-firewalls-reverse-proxies-ssrf-vulnerabilities-ec2-instance-metadata-service/)\. 
 
@@ -87,13 +87,13 @@ You can configure your launch configuration for the following:
 
 You can find more details on configuring the Instance Metadata Service in the following topic: [Configuring the instance metadata service](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/configuring-instance-metadata-service.html) in the *Amazon EC2 User Guide for Linux Instances*\.
 
-Use the following procedure to configure IMDS options in a launch configuration\. After you create your launch configuration, you can associate it with your Auto Scaling group\. If you associate the launch configuration with an existing Auto Scaling group, the existing launch configuration is disassociated from the Auto Scaling group, and existing instances will require replacement to use the IMDS options that you specified in the new launch configuration\. For more information, see [Changing the launch configuration for an Auto Scaling group](change-launch-config.md)\.
+Use the following procedure to configure IMDS options in a launch configuration\. After you create your launch configuration, you can associate it with your Auto Scaling group\. If you associate the launch configuration with an existing Auto Scaling group, the existing launch configuration is disassociated from the Auto Scaling group, and existing instances will require replacement to use the IMDS options that you specified in the new launch configuration\. For more information, see [Change the launch configuration for an Auto Scaling group](change-launch-config.md)\.
 
 **To configure IMDS in a launch configuration \(console\)**
 
 1. Open the Amazon EC2 console at [https://console\.aws\.amazon\.com/ec2/](https://console.aws.amazon.com/ec2/)\.
 
-1. On the navigation pane, under **AUTO SCALING**, choose **Launch Configurations**\. 
+1. On the navigation pane, under **Auto Scaling**, choose **Launch Configurations**\. 
 
 1.  In the navigation bar, select your AWS Region\. 
 

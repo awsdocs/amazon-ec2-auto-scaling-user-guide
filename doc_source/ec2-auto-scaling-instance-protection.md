@@ -1,4 +1,4 @@
-# Using instance scale\-in protection<a name="ec2-auto-scaling-instance-protection"></a>
+# Use instance scale\-in protection<a name="ec2-auto-scaling-instance-protection"></a>
 
 To control whether an Auto Scaling group can terminate a particular instance when scaling in, use instance scale\-in protection\. You can enable the instance scale\-in protection setting on an Auto Scaling group or on an individual Auto Scaling instance\. When Amazon EC2 Auto Scaling launches a new instance or moves an instance from a warm pool into the Auto Scaling group, the instance inherits the instance scale\-in protection setting of the Auto Scaling group\. You can change the instance scale\-in protection setting for an Auto Scaling group or an Auto Scaling instance at any time\.
 
@@ -6,7 +6,7 @@ Instance scale\-in protection starts when the instance state is `InService`\. If
 
 Instance scale\-in protection does not protect Auto Scaling instances from the following:
 + Manual termination through the Amazon EC2 console, the `terminate-instances` command, or the `TerminateInstances` action\. To protect Auto Scaling instances from manual termination, enable Amazon EC2 termination protection\. For more information, see [Enabling termination protection](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/terminating-instances.html#Using_ChangingDisableAPITermination) in the *Amazon EC2 User Guide for Linux Instances*\.
-+ Health check replacement if the instance fails health checks\. For more information, see [Health checks for Auto Scaling instances](healthcheck.md)\.
++ Health check replacement if the instance fails health checks\. For more information, see [Health checks for Auto Scaling instances](ec2-auto-scaling-health-checks.md)\.
 + Spot Instance interruptions\. A Spot Instance is terminated when capacity is no longer available or the Spot price exceeds your maximum price\. 
 
 **Topics**
@@ -42,7 +42,7 @@ You can enable or disable the instance scale\-in protection setting for an Auto 
 
 1. Select check box next to the Auto Scaling group\.
 
-   A split pane opens up in the bottom part of the **Auto Scaling groups** page, showing information about the group that's selected\. 
+   A split pane opens up in the bottom of the **Auto Scaling groups** page\.
 
 1. On the **Details** tab, choose **Advanced configurations**, **Edit**\.
 
@@ -73,7 +73,7 @@ By default, an instance gets its instance scale\-in protection setting from its 
 
 1. Select the check box next to your Auto Scaling group\.
 
-   A split pane opens up in the bottom part of the **Auto Scaling groups** page, showing information about the group that's selected\. 
+   A split pane opens up in the bottom of the **Auto Scaling groups** page\. 
 
 1. On the **Instance management** tab, in **Instances**, select an instance\.
 

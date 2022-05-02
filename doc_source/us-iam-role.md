@@ -23,21 +23,29 @@ If you use the IAM console instead of the AWS CLI or one of the AWS SDKs, the co
 
 1. Open the IAM console at [https://console\.aws\.amazon\.com/iam/](https://console.aws.amazon.com/iam/)\.
 
-1. In the navigation pane, choose **Roles**, **Create role**\.
+1. In the navigation pane on the left, choose **Roles**\.
 
-1. For **Select type of trusted entity**, choose **AWS service**\. 
+1. Choose **Create role**\.
 
-1. For **Choose the service that will use this role**, choose **EC2** and the **EC2** use case\. Choose **Next: Permissions**\. 
+1. For **Select trusted entity**, choose **AWS service**\. 
 
-1. For **Attach permissions policies**, choose the AWS managed policies that contain the required permissions\. Choose **Next: Tags** and then **Next: Review**\.
+1. For your use case, choose **EC2** and then choose **Next**\. 
 
-1. On the **Review** page, enter a name for the role \(for example\) and choose **Create role**\. 
+1. If possible, select the policy to use for the permissions policy or choose **Create policy** to open a new browser tab and create a new policy from scratch\. For more information, see [Creating IAM policies](https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies_create-console.html#access_policies_create-start) in the *IAM User Guide*\. After you create the policy, close that tab and return to your original tab\. Select the check box next to the permissions policies that you want the service to have\.
 
-Use user permissions to control access to your new IAM role\. The `iam:PassRole` permission is needed on the IAM user who creates or updates an Auto Scaling group using a launch template that specifies an instance profile, or who creates a launch configuration that specifies an instance profile\. For an example policy that grants users specific permissions, see [Control which IAM roles can be passed \(using PassRole\)](security_iam_id-based-policy-examples.md#policy-example-pass-IAM-role)\.
+1. \(Optional\) Set a permissions boundary\. This is an advanced feature that is available for service roles\. For more information, see [Permissions boundaries for IAM entities ](https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies_boundaries.html) in the *IAM User Guide*\.
+
+1. Choose **Next**\.
+
+1. On the **Name, review, and create** page, for **Role name**, enter a role name to help you identify the purpose of this role\. This name must be unique within your AWS account\. Because other AWS resources might reference the role, you can't edit the name of the role after it has been created\. 
+
+1. Review the role, and then choose **Create role**\. 
+
+Use IAM user permissions to control access to your new IAM role\. The `iam:PassRole` permission is needed on the IAM user who creates or updates an Auto Scaling group using a launch template that specifies an instance profile, or who creates a launch configuration that specifies an instance profile\. For an example policy that grants users specific permissions, see [Control which IAM roles can be passed \(using PassRole\)](security_iam_id-based-policy-examples.md#policy-example-pass-IAM-role)\.
 
 ## Create a launch template<a name="us-iam-role-create-lt"></a>
 
-When you create the launch template using the AWS Management Console, in the **Advanced details** section, select the role from **IAM instance profile**\. For more information, see [Configuring advanced settings for your launch template](create-launch-template.md#advanced-settings-for-your-launch-template)\.
+When you create the launch template using the AWS Management Console, in the **Advanced details** section, select the role from **IAM instance profile**\. For more information, see [Configure advanced settings for your launch template](create-launch-template.md#advanced-settings-for-your-launch-template)\.
 
 When you create the launch template using the [create\-launch\-template](https://docs.aws.amazon.com/cli/latest/reference/ec2/create-launch-template.html) command from the AWS CLI, specify the instance profile name of your IAM role as shown in the following example\.
 
@@ -48,7 +56,7 @@ aws ec2 create-launch-template --launch-template-name my-lt-with-instance-profil
 
 ## Create a launch configuration<a name="us-iam-role-create-launch"></a>
 
-When you create the launch configuration using the AWS Management Console, in the **Additional configuration** section, select the role from **IAM instance profile**\. For more information, see [Creating a launch configuration](create-launch-config.md)\.
+When you create the launch configuration using the AWS Management Console, in the **Additional configuration** section, select the role from **IAM instance profile**\. For more information, see [Create a launch configuration](create-launch-config.md)\.
 
 When you create the launch configuration using the [create\-launch\-configuration](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/create-launch-configuration.html) command from the AWS CLI, specify the instance profile name of your IAM role as shown in the following example\.
 

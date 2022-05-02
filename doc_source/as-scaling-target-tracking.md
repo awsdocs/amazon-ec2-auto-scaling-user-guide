@@ -10,8 +10,8 @@ Depending on your application needs, you might find that one of these popular sc
 
 **Contents**
 + [Considerations](#target-tracking-considerations)
-  + [Choosing metrics](#available-metrics)
-  + [Monitoring Amazon EC2 metrics](#target-tracking-monitoring)
+  + [Choose metrics](#available-metrics)
+  + [Monitor Amazon EC2 metrics](#target-tracking-monitoring)
   + [Instance warm\-up](#as-target-tracking-scaling-warmup)
 + [Create a target tracking scaling policy \(console\)](#policy_creating)
 + [Create a target tracking scaling policy \(AWS CLI\)](#target-tracking-policy-creating-aws-cli)
@@ -29,7 +29,7 @@ Before you create a target tracking scaling policy for your Auto Scaling group, 
 + You can disable the scale\-in portion of a target tracking scaling policy\. This feature provides you with the flexibility to scale in your Auto Scaling group using a different method\. For example, you can use a different policy type for scale in while using a target tracking scaling policy for scale out\. 
 + Do not edit or delete the CloudWatch alarms that are configured for the target tracking scaling policy\. CloudWatch alarms that are associated with your target tracking scaling policies are managed by AWS and deleted automatically when no longer needed\. 
 
-### Choosing metrics<a name="available-metrics"></a>
+### Choose metrics<a name="available-metrics"></a>
 
 In a target tracking scaling policy, you can use predefined or customized metrics\. 
 
@@ -50,21 +50,24 @@ Keep the following in mind when choosing a metric:
 + A target tracking scaling policy does not scale in your Auto Scaling group when the specified metric has no data, unless you use the `ALBRequestCountPerTarget` metric\. This works because the `ALBRequestCountPerTarget` metric emits zeros for periods with no associated data, and the target tracking policy requires metric data to interpret a low utilization trend\. To have your Auto Scaling group scale in to 0 instances when no requests are routed to the Application Load Balancer target group, the group's minimum capacity must be set to 0\. 
 + To use the `ALBRequestCountPerTarget` metric, you must specify the `ResourceLabel` parameter to identify the load balancer target group that is associated with the metric\. 
 
-### Monitoring Amazon EC2 metrics<a name="target-tracking-monitoring"></a>
+### Monitor Amazon EC2 metrics<a name="target-tracking-monitoring"></a>
 
 To ensure a faster response to changes in the metric value, we recommend that you scale on metrics with a 1\-minute frequency\. Scaling on metrics with a 5\-minute frequency can result in slower response times and scaling on stale metric data\. 
 
-To get this level of data for Amazon EC2 metrics, you must specifically enable detailed monitoring\. By default, Amazon EC2 instances are enabled for basic monitoring, which means metric data for instances is available at 5\-minute frequency\. For more information, see [Configuring monitoring for Auto Scaling instances](enable-as-instance-metrics.md)\.
+To get this level of data for Amazon EC2 metrics, you must specifically enable detailed monitoring\. By default, Amazon EC2 instances are enabled for basic monitoring, which means metric data for instances is available at 5\-minute frequency\. For more information, see [Configure monitoring for Auto Scaling instances](enable-as-instance-metrics.md)\.
 
 ### Instance warm\-up<a name="as-target-tracking-scaling-warmup"></a>
 
-When you create a target tracking scaling policy, you can specify the number of seconds that it takes for a newly launched instance to warm up\. Until its specified warm\-up time has expired, an instance is not counted toward the aggregated metrics of the Auto Scaling group\. 
+**Important**  
+We recommend using the `DefaultInstanceWarmup` setting, which unifies all the warm\-up and cooldown settings for your Auto Scaling group\. For more information, see [Available warm\-up and cooldown settings](consolidated-view-of-warm-up-and-cooldown-settings.md)\.
 
-While scaling out, we do not consider instances that are warming up as part of the current capacity of the group so that the metrics are not affected by higher resource usage at startup\. This ensures that we don't add more instances than you need\.
+When you create a target tracking scaling policy, you can specify the number of seconds that it takes for a newly launched instance to warm up\. Until its specified warm\-up time has expired, an instance is not counted toward the aggregated metrics of the Auto Scaling group\.
 
-While scaling in, we consider instances that are terminating as part of the current capacity of the group\. Therefore, we don't remove more instances from the Auto Scaling group than necessary\.
+While instances are in the warm\-up period, your scaling policies only scale out if the metric value from instances that are not warming up is greater than the policy's target utilization\.
 
-A scale\-in activity can't start while a scale\-out activity is in progress\.
+If the group scales out again, the instances that are still warming up are counted as part of the desired capacity for the next scale\-out activity\. The intention is to continuously \(but not excessively\) scale out\.
+
+While the scale\-out activity is in progress, all scale\-in activities initiated by scaling policies are blocked until the instances finish warming up\.
 
 ## Create a target tracking scaling policy \(console\)<a name="policy_creating"></a>
 
@@ -104,7 +107,7 @@ You can choose to configure a target tracking scaling policy on an Auto Scaling 
 
 1. Select the check box next to your Auto Scaling group\.
 
-   A split pane opens up in the bottom part of the **Auto Scaling groups** page, showing information about the group that's selected\. 
+   A split pane opens up in the bottom of the **Auto Scaling groups** page\. 
 
 1. Verify that the minimum capacity and maximum capacity are appropriately set\. For example, if your group is already at its maximum size, specify a new maximum in order to scale out\. Amazon EC2 Auto Scaling does not scale your group below the minimum capacity or above the maximum capacity\. To update your group, on the **Details** tab, change the current settings for minimum and maximum capacity\. 
 

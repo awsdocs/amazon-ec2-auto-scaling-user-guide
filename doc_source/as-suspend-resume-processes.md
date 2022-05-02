@@ -1,15 +1,15 @@
-# Suspending and resuming a process for an Auto Scaling group<a name="as-suspend-resume-processes"></a>
+# Suspend and resume a process for an Auto Scaling group<a name="as-suspend-resume-processes"></a>
 
 This topic explains how to suspend and then resume one or more of the processes for your Auto Scaling group\. It also describes the issues to consider when choosing to use the suspend\-resume feature of Amazon EC2 Auto Scaling\.
 
 **Important**  
-Use the standby feature instead of the suspend\-resume feature if you need to troubleshoot or reboot an instance\. For more information, see [Temporarily removing instances from your Auto Scaling group](as-enter-exit-standby.md)\. Use the instance scale\-in protection feature to prevent specific instances from being terminated during automatic scale in\. For more information, see [Using instance scale\-in protection](ec2-auto-scaling-instance-protection.md)\.
+Use the standby feature instead of the suspend\-resume feature if you need to troubleshoot or reboot an instance\. For more information, see [Temporarily remove instances from your Auto Scaling group](as-enter-exit-standby.md)\. Use the instance scale\-in protection feature to prevent specific instances from being terminated during automatic scale in\. For more information, see [Use instance scale\-in protection](ec2-auto-scaling-instance-protection.md)\.
 
 In addition to suspensions that you initiate, Amazon EC2 Auto Scaling can also suspend processes for Auto Scaling groups that repeatedly fail to launch instances\. This is known as an *administrative suspension*\. An administrative suspension most commonly applies to Auto Scaling groups that have been trying to launch instances for over 24 hours but have not succeeded in launching any instances\. You can resume processes that were suspended by Amazon EC2 Auto Scaling for administrative reasons\.
 
 **Topics**
 + [Amazon EC2 Auto Scaling processes](#process-types)
-+ [Choosing to suspend](#choosing-suspend-resume)
++ [Choose to suspend](#choosing-suspend-resume)
 + [Suspend and resume processes \(console\)](#as-suspend-resume)
 + [Suspend and resume processes \(AWS CLI\)](#as-suspend-resume-aws-cli)
 
@@ -18,15 +18,15 @@ In addition to suspensions that you initiate, Amazon EC2 Auto Scaling can also s
 For Amazon EC2 Auto Scaling, there are two primary process types: `Launch` and `Terminate`\. The `Launch` process adds a new Amazon EC2 instance to an Auto Scaling group, increasing its capacity\. The `Terminate` process removes an Amazon EC2 instance from the group, decreasing its capacity\. 
 
 The other process types for Amazon EC2 Auto Scaling relate to specific scaling features: 
-+ `AddToLoadBalancer`—Adds instances to the attached load balancer target group or Classic Load Balancer when they are launched\. For more information, see [Elastic Load Balancing and Amazon EC2 Auto Scaling](autoscaling-load-balancer.md)\.
++ `AddToLoadBalancer`—Adds instances to the attached load balancer target group or Classic Load Balancer when they are launched\. For more information, see [Use Elastic Load Balancing to distribute traffic across the instances in your Auto Scaling group](autoscaling-load-balancer.md)\.
 + `AlarmNotification`—Accepts notifications from CloudWatch alarms that are associated with the group's scaling policies\. For more information, see [Dynamic scaling for Amazon EC2 Auto Scaling](as-scale-based-on-demand.md)\.
 + `AZRebalance`—Balances the number of EC2 instances in the group evenly across all of the specified Availability Zones when the group becomes unbalanced, for example, a previously unavailable Availability Zone returns to a healthy state\. For more information, see [Rebalancing activities](auto-scaling-benefits.md#AutoScalingBehavior.InstanceUsage)\.
-+ `HealthCheck`—Checks the health of the instances and marks an instance as unhealthy if Amazon EC2 or Elastic Load Balancing tells Amazon EC2 Auto Scaling that the instance is unhealthy\. This process can override the health status of an instance that you set manually\. For more information, see [Health checks for Auto Scaling instances](healthcheck.md)\.
-+ `InstanceRefresh`—Terminates and replaces instances using the instance refresh feature\. For more information, see [Replacing Auto Scaling instances based on an instance refresh](asg-instance-refresh.md)\.
-+ `ReplaceUnhealthy`—Terminates instances that are marked as unhealthy and then creates new instances to replace them\. For more information, see [Health checks for Auto Scaling instances](healthcheck.md)\.
-+ `ScheduledActions`—Performs the scheduled scaling actions that you create or that are created for you when you create an AWS Auto Scaling scaling plan and turn on predictive scaling\. For more information, see [Scheduled scaling for Amazon EC2 Auto Scaling](schedule_time.md)\. 
++ `HealthCheck`—Checks the health of the instances and marks an instance as unhealthy if Amazon EC2 or Elastic Load Balancing tells Amazon EC2 Auto Scaling that the instance is unhealthy\. This process can override the health status of an instance that you set manually\. For more information, see [Health checks for Auto Scaling instances](ec2-auto-scaling-health-checks.md)\.
++ `InstanceRefresh`—Terminates and replaces instances using the instance refresh feature\. For more information, see [Replace Auto Scaling instances based on an instance refresh](asg-instance-refresh.md)\.
++ `ReplaceUnhealthy`—Terminates instances that are marked as unhealthy and then creates new instances to replace them\. For more information, see [Health checks for Auto Scaling instances](ec2-auto-scaling-health-checks.md)\.
++ `ScheduledActions`—Performs the scheduled scaling actions that you create or that are created for you when you create an AWS Auto Scaling scaling plan and turn on predictive scaling\. For more information, see [Scheduled scaling for Amazon EC2 Auto Scaling](ec2-auto-scaling-scheduled-scaling.md)\. 
 
-## Choosing to suspend<a name="choosing-suspend-resume"></a>
+## Choose to suspend<a name="choosing-suspend-resume"></a>
 
 Each process type can be suspended and resumed independently\. This section provides some guidance and behavior to take into account before deciding to suspend one of the processes built into Amazon EC2 Auto Scaling\. Keep in mind that suspending individual processes might interfere with other processes\. Depending on the reason for suspending a process, you might need to suspend multiple processes together\. 
 
@@ -65,7 +65,7 @@ If you suspend either the `Launch` or `Terminate` process types, it can prevent 
 `ScheduledActions`
 + Amazon EC2 Auto Scaling does not execute scaling actions that are scheduled to run during the suspension period\. When you resume `ScheduledActions`, Amazon EC2 Auto Scaling only considers scheduled actions whose execution time has not yet passed\. 
 
-### Suspending both launch and terminate<a name="suspend-launch-terminate"></a>
+### Suspend both launch and terminate<a name="suspend-launch-terminate"></a>
 
 When you suspend the `Launch` and `Terminate` process types together, the following happens: 
 + Your Auto Scaling group cannot initiate scaling activities or maintain its desired capacity\. 
@@ -96,7 +96,7 @@ You can suspend and resume individual processes or all processes\.
 
 1. Select the check box next to the Auto Scaling group\. 
 
-   A split pane opens up in the bottom part of the **Auto Scaling groups** page, showing information about the group that's selected\. 
+   A split pane opens up in the bottom of the **Auto Scaling groups** page\. 
 
 1. On the **Details** tab, choose **Advanced configurations**, **Edit**\.
 

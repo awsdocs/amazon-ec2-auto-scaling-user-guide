@@ -26,7 +26,7 @@ The following example shows an event for a lifecycle hook for the `Warmed:Pendin
 ```
 {
   "version": "0",
-  "id": "18b2ec17-3e9b-4c15-8024-ff2e8ce8786a",
+  "id": "12345678-1234-1234-1234-123456789012",
   "detail-type": "EC2 Instance-launch Lifecycle Action",
   "source": "aws.autoscaling",
   "account": "123456789012",
@@ -38,7 +38,7 @@ The following example shows an event for a lifecycle hook for the `Warmed:Pendin
   "detail": { 
     "LifecycleActionToken": "71514b9d-6a40-4b26-8523-05e7eEXAMPLE", 
     "AutoScalingGroupName": "my-asg", 
-    "LifecycleHookName": "my-lifecycle-hook-for-warming-instances", 
+    "LifecycleHookName": "my-launch-lifecycle-hook", 
     "EC2InstanceId": "i-1234567890abcdef0", 
     "LifecycleTransition": "autoscaling:EC2_INSTANCE_LAUNCHING",
     "NotificationMetadata": "additional-info",
@@ -54,7 +54,7 @@ The following example shows an event for a lifecycle hook for the `Pending:Wait`
 ```
 {
   "version": "0",
-  "id": "5985cdde-1f01-9ae2-1498-3c8ea162d141",
+  "id": "12345678-1234-1234-1234-123456789012",
   "detail-type": "EC2 Instance-launch Lifecycle Action",
   "source": "aws.autoscaling",
   "account": "123456789012",
@@ -66,7 +66,7 @@ The following example shows an event for a lifecycle hook for the `Pending:Wait`
   "detail": { 
     "LifecycleActionToken": "19cc4d4a-e450-4d1c-b448-0de67EXAMPLE", 
     "AutoScalingGroupName": "my-asg", 
-    "LifecycleHookName": "my-lifecycle-hook-for-warmed-instances", 
+    "LifecycleHookName": "my-launch-lifecycle-hook", 
     "EC2InstanceId": "i-1234567890abcdef0", 
     "LifecycleTransition": "autoscaling:EC2_INSTANCE_LAUNCHING",
     "NotificationMetadata": "additional-info",
@@ -94,12 +94,40 @@ The following example shows an event for a lifecycle hook for the `Pending:Wait`
   "detail": { 
     "LifecycleActionToken": "87654321-4321-4321-4321-21098EXAMPLE", 
     "AutoScalingGroupName": "my-asg", 
-    "LifecycleHookName": "my-lifecycle-hook-for-launching-instances", 
+    "LifecycleHookName": "my-launch-lifecycle-hook", 
     "EC2InstanceId": "i-1234567890abcdef0", 
     "LifecycleTransition": "autoscaling:EC2_INSTANCE_LAUNCHING",
     "NotificationMetadata": "additional-info",
     "Origin": "EC2",
     "Destination": "AutoScalingGroup"
+  } 
+}
+```
+
+**Instances returning to the warm pool on scale in**  
+The following example shows an event for a lifecycle hook for the `Warmed:Pending:Wait` state\. It represents an instance that is leaving the group and returning to the warm pool on scale in\.
+
+```
+{
+  "version": "0",
+  "id": "12345678-1234-1234-1234-123456789012",
+  "detail-type": "EC2 Instance-terminate Lifecycle Action",
+  "source": "aws.autoscaling",
+  "account": "123456789012",
+  "time": "2022-03-28T00:12:37.214Z",
+  "region": "us-west-2",
+  "resources": [
+    "arn:aws:autoscaling:us-west-2:123456789012:autoScalingGroup:042cba90-ad2f-431c-9b4d-6d9055bcc9fb:autoScalingGroupName/my-asg"
+  ],
+  "detail": { 
+    "LifecycleActionToken": "42694b3d-4b70-6a62-8523-09a1eEXAMPLE", 
+    "AutoScalingGroupName": "my-asg", 
+    "LifecycleHookName": "my-termination-lifecycle-hook", 
+    "EC2InstanceId": "i-1234567890abcdef0", 
+    "LifecycleTransition": "autoscaling:EC2_INSTANCE_TERMINATING",
+    "NotificationMetadata": "additional-info",
+    "Origin": "AutoScalingGroup",
+    "Destination": "WarmPool"
   } 
 }
 ```
@@ -182,6 +210,27 @@ Use the following sample event pattern to capture all events that are associated
       ],
       "Destination": [
           "AutoScalingGroup"
+      ]
+   }
+}
+```
+
+Use the following sample event pattern to capture all events that are associated with instances returning to the warm pool on scale in\.
+
+```
+{
+  "source": [ 
+      "aws.autoscaling" 
+  ],
+  "detail-type": [ 
+      "EC2 Instance-terminate Lifecycle Action" 
+  ],
+  "detail": {
+      "Origin": [
+          "AutoScalingGroup"
+      ],
+      "Destination": [
+          "WarmPool"
       ]
    }
 }

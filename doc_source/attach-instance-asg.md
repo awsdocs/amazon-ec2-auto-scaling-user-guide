@@ -20,7 +20,7 @@ The examples use an Auto Scaling group with the following configuration:
 + Desired capacity = 2
 + Availability Zone = us\-west\-2a
 
-## Attaching an instance \(console\)<a name="attach-instance-console"></a>
+## Attach an instance \(console\)<a name="attach-instance-console"></a>
 
 You can attach an existing instance to an existing Auto Scaling group, or to a new Auto Scaling group as you create it\.
 
@@ -28,7 +28,7 @@ You can attach an existing instance to an existing Auto Scaling group, or to a n
 
 1. Open the Amazon EC2 console at [https://console\.aws\.amazon\.com/ec2/](https://console.aws.amazon.com/ec2/)\.
 
-1. On the navigation pane, under **INSTANCES**, choose **Instances**, and then select an instance\.
+1. On the navigation pane, under **Instances**, choose **Instances**, and then select an instance\.
 
 1. Choose **Actions**, **Instance settings**, **Attach to Auto Scaling Group**\.
 
@@ -36,7 +36,7 @@ You can attach an existing instance to an existing Auto Scaling group, or to a n
 
    The new Auto Scaling group is created using a new launch configuration with the same name that you specified for the Auto Scaling group\. The launch configuration gets its settings \(for example, security group and IAM role\) from the instance that you attached\. The Auto Scaling group gets settings \(for example, Availability Zone and subnet\) from the instance that you attached, and has a desired capacity and maximum size of `1`\.
 
-1. \(Optional\) To edit the settings for the Auto Scaling group, on the navigation pane, under **AUTO SCALING**, choose **Auto Scaling Groups**\. Select the check box next to the new Auto Scaling group, choose the **Edit** button that is above the list of groups, change the settings as needed, and then choose **Update**\. 
+1. \(Optional\) To edit the settings for the Auto Scaling group, on the navigation pane, under **Auto Scaling**, choose **Auto Scaling Groups**\. Select the check box next to the new Auto Scaling group, choose the **Edit** button that is above the list of groups, change the settings as needed, and then choose **Update**\. 
 
 **To attach an instance to an existing Auto Scaling group**
 
@@ -44,7 +44,7 @@ You can attach an existing instance to an existing Auto Scaling group, or to a n
 
 1. \(Optional\) On the navigation pane, under **AUTO SCALING**, choose **Auto Scaling Groups**\. Select the Auto Scaling group and verify that the maximum size of the Auto Scaling group is large enough that you can add another instance\. Otherwise, on the **Details** tab, increase the maximum capacity\. 
 
-1. On the navigation pane, under **INSTANCES**, choose **Instances**, and then select an instance\.
+1. On the navigation pane, under **Instances**, choose **Instances**, and then select an instance\.
 
 1. Choose **Actions**, **Instance settings**, **Attach to Auto Scaling Group**\.
 
@@ -52,7 +52,7 @@ You can attach an existing instance to an existing Auto Scaling group, or to a n
 
 1. If the instance doesn't meet the criteria, you get an error message with the details\. For example, the instance might not be in the same Availability Zone as the Auto Scaling group\. Choose **Close** and try again with an instance that meets the criteria\.
 
-## Attaching an instance \(AWS CLI\)<a name="attach-instance-aws-cli"></a>
+## Attach an instance \(AWS CLI\)<a name="attach-instance-aws-cli"></a>
 
 **To attach an instance to an Auto Scaling group**
 

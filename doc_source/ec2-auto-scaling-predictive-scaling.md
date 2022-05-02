@@ -19,8 +19,8 @@ Use the AWS Management Console, the AWS CLI, or one of the SDKs to add a predict
 + [Create a predictive scaling policy \(console\)](#predictive-scaling-policy-console)
 + [Create a predictive scaling policy \(AWS CLI\)](#predictive-scaling-policy-aws-cli)
 + [Limitations](#predictive-scaling-limitations)
-+ [Exploring your data and forecast](predictive-scaling-graphs.md)
-+ [Overriding forecast values using scheduled actions](predictive-scaling-overriding-forecast-capacity.md)
++ [Explore your data and forecast](predictive-scaling-graphs.md)
++ [Override forecast values using scheduled actions](predictive-scaling-overriding-forecast-capacity.md)
 + [Advanced predictive scaling policy configurations using custom metrics](predictive-scaling-customized-metric-specification.md)
 
 ## How predictive scaling works<a name="as-how-predictive-scaling-works"></a>

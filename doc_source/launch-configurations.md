@@ -1,4 +1,4 @@
-# Launch configurations<a name="LaunchConfiguration"></a>
+# Launch configurations<a name="launch-configurations"></a>
 
 **Important**  
 We strongly recommend that you do not use launch configurations\. They do not provide full functionality for Amazon EC2 Auto Scaling or Amazon EC2\. We provide information about launch configurations for customers who have not yet migrated from launch configurations to launch templates\. For more information, see [Amazon EC2 Auto Scaling will no longer add support for new EC2 features to Launch Configurations](http://aws.amazon.com/blogs/compute/amazon-ec2-auto-scaling-will-no-longer-add-support-for-new-ec2-features-to-launch-configurations/) on the AWS Compute Blog\.
@@ -7,10 +7,10 @@ A *launch configuration* is an instance configuration template that an Auto Scal
 
 You can specify your launch configuration with multiple Auto Scaling groups\. However, you can only specify one launch configuration for an Auto Scaling group at a time, and you can't modify a launch configuration after you've created it\. To change the launch configuration for an Auto Scaling group, you must create a launch configuration and then update your Auto Scaling group with it\.
 
-Keep in mind that whenever you create an Auto Scaling group, you must specify a launch configuration, a launch template, or an EC2 instance\. When you create an Auto Scaling group using an EC2 instance, Amazon EC2 Auto Scaling automatically creates a launch configuration for you and associates it with the Auto Scaling group\. For more information, see [Creating an Auto Scaling group using parameters from an existing instance ](create-asg-from-instance.md)\. Alternatively, if you are using launch templates, you can specify a launch template instead of a launch configuration or an EC2 instance\. For more information, see [Launch templates](LaunchTemplates.md)\.
+Keep in mind that whenever you create an Auto Scaling group, you must specify a launch configuration, a launch template, or an EC2 instance\. When you create an Auto Scaling group using an EC2 instance, Amazon EC2 Auto Scaling automatically creates a launch configuration for you and associates it with the Auto Scaling group\. For more information, see [Create an Auto Scaling group using parameters from an existing instance ](create-asg-from-instance.md)\. Alternatively, if you are using launch templates, you can specify a launch template instead of a launch configuration or an EC2 instance\. For more information, see [Launch templates](launch-templates.md)\.
 
 **Topics**
-+ [Creating a launch configuration](create-launch-config.md)
-+ [Creating a launch configuration using an EC2 instance](create-lc-with-instanceID.md)
-+ [Changing the launch configuration for an Auto Scaling group](change-launch-config.md)
-+ [Configuring instance tenancy with a launch configuration](auto-scaling-dedicated-instances.md)
++ [Create a launch configuration](create-launch-config.md)
++ [Create a launch configuration using an EC2 instance](create-lc-with-instanceID.md)
++ [Change the launch configuration for an Auto Scaling group](change-launch-config.md)
++ [Configure instance tenancy with a launch configuration](auto-scaling-dedicated-instances.md)

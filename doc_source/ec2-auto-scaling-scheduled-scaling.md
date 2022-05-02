@@ -1,4 +1,4 @@
-# Scheduled scaling for Amazon EC2 Auto Scaling<a name="schedule_time"></a>
+# Scheduled scaling for Amazon EC2 Auto Scaling<a name="ec2-auto-scaling-scheduled-scaling"></a>
 
 Scheduled scaling helps you to set up your own scaling schedule according to predictable load changes\. For example, let's say that every week the traffic to your web application starts to increase on Wednesday, remains high on Thursday, and starts to decrease on Friday\. You can configure a schedule for Amazon EC2 Auto Scaling to increase capacity on Wednesday and decrease capacity on Friday\. 
 
@@ -16,7 +16,7 @@ To use scheduled scaling, you create *scheduled actions*\. Scheduled actions are
 When you create a scheduled action, keep the following in mind:
 + A scheduled action sets the desired, minimum, and maximum sizes to what is specified by the scheduled action at the date and time specified\. The request can optionally include only one of these sizes\. For example, you can create a scheduled action with only the desired capacity specified\. In some cases, however, you must include the minimum and maximum sizes to ensure that the new desired capacity that you specified in the action is not outside of these limits\.
 + By default, the recurring schedules that you set are in Coordinated Universal Time \(UTC\)\. You can change the time zone to correspond to your local time zone or a time zone for another part of your network\. When you specify a time zone that observes Daylight Saving Time \(DST\), the action automatically adjusts for DST\. 
-+ You can temporarily turn off scheduled scaling for an Auto Scaling group by suspending the `ScheduledActions` process\. This helps you prevent scheduled actions from being active without having to delete them\. You can then resume scheduled scaling when you want to use it again\. For more information, see [Suspending and resuming a process for an Auto Scaling group](as-suspend-resume-processes.md)\.
++ You can temporarily turn off scheduled scaling for an Auto Scaling group by suspending the `ScheduledActions` process\. This helps you prevent scheduled actions from being active without having to delete them\. You can then resume scheduled scaling when you want to use it again\. For more information, see [Suspend and resume a process for an Auto Scaling group](as-suspend-resume-processes.md)\.
 + The order of execution for scheduled actions is guaranteed within the same group, but not for scheduled actions across groups\.
 + A scheduled action generally executes within seconds\. However, the action might be delayed for up to two minutes from the scheduled start time\. Because scheduled actions within an Auto Scaling group are executed in the order that they are specified, actions with scheduled start times close to each other can take longer to execute\.
 
@@ -51,7 +51,7 @@ Complete the following procedure to create a scheduled action to scale your Auto
 
 1. Select the check box next to your Auto Scaling group\.
 
-   A split pane opens up in the bottom part of the **Auto Scaling groups** page, showing information about the group that's selected\. 
+   A split pane opens up in the bottom of the **Auto Scaling groups** page\.
 
 1. On the **Automatic scaling** tab, in **Scheduled actions**, choose **Create scheduled action**\.
 
@@ -97,7 +97,7 @@ After creating a scheduled action, you can update any of its settings except the
 
 1. Select the check box next to your Auto Scaling group\.
 
-   A split pane opens up in the bottom part of the **Auto Scaling groups** page, showing information about the group that's selected\. 
+   A split pane opens up in the bottom of the **Auto Scaling groups** page\.
 
 1. On the **Automatic scaling** tab, in **Scheduled actions**, select a scheduled action\.
 

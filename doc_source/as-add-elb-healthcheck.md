@@ -1,4 +1,4 @@
-# Adding Elastic Load Balancing health checks to an Auto Scaling group<a name="as-add-elb-healthcheck"></a>
+# Add Elastic Load Balancing health checks to an Auto Scaling group<a name="as-add-elb-healthcheck"></a>
 
 The default health checks for an Auto Scaling group are EC2 status checks only\. If an instance fails these status checks, it is marked unhealthy and is terminated while Amazon EC2 Auto Scaling launches a new replacement instance\. 
 
@@ -16,20 +16,20 @@ Use the following procedure to add Elastic Load Balancing \(`ELB`\) health check
 
 1. Select the check box next to an existing group\.
 
-   A split pane opens up in the bottom part of the **Auto Scaling groups** page, showing information about the group that's selected\. 
+   A split pane opens up in the bottom of the **Auto Scaling groups** page\. 
 
 1. On the **Details** tab, choose **Health checks**, **Edit**\.
 
 1. For **Health check type**, select **Enable ELB health checks**\.
 
-1. For **Health check grace period**, enter the amount of time, in seconds, that Amazon EC2 Auto Scaling needs to wait before checking the health status of an instance\. New instances often need time for a brief warm\-up before they can pass a health check\. To provide enough warm\-up time, set the health check grace period of the group to match the expected startup time of your application\.
+1. For **Health check grace period**, enter the amount of time, in seconds, that Amazon EC2 Auto Scaling needs to wait before checking the health status of an instance after it enters the `InService` state\. For more information, see [Health check grace period](ec2-auto-scaling-health-checks.md#health-check-grace-period)\. 
 
 1. Choose **Update**\.
 
 1. On the **Instance management** tab, under **Instances**, you can view the health status of instances\. The **Health Status** column displays the results of the newly added health checks\.
 
 ## See also<a name="elb-healthchecks-see-also"></a>
-+ For more information, see [Health checks for Auto Scaling instances](healthcheck.md)\. 
++ For more information, see [Health checks for Auto Scaling instances](ec2-auto-scaling-health-checks.md)\. 
 + To configure health checks for your Application Load Balancer, see [Health checks for your target groups](https://docs.aws.amazon.com/elasticloadbalancing/latest/application/target-group-health-checks.html) in the *User Guide for Application Load Balancers*\.
 + To configure health checks for your Network Load Balancer, see [Health checks for your target groups](https://docs.aws.amazon.com/elasticloadbalancing/latest/network/target-group-health-checks.html) in the *User Guide for Network Load Balancers*\.
 + To configure health checks for your Gateway Load Balancer, see [Health checks for your target groups](https://docs.aws.amazon.com/elasticloadbalancing/latest/gateway/health-checks.html) in the *User Guide for Gateway Load Balancers*\.

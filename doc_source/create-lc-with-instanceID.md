@@ -1,4 +1,4 @@
-# Creating a launch configuration using an EC2 instance<a name="create-lc-with-instanceID"></a>
+# Create a launch configuration using an EC2 instance<a name="create-lc-with-instanceID"></a>
 
 Amazon EC2 Auto Scaling provides you with an option to create a launch configuration using the attributes from a running EC2 instance\.
 

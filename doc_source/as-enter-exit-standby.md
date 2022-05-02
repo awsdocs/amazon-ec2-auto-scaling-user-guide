@@ -1,4 +1,4 @@
-# Temporarily removing instances from your Auto Scaling group<a name="as-enter-exit-standby"></a>
+# Temporarily remove instances from your Auto Scaling group<a name="as-enter-exit-standby"></a>
 
 You can put an instance that is in the `InService` state into the `Standby` state, update or troubleshoot the instance, and then return the instance to service\. Instances that are on standby are still part of the Auto Scaling group, but they do not actively handle load balancer traffic\.
 
@@ -9,7 +9,7 @@ For example, you can change the Amazon Machine Image \(AMI\) for an Auto Scaling
 Detaching instances from an Auto Scaling group is similar to putting instances on standby\. Detaching instances might be useful if you want to manage the instances like standalone EC2 instances and possibly terminate them\. For more information, see [Detach EC2 instances from your Auto Scaling group](detach-instance-asg.md)\.
 
 **Important**  
-When you put instances on standby, your Auto Scaling group can become unbalanced between Availability Zones\. Amazon EC2 Auto Scaling compensates by rebalancing the Availability Zones unless you suspend the `AZRebalance` process\. For more information, see [Suspending and resuming a process for an Auto Scaling group](as-suspend-resume-processes.md)\.
+When you put instances on standby, your Auto Scaling group can become unbalanced between Availability Zones\. Amazon EC2 Auto Scaling compensates by rebalancing the Availability Zones unless you suspend the `AZRebalance` process\. For more information, see [Suspend and resume a process for an Auto Scaling group](as-suspend-resume-processes.md)\.
 
 **Topics**
 + [How the standby state works](#standby-state)
@@ -34,7 +34,7 @@ The standby state works as follows to help you temporarily remove an instance fr
 
 1. You return the instance to service by exiting the standby state\.
 
-1. After you put an instance that was on standby back in service, the desired capacity is incremented\. If you did not decrement the capacity when you put the instance on standby, the Auto Scaling group detects that you have more instances than you need\. It applies the termination policy in effect to reduce the size of the group\. For more information, see [Controlling which Auto Scaling instances terminate during scale in](as-instance-termination.md)\.
+1. After you put an instance that was on standby back in service, the desired capacity is incremented\. If you did not decrement the capacity when you put the instance on standby, the Auto Scaling group detects that you have more instances than you need\. It applies the termination policy in effect to reduce the size of the group\. For more information, see [Control which Auto Scaling instances terminate during scale in](as-instance-termination.md)\.
 
 1. If there is a load balancer target group or Classic Load Balancer attached to your Auto Scaling group, the instance is registered with the load balancer\.
 
@@ -42,13 +42,13 @@ The following illustration shows the transitions between instance states in this
 
 ![\[Instances enter and exit the standby state.\]](http://docs.aws.amazon.com/autoscaling/ec2/userguide/images/standby_lifecycle.png)
 
-For more information about the complete lifecycle of instances in an Auto Scaling group, see [Amazon EC2 Auto Scaling instance lifecycle](AutoScalingGroupLifecycle.md)\.
+For more information about the complete lifecycle of instances in an Auto Scaling group, see [Amazon EC2 Auto Scaling instance lifecycle](ec2-auto-scaling-lifecycle.md)\.
 
 ## Health status of an instance in a standby state<a name="standby-instance-health-status"></a>
 
 Amazon EC2 Auto Scaling does not perform health checks on instances that are in a standby state\. While the instance is in a standby state, its health status reflects the status that it had before you put it on standby\. Amazon EC2 Auto Scaling does not perform a health check on the instance until you put it back in service\.
 
-For example, if you put a healthy instance on standby and then terminate it, Amazon EC2 Auto Scaling continues to report the instance as healthy\. If you attempt to put a terminated instance that was on standby back in service, Amazon EC2 Auto Scaling performs a health check on the instance, determines that it is terminating and unhealthy, and launches a replacement instance\. For an introduction to health checks, see [Health checks for Auto Scaling instances](healthcheck.md)\.
+For example, if you put a healthy instance on standby and then terminate it, Amazon EC2 Auto Scaling continues to report the instance as healthy\. If you attempt to put a terminated instance that was on standby back in service, Amazon EC2 Auto Scaling performs a health check on the instance, determines that it is terminating and unhealthy, and launches a replacement instance\. For an introduction to health checks, see [Health checks for Auto Scaling instances](ec2-auto-scaling-health-checks.md)\.
 
 ## Temporarily remove an instance \(console\)<a name="standby-state-console"></a>
 
@@ -60,7 +60,7 @@ The following procedure demonstrates the general process for updating an instanc
 
 1. Select the check box next to the Auto Scaling group\.
 
-   A split pane opens up in the bottom part of the **Auto Scaling groups** page, showing information about the group that's selected\. 
+   A split pane opens up in the bottom of the **Auto Scaling groups** page\. 
 
 1. On the **Instance management** tab, in **Instances**, select an instance\.
 

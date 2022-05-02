@@ -1,4 +1,4 @@
-# Logging Amazon EC2 Auto Scaling API calls with AWS CloudTrail<a name="logging-using-cloudtrail"></a>
+# Log Amazon EC2 Auto Scaling API calls with AWS CloudTrail<a name="logging-using-cloudtrail"></a>
 
 Amazon EC2 Auto Scaling is integrated with AWS CloudTrail, a service that provides a record of actions taken by a user, role, or a service using Amazon EC2 Auto Scaling\. CloudTrail captures all API calls for Amazon EC2 Auto Scaling as events\. The calls captured include calls from the Amazon EC2 Auto Scaling console and code calls to the Amazon EC2 Auto Scaling API\. 
 
@@ -25,7 +25,7 @@ Every event or log entry contains information about who generated the request\. 
 
 For more information, see the [CloudTrail `userIdentity` element](https://docs.aws.amazon.com/awscloudtrail/latest/userguide/cloudtrail-event-reference-user-identity.html)\.
 
-## Understanding Amazon EC2 Auto Scaling log file entries<a name="understanding-service-name-entries"></a>
+## Understand Amazon EC2 Auto Scaling log file entries<a name="understanding-service-name-entries"></a>
 
 A trail is a configuration that enables delivery of events as log files to an Amazon S3 bucket that you specify\. CloudTrail log files contain one or more log entries\. An event represents a single request from any source and includes information about the requested action, the date and time of the action, request parameters, and so on\. CloudTrail log files aren't an ordered stack trace of the public API calls, so they don't appear in any specific order\. 
 

@@ -1,4 +1,4 @@
-# Exploring your data and forecast<a name="predictive-scaling-graphs"></a>
+# Explore your data and forecast<a name="predictive-scaling-graphs"></a>
 
 After the forecast is created, you can view charts showing historical data from the last eight weeks and the forecast for the next two days\. To find detailed information about a forecast and its history, open the Auto Scaling group from the Amazon EC2 Auto Scaling console and choose the **Automatic scaling** tab in the lower pane\. The graphs become available shortly after the policy is created\.
 
@@ -10,11 +10,11 @@ You can adjust the time range for past data by choosing your preferred value in 
 
 To enlarge the graph pane, choose the expand icon in the top right of the graph\. To revert back to the default view, choose the icon again\.
 
-You can also use the AWS CLI command get\-predictive\-scaling\-forecast to get forecast data\. The data returned by this call can help you identify time periods when you might want to override the forecast\. For more information, see [Overriding forecast values using scheduled actions](predictive-scaling-overriding-forecast-capacity.md)\.
+You can also use the AWS CLI command get\-predictive\-scaling\-forecast to get forecast data\. The data returned by this call can help you identify time periods when you might want to override the forecast\. For more information, see [Override forecast values using scheduled actions](predictive-scaling-overriding-forecast-capacity.md)\.
 
 **Note**  
 We recommend that you enable Auto Scaling group metrics\. If these metrics are not enabled, actual capacity data will be missing from the capacity forecast graph\. There is no cost for enabling these metrics\.   
-To enable Auto Scaling group metrics, open the Auto Scaling group in the Amazon EC2 console, and from the **Monitoring** tab, select the **Auto Scaling group metrics collection**, **Enable** check box\. For more information, see [Enable Auto Scaling group metrics \(console\)](as-instance-monitoring.md#as-enable-group-metrics)\.
+To enable Auto Scaling group metrics, open the Auto Scaling group in the Amazon EC2 console, and from the **Monitoring** tab, select the **Auto Scaling group metrics collection**, **Enable** check box\. For more information, see [Enable Auto Scaling group metrics \(console\)](ec2-auto-scaling-cloudwatch-monitoring.md#as-enable-group-metrics)\.
 
 **Important**  
 If the Auto Scaling group is new, allow 24 hours for Amazon EC2 Auto Scaling to create the first forecast\. 

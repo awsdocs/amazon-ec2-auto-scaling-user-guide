@@ -1,4 +1,4 @@
-# Replacing Auto Scaling instances based on an instance refresh<a name="asg-instance-refresh"></a>
+# Replace Auto Scaling instances based on an instance refresh<a name="asg-instance-refresh"></a>
 
 You can use an instance refresh to update the instances in your Auto Scaling group instead of manually replacing instances a few at a time\. This can be useful when a configuration change requires you to replace instances, and you have a large number of instances in your Auto Scaling group\. 
 
@@ -7,7 +7,7 @@ An instance refresh can be helpful when you have a new Amazon Machine Image \(AM
 ## How it works<a name="instance-refresh-how-it-works"></a>
 
 The following example steps show how an instance refresh works: 
-+ You create a launch template or a new launch template version with your desired updates\. For more information, see [Creating a launch template for an Auto Scaling group](create-launch-template.md)\.
++ You create a launch template or a new launch template version with your desired updates\. For more information, see [Create a launch template for an Auto Scaling group](create-launch-template.md)\.
 + You configure the minimum healthy percentage, instance warmup, and checkpoints, specify your desired configuration that includes your launch template, and start an instance refresh\. The desired configuration can optionally specify whether a [mixed instances policy](ec2-auto-scaling-mixed-instances-groups.md) is to be applied\.
 + Amazon EC2 Auto Scaling starts performing a rolling replacement of the instances\. It takes a set of instances out of service, terminates them, and launches a set of instances with the new desired configuration\. Then, it waits until the instances pass your health checks and complete warmup before it moves on to replacing other instances\. 
 + After a certain percentage of the group is replaced, a checkpoint is reached\. Whenever there is a checkpoint, Amazon EC2 Auto Scaling temporarily stops replacing instances, sends a notification, and waits for the amount of time you specified before continuing\. After you receive the notification, you can verify that your new instances are working as expected\.
@@ -18,10 +18,10 @@ The following example steps show how an instance refresh works:
 Before you get started, familiarize yourself with the following instance refresh core concepts and terms:
 
 **Minimum healthy percentage**  
-As part of starting an instance refresh, you specify the minimum healthy percentage to maintain at all times\. This is the amount of capacity in an Auto Scaling group that must pass your [health checks](healthcheck.md) during an instance refresh so that the operation is allowed to continue\. The value is expressed as a percentage of the desired capacity of the Auto Scaling group \(rounded up to the nearest integer\)\. Setting the minimum healthy percentage to 100 percent limits the rate of replacement to one instance at a time\. In contrast, setting it to 0 percent causes all instances to be replaced at the same time\.
+As part of starting an instance refresh, you specify the minimum healthy percentage to maintain at all times\. This is the amount of capacity in an Auto Scaling group that must pass your [health checks](ec2-auto-scaling-health-checks.md) during an instance refresh so that the operation is allowed to continue\. The value is expressed as a percentage of the desired capacity of the Auto Scaling group \(rounded up to the nearest integer\)\. Setting the minimum healthy percentage to 100 percent limits the rate of replacement to one instance at a time\. In contrast, setting it to 0 percent causes all instances to be replaced at the same time\.
 
 **Instance warmup**  
-The *instance warmup* is the time period from when a new instance comes into service to when it can receive traffic\. During an instance refresh, Amazon EC2 Auto Scaling does not immediately move on to the next replacement after determining that a newly launched instance is healthy\. It waits for the warm\-up period that you specified before it moves on to replacing other instances\. This setting can be helpful when you have configuration scripts that take time to run\.
+The *instance warmup* is the time period from when a new instance's state changes to `InService` to when it can receive traffic\. During an instance refresh, Amazon EC2 Auto Scaling does not immediately move on to the next replacement after determining that a newly launched instance is healthy\. It waits for the warm\-up period that you specified before it moves on to replacing other instances\. This can be helpful when your application takes time to initialize itself before it starts to serve traffic\.
 
 **Desired configuration**  
 A *desired configuration* is the new configuration you want Amazon EC2 Auto Scaling to deploy across your Auto Scaling group\. For example, you can specify the launch template and version for your instances\. During an instance refresh, Amazon EC2 Auto Scaling updates the Auto Scaling group to the desired configuration\. If a scale\-out event occurs during an instance refresh, Amazon EC2 Auto Scaling launches new instances with the desired configuration instead of the group's current settings\. After the instance refresh succeeds, Amazon EC2 Auto Scaling updates the settings of the Auto Scaling group to reflect the new desired configuration that you specified as part of the instance refresh\. 
@@ -30,23 +30,24 @@ A *desired configuration* is the new configuration you want Amazon EC2 Auto Scal
 Skip matching means that Amazon EC2 Auto Scaling skips replacing instances that match the desired configuration\. If no desired configuration is specified, then it skips replacing instances that have the same configuration that is already set on the group\. If skip matching is not enabled, any instance in the Auto Scaling group can be replaced with a new instance, regardless of whether there are any updates needed\. 
 
 **Checkpoints**  
-A checkpoint is a point in time where the instance refresh pauses for a specified amount of time\. An instance refresh can contain multiple checkpoints\. Amazon EC2 Auto Scaling emits events for each checkpoint, so that you can add an EventBridge rule to send the events to a target such as Amazon SNS to be notified when a checkpoint is reached\. After a checkpoint is reached, you have the opportunity to validate your deployment\. If any problems are identified, you can cancel the instance refresh and then roll it back by initiating another instance refresh\. The ability to deploy updates in phases is a key benefit of checkpoints\. If you don't use checkpoints, rolling replacements are performed continuously\.
+A checkpoint is a point in time where the instance refresh pauses for a specified amount of time\. An instance refresh can contain multiple checkpoints\. Amazon EC2 Auto Scaling emits events for each checkpoint, so that you can add an EventBridge rule to send the events to a target such as Amazon SNS to be notified when a checkpoint is reached\. After a checkpoint is reached, you have the opportunity to verify your deployment\. If any problems are identified, you can cancel the instance refresh and then roll it back by initiating another instance refresh\. The ability to deploy updates in phases is a key benefit of checkpoints\. If you don't use checkpoints, rolling replacements are performed continuously\.
 
 ## Considerations<a name="instance-refresh-considerations"></a>
 
 The following are things to consider when starting an instance refresh, to help ensure that the group continues to perform as expected\. 
-+ While warming up, a newly launched instance is not counted toward the aggregated metrics of the Auto Scaling group\. 
-+ If you added scaling policies to the Auto Scaling group, the scaling activities run in parallel\. If you set a long interval for the instance refresh warm\-up period, it takes more time for newly launched instances to be reflected in the metrics\. Therefore, an adequate warm\-up period helps to prevent Amazon EC2 Auto Scaling from scaling on stale metric data\. 
-+ If you added a lifecycle hook to the Auto Scaling group, the warm\-up period does not start until the lifecycle hook actions are complete and the instance enters the `InService` state\. 
++ We recommend that you consider enabling the default instance warmup feature to unify warm\-up settings at the group level\. For more information, see [Set the default instance warmup for an Auto Scaling group](ec2-auto-scaling-default-instance-warmup.md)\.
++ While warming up, a newly launched instance is not counted toward the aggregated instance metrics of the Auto Scaling group \(such as CPUUtilization, NetworkIn, NetworkOut, and so on\)\. 
++ If you added scaling policies to the Auto Scaling group, the scaling activities run in parallel\. If you set a long interval for the instance refresh warm\-up period, it takes more time for newly launched instances to be reflected in the metrics\. Therefore, an adequate warm\-up period keeps Amazon EC2 Auto Scaling from scaling on stale metric data\. 
++ If you added a lifecycle hook to the Auto Scaling group, the warm\-up period does not start until the lifecycle hook actions are complete and the instance enters the `InService` state\. For more information, see [Amazon EC2 Auto Scaling lifecycle hooks](lifecycle-hooks.md)\.
 + If you enable skip matching but the launch template, the launch template version, and instance types in the mixed instances policy are not changing, the instance refresh will succeed immediately without making any replacements\. If you made any other changes \(for example, changing your Spot allocation strategy\), Amazon EC2 Auto Scaling updates the settings of the Auto Scaling group to reflect the new desired configuration after the instance refresh succeeds\. 
 
 ## Start or cancel an instance refresh \(console\)<a name="start-instance-refresh-console"></a>
 
 You can create, view, and cancel your instance refreshes with the Amazon EC2 Auto Scaling console\. If this is your first time starting an instance refresh, using the console will help you understand the features and options available\.
 
-### Starting an instance refresh in the console \(basic procedure\)<a name="starting-an-instance-refresh-in-the-console"></a>
+### Start an instance refresh in the console \(basic procedure\)<a name="starting-an-instance-refresh-in-the-console"></a>
 
-Use the following procedure if you have not previously defined a [mixed instances policy](ec2-auto-scaling-mixed-instances-groups.md) for your Auto Scaling group\. If you have previously defined a mixed instances policy, see [Starting an instance refresh in the console \(mixed instances group\)](#starting-an-instance-refresh-in-the-console-mig) to start an instance refresh\.
+Use the following procedure if you have not previously defined a [mixed instances policy](ec2-auto-scaling-mixed-instances-groups.md) for your Auto Scaling group\. If you have previously defined a mixed instances policy, see [Start an instance refresh in the console \(mixed instances group\)](#starting-an-instance-refresh-in-the-console-mig) to start an instance refresh\.
 
 **To start an instance refresh**
 
@@ -60,7 +61,9 @@ Use the following procedure if you have not previously defined a [mixed instance
 
 1. For **Minimum healthy percentage**, enter the percentage of the Auto Scaling group that must remain healthy during an instance refresh\. The default is 90 percent\. Choosing a lower percentage results in a higher number of instances being terminated and replaced at the same time\. 
 
-1. For **Instance warmup**, enter the number of seconds until a newly launched instance is ready to use\. Set this value greater than or equal to the maximum amount of startup time needed for your application, from when an instance starts to when it can receive traffic\. The default value is the value for the health check grace period that's currently set for the Auto Scaling group\.
+1. For **Instance warmup**, enter the number of seconds from when a new instance's state changes to `InService` to when it can receive traffic, or leave blank to keep the default warmup\.
+
+   If left blank, the default is the group's default instance warmup if enabled\. If default instance warmup is not enabled, then the instance warmup falls back to the value of the health check grace period for the group\.
 
 1. \(Optional\) For **Checkpoints**, choose **Enable checkpoints** to replace instances using an incremental or phased approach to an instance refresh\. This provides additional time for verification between sets of replacements\. If you choose not to enable checkpoints, the instances are replaced in one nearly continuous operation\.
 
@@ -100,9 +103,9 @@ To configure these options on an Auto Scaling group that currently uses a launch
 
 1. When you are satisfied with your instance refresh selections, choose **Start**\. 
 
-### Starting an instance refresh in the console \(mixed instances group\)<a name="starting-an-instance-refresh-in-the-console-mig"></a>
+### Start an instance refresh in the console \(mixed instances group\)<a name="starting-an-instance-refresh-in-the-console-mig"></a>
 
-Use the following procedure if you have created an Auto Scaling group with a [mixed instances policy](ec2-auto-scaling-mixed-instances-groups.md)\. If you haven't defined a mixed instances policy for your group yet, see [Starting an instance refresh in the console \(basic procedure\)](#starting-an-instance-refresh-in-the-console) to start an instance refresh\.
+Use the following procedure if you have created an Auto Scaling group with a [mixed instances policy](ec2-auto-scaling-mixed-instances-groups.md)\. If you haven't defined a mixed instances policy for your group yet, see [Start an instance refresh in the console \(basic procedure\)](#starting-an-instance-refresh-in-the-console) to start an instance refresh\.
 
 **To start an instance refresh**
 
@@ -116,7 +119,9 @@ Use the following procedure if you have created an Auto Scaling group with a [mi
 
 1. For **Minimum healthy percentage**, enter the percentage of the Auto Scaling group that must remain healthy during an instance refresh\. The default value is 90 percent\. Choosing a lower percentage will result in a higher number of instances being terminated and replaced at the same time\. 
 
-1. For **Instance warmup**, enter the number of seconds until a newly launched instance is ready to use\. Set this value greater than or equal to the maximum amount of startup time needed for your application, from when an instance starts to when it can receive traffic\. The default value is the value for the health check grace period that's currently set for the Auto Scaling group\.
+1. For **Instance warmup**, enter the number of seconds from when a new instance's state changes to `InService` to when it can receive traffic, or leave blank to keep the default warmup\.
+
+   If left blank, the default is the group's default instance warmup if enabled\. If default instance warmup is not enabled, then the instance warmup falls back to the value of the health check grace period for the group\.
 
 1. \(Optional\) For **Checkpoints**, choose **Enable checkpoints** to replace instances using an incremental or phased approach to an instance refresh\. This provides additional time for verification between sets of replacements\. If you choose not to enable checkpoints, the instances are replaced in one nearly continuous operation\.
 
@@ -150,14 +155,6 @@ We recommend that you do not clear this check box\. Only clear it if you want to
 
    When you are satisfied with your instance refresh selections, choose **Start**\. 
 
-**To check the status of an instance refresh**
-
-1. On the **Instance refresh** tab, under **Instance refresh history**, you can determine the status of your request by looking at the **Status** column\. The operation goes into `Pending` status while it is initializing\. The status should then quickly change to `InProgress`\. When all instances are updated, the status changes to `Successful`\.
-
-1. On the **Activity** tab, under **Activity history**, when the instance refresh starts, you see entries when instances are terminated and another set of entries when instances are launched\. In the **Description** column, you can find the instance ID\. 
-
-1. On the **Instance management** tab, under **Instances**, you can verify that your instances launched successfully\. Initially, your instances are in the `Pending` state\. After an instance is ready to receive traffic, its state is `InService`\. The **Health status** column shows the result of the health checks on your instances\.
-
 **To cancel an instance refresh**
 
 1. Open the Amazon EC2 Auto Scaling console at [https://console\.aws\.amazon\.com/ec2autoscaling/](https://console.aws.amazon.com/ec2autoscaling/)\.
@@ -183,7 +180,7 @@ Contents of `config.json`:
 {
     "AutoScalingGroupName": "my-asg",
     "Preferences": {
-      "InstanceWarmup": 400,
+      "InstanceWarmup": 60,
       "MinHealthyPercentage": 50
     }
 }
@@ -205,39 +202,6 @@ Example output:
 
 **Note**  
 To specify your desired configuration and enable skip matching with the AWS CLI, see the additional start\-instance\-refresh examples in [Instance refresh examples that enable skip matching with the AWS Command Line Interface \(AWS CLI\)](asg-instance-refresh-skip-matching.md)\. 
-
-**To check the status of an instance refresh**  
-View the instance refreshes for an Auto Scaling group by using the following [describe\-instance\-refreshes](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/describe-instance-refreshes.html) command\.
-
-```
-aws autoscaling describe-instance-refreshes --auto-scaling-group-name my-asg
-```
-
-Example output:
-
-```
-{
-    "InstanceRefreshes": [
-        {
-            "InstanceRefreshId": "08b91cf7-8fa6-48af-b6a6-d227f40f1b9b",
-            "AutoScalingGroupName": "my-asg",
-            "Status": "InProgress",
-            "StartTime": "2020-06-02T18:11:27Z",
-            "PercentageComplete": 0,
-            "InstancesToUpdate": 5
-        },
-        {
-            "InstanceRefreshId": "dd7728d0-5bc4-4575-96a3-1b2c52bf8bb1",
-            "AutoScalingGroupName": "my-asg",
-            "Status": "Successful",
-            "StartTime": "2020-06-02T16:43:19Z",
-            "EndTime": "2020-06-02T16:53:37Z",
-            "PercentageComplete": 100,
-            "InstancesToUpdate": 0
-        }
-    ]
-}
-```
 
 **To cancel an instance refresh**  
 When you cancel an instance refresh using the [cancel\-instance\-refresh](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/cancel-instance-refresh.html) command from the AWS CLI, specify the name of the Auto Scaling group as shown in the following example\. 

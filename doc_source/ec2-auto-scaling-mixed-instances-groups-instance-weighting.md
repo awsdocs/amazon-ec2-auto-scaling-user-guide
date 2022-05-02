@@ -1,4 +1,4 @@
-# Configuring instance weighting for Amazon EC2 Auto Scaling<a name="ec2-auto-scaling-mixed-instances-groups-instance-weighting"></a>
+# Configure instance weighting for Amazon EC2 Auto Scaling<a name="ec2-auto-scaling-mixed-instances-groups-instance-weighting"></a>
 
 When you configure an Auto Scaling group to launch multiple instance types, you have the option of defining the number of capacity units that each instance contributes to the desired capacity of the group, using *instance weighting*\. This allows you to specify the relative weight of each instance type in a way that directly maps to the performance of your application\. You can weight your instances to suit your specific application needs, for example, by the cores \(vCPUs\) or by memory \(GiBs\)\. 
 
@@ -266,7 +266,7 @@ The following examples show how to use the AWS CLI to add weights when you creat
 
 The [allocation strategies](ec2-auto-scaling-mixed-instances-groups.md#allocation-strategies) determine which instance pools your instances come from\. When you use the instance weighting feature, the allocation strategies perform exactly like they do for other Auto Scaling groups\. However, there is one key difference in how instance pools are chosen when you use the `lowest-price` strategy\. When you choose `lowest-price` for your allocation strategy, your instances come from the instance pools with the lowest price per unit in each Availability Zone\. 
 
-For example, consider you have an Auto Scaling group that has several instance types with varying amounts of vCPUs\. You use `lowest-price` for your Spot and On\-Demand allocation strategies\. If you choose to assign weights based on the vCPU count of each instance type, Amazon EC2 Auto Scaling launches whichever instance types have the lowest price per your assigned weight values \(for example, per vCPU\) at the time of fulfilment\. If it's a Spot Instance, then this means the lowest Spot price per vCPU\. If it's an On\-Demand Instance, then this means the lowest On\-Demand price per vCPU\.
+For example, consider you have an Auto Scaling group that has several instance types with varying amounts of vCPUs\. You use `lowest-price` for your Spot and On\-Demand allocation strategies\. If you choose to assign weights based on the vCPU count of each instance type, Amazon EC2 Auto Scaling launches whichever instance types have the lowest price per your assigned weight values \(for example, per vCPU\) at the time of fulfillment\. If it's a Spot Instance, then this means the lowest Spot price per vCPU\. If it's an On\-Demand Instance, then this means the lowest On\-Demand price per vCPU\.
 
 ### Instance weighting and Spot max price<a name="spot-max-price"></a>
 

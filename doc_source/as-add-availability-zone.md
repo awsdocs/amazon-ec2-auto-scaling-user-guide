@@ -1,4 +1,4 @@
-# Adding and removing Availability Zones<a name="as-add-availability-zone"></a>
+# Add and remove Availability Zones<a name="as-add-availability-zone"></a>
 
 To take advantage of the safety and reliability of geographic redundancy, span your Auto Scaling group across multiple Availability Zones within a Region and attach a load balancer to distribute incoming traffic across those Availability Zones\. 
 
@@ -23,7 +23,7 @@ Use the following procedure to expand your Auto Scaling group and load balancer 
 
 1. Select the check box next to an existing group\.
 
-   A split pane opens up in the bottom part of the **Auto Scaling groups** page, showing information about the group that's selected\. 
+   A split pane opens up in the bottom of the **Auto Scaling groups** page\. 
 
 1. On the **Details** tab, choose **Network**, **Edit**\.
 
@@ -66,7 +66,7 @@ To remove an Availability Zone from your Auto Scaling group and load balancer, u
 
 1. Select the check box next to an existing group\.
 
-   A split pane opens up in the bottom part of the **Auto Scaling groups** page, showing information about the group that's selected\. 
+   A split pane opens up in the bottom of the **Auto Scaling groups** page\. 
 
 1. On the **Details** tab, choose **Network**, **Edit**\.
 

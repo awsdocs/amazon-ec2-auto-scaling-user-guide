@@ -1,4 +1,4 @@
-# Specifying a different launch template for an instance type<a name="ec2-auto-scaling-mixed-instances-groups-launch-template-overrides"></a>
+# Specify a different launch template for an instance type<a name="ec2-auto-scaling-mixed-instances-groups-launch-template-overrides"></a>
 
 The `Overrides` structure allows you to define a new launch template for individual instance types for a new or existing Auto Scaling group\. For example, if the architecture of an instance type requires a different AMI from the rest of the group, you must specify a launch template with a compatible AMI\. 
 
@@ -8,9 +8,9 @@ Say that you configure an Auto Scaling group for compute\-intensive applications
 Currently, this feature is available only if you use the AWS CLI or an SDK, and is not available from the console\.
 
 **Topics**
-+ [Adding or changing a launch template for an instance type \(AWS CLI\)](#launch-template-overrides-cli)
++ [Add or change a launch template for an instance type \(AWS CLI\)](#launch-template-overrides-cli)
 
-## Adding or changing a launch template for an instance type \(AWS CLI\)<a name="launch-template-overrides-cli"></a>
+## Add or change a launch template for an instance type \(AWS CLI\)<a name="launch-template-overrides-cli"></a>
 
 The following procedure shows you how to use the AWS CLI to configure an Auto Scaling group so that one or more of the instance types uses a launch template that is different from the rest of the group\. 
 

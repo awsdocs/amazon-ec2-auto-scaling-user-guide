@@ -1,4 +1,4 @@
-# Elastic Load Balancing and Amazon EC2 Auto Scaling<a name="autoscaling-load-balancer"></a>
+# Use Elastic Load Balancing to distribute traffic across the instances in your Auto Scaling group<a name="autoscaling-load-balancer"></a>
 
 Elastic Load Balancing automatically distributes your incoming application traffic across all the EC2 instances that you are running\. Elastic Load Balancing helps to manage incoming requests by optimally routing traffic so that no one instance is overwhelmed\. 
 
@@ -10,17 +10,16 @@ After attaching a load balancer to your Auto Scaling group, you can configure yo
 
 Optionally, you can add Elastic Load Balancing health checks to your Auto Scaling group so that Amazon EC2 Auto Scaling can identify and replace unhealthy instances based on these additional health checks\. Otherwise, you can create a CloudWatch alarm that notifies you if the healthy host count of the target group is lower than allowed\. 
 
-**Limitations**
-+ The load balancer and its target group must be in the same Region as your Auto Scaling group\.
-+ The target group must specify a target type of `instance`\. You can't specify a target type of `ip` when using an Auto Scaling group\.
-
 **Topics**
 + [Elastic Load Balancing types](#integrations-aws-elastic-load-balancing-types)
 + [Prerequisites](getting-started-elastic-load-balancing.md)
-+ [Attaching a load balancer](attach-load-balancer-asg.md)
-+ [Adding ELB health checks](as-add-elb-healthcheck.md)
-+ [Adding Availability Zones](as-add-availability-zone.md)
++ [Attach a load balancer](attach-load-balancer-asg.md)
++ [Understand the attachment status](load-balancer-status.md)
++ [Configure a load balancer from the Amazon EC2 Auto Scaling console](as-create-load-balancer-console.md)
++ [Add Elastic Load Balancing health checks](as-add-elb-healthcheck.md)
++ [Add Availability Zones](as-add-availability-zone.md)
 + [AWS CLI examples for working with Elastic Load Balancing](examples-elastic-load-balancing-aws-cli.md)
++ [Tutorial: Set up a scaled and load\-balanced application](tutorial-ec2-auto-scaling-load-balancer.md)
 
 ## Elastic Load Balancing types<a name="integrations-aws-elastic-load-balancing-types"></a>
 

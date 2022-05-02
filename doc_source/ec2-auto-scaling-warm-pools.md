@@ -13,10 +13,10 @@ Creating a warm pool when it's not required can lead to unnecessary costs\. If y
 + [Delete a warm pool](#delete-warm-pool)
 + [Limitations](#warm-pools-limitations)
 + [Hibernation not supported in all AWS Regions](#warm-pools-regions)
-+ [Using lifecycle hooks](warm-pool-instance-lifecycle.md)
++ [Use lifecycle hooks](warm-pool-instance-lifecycle.md)
 + [Event types and event patterns](warm-pools-eventbridge-events.md)
-+ [Creating EventBridge rules](warm-pool-events-eventbridge-rules.md)
-+ [Viewing health check status](warm-pools-health-checks-monitor-view-status.md)
++ [Create EventBridge rules](warm-pool-events-eventbridge-rules.md)
++ [View health check status](warm-pools-health-checks-monitor-view-status.md)
 + [AWS CLI examples for working with warm pools](examples-warm-pools-aws-cli.md)
 
 ## Core concepts<a name="warm-pool-core-concepts"></a>
@@ -24,7 +24,8 @@ Creating a warm pool when it's not required can lead to unnecessary costs\. If y
 Before you get started, familiarize yourself with the following core concepts:
 
 **Warm pool**  
-A warm pool is a pool of pre\-initialized EC2 instances that sits alongside an Auto Scaling group\. Whenever your application needs to scale out, the Auto Scaling group can draw on the warm pool to meet its new desired capacity\. This helps you to ensure that instances are ready to quickly start serving application traffic, accelerating the response to a scale\-out event\. As instances leave the warm pool, they count toward the desired capacity of the group\. This is known as a *warm start*\. 
+A warm pool is a pool of pre\-initialized EC2 instances that sits alongside an Auto Scaling group\. Whenever your application needs to scale out, the Auto Scaling group can draw on the warm pool to meet its new desired capacity\. This helps you to ensure that instances are ready to quickly start serving application traffic, accelerating the response to a scale\-out event\. As instances leave the warm pool, they count toward the desired capacity of the group\. This is known as a *warm start*\.   
+While instances are in the warm pool, your scaling policies only scale out if the metric value from instances that are in the `InService` state is greater than the scaling policy's alarm high threshold \(which is the same as the target utilization of a target tracking scaling policy\)\.
 
 **Warm pool size**  
 By default, the size of the warm pool is calculated as the difference between the Auto Scaling group's maximum capacity and its desired capacity\. For example, if the desired capacity of your Auto Scaling group is 6 and the maximum capacity is 10, the size of your warm pool will be 4 when you first set up the warm pool and the pool is initializing\.   
@@ -62,7 +63,7 @@ To run user data scripts when an instance restarts, the user data must be in the
 For more information, see the lifecycle hook examples in our [GitHub repository](https://github.com/aws-samples/amazon-ec2-auto-scaling-group-examples)\. 
 
 **Prepare instances for hibernation**  
-To prepare Auto Scaling instances to use the `Hibernated` pool state, create a new launch template or launch configuration that is set up correctly to support instance hibernation, as described in the [Hibernation prerequisites](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/hibernating-prerequisites.html) topic in the *Amazon EC2 User Guide for Linux Instances*\. Then, associate the new launch template or launch configuration with the Auto Scaling group and start an instance refresh to replace the instances associated with a previous launch template or launch configuration\. For more information, see [Replacing Auto Scaling instances based on an instance refresh](asg-instance-refresh.md)\.
+To prepare Auto Scaling instances to use the `Hibernated` pool state, create a new launch template or launch configuration that is set up correctly to support instance hibernation, as described in the [Hibernation prerequisites](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/hibernating-prerequisites.html) topic in the *Amazon EC2 User Guide for Linux Instances*\. Then, associate the new launch template or launch configuration with the Auto Scaling group and start an instance refresh to replace the instances associated with a previous launch template or launch configuration\. For more information, see [Replace Auto Scaling instances based on an instance refresh](asg-instance-refresh.md)\.
 
 ## Create a warm pool<a name="create-a-warm-pool-console"></a>
 
@@ -88,11 +89,11 @@ Before you begin, confirm that you have created a lifecycle hook for your Auto S
 
    1. For **Minimum warm pool size**, enter the minimum number of instances to maintain in the warm pool\.
 
-   1. \(Optional\) For **Max prepared capacity**, choose **Define a set number of instances** if you want to control how much capacity is available in the warm pool\.
+   1. For **Max prepared capacity**, you can specify the maximum prepared capacity by defining a set number of instances, or keep the default option to keep the maximum prepared capacity undefined\. 
 
-      If you choose **Define a set number of instances**, you must enter the maximum instance count\. This value represents the maximum number of instances that are allowed to be in the warm pool and the Auto Scaling group at the same time\. If you enter a value that is less than the group's desired capacity, and you chose not to specify a value for **Minimum warm pool size**, the capacity of the warm pool will be 0\.
-**Note**  
-Keeping the default **Equal to the Auto Scaling group's maximum capacity** option helps you maintain a warm pool that is sized to match the difference between the Auto Scaling group's maximum capacity and its desired capacity\. To make it easier to manage your warm pool, we recommend that you use the default so that you do not need to remember to adjust your warm pool settings in order to control the size of the warm pool\.
+      If you keep the default, **Equal to the Auto Scaling group's maximum capacity**, the warm pool size is sized to match the difference between the Auto Scaling group's maximum capacity and its desired capacity\. To make it easier to manage the warm pool's size by adjusting the group's maximum capacity, we recommend that you use the default option\. 
+
+      If you choose the **Define a set number of instances** option, enter a value that represents the maximum number of instances that are allowed to be in the warm pool and the Auto Scaling group at the same time\.
 
 1. Choose **Create**\. 
 
@@ -100,7 +101,7 @@ Keeping the default **Equal to the Auto Scaling group's maximum capacity** optio
 
 To change the launch template or launch configuration for a warm pool, associate a new launch template or launch configuration with the Auto Scaling group\. Any new instances are launched using the new AMI and other updates that are specified in the launch template or launch configuration, but existing instances are not affected\.
 
-To force replacement warm pool instances to launch that use the new launch template or launch configuration, you can terminate existing instances in the warm pool\. Amazon EC2 Auto Scaling immediately starts launching new instances to replace the instances that you terminated\. Alternatively, you can start an instance refresh to do a rolling update of your group\. An instance refresh first replaces `InService` instances\. Then it replaces instances in the warm pool\. For more information, see [Replacing Auto Scaling instances based on an instance refresh](asg-instance-refresh.md)\.
+To force replacement warm pool instances to launch that use the new launch template or launch configuration, you can terminate existing instances in the warm pool\. Amazon EC2 Auto Scaling immediately starts launching new instances to replace the instances that you terminated\. Alternatively, you can start an instance refresh to do a rolling update of your group\. An instance refresh first replaces `InService` instances\. Then it replaces instances in the warm pool\. For more information, see [Replace Auto Scaling instances based on an instance refresh](asg-instance-refresh.md)\.
 
 ## Delete a warm pool<a name="delete-warm-pool"></a>
 
@@ -112,9 +113,11 @@ When you no longer need the warm pool, use the following procedure to delete it\
 
 1. Select the check box next to an existing group\.
 
-   A split pane opens up at the bottom of the **Auto Scaling groups** page, showing information about the group that's selected\. 
+   A split pane opens up at the bottom of the **Auto Scaling groups** page\. 
 
-1. Choose **Actions**, **Delete**\.
+1. Choose the **Instance management** tab\. 
+
+1. For **Warm pool**, choose **Actions**, **Delete**\.
 
 1. When prompted for confirmation, choose **Delete**\. 
 
@@ -123,7 +126,7 @@ When you no longer need the warm pool, use the following procedure to delete it\
 + Amazon EC2 Auto Scaling can put an instance in a `Stopped` or `Hibernated` state only if it has an Amazon EBS volume as its root device\. Instances that use instance stores for the root device cannot be stopped or hibernated\.
 + Amazon EC2 Auto Scaling can put an instance in a `Hibernated` state only if meets all of the requirements listed in the [Hibernation prerequisites](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/hibernating-prerequisites.html) topic in the *Amazon EC2 User Guide for Linux Instances*\. 
 + If your warm pool is depleted when there is a scale\-out event, instances will launch directly into the Auto Scaling group \(a *cold start*\)\. You could also experience cold starts if an Availability Zone is out of capacity\.
-+ If you try using warm pools with an Amazon Elastic Kubernetes Service \(Amazon EKS\) managed node group, instances that are still initializing might register with your Amazon EKS cluster\. As a result, the cluster might schedule jobs on an instance as it is preparing to be stopped or hibernated\. To use a warm pool with an Amazon ECS cluster, your launch template or launch configuration must be set up correctly\. For more information see [Using a warm pool for your Auto Scaling group](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/creating-warm-pool.html) in the *Amazon Elastic Container Service Developer Guide*\.
++ If you try using warm pools with an Amazon Elastic Kubernetes Service \(Amazon EKS\) managed node group, instances that are still initializing might register with your Amazon EKS cluster\. As a result, the cluster might schedule jobs on an instance as it is preparing to be stopped or hibernated\. To use a warm pool with an Amazon ECS cluster, your launch template or launch configuration must be set up correctly\. For more information see [Using a warm pool for your Auto Scaling group](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/asg-capacity-providers-create-auto-scaling-group.html#using-warm-pool) in the *Amazon Elastic Container Service Developer Guide*\.
 
 ## Hibernation not supported in all AWS Regions<a name="warm-pools-regions"></a>
 

@@ -1,4 +1,4 @@
-# Creating an Auto Scaling group using attribute\-based instance type selection<a name="create-asg-instance-type-requirements"></a>
+# Create an Auto Scaling group using attribute\-based instance type selection<a name="create-asg-instance-type-requirements"></a>
 
 When you create an Auto Scaling group, you must specify the necessary information to configure the Amazon EC2 instances, the Availability Zones and VPC subnets for the instances, the desired capacity, and the minimum and maximum capacity limits\.
 
@@ -15,7 +15,7 @@ The following are benefits of attribute\-based instance type selection:
 
 You can use attribute\-based instance type selection through the AWS Management Console, AWS CLI, or SDKs\.
 
-For information about how to configure attribute\-based instance type selection in a launch template, see [Creating a launch template for an Auto Scaling group](create-launch-template.md)\. For information about how to configure attribute\-based instance type selection by passing parameters in Amazon EC2 Auto Scaling API calls using an SDK, see [InstanceRequirements](https://docs.aws.amazon.com/autoscaling/ec2/APIReference/API_InstanceRequirements.html) in the *Amazon EC2 Auto Scaling API Reference*\.
+For information about how to configure attribute\-based instance type selection in a launch template, see [Create a launch template for an Auto Scaling group](create-launch-template.md)\. For information about how to configure attribute\-based instance type selection by passing parameters in Amazon EC2 Auto Scaling API calls using an SDK, see [InstanceRequirements](https://docs.aws.amazon.com/autoscaling/ec2/APIReference/API_InstanceRequirements.html) in the *Amazon EC2 Auto Scaling API Reference*\.
 
 To learn more about attribute\-based instance type selection, see [Attribute\-Based Instance Type Selection for EC2 Auto Scaling and EC2 Fleet](http://aws.amazon.com/blogs/aws/new-attribute-based-instance-type-selection-for-ec2-auto-scaling-and-ec2-fleet/) on the AWS Blog\.
 
@@ -48,7 +48,7 @@ If you set **Desired capacity type** to **vCPUs** or **Memory GiB**, the price p
 
 ## Prerequisites<a name="use-attribute-based-instance-type-selection-prerequisites"></a>
 
-Create a launch template that includes the parameters required to launch an EC2 instance, such as the Amazon Machine Image \(AMI\) and security groups\. For more information, see [Creating a launch template for an Auto Scaling group](create-launch-template.md)\.
+Create a launch template that includes the parameters required to launch an EC2 instance, such as the Amazon Machine Image \(AMI\) and security groups\. For more information, see [Create a launch template for an Auto Scaling group](create-launch-template.md)\.
 
 Verify that you have the permissions required to use a launch template\. Your `ec2:RunInstances` permissions are checked when use a launch template\. Your `iam:PassRole` permissions are also checked if the launch template specifies an IAM role\. For more information, see [Launch template support](ec2-auto-scaling-launch-template-permissions.md)\.
 
@@ -106,7 +106,7 @@ If you are already using attribute\-based instance type selection in your launch
 
 1. For **Spot allocation strategy**, choose an allocation strategy\. We recommend that you keep the default setting of **Capacity optimized**\. If you prefer not to keep the default, choose **Lowest price**, and then enter the number of lowest priced Spot Instance pools to diversify across\. 
 
-1. For **Capacity rebalance**, choose whether to enable or disable Capacity Rebalancing\. For more information, see [Amazon EC2 Auto Scaling Capacity Rebalancing](ec2-auto-scaling-capacity-rebalancing.md)\. 
+1. For **Capacity rebalance**, choose whether to enable or disable Capacity Rebalancing\. For more information, see [Use Capacity Rebalancing to handle Amazon EC2 Spot Interruptions](ec2-auto-scaling-capacity-rebalancing.md)\. 
 
 1. Choose **Next** twice to go to the **Configure group size and scaling policies** page\. 
 
@@ -116,15 +116,15 @@ If you are already using attribute\-based instance type selection in your launch
 
    1. Choose a **Desired capacity type**\. **Units** \(default\), **vCPUs** and **Memory GiB** are supported\.
 
-   1. Enter the initial size of your Auto Scaling group for **Desired capacity** and update the **Minimum capacity** and **Maximum capacity** limits as needed\. For more information, see [Setting capacity limits on your Auto Scaling group](asg-capacity-limits.md)\.
+   1. Enter the initial size of your Auto Scaling group for **Desired capacity** and update the **Minimum capacity** and **Maximum capacity** limits as needed\. For more information, see [Set capacity limits on your Auto Scaling group](asg-capacity-limits.md)\.
 
    1. To automatically scale the size of the Auto Scaling group, choose **Target tracking scaling policy** and follow the directions\. For more information, see [Target Tracking Scaling Policies](as-scaling-target-tracking.md#policy-creating-scalingpolicies-console)\.
 
-   1. Under **Instance scale\-in protection**, choose whether to enable instance scale\-in protection\. For more information, see [Using instance scale\-in protection](ec2-auto-scaling-instance-protection.md)\.
+   1. Under **Instance scale\-in protection**, choose whether to enable instance scale\-in protection\. For more information, see [Use instance scale\-in protection](ec2-auto-scaling-instance-protection.md)\.
 
-1. \(Optional\) To receive notifications, for **Add notification**, configure the notification, and then choose **Next**\. For more information, see [Getting Amazon SNS notifications when your Auto Scaling group scales](ASGettingNotifications.md)\.
+1. \(Optional\) To receive notifications, for **Add notification**, configure the notification, and then choose **Next**\. For more information, see [Get Amazon SNS notifications when your Auto Scaling group scales](ec2-auto-scaling-sns-notifications.md)\.
 
-1. \(Optional\) To add tags, choose **Add tag**, provide a tag key and value for each tag, and then choose **Next**\. For more information, see [Tagging Auto Scaling groups and instances](autoscaling-tagging.md)\.
+1. \(Optional\) To add tags, choose **Add tag**, provide a tag key and value for each tag, and then choose **Next**\. For more information, see [Tag Auto Scaling groups and instances](ec2-auto-scaling-tagging.md)\.
 
 1. On the **Review** page, choose **Create Auto Scaling group**\.
 

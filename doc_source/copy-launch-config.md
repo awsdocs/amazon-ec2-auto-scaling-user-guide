@@ -8,7 +8,7 @@ If you copy your launch configurations, you can migrate them all at once, or you
 
 1. Open the Amazon EC2 console at [https://console\.aws\.amazon\.com/ec2/](https://console.aws.amazon.com/ec2/)\.
 
-1. On the navigation pane, under **AUTO SCALING**, choose **Launch Configurations**\.
+1. On the navigation pane, under **Auto Scaling**, choose **Launch Configurations**\.
 
 1. Select the launch configuration you want to copy and choose **Copy to launch template, Copy selected**\. This sets up a new launch template with the same name and options as the launch configuration that you selected\.
 
@@ -24,10 +24,10 @@ If you know that you want to copy all launch configurations to launch templates,
 
 1. Open the Amazon EC2 console at [https://console\.aws\.amazon\.com/ec2/](https://console.aws.amazon.com/ec2/)\.
 
-1. On the navigation pane, under **AUTO SCALING**, choose **Launch Configurations**\.
+1. On the navigation pane, under **Auto Scaling**, choose **Launch Configurations**\.
 
 1. Choose **Copy to launch template, Copy all**\. This copies each launch configuration in the current Region to a new launch template with the same name and options\.
 
 1. Choose **Copy**\.
 
-Next, you can update your existing Auto Scaling groups to specify the launch templates that you created\. For more information, see [Replacing a launch configuration with a launch template](replace-launch-config.md)\. As another option, you can follow the procedure in [Replacing Auto Scaling instances based on an instance refresh](asg-instance-refresh.md) to add the new launch templates to your Auto Scaling groups and update your Auto Scaling instances immediately\.
+Next, you can update your existing Auto Scaling groups to specify the launch templates that you created\. For more information, see [Replace a launch configuration with a launch template](replace-launch-config.md)\. As another option, you can follow the procedure in [Replace Auto Scaling instances based on an instance refresh](asg-instance-refresh.md) to add the new launch templates to your Auto Scaling groups and update your Auto Scaling instances immediately\.

@@ -1,12 +1,12 @@
-# Completing a lifecycle action<a name="completing-lifecycle-hooks"></a>
+# Complete a lifecycle action<a name="completing-lifecycle-hooks"></a>
 
 When an Auto Scaling group responds to a lifecycle event, it puts the instance in a wait state and sends an event notification\. You can perform a custom action while the instance is in a wait state\.
 
 **Topics**
-+ [Completing a lifecycle action \(manual\)](#completing-lifecycle-hooks-aws-cli)
-+ [Completing a lifecycle action \(automatic\)](#completing-lifecycle-hooks-automatic)
++ [Complete a lifecycle action \(manual\)](#completing-lifecycle-hooks-aws-cli)
++ [Complete a lifecycle action \(automatic\)](#completing-lifecycle-hooks-automatic)
 
-## Completing a lifecycle action \(manual\)<a name="completing-lifecycle-hooks-aws-cli"></a>
+## Complete a lifecycle action \(manual\)<a name="completing-lifecycle-hooks-aws-cli"></a>
 
 The following procedure is for the command line interface and is not supported in the console\. Information that must be replaced, such as the instance ID or the name of an Auto Scaling group, are shown in italics\. 
 
@@ -44,7 +44,7 @@ The following procedure is for the command line interface and is not supported i
      --auto-scaling-group-name my-asg
    ```
 
-## Completing a lifecycle action \(automatic\)<a name="completing-lifecycle-hooks-automatic"></a>
+## Complete a lifecycle action \(automatic\)<a name="completing-lifecycle-hooks-automatic"></a>
 
 If you have a user data script that configures your instances after they launch, you do not need to manually complete lifecycle actions\. You can add the [complete\-lifecycle\-action](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/complete-lifecycle-action.html) command to the script\. The script can retrieve the instance ID from the instance metadata and signal Amazon EC2 Auto Scaling when the bootstrap scripts have completed successfully\. 
 

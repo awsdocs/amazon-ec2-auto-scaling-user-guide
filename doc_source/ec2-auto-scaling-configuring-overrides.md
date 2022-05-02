@@ -1,4 +1,4 @@
-# Configuring overrides<a name="ec2-auto-scaling-configuring-overrides"></a>
+# Configure overrides<a name="ec2-auto-scaling-configuring-overrides"></a>
 
 Overrides are changes you make to the properties of your launch template\. Amazon EC2 Auto Scaling supports overrides to the instance type property\. That way, you can specify multiple instance types\. To do so, you must add the `Overrides` structure to your mixed instances policy\.
 
@@ -11,5 +11,5 @@ The `Overrides` structure allows you to define a set of parameters that Amazon E
 As an alternative to specifying a list of instance types, you can specify a set of instance attributes to use as criteria for selecting the instance types your Auto Scaling group uses\. This is known as *attribute\-based instance type selection*\. For more information, see [Using attribute\-based instance type selection](create-asg-instance-type-requirements.md)\.
 
 **Topics**
-+ [Specifying a different launch template for an instance type](ec2-auto-scaling-mixed-instances-groups-launch-template-overrides.md)
-+ [Configuring instance weighting for Amazon EC2 Auto Scaling](ec2-auto-scaling-mixed-instances-groups-instance-weighting.md)
++ [Specify a different launch template for an instance type](ec2-auto-scaling-mixed-instances-groups-launch-template-overrides.md)
++ [Configure instance weighting for Amazon EC2 Auto Scaling](ec2-auto-scaling-mixed-instances-groups-instance-weighting.md)

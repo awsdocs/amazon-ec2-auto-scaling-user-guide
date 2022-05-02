@@ -1,4 +1,4 @@
-# Setting capacity limits on your Auto Scaling group<a name="asg-capacity-limits"></a>
+# Set capacity limits on your Auto Scaling group<a name="asg-capacity-limits"></a>
 
 Capacity limits place restrictions on the size of your Auto Scaling group\. You set limits separately for the minimum and maximum size\. The group's desired capacity is resizeable between the minimum and maximum size limits\. The desired capacity must be greater than or equal to the minimum size of the group and less than or equal to the maximum size of the group\.
 
@@ -12,11 +12,11 @@ The minimum and maximum size limits also apply when you manually scale your Auto
 
 1. Open the Amazon EC2 console at [https://console\.aws\.amazon\.com/ec2/](https://console.aws.amazon.com/ec2/)\.
 
-1. On the navigation pane, under **AUTO SCALING**, choose **Auto Scaling Groups**\. 
+1. On the navigation pane, under **Auto Scaling**, choose **Auto Scaling Groups**\. 
 
 1. On the **Auto Scaling groups** page, select the check box next to the Auto Scaling group whose settings you want to manage\.
 
-   A split pane opens up in the bottom part of the **Auto Scaling groups** page, showing information about the group that's selected\. 
+   A split pane opens up in the bottom of the **Auto Scaling groups** page\. 
 
 1. In the lower pane, in the **Details** tab, view or change the current settings for minimum, maximum, and desired capacity\.
 

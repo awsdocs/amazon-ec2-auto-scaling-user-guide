@@ -3,7 +3,7 @@
 **Important**  
 Amazon EC2 Auto Scaling started generating the target lifecycle state on March 10, 2022\. If your instance transitions to one of the target lifecycle states after that date, the target lifecycle state item is present in your instance metadata\. Otherwise, it is not present, and you receive an HTTP 404 error\.
 
-Each Auto Scaling instance that you launch goes through several lifecycle states\. If you want to fine tune your on\-instance custom actions to act on specific lifecycle state transitions, you can do this by retrieving the target lifecycle state through instance metadata\. For example, you might create lifecycle hooks for instances in a warm pool so that hibernated or stopped instances can be attached to a cluster on restart\.
+Each Auto Scaling instance that you launch goes through several lifecycle states\. If you want to fine tune your on\-instance custom actions to act on specific lifecycle state transitions, you can do this by retrieving the target lifecycle state through instance metadata\. For example, you might retrieve the target lifecycle state when creating lifecycle actions for instances in a warm pool so that hibernated or stopped instances can be attached to a cluster on restart\.
 
 The Auto Scaling instance lifecycle has two primary steady states—`InService` and `Terminated`—and two side steady states—`Detached` and `Standby`\. If you use a warm pool, the lifecycle has four additional steady states—`Warmed:Hibernated`, `Warmed:Running`, `Warmed:Stopped`, and `Warmed:Terminated`\.
 

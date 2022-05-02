@@ -20,8 +20,6 @@ The Lambda function also performs a callback to let the lifecycle of the instanc
 
 Before you begin this tutorial, create an Auto Scaling group, if you don't have one already\. To create an Auto Scaling group, open the [Auto Scaling groups page](https://console.aws.amazon.com/ec2autoscaling) in the Amazon EC2 console and choose **Create Auto Scaling group**\.
 
-Note that all of the following procedures are for the new console\.
-
 ## Step 1: Create an IAM role with permissions to complete lifecycle actions<a name="lambda-create-iam-role"></a>
 
 Before you create a Lambda function, you must first create an execution role and a permissions policy to allow Lambda to complete lifecycle hooks\.
@@ -57,15 +55,19 @@ When you finish creating the policy, you can create a role that uses it\.
 
 **To create the role**
 
-1. On the navigation pane, choose **Roles**, **Create role**\.
+1. In the navigation pane on the left, choose **Roles**\.
 
-1. Under **Choose a use case**, choose **Lambda** from the list, and then choose **Next:Permissions**\. 
+1. Choose **Create role**\.
 
-1. Under **Attach permissions policies**, choose **LogAutoScalingEvent\-policy** and **AWSLambdaBasicExecutionRole**\. 
+1. For **Select trusted entity**, choose **AWS service**\.
 
-1. Choose **Next:Tags**, and then **Next:Review**\. 
+1. For your use case, choose **Lambda** and then choose **Next**\. 
 
-1. On the **Review** page, for **Name**, enter **LogAutoScalingEvent\-role** and choose **Create role**\. 
+1. Under **Add permissions**, choose the policy that you created \(**LogAutoScalingEvent\-policy**\) and the policy named **AWSLambdaBasicExecutionRole**\. Then, choose **Next**\. 
+**Note**  
+The **AWSLambdaBasicExecutionRole** policy has the permissions that the function needs to write logs to CloudWatch Logs\.
+
+1. On the **Name, review, and create** page, for **Role name**, enter **LogAutoScalingEvent\-role** and choose **Create role**\.
 
 ## Step 2: Create a Lambda function<a name="lambda-create-hello-world-function"></a>
 
@@ -231,7 +233,7 @@ If you do not need the additional instance that you launched for this test, you 
 
 ## Step 6: Next steps<a name="lambda-lifecycle-hooks-tutorial-next-steps"></a>
 
-Now that you have completed this tutorial, you can try creating a termination lifecycle hook\. If instances in the Auto Scaling group terminate, an event is sent to EventBridge\. For information about the event that is emitted when an instance terminates, see [EC2 Instance\-terminate Lifecycle Action](cloud-watch-events.md#terminate-lifecycle-action)\.
+Now that you have completed this tutorial, you can try creating a termination lifecycle hook\. If instances in the Auto Scaling group terminate, an event is sent to EventBridge\. For information about the event that is emitted when an instance terminates, see [EC2 Instance\-terminate Lifecycle Action](automating-ec2-auto-scaling-with-eventbridge.md#terminate-lifecycle-action)\.
 
 ## Step 7: Clean up<a name="lambda-lifecycle-hooks-tutorial-cleanup"></a>
 

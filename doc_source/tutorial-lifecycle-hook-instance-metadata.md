@@ -47,17 +47,17 @@ When you finish creating the policy, you can create a role that uses it\.
 
 **To create the role**
 
-1. On the navigation pane, choose **Roles**, **Create role**\.
+1. In the navigation pane on the left, choose **Roles**\.
 
-1. For **Select type of trusted entity**, choose **AWS service**\. 
+1. Choose **Create role**\.
 
-1. For **Choose the service that will use this role**, choose **EC2** and the **EC2** use case\. Choose **Next: Permissions**\. 
+1. For **Select trusted entity**, choose **AWS service**\.
 
-1. Under **Attach permissions policies**, choose the policy that you created \(**TestAutoScalingEvent\-policy**\)\.
+1. For your use case, choose **EC2** and then choose **Next**\. 
 
-1. Choose **Next:Tags**, and then **Next:Review**\. 
+1. Under **Add permissions**, choose the policy that you created \(**TestAutoScalingEvent\-policy**\)\. Then, choose **Next**\. 
 
-1. On the **Review** page, for **Name**, enter **TestAutoScalingEvent\-role** and choose **Create role**\. 
+1. On the **Name, review, and create** page, for **Role name**, enter **TestAutoScalingEvent\-role** and choose **Create role**\. 
 
 ## Step 2: Create a launch template and include the IAM role and a user data script<a name="instance-metadata-create-hello-world-function"></a>
 
@@ -73,7 +73,7 @@ Create a launch template to use with your Auto Scaling group\. Include the IAM r
 
 1. Under **Auto Scaling guidance**, select the check box\. 
 
-1. For **Amazon machine image \(AMI\)**, choose Amazon Linux 2 \(HVM\), SSD Volume Type, 64\-bit \(x86\) from the **Quick Start** list\. 
+1. For **Application and OS Images \(Amazon Machine Image\)**, choose Amazon Linux 2 \(HVM\), SSD Volume Type, 64\-bit \(x86\) from the **Quick Start** list\. 
 
 1. For **Instance type**, choose a type of Amazon EC2 instance \(for example, "t2\.micro"\)\.
 
@@ -130,7 +130,7 @@ Create a launch template to use with your Auto Scaling group\. Include the IAM r
    main
    ```
 
-   This user data script does the following:
+   This simple user data script does the following:
    + Calls the instance metadata to retrieve the target lifecycle state and instance ID from the instance metadata
    + Retrieves the target lifecycle state repeatedly until it changes to `InService`
    + Changes the hostname of the instance to the instance ID prepended with the name of the Auto Scaling group, if the target lifecycle state is `InService`

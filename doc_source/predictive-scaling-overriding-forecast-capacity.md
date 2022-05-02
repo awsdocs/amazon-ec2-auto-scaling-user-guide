@@ -1,4 +1,4 @@
-# Overriding forecast values using scheduled actions<a name="predictive-scaling-overriding-forecast-capacity"></a>
+# Override forecast values using scheduled actions<a name="predictive-scaling-overriding-forecast-capacity"></a>
 
 Sometimes, you might have additional information about your future application requirements that the forecast calculation is unable to take into account\. For example, forecast calculations might underestimate the capacity needed for an upcoming marketing event\. You can use scheduled actions to temporarily override the forecast during future time periods\. The scheduled actions can run on a recurring basis, or at a specific date and time when there are one\-time demand fluctuations\. 
 
@@ -164,4 +164,4 @@ For example, the following cron expression runs the action every Tuesday at 6:30
 
 ### See also<a name="scheduling-scaling-see-also"></a>
 
-For more information about how to create, list, edit, and delete scheduled actions, see [Scheduled scaling for Amazon EC2 Auto Scaling](schedule_time.md)\.
+For more information about how to create, list, edit, and delete scheduled actions, see [Scheduled scaling for Amazon EC2 Auto Scaling](ec2-auto-scaling-scheduled-scaling.md)\.

@@ -1,8 +1,8 @@
-# Creating EventBridge rules for warm pool events<a name="warm-pool-events-eventbridge-rules"></a>
+# Create EventBridge rules for warm pool events<a name="warm-pool-events-eventbridge-rules"></a>
 
 The following procedures explain how to create an EventBridge rule for warm pool events\. This sample rule detects events that use the event pattern for instances entering the warm pool, and then sends those events to an AWS Lambda function for processing\. A Lambda target is the subject of this procedure, but rules can invoke many types of targets\. For information about supported targets, see [Amazon EventBridge targets](https://docs.aws.amazon.com/eventbridge/latest/userguide/eventbridge-targets.html) in the *Amazon EventBridge User Guide*\.
 
-Before you create the rule, create the AWS Lambda function that you want the rule to use as a target\. When you create the rule, you'll need to specify this function as the target for the rule\. For an introductory tutorial that shows you how to create a Lambda function, see [Tutorial: Configure a lifecycle hook that invokes a Lambda function](tutorial-lifecycle-hook-lambda.md)\.
+Before you create the rule, create the AWS Lambda function that you want the rule to use as a target\. When you create the rule, you'll need to specify this function as the target for the rule\. For an introductory tutorial that shows you how to use lifecycle hooks to put instances in a wait state before invoking a Lambda function that processes EventBridge events, see [Tutorial: Configure a lifecycle hook that invokes a Lambda function](tutorial-lifecycle-hook-lambda.md)\.
 
 ## Create an EventBridge rule \(console\)<a name="warm-pool-events-eventbridge-rules-console"></a>
 
@@ -41,7 +41,7 @@ Before you create the rule, create the AWS Lambda function that you want the rul
 
 1. When you finish entering settings for the rule, choose **Create**\.
 
-1. After you have followed these instructions, continue on to [Adding lifecycle hooks](adding-lifecycle-hooks.md) as a next step\.
+1. After you have followed these instructions, continue on to [Add lifecycle hooks](adding-lifecycle-hooks.md) as a next step\.
 
 ## Create an EventBridge rule \(AWS CLI\)<a name="warm-pool-events-eventbridge-rules-cli"></a>
 
@@ -108,4 +108,4 @@ If you haven't already, create the Lambda function that you want the rule to use
 
    The `Statement` value is a JSON string version of the statement that was added to the Lambda function policy\.
 
-1. After you have followed these instructions, continue on to [Adding lifecycle hooks](adding-lifecycle-hooks.md) as a next step\.
+1. After you have followed these instructions, continue on to [Add lifecycle hooks](adding-lifecycle-hooks.md) as a next step\.

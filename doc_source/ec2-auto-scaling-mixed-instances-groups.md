@@ -9,7 +9,7 @@ You first specify the common configuration parameters in a launch template, and 
 + Prioritize instance types that can benefit from Savings Plan or Reserved Instance discount pricing\.
 + Specify how much On\-Demand and Spot capacity to launch, and specify an optional On\-Demand base portion\.
 + Define how Amazon EC2 Auto Scaling should distribute your On\-Demand and Spot capacity across instance types\.
-+ Enable Capacity Rebalancing\. When you turn on Capacity Rebalancing, Amazon EC2 Auto Scaling attempts to launch a Spot Instance whenever the Amazon EC2 Spot service notifies that a Spot Instance is at an elevated risk of interruption\. After launching a new instance, it then terminates an old instance\. For more information, see [Amazon EC2 Auto Scaling Capacity Rebalancing](ec2-auto-scaling-capacity-rebalancing.md)\.
++ Enable Capacity Rebalancing\. When you turn on Capacity Rebalancing, Amazon EC2 Auto Scaling attempts to launch a Spot Instance whenever the Amazon EC2 Spot service notifies that a Spot Instance is at an elevated risk of interruption\. After launching a new instance, it then terminates an old instance\. For more information, see [Use Capacity Rebalancing to handle Amazon EC2 Spot Interruptions](ec2-auto-scaling-capacity-rebalancing.md)\.
 
 You enhance availability by deploying your application across multiple instance types running in multiple Availability Zones\. You can use just one instance type, but it is a best practice to use a few instance types to allow Amazon EC2 Auto Scaling to launch another instance type in the event that there is insufficient instance capacity in your chosen Availability Zones\. With Spot Instances, if there is insufficient instance capacity, Amazon EC2 Auto Scaling keeps trying in other Spot Instance pools \(determined by your choice of instance types and allocation strategy\) rather than launching On\-Demand Instances, so that you can leverage the cost savings of Spot Instances\.
 
@@ -19,13 +19,13 @@ There are two ways to associate multiple instance types with your Auto Scaling g
 
 **Topics**
 + [Allocation strategies](#allocation-strategies)
-+ [Controlling the proportion of On\-Demand instances](#instances-distribution)
++ [Control the proportion of On\-Demand Instances](#instances-distribution)
 + [Best practices for Spot Instances](#spot-best-practices)
 + [Prerequisites](#create-mixed-instances-group-prerequisites)
-+ [Creating an Auto Scaling group with Spot and On\-Demand Instances \(console\)](#create-mixed-instances-group-console)
-+ [Configuring Spot allocation strategies \(AWS CLI\)](#create-mixed-instances-group-aws-cli)
-+ [Verifying whether your Auto Scaling group is configured correctly and that the group has launched instances \(AWS CLI\)](#verify-launch-aws-cli)
-+ [Configuring overrides](ec2-auto-scaling-configuring-overrides.md)
++ [Create an Auto Scaling group with Spot and On\-Demand Instances \(console\)](#create-mixed-instances-group-console)
++ [Configure Spot allocation strategies \(AWS CLI\)](#create-mixed-instances-group-aws-cli)
++ [Verify whether your Auto Scaling group is configured correctly and that the group has launched instances \(AWS CLI\)](#verify-launch-aws-cli)
++ [Configure overrides](ec2-auto-scaling-configuring-overrides.md)
 
 ## Allocation strategies<a name="allocation-strategies"></a>
 
@@ -69,7 +69,7 @@ You can pay for usage upfront to get significant discounts for On\-Demand Instan
 + With Reserved Instances, your discounted rate of the regular On\-Demand Instance pricing applies if Amazon EC2 Auto Scaling launches matching instance types\. That means that if you have unused Reserved Instances for `c4.large`, you can set the instance type priority to give the highest priority for your Reserved Instances to a `c4.large` instance type\. When a `c4.large` instance launches, you receive the Reserved Instance pricing\. 
 + With Savings Plans, your discounted rate of the regular On\-Demand Instance pricing applies when using either Amazon EC2 Instance Savings Plans or Compute Savings Plans\. Because of the flexible nature of Savings Plans, you have greater flexibility in prioritizing your instance types\. As long as you use instance types that are covered by your Savings Plan, you can set them in any order of priority and even occasionally change their order entirely, and continue to receive the discounted rate provided by your Savings Plan\. To learn more about Savings Plans, see the [Savings Plans User Guide](https://docs.aws.amazon.com/savingsplans/latest/userguide/)\.
 
-## Controlling the proportion of On\-Demand instances<a name="instances-distribution"></a>
+## Control the proportion of On\-Demand Instances<a name="instances-distribution"></a>
 
 You have full control over the proportion of instances in the Auto Scaling group that are launched as On\-Demand Instances\. To ensure that you always have instance capacity, you can designate a percentage of the group to launch as On\-Demand Instances and, optionally, a base number of On\-Demand Instances to start with\. If you choose to specify a base capacity of On\-Demand Instances, Amazon EC2 Auto Scaling launches Spot Instances only after launching this base capacity of On\-Demand Instances when the group scales out\. Anything beyond the base capacity uses the On\-Demand percentage to determine how many On\-Demand Instances and Spot Instances to launch\. You can specify any number from 0 to 100 for the On\-Demand percentage\. 
 
@@ -118,11 +118,11 @@ If you intend to specify a maximum price, use the AWS CLI or an SDK to create th
 
 ## Prerequisites<a name="create-mixed-instances-group-prerequisites"></a>
 
-Create a launch template\. For more information, see [Creating a launch template for an Auto Scaling group](create-launch-template.md)\.
+Create a launch template\. For more information, see [Create a launch template for an Auto Scaling group](create-launch-template.md)\.
 
 Verify that you have the permissions required to use a launch template\. Your `ec2:RunInstances` permissions are checked when use a launch template\. Your `iam:PassRole` permissions are also checked if the launch template specifies an IAM role\. For more information, see [Launch template support](ec2-auto-scaling-launch-template-permissions.md)\.
 
-## Creating an Auto Scaling group with Spot and On\-Demand Instances \(console\)<a name="create-mixed-instances-group-console"></a>
+## Create an Auto Scaling group with Spot and On\-Demand Instances \(console\)<a name="create-mixed-instances-group-console"></a>
 
 Complete the following steps to create a fleet of Spot Instances and On\-Demand Instances that you can scale\.
 
@@ -170,7 +170,7 @@ Verify that the launch template doesn't already request Spot Instances\.
 
 1. For **Spot allocation strategy**, choose an allocation strategy\. We recommend that you keep the default setting of **Capacity optimized**\. If you prefer not to keep the default, choose **Lowest price**, and then enter the number of lowest priced Spot Instance pools to diversify across\. 
 
-1. For **Capacity rebalance**, choose whether to enable or disable Capacity Rebalancing\. For more information, see [Amazon EC2 Auto Scaling Capacity Rebalancing](ec2-auto-scaling-capacity-rebalancing.md)\. 
+1. For **Capacity rebalance**, choose whether to enable or disable Capacity Rebalancing\. For more information, see [Use Capacity Rebalancing to handle Amazon EC2 Spot Interruptions](ec2-auto-scaling-capacity-rebalancing.md)\. 
 
 1. Choose **Next**\. 
 
@@ -180,19 +180,19 @@ Verify that the launch template doesn't already request Spot Instances\.
 
 1. \(Optional\) On the **Configure group size and scaling policies** page, configure the following options, and then choose **Next**:
 
-   1. For **Desired capacity**, enter the initial number of instances to launch\. When you change this number to a value outside of the minimum or maximum capacity limits, you must update the values of **Minimum capacity** or **Maximum capacity**\. For more information, see [Setting capacity limits on your Auto Scaling group](asg-capacity-limits.md)\. 
+   1. For **Desired capacity**, enter the initial number of instances to launch\. When you change this number to a value outside of the minimum or maximum capacity limits, you must update the values of **Minimum capacity** or **Maximum capacity**\. For more information, see [Set capacity limits on your Auto Scaling group](asg-capacity-limits.md)\. 
 
    1. To automatically scale the size of the Auto Scaling group, choose **Target tracking scaling policy** and follow the directions\. For more information, see [Target Tracking Scaling Policies](as-scaling-target-tracking.md#policy-creating-scalingpolicies-console)\.
 
-   1. Under **Instance scale\-in protection**, choose whether to enable instance scale\-in protection\. For more information, see [Using instance scale\-in protection](ec2-auto-scaling-instance-protection.md)\.
+   1. Under **Instance scale\-in protection**, choose whether to enable instance scale\-in protection\. For more information, see [Use instance scale\-in protection](ec2-auto-scaling-instance-protection.md)\.
 
-1. \(Optional\) To receive notifications, for **Add notification**, configure the notification, and then choose **Next**\. For more information, see [Getting Amazon SNS notifications when your Auto Scaling group scales](ASGettingNotifications.md)\.
+1. \(Optional\) To receive notifications, for **Add notification**, configure the notification, and then choose **Next**\. For more information, see [Get Amazon SNS notifications when your Auto Scaling group scales](ec2-auto-scaling-sns-notifications.md)\.
 
-1. \(Optional\) To add tags, choose **Add tag**, provide a tag key and value for each tag, and then choose **Next**\. For more information, see [Tagging Auto Scaling groups and instances](autoscaling-tagging.md)\.
+1. \(Optional\) To add tags, choose **Add tag**, provide a tag key and value for each tag, and then choose **Next**\. For more information, see [Tag Auto Scaling groups and instances](ec2-auto-scaling-tagging.md)\.
 
 1. On the **Review** page, choose **Create Auto Scaling group**\.
 
-## Configuring Spot allocation strategies \(AWS CLI\)<a name="create-mixed-instances-group-aws-cli"></a>
+## Configure Spot allocation strategies \(AWS CLI\)<a name="create-mixed-instances-group-aws-cli"></a>
 
 The following example configurations show how to launch Spot Instances using the different Spot allocation strategies\.
 
@@ -517,8 +517,8 @@ VPCZoneIdentifier: subnet-5ea0c127,subnet-6194ea3b,subnet-c934b782
 ```
 
 **Note**  
-For additional examples, see [Specifying a different launch template for an instance type](ec2-auto-scaling-mixed-instances-groups-launch-template-overrides.md), [Configuring instance weighting for Amazon EC2 Auto Scaling](ec2-auto-scaling-mixed-instances-groups-instance-weighting.md), and [Amazon EC2 Auto Scaling Capacity Rebalancing](ec2-auto-scaling-capacity-rebalancing.md)\. 
+For additional examples, see [Specify a different launch template for an instance type](ec2-auto-scaling-mixed-instances-groups-launch-template-overrides.md), [Configure instance weighting for Amazon EC2 Auto Scaling](ec2-auto-scaling-mixed-instances-groups-instance-weighting.md), and [Use Capacity Rebalancing to handle Amazon EC2 Spot Interruptions](ec2-auto-scaling-capacity-rebalancing.md)\. 
 
-## Verifying whether your Auto Scaling group is configured correctly and that the group has launched instances \(AWS CLI\)<a name="verify-launch-aws-cli"></a>
+## Verify whether your Auto Scaling group is configured correctly and that the group has launched instances \(AWS CLI\)<a name="verify-launch-aws-cli"></a>
 
 To check whether your Auto Scaling group is configured correctly and that it has launched instances, use the [describe\-auto\-scaling\-groups](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/describe-auto-scaling-groups.html) command\. Verify that the mixed instances policy and the list of subnets exist and are configured correctly\. If the instances have launched, you will see a list of the instances and their statuses\. To view the scaling activities that result from instances launching, use the [describe\-scaling\-activities](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/describe-scaling-activities.html) command\. You can monitor scaling activities that are in progress and that are recently completed\.

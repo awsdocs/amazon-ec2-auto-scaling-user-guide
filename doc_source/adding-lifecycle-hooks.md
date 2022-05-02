@@ -1,4 +1,4 @@
-# Adding lifecycle hooks<a name="adding-lifecycle-hooks"></a>
+# Add lifecycle hooks<a name="adding-lifecycle-hooks"></a>
 
 To put your Auto Scaling instances into a wait state and perform custom actions on them, you can add lifecycle hooks to your Auto Scaling group\. Custom actions are performed as the instances launch or before they terminate\. Instances remain in a wait state until you either complete the lifecycle action, or the timeout period ends\.
 
@@ -91,4 +91,4 @@ aws autoscaling put-lifecycle-hook --lifecycle-hook-name my-termination-hook \
   --auto-scaling-group-name my-asg --heartbeat-timeout 120
 ```
 
-If an instance is already in a wait state, you can prevent the lifecycle hook from timing out by recording a heartbeat, using the [record\-lifecycle\-action\-heartbeat](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/record-lifecycle-action-heartbeat.html) CLI command\. This extends the timeout period by the timeout value specified when you created the lifecycle hook\. If you finish before the timeout period ends, you can send the [complete\-lifecycle\-action](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/complete-lifecycle-action.html) CLI command to allow the instance to proceed to the next state\. For more information and examples, see [Completing a lifecycle action](completing-lifecycle-hooks.md)\.
+If an instance is already in a wait state, you can prevent the lifecycle hook from timing out by recording a heartbeat, using the [record\-lifecycle\-action\-heartbeat](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/record-lifecycle-action-heartbeat.html) CLI command\. This extends the timeout period by the timeout value specified when you created the lifecycle hook\. If you finish before the timeout period ends, you can send the [complete\-lifecycle\-action](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/complete-lifecycle-action.html) CLI command to allow the instance to proceed to the next state\. For more information and examples, see [Complete a lifecycle action](completing-lifecycle-hooks.md)\.

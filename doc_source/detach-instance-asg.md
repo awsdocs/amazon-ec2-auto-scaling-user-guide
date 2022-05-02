@@ -4,7 +4,7 @@ You can remove \(detach\) an instance that is in the `InService` state from an A
 + Move an instance out of one Auto Scaling group and attach it to a different group\. For more information, see [Attach EC2 instances to your Auto Scaling group](attach-instance-asg.md)\.
 + Test an Auto Scaling group by creating it using existing instances running your application\. You can then detach these instances from the Auto Scaling group when your tests are complete\.
 
-When you detach instances, you have the option of decrementing the desired capacity for the Auto Scaling group by the number of instances that you are detaching\. If you choose not to decrement the capacity, Amazon EC2 Auto Scaling launches new instances to replace the ones that you detach\. If you decrement the capacity but detach multiple instances from the same Availability Zone, Amazon EC2 Auto Scaling can rebalance the Availability Zones unless you suspend the `AZRebalance` process\. For more information, see [Suspending and resuming a process for an Auto Scaling group](as-suspend-resume-processes.md)\.
+When you detach instances, you have the option of decrementing the desired capacity for the Auto Scaling group by the number of instances that you are detaching\. If you choose not to decrement the capacity, Amazon EC2 Auto Scaling launches new instances to replace the ones that you detach\. If you decrement the capacity but detach multiple instances from the same Availability Zone, Amazon EC2 Auto Scaling can rebalance the Availability Zones unless you suspend the `AZRebalance` process\. For more information, see [Suspend and resume a process for an Auto Scaling group](as-suspend-resume-processes.md)\.
 
 If the number of instances that you are detaching decreases the size of the Auto Scaling group below its minimum capacity, you must decrement the minimum capacity for the group before you can detach the instances\.
 
@@ -17,7 +17,7 @@ The examples use an Auto Scaling group with the following configuration:
 + Desired capacity = `4`
 + Availability Zone = `us-west-2a`
 
-## Detaching instances \(console\)<a name="detach-instance-console"></a>
+## Detach instances \(console\)<a name="detach-instance-console"></a>
 
 Use the following procedure to detach an instance from your Auto Scaling group\.
 
@@ -27,13 +27,13 @@ Use the following procedure to detach an instance from your Auto Scaling group\.
 
 1. Select the check box next to your Auto Scaling group\.
 
-   A split pane opens up in the bottom part of the **Auto Scaling groups** page, showing information about the group that's selected\. 
+   A split pane opens up in the bottom of the **Auto Scaling groups** page\. 
 
 1. On the **Instance management** tab, in **Instances**, select an instance and choose **Actions**, **Detach**\.
 
 1. In the **Detach instance** dialog box, select the check box to launch a replacement instance, or leave it unchecked to decrement the desired capacity\. Choose **Detach instance**\.
 
-## Detaching instances \(AWS CLI\)<a name="detach-instance-aws-cli"></a>
+## Detach instances \(AWS CLI\)<a name="detach-instance-aws-cli"></a>
 
 Use the following procedure to detach an instance from your Auto Scaling group\.
 

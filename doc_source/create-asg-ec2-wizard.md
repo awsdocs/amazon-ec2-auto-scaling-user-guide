@@ -1,4 +1,4 @@
-# Creating an Auto Scaling group using the Amazon EC2 launch wizard<a name="create-asg-ec2-wizard"></a>
+# Create an Auto Scaling group using the Amazon EC2 launch wizard<a name="create-asg-ec2-wizard"></a>
 
 The following procedure shows how to create an Auto Scaling group by using the **Launch instance** wizard in the Amazon EC2 console\. This option automatically populates a launch template with certain configuration details from the **Launch instance** wizard\.
 
@@ -16,33 +16,41 @@ An AMI provides the information required to configure an instance\. You can laun
 
 1. On the navigation bar at the top of the screen, the current AWS Region is displayed\. Select a Region in which to launch your Auto Scaling group\.
 
-1. From the console dashboard, choose **Launch instance**, choose **Launch instance** again, and then do the following:
+1. In the navigation pane, choose **Instances**\.
 
-   1. On the **Choose an Amazon Machine Image \(AMI\)** page, choose **My AMIs**, find the AMI that you created, and then choose **Select**\.
+1. Choose **Launch instance**, and then do the following:
 
-   1. On the **Choose an Instance Type** page, choose an instance type\. 
+   1. Under **Name and tags**, leave **Name** blank\. The name isn't part of the data that's used to create a launch template\. 
+
+   1. Under **Application and OS Images \(Amazon Machine Image\)**, choose **Browse more AMIs** to browse the full AMI catalog\.
+
+   1. Choose **My AMIs**, find the AMI that you created, and then choose **Select**\. 
+
+   1. Under **Instance type**, choose an instance type\. 
 **Note**  
-Select the same instance type that you used when you created the AMI or a more powerful one\.
+Choose the same instance type that you used when you created the AMI or a more powerful one\.
 
-   1. At the bottom of the screen, choose **Next: Configure Instance Details**\.
+   1. On the right side of the screen, under **Summary**, for **Number of instances**, enter any number\. The number that you enter here isn't important\. You will specify the number of instances that you want to launch when you create the Auto Scaling group\.
 
-   1. In **Step 3: Configure Instance Details**, choose **Launch into Auto Scaling Group** next to **Number of instances**\.
+      Under the **Number of instances** field, a message displays that says **When launching more than 1 instance, consider EC2 Auto Scaling**\. 
 
-   1. On the confirmation dialogue, choose **Continue** to go to the **Create launch template** page with the AMI and instance type you selected in the launch instance wizard already populated\.
+   1. Choose the **consider EC2 Auto Scaling** hyperlink text\.
+
+   1. On the **Launch into Auto Scaling Group** confirmation dialogue, choose **Continue** to go to the **Create launch template** page with the AMI and instance type you selected in the launch instance wizard already populated\.
 
 ## Create a launch template<a name="create-asg-ec2-wizard-launch-template"></a>
 
-After you choose **Continue**, the **Create launch template** page opens\. Follow this procedure to create a launch template\. For more information, see [Creating your launch template \(console\)](create-launch-template.md#create-launch-template-for-auto-scaling)\.
+After you choose **Continue**, the **Create launch template** page opens\. Follow this procedure to create a launch template\. For more information, see [Create your launch template \(console\)](create-launch-template.md#create-launch-template-for-auto-scaling)\.
 
 **To create a launch template**
 
-1. Enter a name and description for the new launch template\.
+1. Under **Launch template name and description**, enter a name and description for the new launch template\.
 
-1. \(Optional\) For **Key pair \(login\)**, **Key pair name**, choose the name of the previously created key pair to use when connecting to instances, for example, using SSH\.
+1. \(Optional\) Under **Key pair \(login\)**, for **Key pair name**, choose the name of the previously created key pair to use when connecting to instances, for example, using SSH\.
 
-1. \(Optional\) For **Network settings**, **Security groups**, choose one or more previously created [security groups](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-network-security.html)\.
+1. \(Optional\) Under **Network settings**, for **Security groups**, choose one or more previously created [security groups](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-network-security.html)\.
 
-1. \(Optional\) For **Storage \(Volumes\)**, update the storage configuration\. The default storage configuration is determined by the AMI and the instance type\. 
+1. \(Optional\) Under **Configure storage**, update the storage configuration\. The default storage configuration is determined by the AMI and the instance type\. 
 
 1. When you are done configuring the launch template, choose **Create launch template**\.
 
@@ -51,7 +59,7 @@ After you choose **Continue**, the **Create launch template** page opens\. Follo
 ## Create an Auto Scaling group<a name="create-asg-ec2-wizard-auto-scaling-group"></a>
 
 **Note**  
-The rest of this topic describes the basic procedure for creating an Auto Scaling group\. For more description of the parameters you can configure for your Auto Scaling group, see [Creating an Auto Scaling group using a launch template](create-asg-launch-template.md)\.
+The rest of this topic describes the basic procedure for creating an Auto Scaling group\. For more description of the parameters you can configure for your Auto Scaling group, see [Create an Auto Scaling group using a launch template](create-asg-launch-template.md)\.
 
 After you choose **Create Auto Scaling group**, the **Create Auto Scaling group** wizard opens\. Follow this procedure to create an Auto Scaling group\.
 
@@ -81,9 +89,9 @@ If you didn't specify a security group in your launch template, your instances a
 
 ## Next steps<a name="create-asg-ec2-wizard-next-steps"></a>
 
-You can check that the Auto Scaling Group has been created correctly by viewing the activity history\. On the **Activity** tab, under **Activity history**, the **Status** column shows whether your Auto Scaling group has successfully launched instances\. If the instances fail to launch or they launch but then immediately terminate, see the following topics for possible causes and resolutions:
-+ [Troubleshooting Amazon EC2 Auto Scaling: EC2 instance launch failures](ts-as-instancelaunchfailure.md)
-+ [Troubleshooting Amazon EC2 Auto Scaling: AMI issues](ts-as-ami.md)
-+ [Troubleshooting Amazon EC2 Auto Scaling: Health checks](ts-as-healthchecks.md)
+You can check that the Auto Scaling group has been created correctly by viewing the activity history\. On the **Activity** tab, under **Activity history**, the **Status** column shows whether your Auto Scaling group has successfully launched instances\. If the instances fail to launch or they launch but then immediately terminate, see the following topics for possible causes and resolutions:
++ [Troubleshoot Amazon EC2 Auto Scaling: EC2 instance launch failures](ts-as-instancelaunchfailure.md)
++ [Troubleshoot Amazon EC2 Auto Scaling: AMI issues](ts-as-ami.md)
++ [Troubleshoot Amazon EC2 Auto Scaling: Health checks](ts-as-healthchecks.md)
 
-You can now attach a load balancer in the same Region as your Auto Scaling group, if desired\. For more information, see [Elastic Load Balancing and Amazon EC2 Auto Scaling](autoscaling-load-balancer.md)\.
+You can now attach a load balancer in the same Region as your Auto Scaling group, if desired\. For more information, see [Use Elastic Load Balancing to distribute traffic across the instances in your Auto Scaling group](autoscaling-load-balancer.md)\.
