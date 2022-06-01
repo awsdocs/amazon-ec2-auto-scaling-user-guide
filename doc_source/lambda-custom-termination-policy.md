@@ -29,17 +29,17 @@ The following is an example payload:
     {
       "AvailabilityZone": "us-east-1b",
       "Capacity": 2,
-      "InstanceMarketOption": "OnDemand"
+      "InstanceMarketOption": "on-demand"
     },
     {
       "AvailabilityZone": "us-east-1b",
       "Capacity": 1,
-      "InstanceMarketOption": "Spot"
+      "InstanceMarketOption": "spot"
     },
     {
       "AvailabilityZone": "us-east-1c",
       "Capacity": 3,
-      "InstanceMarketOption": "OnDemand"
+      "InstanceMarketOption": "on-demand"
     }
   ],
   "Instances": [
@@ -47,19 +47,19 @@ The following is an example payload:
       "AvailabilityZone": "us-east-1b",
       "InstanceId": "i-0056faf8da3e1f75d",
       "InstanceType": "t2.nano",
-      "InstanceMarketOption": "OnDemand"
+      "InstanceMarketOption": "on-demand"
     },
     {
       "AvailabilityZone": "us-east-1c",
       "InstanceId": "i-02e1c69383a3ed501",
       "InstanceType": "t2.nano",
-      "InstanceMarketOption": "OnDemand"
+      "InstanceMarketOption": "on-demand"
     },
     {
       "AvailabilityZone": "us-east-1c",
       "InstanceId": "i-036bc44b6092c01c7",
       "InstanceType": "t2.nano",
-      "InstanceMarketOption": "OnDemand"
+      "InstanceMarketOption": "on-demand"
     },
     ...
   ],
