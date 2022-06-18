@@ -19,7 +19,7 @@ Amazon EC2 Auto Scaling provides a number of ways to adjust scaling to best meet
 + [Warm pools](ec2-auto-scaling-warm-pools.md)
 + [Control instance termination](as-instance-termination.md)
 + [Temporarily remove instances](as-enter-exit-standby.md)
-+ [Suspend processes](as-suspend-resume-processes.md)
++ [Suspend\-resume processes](as-suspend-resume-processes.md)
 
 ## Scaling options<a name="scaling-options"></a>
 

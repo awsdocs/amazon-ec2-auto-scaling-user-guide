@@ -1,4 +1,4 @@
-# Launch Auto Scaling instances in a VPC<a name="asg-in-vpc"></a>
+# Provide network connectivity for your Auto Scaling instances using Amazon VPC<a name="asg-in-vpc"></a>
 
 
 |  | 
@@ -7,7 +7,7 @@
 
 Amazon Virtual Private Cloud \(Amazon VPC\) enables you to define a virtual networking environment in a private, isolated section of the AWS Cloud\. You have complete control over your virtual networking environment\.
 
-Within a virtual private cloud \(VPC\), you can launch AWS resources such as Auto Scaling groups\. An Auto Scaling group in a VPC works essentially the same way as it does on Amazon EC2 and supports the same set of features\.
+Within a virtual private cloud \(VPC\), you can launch AWS resources such as Auto Scaling groups\. An Auto Scaling group in a VPC works essentially the same way as it does on EC2\-Classic and supports the same set of features\.
 
 A subnet in Amazon VPC is a subdivision within an Availability Zone defined by a segment of the IP address range of the VPC\. Using subnets, you can group your instances based on your security and operational needs\. A subnet resides entirely within the Availability Zone it was created in\. You launch Auto Scaling instances within the subnets\.
 
@@ -20,6 +20,7 @@ To enable communication between the internet and the instances in your subnets, 
 + [IP addressing in a VPC](#as-vpc-ipaddress)
 + [Network interfaces in a VPC](#as-vpc-network-interfaces)
 + [Instance placement tenancy](#as-vpc-tenancy)
++ [AWS Outposts](#auto-scaling-outposts)
 + [More resources for learning about VPCs](#auto-scaling-resources-about-vpcs)
 
 ## Default VPC<a name="as-defaultVPC"></a>
@@ -28,17 +29,26 @@ If you created your AWS account after December 4, 2013 or you are creating your 
 
 If you created your AWS account before December 4, 2013, it may allow you to choose between Amazon VPC and EC2\-Classic in certain Regions\. If you have one of these older accounts, you might have Auto Scaling groups in EC2\-Classic in some Regions instead of Amazon VPC\. Migrating the classic instances to a VPC is highly recommended\. One of the advantages of using a VPC is the ability to put your instances in private subnets with no route to the internet\. 
 
-For information about default VPCs and checking whether your account comes with a default VPC, see [Default VPC and default subnets](https://docs.aws.amazon.com/vpc/latest/userguide/default-vpc.html) in the *Amazon VPC User Guide*\. 
+To determine whether any of the Regions you use are still using EC2\-Classic, open the Amazon EC2 console\. If **Supported platforms** indicates only VPC, as shown in the following example, your AWS account in the current AWS Region uses the EC2\-VPC platform, and uses a default VPC\. The name of the default VPC is shown below the supported platform\. 
+
+![\[EC2-VPC platform\]](http://docs.aws.amazon.com/autoscaling/ec2/userguide/images/EC2-VPC.png)
+
+You can view your VPCs on the [Your VPCs page](https://console.aws.amazon.com/vpc/home?/#vpcs) of the Amazon VPC console\.
+
+For more information about the default VPC, see [Default VPC and default subnets](https://docs.aws.amazon.com/vpc/latest/userguide/default-vpc.html) in the *Amazon VPC User Guide*\. 
 
 ## Nondefault VPC<a name="as-nondefaultVPC"></a>
 
-You can choose to create additional VPCs by going to the Amazon VPC page in the AWS Management Console and selecting **Launch VPC Wizard**\. 
+You can choose to create additional VPCs by going to the [VPC Dashboard page](https://console.aws.amazon.com/vpc/home?/#vpcs) in the AWS Management Console and selecting **Create VPC**\. 
 
 For more information, see the *[Amazon VPC User Guide](https://docs.aws.amazon.com/vpc/latest/userguide/)*\.
 
+**Note**  
+A VPC spans all Availability Zones in its AWS Region\. When you add subnets to your VPC, choose multiple Availability Zones to ensure that the applications hosted in those subnets are highly available\. An Availability Zone is one or more discrete data centers with redundant power, networking, and connectivity in an AWS Region\. Availability Zones help you to make production applications highly available, fault tolerant, and scalable\.
+
 ## Considerations when choosing VPC subnets<a name="as-vpc-considerations"></a>
 
-Note the following considerations when choosing VPC subnets: 
+Note the following considerations when choosing VPC subnets for your Auto Scaling group: 
 + If you're attaching an Elastic Load Balancing load balancer to your Auto Scaling group, the instances can be launched into either public or private subnets\. However, the load balancer can be created in public subnets only\.
 + If you're accessing your Auto Scaling instances directly through SSH, the instances can be launched into public subnets only\. 
 + If you're accessing no\-ingress Auto Scaling instances using AWS Systems Manager Session Manager, the instances can be launched into either public or private subnets\. 
@@ -69,6 +79,14 @@ If you create or attach two or more network interfaces from the same subnet to a
 
 By default, all instances in the VPC run as shared tenancy instances\. Amazon EC2 Auto Scaling also supports Dedicated Instances and Dedicated Hosts\. However, support for Dedicated Hosts is only available for Auto Scaling groups that use a launch template\. For more information, see [Configure instance tenancy with a launch configuration](auto-scaling-dedicated-instances.md)\.
 
+## AWS Outposts<a name="auto-scaling-outposts"></a>
+
+AWS Outposts extends an Amazon VPC from an AWS Region to an Outpost with the VPC components that are accessible in the Region, including internet gateways, virtual private gateways, Amazon VPC Transit Gateways, and VPC endpoints\. An Outpost is homed to an Availability Zone in the Region and is an extension of that Availability Zone that you can use for resiliency\.
+
+For more information, see the [AWS Outposts User Guide](https://docs.aws.amazon.com/outposts/latest/userguide/)\.
+
+For an example of how to deploy an Auto Scaling group that serves traffic from an Application Load Balancer within an Outpost, see the following blog post [Configuring an Application Load Balancer on AWS Outposts](http://aws.amazon.com/blogs/networking-and-content-delivery/configuring-an-application-load-balancer-on-aws-outposts/)\.
+
 ## More resources for learning about VPCs<a name="auto-scaling-resources-about-vpcs"></a>
 
 Use the following topics to learn more about VPCs and subnets\.
@@ -83,4 +101,5 @@ Use the following topics to learn more about VPCs and subnets\.
   + [Amazon VPC User Guide](https://docs.aws.amazon.com/vpc/latest/userguide/)
   + [VPC peering](https://docs.aws.amazon.com/vpc/latest/userguide/vpc-peering.html)
   + [Elastic network interfaces](https://docs.aws.amazon.com/vpc/latest/userguide/VPC_ElasticNetworkInterfaces.html)
+  + [Use VPC endpoints for private connectivity](ec2-auto-scaling-vpc-endpoints.md)
   + [Migrate from EC2\-Classic to a VPC](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/vpc-migrate.html)

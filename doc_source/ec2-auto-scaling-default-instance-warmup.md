@@ -55,6 +55,9 @@ The following [create\-auto\-scaling\-group](https://docs.aws.amazon.com/cli/lat
 aws autoscaling create-auto-scaling-group --auto-scaling-group-name my-asg --default-instance-warmup 120 ...
 ```
 
+**Tip**  
+If this command throws an error, make sure that you have updated the AWS CLI locally to the latest version\.
+
 ------
 
 ------
@@ -83,6 +86,9 @@ The following example uses the [update\-auto\-scaling\-group](https://docs.aws.a
 ```
 aws autoscaling update-auto-scaling-group --auto-scaling-group-name my-asg --default-instance-warmup 120
 ```
+
+**Tip**  
+If this command throws an error, make sure that you have updated the AWS CLI locally to the latest version\.
 
 ------
 

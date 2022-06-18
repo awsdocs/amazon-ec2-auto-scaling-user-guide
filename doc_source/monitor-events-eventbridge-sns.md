@@ -1,15 +1,15 @@
 # Create EventBridge rules for instance refresh events<a name="monitor-events-eventbridge-sns"></a>
 
-This section shows you how to create an Amazon EventBridge rule that notifies you whenever a checkpoint is reached during an instance refresh\. The procedure for setting up email notifications through Amazon SNS is included\. To use Amazon SNS to send email notifications, you must first create a *topic* and then subscribe your email addresses to the topic\.
+The following example creates an EventBridge rule to send an email notification\. It does this each time that your Auto Scaling group emits an event when a checkpoint is reached during an instance refresh\. The procedure for setting up email notifications using Amazon SNS is included\. To use Amazon SNS to send email notifications, you must first create a *topic* and then subscribe your email addresses to the topic\.
 
-For more information about working with EventBridge, see [Use EventBridge to handle Auto Scaling events](automating-ec2-auto-scaling-with-eventbridge.md)\.
+For more information about the instance refresh feature, see [Replace Auto Scaling instances based on an instance refresh](asg-instance-refresh.md)\.
 
 ## Create an Amazon SNS topic<a name="eventbridge-sns-create-topic"></a>
 
 An SNS topic is a logical access point, a communication channel that your Auto Scaling group uses to send the notifications\. You create a topic by specifying a name for your topic\.
 
-When you create a topic name, the name must meet the following requirements:
-+ Between 1 and 256 characters long
+Topic names must meet the following requirements:
++ Have 1\-256 characters
 + Contain uppercase and lowercase ASCII letters, numbers, underscores, or hyphens 
 
 For more information, see [Creating an Amazon SNS topic](https://docs.aws.amazon.com/sns/latest/dg/sns-create-topic.html) in the *Amazon Simple Notification Service Developer Guide*\.
@@ -32,38 +32,56 @@ You will receive an acknowledgment message from AWS\. Amazon SNS is now configur
 
 Create a rule that matches selected events and routes them to your Amazon SNS topic to notify subscribed email addresses\.
 
-**To create a rule that routes instance refresh events to your Amazon SNS topic**
+**To create a rule that sends notifications to your Amazon SNS topic**
 
 1. Open the Amazon EventBridge console at [https://console\.aws\.amazon\.com/events/](https://console.aws.amazon.com/events/)\.
 
-1. In the navigation pane, under **Events**, choose **Rules**\.
+1. In the navigation pane, choose **Rules**\.
 
-1. In the **Rules** section, choose **Create rule**\.
+1. Choose **Create rule**\.
 
-1. Enter a name and description for the rule\.
+1. For **Define rule detail**, do the following:
 
-1. For **Define pattern**, do the following:
+   1. Enter a **Name** for the rule, and, optionally, a description\.
 
-   1. Choose **Event Pattern**\.
+      A rule can't have the same name as another rule in the same Region and on the same event bus\.
 
-   1. For **Event matching pattern**, choose **Pre\-defined by service**\.
+   1. For **Event bus**, choose **default**\. When an AWS service in your account generates an event, it always goes to your account's default event bus\.
 
-   1. For **Service provider**, choose **Amazon Web Services**\.
+   1. For **Rule type**, choose **Rule with an event pattern**\.
 
-   1. For **Service Name**, choose **Auto Scaling**\.
+   1. Choose **Next**\.
 
-   1. For **Event type**, choose **Instance Refresh**\.
+1. For **Build event pattern**, do the following:
 
-   1. By default, the rule matches any instance refresh event\. To create a rule that notifies you whenever a checkpoint is reached during an instance refresh, choose **Specific instance event\(s\)** and select **EC2 Auto Scaling Instance Refresh Checkpoint Reached**\.
+   1. For **Event source**, choose **AWS events or EventBridge partner events**\.
 
-   1. By default, the rule matches any Auto Scaling group in the Region\. To make the rule match a specific Auto Scaling group, choose **Specific group name\(s\)** and select one or more Auto Scaling groups\.
+   1. For **Event pattern**, do the following:
 
-1. For **Select event bus**, choose **AWS default event bus**\. When an AWS service in your account emits an event, it always goes to your account's default event bus\. 
+      1. For **Event source**, choose **AWS services**\.
 
-1. For **Target**, choose **SNS topic**\.
+      1. For **AWS service**, choose **Auto Scaling**\.
 
-1. For **Topic**, select the Amazon SNS topic that you created\.
+      1. For **Event type**, choose **Instance Refresh**\.
 
-1. For **Configure input**, choose the input for the email notification\. 
+      1. By default, the rule matches any instance refresh event\. To create a rule that notifies you when a checkpoint is reached during an instance refresh, choose **Specific instance event\(s\)** and select **EC2 Auto Scaling Instance Refresh Checkpoint Reached**\.
 
-1. Choose **Create**\.
+      1. By default, the rule matches any Auto Scaling group in the Region\. To make the rule match a specific Auto Scaling group, choose **Specific group name\(s\)** and select one or more Auto Scaling groups\.
+
+      1. Choose **Next**\.
+
+1. For **Select target\(s\)**, do the following:
+
+   1. For **Target types**, choose **AWS service**\.
+
+   1. For **Select a target**, choose **SNS topic**\.
+
+   1. For **Topic**, choose your Amazon SNS topic\.
+
+   1. \(Optional\) Under **Additional settings**, you can optionally configure additional settings\. For more information, see [Creating Amazon EventBridge rules that react to events](https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-create-rule.html) \(step 16\) in the *Amazon EventBridge User Guide*\.
+
+   1. Choose **Next**\.
+
+1. \(Optional\) For **Tags**, you can optionally assign one or more tags to your rule, and then choose **Next**\.
+
+1. For **Review and create**, review the details of the rule and modify them as necessary\. Then, choose **Create rule**\.

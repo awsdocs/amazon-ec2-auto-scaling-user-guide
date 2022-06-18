@@ -92,73 +92,79 @@ Add the following two policy statements to the key policy of the customer manage
 
 ## Example 2: Key policy sections that allow cross\-account access to the customer managed key<a name="policy-example-cmk-cross-account-access"></a>
 
-If your customer managed key is in a different account than the Auto Scaling group, you must use a grant in combination with the key policy to allow access to the key\. For more information, see [Using grants](https://docs.aws.amazon.com/kms/latest/developerguide/grants.html) in the *AWS Key Management Service Developer Guide*\. 
+If you create a customer managed key in a different account than the Auto Scaling group, you must use a grant in combination with the key policy to allow cross\-account access to the key\. 
 
-First, add the following two policy statements to the customer managed key's key policy, replacing the example ARN with the ARN of the external account, and specifying the account in which the key can be used\. This allows you to use IAM policies to give an IAM user or role in the specified account permission to create a grant for the key using the CLI command that follows\. Giving the AWS account full access to the key does not by itself give any IAM users or roles access to the key\.
+There are two steps that must be completed in the following order:
 
-```
-{
-   "Sid": "Allow external account 111122223333 use of the customer managed key",
-   "Effect": "Allow",
-   "Principal": {
-       "AWS": [
-           "arn:aws:iam::111122223333:root"
-       ]
-   },
-   "Action": [
-       "kms:Encrypt",
-       "kms:Decrypt",
-       "kms:ReEncrypt*",
-       "kms:GenerateDataKey*",
-       "kms:DescribeKey"
-   ],
-   "Resource": "*"
-}
-```
+1. First, add the following two policy statements to the customer managed key's key policy\. Replace the example ARN with the ARN of the other account, making sure to replace *111122223333* with the actual account ID of the AWS account that you want to create the Auto Scaling group in\. This allows you to give an IAM user or role in the specified account permission to create a grant for the key using the CLI command that follows\. However, this does not by itself give any IAM users or roles access to the key\.
 
-```
-{
-   "Sid": "Allow attachment of persistent resources in external account 111122223333",
-   "Effect": "Allow",
-   "Principal": {
-       "AWS": [
-           "arn:aws:iam::111122223333:root"
-       ]
-   },
-   "Action": [
-       "kms:CreateGrant"
-   ],
-   "Resource": "*"
-}
-```
-
-Then, from the external account, create a grant that delegates the relevant permissions to the appropriate service\-linked role\. The `Grantee Principal` element of the grant is the ARN of the appropriate service\-linked role\. The `key-id` is the ARN of the key\. The following is an example [create\-grant](https://docs.aws.amazon.com/cli/latest/reference/kms/create-grant.html) CLI command that gives the service\-linked role named `AWSServiceRoleForAutoScaling` in account *111122223333* permissions to use the customer managed key in account *444455556666*\.
-
-```
-aws kms create-grant \
-  --region us-west-2 \
-  --key-id arn:aws:kms:us-west-2:444455556666:key/1a2b3c4d-5e6f-1a2b-3c4d-5e6f1a2b3c4d \
-  --grantee-principal arn:aws:iam::111122223333:role/aws-service-role/autoscaling.amazonaws.com/AWSServiceRoleForAutoScaling \
-  --operations "Encrypt" "Decrypt" "ReEncryptFrom" "ReEncryptTo" "GenerateDataKey" "GenerateDataKeyWithoutPlaintext" "DescribeKey" "CreateGrant"
-```
-
-For this command to succeed, the user making the request must have permissions for the `CreateGrant` action\. The following example IAM policy allows an IAM user or role in account *111122223333* to create a grant for the customer managed key in account *444455556666*\.
-
-```
-{
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Sid": "AllowCreationOfGrantForTheKMSKeyinExternalAccount444455556666",
+   ```
+   {
+      "Sid": "Allow external account 111122223333 use of the customer managed key",
       "Effect": "Allow",
-      "Action": "kms:CreateGrant",
-      "Resource": "arn:aws:kms:us-west-2:444455556666:key/1a2b3c4d-5e6f-1a2b-3c4d-5e6f1a2b3c4d"
-    }
-  ]
-}
-```
+      "Principal": {
+          "AWS": [
+              "arn:aws:iam::111122223333:root"
+          ]
+      },
+      "Action": [
+          "kms:Encrypt",
+          "kms:Decrypt",
+          "kms:ReEncrypt*",
+          "kms:GenerateDataKey*",
+          "kms:DescribeKey"
+      ],
+      "Resource": "*"
+   }
+   ```
 
-After you grant these permissions, everything should work as expected\.
+   ```
+   {
+      "Sid": "Allow attachment of persistent resources in external account 111122223333",
+      "Effect": "Allow",
+      "Principal": {
+          "AWS": [
+              "arn:aws:iam::111122223333:root"
+          ]
+      },
+      "Action": [
+          "kms:CreateGrant"
+      ],
+      "Resource": "*"
+   }
+   ```
+
+1. Then, from the account that you want to create the Auto Scaling group in, create a grant that delegates the relevant permissions to the appropriate service\-linked role\. The `Grantee Principal` element of the grant is the ARN of the appropriate service\-linked role\. The `key-id` is the ARN of the key\.
+
+   The following is an example [create\-grant](https://docs.aws.amazon.com/cli/latest/reference/kms/create-grant.html) CLI command that gives the service\-linked role named `AWSServiceRoleForAutoScaling` in account *111122223333* permissions to use the customer managed key in account *444455556666*\.
+
+   ```
+   aws kms create-grant \
+     --region us-west-2 \
+     --key-id arn:aws:kms:us-west-2:444455556666:key/1a2b3c4d-5e6f-1a2b-3c4d-5e6f1a2b3c4d \
+     --grantee-principal arn:aws:iam::111122223333:role/aws-service-role/autoscaling.amazonaws.com/AWSServiceRoleForAutoScaling \
+     --operations "Encrypt" "Decrypt" "ReEncryptFrom" "ReEncryptTo" "GenerateDataKey" "GenerateDataKeyWithoutPlaintext" "DescribeKey" "CreateGrant"
+   ```
+
+   For this command to succeed, the user making the request must have permissions for the `CreateGrant` action\. 
+
+   The following example IAM policy allows an IAM user or role in account *111122223333* to create a grant for the customer managed key in account *444455556666*\.
+
+   ```
+   {
+     "Version": "2012-10-17",
+     "Statement": [
+       {
+         "Sid": "AllowCreationOfGrantForTheKMSKeyinExternalAccount444455556666",
+         "Effect": "Allow",
+         "Action": "kms:CreateGrant",
+         "Resource": "arn:aws:kms:us-west-2:444455556666:key/1a2b3c4d-5e6f-1a2b-3c4d-5e6f1a2b3c4d"
+       }
+     ]
+   }
+   ```
+
+   For more information about creating a grant for a KMS key in a different AWS account, see [Grants in AWS KMS](https://docs.aws.amazon.com/kms/latest/developerguide/grants.html) in the *AWS Key Management Service Developer Guide*\.
 
 ## Edit key policies in the AWS KMS console<a name="eding-key-policies-console"></a>
 

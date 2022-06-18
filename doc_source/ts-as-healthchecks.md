@@ -38,7 +38,7 @@ The sections that follow describe the most common health check errors and causes
 
 **Problem**: Auto Scaling instances are replaced when a scheduled event indicates a problem with the instance\.
 
-**Cause**: Amazon EC2 Auto Scaling replaces instances with a future scheduled maintenance or retirement event before the scheduled time\.
+**Cause**: Amazon EC2 Auto Scaling replaces instances with a future scheduled maintenance or retirement event\.
 
 **Solution**: These events do not occur frequently\. If you need something to happen on the instance that is terminating, or on the instance that is starting up, you can use lifecycle hooks\. These hooks allow you to perform a custom action as Amazon EC2 Auto Scaling launches or terminates instances\. For more information, see [Amazon EC2 Auto Scaling lifecycle hooks](lifecycle-hooks.md)\. 
 

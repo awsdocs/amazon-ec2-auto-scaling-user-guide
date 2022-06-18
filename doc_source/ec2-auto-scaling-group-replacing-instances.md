@@ -15,5 +15,4 @@ This section includes information to help you do the following:
 + [Check instance refresh status](check-status-instance-refresh.md)
 + [AWS CLI examples that enable skip matching](asg-instance-refresh-skip-matching.md)
 + [Add checkpoints to an instance refresh](asg-adding-checkpoints-instance-refresh.md)
-+ [Create EventBridge rules for instance refresh events](monitor-events-eventbridge-sns.md)
 + [Replace instances based on maximum instance lifetime](asg-max-instance-lifetime.md)

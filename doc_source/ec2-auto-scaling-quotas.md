@@ -14,7 +14,7 @@ Your AWS account has the following quotas related to the number of Auto Scaling 
 
 | Resource | Default quota | 
 | --- | --- | 
-| Auto Scaling groups per region | 200 | 
+| Auto Scaling groups per region | 500 | 
 | Launch configurations per region | 200 | 
 
 **Auto Scaling group configuration**  

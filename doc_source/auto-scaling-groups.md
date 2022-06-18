@@ -33,6 +33,5 @@ If you're new to Auto Scaling groups, start by creating a launch template or a l
 + [Create an Auto Scaling group using parameters from an existing instance](create-asg-from-instance.md)
 + [Create an Auto Scaling group using the Amazon EC2 launch wizard](create-asg-ec2-wizard.md)
 + [Tag Auto Scaling groups and instances](ec2-auto-scaling-tagging.md)
-+ [Launch Auto Scaling instances in a VPC](asg-in-vpc.md)
 + [Replace Auto Scaling instances](ec2-auto-scaling-group-replacing-instances.md)
 + [Delete your Auto Scaling infrastructure](as-process-shutdown.md)

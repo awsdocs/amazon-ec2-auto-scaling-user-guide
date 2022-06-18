@@ -10,7 +10,7 @@ Skip matching makes it more efficient to:
 **Note**  
 The skip matching feature cannot be used to update an Auto Scaling group that uses a launch configuration unless a launch template is specified for the desired configuration\.
 
-The following AWS CLI examples demonstrate a few scenarios for the use of skip matching\. 
+The following AWS CLI examples demonstrate a few scenarios for the use of skip matching\. If you encounter any errors when running these commands, make sure that you have updated the AWS CLI locally to the latest version\.
 
 **Contents**
 + [Migrate to the default version of your launch template](#skip-matching-launch-template-latest)

@@ -1,27 +1,37 @@
-# Event types and event patterns that you use when you add or update lifecycle hooks<a name="warm-pools-eventbridge-events"></a>
+# Warm pool event types and patterns<a name="warm-pools-eventbridge-events"></a>
 
-When you add lifecycle hooks to your Auto Scaling group, events are sent to EventBridge in JSON format\. You can create an EventBridge rule that uses an event pattern to filter incoming events and then invokes your Lambda function or other target\.
+**Note**  
+Amazon EC2 Auto Scaling supports several predefined patterns in Amazon EventBridge\. This simplifies how an event pattern is created\. You select field values on a form, and EventBridge generates the pattern for you\. At this time, Amazon EC2 Auto Scaling doesn't support predefined patterns for any events that are emitted by an Auto Scaling group with a warm pool\. You must enter the pattern as a JSON object\. This section and the [Create EventBridge rules for warm pool events](warm-pool-events-eventbridge-rules.md) topic show you how to use an event pattern to select events and send them to targets\. 
 
-There are two types of events that are emitted for lifecycle hooks: 
+When you add lifecycle hooks to your Auto Scaling group, events are sent to EventBridge when an instance transitions into a wait state\.
+
+There are two primary event types for lifecycle hooks: 
 + `EC2 Instance-launch Lifecycle Action`
-+ `EC2 Instance-terminate Lifecycle Action`\. 
++ `EC2 Instance-terminate Lifecycle Action`
 
-After you add a warm pool to your Auto Scaling group, the `detail` section for `EC2 Instance-launch Lifecycle Action` events contains new `Origin` and `Destination` fields\. 
+To create EventBridge rules that filter for specific events that are emitted by an Auto Scaling group with a warm pool, include the `Origin` and `Destination` fields from the `detail` section of the event\. Events that contain the `Origin` and `Destination` fields are only emitted by Auto Scaling groups that have a warm pool\. 
 
 The values of `Origin` and `Destination` can be the following:
 
-`EC2` \| `AutoScalingGroup` \| `WarmPool` 
+`EC2` \| `AutoScalingGroup` \| `WarmPool`
 
 **Topics**
-+ [Warm pool events](#warm-pool-event-types)
++ [Example events](#warm-pool-event-types)
 + [Example event patterns](#warm-pools-eventbridge-patterns)
 
-## Warm pool events<a name="warm-pool-event-types"></a>
+## Example events<a name="warm-pool-event-types"></a>
 
-This section lists example events from Amazon EC2 Auto Scaling\. Events are emitted on a best\-effort basis\.
+This section lists example events that are sent to EventBridge when an instance transitions into a wait state\. Events are emitted on a best\-effort basis\.
 
-**Instances bound for the warm pool**  
-The following example shows an event for a lifecycle hook for the `Warmed:Pending:Wait` state\. It represents an instance that is launching into the warm pool\. 
+**Topics**
++ [Example 1: Amazon EC2 Auto Scaling adds a new instance to the warm pool](#warm-pool-example-1)
++ [Example 2: Amazon EC2 Auto Scaling adds an instance to the Auto Scaling group](#warm-pool-example-2)
++ [Example 3: Amazon EC2 Auto Scaling adds a new instance to the Auto Scaling group](#warm-pool-example-3)
++ [Example 4: Amazon EC2 Auto Scaling returns an instance to the warm pool](#warm-pool-example-4)
+
+### Example 1: Amazon EC2 Auto Scaling adds a new instance to the warm pool<a name="warm-pool-example-1"></a>
+
+In this example event, the state of a new instance changes to `Warmed:Pending:Wait` when it is added to a warm pool\. This occurs because of a lifecycle hook for scale\-out events\.
 
 ```
 {
@@ -48,8 +58,9 @@ The following example shows an event for a lifecycle hook for the `Warmed:Pendin
 }
 ```
 
-**Instances leaving the warm pool**  
-The following example shows an event for a lifecycle hook for the `Pending:Wait` state\. It represents an instance that is leaving the warm pool due to a scale\-out event\.
+### Example 2: Amazon EC2 Auto Scaling adds an instance to the Auto Scaling group<a name="warm-pool-example-2"></a>
+
+In this example event, the state of an instance in the warm pool changes to `Pending:Wait` when it is added to the Auto Scaling group\. This occurs because of a lifecycle hook for scale\-out events\.
 
 ```
 {
@@ -76,8 +87,9 @@ The following example shows an event for a lifecycle hook for the `Pending:Wait`
 }
 ```
 
-**Instances launching outside of the warm pool**  
-The following example shows an event for a lifecycle hook for the `Pending:Wait` state\. It represents an instance that is launching directly into the Auto Scaling group\.
+### Example 3: Amazon EC2 Auto Scaling adds a new instance to the Auto Scaling group<a name="warm-pool-example-3"></a>
+
+In this example event, the state of a new instance \(not an instance from the warm pool\) changes to `Pending:Wait` when it is added to the Auto Scaling group\. This occurs because of a lifecycle hook for scale\-out events\.
 
 ```
 {
@@ -104,8 +116,9 @@ The following example shows an event for a lifecycle hook for the `Pending:Wait`
 }
 ```
 
-**Instances returning to the warm pool on scale in**  
-The following example shows an event for a lifecycle hook for the `Warmed:Pending:Wait` state\. It represents an instance that is leaving the group and returning to the warm pool on scale in\.
+### Example 4: Amazon EC2 Auto Scaling returns an instance to the warm pool<a name="warm-pool-example-4"></a>
+
+In this example event, the state of an instance changes to `Warmed:Pending:Wait` when it is returned to the warm pool\. This occurs because of a lifecycle hook for scale\-in events\. 
 
 ```
 {
@@ -156,40 +169,24 @@ Use the following sample event pattern to capture all events that are associated
 
 ```
 {
-  "source": [ 
-      "aws.autoscaling" 
-  ],
-  "detail-type": [ 
-      "EC2 Instance-launch Lifecycle Action" 
-  ],
+  "source": [ "aws.autoscaling" ],
+  "detail-type": [ "EC2 Instance-launch Lifecycle Action" ],
   "detail": {
-      "Origin": [
-          "EC2"
-      ],
-      "Destination": [
-          "WarmPool"
-      ]
+      "Origin": [ "EC2" ],
+      "Destination": [ "WarmPool" ]
    }
 }
 ```
 
-Use the following sample event pattern to capture all events that are associated with instances leaving the warm pool due to a scale\-out event\.
+Use the following sample event pattern to capture all events that are associated with instances leaving the warm pool because of a scale\-out event\.
 
 ```
 {
-  "source": [ 
-      "aws.autoscaling" 
-  ],
-  "detail-type": [ 
-      "EC2 Instance-launch Lifecycle Action" 
-  ],
+  "source": [ "aws.autoscaling" ],
+  "detail-type": [ "EC2 Instance-launch Lifecycle Action" ],
   "detail": {
-      "Origin": [
-          "WarmPool"
-      ],
-      "Destination": [
-          "AutoScalingGroup"
-      ]
+      "Origin": [ "WarmPool" ],
+      "Destination": [ "AutoScalingGroup" ]
    }
 }
 ```
@@ -198,19 +195,11 @@ Use the following sample event pattern to capture all events that are associated
 
 ```
 {
-  "source": [ 
-      "aws.autoscaling" 
-  ],
-  "detail-type": [ 
-      "EC2 Instance-launch Lifecycle Action" 
-  ],
+  "source": [ "aws.autoscaling" ],
+  "detail-type": [ "EC2 Instance-launch Lifecycle Action" ],
   "detail": {
-      "Origin": [
-          "EC2"
-      ],
-      "Destination": [
-          "AutoScalingGroup"
-      ]
+      "Origin": [ "EC2" ],
+      "Destination": [ "AutoScalingGroup" ]
    }
 }
 ```
@@ -219,19 +208,11 @@ Use the following sample event pattern to capture all events that are associated
 
 ```
 {
-  "source": [ 
-      "aws.autoscaling" 
-  ],
-  "detail-type": [ 
-      "EC2 Instance-terminate Lifecycle Action" 
-  ],
+  "source": [ "aws.autoscaling" ],
+  "detail-type": [ "EC2 Instance-terminate Lifecycle Action" ],
   "detail": {
-      "Origin": [
-          "AutoScalingGroup"
-      ],
-      "Destination": [
-          "WarmPool"
-      ]
+      "Origin": [ "AutoScalingGroup" ],
+      "Destination": [ "WarmPool" ]
    }
 }
 ```
@@ -240,11 +221,7 @@ Use the following sample event pattern to capture all events that are associated
 
 ```
 {
-  "source": [ 
-      "aws.autoscaling" 
-  ],
-  "detail-type": [ 
-      "EC2 Instance-launch Lifecycle Action" 
-  ]
+  "source": [ "aws.autoscaling" ],
+  "detail-type": [ "EC2 Instance-launch Lifecycle Action" ]
 }
 ```

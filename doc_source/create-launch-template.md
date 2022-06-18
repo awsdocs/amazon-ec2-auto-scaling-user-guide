@@ -1,28 +1,34 @@
 # Create a launch template for an Auto Scaling group<a name="create-launch-template"></a>
 
-Before you can create an Auto Scaling group using a launch template, you must create a launch template that includes the parameters required to launch an EC2 instance, such as the ID of the Amazon Machine Image \(AMI\) and an instance type\.
+Before you can create an Auto Scaling group using a launch template, you must create a launch template with the parameters required to launch an EC2 instance\. These parameters include the ID of the Amazon Machine Image \(AMI\) and an instance type\.
 
-A launch template provides full functionality for Amazon EC2 Auto Scaling and also newer features of Amazon EC2 such as the current generation of EBS Provisioned IOPS volumes \(io2\), EBS volume tagging, T2 Unlimited instances, Elastic Inference, and Dedicated Hosts\.
+A launch template provides full functionality for Amazon EC2 Auto Scaling and also newer features of Amazon EC2 such as the current generation of Amazon EBS Provisioned IOPS volumes \(io2\), EBS volume tagging, T2 Unlimited instances, Elastic Inference, and Dedicated Hosts\.
 
-The following procedure works for creating a new launch template\. After you create your launch template, you can create the Auto Scaling group by following the instructions in these topics: 
+Use the following procedure to create a new launch template\. After you create your launch template, you can create the Auto Scaling group\. For information about creating the Auto Scaling group, see the following topics: 
 + [Create an Auto Scaling group using a launch template](create-asg-launch-template.md)
 + [Auto Scaling groups with multiple instance types and purchase options](ec2-auto-scaling-mixed-instances-groups.md)
 + [Create an Auto Scaling group using attribute\-based instance type selection](create-asg-instance-type-requirements.md)
 
-**Topics**
+**Contents**
 + [Create your launch template \(console\)](#create-launch-template-for-auto-scaling)
+  + [Change the default network interface settings](#change-network-interface)
+  + [Modify the storage configuration](#modify-storage-configuration)
+  + [Configure advanced settings for your launch template](#advanced-settings-for-your-launch-template)
 + [Create a launch template from an existing instance \(console\)](#create-launch-template-from-instance)
 + [Additional information](#create-launch-template-additional-info)
 + [Limitations](#create-launch-template-limitations)
 
+**Important**  
+Launch template parameters are not fully validated when you create the launch template\. If you specify incorrect values for parameters, or if you do not use supported parameter combinations, no instances can launch using this launch template\. Be sure to specify the correct values for the parameters and use supported parameter combinations\. For example, to launch instances with an Arm\-based AWS Graviton or Graviton2 AMI, you must specify an Arm\-compatible instance type\. 
+
 ## Create your launch template \(console\)<a name="create-launch-template-for-auto-scaling"></a>
 
-Follow these steps to configure your launch template for the following: 
-+ Specify the Amazon machine image \(AMI\) from which to launch the instances\.
-+ Choose an instance type that is compatible with the AMI you've specified\. 
+The following steps describe how to configure your launch template: 
++ Specify the Amazon Machine Image \(AMI\) from which to launch the instances\.
++ Choose an instance type that is compatible with the AMI that you specify\. 
 + Specify the key pair to use when connecting to instances, for example, using SSH\.
 + Add one or more security groups to allow relevant access to the instances from an external network\.
-+ Specify whether to attach additional EBS volumes or instance store volumes to each instance\. 
++ Specify whether to attach additional volumes to each instance\. 
 + Add custom tags \(key\-value pairs\) to the instances and volumes\.
 
 **To create a launch template**
@@ -37,98 +43,125 @@ Follow these steps to configure your launch template for the following:
 
 1. Under **Launch template contents**, fill out each required field and any optional fields as needed\.
 
-   1. **Application and OS Images \(Amazon Machine Image\)**: Choose the ID of the AMI from which to launch the instances\. You can search through all available AMIs, or from the **Recent** or **Quick Start** list, select an AMI\. If you don't see the AMI that you need, you can choose **Browser more AMIs** to browse the full AMI catalog\.
+   1. **Application and OS Images \(Amazon Machine Image\)**: \(Required\) Choose the ID of the AMI for your instances\. You can search through all available AMIs, or select an AMI from the **Recents** or **Quick Start** list\. If you don't see the AMI that you need, choose **Browse more AMIs** to browse the full AMI catalog\.
 
-   1. For **Instance type**, choose a single instance type that is compatible with the AMI\. To configure advanced options, choose **Advanced**\.
+      To choose a custom AMI, you must first create your AMI from a customized instance\. For more information, see [Create an AMI](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/create-ami.html) in the *Amazon EC2 User Guide for Linux Instances*\.
 
-      Use advanced options to support the use of multiple instance types when using attribute\-based instance type selection\. For more information, see [Create an Auto Scaling group using attribute\-based instance type selection](create-asg-instance-type-requirements.md)\. Manually choosing instance types is not supported when creating a launch template for an Auto Scaling group\.
+   1. For **Instance type**, choose a single instance type that's compatible with the AMI that you specified\.
 
-      To use attribute\-based instance type selection, choose **Specify instance type attributes**, and specify the following options:
-      + **Number of vCPUs**: Enter the minimum and maximum number of vCPUs\. To indicate no limits, enter a minimum of 0, and leave the maximum blank\. 
-      + **Amount of memory \(MiB\)**: Enter the minimum and maximum amount of memory, in MiB\. To indicate no limits, enter a minimum of 0, and leave the maximum blank\. 
+      Alternatively, to launch an Auto Scaling group with multiple instance types, choose **Advanced**, **Specify instance type attributes**, and then specify the following options:
+      + **Number of vCPUs**: Enter the minimum and maximum number of vCPUs\. To indicate no limits, enter a minimum of 0, and keep the maximum blank\. 
+      + **Amount of memory \(MiB\)**: Enter the minimum and maximum amount of memory, in MiB\. To indicate no limits, enter a minimum of 0, and keep the maximum blank\. 
       + Expand **Optional instance type attributes** and choose **Add attribute** to further limit the types of instances that can be used to fulfill your desired capacity\. For information about each attribute, see [InstanceRequirementsRequest](https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_InstanceRequirementsRequest.html) in the *Amazon EC2 API Reference*\. 
       + **Resulting instance types**: You can view the instance types that match the specified compute requirements, such as vCPUs, memory, and storage\.
-      + \(Optional\) To exclude instance types, choose **Add attribute**, and from the **Attribute** list, choose **Excluded instance types**\. From the **Attribute value** list, select the instance types to exclude\.
+      + To exclude instance types, choose **Add attribute**\. From the **Attribute** list, choose **Excluded instance types**\. From the **Attribute value** list, select the instance types to exclude\.
 
-   1. \(Optional\) **Key pair \(login\)**: Specify a [key pair](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-key-pairs.html)\.
+      For more information, see [Create an Auto Scaling group using attribute\-based instance type selection](create-asg-instance-type-requirements.md)\.
 
-   1. \(Optional\) **Network settings**: Choose one or more [security groups](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-network-security.html), or leave blank and configure one or more security groups as part of the network interface\. Each security group must be configured for the VPC that your Auto Scaling group will launch instances into\. 
+   1. **Key pair \(login\)**: For **Key pair name**, choose an existing key pair, or choose **Create new key pair** to create a new one\. For more information, see [Amazon EC2 key pairs and Linux instances](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-key-pairs.html) in the *Amazon EC2 User Guide for Linux Instances*\.
 
-      If you don't specify any security groups in your launch template, Amazon EC2 uses the [default security group](https://docs.aws.amazon.com/vpc/latest/userguide/VPC_SecurityGroups.html#DefaultSecurityGroup)\. By default, this security group doesn't allow inbound traffic from external networks\.
+   1. **Network settings**: For **Firewall \(security groups\)**, use one or more security groups, or keep this blank and configure one or more security groups as part of the network interface\. For more information, see [Amazon EC2 security groups for Linux instances](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-security-groups.html) in the *Amazon EC2 User Guide for Linux Instances*\.
 
-   1. \(Optional\) **Configure storage**: Update the storage configuration\. The default storage configuration is determined by the AMI and the instance type\. To configure advanced options, choose **Advanced**\.
+      If you don't specify any security groups in your launch template, Amazon EC2 uses the default security group for the VPC that your Auto Scaling group will launch instances into\. By default, this security group doesn't allow inbound traffic from external networks\. For more information, see [Default security groups for your VPCs](https://docs.aws.amazon.com/vpc/latest/userguide/VPC_SecurityGroups.html#DefaultSecurityGroup) in the *Amazon VPC User Guide*\.
 
-      Use advanced options to review and configure the following: 
+   1. Do one of the following:
+      + Change the default network interface settings\. For example, you can enable or disable the public IPv4 addressing feature, which overrides the auto\-assign public IPv4 addresses setting on the subnet\. For more information, see [Change the default network interface settings](#change-network-interface)\.
+      + Skip this step to keep the default network interface settings\. 
 
-      1. **Volume type**: The type of volume depends on the instance type that you've chosen\. Each instance type has an associated root device volume, either an Amazon EBS volume or an instance store volume\. For more information, see [Amazon EC2 instance store](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/InstanceStorage.html) and [Amazon EBS volumes](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EBSVolumes.html) in the *Amazon EC2 User Guide for Linux Instances*\.
+   1. Do one of the following:
+      + Modify the storage configuration\. For more information, see [Modify the storage configuration](#modify-storage-configuration)\.
+      + Skip this step to keep the default storage configuration\.
 
-      1. **Device name**: Specify a device name for the volume\.
+   1. For **Resource tags**, specify tags by providing key and value combinations\. If you specify instance tags in your launch template and then you choose to propagate your Auto Scaling group's tags to its instances, all the tags are merged\. If the same tag key is specified for a tag in your launch template and a tag in your Auto Scaling group, then the tag value from the group takes precedence\. 
 
-      1. **Snapshot**: Enter the ID of the snapshot from which to create the volume\.
+1. \(Optional\) Configure advanced settings\. For more information, see [Configure advanced settings for your launch template](#advanced-settings-for-your-launch-template)\.
 
-      1. **Size \(GiB\)**: For Amazon EBS\-backed volumes, specify a storage size\. If you're creating the volume from a snapshot and don't specify a volume size, the default is the snapshot size\.
-
-      1. **Volume type**: For Amazon EBS volumes, choose the [volume type](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EBSVolumeTypes.html)\.
-
-      1. **IOPS**: With a Provisioned IOPS SSD volume, enter the maximum number of input/output operations per second \(IOPS\) that the volume should support\.
-
-      1. **Delete on termination**: For Amazon EBS volumes, choose whether to delete the volume when the associated instance is terminated\. 
-
-      1. **Encrypted**: Choose **Yes** to change the encryption state of an Amazon EBS volume\. The default effect of setting this parameter varies with the choice of volume source, as described in the following table\. In all cases, you must have permission to use the specified AWS KMS key\. For more information about specifying encrypted volumes, see [Amazon EBS encryption](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EBSEncryption.html) in the *Amazon EC2 User Guide for Linux Instances*\.   
-**Encryption outcomes**    
-[\[See the AWS documentation website for more details\]](http://docs.aws.amazon.com/autoscaling/ec2/userguide/create-launch-template.html)
-
-         \* If [encryption by default](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EBSEncryption.html#encryption-by-default) is enabled, all newly created volumes \(whether or not the **Encrypted** parameter is set to **Yes**\) are encrypted using the default KMS key\. Setting both the **Encrypted** and **Key** parameters allows you to specify a non\-default KMS key\. 
-
-      1. **Key**: If you chose **Yes** in the previous step, optionally enter the KMS key you want to use when encrypting the volumes\. Enter a KMS key that you previously created using the AWS Key Management Service\. You can paste the full ARN of any key that you have access to\. For information about setting up key policies for your customer managed keys, see the [AWS Key Management Service Developer Guide](https://docs.aws.amazon.com/kms/latest/developerguide/) and the [Required AWS KMS key policy for use with encrypted volumes](key-policy-requirements-EBS-encryption.md)\. 
-**Note**  
-Providing a KMS key without also setting the **Encrypted** parameter results in an error\. 
-
-   1. For **Resource tags**, specify tags by providing key and value combinations\. You can tag the instances, the volumes, or both\. If you specify instance tags in your launch template and then you choose to propagate your Auto Scaling group's tags to its instances, all the tags are merged\. If the same tag key is specified for a tag in your launch template and a tag in your Auto Scaling group, then the tag value from the group takes precedence\. 
-
-1. To change the default network interface, see [Change the default network interface](#change-network-interface)\. Skip this step if you want to keep the default network interface \(the primary network interface\)\.
-
-1. To configure advanced settings, see [Configure advanced settings for your launch template](#advanced-settings-for-your-launch-template)\. Otherwise, choose **Create launch template**\. 
+1. When you are ready to create the launch template, choose **Create launch template**\.
 
 1. To create an Auto Scaling group, choose **Create Auto Scaling group** from the confirmation page\.
 
-### Change the default network interface<a name="change-network-interface"></a>
+### Change the default network interface settings<a name="change-network-interface"></a>
 
-This section shows you how to change the default network interface\. This allows you to define, for example, whether you want to assign a public IP address to each instance instead of defaulting to the auto\-assign public IP setting on the subnet\.
+This section shows you how to change the default network interface settings\. For example, you can define whether you want to assign a public IPv4 address to each instance instead of defaulting to the auto\-assign public IPv4 addresses setting on the subnet\.
 
 **Considerations and limitations**
 
-When specifying a network interface, keep in mind the following considerations and limitations:
-+ You must configure the security group as part of the network interface, and not in the **Security groups** section of the template\. You cannot specify security groups in both places\.
-+ You cannot assign additional private IP addresses, known as secondary private IP addresses, to a network interface\. When an instance launches, a single private address is allocated to each network interface from the CIDR range of the subnet in which the instance is launched\. For more information on specifying CIDR ranges for your VPC or subnet, see the [Amazon VPC User Guide](https://docs.aws.amazon.com/vpc/latest/userguide/)\.
-+ You can launch only one instance if you specify an existing network interface ID\. For this to work, you must use the AWS CLI or an SDK to create the Auto Scaling group\. When you create the group, you must specify the Availability Zone, but not the subnet ID\. Also, you can specify an existing network interface only if it has a device index of 0\. 
-+ You cannot auto\-assign a public IP address if you specify more than one network interface\. You also cannot specify duplicate device indexes across network interfaces\. Note that both the primary and secondary network interfaces will reside in the same subnet\.
+When changing the default network interface settings, keep in mind the following considerations and limitations:
++ You must configure the security groups as part of the network interface, not in the **Security groups** section of the template\. You cannot specify security groups in both places\.
++ You cannot assign secondary private IP addresses, known as *secondary IP addresses*, to a network interface\.
++ If you specify an existing network interface ID, you can launch only one instance\. To do this, you must use the AWS CLI or an SDK to create the Auto Scaling group\. When you create the group, you must specify the Availability Zone, but not the subnet ID\. Also, you can specify an existing network interface only if it has a device index of 0\. 
++ You cannot auto\-assign a public IPv4 address if you specify more than one network interface\. You also cannot specify duplicate device indexes across network interfaces\. Both the primary and secondary network interfaces reside in the same subnet\. For more information, see [Provide network connectivity for your Auto Scaling instances using Amazon VPC](asg-in-vpc.md)\. 
++ When an instance launches, a private address is automatically allocated to each network interface\. The address comes from the CIDR range of the subnet in which the instance is launched\. For information on specifying CIDR blocks \(or IP address ranges\) for your VPC or subnet, see the [Amazon VPC User Guide](https://docs.aws.amazon.com/vpc/latest/userguide/)\.
 
-**To change the default network interface**
+**To change the default network interface settings**
 
-1. Under **Network settings**, expand **Advanced network configuration** and then choose **Add network interface**\.
+1. Under **Network settings**, expand **Advanced network configuration**\.
 
-1. Specify the primary network interface, paying attention to the following fields:
+1. Choose **Add network interface** to configure the primary network interface, paying attention to the following fields:
 
-   1. **Device index**: Specify the device index\. Enter `0` for the primary network interface \(eth0\)\. 
+   1. **Device index**: Keep the default value, 0, to apply your changes to the primary network interface \(eth0\)\.
 
-   1. **Network interface**: Leave blank to create a new network interface when an instance is launched, or enter the ID of an existing network interface\. If you specify an ID, this limits your Auto Scaling group to one instance\. 
+   1. **Network interface**: Keep the default value, **New interface**, to have Amazon EC2 Auto Scaling automatically create a new network interface when an instance is launched\. Alternatively, you can choose an existing, available network interface with a device index of 0, but this limits your Auto Scaling group to one instance\. 
 
-   1. **Description**: Enter a descriptive name\.
+   1. **Description**: \(Optional\) Enter a descriptive name\.
 
-   1. **Subnet**: While you can choose to specify a subnet, it is ignored for Amazon EC2 Auto Scaling in favor of the settings of the Auto Scaling group\. 
+   1. **Subnet**: Keep the default **Don't include in launch template** setting\. 
 
-   1. **Auto\-assign public IP**: Choose whether to automatically assign a [public IPv4 address](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-instance-addressing.html#public-ip-addresses) to the network interface with the device index of 0\. This setting takes precedence over settings that you configure for the subnets\. If you do not set a value, the default is to use the auto\-assign public IPv4 settings of the subnets that your instances are launched into\. 
+      If the AMI specifies a subnet for the network interface, this results in an error\. We recommend turning off **Auto Scaling guidance** as a workaround\. After you make this change, you will not receive an error message\. However, regardless of where the subnet is specified, the subnet settings of the Auto Scaling group take precedence and cannot be overridden\.
 
-   1. **Security groups**: Choose one or more [security groups](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-network-security.html)\. Each security group must be configured for the VPC that your Auto Scaling group will launch instances into\.
+   1. **Auto\-assign public IP**: Change whether your network interface with a device index of 0 receives a public IPv4 address\. By default, instances in a default subnet receive a public IPv4 address, while instances in a nondefault subnet do not\. Select **Enable** or **Disable** to override the subnet's default setting\.
 
-   1. **Delete on termination**: Choose whether the network interface is deleted when the Auto Scaling group scales in and terminates the instance to which the network interface is attached\. 
+   1. **Security groups**: Choose one or more security groups for the network interface\. Each security group must be configured for the VPC that your Auto Scaling group will launch instances into\. For more information, see [Amazon EC2 security groups for Linux instances](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-security-groups.html) in the *Amazon EC2 User Guide for Linux Instances*\.
 
-   1. **Elastic Fabric Adapter**: Indicates whether the network interface is an Elastic Fabric Adapter\. For more information, see [Elastic Fabric Adapter](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/efa.html) in the *Amazon EC2 User Guide for Linux Instances*\. 
+   1. **Delete on termination**: Choose **Yes** to delete the network interface when the instance is terminated, or choose **No** to keep the network interface\.
 
-   1. **Network card index**: Attaches the network interface to a specific network card when using an instance type that supports multiple network cards\. The primary network interface \(eth0\) must be assigned to network card index 0\. Defaults to 0 if not specified\. For more information, see [Network cards](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-eni.html#network-cards) in the *Amazon EC2 User Guide for Linux Instances*\. 
+   1. **Elastic Fabric Adapter**: To support high performance computing \(HPC\) use cases, change the network interface into an Elastic Fabric Adapter network interface\. For more information, see [Elastic Fabric Adapter](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/efa.html) in the *Amazon EC2 User Guide for Linux Instances*\. 
+
+   1. **Network card index**: Choose **0** to attach the primary network interface to the network card with a device index of 0\. If this option isn't available, keep the default value, **Don't include in launch template**\. Attaching the network interface to a specific network card is available only for supported instance types\. For more information, see [Network cards](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-eni.html#network-cards) in the *Amazon EC2 User Guide for Linux Instances*\. 
 
 1. To add a secondary network interface, choose **Add network interface**\.
+
+### Modify the storage configuration<a name="modify-storage-configuration"></a>
+
+You can modify the storage configuration for instances launched from an Amazon EBS\-backed AMI or an instance store\-backed AMI\. You can also specify additional EBS volumes to attach to the instances\. The AMI includes one or more volumes of storage, including the root volume \(**Volume 1 \(AMI Root\)**\)\. 
+
+**To modify the storage configuration**
+
+1. In **Configure storage**, modify the size or type of volume\. 
+
+   If the value you specify for volume size is outside the limits of the volume type, or smaller than the snapshot size, an error message is displayed\. To help you address the issue, this message gives the minimum or maximum value that the field can accept\.
+
+   Only volumes associated with an Amazon EBS\-backed AMI appear\. To display information about the storage configuration for an instance launched from an instance store\-backed AMI, choose **Show details** from the **Instance store volumes** section\.
+
+   To specify all EBS volume parameters, switch to the **Advanced** view in the top right corner\. 
+
+1. For advanced options, expand the volume that you want to modify and configure the volume as follows:
+
+   1. **Storage type**: The type of volume \(EBS or ephemeral\) to associate with your instance\. The instance store \(ephemeral\) volume type is only available if you select an instance type that supports it\. For more information, see [Amazon EC2 instance store](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/InstanceStorage.html) and [Amazon EBS volumes](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EBSVolumes.html) in the *Amazon EC2 User Guide for Linux Instances*\.
+
+   1. **Device name**: Select from the list of available device names for the volume\.
+
+   1. **Snapshot**: Select the snapshot from which to create the volume\. You can search for available shared and public snapshots by entering text into the **Snapshot** field\.
+
+   1. **Size \(GiB\)**: For EBS volumes, you can specify a storage size\. If you have selected an AMI and instance that are eligible for the free tier, keep in mind that to stay within the free tier, you must stay under 30 GiB of total storage\. For more information, see [Constraints on the size and configuration of an EBS volume](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/volume_constraints.html) in the *Amazon EC2 User Guide for Linux Instances*\.
+
+   1. **Volume type**: For EBS volumes, choose the volume type\. For more information, see [Amazon EBS volume types](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ebs-volume-types.html) in the *Amazon EC2 User Guide for Linux Instances*\.
+
+   1. **IOPS**: If you have selected a Provisioned IOPS SSD \(`io1` and `io2`\) or General Purpose SSD \(`gp3`\) volume type, then you can enter the number of I/O operations per second \(IOPS\) that the volume can support\. This is required for io1, io2, and gp3 volumes\. It is not supported for gp2, st1, sc1, or standard volumes\.
+
+   1. **Delete on termination**: For EBS volumes, choose **Yes** to delete the volume when the instance is terminated, or choose **No** to keep the volume\.
+
+   1. **Encrypted**: If the instance type supports EBS encryption, you can choose **Yes** to enable encryption for the volume\. If you have enabled encryption by default in this Region, encryption is enabled for you\. For more information, see [Amazon EBS encryption](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EBSEncryption.html) and [Encryption by default](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EBSEncryption.html#encryption-by-default) in the *Amazon EC2 User Guide for Linux Instances*\. 
+
+      The default effect of setting this parameter varies with the choice of volume source, as described in the following table\. In all cases, you must have permission to use the specified AWS KMS key\.   
+**Encryption outcomes**    
+[\[See the AWS documentation website for more details\]](http://docs.aws.amazon.com/autoscaling/ec2/userguide/create-launch-template.html)
+
+      \* If encryption by default is enabled, all newly created volumes \(whether or not the **Encrypted** parameter is set to **Yes**\) are encrypted using the default KMS key\. If you set both the **Encrypted** and **KMS key** parameters, then you can specify a non\-default KMS key\. 
+
+   1. **KMS key**: If you chose **Yes** for **Encrypted**, then you must select a customer managed key to use to encrypt the volume\. If you have enabled encryption by default in this Region, the default customer managed key is selected for you\. You can select a different key or specify the ARN of any customer managed key that you previously created using the AWS Key Management Service\.
+
+1. To specify additional volumes to attach to the instances launched by this launch template, choose **Add new volume**\.
 
 ### Configure advanced settings for your launch template<a name="advanced-settings-for-your-launch-template"></a>
 
@@ -153,9 +186,11 @@ For information about creating mixed instances groups, see [Auto Scaling groups 
 
 1. For **Detailed CloudWatch monitoring**, choose whether to enable the instances to publish metric data at 1\-minute intervals to Amazon CloudWatch\. Additional charges apply\. For more information, see [Configure monitoring for Auto Scaling instances](enable-as-instance-metrics.md)\.
 
+1. For **Elastic inference**, choose an elastic inference accelerator to attach to your EC2 CPU instance\. Additional charges apply\. For more information, see [Working with Amazon Elastic Inference](https://docs.aws.amazon.com/elastic-inference/latest/developerguide/working-with-ei.html) in the *Amazon Elastic Inference Developer Guide*\.
+
 1. For **T2/T3 Unlimited**, choose whether to enable applications to burst beyond the baseline for as long as needed\. This field is only valid for T2, T3, and T3a instances\. Additional charges may apply\. For more information, see [Using an Auto Scaling group to launch a burstable performance instance as Unlimited](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/burstable-performance-instances-how-to.html#burstable-performance-instances-auto-scaling-grp) in the *Amazon EC2 User Guide for Linux Instances*\.
 
-1. For **Placement group name**, you can specify a placement group in which to launch the instances\. Not all instance types can be launched in a placement group\. If you configure an Auto Scaling group using a CLI command that specifies a different placement group, the setting is ignored in favor of the one specified for the Auto Scaling group\.
+1. For **Placement group name**, you can specify a placement group in which to launch the instances\. Not all instance types can be launched in a placement group\. If you configure an Auto Scaling group using a CLI command that specifies a different placement group, the placement group for the Auto Scaling group takes precedence\.
 
 1. For **Capacity Reservation**, you can specify whether to launch the instances into shared capacity, any `open` Capacity Reservation, a specific Capacity Reservation, or a Capacity Reservation group\. For more information, see [Launching instances into an existing capacity reservation](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/capacity-reservations-using.html#capacity-reservations-launch) in the *Amazon EC2 User Guide for Linux Instances*\.
 
@@ -211,8 +246,8 @@ For additional information about creating launch templates, see:
 + [AWS::EC2::LaunchTemplate](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-ec2-launchtemplate.html) section of the *AWS CloudFormation User Guide*
 
 ## Limitations<a name="create-launch-template-limitations"></a>
-+ A launch template lets you configure a network type \(VPC or EC2\-Classic\), subnet, and Availability Zone\. However, these settings are ignored in favor of what is specified in the Auto Scaling group\. 
-+ Because the subnet settings in your launch template are ignored in favor of what is specified in the Auto Scaling group, all of the network interfaces that are created for a given instance will be connected to the same subnet as the instance\. For other limitations on user\-defined network interfaces, see [Change the default network interface](#change-network-interface)\.
++ A launch template lets you configure a network type \(VPC or EC2\-Classic\), subnet, and Availability Zone\. However, the settings of the Auto Scaling group take precedence\.
++ Because the subnet settings in your launch template are ignored in favor of what is specified in the Auto Scaling group, all of the network interfaces that are created for a given instance will be connected to the same subnet as the instance\. For other limitations on user\-defined network interfaces, see [Change the default network interface settings](#change-network-interface)\.
 + A launch template lets you configure additional settings in your Auto Scaling group to launch multiple instance types and combine On\-Demand and Spot purchase options, as described in [Auto Scaling groups with multiple instance types and purchase options](ec2-auto-scaling-mixed-instances-groups.md)\. Launching instances with such a combination is not supported:
   + If you specify a Spot Instance request in the launch template
   + In EC2\-Classic

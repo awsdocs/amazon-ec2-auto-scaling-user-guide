@@ -63,7 +63,7 @@ Alternatively, to create a new launch template, use the following procedure\.
 
 1. Enter a name and provide a description for the initial version of the launch template\.
 
-1. For **Application and OS Images \(Amazon Machine Image\)**, choose the ID of the AMI for your instances\. You can search through all available AMIs, or from the **Recent** or **Quick Start** list, select an AMI\. If you don't see the AMI that you need, you can choose **Browser more AMIs** to browse the full AMI catalog\.
+1. For **Application and OS Images \(Amazon Machine Image\)**, choose the ID of the AMI for your instances\. You can search through all available AMIs, or select an AMI from the **Recents** or **Quick Start** list\. If you don't see the AMI that you need, choose **Browse more AMIs** to browse the full AMI catalog\.
 
 1. For **Instance type**, select a hardware configuration for your instances that is compatible with the AMI that you specified\.
 
@@ -93,7 +93,7 @@ If you already have a launch configuration that you'd like to use, select it by 
 
 **To select an existing launch configuration**
 
-1. Open the [Launch configurations page](https://console.aws.amazon.com/ec2autoscaling/home?#/lc) of the Amazon EC2 console\.
+1. Open the [Launch configurations page](https://console.aws.amazon.com/ec2/v2/home?#LaunchConfigurations) of the Amazon EC2 console\.
 
 1. On the navigation bar at the top of the screen, choose the Region where the load balancer was created\.
 
@@ -105,7 +105,7 @@ Alternatively, to create a new launch configuration, use the following procedure
 
 **To create a launch configuration**
 
-1. Open the [Launch configurations page](https://console.aws.amazon.com/ec2autoscaling/home?#/lc) of the Amazon EC2 console\.
+1. Open the [Launch configurations page](https://console.aws.amazon.com/ec2/v2/home?#LaunchConfigurations) of the Amazon EC2 console\.
 
 1. On the navigation bar at the top of the screen, choose the Region where the load balancer was created\.
 
@@ -173,7 +173,7 @@ After you have created the Auto Scaling group with the load balancer attached, t
 
 **To verify that your load balancer is attached**
 
-1. From the [Auto Scaling groups page](https://console.aws.amazon.com/ec2autoscaling) of the Amazon EC2 console, select the check box next to your Auto Scaling group\.
+1. From the [Auto Scaling groups page](https://console.aws.amazon.com/ec2/v2/home?#AutoScalingGroups) of the Amazon EC2 console, select the check box next to your Auto Scaling group\.
 
 1. On the **Details** tab, **Load balancing** shows any attached load balancer target groups or Classic Load Balancers\.
 
@@ -196,7 +196,7 @@ After you're finished with the resources that you created for this tutorial, you
 
 **To delete your Auto Scaling group**
 
-1. Open the [Auto Scaling groups page](https://console.aws.amazon.com/ec2autoscaling) in the Amazon EC2 console\.
+1. Open the [Auto Scaling groups page](https://console.aws.amazon.com/ec2/v2/home?#AutoScalingGroups) of the Amazon EC2 console\.
 
 1. Select your Auto Scaling group\.
 
@@ -218,7 +218,7 @@ Skip the following procedure if you would like to keep your launch configuration
 
 **To delete your launch configuration**
 
-1. Open the [Launch configurations page](https://console.aws.amazon.com/ec2autoscaling/home?#/lc) of the Amazon EC2 console\.
+1. Open the [Launch configurations page](https://console.aws.amazon.com/ec2/v2/home?#LaunchConfigurations) of the Amazon EC2 console\.
 
 1. Select your launch configuration\.
 

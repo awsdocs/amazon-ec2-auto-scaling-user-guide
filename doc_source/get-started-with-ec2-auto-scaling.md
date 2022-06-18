@@ -48,11 +48,11 @@ Alternatively, you can use a launch configuration to create an Auto Scaling grou
 
 **To create a launch template**
 
-1. Open the [Amazon EC2 console](https://console.aws.amazon.com/ec2)\.
+1. Open the [Launch templates page](https://console.aws.amazon.com/ec2/v2/#LaunchTemplates) of the Amazon EC2 console\.
 
-1. On the navigation bar at the top of the screen, select an AWS Region\. The Amazon EC2 Auto Scaling resources that you create are tied to the Region that you specify\. 
+1. On the navigation bar at the top of the screen, select an AWS Region\. The launch template and Auto Scaling group that you create are tied to the Region that you specify\. 
 
-1. In the left navigation pane, choose **Launch Templates**, and then choose **Create launch template**\.
+1. Choose **Create launch template**\.
 
 1. For **Launch template name**, enter **my\-template\-for\-auto\-scaling**\.
 
@@ -80,9 +80,9 @@ A launch configuration is similar to a launch template, in that it specifies the
 
 **To create a launch configuration**
 
-1. Open the [Launch configurations page](https://console.aws.amazon.com/ec2autoscaling/home?#/lc) of the Amazon EC2 console\.
+1. Open the [Launch configurations page](https://console.aws.amazon.com/ec2/v2/home?#LaunchConfigurations) of the Amazon EC2 console\.
 
-1. On the navigation bar, select an AWS Region\. The Auto Scaling resources that you create are tied to the Region that you specify\. 
+1. On the navigation bar, select an AWS Region\. The launch configuration and Auto Scaling group that you create are tied to the Region that you specify\.
 
 1. Choose **Create launch configuration**, and then enter **my\-first\-launch\-configuration** in the **Name** field\.
 
@@ -145,7 +145,7 @@ In the following procedure, you look at the **Activity history** and **Instances
 
 **To verify that your Auto Scaling group has launched an EC2 instance**
 
-1. Open the [Auto Scaling groups page](https://console.aws.amazon.com/ec2autoscaling) in the Amazon EC2 console\.
+1. Open the [Auto Scaling groups page](https://console.aws.amazon.com/ec2/v2/home?#AutoScalingGroups) of the Amazon EC2 console\.
 
 1. Select the check box next to the Auto Scaling group that you just created\. 
 
@@ -163,17 +163,17 @@ In the following procedure, you look at the **Activity history** and **Instances
 
 Use these steps to learn more about how Amazon EC2 Auto Scaling works, specifically, how it launches new instances when necessary\. The minimum size for the Auto Scaling group that you created in this tutorial is one instance\. Therefore, if you terminate that running instance, Amazon EC2 Auto Scaling must launch a new instance to replace it\.
 
-1. Open the [Auto Scaling groups page](https://console.aws.amazon.com/ec2autoscaling) in the Amazon EC2 console\.
+1. Open the [Auto Scaling groups page](https://console.aws.amazon.com/ec2/v2/home?#AutoScalingGroups) of the Amazon EC2 console\.
 
 1. Select the check box next to your Auto Scaling group\. 
 
 1. On the **Instance management** tab, under **Instances**, select the ID of the instance\.
 
-   This takes you to the **Instances** page in the Amazon EC2 console, where you can terminate the instance\.
+   This takes you to the **Instances** page of the Amazon EC2 console, where you can terminate the instance\.
 
 1. Choose **Actions**, **Instance State**, **Terminate**\. When prompted for confirmation, choose **Yes, Terminate**\.
 
-1. On the navigation pane, under **Auto Scaling**, choose **Auto Scaling Groups**\. Select your Auto Scaling group and choose the **Activity** tab\.
+1. On the navigation pane, under **Auto Scaling**, choosel **Auto Scaling Groups**\. Select your Auto Scaling group and choose the **Activity** tab\.
 
    The default cooldown for the Auto Scaling group is 300 seconds \(5 minutes\), so it takes about 5 minutes until you see the scaling activity\. In the activity history, when the scaling activity starts, you see an entry for the termination of the first instance and an entry for the launch of a new instance\. 
 
@@ -197,7 +197,7 @@ If you launched an instance that is not within the [AWS Free Tier](https://aws.a
 
 **To delete your Auto Scaling group**
 
-1. Open the [Auto Scaling groups page](https://console.aws.amazon.com/ec2autoscaling) in the Amazon EC2 console\.
+1. Open the [Auto Scaling groups page](https://console.aws.amazon.com/ec2/v2/home?#AutoScalingGroups) of the Amazon EC2 console\.
 
 1. Select your Auto Scaling group \(`my-first-asg`\)\.
 
@@ -209,9 +209,7 @@ Skip the following procedure if you would like to keep your launch template\.
 
 **To delete your launch template**
 
-1. Open the [Amazon EC2 console](https://console.aws.amazon.com/ec2)\.
-
-1. On the navigation pane, under **Instances**, choose **Launch Templates**\.
+1. Open the [Launch templates page](https://console.aws.amazon.com/ec2/v2/#LaunchTemplates) of the Amazon EC2 console\.
 
 1. Select your launch template \(`my-template-for-auto-scaling`\)\.
 
@@ -221,7 +219,7 @@ Skip the following procedure if you would like to keep your launch configuration
 
 **To delete your launch configuration**
 
-1. Open the [Launch configurations page](https://console.aws.amazon.com/ec2autoscaling/home?#/lc) of the Amazon EC2 console\.
+1. Open the [Launch configurations page](https://console.aws.amazon.com/ec2/v2/home?#LaunchConfigurations) of the Amazon EC2 console\.
 
 1. Select your launch configuration \(`my-first-launch-configuration`\)\.
 

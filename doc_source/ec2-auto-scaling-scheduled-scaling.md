@@ -24,7 +24,7 @@ When you create a scheduled action, keep the following in mind:
 
 You can create scheduled actions that scale your Auto Scaling group on a recurring schedule\. 
 
-To create a recurring schedule using the AWS CLI or an SDK, specify a cron expression and a time zone to describe when that schedule action is to recur\. You can optionally specify a date and time for the start time, the end time, or both\. 
+To create a recurring schedule using the AWS CLI or an SDK, specify a cron expression and a time zone to describe when that scheduled action is to recur\. You can optionally specify a date and time for the start time, the end time, or both\. 
 
 To create a recurring schedule using the AWS Management Console, specify the recurrence pattern, time zone, start time, and optional end time of your scheduled action\. All of the recurrence pattern options are based on cron expressions\. Alternatively, you can write your own custom cron expression\. 
 

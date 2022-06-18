@@ -2,7 +2,7 @@
 
 Health checks allow Amazon EC2 Auto Scaling to determine when an instance is unhealthy and should be terminated\. For warm pool instances kept in a `Stopped` state, it employs the knowledge that Amazon EBS has of a `Stopped` instance's availability to identify unhealthy instances\. It does this by calling the `DescribeVolumeStatus` API to determine the status of the EBS volume that's attached to the instance\. For warm pool instances kept in a `Running` state, it relies on EC2 status checks to determine instance health\. While there is no health check grace period for warm pool instances, Amazon EC2 Auto Scaling doesn't start checking instance health until the lifecycle hook finishes\. 
 
-When an instance is found to be unhealthy, Amazon EC2 Auto Scaling automatically deletes the unhealthy instance and creates a new one to replace it\. Instances are usually terminated within a few minutes after failing their health check\. For more information, see [Replace unhealthy instances](ec2-auto-scaling-health-checks.md#replace-unhealthy-instance)\.
+When an instance is found to be unhealthy, Amazon EC2 Auto Scaling automatically deletes the unhealthy instance and creates a new one to replace it\. Instances are usually terminated within a few minutes after failing their health check\. For more information, see [Unhealthy instance replacement](ec2-auto-scaling-health-checks.md#replace-unhealthy-instance)\.
 
 Custom health checks are also supported\. This can be helpful if you have your own health check system that can detect an instance's health and send this information to Amazon EC2 Auto Scaling\. For more information, see [Custom health detection tasks](ec2-auto-scaling-health-checks.md#as-configure-healthcheck)\.
 

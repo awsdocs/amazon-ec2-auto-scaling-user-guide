@@ -30,3 +30,5 @@ If you haven't used Amazon EC2 before, complete the tasks described in the Amazo
 ## Install the AWS CLI<a name="set-up-cli"></a>
 
 To use the AWS CLI with Amazon EC2 Auto Scaling, install the latest AWS CLI version\. For information about installing the AWS CLI or upgrading it to the latest version, see [Installing the AWS Command Line Interface](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-install.html) in the *AWS Command Line Interface User Guide*\.
+
+To run AWS CLI commands using the AWS Management Console, you can use AWS CloudShell in supported AWS Regions\. For more information, see [Create Auto Scaling groups from the command line using AWS CloudShell\.](create-auto-scaling-groups-with-cloudshell.md)\.

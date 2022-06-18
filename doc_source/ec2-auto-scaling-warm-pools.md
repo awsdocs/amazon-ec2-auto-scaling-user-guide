@@ -14,8 +14,6 @@ Creating a warm pool when it's not required can lead to unnecessary costs\. If y
 + [Limitations](#warm-pools-limitations)
 + [Hibernation not supported in all AWS Regions](#warm-pools-regions)
 + [Use lifecycle hooks](warm-pool-instance-lifecycle.md)
-+ [Event types and event patterns](warm-pools-eventbridge-events.md)
-+ [Create EventBridge rules](warm-pool-events-eventbridge-rules.md)
 + [View health check status](warm-pools-health-checks-monitor-view-status.md)
 + [AWS CLI examples for working with warm pools](examples-warm-pools-aws-cli.md)
 
@@ -29,12 +27,13 @@ While instances are in the warm pool, your scaling policies only scale out if th
 
 **Warm pool size**  
 By default, the size of the warm pool is calculated as the difference between the Auto Scaling group's maximum capacity and its desired capacity\. For example, if the desired capacity of your Auto Scaling group is 6 and the maximum capacity is 10, the size of your warm pool will be 4 when you first set up the warm pool and the pool is initializing\.   
-If you set a value for maximum prepared capacity, the size of the warm pool is calculated as the difference between the maximum prepared capacity and the desired capacity\. For example, if the desired capacity of your Auto Scaling group is 6, if the maximum capacity is 10, and if the maximum prepared capacity is 8, the size of your warm pool will be 2 when you first set up the warm pool and the pool is initializing\. 
+To specify the warm pool's maximum capacity separately, set a value for maximum prepared capacity that is greater than the current capacity of the group\. When you set a value for maximum prepared capacity, the size of the warm pool is calculated as the difference between the maximum prepared capacity and the current desired capacity of the group\. For example, if the desired capacity of your Auto Scaling group is 6, if the maximum capacity is 10, and if the maximum prepared capacity is 8, the size of your warm pool will be 2 when you first set up the warm pool and the pool is initializing\.   
+You might only need to use the maximum prepared capacity option when working with large Auto Scaling groups to manage the cost benefits of having a warm pool\. For example, an Auto Scaling group with 1,000 instances, a maximum capacity of 1,500 \(to provide extra capacity for emergency traffic spikes\), and a warm pool of 100 instances might help you achieve your goals better than keeping 500 instances reserved for future use inside the warm pool\.
 
 **Warm pool instance state**  
-You can keep instances in the warm pool in one of three states: `Stopped`, `Running`, or `Hibernated`\. Keeping instances in a `Stopped` state is an effective way to minimize costs\. With stopped instances, you pay only for the volumes that you use and the Elastic IP addresses attached to the instances\. But you don't pay for the stopped instances themselves\. You pay for the instances only when they are running\.   
+You can keep instances in the warm pool in one of three states: `Stopped`, `Running`, or `Hibernated`\. Keeping instances in a `Stopped` state is an effective way to minimize costs\. With stopped instances, you pay only for the volumes that you use and the Elastic IP addresses attached to the instances\.  
 Alternatively, you can keep instances in a `Hibernated` state to stop instances without deleting their memory contents \(RAM\)\. When an instance is hibernated, this signals the operating system to save the contents of your RAM to your Amazon EBS root volume\. When the instance is started again, the root volume is restored to its previous state and the RAM contents are reloaded\. While the instances are in hibernation, you pay only for the EBS volumes, including storage for the RAM contents, and the Elastic IP addresses attached to the instances\.  
-Currently, the `Hibernated` option is available only if you use the AWS CLI or an SDK\. This option is not available from the console\.
+Keeping instances in a `Running` state inside the warm pool is also possible, but is highly discouraged to avoid incurring unnecessary charges\. When instances are stopped or hibernated, you are saving the cost of the instances themselves\. You pay for the instances only when they are running\.
 
 **Lifecycle hooks**  
 [Lifecycle hooks](lifecycle-hooks.md) let you put instances into a wait state so that you can perform custom actions on the instances\. Custom actions are performed as the instances launch or before they terminate\.  

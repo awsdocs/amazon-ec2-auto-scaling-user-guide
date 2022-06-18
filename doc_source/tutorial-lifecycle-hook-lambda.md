@@ -1,10 +1,12 @@
 # Tutorial: Configure a lifecycle hook that invokes a Lambda function<a name="tutorial-lifecycle-hook-lambda"></a>
 
-In this exercise, you create an EventBridge rule that includes a filter pattern that when matched, invokes an AWS Lambda function as the rule target\. We provide the filter pattern and sample function code to use\. 
+In this exercise, you create an Amazon EventBridge rule that includes a filter pattern that when matched, invokes an AWS Lambda function as the rule target\. We provide the filter pattern and sample function code to use\. 
 
 If everything is configured correctly, at the end of this tutorial, the Lambda function performs a custom action when instances launch\. The custom action simply logs the event in the CloudWatch Logs log stream associated with the Lambda function\.
 
 The Lambda function also performs a callback to let the lifecycle of the instance proceed if this action is successful, but lets the instance abandon the launch and terminate if the action fails\.
+
+For more information about using EventBridge, see [Use EventBridge to handle Auto Scaling events](automating-ec2-auto-scaling-with-eventbridge.md)\.
 
 **Topics**
 + [Prerequisites](#lambda-hello-world-tutorial-prerequisites)
@@ -18,7 +20,7 @@ The Lambda function also performs a callback to let the lifecycle of the instanc
 
 ## Prerequisites<a name="lambda-hello-world-tutorial-prerequisites"></a>
 
-Before you begin this tutorial, create an Auto Scaling group, if you don't have one already\. To create an Auto Scaling group, open the [Auto Scaling groups page](https://console.aws.amazon.com/ec2autoscaling) in the Amazon EC2 console and choose **Create Auto Scaling group**\.
+Before you begin this tutorial, create an Auto Scaling group, if you don't have one already\. To create an Auto Scaling group, open the [Auto Scaling groups page](https://console.aws.amazon.com/ec2/v2/home?#AutoScalingGroups) of the Amazon EC2 console and choose **Create Auto Scaling group**\.
 
 ## Step 1: Create an IAM role with permissions to complete lifecycle actions<a name="lambda-create-iam-role"></a>
 
@@ -89,7 +91,7 @@ Create a Lambda function to serve as the target for events\. The sample Lambda f
 
 1. Choose **Create function**\. You are returned to the function's code and configuration\. 
 
-1. With your `LogAutoScalingEvent` function still open in the console, under **Function code**, in the editor, copy the following sample code into the file named index\.js\.
+1. With your `LogAutoScalingEvent` function still open in the console, under **Function code**, in the editor, paste the following sample code into the file named index\.js\.
 
    ```
    var aws = require("aws-sdk");
@@ -137,32 +139,49 @@ Create an EventBridge rule to run your Lambda function\.
 
 1. Open the [EventBridge console](https://console.aws.amazon.com/events/)\.
 
-1. On the navigation pane, choose **Rules**, **Create rule**\.
+1. In the navigation pane, choose **Rules**\.
 
-1. For **Name**, enter **LogAutoScalingEvent\-rule**\.
+1. Choose **Create rule**\.
 
-1. For **Define pattern**, choose **Event Pattern**\.
+1. For **Define rule detail**, do the following:
 
-1. For **Event matching pattern**, choose **Custom pattern**\.
+   1. For **Name**, enter **LogAutoScalingEvent\-rule**\.
 
-1. Rules use event patterns to select events and route them to targets\. Copy the following pattern into the **Event pattern** box\.
+   1. For **Event bus**, choose **default**\. When an AWS service in your account generates an event, it always goes to your account's default event bus\.
 
-   ```
-   {
-     "source": [ "aws.autoscaling" ],
-     "detail-type": [ "EC2 Instance-launch Lifecycle Action" ]
-   }
-   ```
+   1. For **Rule type**, choose **Rule with an event pattern**\.
 
-1. To save the event pattern, choose **Save**\. 
+   1. Choose **Next**\.
 
-1. For **Select event bus**, choose **AWS default event bus**\. 
-**Important**  
-You must choose the default event bus to receive events from AWS services\.
+1. For **Build event pattern**, do the following:
 
-1. For **Target**, choose **Lambda function**\.
+   1. For **Event source**, choose **AWS events or EventBridge partner events**\.
 
-1. For **Function**, select **LogAutoScalingEvent**\. Choose **Create**\.
+   1. For **Event pattern**, do the following:
+
+      1. For **Event source**, choose **AWS services**\.
+
+      1. For **AWS service**, choose **Auto Scaling**\.
+
+      1. For **Event type**, choose **Instance Launch and Terminate**\.
+
+      1. By default, the rule matches any scale\-in or scale\-out event\. To create a rule that notifies you when there is a scale\-out event and an instance is put into a wait state due to a lifecycle hook, choose **Specific instance event\(s\)** and select **EC2 Instance\-launch Lifecycle Action**\.
+
+      1. By default, the rule matches any Auto Scaling group in the Region\. To make the rule match a specific Auto Scaling group, choose **Specific group name\(s\)** and select one or more Auto Scaling groups\.
+
+      1. Choose **Next**\.
+
+1. For **Select target\(s\)**, do the following:
+
+   1. For **Target types**, choose **AWS service**\.
+
+   1. For **Select a target**, choose **Lambda function**\.
+
+   1. For **Function**, choose **LogAutoScalingEvent**\.
+
+   1. Choose **Next** twice\.
+
+1. On the **Review and create** page, choose **Create**\.
 
 ## Step 4: Add a lifecycle hook<a name="lambda-add-lifecycle-hook"></a>
 
@@ -170,7 +189,7 @@ In this section, you add a lifecycle hook so that Lambda runs your function on i
 
 **To add a lifecycle hook**
 
-1. Open the [Auto Scaling groups page](https://console.aws.amazon.com/ec2autoscaling) in the Amazon EC2 console\.
+1. Open the [Auto Scaling groups page](https://console.aws.amazon.com/ec2/v2/home?#AutoScalingGroups) of the Amazon EC2 console\.
 
 1. Select the check box next to your Auto Scaling group\.
 
@@ -198,7 +217,7 @@ To test the event, update the Auto Scaling group by increasing the desired capac
 
 **To increase the size of the Auto Scaling group**
 
-1. Open the [Auto Scaling groups page](https://console.aws.amazon.com/ec2autoscaling) in the Amazon EC2 console\.
+1. Open the [Auto Scaling groups page](https://console.aws.amazon.com/ec2/v2/home?#AutoScalingGroups) of the Amazon EC2 console\.
 
 1. Select the check box next to your Auto Scaling group to view details in a lower pane and still see the top rows of the upper pane\. 
 
@@ -233,7 +252,7 @@ If you do not need the additional instance that you launched for this test, you 
 
 ## Step 6: Next steps<a name="lambda-lifecycle-hooks-tutorial-next-steps"></a>
 
-Now that you have completed this tutorial, you can try creating a termination lifecycle hook\. If instances in the Auto Scaling group terminate, an event is sent to EventBridge\. For information about the event that is emitted when an instance terminates, see [EC2 Instance\-terminate Lifecycle Action](automating-ec2-auto-scaling-with-eventbridge.md#terminate-lifecycle-action)\.
+Now that you have completed this tutorial, you can try creating a termination lifecycle hook\. If instances in the Auto Scaling group terminate, an event is sent to EventBridge\. For information about the event that is emitted when an instance terminates, see [EC2 Instance\-terminate Lifecycle Action](ec2-auto-scaling-event-reference.md#terminate-lifecycle-action)\.
 
 ## Step 7: Clean up<a name="lambda-lifecycle-hooks-tutorial-cleanup"></a>
 
@@ -241,7 +260,7 @@ If you are done working with the resources that you created just for this tutori
 
 **To delete the lifecycle hook**
 
-1. Open the [Auto Scaling groups page](https://console.aws.amazon.com/ec2autoscaling) in the Amazon EC2 console\.
+1. Open the [Auto Scaling groups page](https://console.aws.amazon.com/ec2/v2/home?#AutoScalingGroups) of the Amazon EC2 console\.
 
 1. Select the check box next to your Auto Scaling group\.
 

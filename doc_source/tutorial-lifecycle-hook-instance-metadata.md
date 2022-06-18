@@ -166,7 +166,7 @@ Add a lifecycle hook to hold the instance in a wait state until your lifecycle a
 
 **To add a lifecycle hook**
 
-1. Open the [Auto Scaling groups page](https://console.aws.amazon.com/ec2autoscaling) in the Amazon EC2 console\.
+1. Open the [Auto Scaling groups page](https://console.aws.amazon.com/ec2/v2/home?#AutoScalingGroups) of the Amazon EC2 console\.
 
 1. Select the check box next to your Auto Scaling group\.
 
@@ -194,7 +194,7 @@ To test the functionality, update the Auto Scaling group by increasing the desir
 
 **To increase the size of the Auto Scaling group**
 
-1. Open the [Auto Scaling groups page](https://console.aws.amazon.com/ec2autoscaling) in the Amazon EC2 console\.
+1. Open the [Auto Scaling groups page](https://console.aws.amazon.com/ec2/v2/home?#AutoScalingGroups) of the Amazon EC2 console\.
 
 1. Select the check box next to your Auto Scaling group\. View details in a lower pane while still seeing the top rows of the upper pane\. 
 
@@ -220,7 +220,7 @@ If you are done working with the resources that you created for this tutorial, u
 
 **To delete the lifecycle hook**
 
-1. Open the [Auto Scaling groups page](https://console.aws.amazon.com/ec2autoscaling) in the Amazon EC2 console\.
+1. Open the [Auto Scaling groups page](https://console.aws.amazon.com/ec2/v2/home?#AutoScalingGroups) of the Amazon EC2 console\.
 
 1. Select the check box next to your Auto Scaling group\.
 
@@ -242,7 +242,7 @@ If you are done working with the example Auto Scaling group, delete it\. You can
 
 **To delete the Auto Scaling group**
 
-1. Open the [Auto Scaling groups page](https://console.aws.amazon.com/ec2autoscaling) in the Amazon EC2 console\.
+1. Open the [Auto Scaling groups page](https://console.aws.amazon.com/ec2/v2/home?#AutoScalingGroups) of the Amazon EC2 console\.
 
 1. Select the check box next to your Auto Scaling group \(`TestAutoScalingEvent-group`\) and choose **Delete**\. 
 

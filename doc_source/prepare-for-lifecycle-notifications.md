@@ -32,55 +32,77 @@ The EventBridge rule, Lambda function, Amazon SNS topic, and Amazon SQS queue th
 
 ### Route notifications to Lambda using EventBridge<a name="cloudwatch-events-notification"></a>
 
-You can configure an EventBridge rule to invoke a Lambda function when an instance enters a wait state\. Amazon EC2 Auto Scaling emits a lifecycle event notification to EventBridge about the instance that is launching or terminating and a token that you can use to control the lifecycle action\. For examples of these events, see [Auto Scaling group events](automating-ec2-auto-scaling-with-eventbridge.md#auto-scaling-group-event-types)\.
-
-Before you create your EventBridge rule, you must create a Lambda function\. For an introductory tutorial that shows you how to create a simple Lambda function that listens for launch events and writes them out to a CloudWatch Logs log, see [Tutorial: Configure a lifecycle hook that invokes a Lambda function](tutorial-lifecycle-hook-lambda.md)\.
+You can configure an EventBridge rule to invoke a Lambda function when an instance enters a wait state\. Amazon EC2 Auto Scaling emits a lifecycle event notification to EventBridge about the instance that is launching or terminating and a token that you can use to control the lifecycle action\. For examples of these events, see [Amazon EC2 Auto Scaling event reference](ec2-auto-scaling-event-reference.md)\.
 
 **Note**  
-When you use the AWS Management Console to create an event rule, the console automatically adds the IAM permissions necessary to grant EventBridge permission to call your Lambda function\. If you are creating an event rule using the AWS CLI, you need to grant this permission explicitly\. For the steps for creating an event rule using the console, see [Tutorial: Configure a lifecycle hook that invokes a Lambda function](tutorial-lifecycle-hook-lambda.md)\.
+When you use the AWS Management Console to create an event rule, the console automatically adds the IAM permissions necessary to grant EventBridge permission to call your Lambda function\. If you are creating an event rule using the AWS CLI, you need to grant this permission explicitly\.   
+For information about how to create event rules in the EventBridge console, see [Creating Amazon EventBridge rules that react to events](https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-create-rule.html) in the *Amazon EventBridge User Guide*\.  
+– or –   
+For an introductory tutorial that is directed towards console users, see [Tutorial: Configure a lifecycle hook that invokes a Lambda function](tutorial-lifecycle-hook-lambda.md)\. This tutorial shows you how to create a simple Lambda function that listens for launch events and writes them out to a CloudWatch Logs log\.
 
 **To create an EventBridge rule that invokes a Lambda function**
 
-1. Create a Lambda function by using the [Lambda console](https://console.aws.amazon.com/lambda/home#/functions) and note its Amazon Resource Name \(ARN\)\. For example, `arn:aws:lambda:region:123456789012:function:my-function`\. You need the ARN to create an EventBridge target\.
+1. Create a Lambda function by using the [Lambda console](https://console.aws.amazon.com/lambda/home#/functions) and note its Amazon Resource Name \(ARN\)\. For example, `arn:aws:lambda:region:123456789012:function:my-function`\. You need the ARN to create an EventBridge target\. For more information, see [Getting started with Lambda](https://docs.aws.amazon.com/lambda/latest/dg/getting-started.html) in the *AWS Lambda Developer Guide*\.
 
-   For more information, see [Getting started with Lambda](https://docs.aws.amazon.com/lambda/latest/dg/getting-started.html) in the *AWS Lambda Developer Guide*\.
-
-1. Create an EventBridge rule that matches the lifecycle action using the following [put\-rule](https://docs.aws.amazon.com/cli/latest/reference/events/put-rule.html) command\.
+1. To create a rule that matches events for instance launch, use the following [put\-rule](https://docs.aws.amazon.com/cli/latest/reference/events/put-rule.html) command\.
 
    ```
    aws events put-rule --name my-rule --event-pattern file://pattern.json --state ENABLED
    ```
 
-   The following example shows the `pattern.json` for an instance launch lifecycle action\.
+   The following example shows the `pattern.json` for an instance launch lifecycle action\. Replace the text in **italics** with the name of your Auto Scaling group\.
 
    ```
    {
      "source": [ "aws.autoscaling" ],
-     "detail-type": [ "EC2 Instance-launch Lifecycle Action" ]
+     "detail-type": [ "EC2 Instance-launch Lifecycle Action" ],
+     "detail": {
+         "AutoScalingGroupName": [ "my-asg" ]
+      }
    }
    ```
 
-   The following example shows the `pattern.json` for an instance terminate lifecycle action\.
+   If the command runs successfully, EventBridge responds with the ARN of the rule\. Note this ARN\. You'll need to enter it in step 4\.
 
-   ```
-   {
-     "source": [ "aws.autoscaling" ],
-     "detail-type": [ "EC2 Instance-terminate Lifecycle Action" ]
-   }
-   ```
+   To create a rule that matches for other events, modify the event pattern\. For more information, see [Use EventBridge to handle Auto Scaling events](automating-ec2-auto-scaling-with-eventbridge.md)\.
 
-1. Create a target that invokes your Lambda function when the lifecycle action occurs, using the following [put\-targets](https://docs.aws.amazon.com/cli/latest/reference/events/put-targets.html) command\.
+1. To specify the Lambda function to use as a target for the rule, use the following [put\-targets](https://docs.aws.amazon.com/cli/latest/reference/events/put-targets.html) command\.
 
    ```
    aws events put-targets --rule my-rule --targets Id=1,Arn=arn:aws:lambda:region:123456789012:function:my-function
    ```
 
-1. Grant the rule permission to invoke your Lambda function using the following [add\-permission](https://docs.aws.amazon.com/cli/latest/reference/lambda/add-permission.html) command\. This command trusts the EventBridge service principal \(`events.amazonaws.com`\) and scopes permissions to the specified rule\.
+   In the preceding command, *my\-rule* is the name that you specified for the rule in step 2, and the value for the `Arn` parameter is the ARN of the function that you created in step 1\.
+
+1. To add permissions that allow the rule to invoke your Lambda function, use the following Lambda [add\-permission](https://docs.aws.amazon.com/cli/latest/reference/lambda/add-permission.html) command\. This command trusts the EventBridge service principal \(`events.amazonaws.com`\) and scopes permissions to the specified rule\.
 
    ```
    aws lambda add-permission --function-name my-function --statement-id my-unique-id \
      --action 'lambda:InvokeFunction' --principal events.amazonaws.com --source-arn arn:aws:events:region:123456789012:rule/my-rule
    ```
+
+   In the preceding command:
+   + *my\-function* is the name of the Lambda function that you want the rule to use as a target\.
+   + *my\-unique\-id* is a unique identifier that you define to describe the statement in the Lambda function policy\.
+   + `source-arn` is the ARN of the EventBridge rule\.
+
+   If the command runs successfully, you receive output similar to the following\.
+
+   ```
+   {
+     "Statement": "{\"Sid\":\"my-unique-id\",
+       \"Effect\":\"Allow\",
+       \"Principal\":{\"Service\":\"events.amazonaws.com\"},
+       \"Action\":\"lambda:InvokeFunction\",
+       \"Resource\":\"arn:aws:lambda:us-west-2:123456789012:function:my-function\",
+       \"Condition\":
+         {\"ArnLike\":
+           {\"AWS:SourceArn\":
+            \"arn:aws:events:us-west-2:123456789012:rule/my-rule\"}}}"
+   }
+   ```
+
+   The `Statement` value is a JSON string version of the statement that was added to the Lambda function policy\.
 
 1. After you have followed these instructions, continue on to [Add lifecycle hooks](adding-lifecycle-hooks.md) as a next step\.
 
@@ -131,7 +153,7 @@ FIFO queues are not compatible with lifecycle hooks\.
 
 1. Create an Amazon SQS queue by using the [Amazon SQS console](https://console.aws.amazon.com/sqs/)\. Ensure that the queue is in the same Region as the Auto Scaling group that you're using\. For more information, see [Getting started with Amazon SQS](https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-getting-started.html) in the *Amazon Simple Queue Service Developer Guide*\. 
 
-1. Note the queue ARN, for example, `arn:aws:sqs:region:123456789012:my-sqs-queue`\. You need it to create the lifecycle hook\.
+1. Note the queue ARN, for example, `arn:aws:sqs:us-west-2:123456789012:my-sqs-queue`\. You need it to create the lifecycle hook\.
 
 1. Create an IAM service role to give Amazon EC2 Auto Scaling access to your Amazon SQS notification target\.
 
@@ -159,7 +181,7 @@ FIFO queues are not compatible with lifecycle hooks\.
 
 While the instance is in a wait state, a message is published to the Amazon SNS or Amazon SQS notification target\. The message includes the following information:
 + `LifecycleActionToken` — The lifecycle action token\.
-+ `AccountId` — The Amazon Web Services account ID\.
++ `AccountId` — The AWS account ID\.
 + `AutoScalingGroupName` — The name of the Auto Scaling group\.
 + `LifecycleHookName` — The name of the lifecycle hook\.
 + `EC2InstanceId` — The ID of the EC2 instance\.
@@ -196,4 +218,4 @@ AutoScalingGroupARN: arn:aws:autoscaling:us-west-2:123456789012:autoScalingGroup
 ```
 
 **Note**  
-For examples of the events delivered from Amazon EC2 Auto Scaling to EventBridge, see [Auto Scaling group events](automating-ec2-auto-scaling-with-eventbridge.md#auto-scaling-group-event-types)\.
+For examples of the events delivered from Amazon EC2 Auto Scaling to EventBridge, see [Amazon EC2 Auto Scaling event reference](ec2-auto-scaling-event-reference.md)\.

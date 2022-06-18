@@ -10,7 +10,7 @@ The following examples show you how to create and manage warm pools using the AW
 + [Example 3: Keep instances in the `Hibernated` state](#warm-pool-configuration-ex3)
 + [Example 4: Return instances to the warm pool when scaling in](#warm-pool-configuration-ex4)
 + [Example 5: Specify the minimum number of instances in the warm pool](#warm-pool-configuration-ex5)
-+ [Example 6: Define a warm pool size separate from the maximum group size](#warm-pool-configuration-ex6)
++ [Example 6: Define the warm pool maximum capacity separately](#warm-pool-configuration-ex6)
 + [Example 7: Define an absolute warm pool size](#warm-pool-configuration-ex7)
 + [Example 8: Delete a warm pool](#delete-warm-pool-cli)
 
@@ -59,13 +59,11 @@ aws autoscaling put-warm-pool --auto-scaling-group-name my-asg /
   --pool-state Stopped --min-size 4
 ```
 
-## Example 6: Define a warm pool size separate from the maximum group size<a name="warm-pool-configuration-ex6"></a>
+## Example 6: Define the warm pool maximum capacity separately<a name="warm-pool-configuration-ex6"></a>
 
-Generally, you understand how much to increase your maximum capacity above your desired capacity\. There's usually no need to define an additional maximum size, because Amazon EC2 Auto Scaling creates a warm pool that dynamically resizes based on your maximum capacity setting\. 
+Generally, you understand how much to increase your maximum capacity above your desired capacity\. There's usually no need to define an additional maximum size, because Amazon EC2 Auto Scaling creates a warm pool that dynamically resizes based on your group's desired and maximum capacity\. However, you can use the `--max-group-prepared-capacity` option to define the warm pool maximum capacity separately when desired\.
 
-However, in cases where you want to control the group's maximum capacity and avoid having it impact the warm pool size, you can use the `--max-group-prepared-capacity` option\. You might need to use this option when working with large Auto Scaling groups to manage the cost benefits of having a warm pool\. For example, an Auto Scaling group with 1,000 instances, a maximum capacity of 1,500 \(to provide extra capacity for emergency traffic spikes\), and a warm pool of 100 instances might achieve your objectives better than a warm pool of 500 instances\.
-
-The following [put\-warm\-pool](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/put-warm-pool.html) example creates a warm pool that defines its size separately from the maximum group size\. Suppose that the Auto Scaling group has a desired capacity of 800\. The size of the warm pool will be 100 when you run this command and the pool is initializing\.
+The following [put\-warm\-pool](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/put-warm-pool.html) example creates a warm pool that defines its maximum capacity separately\. Suppose that the Auto Scaling group has a desired capacity of 800\. The size of the warm pool will be 100 when you run this command and the pool is initializing\.
 
 ```
 aws autoscaling put-warm-pool --auto-scaling-group-name my-asg /

@@ -88,7 +88,7 @@ The following pages provide additional information for troubleshooting issues wi
 + [Health checks for Auto Scaling instances](ec2-auto-scaling-health-checks.md) 
 + [Considerations and limitations for lifecycle hooks](lifecycle-hooks.md#lifecycle-hook-considerations)
 +  [Complete a lifecycle action](completing-lifecycle-hooks.md)
-+  [Launch Auto Scaling instances in a VPC](asg-in-vpc.md) 
++  [Provide network connectivity for your Auto Scaling instances using Amazon VPC](asg-in-vpc.md) 
 + [Temporarily remove instances from your Auto Scaling group](as-enter-exit-standby.md) 
 + [Disable a scaling policy for an Auto Scaling group](as-enable-disable-scaling-policy.md) 
 +  [Suspend and resume a process for an Auto Scaling group](as-suspend-resume-processes.md) 
