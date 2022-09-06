@@ -70,7 +70,7 @@ The following is an example payload:
 The payload includes the name of the Auto Scaling group, its Amazon Resource Name \(ARN\), and the following elements:
 + `CapacityToTerminate` describes how much of your Spot or On\-Demand capacity is set to be terminated in a given Availability Zone\. 
 + `Instances` represents the instances that Amazon EC2 Auto Scaling suggests for termination based on the information in `CapacityToTerminate`\. 
-+ `Cause` describes the event that triggered the termination: `SCALE_IN`, `INSTANCE_REFRESH`, `MAX_INSTANCE_LIFETIME`, or `REBALANCE`\. 
++ `Cause` describes the event that caused the termination: `SCALE_IN`, `INSTANCE_REFRESH`, `MAX_INSTANCE_LIFETIME`, or `REBALANCE`\. 
 
 The following information outlines the most significant factors in how Amazon EC2 Auto Scaling generates the `Instances` in the input data:
 + Maintaining balance across Availability Zones takes precedence when an instance is terminating due to scale\-in events and instance refresh\-based terminations\. Therefore, if one Availability Zone has more instances than the other Availability Zones that are used by the group, the input data contains instances that are eligible for termination only from the imbalanced Availability Zone\. If the Availability Zones used by the group are balanced, the input data contains instances from all of the Availability Zones for the group\. 
@@ -95,6 +95,14 @@ With the given input, the response from your Lambda function should look like th
 The `InstanceIDs` in the response represent the instances that are ready to terminate\. 
 
 Alternatively, you can return a different set of instances that are ready to be terminated, which overrides the instances in the input data\. If no instances are ready to terminate when your Lambda function is invoked, you can also choose not to return any instances\.
+
+When no instances are ready to terminate, the response from your Lambda function should look like the following example:
+
+```
+{
+  "InstanceIDs": [ ]
+}
+```
 
 ## Considerations when using a custom termination policy<a name="lambda-termination-policy-considerations"></a>
 
@@ -145,6 +153,9 @@ Start by creating the Lambda function, so that you can specify its Amazon Resour
    1. Choose **Save**\. 
 
 1. After you have followed these instructions, continue on to specify the ARN of your function in the termination policies for your Auto Scaling group as a next step\. For more information, see [Use different termination policies \(console\)](ec2-auto-scaling-termination-policies.md#custom-termination-policy-console)\. 
+
+**Note**  
+For examples that you can use as a reference for developing your Lambda function, see the [GitHub repository](https://github.com/aws-samples/amazon-ec2-auto-scaling-group-examples) for Amazon EC2 Auto Scaling\.
 
 ## Limitations<a name="lambda-custom-termination-policy-limitations"></a>
 + You can only specify one Lambda function in the termination policies for an Auto Scaling group\. If there are multiple termination policies specified, the Lambda function must be specified first\.

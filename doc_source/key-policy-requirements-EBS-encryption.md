@@ -1,6 +1,6 @@
 # Required AWS KMS key policy for use with encrypted volumes<a name="key-policy-requirements-EBS-encryption"></a>
 
-Amazon EC2 Auto Scaling supports [service\-linked roles](autoscaling-service-linked-role.md), a new type of IAM role that gives you a more secure and transparent way to delegate permissions to Amazon Web Services\. Amazon EC2 Auto Scaling service\-linked roles are predefined by Amazon EC2 Auto Scaling and include permissions that the service requires to call other AWS services on your behalf\. The predefined permissions also include access to your AWS managed keys\. However, they do not include access to your customer managed keys, allowing you to maintain full control over these keys\.
+Amazon EC2 Auto Scaling supports [service\-linked roles](autoscaling-service-linked-role.md), a new type of IAM role that gives you a more secure and transparent way to delegate permissions to AWS services\. Amazon EC2 Auto Scaling service\-linked roles are predefined by Amazon EC2 Auto Scaling and include permissions that the service requires to call other AWS services on your behalf\. The predefined permissions also include access to your AWS managed keys\. However, they do not include access to your customer managed keys, allowing you to maintain full control over these keys\.
 
 This topic describes how to set up the key policy that you need to launch Auto Scaling instances when you specify a customer managed key for Amazon EBS encryption\. 
 
@@ -32,7 +32,7 @@ Use the examples on this page to configure a key policy to give Amazon EC2 Auto 
 
 You must, at minimum, add two policy statements to your key policy for it to work with Amazon EC2 Auto Scaling\.
 + The first statement allows the IAM identity specified in the `Principal` element to use the customer managed key directly\. It includes permissions to perform the AWS KMS `Encrypt`, `Decrypt`, `ReEncrypt*`, `GenerateDataKey*`, and `DescribeKey` operations on the key\. 
-+ The second statement allows the IAM identity specified in the `Principal` element to use grants to delegate a subset of its own permissions to Amazon Web Services that are integrated with AWS KMS or another principal\. This allows them to use the key to create encrypted resources on your behalf\.
++ The second statement allows the IAM identity specified in the `Principal` element to use grants to delegate a subset of its own permissions to AWS services that are integrated with AWS KMS or another principal\. This allows them to use the key to create encrypted resources on your behalf\.
 
 When you add the new policy statements to your key policy, do not change any existing statements in the policy\.
 
@@ -165,6 +165,8 @@ There are two steps that must be completed in the following order:
    ```
 
    For more information about creating a grant for a KMS key in a different AWS account, see [Grants in AWS KMS](https://docs.aws.amazon.com/kms/latest/developerguide/grants.html) in the *AWS Key Management Service Developer Guide*\.
+**Important**  
+The service\-linked role name specified as the grantee principal must be the name of an existing role\. After creating the grant, to ensure that the grant allows Amazon EC2 Auto Scaling to use the specified KMS key, do not delete and recreate the service\-linked role\.
 
 ## Edit key policies in the AWS KMS console<a name="eding-key-policies-console"></a>
 

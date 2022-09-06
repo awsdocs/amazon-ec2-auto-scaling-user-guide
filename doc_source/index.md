@@ -4,13 +4,13 @@
 *****Copyright &copy; Amazon Web Services, Inc. and/or its affiliates. All rights reserved.*****
 
 -----
-Amazon's trademarks and trade dress may not be used in 
-     connection with any product or service that is not Amazon's, 
-     in any manner that is likely to cause confusion among customers, 
-     or in any manner that disparages or discredits Amazon. All other 
-     trademarks not owned by Amazon are the property of their respective
-     owners, who may or may not be affiliated with, connected to, or 
-     sponsored by Amazon.
+Amazon's trademarks and trade dress may not be used in
+connection with any product or service that is not Amazon's,
+in any manner that is likely to cause confusion among customers,
+or in any manner that disparages or discredits Amazon. All other
+trademarks not owned by Amazon are the property of their respective
+owners, who may or may not be affiliated with, connected to, or
+sponsored by Amazon.
 
 -----
 ## Contents
@@ -101,7 +101,7 @@ Amazon's trademarks and trade dress may not be used in
 + [AWS services integrated with Amazon EC2 Auto Scaling](ec2-auto-scaling-integrations.md)
    + [Use Capacity Rebalancing to handle Amazon EC2 Spot Interruptions](ec2-auto-scaling-capacity-rebalancing.md)
    + [Create Auto Scaling groups with AWS CloudFormation](creating-auto-scaling-groups-with-cloudformation.md)
-   + [Create Auto Scaling groups from the command line using AWS CloudShell.](create-auto-scaling-groups-with-cloudshell.md)
+   + [Create Auto Scaling groups from the command line using AWS CloudShell](create-auto-scaling-groups-with-cloudshell.md)
    + [Use AWS Compute Optimizer to get recommendations for the instance type for an Auto Scaling group](asg-getting-recommendations.md)
    + [Use Elastic Load Balancing to distribute traffic across the instances in your Auto Scaling group](autoscaling-load-balancer.md)
       + [Prerequisites for getting started with Elastic Load Balancing](getting-started-elastic-load-balancing.md)

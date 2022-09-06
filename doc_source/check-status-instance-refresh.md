@@ -7,7 +7,7 @@ In the following procedure, you look at the **Instance refresh history**, **Acti
 
 **To check the status of an instance refresh \(console\)**
 
-1. Open the Amazon EC2 Auto Scaling console at [https://console\.aws\.amazon\.com/ec2autoscaling/](https://console.aws.amazon.com/ec2autoscaling/)\.
+1. Open the Amazon EC2 console at [https://console\.aws\.amazon\.com/ec2/](https://console.aws.amazon.com/ec2/), and choose **Auto Scaling Groups** from the navigation pane\.
 
 1. Select the check box next to the Auto Scaling group\. 
 

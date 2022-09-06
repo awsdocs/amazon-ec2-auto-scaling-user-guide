@@ -4,7 +4,7 @@ Use the following procedure to create and attach an Application Load Balancer or
 
 **To create and attach a new load balancer as you create a new Auto Scaling group**
 
-1. Open the Amazon EC2 Auto Scaling console at [https://console\.aws\.amazon\.com/ec2autoscaling/](https://console.aws.amazon.com/ec2autoscaling/)\.
+1. Open the Amazon EC2 console at [https://console\.aws\.amazon\.com/ec2/](https://console.aws.amazon.com/ec2/), and choose **Auto Scaling Groups** from the navigation pane\.
 
 1. Choose **Create Auto Scaling group**\.
 

@@ -16,7 +16,7 @@ You can attach an existing load balancer to an Auto Scaling group when you creat
 
 **To attach an existing load balancer as you are creating a new Auto Scaling group**
 
-1. Open the Amazon EC2 Auto Scaling console at [https://console\.aws\.amazon\.com/ec2autoscaling/](https://console.aws.amazon.com/ec2autoscaling/)\.
+1. Open the Amazon EC2 console at [https://console\.aws\.amazon\.com/ec2/](https://console.aws.amazon.com/ec2/), and choose **Auto Scaling Groups** from the navigation pane\.
 
 1. Choose **Create Auto Scaling group**\.
 
@@ -40,7 +40,7 @@ You can attach an existing load balancer to an Auto Scaling group when you creat
 
 Use the following procedure to attach a load balancer to an existing Auto Scaling group\. 
 
-1. Open the Amazon EC2 Auto Scaling console at [https://console\.aws\.amazon\.com/ec2autoscaling/](https://console.aws.amazon.com/ec2autoscaling/)\.
+1. Open the Amazon EC2 console at [https://console\.aws\.amazon\.com/ec2/](https://console.aws.amazon.com/ec2/), and choose **Auto Scaling Groups** from the navigation pane\.
 
 1. Select the check box next to an existing group\.
 
@@ -62,7 +62,7 @@ When you no longer need the load balancer, use the following procedure to detach
 
 **To detach a load balancer from a group**
 
-1. Open the Amazon EC2 Auto Scaling console at [https://console\.aws\.amazon\.com/ec2autoscaling/](https://console.aws.amazon.com/ec2autoscaling/)\.
+1. Open the Amazon EC2 console at [https://console\.aws\.amazon\.com/ec2/](https://console.aws.amazon.com/ec2/), and choose **Auto Scaling Groups** from the navigation pane\.
 
 1. Select the check box next to an existing group\.
 

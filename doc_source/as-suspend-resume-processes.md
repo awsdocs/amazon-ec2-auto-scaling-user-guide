@@ -86,7 +86,7 @@ Use the following procedure to suspend a process\.
 
 **To suspend a process**
 
-1. Open the Amazon EC2 Auto Scaling console at [https://console\.aws\.amazon\.com/ec2autoscaling/](https://console.aws.amazon.com/ec2autoscaling/)\.
+1. Open the Amazon EC2 console at [https://console\.aws\.amazon\.com/ec2/](https://console.aws.amazon.com/ec2/), and choose **Auto Scaling Groups** from the navigation pane\.
 
 1. Select the check box next to the Auto Scaling group\. 
 

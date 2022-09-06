@@ -1,22 +1,46 @@
 # Troubleshoot Amazon EC2 Auto Scaling: Launch templates<a name="ts-as-launch-template"></a>
 
-Use the following information to help you diagnose and fix common permission issues that you might encounter when using a launch template with your Auto Scaling group\.
+Use the following information to help you diagnose and fix common issues that you might encounter when trying to specify a launch template for your Auto Scaling group\.
 
-**Note**  
-For other errors that you might receive during Auto Scaling group creation that are associated with your launch template, see [Troubleshoot Amazon EC2 Auto Scaling: EC2 instance launch failures](ts-as-instancelaunchfailure.md)\.
+**Can't launch instances**  
+If you are unable to launch any instances with an already specified launch template, check the following for general troubleshooting: [Troubleshoot Amazon EC2 Auto Scaling: EC2 instance launch failures](ts-as-instancelaunchfailure.md)\.
 
-## You are not authorized to perform this operation<a name="ts-launch-template-unauthorized-error"></a>
+## You must use a valid fully\-formed launch template \(invalid value\)<a name="ts-launch-template-invalid-error"></a>
 
-**Problem**: When you try to specify a launch template, you get the "You are not authorized to perform this operation" error\. 
+**Problem**: When you try to specify a launch template for an Auto Scaling group, you get the `You must use a valid fully-formed launch template` error\. You might encounter this error because the values in the launch template are only validated when an Auto Scaling group that is using the launch template is created or updated
+
+**Cause 1**: If you receive a `You must use a valid fully-formed launch template` error, then there are issues that cause Amazon EC2 Auto Scaling to consider something about the launch template not valid\. This is a generic error that can have several different causes\. 
+
+**Solution 1**: Try the following steps to troubleshoot:
+
+1. Pay attention to the second part of the error message to find more information\. Following the `You must use a valid fully-formed launch template` error, see the more specific error message that identifies the issue that you will need to address\.
+
+1. If you are unable to find the cause, test your launch template with the [RunInstances](https://docs.aws.amazon.com/cli/latest/reference/ec2/run-instances.html) command\. Use the `--dry-run` option, as shown in the following example\. This lets you reproduce the issue and can provide insights about its cause\.
+
+   ```
+   aws ec2 run-instances --launch-template LaunchTemplateName=my-template,Version='1' --dry-run
+   ```
+
+1. If a value is not valid, verify that the specified resource exists and that it's correct\. For example, when you specify an Amazon EC2 key pair, the resource must exist in your account and in the Region in which you are creating or updating your Auto Scaling group\.
+
+1. If expected information is missing, verify your settings and adjust the launch template as needed\.
+
+1. After making your changes, re\-run the [RunInstances](https://docs.aws.amazon.com/cli/latest/reference/ec2/run-instances.html) command with the `--dry-run` option to verify that your launch template uses valid values\.
+
+For more information, see [Create a launch template for an Auto Scaling group](create-launch-template.md)\.
+
+## You are not authorized to use launch template \(insufficient IAM permissions\)<a name="ts-launch-template-unauthorized-error"></a>
+
+**Problem**: When you try to specify a launch template for an Auto Scaling group, you get the `You are not authorized to use launch template` error\. 
 
 **Cause 1**: If you are attempting to use a launch template, and the IAM credentials that you are using do not have sufficient permissions, you receive an error that you're not authorized to use the launch template\. 
 
-**Solution 1**: Verify that the IAM user or role that you are using to make the request has permissions to call the EC2 API actions you need, including the `ec2:RunInstances` action\. If you specified any tags in your launch template, you must also have permission to use the `ec2:CreateTags` action\. For a topic that shows how you might create your own policy to allow just what you want your IAM user or role to be able to do, see [Launch template support](ec2-auto-scaling-launch-template-permissions.md)\.
+**Solution 1**: Verify that the IAM credentials that you are using to make the request has permissions to call the EC2 API actions you need, including the `ec2:RunInstances` action\. If you specified any tags in your launch template, you must also have permission to use the `ec2:CreateTags` action\.
 
-**Solution 2**: Verify that your IAM user or role is using the `AmazonEC2FullAccess` policy\. This AWS managed policy grants full access to all Amazon EC2 resources and related services, including Amazon EC2 Auto Scaling, CloudWatch, and Elastic Load Balancing\. 
+**Solution 2**: Verify that the IAM credentials that you are using to make the request is assigned the `AmazonEC2FullAccess` policy\. This AWS managed policy grants full access to all Amazon EC2 resources and related services, including Amazon EC2 Auto Scaling, CloudWatch, and Elastic Load Balancing\.
 
-**Cause 2**: If you are attempting to use a launch template that specifies an instance profile, you must have IAM permission to pass the IAM role that is associated with the instance profile\. 
+**Cause 2**: If you are attempting to use a launch template that specifies an instance profile, you must have IAM permission to pass the IAM role that is associated with the instance profile\.
 
-**Solution 3**: Verify that the IAM user or role that you are using to make the request has the correct permissions to pass the specified role to the Amazon EC2 Auto Scaling service\. For more information, see [IAM role for applications that run on Amazon EC2 instances](us-iam-role.md)\. 
+**Solution 3**: Verify that the IAM credentials that you are using to make the request has the correct permissions to pass the specified role to the Amazon EC2 Auto Scaling service\. For more information, see [IAM role for applications that run on Amazon EC2 instances](us-iam-role.md)\. For further troubleshooting topics related to instance profiles, see [Troubleshooting Amazon EC2 and IAM](https://docs.aws.amazon.com/IAM/latest/UserGuide/troubleshoot_iam-ec2.html) in the *IAM User Guide*\.
 
-For further troubleshooting topics related to instance profiles, see [Troubleshooting Amazon EC2 and IAM](https://docs.aws.amazon.com/IAM/latest/UserGuide/troubleshoot_iam-ec2.html) in the *IAM User Guide*\.
+For more information about setting up IAM permissions for launch templates, see [Launch template support](ec2-auto-scaling-launch-template-permissions.md)\.

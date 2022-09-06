@@ -4,11 +4,11 @@
 
 AWS Identity and Access Management \(IAM\) is an AWS service that helps an administrator securely control access to AWS resources\. IAM administrators control who can be *authenticated* \(signed in\) and *authorized* \(have permissions\) to use Amazon EC2 Auto Scaling resources\. IAM is an AWS service that you can use with no additional charge\.
 
-To use Amazon EC2 Auto Scaling, you need an AWS account and credentials\. To increase the security of your account, we recommend that you use an *IAM user* to provide access credentials instead of using your AWS account credentials\. For more information, see [AWS account root user credentials and IAM user credentials](https://docs.aws.amazon.com/general/latest/gr/root-vs-iam.html) in the *AWS General Reference* and [IAM best practices](https://docs.aws.amazon.com/IAM/latest/UserGuide/best-practices.html) in the *IAM User Guide*\. 
+To use Amazon EC2 Auto Scaling, you need an AWS account and your specific user credentials for signing into your account\. For more information, see the [IAM User Guide](https://docs.aws.amazon.com/IAM/latest/UserGuide/)\.
 
-For an overview of IAM users and why they are important for the security of your account, see [AWS security credentials](https://docs.aws.amazon.com/general/latest/gr/aws-security-credentials.html) in the *AWS General Reference*\.
+After your account is set up, you will need to obtain your AWS access keys if you want to access Amazon EC2 Auto Scaling through its API, whether by the Query \(HTTPS\) interface directly or indirectly through an [SDK](https://aws.amazon.com/tools/), the [AWS Command Line Interface](https://aws.amazon.com/cli/), or the [AWS Tools for Windows PowerShell](https://aws.amazon.com/powershell/)\. AWS access keys consist of an access key ID and a secret access key\. For more information about getting your AWS access keys, see [AWS security credentials](https://docs.aws.amazon.com/general/latest/gr/aws-security-credentials.html) in the *AWS General Reference*\.
 
-For details about working with IAM, see the [IAM User Guide](https://docs.aws.amazon.com/IAM/latest/UserGuide/)\. 
+
 
 ## Access control<a name="access-control"></a>
 

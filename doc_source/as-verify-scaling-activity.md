@@ -9,7 +9,7 @@ In the following procedure, you look at the **Activity history** and **Instances
 
 **To view the scaling activities for an Auto Scaling group \(console\)**
 
-1. Open the Amazon EC2 Auto Scaling console at [https://console\.aws\.amazon\.com/ec2autoscaling/](https://console.aws.amazon.com/ec2autoscaling/)\.
+1. Open the Amazon EC2 console at [https://console\.aws\.amazon\.com/ec2/](https://console.aws.amazon.com/ec2/), and choose **Auto Scaling Groups** from the navigation pane\.
 
 1. Select the check box next to the Auto Scaling group\. 
 
@@ -52,4 +52,4 @@ Scaling activities are ordered by start time\. Activities still in progress are 
 }
 ```
 
-For information about the types of errors that you may encounter and how to handle them, see [Troubleshoot Amazon EC2 Auto Scaling](CHAP_Troubleshooting.md)\.
+For help retrieving the scaling activities for a deleted group and for information about the types of errors that you may encounter and how to handle them, see [Troubleshoot Amazon EC2 Auto Scaling](CHAP_Troubleshooting.md)\.

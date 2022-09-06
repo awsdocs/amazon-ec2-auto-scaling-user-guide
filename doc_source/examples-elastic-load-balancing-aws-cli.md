@@ -108,7 +108,7 @@ aws autoscaling update-auto-scaling-group --auto-scaling-group-name my-lb-asg \
 
 ## Update Availability Zones<a name="example-specify-availability-zones"></a>
 
-The commands that you use depend on whether your load balancer is an Application Load Balancer or Network Load Balancer, a Classic Load Balancer in a VPC, or a Classic Load Balancer in EC2\-Classic\. You can update the subnets and Availability Zones for your load balancer only if your load balancer supports it\. For more information, see [Limitations](as-add-availability-zone.md#availability-zone-limitations)\.
+The commands that you use depend on whether your load balancer is an Application Load Balancer or Network Load Balancer, or a Classic Load Balancer\. You can update the subnets and Availability Zones for your load balancer only if your load balancer supports it\. For more information, see [Limitations](as-add-availability-zone.md#availability-zone-limitations)\.
 
 **For an Auto Scaling group with an Application Load Balancer or Network Load Balancer**
 
@@ -159,33 +159,4 @@ The commands that you use depend on whether your load balancer is an Application
    ```
    aws elb detach-load-balancer-from-subnets --load-balancer-name my-lb \
      --subnets subnet-8360a9e7
-   ```
-
-**For an Auto Scaling group with a Classic Load Balancer in EC2\-Classic**
-
-1. Specify the Availability Zones that are used for the Auto Scaling group using the following [update\-auto\-scaling\-group](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/update-auto-scaling-group.html) command\.
-
-   ```
-   aws autoscaling update-auto-scaling-group --auto-scaling-group-name my-asg \
-     --availability-zones us-west-2a us-west-2b
-   ```
-
-1. Verify that the instances in the new Availability Zones are ready to accept traffic from the load balancer using the following [describe\-auto\-scaling\-groups](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/describe-auto-scaling-groups.html) command\.
-
-   ```
-   aws autoscaling describe-auto-scaling-groups --auto-scaling-group-name my-asg
-   ```
-
-1. Enable the new Availability Zone for your Classic Load Balancer using the following [enable\-availability\-zones\-for\-load\-balancer](https://docs.aws.amazon.com/cli/latest/reference/elb/enable-availability-zones-for-load-balancer.html) command\.
-
-   ```
-   aws elb enable-availability-zones-for-load-balancer --load-balancer-name my-lb \
-     --availability-zones us-west-2b
-   ```
-
-   To disable an Availability Zone, run the following [disable\-availability\-zones\-for\-load\-balancer](https://docs.aws.amazon.com/cli/latest/reference/elb/disable-availability-zones-for-load-balancer.html) command\.
-
-   ```
-   aws elb disable-availability-zones-for-load-balancer --load-balancer-name my-lb \
-     --availability-zones us-west-2c
    ```

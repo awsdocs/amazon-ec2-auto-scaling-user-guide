@@ -10,7 +10,7 @@ On the Amazon EC2 Auto Scaling console, you can view the status \(healthy or unh
 
 **To view the status of your warm pool instances \(console\)**
 
-1. Open the Amazon EC2 Auto Scaling console at [https://console\.aws\.amazon\.com/ec2autoscaling/](https://console.aws.amazon.com/ec2autoscaling/)\.
+1. Open the Amazon EC2 console at [https://console\.aws\.amazon\.com/ec2/](https://console.aws.amazon.com/ec2/), and choose **Auto Scaling Groups** from the navigation pane\.
 
 1. Select the check box next to the Auto Scaling group\. 
 
@@ -24,7 +24,7 @@ New instances start healthy\. Until the lifecycle hook is finished, an instance'
 
 **To view the reason for health check failures \(console\)**
 
-1. Open the Amazon EC2 Auto Scaling console at [https://console\.aws\.amazon\.com/ec2autoscaling/](https://console.aws.amazon.com/ec2autoscaling/)\.
+1. Open the Amazon EC2 console at [https://console\.aws\.amazon\.com/ec2/](https://console.aws.amazon.com/ec2/), and choose **Auto Scaling Groups** from the navigation pane\.
 
 1. Select the check box next to the Auto Scaling group\. 
 

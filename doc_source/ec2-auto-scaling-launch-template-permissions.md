@@ -1,6 +1,6 @@
 # Launch template support<a name="ec2-auto-scaling-launch-template-permissions"></a>
 
-Amazon EC2 Auto Scaling supports using Amazon EC2 launch templates with your Auto Scaling groups\. We recommend that you allow users to create Auto Scaling groups from launch templates, because doing so allows them to use the latest features of Amazon EC2 Auto Scaling and Amazon EC2\. In addition, users must specify a launch template to use a [mixed instances policy](https://docs.aws.amazon.com/autoscaling/ec2/APIReference/API_MixedInstancesPolicy.html)\.
+Amazon EC2 Auto Scaling supports using Amazon EC2 launch templates with your Auto Scaling groups\. We recommend that you allow users to create Auto Scaling groups from launch templates, because doing so allows them to use the latest features of Amazon EC2 Auto Scaling and Amazon EC2\. For example, users must specify a launch template to use a [mixed instances policy](https://docs.aws.amazon.com/autoscaling/ec2/APIReference/API_MixedInstancesPolicy.html)\.
 
 You can use the `AmazonEC2FullAccess` policy to give users complete access to work with Amazon EC2 Auto Scaling resources, launch templates, and other EC2 resources in their account\. Or, you can create your own custom IAM policies to give users fine\-grained permissions to work with launch templates, as described in this topic\. 
 
@@ -49,6 +49,7 @@ The following examples show policy statements that you could use to control the 
 + [Restrict access to Amazon EC2 resources](#policy-example-launch-template-ex4)
 + [Permissions required to tag instances and volumes](#policy-example-launch-template-createtags)
 + [Additional permissions](#policy-launch-template-additional-permissions)
++ [Learn more](#launch-template-resources-about-iam)
 
 ## Require launch templates that have a specific tag<a name="policy-example-launch-template-ex1"></a>
 
@@ -167,7 +168,7 @@ In this example, there are two statements:
 
 ## Permissions required to tag instances and volumes<a name="policy-example-launch-template-createtags"></a>
 
-The following example allows users to tag instances and volumes on creation\. This policy is needed if there are tags specified in the launch template\. For more information, see [Grant permission to tag resources during creation](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/supported-iam-actions-tagging.html) in the *Amazon EC2 User Guide for Linux Instances*\. 
+The following example allows users to tag instances and volumes on creation\. This policy is needed if there are tags specified in the launch template\. For more information, see [Grant permission to tag resources during creation](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/supported-iam-actions-tagging.html) in the *Amazon EC2 User Guide for Linux Instances*\.
 
 ```
 {
@@ -197,3 +198,7 @@ To control access to the `ec2:CreateLaunchTemplate` and `ec2:CreateLaunchTemplat
 
 **Note**  
 For groups that are configured to use the `Latest` or `Default` launch template version, permissions for actions to be completed when launching instances are not checked by Amazon EC2 Auto Scaling when a new version of the launch template is created\. This is an important consideration when setting up your permissions for who can create and manage launch template versions\. 
+
+## Learn more<a name="launch-template-resources-about-iam"></a>
+
+Before you use IAM to manage access to launch templates, you should understand what IAM features are available to use with launch templates\. For more information, see [Actions, resources, and condition keys for Amazon EC2](https://docs.aws.amazon.com/service-authorization/latest/reference/list_amazonec2.html) in the *Service Authorization Reference*\.

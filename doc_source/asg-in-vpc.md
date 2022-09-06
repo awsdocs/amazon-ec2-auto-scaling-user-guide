@@ -3,7 +3,7 @@
 
 |  | 
 | --- |
-| We are retiring EC2\-Classic on August 15, 2022\. To avoid interruptions to your workloads, we recommend that you migrate from EC2\-Classic to a VPC prior to August 15, 2022\. For more information, see the blog post [EC2\-Classic Networking is Retiring \- Here's How to Prepare](http://aws.amazon.com/blogs/aws/ec2-classic-is-retiring-heres-how-to-prepare/)\. | 
+| We are retiring EC2\-Classic\. We recommend that you migrate from EC2\-Classic to a VPC\. For more information, see the blog post [EC2\-Classic Networking is Retiring \- Here's How to Prepare](http://aws.amazon.com/blogs/aws/ec2-classic-is-retiring-heres-how-to-prepare/)\. | 
 
 Amazon Virtual Private Cloud \(Amazon VPC\) enables you to define a virtual networking environment in a private, isolated section of the AWS Cloud\. You have complete control over your virtual networking environment\.
 
@@ -14,6 +14,7 @@ A subnet in Amazon VPC is a subdivision within an Availability Zone defined by a
 To enable communication between the internet and the instances in your subnets, you must create an internet gateway and attach it to your VPC\. An internet gateway enables your resources within the subnets to connect to the internet through the Amazon EC2 network edge\. If a subnet's traffic is routed to an internet gateway, the subnet is known as a *public* subnet\. If a subnet's traffic is not routed to an internet gateway, the subnet is known as a *private* subnet\. Use a public subnet for resources that must be connected to the internet, and a private subnet for resources that need not be connected to the internet\. For more information about giving internet access to instances in a VPC, see [Accessing the internet](https://docs.aws.amazon.com/vpc/latest/userguide/how-it-works.html#what-is-connectivity) in the *Amazon VPC User Guide*\.
 
 **Topics**
++ [EC2\-Classic](#asg-ec2-classic)
 + [Default VPC](#as-defaultVPC)
 + [Nondefault VPC](#as-nondefaultVPC)
 + [Considerations when choosing VPC subnets](#as-vpc-considerations)
@@ -23,15 +24,22 @@ To enable communication between the internet and the instances in your subnets, 
 + [AWS Outposts](#auto-scaling-outposts)
 + [More resources for learning about VPCs](#auto-scaling-resources-about-vpcs)
 
+## EC2\-Classic<a name="asg-ec2-classic"></a>
+
+If you created your AWS account before December 4, 2013, it may allow you to choose between Amazon VPC and EC2\-Classic in certain Regions\. If you have one of these older accounts, you might have Auto Scaling groups in EC2\-Classic in some Regions instead of Amazon VPC\.
+
+For information about migrating from EC2\-Classic to a VPC, see the blog post [EC2\-Classic Networking is Retiring \- Here's How to Prepare](http://aws.amazon.com/blogs/aws/ec2-classic-is-retiring-heres-how-to-prepare/)\. For information about the differences between instances in EC2\-Classic and a VPC, see [EC2\-Classic](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-classic-platform.html) in the *Amazon EC2 User Guide for Linux Instances*\.
+
+To determine whether any of the AWS Regions you use are still using EC2\-Classic, open the Amazon EC2 console\. If **Supported platforms** indicates only VPC, as shown in the following example, your AWS account in the current AWS Region uses the VPC platform, and uses a default VPC\. The name of the default VPC is shown below the supported platform\. 
+
+![\[EC2-VPC platform\]](http://docs.aws.amazon.com/autoscaling/ec2/userguide/images/EC2-VPC.png)
+
+**Tip**  
+Any Auto Scaling groups created in a Region that has a default VPC can launch instances into the default VPC or a nondefault VPC, but not in EC2\-Classic\.
+
 ## Default VPC<a name="as-defaultVPC"></a>
 
 If you created your AWS account after December 4, 2013 or you are creating your Auto Scaling group in a new AWS Region, we create a default VPC for you\. Your default VPC comes with a default subnet in each Availability Zone\. If you have a default VPC, your Auto Scaling group is created in the default VPC by default\.
-
-If you created your AWS account before December 4, 2013, it may allow you to choose between Amazon VPC and EC2\-Classic in certain Regions\. If you have one of these older accounts, you might have Auto Scaling groups in EC2\-Classic in some Regions instead of Amazon VPC\. Migrating the classic instances to a VPC is highly recommended\. One of the advantages of using a VPC is the ability to put your instances in private subnets with no route to the internet\. 
-
-To determine whether any of the Regions you use are still using EC2\-Classic, open the Amazon EC2 console\. If **Supported platforms** indicates only VPC, as shown in the following example, your AWS account in the current AWS Region uses the EC2\-VPC platform, and uses a default VPC\. The name of the default VPC is shown below the supported platform\. 
-
-![\[EC2-VPC platform\]](http://docs.aws.amazon.com/autoscaling/ec2/userguide/images/EC2-VPC.png)
 
 You can view your VPCs on the [Your VPCs page](https://console.aws.amazon.com/vpc/home?/#vpcs) of the Amazon VPC console\.
 

@@ -1,6 +1,6 @@
 # Amazon EC2 Auto Scaling and interface VPC endpoints<a name="ec2-auto-scaling-vpc-endpoints"></a>
 
-You can improve the security posture of your VPC by configuring Amazon EC2 Auto Scaling to use an interface VPC endpoint\. Interface endpoints are powered by AWS PrivateLink, a technology that enables you to privately access Amazon EC2 Auto Scaling APIs by restricting all network traffic between your VPC and Amazon EC2 Auto Scaling to the Amazon network\. With interface endpoints, you also don't need an internet gateway, a NAT device, or a virtual private gateway\.
+You can improve the security posture of your VPC by configuring Amazon EC2 Auto Scaling to use an interface VPC endpoint\. Interface endpoints are powered by AWS PrivateLink, a technology that enables you to privately access Amazon EC2 Auto Scaling APIs by restricting all network traffic between your VPC and Amazon EC2 Auto Scaling to the AWS network\. With interface endpoints, you also don't need an internet gateway, a NAT device, or a virtual private gateway\.
 
 You are not required to configure AWS PrivateLink, but it's recommended\. For more information about AWS PrivateLink and VPC endpoints, see [What is AWS PrivateLink?](https://docs.aws.amazon.com/vpc/latest/userguide/vpce-interface.html) in the *AWS PrivateLink Guide*\.
 

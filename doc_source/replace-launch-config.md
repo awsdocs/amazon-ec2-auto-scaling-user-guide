@@ -14,7 +14,7 @@ If you switch your Auto Scaling group from using a launch configuration, be sure
 
 **To replace the launch configuration for an Auto Scaling group \(console\)**
 
-1. Open the Amazon EC2 Auto Scaling console at [https://console\.aws\.amazon\.com/ec2autoscaling/](https://console.aws.amazon.com/ec2autoscaling/)\.
+1. Open the Amazon EC2 console at [https://console\.aws\.amazon\.com/ec2/](https://console.aws.amazon.com/ec2/), and choose **Auto Scaling Groups** from the navigation pane\.
 
 1. Select the check box next to your Auto Scaling group\. 
 

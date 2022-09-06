@@ -1,8 +1,10 @@
 # Configure monitoring for Auto Scaling instances<a name="enable-as-instance-metrics"></a>
 
-Amazon EC2 can enable detailed monitoring when it is launching EC2 instances in your Auto Scaling group\. You configure monitoring for Auto Scaling instances using a launch template or launch configuration\. 
+Amazon EC2 collects and processes raw data from instances into readable, near real\-time metrics that describe the CPU and other usage data for your Auto Scaling group\. You can configure the interval for monitoring these metrics by choosing one\-minute or five\-minute granularity\. 
 
-Monitoring is enabled whenever an instance is launched, either basic monitoring \(five\-minute granularity\) or detailed monitoring \(one\-minute granularity\)\. For detailed monitoring, additional charges apply\. For more information, see [Amazon CloudWatch pricing](https://aws.amazon.com/cloudwatch/pricing/) and [Monitoring your instances using CloudWatch](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-cloudwatch.html) in the *Amazon EC2 User Guide for Linux Instances*\.
+Instance monitoring is enabled whenever an instance is launched, using either basic monitoring \(five\-minute granularity\) or detailed monitoring \(one\-minute granularity\)\. For detailed monitoring, additional charges apply\. For more information, see [Amazon CloudWatch pricing](https://aws.amazon.com/cloudwatch/pricing/) and [Monitoring your instances using CloudWatch](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-cloudwatch.html) in the *Amazon EC2 User Guide for Linux Instances*\.
+
+Before creating an Auto Scaling group, you should create a launch template or launch configuration that permits the type of monitoring that is appropriate to your application\. If you add a scaling policy to your group, we strongly recommend that you use detailed monitoring to get metric data for EC2 instances at a one\-minute granularity, because that achieves a faster response to changes in load\.
 
 **Topics**
 + [Enable detailed monitoring \(console\)](#enable-detailed-monitoring-console)
@@ -45,8 +47,6 @@ When you switch between basic and detailed monitoring:
 
 If you have CloudWatch alarms associated with your Auto Scaling group, use the [put\-metric\-alarm](https://docs.aws.amazon.com/cli/latest/reference/cloudwatch/put-metric-alarm.html) command to update each alarm\. Make each period match the monitoring type \(300 seconds for basic monitoring and 60 seconds for detailed monitoring\)\. If you change from detailed monitoring to basic monitoring but do not update your alarms to match the five\-minute period, they continue to check for statistics every minute\. They might find no data available for as many as four out of every five periods\.
 
-
-
 ## Collect additional metrics using the CloudWatch agent<a name="metrics-collected-by-cloudwatch-agent"></a>
 
-To collect memory metrics and other metrics collected by the CloudWatch agent, you must install the CloudWatch agent\. Additional fees may apply\. For more information, see [Metrics collected by the CloudWatch agent](https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/metrics-collected-by-CloudWatch-agent.html) in the *Amazon CloudWatch User Guide*\.
+To collect operating system\-level metrics like available and used memory, you must install the CloudWatch agent\. Additional fees may apply\. For more information, see [Metrics collected by the CloudWatch agent](https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/metrics-collected-by-CloudWatch-agent.html) in the *Amazon CloudWatch User Guide*\.

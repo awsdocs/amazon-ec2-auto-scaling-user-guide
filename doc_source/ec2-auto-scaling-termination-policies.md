@@ -49,7 +49,7 @@ To specify the termination criteria to apply before Amazon EC2 Auto Scaling choo
 + `Default`\. Terminate instances according to the default termination policy\. This policy is useful when you want your Spot allocation strategy evaluated before any other policy, so that every time your Spot instances are terminated or replaced, you continue to make use of Spot Instances in the optimal pools\. It is also useful, for example, when you want to move off launch configurations and start using launch templates\.
 + `AllocationStrategy`\. Terminate instances in the Auto Scaling group to align the remaining instances to the allocation strategy for the type of instance that is terminating \(either a Spot Instance or an On\-Demand Instance\)\. This policy is useful when your preferred instance types have changed\. If the Spot allocation strategy is `lowest-price`, you can gradually rebalance the distribution of Spot Instances across your N lowest priced Spot pools\. If the Spot allocation strategy is `capacity-optimized`, you can gradually rebalance the distribution of Spot Instances across Spot pools where there is more available Spot capacity\. You can also gradually replace On\-Demand Instances of a lower priority type with On\-Demand Instances of a higher priority type\.
 + `OldestLaunchTemplate`\. Terminate instances that have the oldest launch template\. With this policy, instances that use the noncurrent launch template are terminated first, followed by instances that use the oldest version of the current launch template\. This policy is useful when you're updating a group and phasing out the instances from a previous configuration\.
-+ `OldestLaunchConfiguration`\. Terminate instances that have the oldest launch configuration\. This policy is useful when you're updating a group and phasing out the instances from a previous configuration\.
++ `OldestLaunchConfiguration`\. Terminate instances that have the oldest launch configuration\. This policy is useful when you're updating a group and phasing out the instances from a previous configuration\. With this policy, instances that use the noncurrent launch configuration are terminated first\.
 + `ClosestToNextInstanceHour`\. Terminate instances that are closest to the next billing hour\. This policy helps you maximize the use of your instances that have an hourly charge\. \(Only instances that use Amazon Linux, Windows, or Ubuntu are billed in one\-second increments\.\)
 + `NewestInstance`\. Terminate the newest instance in the group\. This policy is useful when you're testing a new launch configuration but don't want to keep it in production\.
 + `OldestInstance`\. Terminate the oldest instance in the group\. This option is useful when you're upgrading the instances in the Auto Scaling group to a new EC2 instance type\. You can gradually replace instances of the old type with instances of the new type\.
@@ -62,7 +62,7 @@ After your Auto Scaling group has been created, you can update the termination p
 
 **To choose different termination policies**
 
-1. Open the Amazon EC2 Auto Scaling console at [https://console\.aws\.amazon\.com/ec2autoscaling/](https://console.aws.amazon.com/ec2autoscaling/)\.
+1. Open the Amazon EC2 console at [https://console\.aws\.amazon\.com/ec2/](https://console.aws.amazon.com/ec2/), and choose **Auto Scaling Groups** from the navigation pane\.
 
 1. Select the check box next to the Auto Scaling group\.
 

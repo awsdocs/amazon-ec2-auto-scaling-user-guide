@@ -4,18 +4,13 @@ You can remove \(detach\) an instance that is in the `InService` state from an A
 + Move an instance out of one Auto Scaling group and attach it to a different group\. For more information, see [Attach EC2 instances to your Auto Scaling group](attach-instance-asg.md)\.
 + Test an Auto Scaling group by creating it using existing instances running your application\. You can then detach these instances from the Auto Scaling group when your tests are complete\.
 
-When you detach instances, you have the option of decrementing the desired capacity for the Auto Scaling group by the number of instances that you are detaching\. If you choose not to decrement the capacity, Amazon EC2 Auto Scaling launches new instances to replace the ones that you detach\. If you decrement the capacity but detach multiple instances from the same Availability Zone, Amazon EC2 Auto Scaling can rebalance the Availability Zones unless you suspend the `AZRebalance` process\. For more information, see [Suspend and resume a process for an Auto Scaling group](as-suspend-resume-processes.md)\.
+When you detach instances, consider the following:
++ If the number of instances that you are detaching decreases the size of the Auto Scaling group below its minimum capacity, you must decrement the minimum capacity for the group before you can detach the instances\.
++ When you detach instances, you have the option of decrementing the desired capacity for the Auto Scaling group by the number of instances that you are detaching\. If you choose not to decrement the capacity, Amazon EC2 Auto Scaling launches new instances to replace the ones that you detach\. If you decrement the capacity but detach multiple instances from the same Availability Zone, Amazon EC2 Auto Scaling can rebalance the Availability Zones unless you suspend the `AZRebalance` process\. For more information, see [Suspend and resume a process for an Auto Scaling group](as-suspend-resume-processes.md)\.
++ If you detach an instance from an Auto Scaling group that has an attached load balancer target group or Classic Load Balancer, the instance is deregistered from the load balancer\. If connection draining \(deregistration delay\) is enabled for your load balancer, Amazon EC2 Auto Scaling waits for in\-flight requests to complete\.
 
-If the number of instances that you are detaching decreases the size of the Auto Scaling group below its minimum capacity, you must decrement the minimum capacity for the group before you can detach the instances\.
-
-If you detach an instance from an Auto Scaling group that has an attached load balancer target group or Classic Load Balancer, the instance is deregistered from the load balancer\. If connection draining is enabled for your load balancer, Amazon EC2 Auto Scaling waits for in\-flight requests to complete\.
-
-The examples use an Auto Scaling group with the following configuration:
-+ Auto Scaling group name = `my-asg`
-+ Minimum size = `1`
-+ Maximum size = `5`
-+ Desired capacity = `4`
-+ Availability Zone = `us-west-2a`
+**Note**  
+If you are detaching instances that are in the `Standby` state, exercise caution\. Attempting to detach instances after putting them into the `Standby` state may cause other instances to terminate unexpectedly\.
 
 ## Detach instances \(console\)<a name="detach-instance-console"></a>
 
@@ -23,7 +18,7 @@ Use the following procedure to detach an instance from your Auto Scaling group\.
 
 **To detach an instance from an existing Auto Scaling group**
 
-1. Open the Amazon EC2 Auto Scaling console at [https://console\.aws\.amazon\.com/ec2autoscaling/](https://console.aws.amazon.com/ec2autoscaling/)\.
+1. Open the Amazon EC2 console at [https://console\.aws\.amazon\.com/ec2/](https://console.aws.amazon.com/ec2/), and choose **Auto Scaling Groups** from the navigation pane\.
 
 1. Select the check box next to your Auto Scaling group\.
 
@@ -36,6 +31,12 @@ Use the following procedure to detach an instance from your Auto Scaling group\.
 ## Detach instances \(AWS CLI\)<a name="detach-instance-aws-cli"></a>
 
 Use the following procedure to detach an instance from your Auto Scaling group\.
+
+The examples use an Auto Scaling group with the following configuration:
++ Auto Scaling group name = `my-asg`
++ Minimum size = `1`
++ Maximum size = `5`
++ Desired capacity = `4`
 
 **To detach an instance from an existing Auto Scaling group**
 

@@ -20,6 +20,12 @@ When a scale\-out event occurs, the Auto Scaling group launches the required num
 
 When each instance is fully configured and passes the Amazon EC2 health checks, it is attached to the Auto Scaling group and it enters the `InService` state\. The instance is counted against the desired capacity of the Auto Scaling group\.
 
+If your Auto Scaling group is configured to receive traffic from an Elastic Load Balancing load balancer, Amazon EC2 Auto Scaling automatically registers your instance with the load balancer before it marks the instance as `InService`\.
+
+The following summarizes the workflow for registering an instance with a load balancer for a scale\-out event\.
+
+![\[A swimlane diagram of a scale-out event.\]](http://docs.aws.amazon.com/autoscaling/ec2/userguide/images/scale-out-swimlane.png)
+
 ## Instances in service<a name="as-lifecycle-inservice"></a>
 
 Instances remain in the `InService` state until one of the following occurs:
@@ -38,6 +44,12 @@ The following scale\-in events direct the Auto Scaling group to detach EC2 insta
 It is important that you create a corresponding scale\-in event for each scale\-out event that you create\. This helps ensure that the resources assigned to your application match the demand for those resources as closely as possible\.
 
 When a scale\-in event occurs, the Auto Scaling group terminates one or more instances\. The Auto Scaling group uses its termination policy to determine which instances to terminate\. Instances that are in the process of terminating from the Auto Scaling group and shutting down enter the `Terminating` state, and can't be put back into service\. If you add a lifecycle hook to your Auto Scaling group, you can perform a custom action here\. Finally, the instances are completely terminated and enter the `Terminated` state\.
+
+If your Auto Scaling group is configured to receive traffic from an Elastic Load Balancing load balancer, Amazon EC2 Auto Scaling automatically deregisters the terminating instance from the load balancer before running lifecycle hooks\. Deregistering the instance ensures that all new requests are redirected to other instances in the load balancer's target group while existing connections to the instance are allowed to continue until the deregistration delay expires\.
+
+The following summarizes the workflow for deregistering an instance with a load balancer for a scale\-in event\.
+
+![\[A swimlane diagram of a scale-in event.\]](http://docs.aws.amazon.com/autoscaling/ec2/userguide/images/scale-in-swimlane.png)
 
 ## Attach an instance<a name="as-lifecycle-attach"></a>
 

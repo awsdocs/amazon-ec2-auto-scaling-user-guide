@@ -12,7 +12,7 @@ There are some scenarios where you might think about scaling in response to acti
 
 ## Use target tracking with the right metric<a name="scale-sqs-queue-custom-metric"></a>
 
-If you use a target tracking scaling policy based on a custom Amazon SQS queue metric, dynamic scaling can adjust to the demand curve of your application more effectively\. For more information about choosing metrics for target tracking, see [Choose metrics](as-scaling-target-tracking.md#available-metrics)\.
+If you use a target tracking scaling policy based on a custom Amazon SQS queue metric, dynamic scaling can adjust to the demand curve of your application more effectively\. For more information about choosing metrics for target tracking, see [Choose metrics](as-scaling-target-tracking.md#target-tracking-choose-metrics)\.
 
 The issue with using a CloudWatch Amazon SQS metric like `ApproximateNumberOfMessagesVisible` for target tracking is that the number of messages in the queue might not change proportionally to the size of the Auto Scaling group that processes messages from the queue\. That's because the number of messages in your SQS queue does not solely define the number of instances needed\. The number of instances in your Auto Scaling group can be driven by multiple factors, including how long it takes to process a message and the acceptable amount of latency \(queue delay\)\. 
 
@@ -20,7 +20,7 @@ The solution is to use a *backlog per instance* metric with the target value bei
 + **Backlog per instance**: To calculate your backlog per instance, start with the `ApproximateNumberOfMessages` queue attribute to determine the length of the SQS queue \(number of messages available for retrieval from the queue\)\. Divide that number by the fleet's running capacity, which for an Auto Scaling group is the number of instances in the `InService` state, to get the backlog per instance\.
 + **Acceptable backlog per instance**: To calculate your target value, first determine what your application can accept in terms of latency\. Then, take the acceptable latency value and divide it by the average time that an EC2 instance takes to process a message\. 
 
-To illustrate with an example, let's say that the current `ApproximateNumberOfMessages` is 1500 and the fleet's running capacity is 10\. If the average processing time is 0\.1 seconds for each message and the longest acceptable latency is 10 seconds, then the acceptable backlog per instance is 10 / 0\.1, which equals 100\. This means that 100 is the target value for your target tracking policy\. If the backlog per instance is currently at 150 \(1500 / 10\), your fleet scales out, and it scales out by five instances to maintain proportion to the target value\.
+As an example, let's say that you currently have an Auto Scaling group with 10 instances and the number of visible messages in the queue \(`ApproximateNumberOfMessages`\) is 1500\. If the average processing time is 0\.1 seconds for each message and the longest acceptable latency is 10 seconds, then the acceptable backlog per instance is 10 / 0\.1, which equals 100 messages\. This means that 100 is the target value for your target tracking policy\. When the backlog per instance reaches the target value, a scale\-out event will happen\. Because the backlog per instance is already 150 messages \(1500 messages / 10 instances\), your group scales out, and it scales out by five instances to maintain proportion to the target value\.
 
 The following procedures demonstrate how to publish the custom metric and create the target tracking scaling policy that configures your Auto Scaling group to scale based on these calculations\.
 
@@ -71,7 +71,7 @@ Follow this procedure to create the custom metric by first reading information f
    aws autoscaling describe-auto-scaling-groups --auto-scaling-group-names my-asg
    ```
 
-1. Calculate the backlog per instance by dividing the approximate number of messages available for retrieval from the queue by the fleet's running capacity\. 
+1. Calculate the backlog per instance by dividing the approximate number of messages available for retrieval from the queue by the group's running capacity\. 
 
 1. Publish the results at a 1\-minute granularity as a CloudWatch custom metric\. 
 
@@ -121,7 +121,7 @@ After publishing your custom metric, create a target tracking scaling policy wit
      --target-tracking-configuration file://~/config.json
    ```
 
-   This creates two alarms: one for scaling out and one for scaling in\. It also returns the Amazon Resource Name \(ARN\) of the policy that is registered with CloudWatch, which CloudWatch uses to invoke scaling whenever the metric is in breach\. 
+   This creates two alarms: one for scaling out and one for scaling in\. It also returns the Amazon Resource Name \(ARN\) of the policy that is registered with CloudWatch, which CloudWatch uses to invoke scaling whenever the metric threshold is in breach\. 
 
 ### Step 3: Test your scaling policy<a name="validate-sqs-scaling-cli"></a>
 
@@ -131,7 +131,7 @@ After your setup is complete, verify that your scaling policy is working\. You c
 
 1. Follow the steps in [Tutorial: Sending a message to an Amazon SQS queue](https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-send-message.html) to add messages to your queue\. Make sure that you have increased the number of messages in the queue so that the backlog per instance metric exceeds the target value\.
 
-   It can take a few minutes for your changes to trigger the CloudWatch alarm\. 
+   It can take a few minutes for your changes to invoke the alarm\.
 
 1. Use the [describe\-auto\-scaling\-groups](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/describe-auto-scaling-groups.html) command to verify that the group has launched an instance\.
 
@@ -143,7 +143,7 @@ After your setup is complete, verify that your scaling policy is working\. You c
 
 1. Follow the steps in [Tutorial: Sending a message to an Amazon SQS queue](https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-send-message.html) to remove messages from the queue\. Make sure that you have decreased the number of messages in the queue so that the backlog per instance metric is below the target value\.
 
-   It can take a few minutes for your changes to trigger the CloudWatch alarm\. 
+   It can take a few minutes for your changes to invoke the alarm\.
 
 1. Use the [describe\-auto\-scaling\-groups](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/describe-auto-scaling-groups.html) command to verify that the group has terminated an instance\.
 

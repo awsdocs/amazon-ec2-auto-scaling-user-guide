@@ -31,13 +31,13 @@ Application Load Balancer
 Routes and load balances at the application layer \(HTTP/HTTPS\), and supports path\-based routing\. An Application Load Balancer can route requests to ports on one or more registered targets, such as EC2 instances, in your virtual private cloud \(VPC\)\.
 
 Network Load Balancer  
-Routes and load balances at the transport layer \(TCP/UDP Layer\-4\), based on address information extracted from the TCP packet header, not from packet content\. Network Load Balancers can handle traffic bursts, retain the source IP of the client, and use a fixed IP for the life of the load balancer\. 
+Routes and load balances at the transport layer \(TCP/UDP Layer\-4\), based on address information extracted from the Layer\-4 header\. Network Load Balancers can handle traffic bursts, retain the source IP of the client, and use a fixed IP for the life of the load balancer\. 
 
 Gateway Load Balancer  
 Distributes traffic to a fleet of appliance instances\. Provides scale, availability, and simplicity for third\-party virtual appliances, such as firewalls, intrusion detection and prevention systems, and other appliances\. Gateway Load Balancers work with virtual appliances that support the GENEVE protocol\. Additional technical integration is required, so make sure to consult the user guide before choosing a Gateway Load Balancer\. 
 
 Classic Load Balancer  
-Routes and load balances either at the transport layer \(TCP/SSL\), or at the application layer \(HTTP/HTTPS\)\. A Classic Load Balancer supports either EC2\-Classic or a VPC\.
+Routes and load balances either at the transport layer \(TCP/SSL\), or at the application layer \(HTTP/HTTPS\)\.
 
 To learn more about Elastic Load Balancing, see the following topics:
 + [What is Elastic Load Balancing?](https://docs.aws.amazon.com/elasticloadbalancing/latest/userguide/what-is-load-balancing.html)

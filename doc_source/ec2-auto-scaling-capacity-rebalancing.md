@@ -19,18 +19,16 @@ When Capacity Rebalancing is disabled, Amazon EC2 Auto Scaling doesn't replace S
 
 **Contents**
 + [How it works](#capacity-rebalancing-how-it-works)
++ [Considerations](#capacity-rebalancing-considerations)
+  + [Capacity Rebalancing does not increase your Spot Instance interruption rate](#capacity-rebalancing-does-not-increase-interruption-rate)
 + [Enable Capacity Rebalancing](#enable-capacity-rebalancing)
   + [Enable Capacity Rebalancing \(console\)](#enable-capacity-rebalancing-console)
   + [Enable Capacity Rebalancing \(AWS CLI\)](#enable-capacity-rebalancing-aws-cli)
 + [Add a termination lifecycle hook](#capacity-rebalancing-lifecycle-hook)
 
-## Enable Capacity Rebalancing<a name="enable-capacity-rebalancing"></a>
+## Considerations<a name="capacity-rebalancing-considerations"></a>
 
-You can enable or disable Capacity Rebalancing at any time\. 
-
-**Considerations**
-
-The following considerations apply for this configuration:
+If you configure an Auto Scaling group for Capacity Rebalancing, consider the following:
 + We recommend that you configure your Auto Scaling group to use multiple instance types\. This provides the flexibility to launch instances in various Spot Instance pools within each Availability Zone, as documented in [Auto Scaling groups with multiple instance types and purchase options](ec2-auto-scaling-mixed-instances-groups.md)\. 
 + Your replacement Spot Instances may be at an elevated risk of interruption if you use the `lowest-price` allocation strategy\. This is because we will always launch instances in the lowest priced pool that has available capacity at that moment, even if your replacement Spot Instances are likely to be interrupted soon after being launched\. To avoid an elevated risk of interruption, we strongly recommend against using the `lowest-price` allocation strategy, and instead recommend the `capacity-optimized` or `capacity-optimized-prioritized` allocation strategy\. These strategies aim to launch replacement Spot Instances in the most optimal Spot capacity pools so that they are less likely to be interrupted in the near future\.
 + Whenever possible, you should create your Auto Scaling group in all Availability Zones within the Region\. This way, Amazon EC2 Auto Scaling can look at the available capacity in each Availability Zone\. If a launch fails in one Availability Zone, Amazon EC2 Auto Scaling keeps trying to launch Spot Instances across the specified Availability Zones until it succeeds\. 
@@ -44,13 +42,28 @@ The following considerations apply for this configuration:
 + It is also not always possible for Amazon EC2 to send the rebalance recommendation signal before the two\-minute Spot Instance interruption notice\. In some cases, the rebalance recommendation signal can arrive along with the two\-minute interruption notice\.
 + In cases where an instance receives a final two\-minute interruption notice, Amazon EC2 Auto Scaling calls the termination lifecycle hook and attempts to launch a replacement immediately\.
 
+### Capacity Rebalancing does not increase your Spot Instance interruption rate<a name="capacity-rebalancing-does-not-increase-interruption-rate"></a>
+
+When you enable Capacity Rebalancing, it does not increase your [Spot Instance interruption rate](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/spot-interruptions.html) \(the number of Spot Instances that are reclaimed when Amazon EC2 needs the capacity back\)\. However, if Capacity Rebalancing detects an instance is at risk of interruption, Amazon EC2 Auto Scaling will immediately attempt to launch a new instance\. The result is that more instances might be replaced than if you’d waited for Amazon EC2 Auto Scaling to launch a new instance after the at\-risk instance was interrupted\.
+
+While you might replace more instances with Capacity Rebalancing enabled, you benefit from being proactive rather than reactive by having more time to take action before your instances are interrupted\. With a [Spot Instance interruption notice](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/spot-instance-termination-notices.html), you typically only have up to two minutes to gracefully shut down your instance\. With Capacity Rebalancing launching a new instance in advance, you give existing processes a better chance of completing on your at\-risk instance, you can start your instance shutdown procedures, and prevent new work from being scheduled on your at\-risk instance\. You can also start preparing the newly launched instance to take over the application\. With Capacity Rebalancing’s proactive replacement, you benefit from graceful continuity\.
+
+As a theoretical example to demonstrate the risks and benefits of using Capacity Rebalancing, consider the following scenario:
++ 2:00 PM – A rebalance recommendation is received for instance\-A, and Amazon EC2 Auto Scaling immediately starts attempting to launch a replacement instance\-B, giving you time to start your shutdown procedures\.
++ 2:30 PM – A rebalance recommendation is received for instance\-B, replaced with instance\-C, giving you time to start your shutdown procedures\.
++ 2:32 PM – If Capacity Rebalancing wasn’t enabled, and if a Spot Instance interruption notice would've been received at 2:32 PM for instance\-A, you would only have had up to two minutes to take action, but Instance\-A would have been running up till this time\.
+
+## Enable Capacity Rebalancing<a name="enable-capacity-rebalancing"></a>
+
+You can enable or disable Capacity Rebalancing at any time\. 
+
 ### Enable Capacity Rebalancing \(console\)<a name="enable-capacity-rebalancing-console"></a>
 
 You can enable or disable Capacity Rebalancing when you create or update an Auto Scaling group\.
 
 **To enable Capacity Rebalancing for a new Auto Scaling group**
 
-1. Open the Amazon EC2 Auto Scaling console at [https://console\.aws\.amazon\.com/ec2autoscaling/](https://console.aws.amazon.com/ec2autoscaling/)\.
+1. Open the Amazon EC2 console at [https://console\.aws\.amazon\.com/ec2/](https://console.aws.amazon.com/ec2/), and choose **Auto Scaling Groups** from the navigation pane\.
 
 1. Choose **Create Auto Scaling group**\.
 
@@ -66,7 +79,7 @@ You can enable or disable Capacity Rebalancing when you create or update an Auto
 
 **To enable Capacity Rebalancing for an existing Auto Scaling group**
 
-1. Open the Amazon EC2 Auto Scaling console at [https://console\.aws\.amazon\.com/ec2autoscaling/](https://console.aws.amazon.com/ec2autoscaling/)\.
+1. Open the Amazon EC2 console at [https://console\.aws\.amazon\.com/ec2/](https://console.aws.amazon.com/ec2/), and choose **Auto Scaling Groups** from the navigation pane\.
 
 1. Select the check box next to your Auto Scaling group\.
 
@@ -262,7 +275,7 @@ If you don't have a termination lifecycle hook, use the following procedure to c
 
 **To add a termination lifecycle hook**
 
-1. Open the Amazon EC2 Auto Scaling console at [https://console\.aws\.amazon\.com/ec2autoscaling/](https://console.aws.amazon.com/ec2autoscaling/)\.
+1. Open the Amazon EC2 console at [https://console\.aws\.amazon\.com/ec2/](https://console.aws.amazon.com/ec2/), and choose **Auto Scaling Groups** from the navigation pane\.
 
 1. Select the check box next to your Auto Scaling group\.
 
@@ -289,3 +302,6 @@ If you don't have a termination lifecycle hook, use the following procedure to c
 1. \(Optional\) To use a service such as Lambda to perform a custom action before instance termination, see [Tutorial: Configure a lifecycle hook that invokes a Lambda function](tutorial-lifecycle-hook-lambda.md)\. This tutorial will help you understand how to set up a Lambda function for your lifecycle hook\. Otherwise, for an EC2 instance to run an action automatically, you must configure it to run a shutdown script\. We recommend that you script your entire shutdown sequence to be completed in under one to two minutes to make sure that there is enough time to complete tasks before instance termination\. 
 
 For more information to help you understand different aspects of working with lifecycle hooks, see [Amazon EC2 Auto Scaling lifecycle hooks](lifecycle-hooks.md)\. 
+
+**Note**  
+Support for Capacity Rebalancing is available in all commercial AWS Regions where Amazon EC2 Auto Scaling is available, excluding the Middle East \(UAE\) Region\.

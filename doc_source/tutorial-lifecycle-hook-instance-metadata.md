@@ -79,7 +79,7 @@ Create a launch template to use with your Auto Scaling group\. Include the IAM r
 
 1. For **Advanced details**, expand the section to view the fields\. 
 
-1. For **IAM instance profile**, choose the IAM instance profile name of your IAM role\. An instance profile is a container for an IAM role that allows Amazon EC2 to pass the IAM role to an instance when the instance is launched\.
+1. For **IAM instance profile**, choose the IAM instance profile name of your IAM role \(**TestAutoScalingEvent\-role**\)\. An instance profile is a container for an IAM role that allows Amazon EC2 to pass the IAM role to an instance when the instance is launched\.
 
    When you used the IAM console to create an IAM role, the console automatically created an instance profile with the same name as its corresponding role\.
 
@@ -121,6 +121,7 @@ Create a launch template to use with your Auto Scaling group\. Include the IAM r
                hostname $new_hostname
                # Send callback
                complete_lifecycle_action
+               break
            fi
            echo $target_state
            sleep 5
@@ -140,6 +141,9 @@ Create a launch template to use with your Auto Scaling group\. Include the IAM r
 
 1. On the confirmation page, choose **Create Auto Scaling group**\.
 
+**Note**  
+For other examples that you can use as a reference for developing your user data script, see the [GitHub repository](https://github.com/aws-samples/amazon-ec2-auto-scaling-group-examples) for Amazon EC2 Auto Scaling\.
+
 ## Step 3: Create an Auto Scaling group<a name="instance-metadata-create-auto-scaling-group"></a>
 
 After you create your launch template, create an Auto Scaling group\.
@@ -156,7 +160,7 @@ After you create your launch template, create an Auto Scaling group\.
 
 1. In the **Instance type requirements** section, use the default setting to simplify this step\. \(Do not override the launch template\.\) For this tutorial, you will launch only one On\-Demand Instance using the instance type specified in your launch template\. 
 
-1. Choose **Next**, and then choose **Skip to review** at the bottom of the next screen\. 
+1. Choose **Skip to review** at the bottom of the screen\. 
 
 1. On the **Review** page, review the details of your Auto Scaling group, and then choose **Create Auto Scaling group**\.
 

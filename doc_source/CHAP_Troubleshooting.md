@@ -49,7 +49,8 @@ The following is an example response, where `StatusCode` contains the current st
 
 For a description of the fields in the output, see [Activity](https://docs.aws.amazon.com/autoscaling/ec2/APIReference/API_Activity.html) in the *Amazon EC2 Auto Scaling API Reference*\.
 
-To view scaling activities for a deleted Auto Scaling group, add the `--include-deleted-groups` option to the [describe\-scaling\-activities](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/describe-scaling-activities.html) command as follows\. 
+**To view scaling activities for a deleted group**  
+To view scaling activities after the Auto Scaling group has been deleted, add the `--include-deleted-groups` option to the [describe\-scaling\-activities](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/describe-scaling-activities.html) command as follows\. 
 
 ```
 aws autoscaling describe-scaling-activities --auto-scaling-group-name my-asg --include-deleted-groups
@@ -82,7 +83,6 @@ The following is an example response, with a scaling activity for a deleted grou
 ## Additional troubleshooting resources<a name="additional-troubleshooting-resources"></a>
 
 The following pages provide additional information for troubleshooting issues with Amazon EC2 Auto Scaling\.
-+ [Quotas for Amazon EC2 Auto Scaling](ec2-auto-scaling-quotas.md) 
 + [Verify a scaling activity for an Auto Scaling group](as-verify-scaling-activity.md) 
 + [View monitoring graphs in the Amazon EC2 Auto Scaling console](viewing-monitoring-graphs.md) 
 + [Health checks for Auto Scaling instances](ec2-auto-scaling-health-checks.md) 
@@ -94,6 +94,7 @@ The following pages provide additional information for troubleshooting issues wi
 +  [Suspend and resume a process for an Auto Scaling group](as-suspend-resume-processes.md) 
 + [Control which Auto Scaling instances terminate during scale in](as-instance-termination.md) 
 + [Delete your Auto Scaling infrastructure](as-process-shutdown.md) 
++ [Quotas for Amazon EC2 Auto Scaling](ec2-auto-scaling-quotas.md) 
 
 The following AWS resources can also be of help:
 + [Amazon EC2 Auto Scaling topics in the AWS Knowledge Center](https://aws.amazon.com/premiumsupport/knowledge-center/#AWS_Auto_Scaling) 

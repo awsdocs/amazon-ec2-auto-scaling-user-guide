@@ -19,6 +19,7 @@ Use the AWS Management Console, the AWS CLI, or one of the SDKs to add a predict
 + [Create a predictive scaling policy \(console\)](#predictive-scaling-policy-console)
 + [Create a predictive scaling policy \(AWS CLI\)](#predictive-scaling-policy-aws-cli)
 + [Limitations](#predictive-scaling-limitations)
++ [Supported Regions](#predictive-scaling-regions)
 + [Explore your data and forecast](predictive-scaling-graphs.md)
 + [Override forecast values using scheduled actions](predictive-scaling-overriding-forecast-capacity.md)
 + [Advanced predictive scaling policy configurations using custom metrics](predictive-scaling-customized-metric-specification.md)
@@ -51,7 +52,7 @@ You can configure predictive scaling policies on an Auto Scaling group after the
 
 **To create a predictive scaling policy**
 
-1. Open the Amazon EC2 Auto Scaling console at [https://console\.aws\.amazon\.com/ec2autoscaling/](https://console.aws.amazon.com/ec2autoscaling/)\.
+1. Open the Amazon EC2 console at [https://console\.aws\.amazon\.com/ec2/](https://console.aws.amazon.com/ec2/), and choose **Auto Scaling Groups** from the navigation pane\.
 
 1. Select the check box next to your Auto Scaling group\.
 
@@ -205,3 +206,7 @@ If successful, this command returns the policy's Amazon Resource Name \(ARN\)\.
 + A core assumption of predictive scaling is that the Auto Scaling group is homogenous and all instances are of equal capacity\. If this isn’t true for your group, forecasted capacity can be inaccurate\. Therefore, use caution when creating predictive scaling policies for [mixed instances groups](ec2-auto-scaling-mixed-instances-groups.md), because instances of different types can be provisioned that are of unequal capacity\. Following are some examples where the forecasted capacity will be inaccurate:
   + Your predictive scaling policy is based on CPU utilization, but the number of vCPUs on each Auto Scaling instance varies between instance types\.
   + Your predictive scaling policy is based on network in or network out, but the network bandwidth throughput for each Auto Scaling instance varies between instance types\. For example, the M5 and M5n instance types are similar, but the M5n instance type delivers significantly higher network throughput\.
+
+## Supported Regions<a name="predictive-scaling-regions"></a>
+
+Amazon EC2 Auto Scaling supports predictive scaling policies in the following AWS Regions: US East \(N\. Virginia\), US East \(Ohio\), US West \(Oregon\), US West \(N\. California\), Africa \(Cape Town\), Canada \(Central\), EU \(Frankfurt\), EU \(Ireland\), EU \(London\), EU \(Milan\), EU \(Paris\), EU \(Stockholm\), Asia Pacific \(Hong Kong\), Asia Pacific \(Mumbai\), Asia Pacific \(Osaka\), Asia Pacific \(Tokyo\), Asia Pacific \(Singapore\), Asia Pacific \(Seoul\), Asia Pacific \(Sydney\), Middle East \(Bahrain\), South America \(Sao Paulo\), China \(Beijing\), China \(Ningxia\), and AWS GovCloud \(US\-West\)\. 

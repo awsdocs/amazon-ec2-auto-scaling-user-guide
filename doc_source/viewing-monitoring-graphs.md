@@ -4,11 +4,11 @@ In the Amazon EC2 Auto Scaling section of the Amazon EC2 console, you can monito
 
 You can monitor the following types of metrics: 
 + **Auto Scaling metrics** – Auto Scaling metrics are turned on only when you enable them\. For more information, see [Enable Auto Scaling group metrics \(console\)](ec2-auto-scaling-cloudwatch-monitoring.md#as-enable-group-metrics)\. When Auto Scaling metrics are enabled, the monitoring graphs show data published at one\-minute granularity for Auto Scaling metrics\.
-+ **EC2 metrics** – If detailed monitoring is enabled, the monitoring graphs show data published at one\-minute granularity for EC2 metrics\. For more information, see [Configure monitoring for Auto Scaling instances](enable-as-instance-metrics.md)\. 
++ **EC2 metrics** – If detailed monitoring is enabled, the monitoring graphs show data published at one\-minute granularity for instance metrics\. For more information, see [Configure monitoring for Auto Scaling instances](enable-as-instance-metrics.md)\. 
 
 **To view monitoring graphs using the Amazon EC2 Auto Scaling console**
 
-1. Open the Amazon EC2 Auto Scaling console at [https://console\.aws\.amazon\.com/ec2autoscaling/](https://console.aws.amazon.com/ec2autoscaling/)\.
+1. Open the Amazon EC2 console at [https://console\.aws\.amazon\.com/ec2/](https://console.aws.amazon.com/ec2/), and choose **Auto Scaling Groups** from the navigation pane\.
 
 1. Select the check box next to the Auto Scaling group that you want to view metrics for\. 
 
@@ -18,7 +18,7 @@ You can monitor the following types of metrics:
 
    Amazon EC2 Auto Scaling displays monitoring graphs for **Auto Scaling** metrics\.
 
-1. To view monitoring graphs of Amazon EC2 aggregate data for all instances in the group, choose **EC2**\. 
+1. To view monitoring graphs of the aggregated instance metrics for the group, choose **EC2**\. 
 
  **Graph actions** 
 + Hover on a data point to view a data pop\-up for a specific time in UTC\. 

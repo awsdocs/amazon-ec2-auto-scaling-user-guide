@@ -19,7 +19,7 @@ As a best practice, we recommend that you use EventBridge\. The notifications se
 
 The following procedures cover how to set up your notification target\.
 
-Remember, if you have a user data script in your launch template or launch configuration that configures your instances when they launch, you do not need to receive notification to perform custom actions on your instances\.
+Remember, if you have a user data script in your launch template or launch configuration that configures your instances when they launch, you do not need to receive notifications to perform custom actions on your instances\.
 
 **Topics**
 + [Route notifications to Lambda using EventBridge](#cloudwatch-events-notification)

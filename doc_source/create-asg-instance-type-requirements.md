@@ -35,7 +35,7 @@ The following are things to consider when using attribute\-based instance type s
 
 ### Understand price protection<a name="understand-price-protection"></a>
 
-Price protection is a feature that protects your Auto Scaling group from extreme price differences across instance types\. When you create a new Auto Scaling group or update an existing Auto Scaling group with attribute\-based instance type selection, we enable price protection by default\. You can optionally choose your price protection thresholds for Spot and On\-Demand Instances, and Amazon EC2 Auto Scaling doesn't select instance types whose price is higher than your specified thresholds\. The thresholds represent what you are willing to pay, defined in terms of a percentage above a baseline, rather than as absolute values\. The baseline is determined by the price of the least expensive M, C, or R instance type with your specified attributes\. If your attributes don't match any M, C, or R instance types, we use the lowest priced instance type\.
+Price protection is a feature that protects your Auto Scaling group from extreme price differences across instance types\. When you create a new Auto Scaling group or update an existing Auto Scaling group with attribute\-based instance type selection, we enable price protection by default\. You can optionally choose your price protection thresholds for Spot and On\-Demand Instances, and Amazon EC2 Auto Scaling doesn't select instance types whose price is higher than your specified thresholds\. The thresholds represent what you are willing to pay, defined in terms of a percentage above a baseline, rather than as absolute values\. The baseline is determined by the price of the least expensive current generation M, C, or R instance type with your specified attributes\. If your attributes don't match any M, C, or R instance types, we use the lowest priced instance type\.
 
 If you don't specify a threshold, the following are used by default:
 + For On\-Demand Instances, the price protection threshold is set to 20 percent\.
@@ -62,7 +62,7 @@ Verify that the launch template doesn't already request Spot Instances\.
 
 **To create an Auto Scaling group using attribute\-based instance type selection \(console\)**
 
-1. Open the Amazon EC2 Auto Scaling console at [https://console\.aws\.amazon\.com/ec2autoscaling/](https://console.aws.amazon.com/ec2autoscaling/)\.
+1. Open the Amazon EC2 console at [https://console\.aws\.amazon\.com/ec2/](https://console.aws.amazon.com/ec2/), and choose **Auto Scaling Groups** from the navigation pane\.
 
 1. On the navigation bar at the top of the screen, choose the same AWS Region that you used when you created the launch template\.
 
@@ -118,7 +118,7 @@ If you are already using attribute\-based instance type selection in your launch
 
    1. Enter the initial size of your Auto Scaling group for **Desired capacity** and update the **Minimum capacity** and **Maximum capacity** limits as needed\. For more information, see [Set capacity limits on your Auto Scaling group](asg-capacity-limits.md)\.
 
-   1. To automatically scale the size of the Auto Scaling group, choose **Target tracking scaling policy** and follow the directions\. For more information, see [Target Tracking Scaling Policies](as-scaling-target-tracking.md#policy-creating-scalingpolicies-console)\.
+   1. To automatically scale the size of the Auto Scaling group, choose **Target tracking scaling policy** and follow the directions\. For more information, see [Target tracking scaling policies for Amazon EC2 Auto Scaling](as-scaling-target-tracking.md)\.
 
    1. Under **Instance scale\-in protection**, choose whether to enable instance scale\-in protection\. For more information, see [Use instance scale\-in protection](ec2-auto-scaling-instance-protection.md)\.
 

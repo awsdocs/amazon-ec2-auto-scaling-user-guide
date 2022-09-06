@@ -51,7 +51,7 @@ Use the following procedure if you have not previously defined a [mixed instance
 
 **To start an instance refresh**
 
-1. Open the Amazon EC2 Auto Scaling console at [https://console\.aws\.amazon\.com/ec2autoscaling/](https://console.aws.amazon.com/ec2autoscaling/)\.
+1. Open the Amazon EC2 console at [https://console\.aws\.amazon\.com/ec2/](https://console.aws.amazon.com/ec2/), and choose **Auto Scaling Groups** from the navigation pane\.
 
 1. Select the check box next to your Auto Scaling group\.
 
@@ -109,7 +109,7 @@ Use the following procedure if you have created an Auto Scaling group with a [mi
 
 **To start an instance refresh**
 
-1. Open the Amazon EC2 Auto Scaling console at [https://console\.aws\.amazon\.com/ec2autoscaling/](https://console.aws.amazon.com/ec2autoscaling/)\.
+1. Open the Amazon EC2 console at [https://console\.aws\.amazon\.com/ec2/](https://console.aws.amazon.com/ec2/), and choose **Auto Scaling Groups** from the navigation pane\.
 
 1. Select the check box next to your Auto Scaling group\.
 
@@ -157,7 +157,7 @@ We recommend that you do not clear this check box\. Only clear it if you want to
 
 **To cancel an instance refresh**
 
-1. Open the Amazon EC2 Auto Scaling console at [https://console\.aws\.amazon\.com/ec2autoscaling/](https://console.aws.amazon.com/ec2autoscaling/)\.
+1. Open the Amazon EC2 console at [https://console\.aws\.amazon\.com/ec2/](https://console.aws.amazon.com/ec2/), and choose **Auto Scaling Groups** from the navigation pane\.
 
 1. Select the check box next to the Auto Scaling group\.
 
@@ -222,5 +222,6 @@ Example output:
 + **Instances terminated before launch**: When there is only one instance in the Auto Scaling group, starting an instance refresh can result in an outage\. This is because Amazon EC2 Auto Scaling terminates an instance and then launches a new instance\.
 + **Total duration**: The maximum amount of time that an instance refresh can continue to actively replace instances is 14 days\. 
 + **Instances not replaced**: If an instance is on standby or protected from scale in, it cannot be replaced\. If Amazon EC2 Auto Scaling encounters an instance that it cannot replace, it will continue to replace other instances\. 
++ **Difference in behavior specific to weighted groups**: If a mixed instances group is configured with an instance weight that is larger than or equal to the group's desired capacity, Amazon EC2 Auto Scaling may replace all `InService` instances at once\. To avoid this situation, follow the recommendation in the [Configure instance weighting for Amazon EC2 Auto Scaling](ec2-auto-scaling-mixed-instances-groups-instance-weighting.md) topic and specify a desired capacity that is larger than your largest weight when you use weights with your Auto Scaling group\.
 + **One\-hour timeout**: When an instance refresh is unable to continue making replacements because your application doesn't pass health checks or there are instances on standby or protected from scale in, it keeps retrying for an hour\. It also provides a status message to help you resolve the issue\. If the problem persists after an hour, the operation fails\. The intention is to give it time to recover if there is a temporary issue\. 
 + **No rollback**: You can cancel an instance refresh at any time, but any instances that have already been replaced are not rolled back to their previous configuration\. If an instance refresh fails, any instances that were already replaced are not rolled back to their previous configuration\. To fix a failed instance refresh, first resolve the underlying issue that caused the update to fail, and then initiate another instance refresh\. 

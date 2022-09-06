@@ -6,11 +6,11 @@ A *tag* is a custom attribute label that you assign or that AWS assigns to an AW
 
 Tags help you do the following:
 + Track your AWS costs\. You activate these tags on the AWS Billing and Cost Management dashboard\. AWS uses the tags to categorize your costs and deliver a monthly cost allocation report to you\. For more information, see [Using cost allocation tags](https://docs.aws.amazon.com/awsaccountbilling/latest/aboutv2/cost-alloc-tags.html) in the *AWS Billing User Guide*\.
-+ Filter and search for Auto Scaling groups based on the tags you add\. For more information, see [Use tags to filter Auto Scaling groups](#use-tag-filters-aws-cli)\.
 + Control access to Auto Scaling groups based on tags\. You can use conditions in your IAM policies to control access to Auto Scaling groups based on the tags on that group\. For more information, see [Tags for security](#tag-security)\.
++ Filter and search for Auto Scaling groups based on the tags that you add\. For more information, see [Use tags to filter Auto Scaling groups](#use-tag-filters-aws-cli)\.
 + Identify and organize your AWS resources\. Many AWS services support tagging, so you can assign the same tag to resources from different services to indicate that the resources are related\.
 
-You can tag new or existing Auto Scaling groups\. You can also propagate tags from an Auto Scaling group to the Amazon EC2 instances it launches\. 
+You can tag new or existing Auto Scaling groups\. You can also propagate tags from an Auto Scaling group to the EC2 instances that it launches\. 
 
 Tags are not propagated to Amazon EBS volumes\. To add tags to Amazon EBS volumes, specify the tags in a launch template\. For more information, see [Create a launch template for an Auto Scaling group](create-launch-template.md)\.
 
@@ -37,7 +37,7 @@ The following basic restrictions apply to tags:
 
 ## EC2 instance tagging lifecycle<a name="tag-lifecycle"></a>
 
-If you have opted to propagate tags to your Amazon EC2 instances, the tags are managed as follows:
+If you have opted to propagate tags to your EC2 instances, the tags are managed as follows:
 + When an Auto Scaling group launches instances, it adds tags to the instances during resource creation rather than after the resource is created\. 
 + The Auto Scaling group automatically adds a tag to instances with a key of `aws:autoscaling:groupName` and a value of the Auto Scaling group name\. 
 + If you specify instance tags in your launch template and you opted to propagate your group's tags to its instances, all the tags are merged\. If the same tag key is specified for a tag in your launch template and a tag in your Auto Scaling group, then the tag value from the group takes precedence\.
@@ -59,7 +59,7 @@ When you use the Amazon EC2 console to create an Auto Scaling group, you can spe
 
 **To add or modify tags for an existing Auto Scaling group**
 
-1. Open the Amazon EC2 Auto Scaling console at [https://console\.aws\.amazon\.com/ec2autoscaling/](https://console.aws.amazon.com/ec2autoscaling/)\.
+1. Open the Amazon EC2 console at [https://console\.aws\.amazon\.com/ec2/](https://console.aws.amazon.com/ec2/), and choose **Auto Scaling Groups** from the navigation pane\.
 
 1. Select the check box next to the Auto Scaling group\.
 
@@ -166,7 +166,7 @@ You can delete a tag associated with your Auto Scaling group at any time\.
 
 **To delete a tag**
 
-1. Open the Amazon EC2 Auto Scaling console at [https://console\.aws\.amazon\.com/ec2autoscaling/](https://console.aws.amazon.com/ec2autoscaling/)\.
+1. Open the Amazon EC2 console at [https://console\.aws\.amazon\.com/ec2/](https://console.aws.amazon.com/ec2/), and choose **Auto Scaling Groups** from the navigation pane\.
 
 1. Select the check box next to an existing group\.
 
@@ -190,7 +190,10 @@ You must specify the tag key, but you don't have to specify the value\. If you s
 
 ## Tags for security<a name="tag-security"></a>
 
-IAM supports controlling access to Auto Scaling groups based on tags\. To control access based on tags, provide tag information in the condition element of an IAM policy\. 
+Use tags to control which Auto Scaling groups can be created, modified, or deleted by IAM users and groups in your account\. Provide tag information in the condition element of an IAM policy by using one or more of the following condition keys:
++ Use `autoscaling:ResourceTag/tag-key: tag-value` to allow \(or deny\) user actions on Auto Scaling groups with specific tags\. 
++ Use `aws:RequestTag/tag-key: tag-value` to require that a specific tag be present \(or not present\) in a request\. 
++ Use `aws:TagKeys [tag-key, ...]` to require that specific tag keys be present \(or not present\) in a request\. 
 
 For example, you could deny access to all Auto Scaling groups that include a tag with the key `environment` and the value `production`, as shown in the following example\.
 
@@ -214,13 +217,11 @@ For example, you could deny access to all Auto Scaling groups that include a tag
 }
 ```
 
-For details, see [Authorization based on Amazon EC2 Auto Scaling tags](control-access-using-iam.md#security_iam_service-with-iam-tags)\.
-
-For more examples of IAM policies based on tags, see [Amazon EC2 Auto Scaling identity\-based policy examples](security_iam_id-based-policy-examples.md)\.
+For more examples, see [Amazon EC2 Auto Scaling identity\-based policy examples](security_iam_id-based-policy-examples.md)\.
 
 ## Control access to tags<a name="tag-permissions"></a>
 
-IAM also supports controlling which IAM users and groups in your account have permissions to add, modify, or delete tags for Auto Scaling groups\. To control access to tags, provide tag information in the condition element of an IAM policy\. 
+IAM also supports controlling which IAM users and groups in your account have permissions to add, modify, or delete tags for Auto Scaling groups\. 
 
 For example, you could create an IAM policy that allows removing only the tag with the `temporary` key from Auto Scaling groups\.
 
@@ -242,7 +243,7 @@ For example, you could create an IAM policy that allows removing only the tag wi
 }
 ```
 
-For more examples of IAM policies based on tags, see [Amazon EC2 Auto Scaling identity\-based policy examples](security_iam_id-based-policy-examples.md)\.
+For more examples, see [Amazon EC2 Auto Scaling identity\-based policy examples](security_iam_id-based-policy-examples.md)\.
 
 **Note**  
 Even if you have a policy that restricts your users from performing a tagging \(or untagging\) operation on an Auto Scaling group, this does not prevent them from manually changing the tags on the instances after they have launched\. For examples that control access to tags on EC2 instances, see [Example: Tagging resources](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ExamplePolicies_EC2.html#iam-example-taggingresources) in the *Amazon EC2 User Guide for Linux Instances*\.

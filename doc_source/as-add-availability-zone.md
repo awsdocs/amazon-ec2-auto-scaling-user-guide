@@ -19,7 +19,7 @@ Use the following procedure to expand your Auto Scaling group and load balancer 
 
 **To add an Availability Zone**
 
-1. Open the Amazon EC2 Auto Scaling console at [https://console\.aws\.amazon\.com/ec2autoscaling/](https://console.aws.amazon.com/ec2autoscaling/)\.
+1. Open the Amazon EC2 console at [https://console\.aws\.amazon\.com/ec2/](https://console.aws.amazon.com/ec2/), and choose **Auto Scaling Groups** from the navigation pane\.
 
 1. Select the check box next to an existing group\.
 
@@ -48,11 +48,6 @@ Use the following procedure to expand your Auto Scaling group and load balancer 
         1. On the **Instances** tab, choose **Edit Availability Zones**\. 
 
         1. On the **Add and Remove Subnets** page, for **Available subnets**, select the subnet using its add \(\+\) icon\. The subnet is moved under **Selected subnets**\.
-      + For Classic Load Balancers in EC2\-Classic:
-
-        1. On the **Instances** tab, choose **Edit Availability Zones**\. 
-
-        1. On the **Add and Remove Availability Zones** page, choose the Availability Zone to add\.
 
    1. Choose **Save**\.
 
@@ -62,7 +57,7 @@ To remove an Availability Zone from your Auto Scaling group and load balancer, u
 
 **To remove an Availability Zone**
 
-1. Open the Amazon EC2 Auto Scaling console at [https://console\.aws\.amazon\.com/ec2autoscaling/](https://console.aws.amazon.com/ec2autoscaling/)\.
+1. Open the Amazon EC2 console at [https://console\.aws\.amazon\.com/ec2/](https://console.aws.amazon.com/ec2/), and choose **Auto Scaling Groups** from the navigation pane\.
 
 1. Select the check box next to an existing group\.
 
@@ -91,11 +86,6 @@ To remove an Availability Zone from your Auto Scaling group and load balancer, u
         1. On the **Instances** tab, choose **Edit Availability Zones**\. 
 
         1. On the **Add and Remove Subnets** page, for **Available subnets**, remove the subnet using its delete \(\-\) icon\. The subnet is moved under **Available subnets**\.
-      + For Classic Load Balancers in EC2\-Classic:
-
-        1. On the **Instances** tab, choose **Edit Availability Zones**\. 
-
-        1. On the **Add and Remove Availability Zones** page, clear the Availability Zone\.
 
    1. Choose **Save**\.
 

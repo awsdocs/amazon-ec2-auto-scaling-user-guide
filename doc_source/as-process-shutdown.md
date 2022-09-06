@@ -15,7 +15,7 @@ When you delete an Auto Scaling group, its desired, minimum, and maximum values 
 
 **To delete your Auto Scaling group \(console\)**
 
-1. Open the Amazon EC2 Auto Scaling console at [https://console\.aws\.amazon\.com/ec2autoscaling/](https://console.aws.amazon.com/ec2autoscaling/)\.
+1. Open the Amazon EC2 console at [https://console\.aws\.amazon\.com/ec2/](https://console.aws.amazon.com/ec2/), and choose **Auto Scaling Groups** from the navigation pane\.
 
 1. Select the check box next to your Auto Scaling group and choose **Delete**\. 
 
@@ -30,7 +30,7 @@ Use the following [delete\-auto\-scaling\-group](https://docs.aws.amazon.com/cli
 aws autoscaling delete-auto-scaling-group --auto-scaling-group-name my-asg
 ```
 
-If the group has instances or scaling activities in progress, use the [delete\-auto\-scaling\-group](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/delete-auto-scaling-group.html) command with the `--force-delete` option\. This will also terminate the Amazon EC2 instances\.
+If the group has instances or scaling activities in progress, use the [delete\-auto\-scaling\-group](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/delete-auto-scaling-group.html) command with the `--force-delete` option\. This will also terminate the EC2 instances\.
 
 ```
 aws autoscaling delete-auto-scaling-group --auto-scaling-group-name my-asg --force-delete

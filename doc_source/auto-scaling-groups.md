@@ -1,11 +1,6 @@
 # Auto Scaling groups<a name="auto-scaling-groups"></a>
 
-
-|  | 
-| --- |
-| We are retiring EC2\-Classic on August 15, 2022\. To avoid interruptions to your workloads, we recommend that you migrate from EC2\-Classic to a VPC prior to August 15, 2022\. For more information, see the blog post [EC2\-Classic Networking is Retiring \- Here's How to Prepare](http://aws.amazon.com/blogs/aws/ec2-classic-is-retiring-heres-how-to-prepare/)\. | 
-
-An *Auto Scaling group* contains a collection of Amazon EC2 instances that are treated as a logical grouping for the purposes of automatic scaling and management\. An Auto Scaling group also enables you to use Amazon EC2 Auto Scaling features such as health check replacements and scaling policies\. Both maintaining the number of instances in an Auto Scaling group and automatic scaling are the core functionality of the Amazon EC2 Auto Scaling service\.
+An *Auto Scaling group* contains a collection of EC2 instances that are treated as a logical grouping for the purposes of automatic scaling and management\. An Auto Scaling group also enables you to use Amazon EC2 Auto Scaling features such as health check replacements and scaling policies\. Both maintaining the number of instances in an Auto Scaling group and automatic scaling are the core functionality of the Amazon EC2 Auto Scaling service\.
 
 The size of an Auto Scaling group depends on the number of instances that you set as the desired capacity\. You can adjust its size to meet demand, either manually or by using automatic scaling\. 
 
@@ -15,7 +10,7 @@ You can use scaling policies to increase or decrease the number of instances in 
 
 An Auto Scaling group can launch On\-Demand Instances, Spot Instances, or both\. You can specify multiple purchase options for your Auto Scaling group only when you configure the group to use a launch template\. \(We recommend that you use launch templates instead of launch configurations to make sure that you can use the latest features of Amazon EC2\.\) 
 
-Spot Instances provide you with access to unused Amazon EC2 capacity at steep discounts relative to On\-Demand prices\. For more information, see [Amazon EC2 Spot Instances](https://aws.amazon.com/ec2/spot/pricing/)\. There are key differences between Spot Instances and On\-Demand Instances:
+Spot Instances provide you with access to unused EC2 capacity at steep discounts relative to On\-Demand prices\. For more information, see [Amazon EC2 Spot Instances](https://aws.amazon.com/ec2/spot/pricing/)\. There are key differences between Spot Instances and On\-Demand Instances:
 + The price for Spot Instances varies based on demand
 + Amazon EC2 can terminate an individual Spot Instance as the availability of, or price for, Spot Instances changes
 
