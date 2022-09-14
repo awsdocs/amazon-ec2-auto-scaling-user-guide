@@ -28,7 +28,7 @@ To create a recurring schedule using the AWS CLI or an SDK, specify a cron expre
 
 To create a recurring schedule using the AWS Management Console, specify the recurrence pattern, time zone, start time, and optional end time of your scheduled action\. All of the recurrence pattern options are based on cron expressions\. Alternatively, you can write your own custom cron expression\. 
 
-The supported cron expression format consists of five fields separated by white spaces: \[Minute\] \[Hour\] \[Day\_of\_Month\] \[Month\_of\_Year\] \[Day\_of\_Week\]\. For example, the cron expression `30 6 * * 2` configures a scheduled action that recurs every Tuesday at 6:30 AM\. The asterisk is used as a wildcard to match all values for a field\. For other examples of cron expressions, see [https://crontab\.guru/examples\.html](https://crontab.guru/examples.html)\. For information about writing your own cron expressions in this format, see [Crontab](http://crontab.org)\. 
+The cron format consists of six fields separated by white spaces: [Minutes] [Hours] [Day_of_Month] [Month] [Day_of_Week] [Year]. For example, the cron expression `30 6 * * 2 *` configures a scheduled action that recurs every Tuesday at 6:30 AM\. The asterisk is used as a wildcard to match all values for a field\. For other examples of cron expressions, see [https://crontab\.guru/examples\.html](https://crontab.guru/examples.html)\. For information about writing your own cron expressions in this format, see [Crontab](http://crontab.org)\. 
 
 Choose your start and end times carefully\. Keep the following in mind:
 + If you specify a start time, Amazon EC2 Auto Scaling performs the action at this time, and then performs the action based on the specified recurrence\.
