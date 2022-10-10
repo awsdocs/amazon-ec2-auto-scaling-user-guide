@@ -92,7 +92,7 @@ To remove an Availability Zone from your Auto Scaling group and load balancer, u
 ## Limitations<a name="availability-zone-limitations"></a>
 
 To update which Availability Zones are enabled for your load balancer, you need to be aware of the following limitations: 
-+ When you enable an Availability Zone for your load balancer, you specify one subnet from that Availability Zone\. Note that you can enable at most one subnet per Availability Zone for your load balancer\. 
++ When you enable an Availability Zone for your load balancer, you specify one subnet from that Availability Zone\. Note that you must enable at least one subnet per Availability Zone for your load balancer\. 
 + For internet\-facing load balancers, the subnets that you specify for the load balancer must have at least eight available IP addresses\. 
 + For Application Load Balancers, you must enable at least two Availability Zones\.
 + For Network Load Balancers, you cannot disable the enabled Availability Zones, but you can enable additional ones\.
