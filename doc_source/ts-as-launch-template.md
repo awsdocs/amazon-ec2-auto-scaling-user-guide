@@ -7,7 +7,7 @@ If you are unable to launch any instances with an already specified launch templ
 
 ## You must use a valid fully\-formed launch template \(invalid value\)<a name="ts-launch-template-invalid-error"></a>
 
-**Problem**: When you try to specify a launch template for an Auto Scaling group, you get the `You must use a valid fully-formed launch template` error\. You might encounter this error because the values in the launch template are only validated when an Auto Scaling group that is using the launch template is created or updated
+**Problem**: When you try to specify a launch template for an Auto Scaling group, you get the `You must use a valid fully-formed launch template` error\. You might encounter this error because the values in the launch template are only validated when an Auto Scaling group that is using the launch template is created or updated\.
 
 **Cause 1**: If you receive a `You must use a valid fully-formed launch template` error, then there are issues that cause Amazon EC2 Auto Scaling to consider something about the launch template not valid\. This is a generic error that can have several different causes\. 
 
@@ -41,6 +41,11 @@ For more information, see [Create a launch template for an Auto Scaling group](c
 
 **Cause 2**: If you are attempting to use a launch template that specifies an instance profile, you must have IAM permission to pass the IAM role that is associated with the instance profile\.
 
-**Solution 3**: Verify that the IAM credentials that you are using to make the request has the correct permissions to pass the specified role to the Amazon EC2 Auto Scaling service\. For more information, see [IAM role for applications that run on Amazon EC2 instances](us-iam-role.md)\. For further troubleshooting topics related to instance profiles, see [Troubleshooting Amazon EC2 and IAM](https://docs.aws.amazon.com/IAM/latest/UserGuide/troubleshoot_iam-ec2.html) in the *IAM User Guide*\.
+**Solution 3**: Verify that the IAM credentials that you are using to make the request has the correct `iam:PassRole` permission to pass the specified role to the Amazon EC2 Auto Scaling service\. For more information and an example IAM policy, see [IAM role for applications that run on Amazon EC2 instances](us-iam-role.md) and [Control which IAM roles can be passed \(using PassRole\)](security_iam_id-based-policy-examples.md#policy-example-pass-IAM-role)\. For further troubleshooting topics related to instance profiles, see [Troubleshooting Amazon EC2 and IAM](https://docs.aws.amazon.com/IAM/latest/UserGuide/troubleshoot_iam-ec2.html) in the *IAM User Guide*\.
 
-For more information about setting up IAM permissions for launch templates, see [Launch template support](ec2-auto-scaling-launch-template-permissions.md)\.
+**Cause 3**: If you are attempting to use a launch template that specifies an AMI in another AWS account, and the AMI is private and not shared with the AWS account you are using, you receive an error that you're not authorized to use the launch template\.
+
+**Solution 4**: Verify that the permissions on the AMI include the account that you are using\. For more information, see [Share an AMI with specific AWS accounts](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/sharingamis-explicit.html) in the *Amazon EC2 User Guide for Linux Instances*\.
+
+**Important**  
+For more information about permissions for launch templates, including example IAM policies, see [Launch template support](ec2-auto-scaling-launch-template-permissions.md)\.

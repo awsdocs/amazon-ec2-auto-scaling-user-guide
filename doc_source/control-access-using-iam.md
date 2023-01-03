@@ -11,7 +11,7 @@ Before you use IAM to manage access to Amazon EC2 Auto Scaling, learn what IAM f
 |  [Resource\-based policies](#policy-auto-scaling-resources)  |    No   | 
 |  [Policy actions](#security_iam_service-with-iam-id-based-policies-actions)  |    Yes  | 
 |  [Policy resources](#security_iam_service-with-iam-id-based-policies-resources)  |    Yes  | 
-|  [Policy condition keys \(service\-specific\)](#security_iam_service-with-iam-id-based-policies-conditionkeys)  |    Yes  | 
+|  [Policy condition keys \(service\-specific\)](#policy-auto-scaling-condition-keys)  |    Yes  | 
 |  [ACLs](#security_iam_service-with-iam-acls)  |    No   | 
 |  [ABAC \(tags in policies\)](#security_iam_service-with-iam-tags)  |    Partial  | 
 |  [Temporary credentials](#security_iam_service-with-iam-roles-tempcreds)  |    Yes  | 
@@ -153,7 +153,7 @@ The following Amazon EC2 Auto Scaling actions do not support resource\-level per
 + `DescribeTerminationPolicyTypes`
 + `DescribeWarmPool`
 
-## Policy condition keys for Amazon EC2 Auto Scaling<a name="security_iam_service-with-iam-id-based-policies-conditionkeys"></a>
+## Policy condition keys for Amazon EC2 Auto Scaling<a name="policy-auto-scaling-condition-keys"></a>
 
 
 |  |  | 
@@ -172,26 +172,35 @@ AWS supports global condition keys and service\-specific condition keys\. To see
 
 Amazon EC2 Auto Scaling defines its own set of condition keys and also supports using some global condition keys\.
 
-The following condition keys are specific to Amazon EC2 Auto Scaling:
-+ `autoscaling:ImageId`
-+ `autoscaling:InstanceType`
+Amazon EC2 Auto Scaling supports the following condition keys that you can use in permission policies to determine who can access Amazon EC2 Auto Scaling:
 + `autoscaling:InstanceTypes`
 + `autoscaling:LaunchConfigurationName`
 + `autoscaling:LaunchTemplateVersionSpecified`
 + `autoscaling:LoadBalancerNames`
 + `autoscaling:MaxSize`
-+ `autoscaling:MetadataHttpEndpoint`
-+ `autoscaling:MetadataHttpPutResponseHopLimit`
-+ `autoscaling:MetadataHttpTokens`
 + `autoscaling:MinSize`
-+ `autoscaling:ResourceTag/key`
-+ `autoscaling:SpotPrice`
++ `autoscaling:ResourceTag/key-name: tag-value`
 + `autoscaling:TargetGroupARNs`
 + `autoscaling:VPCZoneIdentifiers`
 
-For more information about using Amazon EC2 Auto Scaling condition keys, see [Condition keys for Amazon EC2 Auto Scaling](https://docs.aws.amazon.com/service-authorization/latest/reference/list_amazonec2autoscaling.html#amazonec2autoscaling-policy-keys) in the *Service Authorization Reference*\. To learn which actions and resources you can use a condition key with, see [Actions defined by Amazon EC2 Auto Scaling](https://docs.aws.amazon.com/service-authorization/latest/reference/list_amazonec2autoscaling.html#amazonec2autoscaling-actions-as-permissions)\.
+The following condition keys are specific to create launch configuration requests:
++ `autoscaling:ImageId`
++ `autoscaling:InstanceType`
++ `autoscaling:MetadataHttpEndpoint`
++ `autoscaling:MetadataHttpPutResponseHopLimit`
++ `autoscaling:MetadataHttpTokens`
++ `autoscaling:SpotPrice`
 
-To view examples of Amazon EC2 Auto Scaling identity\-based policies, see [Amazon EC2 Auto Scaling identity\-based policy examples](security_iam_id-based-policy-examples.md)\.
+Amazon EC2 Auto Scaling also supports the following global condition keys that you can use to define permissions based on the tags in the request or present on the Auto Scaling group\. For more information, see [Tag Auto Scaling groups and instances](ec2-auto-scaling-tagging.md)\. 
++ `aws:RequestTag/key-name: tag-value`
++ `aws:ResourceTag/key-name: tag-value`
++ `aws:TagKeys: [tag-key, ...]`
+
+To learn which Amazon EC2 Auto Scaling API actions you can use a condition key with, see [Actions defined by Amazon EC2 Auto Scaling](https://docs.aws.amazon.com/service-authorization/latest/reference/list_amazonec2autoscaling.html#amazonec2autoscaling-actions-as-permissions) in the *Service Authorization Reference*\. For more information about using Amazon EC2 Auto Scaling condition keys, see [Condition keys for Amazon EC2 Auto Scaling](https://docs.aws.amazon.com/service-authorization/latest/reference/list_amazonec2autoscaling.html#amazonec2autoscaling-policy-keys)\.
+
+For examples of IAM policies you can use to control access, see the following topics:
++ For examples that use condition keys to control access to actions on Auto Scaling groups and launch configurations, see [Tag Auto Scaling groups and instances](ec2-auto-scaling-tagging.md) and [Amazon EC2 Auto Scaling identity\-based policy examples](security_iam_id-based-policy-examples.md)\.
++ For additional examples, including an example that denies access to Auto Scaling groups if a launch configuration is specified in the request, see [Launch template support](ec2-auto-scaling-launch-template-permissions.md)\. 
 
 ## ACLs in Amazon EC2 Auto Scaling<a name="security_iam_service-with-iam-acls"></a>
 

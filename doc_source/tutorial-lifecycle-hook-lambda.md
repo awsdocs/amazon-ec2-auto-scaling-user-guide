@@ -276,11 +276,11 @@ If you are done working with the resources that you created just for this tutori
 
 1. Under **Event bus**, choose the event bus that is associated with the rule \(`Default`\)\.
 
-1. Choose the rule \(`LogAutoScalingEvent-rule`\)\.
+1. Select the check box next to your rule \(`LogAutoScalingEvent-rule`\)\.
 
-1. Choose **Actions**, **Delete**\.
+1. Choose **Delete**\.
 
-1. Choose **Delete** again to confirm\.
+1. When prompted for confirmation, type the name of the rule and then choose **Delete**\.
 
 If you are done working with the example function, delete it\. You can also delete the log group that stores the function's logs, and the execution role and permissions policy that you created\.
 
@@ -292,7 +292,7 @@ If you are done working with the example function, delete it\. You can also dele
 
 1. Choose **Actions**, **Delete**\.
 
-1. In the **Delete function** dialog box, choose **Delete**\.
+1. When prompted for confirmation, type **delete** to confirm deleting the specified function and then choose **Delete**\.
 
 **To delete the log group**
 
@@ -310,9 +310,9 @@ If you are done working with the example function, delete it\. You can also dele
 
 1. Select the function's role \(`LogAutoScalingEvent-role`\)\.
 
-1. Choose **Delete role**\.
+1. Choose **Delete**\.
 
-1. In the **Delete role** dialog box, choose **Yes, delete**\.
+1. When prompted for confirmation, type the name of the role and then choose **Delete**\.
 
 **To delete the IAM policy**
 
@@ -320,6 +320,6 @@ If you are done working with the example function, delete it\. You can also dele
 
 1. Select the policy that you created \(`LogAutoScalingEvent-policy`\)\.
 
-1. Choose **Delete policy**\.
+1. Choose **Actions**, **Delete**\.
 
-1. In the **Delete policy** dialog box, choose **Yes, delete**\.
+1. When prompted for confirmation, type the name of the policy and then choose **Delete**\.

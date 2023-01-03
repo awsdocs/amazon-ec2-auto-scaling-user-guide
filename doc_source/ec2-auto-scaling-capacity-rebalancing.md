@@ -1,4 +1,4 @@
-# Use Capacity Rebalancing to handle Amazon EC2 Spot Interruptions<a name="ec2-auto-scaling-capacity-rebalancing"></a>
+# Use Capacity Rebalancing to handle Amazon EC2 Spot interruptions<a name="ec2-auto-scaling-capacity-rebalancing"></a>
 
 You can configure Amazon EC2 Auto Scaling to monitor and automatically respond to changes that affect the availability of your Spot Instances\. Capacity Rebalancing helps you maintain workload availability by proactively augmenting your fleet with a new Spot Instance before a running instance is interrupted by Amazon EC2\.
 
@@ -20,27 +20,32 @@ When Capacity Rebalancing is disabled, Amazon EC2 Auto Scaling doesn't replace S
 **Contents**
 + [How it works](#capacity-rebalancing-how-it-works)
 + [Considerations](#capacity-rebalancing-considerations)
+  + [Amazon EC2 Auto Scaling will only launch a new instance if availability is the same or better](#auto-scaling-will-only-launch-a-new-instance-if-availability-is-the-same-or-better)
   + [Capacity Rebalancing does not increase your Spot Instance interruption rate](#capacity-rebalancing-does-not-increase-interruption-rate)
 + [Enable Capacity Rebalancing](#enable-capacity-rebalancing)
   + [Enable Capacity Rebalancing \(console\)](#enable-capacity-rebalancing-console)
   + [Enable Capacity Rebalancing \(AWS CLI\)](#enable-capacity-rebalancing-aws-cli)
 + [Add a termination lifecycle hook](#capacity-rebalancing-lifecycle-hook)
++ [Limitations](#capacity-rebalancing-limitations)
 
 ## Considerations<a name="capacity-rebalancing-considerations"></a>
 
-If you configure an Auto Scaling group for Capacity Rebalancing, consider the following:
+The following considerations apply to Capacity Rebalancing:
 + We recommend that you configure your Auto Scaling group to use multiple instance types\. This provides the flexibility to launch instances in various Spot Instance pools within each Availability Zone, as documented in [Auto Scaling groups with multiple instance types and purchase options](ec2-auto-scaling-mixed-instances-groups.md)\. 
-+ Your replacement Spot Instances may be at an elevated risk of interruption if you use the `lowest-price` allocation strategy\. This is because we will always launch instances in the lowest priced pool that has available capacity at that moment, even if your replacement Spot Instances are likely to be interrupted soon after being launched\. To avoid an elevated risk of interruption, we strongly recommend against using the `lowest-price` allocation strategy, and instead recommend the `capacity-optimized` or `capacity-optimized-prioritized` allocation strategy\. These strategies aim to launch replacement Spot Instances in the most optimal Spot capacity pools so that they are less likely to be interrupted in the near future\.
 + Whenever possible, you should create your Auto Scaling group in all Availability Zones within the Region\. This way, Amazon EC2 Auto Scaling can look at the available capacity in each Availability Zone\. If a launch fails in one Availability Zone, Amazon EC2 Auto Scaling keeps trying to launch Spot Instances across the specified Availability Zones until it succeeds\. 
++ Your replacement Spot Instances may be at an elevated risk of interruption if you use the `lowest-price` allocation strategy\. This is because we will always launch instances in the lowest priced pool that has available capacity at that moment, even if your replacement Spot Instances are likely to be interrupted soon after being launched\. To avoid an elevated risk of interruption, we strongly recommend against using the `lowest-price` allocation strategy, and instead recommend the `price-capacity-optimized`, `capacity-optimized`, or `capacity-optimized-prioritized` allocation strategy\. These strategies aim to launch replacement Spot Instances in the most optimal Spot capacity pools so that they are less likely to be interrupted in the near future\.
 + With Capacity Rebalancing, Amazon EC2 Auto Scaling behaves in the following way: 
 
-  When launching a new instance, Amazon EC2 Auto Scaling waits until the new instance passes its health check before it proceeds with terminating the previous instance\. When replacing more than one instance, the termination of each previous instance starts after the new instance has launched and passed its health check\. Because Amazon EC2 Auto Scaling attempts to launch new instances before terminating previous ones, being at or near the specified maximum capacity could impede or completely halt rebalancing activities\. To avoid this problem, Amazon EC2 Auto Scaling can temporarily exceed the specified maximum capacity of a group during a rebalancing activity\.
+  When a new Spot Instance launches, Amazon EC2 Auto Scaling waits until the new instance passes its health check before it proceeds with terminating the previous instance\. When replacing more than one instance, the termination of each previous instance starts after the new instance has launched and passed its health check\. Because Amazon EC2 Auto Scaling attempts to launch new instances before terminating previous ones, being at or near the specified maximum capacity could impede or completely halt rebalancing activities\. To avoid this problem, Amazon EC2 Auto Scaling can temporarily exceed the specified maximum capacity of a group during a rebalancing activity\.
   + If the new instances fail to launch or they launch but the health check fails, Amazon EC2 Auto Scaling keeps trying to relaunch them\. While it is trying to launch new instances, your previous ones will eventually be interrupted and forcibly terminated\. 
   + If a scaling activity is in progress and your Auto Scaling group is below its new desired capacity, Amazon EC2 Auto Scaling scales out first before terminating the previous instances\.
 + You can configure a termination lifecycle hook for your Auto Scaling group when enabling Capacity Rebalancing to attempt a graceful shutdown of your application inside the instances that receive the rebalance notification, before Amazon EC2 Auto Scaling terminates the instances\. If you don't configure a lifecycle hook, Amazon EC2 Auto Scaling starts terminating the previous instances as soon as the new instances pass their health check\.
-+ Your application should be able to handle the possibility of a Spot Instance being interrupted early\. For example, when an instance begins termination, Amazon EC2 Auto Scaling waits for the instance to terminate\. If the Auto Scaling group is behind an Elastic Load Balancing load balancer, Amazon EC2 Auto Scaling waits for the instance to deregister from the load balancer before calling the termination lifecycle hook \(if configured\)\. If the time to deregister the instance and complete lifecycle actions takes too long, the instance might be interrupted while Amazon EC2 Auto Scaling is waiting for the instance to terminate\.
-+ It is also not always possible for Amazon EC2 to send the rebalance recommendation signal before the two\-minute Spot Instance interruption notice\. In some cases, the rebalance recommendation signal can arrive along with the two\-minute interruption notice\.
-+ In cases where an instance receives a final two\-minute interruption notice, Amazon EC2 Auto Scaling calls the termination lifecycle hook and attempts to launch a replacement immediately\.
+
+### Amazon EC2 Auto Scaling will only launch a new instance if availability is the same or better<a name="auto-scaling-will-only-launch-a-new-instance-if-availability-is-the-same-or-better"></a>
+
+One of the goals of Capacity Rebalancing is to improve a Spot Instance's availability\. If an existing Spot Instance receives a rebalance recommendation, Amazon EC2 Auto Scaling will only launch a new instance if the new instance provides the same or better availability than the existing instance\. If the risk of interruption of a new instance will be worse than the existing instance, then Amazon EC2 Auto Scaling will not launch a new instance\. Amazon EC2 Auto Scaling will, however, continue to assess the Spot capacity pools based on information provided by the Amazon EC2 Spot service, and will launch a new instance if availability improves\.
+
+There is a chance that your existing instance will be interrupted without Amazon EC2 Auto Scaling proactively launching a new instance\. When this happens, Amazon EC2 Auto Scaling will attempt to launch a new instance as soon as it receives the Spot Instance interruption notice regardless of whether the new instance has a high risk of interruption\.
 
 ### Capacity Rebalancing does not increase your Spot Instance interruption rate<a name="capacity-rebalancing-does-not-increase-interruption-rate"></a>
 
@@ -303,5 +308,11 @@ If you don't have a termination lifecycle hook, use the following procedure to c
 
 For more information to help you understand different aspects of working with lifecycle hooks, see [Amazon EC2 Auto Scaling lifecycle hooks](lifecycle-hooks.md)\. 
 
-**Note**  
-Support for Capacity Rebalancing is available in all commercial AWS Regions where Amazon EC2 Auto Scaling is available, excluding the Middle East \(UAE\) Region\.
+## Limitations<a name="capacity-rebalancing-limitations"></a>
++ Amazon EC2 Auto Scaling can terminate the instance that receives the rebalance notification only if it isn't protected from scale in\.
++ Your application should be able to handle the possibility of a Spot Instance being interrupted early\. For example, when an instance begins termination, Amazon EC2 Auto Scaling waits for the instance to terminate\. If the Auto Scaling group is behind an Elastic Load Balancing load balancer, Amazon EC2 Auto Scaling waits for the instance to deregister from the load balancer before calling the termination lifecycle hook \(if configured\)\. If the time to deregister the instance and complete lifecycle actions takes too long, the instance might be interrupted while Amazon EC2 Auto Scaling is waiting for the instance to terminate\.
+
+  It is also not always possible for Amazon EC2 to send the rebalance recommendation signal before the two\-minute Spot Instance interruption notice\. In some cases, the rebalance recommendation signal can arrive along with the two\-minute interruption notice\.
+
+  In cases where an instance receives a final two\-minute interruption notice, Amazon EC2 Auto Scaling calls the termination lifecycle hook and attempts to launch a replacement immediately\.
++ Support for Capacity Rebalancing is available in all commercial AWS Regions where Amazon EC2 Auto Scaling is available, excluding the Middle East \(UAE\) Region\.

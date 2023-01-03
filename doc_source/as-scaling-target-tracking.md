@@ -14,6 +14,7 @@ You can meet this need by creating a target tracking scaling policy that targets
 + [Define instance warm\-up time](#as-target-tracking-scaling-warmup)
 + [Create a target tracking scaling policy \(console\)](#policy_creating)
 + [Create a target tracking scaling policy \(AWS CLI\)](#target-tracking-policy-creating-aws-cli)
++ [Create a target tracking scaling policy for Amazon EC2 Auto Scaling using metric math](ec2-auto-scaling-target-tracking-metric-math.md)
 
 ## Multiple target tracking scaling policies<a name="target-tracking-multiple-policies"></a>
 
@@ -33,7 +34,7 @@ The following considerations apply when working with target tracking scaling pol
 
 ## Choose metrics<a name="target-tracking-choose-metrics"></a>
 
-In a target tracking scaling policy, you can use predefined or customized metrics\. 
+In a target tracking scaling policy, you can use predefined or custom metrics\. 
 
 The following predefined metrics are available: 
 + `ASGAverageCPUUtilization`—Average CPU utilization of the Auto Scaling group\.
@@ -44,24 +45,24 @@ The following predefined metrics are available:
 **Important**  
 Other valuable information about the metrics for CPU utilization, network I/O, and Application Load Balancer request count per target can be found in the [List the available CloudWatch metrics for your instances](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/viewing_metrics_with_cloudwatch.html) topic in the *Amazon EC2 User Guide for Linux Instances* and the [CloudWatch metrics for your Application Load Balancer](https://docs.aws.amazon.com/elasticloadbalancing/latest/application/load-balancer-cloudwatch-metrics.html) topic in the *User Guide for Application Load Balancers*, respectively\.
 
-You can choose other available CloudWatch metrics or your own metrics in CloudWatch by specifying a customized metric\. You must use the AWS CLI or an SDK to create a target tracking policy with a customized metric\.
+You can choose other available CloudWatch metrics or your own metrics in CloudWatch by specifying a custom metric\. You must use the AWS CLI or an SDK to create a target tracking policy with a custom metric\.
 
 Keep the following in mind when choosing a metric:
-+ Not all metrics work for target tracking\. This can be important when you are specifying a customized metric\. The metric must be a valid utilization metric and describe how busy an instance is\. The metric value must increase or decrease proportionally to the number of instances in the Auto Scaling group\. That's so the metric data can be used to proportionally scale out or in the number of instances\. For example, the CPU utilization of an Auto Scaling group works \(that is, the Amazon EC2 metric `CPUUtilization` with the metric dimension `AutoScalingGroupName`\), if the load on the Auto Scaling group is distributed across the instances\. 
++ Not all metrics work for target tracking\. This can be important when you are specifying a custom metric\. The metric must be a valid utilization metric and describe how busy an instance is\. The metric value must increase or decrease proportionally to the number of instances in the Auto Scaling group\. That's so the metric data can be used to proportionally scale out or in the number of instances\. For example, the CPU utilization of an Auto Scaling group works \(that is, the Amazon EC2 metric `CPUUtilization` with the metric dimension `AutoScalingGroupName`\), if the load on the Auto Scaling group is distributed across the instances\. 
 + The following metrics do not work for target tracking:
   + The number of requests received by the load balancer fronting the Auto Scaling group \(that is, the Elastic Load Balancing metric `RequestCount`\)\. The number of requests received by the load balancer doesn't change based on the utilization of the Auto Scaling group\.
   + Load balancer request latency \(that is, the Elastic Load Balancing metric `Latency`\)\. Request latency can increase based on increasing utilization, but doesn't necessarily change proportionally\.
-  + The CloudWatch Amazon SQS queue metric `ApproximateNumberOfMessagesVisible`\. The number of messages in a queue might not change proportionally to the size of the Auto Scaling group that processes messages from the queue\. However, a customized metric that measures the number of messages in the queue per EC2 instance in the Auto Scaling group can work\. For more information, see [Scaling based on Amazon SQS](as-using-sqs-queue.md)\.
+  + The CloudWatch Amazon SQS queue metric `ApproximateNumberOfMessagesVisible`\. The number of messages in a queue might not change proportionally to the size of the Auto Scaling group that processes messages from the queue\. However, a custom metric that measures the number of messages in the queue per EC2 instance in the Auto Scaling group can work\. For more information, see [Scaling based on Amazon SQS](as-using-sqs-queue.md)\.
 + To use the `ALBRequestCountPerTarget` metric, you must specify the `ResourceLabel` parameter to identify the load balancer target group that is associated with the metric\. 
 + When a metric emits real 0 values to CloudWatch \(for example, `ALBRequestCountPerTarget`\), an Auto Scaling group can scale in to 0 when there is no traffic to your application\. To have your Auto Scaling group scale in to 0 when no requests are routed it, the group's minimum capacity must be set to 0\.
 
-When you use EC2 instance metrics in your policy, we recommend that you configure these metrics with a 1\-minute granularity to ensure a faster response to changes in the metric value\. Scaling on instance metrics with a 5\-minute granularity can result in slower response times and scaling on stale metric data\.
+When you use EC2 instance metrics in your scaling policies, we recommend that you configure these metrics with a 1\-minute granularity to ensure a faster response to changes in the metric value\. Scaling on instance metrics with a 5\-minute granularity can result in slower response times and scaling on stale metric data\.
 
-To get this level of data for Amazon EC2 metrics, you must specifically enable detailed monitoring\. By default, Amazon EC2 instances are enabled for basic monitoring, which means metric data for instances is available at 5\-minute granularity\. For more information, see [Configure monitoring for Auto Scaling instances](enable-as-instance-metrics.md)\.
+To get this level of data for Amazon EC2 metrics, you must specifically enable detailed monitoring\. By default, EC2 instances are enabled for basic monitoring, which means metric data for instances is available at 5\-minute granularity\. For more information, see [Configure monitoring for Auto Scaling instances](enable-as-instance-metrics.md)\.
 
 ## Define target value<a name="target-tracking-define-target-value"></a>
 
-When you create a target tracking scaling policy, you must specify a target value\. The target value represents the optimal average utilization or throughput for the Auto Scaling group\. To use resources cost efficiently, set the target value as high as possible with a reasonable buffer for unexpected traffic increases\. When your application is scaled out to multiple instances, the actual metric value for a normal traffic flow should be at or just below the target value\.
+When you create a target tracking scaling policy, you must specify a target value\. The target value represents the optimal average utilization or throughput for the Auto Scaling group\. To use resources cost efficiently, set the target value as high as possible with a reasonable buffer for unexpected traffic increases\. When your application is optimally scaled out for a normal traffic flow, the actual metric value should be at or just below the target value\. 
 
 When a scaling policy is based on throughput, such as the request count per target for an Application Load Balancer, network I/O, or other count metrics, the target value represents the optimal average throughput from a single instance, for a one\-minute period\.
 
@@ -178,7 +179,7 @@ The following is an example target tracking configuration that keeps the average
 
 For more information, see [PredefinedMetricSpecification](https://docs.aws.amazon.com/autoscaling/ec2/APIReference/API_PredefinedMetricSpecification.html) in the *Amazon EC2 Auto Scaling API Reference*\.
 
-Alternatively, you can customize the metric used for scaling by creating a customized metric specification and adding values for each parameter from CloudWatch\. The following is an example target tracking configuration that keeps the average utilization of the specified metric at 40 percent\.
+Alternatively, you can use a custom metric for scaling by creating a customized metric specification and adding values for each parameter from CloudWatch\. The following is an example target tracking configuration that keeps the average utilization of the specified metric at 40 percent\.
 
 ```
 {

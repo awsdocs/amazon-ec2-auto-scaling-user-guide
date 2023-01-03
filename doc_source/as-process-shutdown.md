@@ -19,18 +19,18 @@ When you delete an Auto Scaling group, its desired, minimum, and maximum values 
 
 1. Select the check box next to your Auto Scaling group and choose **Delete**\. 
 
-1. When prompted for confirmation, choose **Delete**\.
+1. When prompted for confirmation, type **delete** to confirm deleting the specified Auto Scaling group and then choose **Delete**\.
 
    A loading icon in the **Name** column indicates that the Auto Scaling group is being deleted\. The **Desired**, **Min**, and **Max** columns show `0` instances for the Auto Scaling group\. It takes a few minutes to terminate the instance and delete the group\. Refresh the list to see the current state\. 
 
 **To delete your Auto Scaling group \(AWS CLI\)**  
-Use the following [delete\-auto\-scaling\-group](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/delete-auto-scaling-group.html) command to delete the Auto Scaling group\. 
+Use the following [delete\-auto\-scaling\-group](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/delete-auto-scaling-group.html) command to delete the Auto Scaling group\. This operation does not work if the group has any EC2 instances; it is for group's with zero instances only\. 
 
 ```
 aws autoscaling delete-auto-scaling-group --auto-scaling-group-name my-asg
 ```
 
-If the group has instances or scaling activities in progress, use the [delete\-auto\-scaling\-group](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/delete-auto-scaling-group.html) command with the `--force-delete` option\. This will also terminate the EC2 instances\.
+If the group has instances or scaling activities in progress, use the [delete\-auto\-scaling\-group](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/delete-auto-scaling-group.html) command with the `--force-delete` option\. This will also terminate the EC2 instances\. When you delete an Auto Scaling group from the Amazon EC2 Auto Scaling console, the console uses this operation to terminate any EC2 instances and delete the group at the same time\.
 
 ```
 aws autoscaling delete-auto-scaling-group --auto-scaling-group-name my-asg --force-delete
@@ -48,7 +48,7 @@ You can skip this step to keep the launch configuration for future use\.
 
 1. On the **Launch configurations** page, choose your launch configuration and choose **Actions**, **Delete launch configuration**\.
 
-1. When prompted for confirmation, choose **Yes, Delete**\.
+1. When prompted for confirmation, choose **Delete**\.
 
 **To delete the launch configuration \(AWS CLI\)**  
 Use the following [delete\-launch\-configuration](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/delete-launch-configuration.html) command\.
@@ -70,8 +70,8 @@ You can skip this step to keep the launch template for future use\.
 1. On the navigation pane, under **Instances**, choose **Launch Templates**\.
 
 1. Select your launch template and then do one of the following: 
-   + Choose **Actions**, **Delete template**\. When prompted for confirmation, choose **Delete launch template**\.
-   + Choose **Actions**, **Delete template version**\. Select the version to delete and choose **Delete launch template version**\.
+   + Choose **Actions**, **Delete template**\. When prompted for confirmation, type **Delete** to confirm deleting the specified launch template and then choose **Delete**\.
+   + Choose **Actions**, **Delete template version**\. Select the version to delete and choose **Delete**\.
 
 **To delete the launch template \(AWS CLI\)**  
 Use the following [delete\-launch\-template](https://docs.aws.amazon.com/cli/latest/reference/ec2/delete-launch-template.html) command to delete your template and all its versions\.
@@ -94,7 +94,7 @@ Skip this step if your Auto Scaling group is not associated with an Elastic Load
 
 1. Open the Amazon EC2 console at [https://console\.aws\.amazon\.com/ec2/](https://console.aws.amazon.com/ec2/)\.
 
-1. On the navigation pane, under **LOAD BALANCING**, choose **Load Balancers**\.
+1. On the navigation pane, under **Load Balancing**, choose **Load Balancers**\.
 
 1. Choose the load balancer and choose **Actions**, **Delete**\.
 
@@ -102,11 +102,11 @@ Skip this step if your Auto Scaling group is not associated with an Elastic Load
 
 **To delete your target group \(console\)**
 
-1. On the navigation pane, under **LOAD BALANCING**, choose **Target Groups**\.
+1. On the navigation pane, under **Load Balancing**, choose **Target Groups**\.
 
 1. Choose the target group and choose **Actions**, **Delete**\.
 
-1. When prompted for confirmation, choose **Yes**\.
+1. When prompted for confirmation, choose **Yes, Delete**\.
 
 **To delete the load balancer associated with the Auto Scaling group \(AWS CLI\)**  
 For Application Load Balancers and Network Load Balancers, use the following [delete\-load\-balancer](https://docs.aws.amazon.com/cli/latest/reference/elbv2/delete-load-balancer.html) and [delete\-target\-group](https://docs.aws.amazon.com/cli/latest/reference/elbv2/delete-target-group.html) commands\.

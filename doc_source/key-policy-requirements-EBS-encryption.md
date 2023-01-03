@@ -1,6 +1,6 @@
 # Required AWS KMS key policy for use with encrypted volumes<a name="key-policy-requirements-EBS-encryption"></a>
 
-Amazon EC2 Auto Scaling supports [service\-linked roles](autoscaling-service-linked-role.md), a new type of IAM role that gives you a more secure and transparent way to delegate permissions to AWS services\. Amazon EC2 Auto Scaling service\-linked roles are predefined by Amazon EC2 Auto Scaling and include permissions that the service requires to call other AWS services on your behalf\. The predefined permissions also include access to your AWS managed keys\. However, they do not include access to your customer managed keys, allowing you to maintain full control over these keys\.
+Amazon EC2 Auto Scaling uses [service\-linked roles](autoscaling-service-linked-role.md) to delegate permissions to other AWS services\. Amazon EC2 Auto Scaling service\-linked roles are predefined and include permissions that Amazon EC2 Auto Scaling requires to call other AWS services on your behalf\. The predefined permissions also include access to your AWS managed keys\. However, they do not include access to your customer managed keys, allowing you to maintain full control over these keys\.
 
 This topic describes how to set up the key policy that you need to launch Auto Scaling instances when you specify a customer managed key for Amazon EBS encryption\. 
 
@@ -47,7 +47,7 @@ For more information, see the following resources:
 
 ## Example 1: Key policy sections that allow access to the customer managed key<a name="policy-example-cmk-access"></a>
 
-Add the following two policy statements to the key policy of the customer managed key, replacing the example ARN with the ARN of the appropriate service\-linked role that is allowed access to the key\. In this example, the policy sections give the service\-linked role named `AWSServiceRoleForAutoScaling` permissions to use the customer managed key\. 
+Add the following two policy statements to the key policy of the customer managed key, replacing the example ARN with the ARN of the appropriate service\-linked role that is allowed access to the key\. In this example, the policy sections give the service\-linked role named **AWSServiceRoleForAutoScaling** permissions to use the customer managed key\. 
 
 ```
 {
@@ -96,7 +96,7 @@ If you create a customer managed key in a different account than the Auto Scalin
 
 There are two steps that must be completed in the following order:
 
-1. First, add the following two policy statements to the customer managed key's key policy\. Replace the example ARN with the ARN of the other account, making sure to replace *111122223333* with the actual account ID of the AWS account that you want to create the Auto Scaling group in\. This allows you to give an IAM user or role in the specified account permission to create a grant for the key using the CLI command that follows\. However, this does not by itself give any IAM users or roles access to the key\.
+1. First, add the following two policy statements to the customer managed key's key policy\. Replace the example ARN with the ARN of the other account, making sure to replace *111122223333* with the actual account ID of the AWS account that you want to create the Auto Scaling group in\. This allows you to give an IAM user or role in the specified account permission to create a grant for the key using the CLI command that follows\. However, this does not by itself give any users access to the key\.
 
    ```
    {
@@ -136,7 +136,7 @@ There are two steps that must be completed in the following order:
 
 1. Then, from the account that you want to create the Auto Scaling group in, create a grant that delegates the relevant permissions to the appropriate service\-linked role\. The `Grantee Principal` element of the grant is the ARN of the appropriate service\-linked role\. The `key-id` is the ARN of the key\.
 
-   The following is an example [create\-grant](https://docs.aws.amazon.com/cli/latest/reference/kms/create-grant.html) CLI command that gives the service\-linked role named `AWSServiceRoleForAutoScaling` in account *111122223333* permissions to use the customer managed key in account *444455556666*\.
+   The following is an example [create\-grant](https://docs.aws.amazon.com/cli/latest/reference/kms/create-grant.html) CLI command that gives the service\-linked role named **AWSServiceRoleForAutoScaling** in account *111122223333* permissions to use the customer managed key in account *444455556666*\.
 
    ```
    aws kms create-grant \

@@ -64,7 +64,7 @@ A cooldown period, in seconds, that applies to a specific simple scaling policy\
 
 **API operation:** [CreateAutoScalingGroup](https://docs.aws.amazon.com/autoscaling/ec2/APIReference/API_CreateAutoScalingGroup.html), [UpdateAutoScalingGroup](https://docs.aws.amazon.com/autoscaling/ec2/APIReference/API_UpdateAutoScalingGroup.html)
 
-The amount of time, in seconds, that Amazon EC2 Auto Scaling waits before checking the health status of an EC2 instance that has come into service and marking it unhealthy due to a failed Elastic Load Balancing or custom health check\. This is useful if your instances do not immediately pass these health checks after they enter the `InService` state\. For more information, see [Health check grace period](ec2-auto-scaling-health-checks.md#health-check-grace-period)\.
+The amount of time, in seconds, that Amazon EC2 Auto Scaling waits before checking the health status of an EC2 instance that has come into service and marking it unhealthy due to a failed Elastic Load Balancing or custom health check\. This is useful if your instances do not immediately pass these health checks after they enter the `InService` state\. For more information, see [Set the health check grace period for an Auto Scaling group](health-check-grace-period.md)\.
 
 You can set the value of the health check grace period to `0` if you use a lifecycle hook for instance launch\. If your Auto Scaling group is behind a load balancer, consider adding a lifecycle hook to the group to make sure that your instances are ready to serve traffic before they are registered to the load balancer at the end of the lifecycle hook\. For more information, see [Amazon EC2 Auto Scaling lifecycle hooks](lifecycle-hooks.md)\.
 

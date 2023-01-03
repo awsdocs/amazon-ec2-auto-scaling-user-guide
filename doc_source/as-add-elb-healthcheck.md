@@ -22,7 +22,7 @@ Use the following procedure to add Elastic Load Balancing \(`ELB`\) health check
 
 1. For **Health check type**, select **Enable ELB health checks**\.
 
-1. For **Health check grace period**, enter the amount of time, in seconds, that Amazon EC2 Auto Scaling needs to wait before checking the health status of an instance after it enters the `InService` state\. For more information, see [Health check grace period](ec2-auto-scaling-health-checks.md#health-check-grace-period)\. 
+1. For **Health check grace period**, enter the amount of time, in seconds, that Amazon EC2 Auto Scaling needs to wait before checking the health status of an instance after it enters the `InService` state\. For more information, see [Set the health check grace period for an Auto Scaling group](health-check-grace-period.md)\. 
 
 1. Choose **Update**\.
 

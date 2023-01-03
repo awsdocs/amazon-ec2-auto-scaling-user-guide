@@ -24,7 +24,7 @@ The following steps describe how to configure your launch template:
 + Specify the Amazon Machine Image \(AMI\) from which to launch the instances\.
 + Choose an instance type that is compatible with the AMI that you specify\. 
 + Specify the key pair to use when connecting to instances, for example, using SSH\.
-+ Add one or more security groups to allow relevant access to the instances from an external network\.
++ Add one or more security groups to allow network access to the instances\.
 + Specify whether to attach additional volumes to each instance\. 
 + Add custom tags \(key\-value pairs\) to the instances and volumes\.
 

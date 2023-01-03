@@ -48,19 +48,21 @@ To distribute traffic between the instances in your Auto Scaling groups, you can
 
 ## Example: Distribute instances across Availability Zones<a name="arch-AutoScalingMultiAZ"></a>
 
-AWS resources, such as EC2 instances, are housed in highly available data centers\. To provide additional scalability and reliability, these data centers are in different physical locations\. *Regions* are large and widely dispersed geographic locations\. Each Region contains multiple distinct locations, called *Availability Zones*, which are engineered to be isolated from failures in other Availability Zones\. They provide inexpensive, low\-latency network connectivity to other Availability Zones in the same Region\.
+Availability Zones are isolated locations in a given AWS Region\. Each Region has multiple Availability Zones designed to provide high availability for the Region\. Availability Zones are independent, and therefore you increase application availability when you design your application to use multiple zones\. For more information, see [Resilience in Amazon EC2 Auto Scaling](disaster-recovery-resiliency.md)\.
 
-Amazon EC2 Auto Scaling enables you to take advantage of the safety and reliability of geographic redundancy by spanning Auto Scaling groups across multiple Availability Zones within a Region\. When one Availability Zone becomes unhealthy or unavailable, Amazon EC2 Auto Scaling launches new instances in an unaffected Availability Zone\. When the unhealthy Availability Zone returns to a healthy state, Amazon EC2 Auto Scaling automatically redistributes the application instances evenly across all of the designated Availability Zones\.
+An Availability Zone is identified by the AWS Region code followed by a letter identifier \(for example, `us-east-1a`\)\. If you create your VPC and subnets rather than using the default VPC, you can define one or more subnets in each Availability Zone\. Each subnet must reside entirely within one Availability Zone and cannot span zones\. For more information, see [How Amazon VPC works](https://docs.aws.amazon.com/vpc/latest/userguide/how-it-works.html) in the *Amazon VPC User Guide*\. 
 
-An Auto Scaling group can contain EC2 instances in one or more Availability Zones within the same Region\. However, Auto Scaling groups cannot span multiple Regions\.
+When you create an Auto Scaling group, you must choose the VPC and subnets where you will deploy the Auto Scaling group\. Amazon EC2 Auto Scaling creates your instances in your chosen subnets\. Each instance is thus associated with a specific Availability Zone chosen by Amazon EC2 Auto Scaling\. When instances launch, Amazon EC2 Auto Scaling tries to evenly distribute them between the zones for high availability and reliability\.
 
-For Auto Scaling groups in a VPC, the EC2 instances are launched in subnets\. You select the subnets for your EC2 instances when you create or update the Auto Scaling group\. You can select one or more subnets per Availability Zone\. For more information, see [VPCs and subnets](https://docs.aws.amazon.com/vpc/latest/userguide/VPC_Subnets.html) in the *Amazon VPC User Guide*\.
+The following image shows an overview of multi\-tier architecture deployed across three Availability Zones\.
+
+![\[A typical Auto Scaling group spanning three Availability Zones.\]](http://docs.aws.amazon.com/autoscaling/ec2/userguide/images/sample-3-tier-architecture-with-azs-diagram.png)
 
 ### Instance distribution<a name="AutoScalingBehavior.Rebalancing"></a>
 
-Amazon EC2 Auto Scaling attempts to distribute instances evenly between the Availability Zones that are enabled for your Auto Scaling group\. Amazon EC2 Auto Scaling does this by attempting to launch new instances in the Availability Zone with the fewest instances\. If the attempt fails, however, Amazon EC2 Auto Scaling attempts to launch the instances in another Availability Zone until it succeeds\. For Auto Scaling groups in a VPC, if there are multiple subnets in an Availability Zone, Amazon EC2 Auto Scaling selects a subnet from the Availability Zone at random\.
+Amazon EC2 Auto Scaling automatically tries to maintain equivalent numbers of instances in each enabled Availability Zone\. Amazon EC2 Auto Scaling does this by attempting to launch new instances in the Availability Zone with the fewest instances\. If there are multiple subnets chosen for the Availability Zone, Amazon EC2 Auto Scaling selects a subnet from the Availability Zone at random\. If the attempt fails, however, Amazon EC2 Auto Scaling attempts to launch the instances in another Availability Zone until it succeeds\.
 
-![\[A typical Auto Scaling group spanning two Availability Zones.\]](http://docs.aws.amazon.com/autoscaling/ec2/userguide/images/sample-3-tier-architecture-with-azs-diagram.png)
+In circumstances where an Availability Zone becomes unhealthy or unavailable, the distribution of instances might become unevenly distributed across the Availability Zones\. When the Availability Zone recovers, Amazon EC2 Auto Scaling automatically rebalances the Auto Scaling group\. It does this by launching instances in the enabled Availability Zones with the fewest instances and terminating instances elsewhere\.
 
 ### Rebalancing activities<a name="AutoScalingBehavior.InstanceUsage"></a>
 
@@ -69,15 +71,17 @@ Rebalancing activities fall into two categories: Availability Zone rebalancing a
 **Availability Zone rebalancing**
 
 After certain actions occur, your Auto Scaling group can become unbalanced between Availability Zones\. Amazon EC2 Auto Scaling compensates by rebalancing the Availability Zones\. The following actions can lead to rebalancing activity:
-+ You change the Availability Zones for your group\.
-+ You explicitly terminate or detach instances and the group becomes unbalanced\.
-+ An Availability Zone that previously had insufficient capacity recovers and has additional capacity available\.
++ You change the Availability Zones associated with your Auto Scaling group\. 
++ You explicitly terminate or detach instances or place instances in standby, and then the group becomes unbalanced\.
++ An Availability Zone that previously had insufficient capacity recovers and now has additional capacity\.
 + An Availability Zone that previously had a Spot price above your maximum price now has a Spot price below your maximum price\.
 
-When rebalancing, Amazon EC2 Auto Scaling launches new instances before terminating the old ones, so that rebalancing does not compromise the performance or availability of your application\.
+When rebalancing, Amazon EC2 Auto Scaling launches new instances before terminating the earlier ones\. This way, rebalancing does not compromise the performance or availability of your application\.
 
-Because Amazon EC2 Auto Scaling attempts to launch new instances before terminating the old ones, being at or near the specified maximum capacity could impede or completely halt rebalancing activities\. To avoid this problem, the system can temporarily exceed the specified maximum capacity of a group by a 10 percent margin \(or by a 1\-instance margin, whichever is greater\) during a rebalancing activity\. The margin is extended only if the group is at or near maximum capacity and needs rebalancing, either because of user\-requested rezoning or to compensate for zone availability issues\. The extension lasts only as long as needed to rebalance the group \(typically a few minutes\)\.
+Because Amazon EC2 Auto Scaling attempts to launch new instances before terminating the earlier ones, being at or near the specified maximum capacity could impede or completely halt rebalancing activities\.
+
+To avoid this problem, the system can temporarily exceed the specified maximum capacity of a group during a rebalancing activity\. It can do so by a margin of 10 percent or one instance, whichever is greater\. The margin is extended only if the group is at or near maximum capacity and needs rebalancing\. This can happen because of user\-requested rezoning, or to compensate for zone availability issues\. The extension lasts only as long as needed to rebalance the group \(typically a few minutes\)\.
 
 **Capacity Rebalancing**
 
-You can enable Capacity Rebalancing for your Auto Scaling groups when using Spot Instances\. When you turn on Capacity Rebalancing, Amazon EC2 Auto Scaling attempts to launch a Spot Instance whenever Amazon EC2 notifies that a Spot Instance is at an elevated risk of interruption\. After launching a new instance, it then terminates an old instance\. For more information, see [Use Capacity Rebalancing to handle Amazon EC2 Spot Interruptions](ec2-auto-scaling-capacity-rebalancing.md)\.
+You can turn on Capacity Rebalancing for your Auto Scaling groups when using Spot Instances\. This lets Amazon EC2 Auto Scaling attempt to launch a Spot Instance whenever Amazon EC2 reports that a Spot Instance is at an elevated risk of interruption\. After launching a new instance, it then terminates an earlier instance\. For more information, see [Use Capacity Rebalancing to handle Amazon EC2 Spot interruptions](ec2-auto-scaling-capacity-rebalancing.md)\.

@@ -105,7 +105,7 @@ Next, create two scheduled actions for a specific time period when your applicat
 
 1. Select the check box next to your Auto Scaling group\.
 
-   A split pane opens up in the bottom part of the **Auto Scaling groups** page, showing information about the group that's selected\. 
+   A split pane opens up in the bottom of the page\. 
 
 1. On the **Automatic scaling** tab, in **Scheduled actions**, choose **Create scheduled action**\.
 

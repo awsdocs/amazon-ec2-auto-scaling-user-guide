@@ -65,7 +65,9 @@ If this command throws an error, make sure that you have updated the AWS CLI loc
 
 **To enable the default instance warmup for an existing group \(console\)**
 
-1. Open the Amazon EC2 Auto Scaling console at [https://console\.aws\.amazon\.com/ec2autoscaling](https://console.aws.amazon.com/ec2autoscaling) and choose the AWS Region that you created your Auto Scaling group in\.
+1. Open the Amazon EC2 console at [https://console\.aws\.amazon\.com/ec2/](https://console.aws.amazon.com/ec2/), and choose **Auto Scaling Groups** from the navigation pane\.
+
+1. On the navigation bar at the top of the screen, choose the AWS Region that you created your Auto Scaling group in\.
 
 1. Select the check box next to the Auto Scaling group\.
 

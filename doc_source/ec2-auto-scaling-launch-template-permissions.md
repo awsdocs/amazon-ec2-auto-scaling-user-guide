@@ -6,7 +6,7 @@ You can use the `AmazonEC2FullAccess` policy to give users complete access to wo
 
 **A sample policy that you can tailor for your own use**
 
-The following shows an example of a permissions policy that you can tailor for your own use\. The policy allows IAM users to create, modify, and delete all Auto Scaling groups, but only if the group uses the tag `environment=test`\. It then gives permission for all Describe actions\. Because Describe actions do not support resource\-level permissions, you must specify them in a separate statement without conditions\. 
+The following shows an example of a permissions policy that you can tailor for your own use\. The policy allows users to create, modify, and delete all Auto Scaling groups, but only if the group uses the tag `environment=test`\. It then gives permission for all Describe actions\. Because Describe actions do not support resource\-level permissions, you must specify them in a separate statement without conditions\. 
 
 Users with this policy have permission to create or update an Auto Scaling group using a launch template because they're also given permission to use the `ec2:RunInstances` action\. 
 
@@ -38,7 +38,7 @@ Users with this policy have permission to create or update an Auto Scaling group
 }
 ```
 
-`ec2:RunInstances` are checked when an Auto Scaling group is created or updated using a launch template\. If you want to restrict access to the resources that are used to launch an instance or otherwise limit what IAM users can do, you must modify this policy to add your own statements that filter these permissions\. 
+`ec2:RunInstances` are checked when an Auto Scaling group is created or updated using a launch template\. If you want to restrict access to the resources that are used to launch an instance or otherwise limit what users can do, you must modify this policy to add your own statements that filter these permissions\. 
 
 The following examples show policy statements that you could use to control the permissions that users have when using launch templates\. 
 
@@ -194,7 +194,7 @@ For a user to have the ability to pass an IAM role to provisioned instances, tha
 
 You must give your console users permissions for the `ec2:DescribeLaunchTemplates` and `ec2:DescribeLaunchTemplateVersions` actions\. Without these permissions, launch template data cannot load in the Auto Scaling group wizard, and users cannot step through the wizard to launch instances using a launch template\. 
 
-To control access to the `ec2:CreateLaunchTemplate` and `ec2:CreateLaunchTemplateVersion` actions, see [Control the use of launch templates](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-launch-templates.html#launch-template-permissions) and [Example: Work with launch templates](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ExamplePolicies_EC2.html#iam-example-launch-templates) in the *Amazon EC2 User Guide for Linux Instances*\. 
+When you use launch templates, you must also grant permissions to create, modify, describe, and delete launch templates and launch template versions\. You can control who can create launch templates and launch template versions by controlling access to the `ec2:CreateLaunchTemplate` and `ec2:CreateLaunchTemplateVersion` actions\. For more information, see [Control the use of launch templates](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/use-launch-templates-to-control-launching-instances.html#launch-template-permissions) and [Example: Work with launch templates](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ExamplePolicies_EC2.html#iam-example-launch-templates) in the *Amazon EC2 User Guide for Linux Instances*\. 
 
 **Note**  
 For groups that are configured to use the `Latest` or `Default` launch template version, permissions for actions to be completed when launching instances are not checked by Amazon EC2 Auto Scaling when a new version of the launch template is created\. This is an important consideration when setting up your permissions for who can create and manage launch template versions\. 

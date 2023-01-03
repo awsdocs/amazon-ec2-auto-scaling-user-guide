@@ -1,5 +1,8 @@
 # Scaling based on Amazon SQS<a name="as-using-sqs-queue"></a>
 
+**Important**  
+The following information and steps shows you how to calculate the Amazon SQS queue backlog per instance using the `ApproximateNumberOfMessages` queue attribute before publishing it as a custom metric to CloudWatch\. However, you can now save the cost and effort put into publishing your own metric by using metric math\. For more information, see [Create a target tracking scaling policy for Amazon EC2 Auto Scaling using metric math](ec2-auto-scaling-target-tracking-metric-math.md)\.
+
 This section shows you how to scale your Auto Scaling group in response to changes in system load in an Amazon Simple Queue Service \(Amazon SQS\) queue\. To learn more about how you can use Amazon SQS, see the [Amazon Simple Queue Service Developer Guide](https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/)\.
 
 There are some scenarios where you might think about scaling in response to activity in an Amazon SQS queue\. For example, suppose that you have a web app that lets users upload images and use them online\. In this scenario, each image requires resizing and encoding before it can be published\. The app runs on EC2 instances in an Auto Scaling group, and it's configured to handle your typical upload rates\. Unhealthy instances are terminated and replaced to maintain current instance levels at all times\. The app places the raw bitmap data of the images in an SQS queue for processing\. It processes the images and then publishes the processed images where they can be viewed by users\. The architecture for this scenario works well if the number of image uploads doesn't vary over time\. But if the number of uploads changes over time, you might consider using dynamic scaling to scale the capacity of your Auto Scaling group\.
@@ -24,6 +27,9 @@ As an example, let's say that you currently have an Auto Scaling group with 10 i
 
 The following procedures demonstrate how to publish the custom metric and create the target tracking scaling policy that configures your Auto Scaling group to scale based on these calculations\.
 
+**Important**  
+Remember, to reduce costs, use metric math instead\. For more information, see [Create a target tracking scaling policy for Amazon EC2 Auto Scaling using metric math](ec2-auto-scaling-target-tracking-metric-math.md)\.
+
 There are three main parts to this configuration:
 + An Auto Scaling group to manage EC2 instances for the purposes of processing messages from an SQS queue\. 
 + A custom metric to send to Amazon CloudWatch that measures the number of messages in the queue per EC2 instance in the Auto Scaling group\.
@@ -37,7 +43,7 @@ The following diagram illustrates the architecture of this configuration\.
 
 To use this configuration, you need to be aware of the following limitations:
 + You must use the AWS CLI or an SDK to publish your custom metric to CloudWatch\. You can then monitor your metric with the AWS Management Console\. 
-+ After publishing your custom metric, you must use the AWS CLI or an SDK to create a target tracking scaling policy with a customized metric specification\. 
++ The Amazon EC2 Auto Scaling console does not support target tracking scaling policies that use custom metrics\. You must use the AWS CLI or an SDK to specify a custom metric for your scaling policy\.
 
 The following sections direct you to use the AWS CLI for the tasks you need to perform\. For example, to get metric data that reflects the present use of the queue, you use the SQS [get\-queue\-attributes](https://docs.aws.amazon.com/cli/latest/reference/sqs/get-queue-attributes.html) command\. Make sure that you have the CLI [installed](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-install.html) and [configured](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-configure.html)\. 
 

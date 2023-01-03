@@ -10,8 +10,8 @@ The health status of an Auto Scaling instance indicates whether it is healthy or
 + [Unhealthy instance replacement](#replace-unhealthy-instance)
 + [How Amazon EC2 Auto Scaling minimizes downtime](#minimize-downtime)
 + [Health check considerations](#health-check-considerations)
-+ [Health check grace period](#health-check-grace-period)
 + [Additional information](#health-checks-additional-information)
++ [Set the health check grace period for an Auto Scaling group](health-check-grace-period.md)
 
 ## Health check types<a name="available-health-checks"></a>
 
@@ -22,9 +22,9 @@ Amazon EC2 Auto Scaling can determine the health status of an instance by using 
 
 | Health check type | What it checks | 
 | --- | --- | 
-| Amazon EC2 status checks and scheduled events |  [\[See the AWS documentation website for more details\]](http://docs.aws.amazon.com/autoscaling/ec2/userguide/ec2-auto-scaling-health-checks.html) This is the default health check type for an Auto Scaling group\.   | 
-| Elastic Load Balancing health checks |  [\[See the AWS documentation website for more details\]](http://docs.aws.amazon.com/autoscaling/ec2/userguide/ec2-auto-scaling-health-checks.html) To run this health check type, you must enable it for your Auto Scaling group\. | 
-| Custom health checks |  [\[See the AWS documentation website for more details\]](http://docs.aws.amazon.com/autoscaling/ec2/userguide/ec2-auto-scaling-health-checks.html)  | 
+|  Amazon EC2 status checks and scheduled events  |  [\[See the AWS documentation website for more details\]](http://docs.aws.amazon.com/autoscaling/ec2/userguide/ec2-auto-scaling-health-checks.html) This is the default health check type for an Auto Scaling group\.   | 
+|  Elastic Load Balancing health checks  |  [\[See the AWS documentation website for more details\]](http://docs.aws.amazon.com/autoscaling/ec2/userguide/ec2-auto-scaling-health-checks.html) To run this health check type, you must enable it for your Auto Scaling group\.  | 
+|  Custom health checks  |  [\[See the AWS documentation website for more details\]](http://docs.aws.amazon.com/autoscaling/ec2/userguide/ec2-auto-scaling-health-checks.html)  | 
 
 ## Amazon EC2 health checks<a name="instance-health-detection"></a>
 
@@ -34,10 +34,10 @@ Amazon EC2 Auto Scaling periodically checks the health status of all instances w
 
 **Status checks**  
 Amazon EC2 Auto Scaling uses the results of the Amazon EC2 instance status checks and system status checks to determine the health status of an instance\. If the instance is in any Amazon EC2 state other than `running`, or if its status for the status checks becomes `impaired`, Amazon EC2 Auto Scaling considers the instance to be unhealthy and replaces it\. This includes when the instance has any of the following states:
-+ `stopping`
-+ `stopped`
-+ `shutting-down`
-+ `terminated`
++  `stopping` 
++  `stopped` 
++  `shutting-down` 
++  `terminated` 
 
 The Amazon EC2 status checks do not require any special configuration and are always enabled\. For more information, see [Types of status checks](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/monitoring-system-instance-status-check.html#types-of-instance-status-checks) in the *Amazon EC2 User Guide for Linux Instances*\. 
 
@@ -82,6 +82,8 @@ Use the following [set\-instance\-health](https://docs.aws.amazon.com/cli/latest
 ```
 aws autoscaling set-instance-health --instance-id i-1234567890abcdef0 --health-status Unhealthy
 ```
+
+By default, this command respects the health check grace period\. However, you can override this behavior and not respect the grace period by including the `--no-should-respect-grace-period` option\.
 
 Use the following [describe\-auto\-scaling\-groups](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/describe-auto-scaling-groups.html) command to verify that the instance state is `Unhealthy`\.
 
@@ -153,42 +155,11 @@ Also, if all instances in an Auto Scaling group are reported as unhealthy by Ela
 
 This section contains considerations for Amazon EC2 Auto Scaling health checks\.
 + If you need something to happen on the instance that is terminating, or on the instance that is starting up, you can use lifecycle hooks\. These hooks let you perform a custom action as Amazon EC2 Auto Scaling launches or terminates instances\. For more information, see [Amazon EC2 Auto Scaling lifecycle hooks](lifecycle-hooks.md)\. 
-+ To provide enough time for new instances to be ready to start accepting requests without being terminated due to failed health checks, do one, or both, of the following:
-  + Add a lifecycle hook to the group\. This helps you make sure that your instances are fully configured before they are put into service at the end of the lifecycle hook\. For more information, see [Amazon EC2 Auto Scaling lifecycle hooks](lifecycle-hooks.md)\. 
-  + Set the health check grace period of the group to match the expected startup period of your application\. For more information, see the [Health check grace period](#health-check-grace-period) section\. 
-+ During the health check grace period, if Amazon EC2 Auto Scaling detects that an instance is no longer in the `running` state, it marks it as unhealthy and replaces it\. For example, this can happen when you stop an instance\. Amazon EC2 Auto Scaling has two options for stopping an `InService` instance\. You can either put the instance into standby, or you can detach it from the group\.
 + Amazon EC2 Auto Scaling does not provide a way of removing the Amazon EC2 status checks and scheduled events from its health checks\. If you do not want instances to be replaced, we recommend that you suspend the `ReplaceUnhealthy` and `HealthCheck` process for individual Auto Scaling groups\. For more information, see [Suspend and resume a process for an Auto Scaling group](as-suspend-resume-processes.md)\. 
 + To manually set an unhealthy instance's health status back to healthy, you can try to use the [set\-instance\-health](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/set-instance-health.html) command\. If you get an error, this is probably because the instance is already terminating\. Generally, setting an instance's health status back to healthy with the [set\-instance\-health](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/set-instance-health.html) command is only useful in cases where either the `ReplaceUnhealthy` process or the `Terminate` process is suspended\. 
 + Amazon EC2 Auto Scaling does not perform health checks on instances that are in the `Standby` state\. For more information, see [Temporarily remove instances from your Auto Scaling group](as-enter-exit-standby.md)\. 
 + When your instance is terminated, any associated Elastic IP addresses are disassociated and are not automatically associated with the new instance\. You must manually associate the Elastic IP addresses with the new instance, or do it automatically with a lifecycle hook\-based solution\. For more information, see [Elastic IP addresses](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/elastic-ip-addresses-eip.html) in the *Amazon EC2 User Guide for Linux Instances*\.
 + Similarly, when your instance is terminated, its attached EBS volumes are detached \(or deleted depending on the volume's `DeleteOnTermination` attribute\)\. You must manually attach these EBS volumes to the new instance, or do it automatically with a lifecycle hook\-based solution\. For more information, see [Attach an Amazon EBS volume to an instance](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ebs-attaching-volume.html) in the *Amazon EC2 User Guide for Linux Instances*\.
-
-## Health check grace period<a name="health-check-grace-period"></a>
-
-The `HealthCheckGracePeriod` parameter for the Auto Scaling group helps Amazon EC2 Auto Scaling distinguish unhealthy instances from newly launched instances that are not yet ready to serve traffic\. This grace period can prevent Amazon EC2 Auto Scaling from marking `InService` instances as unhealthy and terminating them before they have time to finish initializing\.
-
-By default, the health check grace period is `300` seconds when you create an Auto Scaling group from the AWS Management Console\. Its default value is `0` seconds when you create an Auto Scaling group using the AWS CLI or an SDK\. 
-
-Set the health check grace period value greater than or equal to the maximum amount of startup time that your application needs\. Startup time begins when an instance starts and ends when it can receive traffic\. If you add a lifecycle hook, you can reduce the value of the health check grace period\. When lifecycle hooks are invoked, the grace period does not start until the lifecycle hook actions are completed and the instance enters the `InService` state\.
-
-When you use the AWS CLI or an SDK to set the health status of instances as unhealthy, the default is to wait for the grace period to end\. However, you can override this behavior and not honor the grace period\. 
-
-**To configure the health check grace period \(console\)**  
-When you create the Auto Scaling group, on the **Configure advanced options** page, for **Health checks**, **Health check grace period**, choose the amount of startup time that your application needs\.
-
-**To modify the health check grace period for an existing group \(console\)**
-
-1. Open the Amazon EC2 Auto Scaling console at [https://console\.aws\.amazon\.com/ec2autoscaling](https://console.aws.amazon.com/ec2autoscaling) and choose the AWS Region that you created your Auto Scaling group in\.
-
-1. Select the check box next to the Auto Scaling group\.
-
-   A split pane opens up in the bottom of the **Auto Scaling groups** page\. 
-
-1. On the **Details** tab, choose **Health checks**, **Edit**\.
-
-1. Under **Health check grace period**, choose the amount of startup time that your application needs\.
-
-1. Choose **Update**\.
 
 ## Additional information<a name="health-checks-additional-information"></a>
 

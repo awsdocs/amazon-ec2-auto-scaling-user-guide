@@ -28,9 +28,13 @@ The following diagram shows the transition between Auto Scaling states when you 
 
 When you add lifecycle hooks, consider the following:
 + When a lifecycle hook is configured for the `autoscaling:EC2_INSTANCE_LAUNCHING` lifecycle action, a newly launched instance first pauses to perform a custom action when it reaches the `Warmed:Pending:Wait` state, and then again when the instance restarts and reaches the `Pending:Wait` state\.
-+ When a lifecycle hook is configured for the `EC2_INSTANCE_TERMINATING` lifecycle action, a terminating instance pauses to perform a custom action when it reaches the `Terminating:Wait` state\. However, if you specify an instance reuse policy to return instances to the warm pool on scale in instead of terminating them, then an instance that is returning to the warm pool pauses to perform a custom action at the `Warmed:Pending:Wait` state\.
++ When a lifecycle hook is configured for the `EC2_INSTANCE_TERMINATING` lifecycle action, a terminating instance pauses to perform a custom action when it reaches the `Terminating:Wait` state\. However, if you specify an instance reuse policy to return instances to the warm pool on scale in instead of terminating them, then an instance that is returning to the warm pool pauses to perform a custom action at the `Warmed:Pending:Wait` state for the `EC2_INSTANCE_TERMINATING` lifecycle action\.
 + If the demand on your application depletes the warm pool, Amazon EC2 Auto Scaling can launch instances directly into the Auto Scaling group as long as the group isn't at its maximum capacity yet\. If the instances launch directly into the group, they are only paused to perform a custom action at the `Pending:Wait` state\.
 + To control how long an instance stays in a wait state before it transitions to the next state, configure your custom action to use the complete\-lifecycle\-action command\. With lifecycle hooks, instances remain in a wait state either until you notify Amazon EC2 Auto Scaling that the specified lifecycle action is complete, or until the timeout period ends \(one hour by default\)\. 
+
+The following summarizes the flow for a scale\-out event\.
+
+![\[A flow diagram of a scale-out event.\]](http://docs.aws.amazon.com/autoscaling/ec2/userguide/images/warm-pools-scale-out-event-diagram.png)![\[A flow diagram of a scale-out event.\]](http://docs.aws.amazon.com/autoscaling/ec2/userguide/)![\[A flow diagram of a scale-out event.\]](http://docs.aws.amazon.com/autoscaling/ec2/userguide/)
 
 When instances reach a wait state, Amazon EC2 Auto Scaling sends a notification\. Examples of these notifications are available in the EventBridge section of this guide\. For more information, see [Warm pool event types and patterns](warm-pools-eventbridge-events.md)\.
 
@@ -41,7 +45,8 @@ Amazon EC2 Auto Scaling provides support for defining any of the following as no
 + Amazon SNS topics 
 + Amazon SQS queues
 
-Remember, if you have a user data script in your launch template or launch configuration that configures your instances when they launch, you do not need to receive notifications to perform custom actions on instances that are launching or restarting\.
+**Important**  
+Remember, if you have a user data \(cloud\-init\) script in your launch template or launch configuration that configures your instances when they launch, you do not need to receive notifications to perform custom actions on instances that are starting or restarting\.
 
 The following sections contain links to documentation that describes how to configure notification targets:
 

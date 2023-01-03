@@ -36,7 +36,7 @@ The **Instances** column shows the number of instances that are currently runnin
 
 Wait for a few minutes, and then refresh the view to see the latest status\. After a scaling activity completes, the **Instances** column shows an updated value\. 
 
-You can also view the number of instances and the status of the currently running instances from the **Instance management** tab, under **Instances**\.
+You can view the number of instances and the status of the currently running instances from the **Instance management** tab, under **Instances**\.
 
 **Note**  
-You can also use Service Quotas to update the total capacity limits for EC2 instances and other resources in your AWS account\. In the Service Quotas console, you can view all your available service quotas and request increases for them\. For more information, see [Requesting a quota increase](https://docs.aws.amazon.com/servicequotas/latest/userguide/request-quota-increase.html) in the *Service Quotas User Guide*\.
+You can use Service Quotas to update the total capacity limits for EC2 instances and other resources in your AWS account\. In the Service Quotas console, you can view all your available service quotas and request increases for them\. For more information, see [Requesting a quota increase](https://docs.aws.amazon.com/servicequotas/latest/userguide/request-quota-increase.html) in the *Service Quotas User Guide*\.

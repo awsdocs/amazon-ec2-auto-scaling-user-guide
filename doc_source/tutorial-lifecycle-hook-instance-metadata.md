@@ -240,7 +240,7 @@ If you are done working with the resources that you created for this tutorial, u
 
 1. Select your launch template \(`TestAutoScalingEvent-template`\) and then choose **Actions**, **Delete template**\.
 
-1. When prompted for confirmation, choose **Delete launch template**\.
+1. When prompted for confirmation, type **Delete** to confirm deleting the specified launch template and then choose **Delete**\.
 
 If you are done working with the example Auto Scaling group, delete it\. You can also delete the IAM role and permissions policy that you created\.
 
@@ -250,7 +250,7 @@ If you are done working with the example Auto Scaling group, delete it\. You can
 
 1. Select the check box next to your Auto Scaling group \(`TestAutoScalingEvent-group`\) and choose **Delete**\. 
 
-1. When prompted for confirmation, choose **Delete**\.
+1. When prompted for confirmation, type **delete** to confirm deleting the specified Auto Scaling group and then choose **Delete**\.
 
    A loading icon in the **Name** column indicates that the Auto Scaling group is being deleted\. It takes a few minutes to terminate the instances and delete the group\. 
 
@@ -260,9 +260,9 @@ If you are done working with the example Auto Scaling group, delete it\. You can
 
 1. Select the function's role \(`TestAutoScalingEvent-role`\)\.
 
-1. Choose **Delete role**\.
+1. Choose **Delete**\.
 
-1. In the **Delete role** dialog box, choose **Yes, delete**\.
+1. When prompted for confirmation, type the name of the role and then choose **Delete**\.
 
 **To delete the IAM policy**
 
@@ -270,6 +270,6 @@ If you are done working with the example Auto Scaling group, delete it\. You can
 
 1. Select the policy that you created \(`TestAutoScalingEvent-policy`\)\.
 
-1. Choose **Delete policy**\.
+1. Choose **Actions**, **Delete**\.
 
-1. In the **Delete policy** dialog box, choose **Yes, delete**\.
+1. When prompted for confirmation, type the name of the policy and then choose **Delete**\.

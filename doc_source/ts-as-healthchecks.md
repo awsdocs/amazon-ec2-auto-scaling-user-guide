@@ -32,7 +32,7 @@ The sections that follow describe the most common health check errors and causes
 
 **Cause 2**: There is a mismatch between the health check grace period and the instance startup time\.
 
-**Solution 2**: Edit the health check grace period for your Auto Scaling group to an appropriate time period for your application\. Instances launched in an Auto Scaling group require sufficient warm\-up time \(grace period\) to prevent early termination due to a health check replacement\. For more information, see [Health check grace period](ec2-auto-scaling-health-checks.md#health-check-grace-period)\. 
+**Solution 2**: Edit the health check grace period for your Auto Scaling group to an appropriate time period for your application\. Instances launched in an Auto Scaling group require sufficient warm\-up time \(grace period\) to prevent early termination due to a health check replacement\. For more information, see [Set the health check grace period for an Auto Scaling group](health-check-grace-period.md)\. 
 
 ## An instance was taken out of service in response to an EC2 scheduled reboot<a name="ts-scheduled-maintenance"></a>
 
@@ -59,7 +59,7 @@ Note that when you terminate instances manually, termination lifecycle hooks and
 **Solution 2**: There is no guarantee that a Spot Instance exists to fulfill the request at any given point in time\. However, you can try the following:
 + Use a higher Spot maximum price \(possibly the On\-Demand price\)\. By setting your maximum price higher, it gives the Amazon EC2 Spot service a better chance of launching and maintaining your required amount of capacity\.
 + Increase the number of different capacity pools that you can launch instances from by running multiple instance types in multiple Availability Zones\. For more information, see [Auto Scaling groups with multiple instance types and purchase options](ec2-auto-scaling-mixed-instances-groups.md)\.
-+ If you use multiple instance types, consider enabling the Capacity Rebalancing feature\. This is useful if you want the Amazon EC2 Spot service to attempt to launch a new Spot Instance before a running instance is terminated\. For more information, see [Use Capacity Rebalancing to handle Amazon EC2 Spot Interruptions](ec2-auto-scaling-capacity-rebalancing.md)\.
++ If you use multiple instance types, consider enabling the Capacity Rebalancing feature\. This is useful if you want the Amazon EC2 Spot service to attempt to launch a new Spot Instance before a running instance is terminated\. For more information, see [Use Capacity Rebalancing to handle Amazon EC2 Spot interruptions](ec2-auto-scaling-capacity-rebalancing.md)\.
 
 ## An instance was taken out of service in response to an ELB system health check failure<a name="ts-failed-elb-health-checks"></a>
 

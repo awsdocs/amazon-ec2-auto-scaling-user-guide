@@ -52,4 +52,6 @@ Scaling activities are ordered by start time\. Activities still in progress are 
 }
 ```
 
+For a description of the fields in the output, see [Activity](https://docs.aws.amazon.com/autoscaling/ec2/APIReference/API_Activity.html) in the *Amazon EC2 Auto Scaling API Reference*\.
+
 For help retrieving the scaling activities for a deleted group and for information about the types of errors that you may encounter and how to handle them, see [Troubleshoot Amazon EC2 Auto Scaling](CHAP_Troubleshooting.md)\.

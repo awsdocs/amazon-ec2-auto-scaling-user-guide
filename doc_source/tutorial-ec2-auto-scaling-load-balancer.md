@@ -198,9 +198,11 @@ After you're finished with the resources that you created for this tutorial, you
 
 1. Open the [Auto Scaling groups page](https://console.aws.amazon.com/ec2/v2/home?#AutoScalingGroups) of the Amazon EC2 console\.
 
-1. Select your Auto Scaling group\.
+1. Select the check box next to your Auto Scaling group\.
 
-1. Choose **Delete**\. When prompted for confirmation, choose **Delete**\.
+1. Choose **Delete**\. 
+
+1. When prompted for confirmation, type **delete** to confirm deleting the specified Auto Scaling group and then choose **Delete**\.
 
    A loading icon in the **Name** column indicates that the Auto Scaling group is being deleted\. When the deletion has occurred, the **Desired**, **Min**, and **Max** columns show `0` instances for the Auto Scaling group\. It takes a few minutes to terminate the instance and delete the group\. Refresh the list to see the current state\. 
 
@@ -212,7 +214,9 @@ Skip the following procedure if you would like to keep your launch template\.
 
 1. Select your launch template\.
 
-1. Choose **Actions**, **Delete template**\. When prompted for confirmation, choose **Delete launch template**\.
+1. Choose **Actions**, **Delete template**\. 
+
+1. When prompted for confirmation, type **Delete** to confirm deleting the specified launch template and then choose **Delete**\.
 
 Skip the following procedure if you would like to keep your launch configuration\.
 
@@ -222,7 +226,9 @@ Skip the following procedure if you would like to keep your launch configuration
 
 1. Select your launch configuration\.
 
-1. Choose **Actions**, **Delete launch configuration**\. When prompted for confirmation, choose **Yes, Delete**\.
+1. Choose **Actions**, **Delete launch configuration**\.
+
+1. When prompted for confirmation, choose **Delete**\.
 
 Skip the following procedure if you want to keep the load balancer for future use\. 
 
@@ -240,4 +246,4 @@ Skip the following procedure if you want to keep the load balancer for future us
 
 1. Choose the target group and choose **Actions**, **Delete**\.
 
-1. When prompted for confirmation, choose **Yes**\.
+1. When prompted for confirmation, choose **Yes, Delete**\.

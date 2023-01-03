@@ -1,16 +1,15 @@
 # Advanced predictive scaling policy configurations using custom metrics<a name="predictive-scaling-customized-metric-specification"></a>
 
-In a predictive scaling policy, you can use predefined or custom metrics\. The custom metrics you specify can include other metrics available in CloudWatch and new metrics that you publish to CloudWatch\. Custom metrics are useful when the predefined metrics \(CPU, network I/O, and Application Load Balancer request count\) do not sufficiently describe your application load\.
+In a predictive scaling policy, you can use predefined or custom metrics\. Custom metrics are useful when the predefined metrics \(CPU, network I/O, and Application Load Balancer request count\) do not sufficiently describe your application load\.
 
-Metric math expressions can also be used to aggregate the metric data received from CloudWatch before using it for predictive scaling\. When you combine values in your data, for example, by calculating new sums or averages, it's called *aggregating*\. The resulting data is called an *aggregate*\. 
+When creating a predictive scaling policy with custom metrics, you can specify other CloudWatch metrics provided by AWS, or you can specify metrics that you define and publish yourself\. You can also use metric math to aggregate and transform existing metrics into a new time series that AWS doesn't automatically track\. When you combine values in your data, for example, by calculating new sums or averages, it's called *aggregating*\. The resulting data is called an *aggregate*\.
 
-On the graphs screen in the Amazon EC2 Auto Scaling console, you can view **Load** and **Capacity** graphs with your metric data in the same way that you do when specifying predefined metrics\. However, you currently can't use the Amazon EC2 Auto Scaling console to create or update a predictive scaling policy that specifies custom metrics\. To do so, you must use the AWS CLI or an AWS SDK\. 
+The following section contains best practices and examples of how to construct the JSON structure for the policy\. 
 
 **Topics**
 + [Best practices](#custom-metrics-best-practices)
 + [Prerequisites](#custom-metrics-prerequisites)
-+ [Example predictive scaling policy with a custom scaling metric and a custom load metric](#custom-metrics-ex1)
-+ [Use metric math expressions](#using-math-expression-examples)
++ [Constructing the JSON for custom metrics](#construct-json-custom-metrics)
 + [Considerations and troubleshooting](#custom-metrics-troubleshooting)
 + [Limitations](#custom-metrics-limitations)
 
@@ -26,16 +25,25 @@ The following best practices can help you use custom metrics more effectively:
 
 ## Prerequisites<a name="custom-metrics-prerequisites"></a>
 
-To specify custom metrics in your policy, you must have `cloudwatch:GetMetricData` permissions\.
+To add custom metrics to your predictive scaling policy, you must have `cloudwatch:GetMetricData` permissions\.
 
-To specify your own metrics instead of the metrics that AWS provides, you must first publish the metrics to CloudWatch\. For more information, see [Publishing custom metrics](https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/publishingMetrics.html) in the *Amazon CloudWatch User Guide*\. 
+To specify your own metrics instead of the metrics that AWS provides, you must first publish your metrics to CloudWatch\. For more information, see [Publishing custom metrics](https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/publishingMetrics.html) in the *Amazon CloudWatch User Guide*\. 
 
-**Note**  
-When you publish your own metrics, make sure to publish the data points at a minimum frequency of five minutes\. Amazon EC2 Auto Scaling retrieves the data points from CloudWatch based on the length of the period that it needs\. For example, the load metric specification uses hourly metrics to measure the load on your application\. CloudWatch uses your published metric data to provide a single data value for any one\-hour period by aggregating all data points with timestamps that fall within each one\-hour period\. 
+If you publish your own metrics, make sure to publish the data points at a minimum frequency of five minutes\. Amazon EC2 Auto Scaling retrieves the data points from CloudWatch based on the length of the period that it needs\. For example, the load metric specification uses hourly metrics to measure the load on your application\. CloudWatch uses your published metric data to provide a single data value for any one\-hour period by aggregating all data points with timestamps that fall within each one\-hour period\. 
 
-## Example predictive scaling policy with a custom scaling metric and a custom load metric<a name="custom-metrics-ex1"></a>
+## Constructing the JSON for custom metrics<a name="construct-json-custom-metrics"></a>
 
-The following example policy shows a complete policy configuration that specifies a custom scaling metric, a custom load metric, and a target utilization of `50`\. Save this configuration in a file named `config.json`\.
+The following section contains examples for how to configure predictive scaling to query data from CloudWatch\. There are two different methods to configure this option, and the method that you choose affects which format you use to construct the JSON for your predictive scaling policy\. When you use metric math, the format of the JSON varies further based on the metric math being performed\.
+
+1. To create a policy that gets data directly from other CloudWatch metrics provided by AWS or metrics that you publish to CloudWatch, see [Example predictive scaling policy with custom load and scaling metrics \(AWS CLI\)](#custom-metrics-ex1)\.
+
+1. To create a policy that can query multiple CloudWatch metrics and use math expressions to create new time series based on these metrics, see [Use metric math expressions](#using-math-expression-examples)\.
+
+### Example predictive scaling policy with custom load and scaling metrics \(AWS CLI\)<a name="custom-metrics-ex1"></a>
+
+To create a predictive scaling policy with custom load and scaling metrics with the AWS CLI, store the arguments for `--predictive-scaling-configuration` in a JSON file named `config.json`\.
+
+You start adding custom metrics by replacing the replaceable values in the following example with those of your metrics and your target utilization\.
 
 ```
 {
@@ -85,14 +93,14 @@ The following example policy shows a complete policy configuration that specifie
 }
 ```
 
-For information about the Amazon EC2 Auto Scaling parameters and values for a metric data query, see [MetricDataQuery](https://docs.aws.amazon.com/autoscaling/ec2/APIReference/API_MetricDataQuery.html) in the *Amazon EC2 Auto Scaling API Reference*\.
+For more information, see [MetricDataQuery](https://docs.aws.amazon.com/autoscaling/ec2/APIReference/API_MetricDataQuery.html) in the *Amazon EC2 Auto Scaling API Reference*\.
 
 **Note**  
-Following are some additional resources that can help:   
+Following are some additional resources that can help you find metric names, namespaces, dimensions, and statistics for CloudWatch metrics:   
 For information about the available metrics for AWS services, see [AWS services that publish CloudWatch metrics](https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/aws-services-cloudwatch-metrics.html) in the *Amazon CloudWatch User Guide*\.
 To get the exact metric name, namespace, and dimensions \(if applicable\) for a CloudWatch metric with the AWS CLI, see [list\-metrics](https://docs.aws.amazon.com/cli/latest/reference/cloudwatch/list-metrics.html)\. 
 
-To create this policy, run the [put\-scaling\-policy](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/put-scaling-policy.html) command with the configuration file specified, as demonstrated in the following example\.
+To create this policy, run the [put\-scaling\-policy](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/put-scaling-policy.html) command using the JSON file as input, as demonstrated in the following example\.
 
 ```
 aws autoscaling put-scaling-policy --policy-name my-predictive-scaling-policy \
@@ -109,16 +117,16 @@ If successful, this command returns the policy's Amazon Resource Name \(ARN\)\.
 }
 ```
 
-## Use metric math expressions<a name="using-math-expression-examples"></a>
+### Use metric math expressions<a name="using-math-expression-examples"></a>
 
-The following AWS CLI examples might be relevant to your scenario when creating a predictive scaling policy that uses metric math expressions\. You can use these example predictive scaling policy configurations as a starting point, then customize them for your needs\.
+The following section provides information and examples of predictive scaling policies that show how you can use metric math in your policy\. 
 
 **Topics**
 + [Understand metric math](#custom-metrics-metric-math)
-+ [Example predictive scaling policy that combines metrics using metric math](#custom-metrics-ex2)
-+ [Example predictive scaling policy to use in a blue/green deployment scenario](#custom-metrics-ex3)
++ [Example predictive scaling policy that combines metrics using metric math \(AWS CLI\)](#custom-metrics-ex2)
++ [Example predictive scaling policy to use in a blue/green deployment scenario \(AWS CLI\)](#custom-metrics-ex3)
 
-### Understand metric math<a name="custom-metrics-metric-math"></a>
+#### Understand metric math<a name="custom-metrics-metric-math"></a>
 
 If all you want to do is aggregate existing metric data, CloudWatch metric math saves you the effort and cost of publishing another metric to CloudWatch\. You can use any metric that AWS provides, and you can also use metrics that you define as part of your applications\. For example, you might want to calculate the Amazon SQS queue backlog per instance\. You can do this by taking the approximate number of messages available for retrieval from the queue and dividing that number by the Auto Scaling group's running capacity\.
 
@@ -135,7 +143,7 @@ To use metric math, do the following:
 + Choose one or more CloudWatch metrics\. Then, create the expression\. For more information, see [Using metric math](https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/using-metric-math.html) in the *Amazon CloudWatch User Guide*\. 
 + Verify that the metric math expression is valid by using the CloudWatch console or the CloudWatch [GetMetricData](https://docs.aws.amazon.com/AmazonCloudWatch/latest/APIReference/API_GetMetricData.html) API\.
 
-### Example predictive scaling policy that combines metrics using metric math<a name="custom-metrics-ex2"></a>
+#### Example predictive scaling policy that combines metrics using metric math \(AWS CLI\)<a name="custom-metrics-ex2"></a>
 
 Sometimes, instead of specifying the metric directly, you might need to first process its data in some way\. For example, you might have an application that pulls work from an Amazon SQS queue, and you might want to use the number of items in the queue as criteria for predictive scaling\. The number of messages in the queue does not solely define the number of instances that you need\. Therefore, more work is needed to create a metric that can be used to calculate the backlog per instance\. For more information, see [Scaling based on Amazon SQS](as-using-sqs-queue.md)\.
 
@@ -230,7 +238,7 @@ The example returns the policy's ARN\.
 }
 ```
 
-### Example predictive scaling policy to use in a blue/green deployment scenario<a name="custom-metrics-ex3"></a>
+#### Example predictive scaling policy to use in a blue/green deployment scenario \(AWS CLI\)<a name="custom-metrics-ex3"></a>
 
 A search expression provides an advanced option in which you can query for a metric from multiple Auto Scaling groups and perform math expressions on them\. This is especially useful for blue/green deployments\. 
 

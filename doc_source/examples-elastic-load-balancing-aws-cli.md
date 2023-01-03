@@ -97,7 +97,7 @@ aws autoscaling update-auto-scaling-group --auto-scaling-group-name my-lb-asg \
   --health-check-type ELB
 ```
 
-To update the health check grace period, use the `--health-check-grace-period` option\. New instances often need time for a brief warm\-up before they can pass a health check\. If the grace period doesn't provide enough warm\-up time, the instances might not appear ready to serve traffic\. Amazon EC2 Auto Scaling might consider those instances unhealthy and replace them\. For more information, see [Health check grace period](ec2-auto-scaling-health-checks.md#health-check-grace-period)\.
+To update the health check grace period, use the `--health-check-grace-period` option\. New instances often need time for a brief warm\-up before they can pass a health check\. If the grace period doesn't provide enough warm\-up time, the instances might not appear ready to serve traffic\. Amazon EC2 Auto Scaling might consider those instances unhealthy and replace them\. For more information, see [Set the health check grace period for an Auto Scaling group](health-check-grace-period.md)\.
 
 The following [update\-auto\-scaling\-group](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/update-auto-scaling-group.html) command adds Elastic Load Balancing health checks and specifies a grace period of 300 seconds\.
 

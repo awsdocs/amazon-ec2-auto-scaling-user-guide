@@ -39,7 +39,6 @@ The following are things to consider when starting an instance refresh, to help 
 + While warming up, a newly launched instance is not counted toward the aggregated instance metrics of the Auto Scaling group \(such as CPUUtilization, NetworkIn, NetworkOut, and so on\)\. 
 + If you added scaling policies to the Auto Scaling group, the scaling activities run in parallel\. If you set a long interval for the instance refresh warm\-up period, it takes more time for newly launched instances to be reflected in the metrics\. Therefore, an adequate warm\-up period keeps Amazon EC2 Auto Scaling from scaling on stale metric data\. 
 + If you added a lifecycle hook to the Auto Scaling group, the warm\-up period does not start until the lifecycle hook actions are complete and the instance enters the `InService` state\. For more information, see [Amazon EC2 Auto Scaling lifecycle hooks](lifecycle-hooks.md)\.
-+ If you enable skip matching but the launch template, the launch template version, and instance types in the mixed instances policy are not changing, the instance refresh will succeed immediately without making any replacements\. If you made any other changes \(for example, changing your Spot allocation strategy\), Amazon EC2 Auto Scaling updates the settings of the Auto Scaling group to reflect the new desired configuration after the instance refresh succeeds\. 
 
 ## Start or cancel an instance refresh \(console\)<a name="start-instance-refresh-console"></a>
 

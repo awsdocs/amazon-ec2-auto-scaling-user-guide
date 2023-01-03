@@ -4,9 +4,9 @@
 
 AWS Identity and Access Management \(IAM\) is an AWS service that helps an administrator securely control access to AWS resources\. IAM administrators control who can be *authenticated* \(signed in\) and *authorized* \(have permissions\) to use Amazon EC2 Auto Scaling resources\. IAM is an AWS service that you can use with no additional charge\.
 
-To use Amazon EC2 Auto Scaling, you need an AWS account and your specific user credentials for signing into your account\. For more information, see the [IAM User Guide](https://docs.aws.amazon.com/IAM/latest/UserGuide/)\.
+To use Amazon EC2 Auto Scaling, you need an AWS account and your security credentials for signing into your account\. For more information, see [AWS security credentials](https://docs.aws.amazon.com/general/latest/gr/aws-security-credentials.html) in the *AWS General Reference*\.
 
-After your account is set up, you will need to obtain your AWS access keys if you want to access Amazon EC2 Auto Scaling through its API, whether by the Query \(HTTPS\) interface directly or indirectly through an [SDK](https://aws.amazon.com/tools/), the [AWS Command Line Interface](https://aws.amazon.com/cli/), or the [AWS Tools for Windows PowerShell](https://aws.amazon.com/powershell/)\. AWS access keys consist of an access key ID and a secret access key\. For more information about getting your AWS access keys, see [AWS security credentials](https://docs.aws.amazon.com/general/latest/gr/aws-security-credentials.html) in the *AWS General Reference*\.
+For complete IAM documentation, see the [IAM User Guide](https://docs.aws.amazon.com/IAM/latest/UserGuide/)\.
 
 
 
@@ -24,6 +24,7 @@ We recommend that you read the Amazon EC2 topics first\. See [Identity and acces
 + [AWS managed policies for Amazon EC2 Auto Scaling](security-iam-awsmanpol.md)
 + [Service\-linked roles for Amazon EC2 Auto Scaling](autoscaling-service-linked-role.md)
 + [Amazon EC2 Auto Scaling identity\-based policy examples](security_iam_id-based-policy-examples.md)
++ [Cross\-service confused deputy prevention](cross-service-confused-deputy-prevention.md)
 + [Launch template support](ec2-auto-scaling-launch-template-permissions.md)
 + [IAM role for applications that run on Amazon EC2 instances](us-iam-role.md)
 + [Required AWS KMS key policy for use with encrypted volumes](key-policy-requirements-EBS-encryption.md)

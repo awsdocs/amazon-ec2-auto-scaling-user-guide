@@ -1,6 +1,6 @@
 # Amazon EC2 Auto Scaling identity\-based policy examples<a name="security_iam_id-based-policy-examples"></a>
 
-By default, a brand new IAM user has no permissions to do anything\. An IAM administrator must create and assign IAM policies that give end users permission to perform Amazon EC2 Auto Scaling API actions\.
+By default, a brand new user in your AWS account has no permissions to do anything\. An IAM administrator must create and assign IAM policies that give end users permission to perform Amazon EC2 Auto Scaling API actions\.
 
 To learn how to create an IAM policy using these example JSON policy documents, see [Creating policies on the JSON tab](https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies_create.html#access_policies_create-json-editor) in the *IAM User Guide*\.
 
@@ -67,11 +67,9 @@ Some Amazon EC2 Auto Scaling API actions allow you to include specific Auto Scal
 
 ## Customer managed policy examples<a name="example-policies-auto-scaling"></a>
 
-You can create your own custom IAM policies to allow or deny permissions for IAM users or groups to perform Amazon EC2 Auto Scaling actions\. You can attach these custom policies to the IAM users or groups that require the specified permissions\. The following examples show permissions for several common use cases\. 
+You can create your own custom IAM policies to allow or deny permissions for IAM entities to perform Amazon EC2 Auto Scaling actions\. You can attach these custom policies to the IAM entities that require the specified permissions\. The following examples show permissions for several common use cases\. 
 
-If you are new to creating policies, we recommend that you first create an IAM user in your account and attach policies to the user\. You can use the console to verify the effects of each policy as you attach the policy to the user\. 
-
-When creating and updating Auto Scaling groups, some actions require that certain other actions be carried out\. You can specify these other actions in the `Action` element of an IAM policy statement\. For example, there are additional API actions for Elastic Load Balancing, CloudWatch, and Amazon SNS that might be required depending on the access that you want to provide for a user\. 
+When creating and updating Auto Scaling groups, some actions require that certain other actions be carried out\. You can specify these other actions in the `Action` element of an IAM policy statement\. For example, there are additional API actions for Elastic Load Balancing, CloudWatch, and Amazon SNS that might be required depending on the access that you want to provide\. 
 
 **Topics**
 + [Control which tag keys and tag values can be used](#policy-example-tags)
@@ -351,7 +349,7 @@ For example policies, see [Launch template support](ec2-auto-scaling-launch-temp
 
 ## Required permissions to create a service\-linked role<a name="ec2-auto-scaling-slr-permissions"></a>
 
-Amazon EC2 Auto Scaling requires permissions to create a service\-linked role the first time that any user in your AWS account calls Amazon EC2 Auto Scaling API actions\. If the service\-linked role does not exist already, Amazon EC2 Auto Scaling creates it in your account\. The service\-linked role gives permissions to Amazon EC2 Auto Scaling so that it can call other services on your behalf\. 
+Amazon EC2 Auto Scaling requires permissions to create a service\-linked role the first time that any user in your AWS account calls Amazon EC2 Auto Scaling API actions\. If the service\-linked role does not exist already, Amazon EC2 Auto Scaling creates it in your account\. The service\-linked role gives permissions to Amazon EC2 Auto Scaling so that it can call other AWS services on your behalf\. 
 
 For automatic role creation to succeed, users must have permissions for the `iam:CreateServiceLinkedRole` action\.
 
@@ -381,11 +379,11 @@ The following shows an example of a permissions policy that allows a user to cre
 
 ### Control which service\-linked role can be passed \(using PassRole\)<a name="policy-example-pass-role"></a>
 
-If your users require the ability to pass custom suffix service\-linked roles to an Auto Scaling group, you must attach a policy to the users or roles, based on the access that they need\. We recommend that you restrict this policy to only the service\-linked roles that your users must access\. For more information about custom suffix service\-linked roles, see [Service\-linked roles for Amazon EC2 Auto Scaling](autoscaling-service-linked-role.md)\.
+If your users require the ability to pass custom suffix service\-linked roles to an Auto Scaling group, you must create policies that provide this access and attach them to IAM entities\. We recommend that you restrict these policies to only the service\-linked roles that your users must access\. For more information about custom suffix service\-linked roles, see [Service\-linked roles for Amazon EC2 Auto Scaling](autoscaling-service-linked-role.md)\.
 
-The following example is helpful for facilitating the security of your AWS KMS customer managed keys if you give different service\-linked roles access to different keys\. Depending on your needs, you might have a key for the development team, another for the QA team, and another for the finance team\. First, create a service\-linked role that has access to the required key, for example, a service\-linked role named `AWSServiceRoleForAutoScaling_devteamkeyaccess`\. Then, to grant permissions to pass that service\-linked role to an Auto Scaling group, attach the policy to your IAM users as shown\. 
+The following example is helpful for facilitating the security of your AWS KMS customer managed keys if you give different service\-linked roles access to different keys\. Depending on your needs, you might have a key for the development team, another for the QA team, and another for the finance team\. First, create a service\-linked role that has access to the required key, for example, a service\-linked role named **AWSServiceRoleForAutoScaling\_devteamkeyaccess**\. Then, to grant permissions to pass that service\-linked role to an Auto Scaling group, attach the policy to your IAM entities as shown\. 
 
-The policy in this example gives users permissions to pass the `AWSServiceRoleForAutoScaling_devteamkeyaccess` role to create any Auto Scaling group whose name begins with `devteam-`\. If they try to specify a different service\-linked role, they receive an error\. If they choose not to specify a service\-linked role, the default `AWSServiceRoleForAutoScaling` role is used instead\.
+The policy in this example gives users permissions to pass the **AWSServiceRoleForAutoScaling\_devteamkeyaccess** role to create any Auto Scaling group whose name begins with `devteam-`\. If they try to specify a different service\-linked role, they receive an error\. If they choose not to specify a service\-linked role, the default **AWSServiceRoleForAutoScaling** role is used instead\.
 
 ```
 {

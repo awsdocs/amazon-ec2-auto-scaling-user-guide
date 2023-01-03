@@ -44,7 +44,7 @@ If you are new to Amazon EC2 Auto Scaling and want to get started using the serv
 In this step, you sign in to the Amazon EC2 console with your AWS account credentials and create a launch template that specifies the type of EC2 instance that Amazon EC2 Auto Scaling creates for you\. Include information such as the ID of the Amazon Machine Image \(AMI\) to use, the instance type, the key pair, and security groups\.
 
 **Note**  
-Alternatively, you can use a launch configuration to create an Auto Scaling group instead of using a launch template\. For the launch configuration instructions, see [Create a launch configuration](#id-gs-create-lc)\.
+To use a launch configuration instead, see [Create a launch configuration](#id-gs-create-lc)\.
 
 **To create a launch template**
 
@@ -173,7 +173,7 @@ Use these steps to learn more about how Amazon EC2 Auto Scaling works, specifica
 
 1. Choose **Actions**, **Instance State**, **Terminate**\. When prompted for confirmation, choose **Yes, Terminate**\.
 
-1. On the navigation pane, under **Auto Scaling**, choosel **Auto Scaling Groups**\. Select your Auto Scaling group and choose the **Activity** tab\.
+1. On the navigation pane, under **Auto Scaling**, choose **Auto Scaling Groups**\. Select your Auto Scaling group and choose the **Activity** tab\.
 
    The default cooldown for the Auto Scaling group is 300 seconds \(5 minutes\), so it takes about 5 minutes until you see the scaling activity\. In the activity history, when the scaling activity starts, you see an entry for the termination of the first instance and an entry for the launch of a new instance\. 
 
@@ -184,10 +184,13 @@ Use these steps to learn more about how Amazon EC2 Auto Scaling works, specifica
 ## Step 5: Next steps<a name="gs-tutorial-next-steps"></a>
 
 Go to the next step if you would like to delete the basic infrastructure for automatic scaling that you just created\. Otherwise, you can use this infrastructure as your base and try one or more of the following:
-+ Learn how to connect to your Linux instance using Session Manager or SSH\. For more information, see [Connect to your Linux instance using Session Manager](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/session-manager.html) and [Connect to your Linux instance using SSH](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/AccessingInstancesLinux.html) in the *Amazon EC2 User Guide for Linux Instances*\.
-+ Manually scale your Auto Scaling group\. For more information, see [Manual scaling](as-manual-scaling.md)\.
-+ Learn how to automatically scale where there are changes in resource utilization\. If the load increases, your Auto Scaling group can scale out \(add instances\) to handle the demand\. For more information, see [Target tracking scaling policies](as-scaling-target-tracking.md)\.
-+ Configure an SNS notification to notify you whenever your Auto Scaling group launches or terminates instances\. For more information, see [Monitor with Amazon SNS notifications](ec2-auto-scaling-sns-notifications.md)\.
++ Connect to your Linux instance using Session Manager or SSH\. For more information, see [Connect to your Linux instance using Session Manager](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/session-manager.html) and [Connect to your Linux instance using SSH](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/AccessingInstancesLinux.html) in the *Amazon EC2 User Guide for Linux Instances*\.
++ Configure an Amazon SNS notification to notify you whenever your Auto Scaling group launches or terminates instances\. For more information, see [Monitor with Amazon SNS notifications](ec2-auto-scaling-sns-notifications.md)\.
++ Manually scale your Auto Scaling group to test the SNS notification\. For more information, see [Manual scaling](as-manual-scaling.md)\.
+
+You can also start familiarizing yourself with auto scaling concepts by reading about [Target tracking scaling policies](as-scaling-target-tracking.md)\. If the load on your application changes, your Auto Scaling group can scale out \(add instances\) and scale in \(run fewer instances\) automatically by adjusting the desired capacity of the group between the minimum and maximum capacity limits\. For more information about setting these limits, see [Set capacity limits on your Auto Scaling group](asg-capacity-limits.md)\.
+
+If you plan to attach a load balancer to your Auto Scaling group, you can learn how to create one quickly using the Amazon EC2 Auto Scaling console\. For more information, see [Configure an Application Load Balancer or Network Load Balancer from the Amazon EC2 Auto Scaling console](as-create-load-balancer-console.md)\.
 
 ## Step 6: Clean up<a name="gs-delete-asg"></a>
 
@@ -199,9 +202,11 @@ If you launched an instance that is not within the [AWS Free Tier](https://aws.a
 
 1. Open the [Auto Scaling groups page](https://console.aws.amazon.com/ec2/v2/home?#AutoScalingGroups) of the Amazon EC2 console\.
 
-1. Select your Auto Scaling group \(`my-first-asg`\)\.
+1. Select the check box next to your Auto Scaling group \(`my-first-asg`\)\.
 
-1. Choose **Delete**\. When prompted for confirmation, choose **Delete**\.
+1. Choose **Delete**\. 
+
+1. When prompted for confirmation, type **delete** to confirm deleting the specified Auto Scaling group and then choose **Delete**\.
 
    A loading icon in the **Name** column indicates that the Auto Scaling group is being deleted\. When the deletion has occurred, the **Desired**, **Min**, and **Max** columns show `0` instances for the Auto Scaling group\. It takes a few minutes to terminate the instance and delete the group\. Refresh the list to see the current state\. 
 
@@ -213,7 +218,9 @@ Skip the following procedure if you would like to keep your launch template\.
 
 1. Select your launch template \(`my-template-for-auto-scaling`\)\.
 
-1. Choose **Actions**, **Delete template**\. When prompted for confirmation, choose **Delete launch template**\.
+1. Choose **Actions**, **Delete template**\.
+
+1. When prompted for confirmation, type **Delete** to confirm deleting the specified launch template and then choose **Delete**\.
 
 Skip the following procedure if you would like to keep your launch configuration\.
 
@@ -223,4 +230,6 @@ Skip the following procedure if you would like to keep your launch configuration
 
 1. Select your launch configuration \(`my-first-launch-configuration`\)\.
 
-1. Choose **Actions**, **Delete launch configuration**\. When prompted for confirmation, choose **Yes, Delete**\.
+1. Choose **Actions**, **Delete launch configuration**\.
+
+1. When prompted for confirmation, choose **Delete**\.

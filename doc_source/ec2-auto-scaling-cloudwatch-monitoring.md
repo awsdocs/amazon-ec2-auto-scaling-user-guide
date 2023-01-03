@@ -19,7 +19,7 @@ For more information, see the [Amazon CloudWatch User Guide](https://docs.aws.am
 
 **Note**  
 This section lists the different types of metrics in the `AWS/AutoScaling` namespace\.   
-For information about the available metrics in the `AWS/EC2` namespace, see [List the available CloudWatch metrics for your instances](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/viewing_metrics_with_cloudwatch.html) in the *Amazon EC2 User Guide for Linux Instances*\. Or, see [Configure monitoring for Auto Scaling instances](enable-as-instance-metrics.md) to learn about how you can enable detailed monitoring for metrics in the `AWS/EC2` namespace or collect memory metrics from the EC2 instances in your Auto Scaling groups\.
+For information about the available metrics in the `AWS/EC2` namespace, see [List the available CloudWatch metrics for your instances](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/viewing_metrics_with_cloudwatch.html) in the *Amazon EC2 User Guide for Linux Instances*\. See [Configure monitoring for Auto Scaling instances](enable-as-instance-metrics.md) to learn how to enable detailed monitoring for metrics in the `AWS/EC2` namespace or collect memory metrics from the EC2 instances in your Auto Scaling groups\.
 
 Amazon EC2 Auto Scaling publishes the following metrics in the `AWS/AutoScaling` namespace\. 
 
