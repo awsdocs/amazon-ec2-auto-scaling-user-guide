@@ -11,7 +11,7 @@ If you are scaling based on a metric that increases or decreases proportionally 
 
 With target tracking, an Auto Scaling group scales in direct proportion to the actual load on your application\. That means that in addition to meeting the immediate need for capacity in response to load changes, a target tracking policy can also adapt to load changes that take place over time, for example, due to seasonal variations\.
 
-By default, new Auto Scaling groups start without any scaling policies\. When you use an Auto Scaling group without any form of dynamic scaling, it doesn't scale on it own unless you set up scheduled scaling or predictive scaling\.
+By default, new Auto Scaling groups start without any scaling policies\. When you use an Auto Scaling group without any form of dynamic scaling, it doesn't scale on its own unless you set up scheduled scaling or predictive scaling\.
 
 **Topics**
 + [How dynamic scaling policies work](#as-how-scaling-policies-work)
