@@ -10,13 +10,14 @@ The other available settings are not intended to be used at the same time as the
 
 **API operation:** [CreateAutoScalingGroup](https://docs.aws.amazon.com/autoscaling/ec2/APIReference/API_CreateAutoScalingGroup.html), [UpdateAutoScalingGroup](https://docs.aws.amazon.com/autoscaling/ec2/APIReference/API_UpdateAutoScalingGroup.html)
 
-The amount of time, in seconds, until a newly launched instance can contribute to the Amazon CloudWatch metrics\. This delay lets an instance finish initializing before Amazon EC2 Auto Scaling aggregates instance metrics, resulting in more reliable usage data\. Set this value equal to the amount of time that it takes for resource consumption to become stable after an instance reaches the `InService` state\. For more information, see [Set the default instance warmup for an Auto Scaling group](ec2-auto-scaling-default-instance-warmup.md)\.
+The amount of time, in seconds, until a new instance is considered to have finished initializing and resource consumption to become stable after it enters the `InService` state\. 
 
-You can reduce the value of the instance warmup if you use a lifecycle hook for instance launch\. If your Auto Scaling group is behind a load balancer, you can add a lifecycle hook to the group to make sure that your instances are ready to serve traffic before they are registered to the load balancer at the end of the lifecycle hook\. For more information, see [Amazon EC2 Auto Scaling lifecycle hooks](lifecycle-hooks.md)\.
+During an instance refresh, Amazon EC2 Auto Scaling waits for the warm\-up period after it replaces an instance before it moves on to replacing the next instance\. Amazon EC2 Auto Scaling also waits for the warm\-up period before aggregating the metrics for new instances with existing instances in the Amazon CloudWatch metrics that are used for scaling, resulting in more reliable usage data\. For more information, see [Set the default instance warmup for an Auto Scaling group](ec2-auto-scaling-default-instance-warmup.md)\.
+
+You can reduce the value of the warm\-up period if you use a lifecycle hook to prepare new instances for use\. For more information, see [Amazon EC2 Auto Scaling lifecycle hooks](lifecycle-hooks.md)\.
 
 **Important**  
-To manage your warm\-up settings at the group level, we recommend that you set the default instance warmup, *even if its value is set to 0 seconds*\. This also optimizes the performance of scaling policies that scale continuously, such as target tracking and step scaling policies\.   
-If you need to remove a value that you previously set, include the property but specify `-1` for the value\. However, we strongly recommend keeping the default instance warmup enabled by specifying a minimum value of `0`\.
+To manage various warm\-up settings at the group level, we recommend that you set the default instance warmup, *even if it is set to 0 seconds*\. To remove a value that you previously set, include the property but specify `-1` for the value\. However, we strongly recommend keeping the default instance warmup enabled by specifying a value of `0` or other nominal value\.
 
 **Default**: None 
 
@@ -36,7 +37,7 @@ The estimated time, in seconds, until a newly launched instance can contribute t
 
 **API operation:** [StartInstanceRefresh](https://docs.aws.amazon.com/autoscaling/ec2/APIReference/API_StartInstanceRefresh.html)
 
-A warm\-up period, in seconds, that applies to a specific instance refresh operation\. Specifying a warm\-up period when you start an instance refresh overrides the default instance warmup, but only for the current instance refresh\. For more information, see [Replace Auto Scaling instances based on an instance refresh](asg-instance-refresh.md)\.
+A time period, in seconds, during which an instance refresh waits before moving on to replacing the next instance after a new instance enters the `InService` state\. Specifying a warm\-up period when you start an instance refresh overrides the default instance warmup, but only for the current instance refresh\. For more information, see [Replace Auto Scaling instances based on an instance refresh](asg-instance-refresh.md)\.
 
 **Default**: If not defined, the value of this parameter defaults to the value for the default instance warmup defined for the group\. If default instance warmup is null, then it falls back to the value of the health check grace period\.
 

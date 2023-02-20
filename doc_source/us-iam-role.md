@@ -41,7 +41,31 @@ If you use the IAM console instead of the AWS CLI or one of the AWS SDKs, the co
 
 1. Review the role, and then choose **Create role**\. 
 
-Use IAM user permissions to control access to your new IAM role\. The `iam:PassRole` permission is needed on the IAM user who creates or updates an Auto Scaling group using a launch template that specifies an instance profile, or who creates a launch configuration that specifies an instance profile\. For an example policy that grants users specific permissions, see [Control which IAM roles can be passed \(using PassRole\)](security_iam_id-based-policy-examples.md#policy-example-pass-IAM-role)\.
+**IAM permissions**  
+Use an IAM identity\-based policy to control access to your new IAM role\. The `iam:PassRole` permission is needed on the IAM identity \(user or role\) that creates or updates an Auto Scaling group using a launch template that specifies an instance profile, or who creates a launch configuration that specifies an instance profile\.
+
+The following example policy grants permissions to pass only IAM roles whose name begins with `qateam-`\. 
+
+```
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Action": "iam:PassRole",
+            "Resource": "arn:aws:iam::123456789012:role/qateam-*",
+            "Condition": {
+                "StringEquals": {
+                    "iam:PassedToService": [
+                        "ec2.amazonaws.com",
+                        "ec2.amazonaws.com.cn"
+                    ]
+                }
+            }
+        }
+    ]
+}
+```
 
 ## Create a launch template<a name="us-iam-role-create-lt"></a>
 

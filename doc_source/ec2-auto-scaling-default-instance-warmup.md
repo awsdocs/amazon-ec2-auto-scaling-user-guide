@@ -6,7 +6,12 @@ When default instance warmup is not enabled, each instance starts contributing u
 
 Default instance warmup is not configured and is not enabled by default\. To optimize the performance of scaling policies that scale continuously, such as target tracking and step scaling policies, we strongly recommend that you enable the default instance warmup, *even if its value is set to 0 seconds*\. When default instance warmup is not enabled, the default cooldown might be applied when instances launch, and dynamic scaling scale\-in activities will be blocked until the default cooldown period ends\.
 
-In addition, by enabling the default instance warmup feature, you no longer have to specify values for warm\-up parameters for individual scaling policies and instance refreshes\. You can use the default instance warmup to unify these settings at the group level\. By default, these parameters will be set to the value of the default instance warmup\. For more information, see [Available warm\-up and cooldown settings](consolidated-view-of-warm-up-and-cooldown-settings.md)\.
+Default instance warmup unifies the warm\-up parameter for multiple features into a single parameter at the group level\. By enabling the default instance warmup feature, you no longer have to specify values for warm\-up parameters for the following features unless you want to override the default:
++ [Instance refresh](asg-instance-refresh.md#instance-refresh-core-concepts)
++ [Target tracking scaling policies](as-scaling-target-tracking.md#as-target-tracking-scaling-warmup)
++ [Step scaling policies](as-scaling-simple-step.md#as-step-scaling-warmup)
+
+In addition to affecting scaling performance, the default instance warmup influences the overall time required to replace an instance during an instance refresh\.
 
 **Topics**
 + [Choose a time value for the default instance warmup](#determining-the-value-of-the-default-instance-warmup)

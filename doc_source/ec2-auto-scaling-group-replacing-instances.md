@@ -8,11 +8,9 @@ This section includes information to help you do the following:
 + Skip replacing already updated instances\.
 + Use checkpoints to replace instances in phases and perform verifications on your instances at specific points\.
 + Receive notifications by email when a checkpoint is reached\.
-+ Limit the lifetime of instances to ensure consistent software versions and instance configurations across the Auto Scaling group\.
++ Use a rollback to restore the Auto Scaling group to the configuration it was previously using\.
++ Limit the lifetime of instances to provide consistent software versions and instance configurations across the Auto Scaling group\.
 
 **Topics**
 + [Replace instances based on an instance refresh](asg-instance-refresh.md)
-+ [Check instance refresh status](check-status-instance-refresh.md)
-+ [AWS CLI examples that enable skip matching](asg-instance-refresh-skip-matching.md)
-+ [Add checkpoints to an instance refresh](asg-adding-checkpoints-instance-refresh.md)
 + [Replace instances based on maximum instance lifetime](asg-max-instance-lifetime.md)

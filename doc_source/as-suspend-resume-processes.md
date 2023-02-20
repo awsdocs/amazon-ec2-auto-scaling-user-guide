@@ -32,6 +32,7 @@ Consider the following before suspending processes:
 + Suspending `AlarmNotification` allows you to temporarily stop the group's target tracking, step, and simple scaling policies without deleting the scaling policies or their associated CloudWatch alarms\. To temporarily stop individual scaling policies instead, see [Disable a scaling policy for an Auto Scaling group](as-enable-disable-scaling-policy.md)\.
 + If you suspend the `Launch` and `Terminate` processes, or `AZRebalance`, and then you make changes to your Auto Scaling group, for example, by detaching instances or changing the Availability Zones that are specified, your group can become unbalanced between Availability Zones\. If that happens, after you resume the suspended processes, Amazon EC2 Auto Scaling gradually redistributes instances evenly between the Availability Zones\.
 + Suspending the `Terminate` process doesn't prevent the successful termination of instances using the force delete option with the [delete\-auto\-scaling\-group](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/delete-auto-scaling-group.html) command\.
++ The `RemoveFromLoadBalancerLowPriority` process should be ignored when it is present in calls to describe Auto Scaling groups using the AWS CLI or SDKs\. This process is deprecated and is retained only for backward compatibility\. 
 
 ### Understand how suspending processes affects other processes<a name="understand-how-suspending-processes-affects-other-processes"></a>
 
@@ -67,7 +68,7 @@ Scenario 7: `InstanceRefresh` is suspended
 + Amazon EC2 Auto Scaling stops replacing instances as a result of an instance refresh\. If there is an instance refresh in progress, this pauses the operation without canceling it\.
 
 Scenario 8: `ReplaceUnhealthy` is suspended
-+ Amazon EC2 Auto Scaling stops replacing instances that are marked as unhealthy\. Instances that fail EC2 or Elastic Load Balancing health checks are still marked as unhealthy\. As soon as you resume the `ReplaceUnhealthly` process, Amazon EC2 Auto Scaling replaces instances that were marked unhealthy while this process was suspended\. The `ReplaceUnhealthy` process calls `Terminate` first and then `Launch`\. 
++ Amazon EC2 Auto Scaling stops replacing instances that are marked as unhealthy\. Instances that fail EC2 or Elastic Load Balancing health checks are still marked as unhealthy\. As soon as you resume the `ReplaceUnhealthy` process, Amazon EC2 Auto Scaling replaces instances that were marked unhealthy while this process was suspended\. The `ReplaceUnhealthy` process calls `Terminate` first and then `Launch`\. 
 
 Scenario 9: `ScheduledActions` is suspended
 + Amazon EC2 Auto Scaling does not run scheduled actions that are scheduled to run during the suspension period\. When you resume `ScheduledActions`, Amazon EC2 Auto Scaling only considers scheduled actions whose scheduled time has not yet passed\. 

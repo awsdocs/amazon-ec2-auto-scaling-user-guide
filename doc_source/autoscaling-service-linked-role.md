@@ -4,7 +4,7 @@ Amazon EC2 Auto Scaling uses service\-linked roles for the permissions that it r
 
 Service\-linked roles provide a secure way to delegate permissions to other AWS services because only the linked service can assume a service\-linked role\. For more information, see [Using service\-linked roles](https://docs.aws.amazon.com/IAM/latest/UserGuide/using-service-linked-roles.html) in the *IAM User Guide*\. Service\-linked roles also enable all API calls to be visible through AWS CloudTrail\. This helps with monitoring and auditing requirements because you can track all actions that Amazon EC2 Auto Scaling performs on your behalf\. For more information, see [Log Amazon EC2 Auto Scaling API calls with AWS CloudTrail](logging-using-cloudtrail.md)\.
 
-The following sections describe how to create and manage Amazon EC2 Auto Scaling service\-linked roles\. Start by configuring permissions to allow an IAM entity \(such as a user, group, or role\) to create, edit, or delete a service\-linked role\. For more information, see [Using service\-linked roles](https://docs.aws.amazon.com/IAM/latest/UserGuide/using-service-linked-roles.html) in the *IAM User Guide*\.
+The following sections describe how to create and manage Amazon EC2 Auto Scaling service\-linked roles\. Start by configuring permissions to allow an IAM identity \(such as a user or role\) to create, edit, or delete a service\-linked role\. For more information, see [Using service\-linked roles](https://docs.aws.amazon.com/IAM/latest/UserGuide/using-service-linked-roles.html) in the *IAM User Guide*\.
 
 **Contents**
 + [Overview](#autoscaling-service-linked-role-overview)
@@ -172,7 +172,7 @@ The role has permissions to do all of the following:
 + `cloudwatch` \- Create, describe, modify, and delete CloudWatch alarms for scaling policies and retrieve metrics used for predictive scaling\.
 + `sns` \- Publish notifications to Amazon SNS when instances launch or terminate\. 
 + `events` \- Create, describe, update, and delete EventBridge rules on your behalf\.
-+ `ssm` \- Read parameters from Parameter Store for an upcoming feature\.
++ `ssm` \- Read parameters from Parameter Store when using a Systems Manager parameter as an alias for an AMI ID in a launch template\.
 + `vpc-lattice` \- Register and deregister instances with VPC Lattice and check the health of registered targets\.
 
 ## Create a service\-linked role \(automatic\)<a name="create-service-linked-role"></a>
@@ -180,7 +180,7 @@ The role has permissions to do all of the following:
 Amazon EC2 Auto Scaling creates the **AWSServiceRoleForAutoScaling** service\-linked role for you the first time that you create an Auto Scaling group, unless you manually create a custom suffix service\-linked role and specify it when creating the group\.
 
 **Important**  
-You must have IAM permissions to create the service\-linked role\. Otherwise, the automatic creation fails\. For more information, see [Service\-linked role permissions](https://docs.aws.amazon.com/IAM/latest/UserGuide/using-service-linked-roles.html#service-linked-role-permissions) in the *IAM User Guide* and [Required permissions to create a service\-linked role](security_iam_id-based-policy-examples.md#ec2-auto-scaling-slr-permissions) in this guide\.
+You must have IAM permissions to create the service\-linked role\. Otherwise, the automatic creation fails\. For more information, see [Service\-linked role permissions](https://docs.aws.amazon.com/IAM/latest/UserGuide/using-service-linked-roles.html#service-linked-role-permissions) in the *IAM User Guide* and [Permissions required to create a service\-linked role](security_iam_id-based-policy-examples.md#ec2-auto-scaling-slr-permissions) in this guide\.
 
 Amazon EC2 Auto Scaling began supporting service\-linked roles in March 2018\. If you created an Auto Scaling group before then, Amazon EC2 Auto Scaling created the **AWSServiceRoleForAutoScaling** role in your account\. For more information, see [A new role appeared in my AWS account](https://docs.aws.amazon.com/IAM/latest/UserGuide/troubleshoot_roles.html#troubleshoot_roles_new-role-appeared) in the *IAM User Guide*\.
 

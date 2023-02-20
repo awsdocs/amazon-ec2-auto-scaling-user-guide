@@ -214,7 +214,7 @@ The following is an example response\.
 
 If you don't use the `--launch-template-names` option to limit the output to one launch template, information on all of your launch templates is returned\.
 
-The following [describe\-launch\-template\-versions](https://docs.aws.amazon.com/cli/latest/reference/ec2/describe-launch-template-versions.html) command provides information describing the versions of the specified launch template *my\-template\-for\-auto\-scaling*\.
+The following [describe\-launch\-template\-versions](https://docs.aws.amazon.com/cli/latest/reference/ec2/describe-launch-template-versions.html) command provides information describing the versions of the specified launch template\.
 
 ```
 aws ec2 describe-launch-template-versions --launch-template-id lt-068f72b729example

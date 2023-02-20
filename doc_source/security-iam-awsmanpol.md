@@ -8,9 +8,9 @@ Additionally, AWS supports managed policies for job functions that span multiple
 
 ## Amazon EC2 Auto Scaling managed policies<a name="predefined-policies-auto-scaling"></a>
 
-You can attach the following managed policies to your AWS Identity and Access Management \(IAM\) entities\. Each policy provides access to all or some of the API actions for Amazon EC2 Auto Scaling\. 
-+ [AutoScalingFullAccess](https://console.aws.amazon.com/iam/home#policies/arn:aws:iam::aws:policy/AutoScalingFullAccess) — Grants full access to Amazon EC2 Auto Scaling for users who need full Amazon EC2 Auto Scaling access from the AWS CLI or SDKs, but not AWS Management Console access\. 
-+ [AutoScalingReadOnlyAccess](https://console.aws.amazon.com/iam/home#policies/arn:aws:iam::aws:policy/AutoScalingReadOnlyAccess) — Grants read\-only access to Amazon EC2 Auto Scaling for users who are making calls only to the AWS CLI or SDKs\. 
+You can attach the following managed policies to your AWS Identity and Access Management \(IAM\) identities \(users or roles\)\. Each policy provides access to all or some of the API actions for Amazon EC2 Auto Scaling\. 
++ [AutoScalingFullAccess](https://console.aws.amazon.com/iam/home#policies/arn:aws:iam::aws:policy/AutoScalingFullAccess) — Grants full access to Amazon EC2 Auto Scaling for IAM identities that need full Amazon EC2 Auto Scaling access from the AWS CLI or SDKs, but not AWS Management Console access\. 
++ [AutoScalingReadOnlyAccess](https://console.aws.amazon.com/iam/home#policies/arn:aws:iam::aws:policy/AutoScalingReadOnlyAccess) — Grants read\-only access to Amazon EC2 Auto Scaling for IAM identities that are making calls only to the AWS CLI or SDKs\. 
 + [AutoScalingConsoleFullAccess](https://console.aws.amazon.com/iam/home#policies/arn:aws:iam::aws:policy/AutoScalingConsoleFullAccess) — Grants full access to Amazon EC2 Auto Scaling using the AWS Management Console\. This policy works when you are using launch configurations, but not when you are using launch templates\. 
 + [AutoScalingConsoleReadOnlyAccess](https://console.aws.amazon.com/iam/home#policies/arn:aws:iam::aws:policy/AutoScalingConsoleReadOnlyAccess) — Grants read\-only access to Amazon EC2 Auto Scaling using the AWS Management Console\. This policy works when you are using launch configurations, but not when you are using launch templates\. 
 
@@ -18,7 +18,7 @@ When you are using launch templates from the console, you need to grant addition
 
 ## AutoScalingServiceRolePolicy AWS managed policy<a name="service-linked-role-policy"></a>
 
-You can't attach [AutoScalingServiceRolePolicy](https://console.aws.amazon.com/iam/home#policies/arn:aws:iam::aws:policy/aws-service-role/AutoScalingServiceRolePolicy) to your IAM entities\. This policy is attached to a service\-linked role that allows Amazon EC2 Auto Scaling to launch and terminate instances\. For more information, see [Service\-linked roles for Amazon EC2 Auto Scaling](autoscaling-service-linked-role.md)\. 
+You can't attach [AutoScalingServiceRolePolicy](https://console.aws.amazon.com/iam/home#policies/arn:aws:iam::aws:policy/aws-service-role/AutoScalingServiceRolePolicy) to your IAM identities\. This policy is attached to a service\-linked role that allows Amazon EC2 Auto Scaling to launch and terminate instances\. For more information, see [Service\-linked roles for Amazon EC2 Auto Scaling](autoscaling-service-linked-role.md)\. 
 
 ## Amazon EC2 Auto Scaling updates to AWS managed policies<a name="policy-updates"></a>
 
@@ -30,6 +30,6 @@ View details about updates to AWS managed policies for Amazon EC2 Auto Scaling s
 | Change | Description | Date | 
 | --- | --- | --- | 
 |  Amazon EC2 Auto Scaling adds permissions to its service\-linked role  | The `AutoScalingServiceRolePolicy` policy now grants permissions to the service to access the API actions it needs for an integration with VPC Lattice\. [\[See the AWS documentation website for more details\]](http://docs.aws.amazon.com/autoscaling/ec2/userguide/security-iam-awsmanpol.html)For more information, see [Service\-linked roles for Amazon EC2 Auto Scaling](autoscaling-service-linked-role.md)\.  | December 6, 2022 | 
-|  Amazon EC2 Auto Scaling adds permissions to its service\-linked role  | The `AutoScalingServiceRolePolicy` policy now grants permission to call the AWS Systems Manager [GetParameters](https://docs.aws.amazon.com/systems-manager/latest/APIReference/API_GetParameters.html) API action to support an upcoming feature to read parameters from Parameter Store\. For more information, see [Service\-linked roles for Amazon EC2 Auto Scaling](autoscaling-service-linked-role.md)\. | March 28, 2022 | 
+|  Amazon EC2 Auto Scaling adds permissions to its service\-linked role  | To support using an AWS Systems Manager Parameter as an alias for an AMI ID when creating a launch template, the `AutoScalingServiceRolePolicy` policy now grants permission to call the AWS Systems Manager [GetParameters](https://docs.aws.amazon.com/systems-manager/latest/APIReference/API_GetParameters.html) API action\. For more information, see [Service\-linked roles for Amazon EC2 Auto Scaling](autoscaling-service-linked-role.md)\. | March 28, 2022 | 
 | Amazon EC2 Auto Scaling adds permissions to its service\-linked role | To support predictive scaling, the `AutoScalingServiceRolePolicy` policy now includes permission to call the CloudWatch [GetMetricData](https://docs.aws.amazon.com/AmazonCloudWatch/latest/APIReference/API_GetMetricData.html) API action\. For more information, see [Service\-linked roles for Amazon EC2 Auto Scaling](autoscaling-service-linked-role.md)\. | May 19, 2021 | 
 |  Amazon EC2 Auto Scaling started tracking changes  |  Amazon EC2 Auto Scaling started tracking changes for its AWS managed policies\.  | May 19, 2021 | 

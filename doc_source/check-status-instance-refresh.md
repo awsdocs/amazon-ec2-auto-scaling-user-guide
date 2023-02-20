@@ -1,9 +1,9 @@
 # Check the status of an instance refresh<a name="check-status-instance-refresh"></a>
 
-You can get the status of an instance refresh for your Auto Scaling group using the console or the AWS CLI\.
+After an instance refresh has begun, you can get its status using the AWS Management Console or AWS CLI\.
 
 **Tip**  
-In the following procedure, you look at the **Instance refresh history**, **Activity history**, and **Instances** sections for the Auto Scaling group\. In each, the named columns should already be displayed\. To display hidden columns or change the number of rows shown, choose the gear icon on the top right corner of each section to open the preferences modal, update the settings as needed, and choose Confirm\.
+In the following procedure, you look at the **Instance refresh history**, **Activity history**, and **Instances** sections for the Auto Scaling group\. In each, the named columns should already be displayed\. To display hidden columns or change the number of rows shown, choose the gear icon on the top right corner of each section to open the preferences modal\. Update the settings as needed and choose **Confirm**\.
 
 **To check the status of an instance refresh \(console\)**
 
@@ -17,7 +17,7 @@ In the following procedure, you look at the **Instance refresh history**, **Acti
 
 1. On the **Activity** tab, under **Activity history**, when the instance refresh starts, you see entries when instances are terminated and another set of entries when instances are launched\. In the **Description** column, you can find the instance ID\. 
 
-1. \(Optional\) If you have a lot of scaling activities, you can choose the **>** icon at the top edge of the activity history to see the next page of scaling activities\.
+1. \(Optional\) If you have numerous scaling activities, you can see more of them by choosing the **>** icon at the top of the activity history\.
 
 1. On the **Instance management** tab, under **Instances**, you can verify that your instances launched successfully\. Initially, your instances are in the `Pending` state\. After an instance is ready to receive traffic, its state is `InService`\. The **Health status** column shows the result of the health checks on your instances\.
 
@@ -53,3 +53,22 @@ Example output:
     ]
 }
 ```
+
+## Instance refresh statuses<a name="instance-refresh-statuses"></a>
+
+When you start an instance refresh, it enters the **Pending** status\. It passes from **Pending** to **InProgress** until it reaches **Successful**, **Failed**, **Cancelled**, **RollbackSuccessful**, or **RollbackFailed**\.
+
+An instance refresh can have the following statuses:
+
+
+| Status | Description | 
+| --- | --- | 
+| Pending | The request was created, but the instance refresh has not started\. | 
+| InProgress | An instance refresh is in progress\. | 
+| Successful | An instance refresh completed successfully\. | 
+| Failed | An instance refresh failed to complete\. You can troubleshoot using the status reason and the scaling activities\. | 
+| Cancelling | An ongoing instance refresh is being cancelled\. | 
+| Cancelled | The instance refresh is cancelled\. | 
+| RollbackInProgress | An instance refresh is being rolled back\. | 
+| RollbackFailed | The rollback failed to complete\. You can troubleshoot using the status reason and the scaling activities\. | 
+| RollbackSuccessful | The rollback completed successfully\. | 

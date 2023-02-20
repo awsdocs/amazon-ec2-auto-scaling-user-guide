@@ -1,6 +1,6 @@
 # Amazon EC2 Auto Scaling identity\-based policy examples<a name="security_iam_id-based-policy-examples"></a>
 
-By default, a brand new user in your AWS account has no permissions to do anything\. An IAM administrator must create and assign IAM policies that give end users permission to perform Amazon EC2 Auto Scaling API actions\.
+By default, a brand new user in your AWS account has no permissions to do anything\. An IAM administrator must create and assign IAM policies that give an IAM identity \(such as a user or role\) permission to perform Amazon EC2 Auto Scaling API actions\.
 
 To learn how to create an IAM policy using these example JSON policy documents, see [Creating policies on the JSON tab](https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies_create.html#access_policies_create-json-editor) in the *IAM User Guide*\.
 
@@ -33,7 +33,7 @@ The following shows an example of a permissions policy\.
 }
 ```
 
-This sample policy gives users permissions to create, modify, and delete Auto Scaling groups, but only if the group uses the tag `environment=test`\. Because launch configurations do not support tags, and `Describe` actions do not support resource\-level permissions, you must specify them in a separate statement without conditions\. To learn more about the elements within an IAM policy statement, see [Identity\-based policies for Amazon EC2 Auto Scaling](control-access-using-iam.md#security_iam_service-with-iam-id-based-policies)\.
+This sample policy grants permissions to create, modify, and delete Auto Scaling groups, but only if the group uses the tag `environment=test`\. Because launch configurations do not support tags, and `Describe` actions do not support resource\-level permissions, you must specify them in a separate statement without conditions\. To learn more about the elements within an IAM policy statement, see [Identity\-based policies for Amazon EC2 Auto Scaling](control-access-using-iam.md#security_iam_service-with-iam-id-based-policies)\.
 
 **Contents**
 + [Policy best practices](#security_iam_service-with-iam-policy-best-practices)
@@ -43,13 +43,11 @@ This sample policy gives users permissions to create, modify, and delete Auto Sc
     + [Control access to creating and managing Auto Scaling groups and scaling policies](#policy-example-scaling)
     + [Control which scaling policies can be deleted](#policy-example-delete-policy)
   + [Control the minimum and maximum capacity of Auto Scaling groups](#policy-example-min-max-size)
-  + [Control which IAM roles can be passed \(using PassRole\)](#policy-example-pass-IAM-role)
   + [Allow users to change the capacity of Auto Scaling groups](#policy-example-capacity)
   + [Allow users to create and use launch configurations](#policy-example-launch-configuration)
-  + [Allow users to create and use launch templates](#policy-example-launch-template)
-+ [Required permissions to create a service\-linked role](#ec2-auto-scaling-slr-permissions)
++ [Permissions required to create a service\-linked role](#ec2-auto-scaling-slr-permissions)
   + [Control which service\-linked role can be passed \(using PassRole\)](#policy-example-pass-role)
-+ [Required API permissions for Amazon EC2 Auto Scaling](#ec2-auto-scaling-api-permissions)
++ [Additional permissions for Amazon EC2 Auto Scaling](#ec2-auto-scaling-api-permissions)
 
 ## Policy best practices<a name="security_iam_service-with-iam-policy-best-practices"></a>
 
@@ -58,7 +56,7 @@ Identity\-based policies determine whether someone can create, access, or delete
 + **Apply least\-privilege permissions** – When you set permissions with IAM policies, grant only the permissions required to perform a task\. You do this by defining the actions that can be taken on specific resources under specific conditions, also known as *least\-privilege permissions*\. For more information about using IAM to apply permissions, see [ Policies and permissions in IAM](https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies.html) in the *IAM User Guide*\.
 + **Use conditions in IAM policies to further restrict access** – You can add a condition to your policies to limit access to actions and resources\. For example, you can write a policy condition to specify that all requests must be sent using SSL\. You can also use conditions to grant access to service actions if they are used through a specific AWS service, such as AWS CloudFormation\. For more information, see [ IAM JSON policy elements: Condition](https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_elements_condition.html) in the *IAM User Guide*\.
 + **Use IAM Access Analyzer to validate your IAM policies to ensure secure and functional permissions** – IAM Access Analyzer validates new and existing policies so that the policies adhere to the IAM policy language \(JSON\) and IAM best practices\. IAM Access Analyzer provides more than 100 policy checks and actionable recommendations to help you author secure and functional policies\. For more information, see [IAM Access Analyzer policy validation](https://docs.aws.amazon.com/IAM/latest/UserGuide/access-analyzer-policy-validation.html) in the *IAM User Guide*\.
-+ **Require multi\-factor authentication \(MFA\)** – If you have a scenario that requires IAM users or root users in your account, turn on MFA for additional security\. To require MFA when API operations are called, add MFA conditions to your policies\. For more information, see [ Configuring MFA\-protected API access](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_mfa_configure-api-require.html) in the *IAM User Guide*\.
++ **Require multi\-factor authentication \(MFA\)** – If you have a scenario that requires IAM users or a root user in your AWS account, turn on MFA for additional security\. To require MFA when API operations are called, add MFA conditions to your policies\. For more information, see [ Configuring MFA\-protected API access](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_mfa_configure-api-require.html) in the *IAM User Guide*\.
 
 For more information about best practices in IAM, see [Security best practices in IAM](https://docs.aws.amazon.com/IAM/latest/UserGuide/best-practices.html) in the *IAM User Guide*\.
 
@@ -67,7 +65,7 @@ Some Amazon EC2 Auto Scaling API actions allow you to include specific Auto Scal
 
 ## Customer managed policy examples<a name="example-policies-auto-scaling"></a>
 
-You can create your own custom IAM policies to allow or deny permissions for IAM entities to perform Amazon EC2 Auto Scaling actions\. You can attach these custom policies to the IAM entities that require the specified permissions\. The following examples show permissions for several common use cases\. 
+You can create your own custom IAM policies to allow or deny permissions for IAM identities \(users or roles\) to perform Amazon EC2 Auto Scaling actions\. You can attach these custom policies to the IAM identities that require the specified permissions\. The following examples show permissions for several common use cases\. 
 
 When creating and updating Auto Scaling groups, some actions require that certain other actions be carried out\. You can specify these other actions in the `Action` element of an IAM policy statement\. For example, there are additional API actions for Elastic Load Balancing, CloudWatch, and Amazon SNS that might be required depending on the access that you want to provide\. 
 
@@ -75,20 +73,18 @@ When creating and updating Auto Scaling groups, some actions require that certai
 + [Control which tag keys and tag values can be used](#policy-example-tags)
 + [Control access to Auto Scaling resources based on tags](#policy-example-control-access-with-tags)
 + [Control the minimum and maximum capacity of Auto Scaling groups](#policy-example-min-max-size)
-+ [Control which IAM roles can be passed \(using PassRole\)](#policy-example-pass-IAM-role)
 + [Allow users to change the capacity of Auto Scaling groups](#policy-example-capacity)
 + [Allow users to create and use launch configurations](#policy-example-launch-configuration)
-+ [Allow users to create and use launch templates](#policy-example-launch-template)
 
 ### Control which tag keys and tag values can be used<a name="policy-example-tags"></a>
 
 You can use conditions in your IAM policies to control the tag keys and tag values that can be applied to Auto Scaling groups\. 
 
-To give users permissions to create or tag an Auto Scaling group only if they specify certain tags, use the `aws:RequestTag` condition key\. To allow only specific tag keys, use the `aws:TagKeys` condition key with the `ForAllValues` modifier\. 
+To grant permissions to create or tag an Auto Scaling group only if the requester specifies certain tags, use the `aws:RequestTag` condition key\. To allow only specific tag keys, use the `aws:TagKeys` condition key with the `ForAllValues` modifier\. 
 
 
 
-The following policy requires users to specify a tag with the key `environment` in the request\. The `"?*"` value enforces that there is some value for the tag key\. To use a wildcard, you must use the `StringLike` condition operator\. 
+The following policy requires the requester to specify a tag with the key `environment` in the request\. The `"?*"` value enforces that there is some value for the tag key\. To use a wildcard, you must use the `StringLike` condition operator\. 
 
 ```
 {
@@ -107,7 +103,7 @@ The following policy requires users to specify a tag with the key `environment` 
 }
 ```
 
-The following policy specifies that users can only tag Auto Scaling groups with the tags `purpose=webserver` and `cost-center=cc123`, and allows only the `purpose` and `cost-center` tags \(no other tags can be specified\)\.
+The following policy specifies that the requester can only tag Auto Scaling groups with the tags `purpose=webserver` and `cost-center=cc123`, and allows only the `purpose` and `cost-center` tags \(no other tags can be specified\)\.
 
 ```
 {
@@ -130,7 +126,7 @@ The following policy specifies that users can only tag Auto Scaling groups with 
 }
 ```
 
-The following policy requires users to specify at least one tag in the request, and allows only the `cost-center` and `owner` keys\.
+The following policy requires the requester to specify at least one tag in the request, and allows only the `cost-center` and `owner` keys\.
 
 ```
 {
@@ -158,7 +154,7 @@ You can also provide tag information in your IAM policies to control access base
 
 #### Control access to creating and managing Auto Scaling groups and scaling policies<a name="policy-example-scaling"></a>
 
-The following policy gives users permissions to use all Amazon EC2 Auto Scaling actions that include the string `Scaling` in their names, as long as the Auto Scaling group has the tag `purpose=webserver`\. Because the `Describe` actions do not support resource\-level permissions, you must specify them in a separate statement without conditions\. 
+The following policy grants permissions to use all Amazon EC2 Auto Scaling actions that include the string `Scaling` in their names, as long as the Auto Scaling group has the tag `purpose=webserver`\. Because the `Describe` actions do not support resource\-level permissions, you must specify them in a separate statement without conditions\. 
 
 ```
 {
@@ -182,7 +178,7 @@ The following policy gives users permissions to use all Amazon EC2 Auto Scaling 
 
 #### Control which scaling policies can be deleted<a name="policy-example-delete-policy"></a>
 
-The following policy allows users to use the `autoscaling:DeletePolicy` action to delete a scaling policy\. However, it also denies the action if the Auto Scaling group being acted upon has the tag `environment=production`\.
+The following policy grants permissions to use the `autoscaling:DeletePolicy` action to delete a scaling policy\. However, it also denies the action if the Auto Scaling group being acted upon has the tag `environment=production`\.
 
 ```
 {
@@ -206,7 +202,7 @@ The following policy allows users to use the `autoscaling:DeletePolicy` action t
 
 ### Control the minimum and maximum capacity of Auto Scaling groups<a name="policy-example-min-max-size"></a>
 
-Amazon EC2 Auto Scaling allows you to restrict the size of the Auto Scaling groups that can be created\. The following policy gives users permissions to create and update all Auto Scaling groups with the tag `allowed=true`, as long as they don't specify a minimum size less than 1 or a maximum size greater than 10\. 
+Amazon EC2 Auto Scaling allows you to restrict the size of the Auto Scaling groups that can be created\. The following policy grants permissions to create and update all Auto Scaling groups with the tag `allowed=true`, as long as the requester doesn't specify a minimum size less than 1 or a maximum size greater than 10\. 
 
 ```
 {
@@ -225,31 +221,6 @@ Amazon EC2 Auto Scaling allows you to restrict the size of the Auto Scaling grou
           "NumericLessThanEqualsIfExists": { "autoscaling:MaxSize": 10 }
       }
    }]
-}
-```
-
-### Control which IAM roles can be passed \(using PassRole\)<a name="policy-example-pass-IAM-role"></a>
-
-If you want a user to be able to create Amazon EC2 Auto Scaling resources that specify an instance profile \(a container for an IAM role\), you must use a policy that includes a statement allowing the user to pass the role, like the following example\. By specifying the ARN, the policy grants the user the permission to pass only roles whose name begins with `qateam-`\. For more information, see [IAM role for applications that run on Amazon EC2 instances](us-iam-role.md)\.
-
-```
-{
-    "Version": "2012-10-17",
-    "Statement": [
-        {
-            "Effect": "Allow",
-            "Action": "iam:PassRole",
-            "Resource": "arn:aws:iam::123456789012:role/qateam-*",
-            "Condition": {
-                "StringEquals": {
-                    "iam:PassedToService": [
-                        "ec2.amazonaws.com",
-                        "ec2.amazonaws.com.cn"
-                    ]
-                }
-            }
-        }
-    ]
 }
 ```
 
@@ -343,11 +314,7 @@ You can add API actions to this policy to provide more options for users, for ex
 + `ec2:AuthorizeSecurityGroupIngress`: To add inbound rules\.
 + `ec2:CreateKeyPair`: To create a new key pair\.
 
-### Allow users to create and use launch templates<a name="policy-example-launch-template"></a>
-
-For example policies, see [Launch template support](ec2-auto-scaling-launch-template-permissions.md)\. 
-
-## Required permissions to create a service\-linked role<a name="ec2-auto-scaling-slr-permissions"></a>
+## Permissions required to create a service\-linked role<a name="ec2-auto-scaling-slr-permissions"></a>
 
 Amazon EC2 Auto Scaling requires permissions to create a service\-linked role the first time that any user in your AWS account calls Amazon EC2 Auto Scaling API actions\. If the service\-linked role does not exist already, Amazon EC2 Auto Scaling creates it in your account\. The service\-linked role gives permissions to Amazon EC2 Auto Scaling so that it can call other AWS services on your behalf\. 
 
@@ -379,11 +346,11 @@ The following shows an example of a permissions policy that allows a user to cre
 
 ### Control which service\-linked role can be passed \(using PassRole\)<a name="policy-example-pass-role"></a>
 
-If your users require the ability to pass custom suffix service\-linked roles to an Auto Scaling group, you must create policies that provide this access and attach them to IAM entities\. We recommend that you restrict these policies to only the service\-linked roles that your users must access\. For more information about custom suffix service\-linked roles, see [Service\-linked roles for Amazon EC2 Auto Scaling](autoscaling-service-linked-role.md)\.
+Users who create or update Auto Scaling groups and specify a custom suffix service\-linked role in the request require the `iam:PassRole` permission\. 
 
-The following example is helpful for facilitating the security of your AWS KMS customer managed keys if you give different service\-linked roles access to different keys\. Depending on your needs, you might have a key for the development team, another for the QA team, and another for the finance team\. First, create a service\-linked role that has access to the required key, for example, a service\-linked role named **AWSServiceRoleForAutoScaling\_devteamkeyaccess**\. Then, to grant permissions to pass that service\-linked role to an Auto Scaling group, attach the policy to your IAM entities as shown\. 
+You can use the `iam:PassRole` permission to protect the security of your AWS KMS customer managed keys if you give different service\-linked roles access to different keys\. Depending on your organization's needs, you might have a key for the development team, another for the QA team, and another for the finance team\. First, create a service\-linked role that has access to the required key, for example, a service\-linked role named **AWSServiceRoleForAutoScaling\_devteamkeyaccess**\. Then, attach the policy to an IAM identity, such as a user or role\. 
 
-The policy in this example gives users permissions to pass the **AWSServiceRoleForAutoScaling\_devteamkeyaccess** role to create any Auto Scaling group whose name begins with `devteam-`\. If they try to specify a different service\-linked role, they receive an error\. If they choose not to specify a service\-linked role, the default **AWSServiceRoleForAutoScaling** role is used instead\.
+The following policy grants permissions to pass the **AWSServiceRoleForAutoScaling\_devteamkeyaccess** role to any Auto Scaling group whose name begins with `devteam-`\. If the IAM identity that creates the Auto Scaling group tries to specify a different service\-linked role, they receive an error\. If they choose not to specify a service\-linked role, the default **AWSServiceRoleForAutoScaling** role is used instead\.
 
 ```
 {
@@ -410,19 +377,19 @@ The policy in this example gives users permissions to pass the **AWSServiceRoleF
 }
 ```
 
-## Required API permissions for Amazon EC2 Auto Scaling<a name="ec2-auto-scaling-api-permissions"></a>
+For more information about custom suffix service\-linked roles, see [Service\-linked roles for Amazon EC2 Auto Scaling](autoscaling-service-linked-role.md)\.
 
-When calling the following actions from the Amazon EC2 Auto Scaling API, users must have permissions from Amazon EC2 and IAM to perform certain actions\. You specify the following actions in the `Action` element of an IAM policy statement\. 
+## Additional permissions for Amazon EC2 Auto Scaling<a name="ec2-auto-scaling-api-permissions"></a>
 
-**Create an Auto Scaling group**
-+ `autoscaling:CreateAutoScalingGroup`
+In addition to Amazon EC2 Auto Scaling permissions, users must have the following permissions from Amazon EC2 and IAM to successfully perform the specified action\.
+
+**Create an Auto Scaling group \(`autoscaling:CreateAutoScalingGroup`\)**
 + `iam:CreateServiceLinkedRole` \(Needed if you are using the default service\-linked role and that role does not yet exist\) 
 + `iam:PassRole` \(Needed if you are using a nondefault service\-linked role, you are specifying an IAM role for the `RoleARN` parameter for a lifecycle hook, or you are using a launch template that specifies the IAM role that can be used by the instances in the Auto Scaling group\)
 + `ec2:RunInstance` \(Needed if you are using a launch template\)
 + `ec2:CreateTags` \(Needed if you are using a launch template that specifies the tags to apply to your instances and EBS volumes\)
 
-**Create a launch configuration**
-+ `autoscaling:CreateLaunchConfiguration`
+**Create a launch configuration \(`autoscaling:CreateLaunchConfiguration`\)**
 + `ec2:DescribeImages`
 + `ec2:DescribeInstances`
 + `ec2:DescribeInstanceAttribute`
@@ -432,6 +399,5 @@ When calling the following actions from the Amazon EC2 Auto Scaling API, users m
 + `ec2:DescribeVpcClassicLink`
 + `iam:PassRole` \(Needed if you are specifying an IAM role for the `IamInstanceProfile` parameter\) 
 
-**Create a lifecycle hook**
-+ `autoscaling:PutLifecycleHook`
+**Create a lifecycle hook \(`autoscaling:PutLifecycleHook`\)**
 + `iam:PassRole` \(Only needed if you are specifying an IAM role for the `RoleARN` parameter\) 

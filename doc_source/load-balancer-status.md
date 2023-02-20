@@ -1,6 +1,8 @@
 # Understand the attachment status of your load balancer<a name="load-balancer-status"></a>
 
-When you describe target groups using the [describe\-load\-balancer\-target\-groups](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/describe-load-balancer-target-groups.html) command or load balancers using the [describe\-load\-balancers](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/describe-load-balancers.html) command, it returns the attachment status of the load balancer in the `State` parameter\.
+You can use the AWS CLI to get the attachment status of your load balancer\. For more information, see the [describe\-load\-balancer\-target\-groups](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/describe-load-balancer-target-groups.html) and [describe\-load\-balancers](https://docs.aws.amazon.com/cli/latest/reference/autoscaling/describe-load-balancers.html) documentation in the *AWS CLI Command Reference*\.
+
+When you describe target groups using the describe\-load\-balancer\-target\-groups command or load balancers using the describe\-load\-balancers command, Amazon EC2 Auto Scaling returns the attachment status of the load balancer in the `State` parameter\.
 
 When you attach a load balancer, it enters the `Adding` state while registering the instances in the group\. After all instances in the group are registered, it enters the `Added` state\. After at least one registered instance passes the health checks, it enters the `InService` state\. When the load balancer is in the `InService` state, Amazon EC2 Auto Scaling can terminate and replace any instances that are reported as unhealthy\. If no registered instances pass the health checks \(for example, due to a misconfigured health check\), the load balancer doesn't enter the `InService` state\. Amazon EC2 Auto Scaling doesn't terminate and replace the instances\. 
 

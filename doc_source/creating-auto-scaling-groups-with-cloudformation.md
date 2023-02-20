@@ -8,11 +8,13 @@ When you use AWS CloudFormation, you can reuse your template to set up your Amaz
 
 To provision and configure resources for Amazon EC2 Auto Scaling and related services, you must understand [AWS CloudFormation templates](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/template-guide.html)\. Templates are formatted text files in JSON or YAML\. These templates describe the resources that you want to provision in your AWS CloudFormation stacks\. If you're unfamiliar with JSON or YAML, you can use AWS CloudFormation Designer to help you get started with AWS CloudFormation templates\. For more information, see [What is AWS CloudFormation Designer?](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/working-with-templates-cfn-designer.html) in the *AWS CloudFormation User Guide*\.
 
-Amazon EC2 Auto Scaling supports creating Auto Scaling groups and launch configurations in AWS CloudFormation\. For more information, including examples of JSON and YAML templates for Auto Scaling groups, see the [Amazon EC2 Auto Scaling resource type reference](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/AWS_AutoScaling.html) in the *AWS CloudFormation User Guide*\.
+To get started creating your own stack templates for Amazon EC2 Auto Scaling, complete the following tasks:
++ Create a launch template using [AWS::EC2::LaunchTemplate](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-ec2-launchtemplate.html)\. 
++ Create an Auto Scaling group using [AWS::AutoScaling::AutoScalingGroup](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-as-group.html)\. 
 
-You can find additional useful examples of templates that create Auto Scaling groups and related resources in the following sections of the *AWS CloudFormation User Guide*\.
-+ For various examples of Amazon EC2 launch templates, see [AWS::EC2::LaunchTemplate](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-ec2-launchtemplate.html)\. 
-+ For examples that cover both Amazon EC2 launch templates and Auto Scaling groups, see [Auto scaling template snippets](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/quickref-autoscaling.html)\.
+For a walkthrough that shows you how to deploy an Auto Scaling group behind an Application Load Balancer, see [Walkthrough: Create a scaled and load\-balanced application](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/example-templates-autoscaling.html) in the *AWS CloudFormation User Guide*\.
+
+You can find additional useful examples of templates that create Auto Scaling groups and related resources in the [Auto scaling template snippets](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/quickref-autoscaling.html) section of the *AWS CloudFormation User Guide*\. For more information and example snippets, see the [Amazon EC2 Auto Scaling resource type reference](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/AWS_AutoScaling.html) in the *AWS CloudFormation User Guide*\.
 
 ## Learn more about AWS CloudFormation<a name="learn-more-cloudformation"></a>
 

@@ -148,7 +148,7 @@ There are two steps that must be completed in the following order:
 
    For this command to succeed, the user making the request must have permissions for the `CreateGrant` action\. 
 
-   The following example IAM policy allows an IAM user or role in account *111122223333* to create a grant for the customer managed key in account *444455556666*\.
+   The following example IAM policy allows an IAM identity \(user or role\) in account *111122223333* to create a grant for the customer managed key in account *444455556666*\.
 
    ```
    {
@@ -170,7 +170,7 @@ The service\-linked role name specified as the grantee principal must be the nam
 
 ## Edit key policies in the AWS KMS console<a name="eding-key-policies-console"></a>
 
-The examples in the previous sections show only how to add statements to a key policy, which is just one way of changing a key policy\. The easiest way to change a key policy is to use the AWS KMS console's default view for key policies and make an IAM entity \(user or role\) one of the *key users* for the appropriate key policy\. For more information, see [Using the AWS Management Console default view](https://docs.aws.amazon.com/kms/latest/developerguide/key-policy-modifying.html#key-policy-modifying-how-to-console-default-view) in the *AWS Key Management Service Developer Guide*\. 
+The examples in the previous sections show only how to add statements to a key policy, which is just one way of changing a key policy\. The easiest way to change a key policy is to use the AWS KMS console's default view for key policies and make an IAM identity \(user or role\) one of the *key users* for the appropriate key policy\. For more information, see [Using the AWS Management Console default view](https://docs.aws.amazon.com/kms/latest/developerguide/key-policy-modifying.html#key-policy-modifying-how-to-console-default-view) in the *AWS Key Management Service Developer Guide*\. 
 
 **Important**  
 Be cautious\. The console's default view policy statements include permissions to perform AWS KMS `Revoke` operations on the customer managed key\. If you give an AWS account access to a customer managed key in your account, and you accidentally revoke the grant that gave them this permission, external users can no longer access their encrypted data or the key that was used to encrypt their data\. 

@@ -190,7 +190,7 @@ You must specify the tag key, but you don't have to specify the value\. If you s
 
 ## Tags for security<a name="tag-security"></a>
 
-Use tags to control which Auto Scaling groups can be created, modified, or deleted by IAM users and groups in your account\. Provide tag information in the condition element of an IAM policy by using one or more of the following condition keys:
+Use tags to verify that the requester \(such as an IAM user or role\) has permissions to create, modify, or delete specific Auto Scaling groups\. Provide tag information in the condition element of an IAM policy by using one or more of the following condition keys:
 + Use `autoscaling:ResourceTag/tag-key: tag-value` to allow \(or deny\) user actions on Auto Scaling groups with specific tags\. 
 + Use `aws:RequestTag/tag-key: tag-value` to require that a specific tag be present \(or not present\) in a request\. 
 + Use `aws:TagKeys [tag-key, ...]` to require that specific tag keys be present \(or not present\) in a request\. 
@@ -221,7 +221,7 @@ For more examples, see [Amazon EC2 Auto Scaling identity\-based policy examples]
 
 ## Control access to tags<a name="tag-permissions"></a>
 
-IAM also supports controlling which IAM users and groups in your account have permissions to add, modify, or delete tags for Auto Scaling groups\. 
+Use tags to verify that the requester \(such as an IAM user or role\) has permissions to add, modify, or delete tags for Auto Scaling groups\. 
 
 For example, you could create an IAM policy that allows removing only the tag with the `temporary` key from Auto Scaling groups\.
 

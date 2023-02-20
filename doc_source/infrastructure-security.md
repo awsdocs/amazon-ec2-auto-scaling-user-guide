@@ -6,5 +6,7 @@ You use AWS published API calls to access Amazon EC2 Auto Scaling through the ne
 
 Additionally, requests must be signed by using an access key ID and a secret access key that is associated with an IAM principal\. Or you can use the [AWS Security Token Service](https://docs.aws.amazon.com/STS/latest/APIReference/Welcome.html) \(AWS STS\) to generate temporary security credentials to sign requests\.
 
+You can also use a virtual private cloud \(VPC\) endpoint for Amazon EC2 Auto Scaling\. Interface VPC endpoints enable your Amazon VPC resources to use their private IP addresses to access Amazon EC2 Auto Scaling with no exposure to the public internet\. For more information, see [Amazon EC2 Auto Scaling and interface VPC endpoints](ec2-auto-scaling-vpc-endpoints.md)
+
 **Related topics**
 + [Infrastructure security in Amazon EC2](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/infrastructure-security.html) in the *Amazon EC2 User Guide for Linux Instances*

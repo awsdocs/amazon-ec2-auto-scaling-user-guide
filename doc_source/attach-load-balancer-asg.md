@@ -6,6 +6,8 @@ When you attach an Application Load Balancer, Network Load Balancer, or Gateway 
 
 For an introductory guide for attaching a target group to your Auto Scaling group, see [Tutorial: Set up a scaled and load\-balanced application](tutorial-ec2-auto-scaling-load-balancer.md)\.
 
+Before you begin this procedure, complete the [prerequisites](getting-started-elastic-load-balancing.md)\.
+
 **Contents**
 + [Attach an existing load balancer](#as-add-load-balancer-console)
 + [Detach a load balancer](#as-remove-load-balancer)
@@ -55,6 +57,9 @@ Use the following procedure to attach a load balancer to an existing Auto Scalin
    1. For **Classic Load Balancers**, select its check box and choose your load balancer\.
 
 1. Choose **Update**\.
+
+**Note**  
+You can monitor the status of the load balancer while it is being attached by using the AWS CLI\. When Amazon EC2 Auto Scaling has successfully registered the instances and at least one registered instance passes the health checks, you receive a status of `InService`\. For more information, see [Understand the attachment status of your load balancer](load-balancer-status.md)\.
 
 ## Detach a load balancer<a name="as-remove-load-balancer"></a>
 

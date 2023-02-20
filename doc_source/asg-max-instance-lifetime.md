@@ -11,7 +11,7 @@ To manage the rate of replacement, you can do the following:
 + Add extra time between certain replacements by using instance protection\. This temporarily prevents individual instances in your Auto Scaling group from being replaced\. When you're ready to replace these instances, remove instance protection from each individual instance\. For more information, see [Use instance scale\-in protection](ec2-auto-scaling-instance-protection.md)\.
 
 **Note**  
-Whenever an old instance is replaced and a new instance launches, the new instance uses the launch template or launch configuration that is currently associated with the Auto Scaling group\. If your launch template or launch configuration specifies the AMI ID of a different version of your application, this version of your application will be deployed automatically\.
+Whenever an earlier instance is replaced and a new instance launches, the new instance uses the launch template or launch configuration that is currently associated with the Auto Scaling group\. If your launch template or launch configuration specifies the AMI ID of a different version of your application, this version of your application will be deployed automatically\.
 
 ## Set the maximum instance lifetime<a name="set-maximum-instance-lifetime"></a>
 
