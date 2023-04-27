@@ -98,7 +98,7 @@ Depending on your needs, you might prefer to access monitoring data for predicti
 
 You can view the load and capacity forecast data for a predictive scaling policy in CloudWatch\. This can be useful when visualizing forecasts against other CloudWatch metrics in a single graph\. It can also help when viewing a broader time range so that you can see trends over time\. You can access up to 15 months of historical metrics to get a better perspective on how your policy is performing\.
 
-For more information, see [Predictive scaling metrics and dimensions](ec2-auto-scaling-cloudwatch-monitoring.md#predictive-scaling-metrics)\.
+For more information, see [Predictive scaling metrics and dimensions](ec2-auto-scaling-metrics.md#predictive-scaling-metrics)\.
 
 **To view historical forecast data using the CloudWatch console**
 

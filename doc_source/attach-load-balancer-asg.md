@@ -6,15 +6,16 @@ When you attach an Application Load Balancer, Network Load Balancer, or Gateway 
 
 For an introductory guide for attaching a target group to your Auto Scaling group, see [Tutorial: Set up a scaled and load\-balanced application](tutorial-ec2-auto-scaling-load-balancer.md)\.
 
-Before you begin this procedure, complete the [prerequisites](getting-started-elastic-load-balancing.md)\.
+**Important**  
+Before you continue, complete all [prerequisites](getting-started-elastic-load-balancing.md) in the previous section\.
 
 **Contents**
-+ [Attach an existing load balancer](#as-add-load-balancer-console)
++ [Attach a load balancer](#as-add-load-balancer-console)
 + [Detach a load balancer](#as-remove-load-balancer)
 
-## Attach an existing load balancer<a name="as-add-load-balancer-console"></a>
+## Attach a load balancer<a name="as-add-load-balancer-console"></a>
 
-You can attach an existing load balancer to an Auto Scaling group when you create or update the group\. If you want to create and attach a new Application Load Balancer or Network Load Balancer at the same time that you create the group, see [Configure an Application Load Balancer or Network Load Balancer from the Amazon EC2 Auto Scaling console](as-create-load-balancer-console.md)\. 
+Use the following procedures to attach a load balancer to your Auto Scaling group\. You can specify the load balancer by choosing either a target group that you created for an Application Load Balancer, Network Load Balancer, or Gateway Load Balancer, or a Classic Load Balancer\. 
 
 **To attach an existing load balancer as you are creating a new Auto Scaling group**
 
@@ -38,13 +39,11 @@ You can attach an existing load balancer to an Auto Scaling group when you creat
 
 1. Proceed to create the Auto Scaling group\. Your instances will be automatically registered to the load balancer after the Auto Scaling group has been created\. 
 
-**To attach an existing load balancer to an existing Auto Scaling group**
-
-Use the following procedure to attach a load balancer to an existing Auto Scaling group\. 
+**To attach an existing load balancer to your Auto Scaling group after it's created**
 
 1. Open the Amazon EC2 console at [https://console\.aws\.amazon\.com/ec2/](https://console.aws.amazon.com/ec2/), and choose **Auto Scaling Groups** from the navigation pane\.
 
-1. Select the check box next to an existing group\.
+1. Select the check box next to your Auto Scaling group\.
 
    A split pane opens up in the bottom of the **Auto Scaling groups** page\. 
 
@@ -59,7 +58,7 @@ Use the following procedure to attach a load balancer to an existing Auto Scalin
 1. Choose **Update**\.
 
 **Note**  
-You can monitor the status of the load balancer while it is being attached by using the AWS CLI\. When Amazon EC2 Auto Scaling has successfully registered the instances and at least one registered instance passes the health checks, you receive a status of `InService`\. For more information, see [Understand the attachment status of your load balancer](load-balancer-status.md)\.
+You can monitor the status of the load balancer while it is being attached by using the AWS CLI\. When Amazon EC2 Auto Scaling has successfully registered the instances and at least one registered instance passes the health checks, you receive a status of `InService`\. For more information, see [Verify the attachment status of your load balancer](load-balancer-status.md)\.
 
 ## Detach a load balancer<a name="as-remove-load-balancer"></a>
 

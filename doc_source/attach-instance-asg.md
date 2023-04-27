@@ -80,6 +80,7 @@ The examples use an Auto Scaling group with the following configuration:
                            "LaunchTemplateId": "lt-050555ad16a3f9c7f"
                        },
                        "InstanceId": "i-05b4f7d5be44822a6",
+                       "InstanceType": "t2.micro",
                        "HealthStatus": "Healthy",
                        "LifecycleState": "Pending"
                    },
@@ -92,6 +93,7 @@ The examples use an Auto Scaling group with the following configuration:
                            "LaunchTemplateId": "lt-050555ad16a3f9c7f"
                        },
                        "InstanceId": "i-0c20ac468fa3049e8",
+                       "InstanceType": "t2.micro",
                        "HealthStatus": "Healthy",
                        "LifecycleState": "InService"
                    }

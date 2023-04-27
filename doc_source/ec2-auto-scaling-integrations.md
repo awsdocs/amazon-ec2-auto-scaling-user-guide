@@ -8,5 +8,6 @@ Amazon EC2 Auto Scaling can be integrated with other AWS services\. Review the f
 + [Create Auto Scaling groups from the command line using AWS CloudShell](create-auto-scaling-groups-with-cloudshell.md)
 + [Use AWS Compute Optimizer to get recommendations for the instance type for an Auto Scaling group](asg-getting-recommendations.md)
 + [Use Elastic Load Balancing to distribute traffic across the instances in your Auto Scaling group](autoscaling-load-balancer.md)
++ [Route traffic to your Auto Scaling group with a VPC Lattice target group](ec2-auto-scaling-vpc-lattice.md)
 + [Use EventBridge to handle Auto Scaling events](automating-ec2-auto-scaling-with-eventbridge.md)
 + [Provide network connectivity for your Auto Scaling instances using Amazon VPC](asg-in-vpc.md)

@@ -33,7 +33,7 @@ Use the following procedure to expand your Auto Scaling group and load balancer 
 
 1. To update the Availability Zones for your load balancer so that it shares the same Availability Zones as your Auto Scaling group, complete the following steps:
 
-   1. On the navigation pane, under **LOAD BALANCING**, choose **Load Balancers**\.
+   1. On the navigation pane, under **Load Balancing**, choose **Load Balancers**\.
 
    1. Choose your load balancer\.
 
@@ -71,7 +71,7 @@ To remove an Availability Zone from your Auto Scaling group and load balancer, u
 
 1. To update the Availability Zones for your load balancer so that it shares the same Availability Zones as your Auto Scaling group, complete the following steps:
 
-   1. On the navigation pane, under **LOAD BALANCING**, choose **Load Balancers**\.
+   1. On the navigation pane, under **Load Balancing**, choose **Load Balancers**\.
 
    1. Choose your load balancer\.
 

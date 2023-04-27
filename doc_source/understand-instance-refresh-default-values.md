@@ -1,8 +1,22 @@
 # Understand the default values for an instance refresh<a name="understand-instance-refresh-default-values"></a>
 
-You can use the AWS Management Console or a configuration file at the command line to customize various preferences that affect the instance refresh\. Some preference defaults are different depending on whether you use the console or the command line\. 
+Before you start an instance refresh, you can customize various preferences that affect the instance refresh\. Some preference defaults are different depending on whether you use the console or the command line \(AWS CLI or AWS SDK\)\.
 
-When you start an instance refresh, you can change any of the following preferences:
+The following table lists the default values for the instance refresh settings\.
+
+
+| Setting | AWS CLI or AWS SDK | Amazon EC2 Auto Scaling console | 
+| --- | --- | --- | 
+| Auto rollback | Disabled \(false\) | Disabled | 
+| Checkpoints | Disabled \(false\) | Disabled | 
+| Checkpoint delay | 1 hour \(3600 seconds\) | 1 hour | 
+| Instance warmup | The [default instance warmup](ec2-auto-scaling-default-instance-warmup.md), if defined, or the [health check grace period](health-check-grace-period.md) otherwise\. | The [default instance warmup](ec2-auto-scaling-default-instance-warmup.md), if defined, or the [health check grace period](health-check-grace-period.md) otherwise\. | 
+| Minimum healthy percentage | 90 | 90 | 
+| Scale\-in protected instances | Wait | Ignore | 
+| Skip matching | Disabled \(false\) | Enabled | 
+| Standby instances | Wait | Ignore | 
+
+A description of each setting follows:
 
 **Auto rollback \(`AutoRollback`\)**  
 Choose whether to roll back the Auto Scaling group to its previous configuration if the instance refresh fails\. For more information, see [Undo changes with a rollback](instance-refresh-rollback.md)\. 
@@ -35,19 +49,3 @@ Amazon EC2 Auto Scaling provides the following options:
 + **Terminate** \(`Terminate`\) — Terminates instances that are in `Standby`\.
 + **Ignore** \(`Ignore`\) — Ignores instances that are in `Standby` and continues to replace instances that are in the `InService` state\.
 + **Wait** \(`Wait`\) — Waits one hour for you to return the instances to service\. If you don't do so, the instance refresh fails\.
-
-The default values depend on whether you start the instance refresh from the command line \(AWS CLI or AWS SDK\) or the console\.
-
-The following table lists the default values for the instance refresh settings\.
-
-
-| Setting | AWS CLI or AWS SDK | Amazon EC2 Auto Scaling console | 
-| --- | --- | --- | 
-| Auto rollback | Disabled \(false\) | Disabled | 
-| Checkpoints | Disabled \(false\) | Disabled | 
-| Checkpoint delay | 1 hour \(3600 seconds\) | 1 hour | 
-| Instance warmup | The [default instance warmup](ec2-auto-scaling-default-instance-warmup.md), if defined, or the [health check grace period](health-check-grace-period.md) otherwise\. | The [default instance warmup](ec2-auto-scaling-default-instance-warmup.md), if defined, or the [health check grace period](health-check-grace-period.md) otherwise\. | 
-| Minimum healthy percentage | 90 | 90 | 
-| Scale\-in protected instances | Wait | Ignore | 
-| Skip matching | Disabled \(false\) | Enabled | 
-| Standby instances | Wait | Ignore | 

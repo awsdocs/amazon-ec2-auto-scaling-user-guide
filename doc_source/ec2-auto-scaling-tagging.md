@@ -231,9 +231,7 @@ For example, you could create an IAM policy that allows removing only the tag wi
     "Statement": [
         {
             "Effect": "Allow",
-            "Action": [        
-                "autoscaling:DeleteTags"
-            ],
+            "Action": "autoscaling:DeleteTags",
             "Resource": "*",
             "Condition": {
                 "ForAllValues:StringEquals": { "aws:TagKeys": ["temporary"] }

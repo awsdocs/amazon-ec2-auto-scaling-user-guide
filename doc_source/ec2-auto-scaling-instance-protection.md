@@ -1,13 +1,20 @@
 # Use instance scale\-in protection<a name="ec2-auto-scaling-instance-protection"></a>
 
-To control whether an Auto Scaling group can terminate a particular instance when scaling in, use instance scale\-in protection\. You can enable the instance scale\-in protection setting on an Auto Scaling group or on an individual Auto Scaling instance\. When Amazon EC2 Auto Scaling launches a new instance or moves an instance from a warm pool into the Auto Scaling group, the instance inherits the instance scale\-in protection setting of the Auto Scaling group\. You can change the instance scale\-in protection setting for an Auto Scaling group or an Auto Scaling instance at any time\.
+When a scaling activity occurs, Amazon EC2 Auto Scaling does one of the following:
++ Increases the capacity of the Auto Scaling group \(referred to as *scaling out*\)
++ Decreases the capacity of the Auto Scaling group \(referred to as *scaling in*\)
 
-Instance scale\-in protection starts when the instance state is `InService`\. If you detach an instance that is protected from scale\-in, its instance scale\-in protection setting is lost\. When you attach the instance to the group again, it inherits the current instance scale\-in protection setting of the group\.
+The instance scale\-in protection setting controls whether the Auto Scaling group can terminate a particular instance when scaling in\. A common use case for such a requirement is scaling container\-based workloads\.
+
+You can protect instances as soon as they launch by enabling the instance scale\-in protection setting on your Auto Scaling group\. Instance scale\-in protection starts when the instance state is `InService`\. Then, to control which instances can terminate, disable the scale\-in protection setting on individual instances within the Auto Scaling group\. By doing so, you can continue to protect certain instances from unwanted terminations\. 
 
 Instance scale\-in protection does not protect Auto Scaling instances from the following:
-+ Manual termination through the Amazon EC2 console, the `terminate-instances` command, or the `TerminateInstances` action\. To protect Auto Scaling instances from manual termination, enable Amazon EC2 termination protection\. For more information, see [Enabling termination protection](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/terminating-instances.html#Using_ChangingDisableAPITermination) in the *Amazon EC2 User Guide for Linux Instances*\.
++ Manual termination through the `terminate-instance-in-auto-scaling-group` command, or the `TerminateInstanceInAutoScalingGroup` action\. For more information, see [TerminateInstanceInAutoScalingGroup](https://docs.aws.amazon.com/autoscaling/ec2/APIReference/API_TerminateInstanceInAutoScalingGroup.html) in the *Amazon EC2 Auto Scaling API Reference*\.
++ Manual termination through the Amazon EC2 console, the Amazon EC2 `terminate-instances` command, or the Amazon EC2 `TerminateInstances` action\. To protect Auto Scaling instances from manual termination, enable Amazon EC2 termination protection\. \(This does not prevent Amazon EC2 Auto Scaling from terminating instances\.\) For more information, see [Enabling termination protection](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/terminating-instances.html#Using_ChangingDisableAPITermination) in the *Amazon EC2 User Guide for Linux Instances*\.
 + Health check replacement if the instance fails health checks\. For more information, see [Health checks for Auto Scaling instances](ec2-auto-scaling-health-checks.md)\.
 + Spot Instance interruptions\. A Spot Instance is terminated when capacity is no longer available or the Spot price exceeds your maximum price\. 
+
+If you detach an instance that is protected from scale\-in, its instance scale\-in protection setting is lost\. When you attach the instance to the group again, it inherits the current instance scale\-in protection setting of the group\. When Amazon EC2 Auto Scaling launches a new instance or moves an instance from a warm pool into the Auto Scaling group, the instance inherits the instance scale\-in protection setting of the Auto Scaling group\. 
 
 **Topics**
 + [Enable instance scale\-in protection for a group](#instance-protection-group)

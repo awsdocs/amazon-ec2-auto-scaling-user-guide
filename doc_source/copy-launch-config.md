@@ -1,8 +1,6 @@
 # Copy launch configurations to launch templates<a name="copy-launch-config"></a>
 
-To migrate from launch configurations to launch templates, you must copy or recreate your launch configurations as launch templates\. We recommend that you migrate to launch templates to take advantage of the latest features of Amazon EC2 and Amazon EC2 Auto Scaling\. 
-
-If you copy your launch configurations, you can migrate them all at once, or you can perform an incremental migration over time by choosing which launch configurations to copy\. The copying feature is available only from the console\. 
+To migrate your existing Auto Scaling groups from launch configurations to launch templates, you must copy or recreate your launch configurations as launch templates\. This topic shows you how to copy your launch configurations to launch templates using the Amazon EC2 Auto Scaling console\. The copying feature is available only from the console\. 
 
 **To copy a launch configuration to a launch template \(console\)**
 
@@ -30,4 +28,7 @@ If you know that you want to copy all launch configurations to launch templates,
 
 1. Choose **Copy**\.
 
-Next, you can update your existing Auto Scaling groups to specify the launch templates that you created\. For more information, see [Replace a launch configuration with a launch template](replace-launch-config.md)\. As another option, you can follow the procedure in [Replace Auto Scaling instances based on an instance refresh](asg-instance-refresh.md) to add the new launch templates to your Auto Scaling groups and update your Auto Scaling instances immediately\.
+**Note**  
+Next, you can update your existing Auto Scaling groups and choose the launch templates that you created\. For more information, see the following topics:  
+To switch an Auto Scaling group to use a launch template, see [Replace a launch configuration with a launch template](replace-launch-config.md)\.
+To migrate all your Auto Scaling groups to use launch templates, see [Migrate to launch templates](launch-templates.md#migrate-to-launch-templates)\.

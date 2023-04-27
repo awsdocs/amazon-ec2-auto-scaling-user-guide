@@ -1,5 +1,8 @@
 # Create a launch configuration using an EC2 instance<a name="create-lc-with-instanceID"></a>
 
+**Important**  
+We provide information about launch configurations for customers who have not yet migrated from launch configurations to launch templates\. For information about migrating existing Auto Scaling groups to launch templates, see [Migrate to launch templates](launch-templates.md#migrate-to-launch-templates) and [Amazon EC2 Auto Scaling will no longer add support for new EC2 features to Launch Configurations](http://aws.amazon.com/blogs/compute/amazon-ec2-auto-scaling-will-no-longer-add-support-for-new-ec2-features-to-launch-configurations/) on the AWS Compute Blog\.
+
 Amazon EC2 Auto Scaling provides you with an option to create a launch configuration using the attributes from a running EC2 instance\.
 
 If the specified instance has properties that are not currently supported by launch configurations, the instances launched by the Auto Scaling group might not be identical to the original EC2 instance\.

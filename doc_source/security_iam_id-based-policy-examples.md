@@ -47,7 +47,6 @@ This sample policy grants permissions to create, modify, and delete Auto Scaling
   + [Allow users to create and use launch configurations](#policy-example-launch-configuration)
 + [Permissions required to create a service\-linked role](#ec2-auto-scaling-slr-permissions)
   + [Control which service\-linked role can be passed \(using PassRole\)](#policy-example-pass-role)
-+ [Additional permissions for Amazon EC2 Auto Scaling](#ec2-auto-scaling-api-permissions)
 
 ## Policy best practices<a name="security_iam_service-with-iam-policy-best-practices"></a>
 
@@ -162,7 +161,7 @@ The following policy grants permissions to use all Amazon EC2 Auto Scaling actio
    "Statement": [
    {
       "Effect": "Allow",
-      "Action": ["autoscaling:*Scaling*"],
+      "Action": "autoscaling:*Scaling*",
       "Resource": "*",
       "Condition": {
           "StringEquals": { "autoscaling:ResourceTag/purpose": "webserver" }
@@ -178,7 +177,7 @@ The following policy grants permissions to use all Amazon EC2 Auto Scaling actio
 
 #### Control which scaling policies can be deleted<a name="policy-example-delete-policy"></a>
 
-The following policy grants permissions to use the `autoscaling:DeletePolicy` action to delete a scaling policy\. However, it also denies the action if the Auto Scaling group being acted upon has the tag `environment=production`\.
+The following policy grants permissions to use the `DeletePolicy` action to delete a scaling policy\. However, it also denies the action if the Auto Scaling group being acted upon has the tag `environment=production`\.
 
 ```
 {
@@ -378,26 +377,3 @@ The following policy grants permissions to pass the **AWSServiceRoleForAutoScali
 ```
 
 For more information about custom suffix service\-linked roles, see [Service\-linked roles for Amazon EC2 Auto Scaling](autoscaling-service-linked-role.md)\.
-
-## Additional permissions for Amazon EC2 Auto Scaling<a name="ec2-auto-scaling-api-permissions"></a>
-
-In addition to Amazon EC2 Auto Scaling permissions, users must have the following permissions from Amazon EC2 and IAM to successfully perform the specified action\.
-
-**Create an Auto Scaling group \(`autoscaling:CreateAutoScalingGroup`\)**
-+ `iam:CreateServiceLinkedRole` \(Needed if you are using the default service\-linked role and that role does not yet exist\) 
-+ `iam:PassRole` \(Needed if you are using a nondefault service\-linked role, you are specifying an IAM role for the `RoleARN` parameter for a lifecycle hook, or you are using a launch template that specifies the IAM role that can be used by the instances in the Auto Scaling group\)
-+ `ec2:RunInstance` \(Needed if you are using a launch template\)
-+ `ec2:CreateTags` \(Needed if you are using a launch template that specifies the tags to apply to your instances and EBS volumes\)
-
-**Create a launch configuration \(`autoscaling:CreateLaunchConfiguration`\)**
-+ `ec2:DescribeImages`
-+ `ec2:DescribeInstances`
-+ `ec2:DescribeInstanceAttribute`
-+ `ec2:DescribeKeyPairs`
-+ `ec2:DescribeSecurityGroups`
-+ `ec2:DescribeSpotInstanceRequests`
-+ `ec2:DescribeVpcClassicLink`
-+ `iam:PassRole` \(Needed if you are specifying an IAM role for the `IamInstanceProfile` parameter\) 
-
-**Create a lifecycle hook \(`autoscaling:PutLifecycleHook`\)**
-+ `iam:PassRole` \(Only needed if you are specifying an IAM role for the `RoleARN` parameter\) 

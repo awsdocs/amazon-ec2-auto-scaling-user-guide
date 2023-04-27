@@ -21,6 +21,7 @@ We recommend that you read the Amazon EC2 topics first\. See [Identity and acces
 **Topics**
 + [Access control](#access-control)
 + [How Amazon EC2 Auto Scaling works with IAM](control-access-using-iam.md)
++ [Amazon EC2 Auto Scaling API permissions](ec2-auto-scaling-api-permissions.md)
 + [AWS managed policies for Amazon EC2 Auto Scaling](security-iam-awsmanpol.md)
 + [Service\-linked roles for Amazon EC2 Auto Scaling](autoscaling-service-linked-role.md)
 + [Amazon EC2 Auto Scaling identity\-based policy examples](security_iam_id-based-policy-examples.md)

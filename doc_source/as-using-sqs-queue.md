@@ -62,7 +62,7 @@ A custom metric is defined using a metric name and namespace of your choosing\. 
 
 Follow this procedure to create the custom metric by first reading information from your AWS account\. Then, calculate the backlog per instance metric, as recommended in an earlier section\. Lastly, publish this number to CloudWatch at a 1\-minute granularity\. Whenever possible, we strongly recommend that you scale on metrics with a 1\-minute granularity to ensure a faster response to changes in system load\. 
 
-**To create a CloudWatch custom metric**
+**To create a CloudWatch custom metric \(AWS CLI\)**
 
 1. Use the SQS [get\-queue\-attributes](https://docs.aws.amazon.com/cli/latest/reference/sqs/get-queue-attributes.html) command to get the number of messages waiting in the queue \(`ApproximateNumberOfMessages`\)\. 
 
@@ -79,9 +79,9 @@ Follow this procedure to create the custom metric by first reading information f
 
 1. Calculate the backlog per instance by dividing the approximate number of messages available for retrieval from the queue by the group's running capacity\. 
 
-1. Publish the results at a 1\-minute granularity as a CloudWatch custom metric\. 
+1. Create a script that runs every minute to retrieve the backlog per instance value and publish it to a CloudWatch custom metric\. When you publish a custom metric, you specify the metric's name, namespace, unit, value, and zero or more dimensions\. A dimension consists of a dimension name and a dimension value\.
 
-   Here is an example CLI [put\-metric\-data](https://docs.aws.amazon.com/cli/latest/reference/cloudwatch/put-metric-data.html) command\.
+   To publish your custom metric, replace placeholder values in *italics* with your preferred metric name, the metric's value, a namespace \(as long as it doesn’t begin with "`AWS`"\), and dimensions \(optional\), and then run the following [put\-metric\-data](https://docs.aws.amazon.com/cli/latest/reference/cloudwatch/put-metric-data.html) command\. 
 
    ```
    aws cloudwatch put-metric-data --metric-name MyBacklogPerInstance --namespace MyNamespace \
@@ -92,13 +92,13 @@ After your application is emitting the desired metric, the data is sent to Cloud
 
 ### Step 2: Create a target tracking scaling policy<a name="create-sqs-policies-cli"></a>
 
-After publishing your custom metric, create a target tracking scaling policy with a customized metric specification\. 
+The metric you created can now be added to a target tracking scaling policy\.
 
-**To create a target tracking scaling policy**
+**To create a target tracking scaling policy \(AWS CLI\)**
 
-1. Use the following command to specify a target value for your scaling policy in a `config.json` file in your home directory\. 
+1. Use the following `cat` command to store a target value for your scaling policy and a customized metric specification in a JSON file named `config.json` in your home directory\. Replace placeholder values in *italics* with your own values\. For the `TargetValue`, calculate the acceptable backlog per instance metric and enter it here\. To calculate this number, decide on a normal latency value and divide it by the average time that it takes to process a message, as described in an earlier section\. 
 
-   For the `TargetValue`, calculate the acceptable backlog per instance metric and enter it here\. To calculate this number, decide on a normal latency value and divide it by the average time that it takes to process a message\. 
+   If you didn't specify any dimensions for the metric you created in step 1, don't include any dimensions in the customized metric specification\.
 
    ```
    $ cat ~/config.json
@@ -135,7 +135,7 @@ After your setup is complete, verify that your scaling policy is working\. You c
 
 **To test the scale\-out function**
 
-1. Follow the steps in [Tutorial: Sending a message to an Amazon SQS queue](https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-send-message.html) to add messages to your queue\. Make sure that you have increased the number of messages in the queue so that the backlog per instance metric exceeds the target value\.
+1. Follow the steps in [Sending messages to a queue \(console\)](https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-using-send-messages.html) to add messages to your queue\. Make sure that you have increased the number of messages in the queue so that the backlog per instance metric exceeds the target value\.
 
    It can take a few minutes for your changes to invoke the alarm\.
 
@@ -147,7 +147,7 @@ After your setup is complete, verify that your scaling policy is working\. You c
 
 **To test the scale\-in function**
 
-1. Follow the steps in [Tutorial: Sending a message to an Amazon SQS queue](https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-send-message.html) to remove messages from the queue\. Make sure that you have decreased the number of messages in the queue so that the backlog per instance metric is below the target value\.
+1. Follow the steps in [Receiving and deleting messages \(console\)](https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-using-receive-delete-message.html) to delete messages from the queue\. Make sure that you have decreased the number of messages in the queue so that the backlog per instance metric is below the target value\.
 
    It can take a few minutes for your changes to invoke the alarm\.
 

@@ -165,15 +165,15 @@ The role uses the [`AutoScalingServiceRolePolicy`](security-iam-awsmanpol.md) po
 ```
 
 The role has permissions to do all of the following:
-+ `ec2` \- Create, describe, modify, start/stop, and terminate EC2 instances\. 
-+ `iam` \- [Pass IAM roles](us-iam-role.md) to EC2 instances so that applications running on the instances can access temporary credentials for the role\.
-+ `iam` \- Create the **AWSServiceRoleForEC2Spot** service\-linked role to allow Amazon EC2 Auto Scaling to launch Spot Instances on your behalf\.
-+ `elasticloadbalancing` \- Register and deregister instances with Elastic Load Balancing and check the health of registered targets\.
-+ `cloudwatch` \- Create, describe, modify, and delete CloudWatch alarms for scaling policies and retrieve metrics used for predictive scaling\.
-+ `sns` \- Publish notifications to Amazon SNS when instances launch or terminate\. 
-+ `events` \- Create, describe, update, and delete EventBridge rules on your behalf\.
-+ `ssm` \- Read parameters from Parameter Store when using a Systems Manager parameter as an alias for an AMI ID in a launch template\.
-+ `vpc-lattice` \- Register and deregister instances with VPC Lattice and check the health of registered targets\.
++ `ec2` — Create, describe, modify, start/stop, and terminate EC2 instances\. 
++ `iam` — [Pass IAM roles](us-iam-role.md) to EC2 instances so that applications running on the instances can access temporary credentials for the role\.
++ `iam` — Create the **AWSServiceRoleForEC2Spot** service\-linked role to allow Amazon EC2 Auto Scaling to launch Spot Instances on your behalf\.
++ `elasticloadbalancing` — Register and deregister instances with Elastic Load Balancing and check the health of registered targets\.
++ `cloudwatch` — Create, describe, modify, and delete CloudWatch alarms for scaling policies and retrieve metrics used for predictive scaling\.
++ `sns` — Publish notifications to Amazon SNS when instances launch or terminate\. 
++ `events` — Create, describe, update, and delete EventBridge rules on your behalf\.
++ `ssm` — Read parameters from Parameter Store when using a Systems Manager parameter as an alias for an AMI ID in a launch template\.
++ `vpc-lattice` — Register and deregister instances with VPC Lattice and check the health of registered targets\.
 
 ## Create a service\-linked role \(automatic\)<a name="create-service-linked-role"></a>
 

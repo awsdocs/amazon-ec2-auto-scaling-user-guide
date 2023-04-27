@@ -3,8 +3,8 @@
 In the Amazon EC2 Auto Scaling section of the Amazon EC2 console, you can monitor minute\-by\-minute progress of individual Auto Scaling groups using CloudWatch metrics\. 
 
 You can monitor the following types of metrics: 
-+ **Auto Scaling metrics** – Auto Scaling metrics are turned on only when you enable them\. For more information, see [Enable Auto Scaling group metrics \(console\)](ec2-auto-scaling-cloudwatch-monitoring.md#as-enable-group-metrics)\. When Auto Scaling metrics are enabled, the monitoring graphs show data published at one\-minute granularity for Auto Scaling metrics\.
-+ **EC2 metrics** – If detailed monitoring is enabled, the monitoring graphs show data published at one\-minute granularity for instance metrics\. For more information, see [Configure monitoring for Auto Scaling instances](enable-as-instance-metrics.md)\. 
++ **Auto Scaling metrics** – Auto Scaling metrics are turned on only when you enable them\. For more information, see [Enable Auto Scaling group metrics \(console\)](ec2-auto-scaling-metrics.md#as-enable-group-metrics)\. When Auto Scaling metrics are enabled, the monitoring graphs show data published at one\-minute granularity for Auto Scaling metrics\.
++ **EC2 metrics** – The Amazon EC2 instance metrics are always enabled\. When detailed monitoring is enabled, the monitoring graphs show data published at one\-minute granularity for instance metrics\. For more information, see [Configure monitoring for Auto Scaling instances](enable-as-instance-metrics.md)\. 
 
 **To view monitoring graphs using the Amazon EC2 Auto Scaling console**
 
@@ -33,49 +33,63 @@ You can monitor the following types of metrics:
 
 After you create an Auto Scaling group, you can open the Amazon EC2 Auto Scaling console and view the monitoring graphs for the group on the **Monitoring** tab\. 
 
-In the **Auto Scaling** section, the graph metrics include the following overall metrics\. These metrics provide measurements that can be indicators of a potential issue, such as number of terminating instances or number of pending instances\.
-+ **Minimum Group Size** \(based on `GroupMinSize`\)
-+ **Maximum Group Size** \(based on `GroupMaxSize`\)
-+ **Desired Capacity** \(based on `GroupDesiredCapacity`\)
-+ **In Service Instances** \(based on `GroupInServiceInstances`\)
-+ **Pending Instances** \(based on `GroupPendingInstances`\)
-+ **Standby Instances** \(based on `GroupStandbyInstances`\)
-+ **Terminating Instances** \(based on `GroupTerminatingInstances`\)
-+ **Total Instances** \(based on `GroupTotalInstances`\)
+In the **Auto Scaling** section, the graph metrics include the following metrics\. These metrics provide measurements that can be indicators of a potential issue, such as number of terminating instances or number of pending instances\. You can find definitions for these metrics in [Amazon CloudWatch metrics for Amazon EC2 Auto Scaling](ec2-auto-scaling-metrics.md)\.
 
-In the **EC2** section, you can find the following graph metrics based on key performance metrics for your Amazon EC2 instances\. These EC2 metrics are an aggregate of metrics for all instances in the group\.
-+ **CPU Utilization** \(based on `CPUUtilization`\)
-+ **Disk Reads** \(based on `DiskReadBytes`\)
-+ **Disk Read Operations** \(based on `DiskReadOps`\)
-+ **Disk Writes** \(based on `DiskWriteBytes`\)
-+ **Disk Write Operations** \(based on `DiskWriteOps`\)
-+ **Network In** \(based on `NetworkIn`\)
-+ **Network Out** \(based on `NetworkOut`\)
-+ **Status Check Failed \(Any\)** \(based on `StatusCheckFailed`\)
-+ **Status Check Failed \(Instance\)** \(based on `StatusCheckFailed_Instance`\)
-+ **Status Check Failed \(System\)** \(based on `StatusCheckFailed_System`\)
 
-You can use the next set of **Auto Scaling** graph metrics to measure specific features of specific groups\.
+| Display name | CloudWatch metric name | 
+| --- | --- | 
+|  Minimum Group Size |  GroupMinSize  | 
+|  Maximum Group Size | GroupMaxSize  | 
+|  Desired Capacity |  GroupDesiredCapacity  | 
+|  In Service Instances |  GroupInServiceInstances  | 
+|  Pending Instances |  GroupPendingInstances  | 
+|  Standby Instances |  GroupStandbyInstances  | 
+| Terminating Instances |  GroupTerminatingInstances  | 
+| Total Instances |  GroupTotalInstances  | 
 
-The following metric data is available for groups where instances have weights that define how many units each instance contributes to the desired capacity of the group:
-+ **In Service Capacity Units** \(based on `GroupInServiceCapacity`\)
-+ **Pending Capacity Units** \(based on `GroupPendingCapacity`\)
-+ **Standby Capacity Units** \(based on `GroupStandbyCapacity`\)
-+ **Terminating Capacity Units** \(based on `GroupTerminatingCapacity`\)
-+ **Total Capacity Units** \(based on `GroupTotalCapacity`\)
+In the **EC2** section, you can find the following graph metrics based on key performance metrics for your Amazon EC2 instances\. These EC2 metrics are an aggregate of metrics for all instances in the group\. You can find definitions for these metrics in [List the available CloudWatch metrics for your instances](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/viewing_metrics_with_cloudwatch.html) in the *Amazon EC2 User Guide for Linux Instances*\. 
 
-The following metric data is available if the group uses the [warm pool](ec2-auto-scaling-warm-pools.md) feature:
-+ **Warm Pool Minimum Size** \(based on `WarmPoolMinSize`\)
-+ **Warm Pool Desired Capacity** \(based on `WarmPoolDesiredCapacity`\)
-+ **Warm Pool Pending Capacity Units** \(based on `WarmPoolPendingCapacity`\)
-+ **Warm Pool Terminating Capacity Units** \(based on `WarmPoolTerminatingCapacity`\)
-+ **Warm Pool Warmed Capacity Units** \(based on `WarmPoolWarmedCapacity`\)
-+ **Warm Pool Total Capacity Units Launched** \(based on `WarmPoolTotalCapacity`\)
-+ **Group and Warm Pool Desired Capacity** \(based on `GroupAndWarmPoolDesiredCapacity`\)
-+ **Group and Warm Pool Total Capacity Units Launched** \(based on `GroupAndWarmPoolTotalCapacity`\)
+
+| Display name | CloudWatch metric name | 
+| --- | --- | 
+| CPU Utilization | CPUUtilization | 
+| Disk Reads | DiskReadBytes | 
+| Disk Read Operations | DiskReadOps | 
+| Disk Writes | DiskWriteBytes | 
+| Disk Write Operations | DiskWriteOps | 
+| Network In | NetworkIn | 
+| Network Out | NetworkOut | 
+| Status Check Failed \(Any\) | StatusCheckFailed | 
+| Status Check Failed \(Instance\) | StatusCheckFailed\_Instance | 
+| Status Check Failed \(System\) | StatusCheckFailed\_System | 
+
+In addition, some metrics are available for specific use cases in the **Auto Scaling** graph metrics\.
+
+The following metrics are useful if your group uses weights that define how many units each instance contributes to the desired capacity of the group\. You can find definitions for these metrics in [Amazon CloudWatch metrics for Amazon EC2 Auto Scaling](ec2-auto-scaling-metrics.md)\.
+
+
+| Display name | CloudWatch metric name | 
+| --- | --- | 
+|  In Service Capacity Units | GroupInServiceCapacity | 
+| Pending Capacity Units | GroupPendingCapacity | 
+| Standby Capacity Units | GroupStandbyCapacity | 
+| Terminating Capacity Units | GroupTerminatingCapacity | 
+| Total Capacity Units | GroupTotalCapacity | 
+
+The following metrics are useful if your group uses the [warm pool](ec2-auto-scaling-warm-pools.md) feature\. You can find definitions for these metrics in [Amazon CloudWatch metrics for Amazon EC2 Auto Scaling](ec2-auto-scaling-metrics.md)\.
+
+
+| Display name | CloudWatch metric name | 
+| --- | --- | 
+| Warm Pool Minimum Size | WarmPoolMinSize | 
+| Warm Pool Desired Capacity | WarmPoolDesiredCapacity | 
+| Warm Pool Pending Capacity Units | WarmPoolPendingCapacity | 
+| Warm Pool Terminating Capacity Units | WarmPoolTerminatingCapacity | 
+| Warm Pool Warmed Capacity Units | WarmPoolWarmedCapacity | 
+| Warm Pool Total Capacity Units Launched | WarmPoolTotalCapacity | 
+| Group and Warm Pool Desired Capacity | GroupAndWarmPoolDesiredCapacity | 
+| Group and Warm Pool Total Capacity Units Launched | GroupAndWarmPoolTotalCapacity | 
 
 ### See also<a name="graph-metrics-see-also"></a>
-
-For information about the data source for the **EC2** graph metrics, see [List the available CloudWatch metrics for your instances](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/viewing_metrics_with_cloudwatch.html) in the *Amazon EC2 User Guide for Linux Instances*\. 
 
 To monitor per\-instance metrics, see [Graph metrics for your instances](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/graphs-in-the-aws-management-console.html) in the *Amazon EC2 User Guide for Linux Instances*\. 

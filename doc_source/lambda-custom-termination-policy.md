@@ -9,7 +9,7 @@ A custom termination policy provides better control over which instances are ter
 **Topics**
 + [Input data](#lambda-custom-termination-policy-input-data)
 + [Response data](#lambda-custom-termination-policy-response-data)
-+ [Considerations when using a custom termination policy](#lambda-termination-policy-considerations)
++ [Considerations](#lambda-termination-policy-considerations)
 + [Create the Lambda function](#lambda-custom-termination-policy-create-function)
 + [Limitations](#lambda-custom-termination-policy-limitations)
 
@@ -104,13 +104,14 @@ When no instances are ready to terminate, the response from your Lambda function
 }
 ```
 
-## Considerations when using a custom termination policy<a name="lambda-termination-policy-considerations"></a>
+## Considerations<a name="lambda-termination-policy-considerations"></a>
 
 Note the following considerations when using a custom termination policy:
 + Returning an instance first in the response data does not guarantee its termination\. If more than the required number of instances are returned when your Lambda function is invoked, Amazon EC2 Auto Scaling evaluates each instance against the other termination policies that you specified for your Auto Scaling group\. When there are multiple termination policies, it tries to apply the next termination policy in the list, and if there are more instances than are required to terminate, it moves on to the next termination policy, and so on\. If no other termination policies are specified, then the default termination policy is used to determine which instances to terminate\.
 + If no instances are returned or your Lambda function times out, then Amazon EC2 Auto Scaling waits a short time before invoking your function again\. For any scale\-in event, it keeps trying as long as the group's desired capacity is less than its current capacity\. For instance refresh\-based terminations, it keeps trying for an hour\. After that, if it continues to fail to terminate any instances, the instance refresh operation fails\. With maximum instance lifetime, Amazon EC2 Auto Scaling keeps trying to terminate the instance that is identified as exceeding its maximum lifetime\. 
 + Because your function is retried repeatedly, make sure to test and fix any permanent errors in your code before using a Lambda function as a custom termination policy\.
 + If you override the input data with your own list of instances to terminate, and terminating these instances puts the Availability Zones out of balance, Amazon EC2 Auto Scaling gradually rebalances the distribution of capacity across Availability Zones\. First, it invokes your Lambda function to see if there are instances that are ready to be terminated so that it can determine whether to start rebalancing\. If there are instances ready to be terminated, it launches new instances first\. When the instances finish launching, it then detects that your group's current capacity is higher than its desired capacity and initiates a scale\-in event\.
++ A custom termination policy does not affect your ability to also use scale\-in protection to protect certain instances from being terminated\. For more information, see [Use instance scale\-in protection](ec2-auto-scaling-instance-protection.md)\.
 
 ## Create the Lambda function<a name="lambda-custom-termination-policy-create-function"></a>
 
@@ -163,4 +164,3 @@ For examples that you can use as a reference for developing your Lambda function
 + You cannot use a qualified ARN with the `$LATEST` suffix\. If you try to add a custom termination policy that refers to a qualified ARN with the `$LATEST` suffix, it will result in an error\.
 + The number of instances provided in the input data is limited to 30,000 instances\. If there are more than 30,000 instances that could be terminated, the input data includes `"HasMoreInstances": true` to indicate that the maximum number of instances are returned\. 
 + The maximum run time for your Lambda function is two seconds \(2000 milliseconds\)\. As a best practice, you should set the timeout value of your Lambda function based on your expected run time\. Lambda functions have a default timeout of three seconds, but this can be decreased\.
-+ Amazon EC2 Auto Scaling won't terminate instances that have instance scale\-in protection enabled\.

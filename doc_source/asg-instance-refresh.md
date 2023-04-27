@@ -4,6 +4,8 @@ You can use an instance refresh to update the instances in your Auto Scaling gro
 
 An instance refresh can be helpful when you have a new Amazon Machine Image \(AMI\) or a new user data script\. To use an instance refresh, first create a new launch template that specifies the new AMI or user data script\. Then, start an instance refresh to begin updating the instances in the group immediately\. 
 
+An instance refresh can also be helpful when you are migrating your Auto Scaling groups from launch configurations to launch templates\. First, copy your launch configurations to new launch templates\. Then, start an instance refresh that specifies the launch template as part of the desired configuration to begin updating the instances in the group immediately\. For more information about migrating to launch templates, see [Migrate to launch templates](launch-templates.md#migrate-to-launch-templates)\.
+
 **Topics**
 + [How it works](#instance-refresh-how-it-works)
 + [Core concepts and terms](#instance-refresh-core-concepts)
@@ -24,7 +26,7 @@ The following example steps show how you might use an instance refresh to update
 + You configure the minimum healthy percentage, instance warmup, and checkpoints, specify your desired configuration that includes your launch template, and start an instance refresh\. The desired configuration can optionally specify whether a [mixed instances policy](ec2-auto-scaling-mixed-instances-groups.md) is to be applied\.
 + Amazon EC2 Auto Scaling starts performing a rolling replacement of the instances\. It takes a set of instances out of service, terminates them, and launches a set of instances with the new desired configuration\. Then, it waits until the instances pass your health checks and complete warmup before it moves on to replacing other instances\. 
 + After a certain percentage of the group is replaced, a checkpoint is reached\. Whenever there is a checkpoint, Amazon EC2 Auto Scaling temporarily stops replacing instances and sends a notification\. Then, it waits for the amount of time you specified before continuing\. After you receive the notification, you can verify that your new instances are working as expected\.
-+ After the instance refresh succeeds, the Auto Scaling group settings are automatically updated with the configuration that you specified at the start of the operation\. 
++ After the instance refresh succeeds, the Auto Scaling group settings are automatically updated with the launch template that you specified at the start of the operation\. 
 
 ## Core concepts and terms<a name="instance-refresh-core-concepts"></a>
 

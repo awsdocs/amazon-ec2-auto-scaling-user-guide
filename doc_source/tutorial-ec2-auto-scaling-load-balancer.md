@@ -20,6 +20,7 @@ For more information about introducing a load balancer into your architecture, s
 + [Step 3: Verify that your load balancer is attached](#as-register-lbs-verify-console)
 + [Step 4: Next steps](#as-lbs-app-next-steps)
 + [Step 5: Clean up](#as-lbs-app-clean-up)
++ [Provision your resources using AWS CloudFormation templates](#provision-resources-using-cloudformation-templates)
 
 ## Prerequisites<a name="as-register-lbs-prerequisites"></a>
 + A load balancer and target group\. Make sure to choose the same Availability Zones for the load balancer that you plan to use for your Auto Scaling group\. For more information, see [Getting started with Elastic Load Balancing](https://docs.aws.amazon.com/elasticloadbalancing/latest/userguide/load-balancer-getting-started.html) in the *Elastic Load Balancing User Guide*\.
@@ -247,3 +248,9 @@ Skip the following procedure if you want to keep the load balancer for future us
 1. Choose the target group and choose **Actions**, **Delete**\.
 
 1. When prompted for confirmation, choose **Yes, Delete**\.
+
+## Provision your resources using AWS CloudFormation templates<a name="provision-resources-using-cloudformation-templates"></a>
+
+With AWS CloudFormation, you can create and provision AWS infrastructure deployments predictably and repeatedly, by using template files to create and delete a collection of resources together as a single unit \(a *stack*\)\. For more information, see the [AWS CloudFormation User Guide](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/Welcome.html)\.
+
+For a walkthrough that uses a stack template to provision an Auto Scaling group and Application Load Balancer, see [Walkthrough: Create a scaled and load\-balanced application](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/example-templates-autoscaling.html) in the *AWS CloudFormation User Guide*\. Use the walkthrough and sample template as a starting point to create similar templates to meet your needs\.
